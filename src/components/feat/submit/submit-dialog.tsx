@@ -12,7 +12,9 @@ import { Button } from "../../ui/button";
 export default function SubmitDialog() {
   return (
     <Dialog>
-      <DialogTrigger>Submit your project</DialogTrigger>
+      <DialogTrigger asChild>
+        <Button>Submit your project</Button>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Submit Your Project</DialogTitle>
