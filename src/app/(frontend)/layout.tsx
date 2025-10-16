@@ -1,4 +1,6 @@
-import Header from "@/components/header";
+import Footer from "@/components/shared/footer";
+import Header from "@/components/shared/header";
+import { ThemeProvider } from "@/components/theme-provider";
 import { SanityLive } from "@/sanity/lib/live";
 
 export default function FrontendLayout({
@@ -7,10 +9,18 @@ export default function FrontendLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <section className="bg-white min-h-screen">
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      disableTransitionOnChange
+      enableSystem
+    >
       <Header />
-      {children}
-      <SanityLive />
-    </section>
+      <main className="mt-14 mb-auto px-5">
+        {children}
+        <SanityLive />
+      </main>
+      <Footer />
+    </ThemeProvider>
   );
 }
