@@ -16,6 +16,7 @@ import { structure } from "./src/sanity/structure";
 export default defineConfig({
   basePath: "/admin",
   projectId,
+  title: "Pittogramma",
   dataset,
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,

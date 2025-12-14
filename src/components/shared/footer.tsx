@@ -4,7 +4,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 export default function Footer() {
   return (
     <footer className="p-4">
-      <div className="grid grid-cols-4 rounded bg-secondary p-4">
+      <div className="grid grid-cols-4 rounded-lg bg-secondary p-4">
         {/* Col 1 */}
         <ul>
           <li>© {new Date().getFullYear()} Pittogramma</li>

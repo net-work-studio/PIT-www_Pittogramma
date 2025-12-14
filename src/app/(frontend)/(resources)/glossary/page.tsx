@@ -394,7 +394,7 @@ type GlossaryCardProps = {
 function GlossaryCard({ word, definition }: GlossaryCardProps) {
   return (
     <Accordion
-      className="rounded-xl bg-secondary p-2.5"
+      className="rounded-lg bg-secondary p-2.5"
       collapsible
       type="single"
     >

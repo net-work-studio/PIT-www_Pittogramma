@@ -4,7 +4,7 @@ import ResourcesNavigation from "@/components/resources-navigation";
 
 function StudioCard() {
   return (
-    <ul className="grid grid-cols-12 gap-2.5 rounded-xl bg-secondary p-2.5">
+    <ul className="grid grid-cols-12 gap-2.5 rounded-lg bg-secondary p-2.5">
       <li className="col-span-4">Name</li>
       <li className="col-span-2">Typology</li>
       <li className="col-span-2">Tag</li>

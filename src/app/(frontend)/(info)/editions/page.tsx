@@ -25,10 +25,10 @@ type EditionCardProps = {
 function EditionCard({ slug, cover, title }: EditionCardProps) {
   return (
     <Link href={`/editions/${slug}`}>
-      <AspectRatio className="relative rounded-xl" ratio={4 / 3}>
+      <AspectRatio className="relative rounded-lg" ratio={4 / 3}>
         <Image
           alt={title}
-          className="h-full w-full rounded-xl object-cover"
+          className="h-full w-full rounded-lg object-cover"
           fill
           src={cover}
         />

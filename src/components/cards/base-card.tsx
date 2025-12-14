@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -11,6 +12,7 @@ type BaseCardProps = {
   title: string;
   authors?: Author[];
   image: string;
+  href: string;
   variant?: "project" | "article" | "interview" | "feat" | "event";
   big?: boolean;
 };
@@ -20,14 +22,16 @@ export default function BaseCard({
   authors,
   image,
   variant,
+  href,
   big,
 }: BaseCardProps) {
   return (
-    <div
+    <Link
       className={cn(
-        "span-col-1 flex h-fit w-full flex-col items-start justify-center gap-2.5 rounded-[10px] bg-stone-50 p-2.5",
+        "span-col-1 flex h-fit w-full flex-col items-start justify-center gap-2.5 rounded-[1.25rem] bg-stone-50 p-2.5",
         big ? "col-span-2" : "col-span-1"
       )}
+      href={href}
     >
       {variant && <Badge variant={variant} />}
       <div className="inline-flex w-full flex-col items-start justify-start gap-3">
@@ -47,9 +51,15 @@ export default function BaseCard({
           )}
         </hgroup>
       </div>
-      <AspectRatio className="relative" ratio={4 / 3}>
-        <Image alt="" fill quality={75} src={image} />
+      <AspectRatio className="relative rounded-lg" ratio={4 / 3}>
+        <Image
+          alt=""
+          className="h-full w-full rounded-lg object-cover"
+          fill
+          quality={75}
+          src={image}
+        />
       </AspectRatio>
-    </div>
+    </Link>
   );
 }

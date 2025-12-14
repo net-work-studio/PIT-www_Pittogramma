@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function BookCardList() {
   return (
-    <ul className="grid grid-cols-12 gap-2.5 rounded-xl bg-secondary p-2.5">
+    <ul className="grid grid-cols-12 gap-2.5 rounded-lg bg-secondary p-2.5">
       <li className="col-span-3">Title</li>
       <li className="col-span-1">Language</li>
       <li className="col-span-3">Author/s</li>
@@ -18,7 +18,7 @@ function BookCardList() {
 
 function BookCardGrid() {
   return (
-    <ul className="col-span-2 grid gap-2.5 rounded-xl bg-secondary p-2.5">
+    <ul className="col-span-2 grid gap-2.5 rounded-lg bg-secondary p-2.5">
       <li className="col-span-3">Title</li>
       <li className="col-span-1">Language</li>
       <li className="col-span-3">Author/s</li>

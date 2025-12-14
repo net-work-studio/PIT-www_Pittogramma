@@ -8,6 +8,7 @@ const cards = [
     image: "https://placehold.co/400x300/png",
     variant: "project" as const,
     big: true,
+    href: "/",
   },
   {
     id: "2",
@@ -15,6 +16,7 @@ const cards = [
     authors: [{ name: "Maria Garcia" }],
     image: "https://placehold.co/400x300/png",
     variant: "article" as const,
+    href: "/",
   },
   {
     id: "3",
@@ -22,6 +24,7 @@ const cards = [
     authors: [{ name: "John Smith" }],
     image: "https://placehold.co/400x300/png",
     variant: "interview" as const,
+    href: "/",
   },
   {
     id: "4",
@@ -29,6 +32,7 @@ const cards = [
     authors: [{ name: "Emma Wilson" }],
     image: "https://placehold.co/400x300/png",
     variant: "feat" as const,
+    href: "/",
   },
   {
     id: "5",
@@ -36,6 +40,7 @@ const cards = [
     authors: [{ name: "Conference Team" }],
     image: "https://placehold.co/400x300/png",
     variant: "event" as const,
+    href: "/",
   },
 ];
 
@@ -46,6 +51,7 @@ export default function HomeGrid() {
         <BaseCard
           authors={card.authors}
           big={card.big}
+          href={card.href}
           image={card.image}
           key={card.id}
           title={card.title}

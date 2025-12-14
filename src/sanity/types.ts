@@ -13,13 +13,66 @@
  */
 
 // Source: schema.json
+export type TitleSlug = {
+  _type: "titleSlug";
+  title: string;
+  slug: Slug;
+};
+
+export type MainImage = {
+  _type: "mainImage";
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  caption?: string;
+  alt?: string;
+};
+
+export type Logo = {
+  _type: "logo";
+  logoLight?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  logoDark?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  alt?: string;
+};
+
 export type Studio = {
   _id: string;
   _type: "studio";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
+  name: string;
   type?: string;
   tag?: string;
   country?: string;
@@ -32,14 +85,14 @@ export type Project = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  titleslug?: TitleSlug;
-  designer?: {
+  titleslug: TitleSlug;
+  designer: {
     _ref: string;
     _type: "reference";
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: "designer";
   };
-  cover?: MainImage;
+  cover: MainImage;
   institute?: {
     _ref: string;
     _type: "reference";
@@ -52,7 +105,7 @@ export type Project = {
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: "teacher";
   };
-  year?: string;
+  year: string;
   disciplines?: string;
   gallery?: Array<{
     children?: Array<{
@@ -81,7 +134,7 @@ export type Teacher = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
+  name: string;
   teachingAt?: {
     _ref: string;
     _type: "reference";
@@ -96,9 +149,9 @@ export type Interview = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  titleslug?: TitleSlug;
-  cover?: MainImage;
-  shortDescription?: string;
+  titleslug: TitleSlug;
+  cover: MainImage;
+  shortDescription: string;
   bio?: string;
   interview?: Array<{
     children?: Array<{
@@ -126,7 +179,7 @@ export type History = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
+  title: string;
   content?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -159,10 +212,10 @@ export type Event = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  titleslug?: TitleSlug;
-  type?: string;
-  cover?: MainImage;
-  dateStart?: string;
+  titleslug: TitleSlug;
+  type: string;
+  cover: MainImage;
+  dateStart: string;
   dateEnd?: string;
   locationName?: string;
   locationAddress?: string;
@@ -181,10 +234,10 @@ export type Event = {
   };
 };
 
-export type TitleSlug = {
-  _type: "titleSlug";
-  title?: string;
-  slug?: Slug;
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
 };
 
 export type Edition = {
@@ -193,9 +246,9 @@ export type Edition = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  slug?: Slug;
-  cover?: MainImage;
+  title: string;
+  slug: Slug;
+  cover: MainImage;
 };
 
 export type Designer = {
@@ -204,9 +257,9 @@ export type Designer = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
+  name: string;
   portrait?: MainImage;
-  birthYear?: string;
+  birthYear: string;
   bio?: string;
   institute?: {
     _ref: string;
@@ -224,8 +277,8 @@ export type Institute = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  yearFoundation?: string;
+  name: string;
+  yearFoundation: string;
   url?: string;
   language?: string;
   country?: string;
@@ -233,22 +286,20 @@ export type Institute = {
   address?: string;
 };
 
-export type MainImage = {
-  _type: "mainImage";
-  image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  caption?: string;
-  alt?: string;
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
 };
 
 export type Contributor = {
@@ -257,38 +308,9 @@ export type Contributor = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  logo?: Logo;
+  name: string;
+  logo: Logo;
   description?: string;
-};
-
-export type Logo = {
-  _type: "logo";
-  logoLight?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  logoDark?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  alt?: string;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -312,25 +334,20 @@ export type SanityImagePalette = {
 
 export type SanityImageDimensions = {
   _type: "sanity.imageDimensions";
-  height?: number;
-  width?: number;
-  aspectRatio?: number;
+  height: number;
+  width: number;
+  aspectRatio: number;
 };
 
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
 };
 
 export type SanityFileAsset = {
@@ -353,6 +370,13 @@ export type SanityFileAsset = {
   path?: string;
   url?: string;
   source?: SanityAssetSourceData;
+};
+
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
 };
 
 export type SanityImageAsset = {
@@ -378,17 +402,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
 export type Geopoint = {
   _type: "geopoint";
   lat?: number;
@@ -396,18 +409,5 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
-export type AllSanitySchemaTypes = Studio | Project | Teacher | Interview | History | Event | TitleSlug | Edition | Designer | Institute | MainImage | Contributor | Logo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = TitleSlug | MainImage | Logo | Studio | Project | Teacher | Interview | History | Event | Slug | Edition | Designer | Institute | SanityImageCrop | SanityImageHotspot | Contributor | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;

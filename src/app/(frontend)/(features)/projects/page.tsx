@@ -1,5 +1,5 @@
 import BaseCard from "@/components/cards/base-card";
-import SubmitBanner from "@/components/feat/submit/submit-banner";
+import SubmitBanner from "@/components/feat/submit/submit-project-banner";
 import PageHeader from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 
@@ -9,30 +9,35 @@ const cards = [
     title: "Typography Masterclass",
     authors: [{ name: "Sarah Chen" }, { name: "Alex Rivera" }],
     image: "https://placehold.co/400x300/png",
+    href: "/",
   },
   {
     id: "2",
     title: "Design Trends 2025",
     authors: [{ name: "Maria Garcia" }],
     image: "https://placehold.co/400x300/png",
+    href: "/",
   },
   {
     id: "3",
     title: "Interview with Creative Director",
     authors: [{ name: "John Smith" }],
     image: "https://placehold.co/400x300/png",
+    href: "/",
   },
   {
     id: "4",
     title: "Featured Designer Spotlight",
     authors: [{ name: "Emma Wilson" }],
     image: "https://placehold.co/400x300/png",
+    href: "/",
   },
   {
     id: "5",
     title: "Design Conference 2025",
     authors: [{ name: "Conference Team" }],
     image: "https://placehold.co/400x300/png",
+    href: "/",
   },
 ];
 
@@ -43,7 +48,7 @@ export default function Page() {
         subtitle="The most interesting and visionary projects designed by talented young graphic designers around the world who highlights new styles and trends"
         title="Projects"
       />
-      <div>
+      <div className="space-y-10 pb-10">
         <div>
           <Button className="font-mono uppercase">Filters</Button>
         </div>
@@ -51,12 +56,18 @@ export default function Page() {
           {cards.map((card) => (
             <BaseCard
               authors={card.authors}
+              href={card.href}
               image={card.image}
               key={card.id}
               title={card.title}
             />
           ))}
         </section>
+        <div className="flex items-center justify-center gap-2">
+          <Button className="rounded-full font-mono uppercase">1</Button>
+          <Button className="rounded-full font-mono uppercase">2</Button>
+          <Button className="rounded-full font-mono uppercase">3</Button>
+        </div>
       </div>
       <SubmitBanner />
     </>
