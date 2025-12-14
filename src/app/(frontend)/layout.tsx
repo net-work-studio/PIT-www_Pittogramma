@@ -2,8 +2,11 @@ import Footer from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SanityLive } from "@/sanity/lib/live";
+import { draftMode } from 'next/headers'
+import { VisualEditing } from 'next-sanity/visual-editing'
+import { DisableDraftMode } from '@/components/disable-draft-mode'
 
-export default function FrontendLayout({
+export default async function FrontendLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -18,8 +21,14 @@ export default function FrontendLayout({
       <Header />
       <main className="mt-14 mb-auto px-5">
         {children}
-        <SanityLive />
       </main>
+        <SanityLive />
+          {(await draftMode()).isEnabled && (
+        <>
+          <DisableDraftMode />
+          <VisualEditing />
+        </>
+      )}
       <Footer />
     </ThemeProvider>
   );
