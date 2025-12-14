@@ -2,7 +2,7 @@ import SearchInput from "@/components/feat/search-input";
 import PageHeader from "@/components/page-header";
 import ResourcesNavigation from "@/components/resources-navigation";
 
-function StudioCard() {
+function InstituteCard() {
   return (
     <ul className="grid grid-cols-12 gap-2.5 rounded-lg bg-secondary p-2.5">
       <li className="col-span-4">Name</li>
@@ -36,7 +36,7 @@ export default function Page() {
         </ul>
         <section className="flex flex-col gap-1.5">
           {Array.from({ length: 20 }).map((_, index) => (
-            <StudioCard key={index} />
+            <InstituteCard key={index} />
           ))}
         </section>
       </div>

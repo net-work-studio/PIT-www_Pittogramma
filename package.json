@@ -12,7 +12,7 @@
     "predev": "bun run typegen",
     "prebuild": "bun run typegen",
     "typegen": "bunx sanity schema extract --enforce-required-fields --path ./src/sanity/extract.json && bunx sanity typegen generate",
-    "cleanup": "rm -rf node_modules .next bun.lock"
+    "cleanup": "rm -rf node_modules .next"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

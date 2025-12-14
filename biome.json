@@ -18,8 +18,7 @@
         "noConsole": "warn"
       },
       "style": {
-        "noMagicNumbers": "off",
-        "useFilenamingConvention": "off"
+        "noMagicNumbers": "off"
       },
       "performance": {
         "noNamespaceImport": "off"

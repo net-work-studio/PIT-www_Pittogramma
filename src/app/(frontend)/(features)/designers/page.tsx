@@ -7,7 +7,7 @@ function StudioCard() {
     <ul className="grid grid-cols-12 gap-2.5 rounded-lg bg-secondary p-2.5">
       <li className="col-span-6">Name</li>
       <li className="col-span-2">City</li>
-      <li className="col-span-2">County</li>
+      <li className="col-span-2">Country</li>
       <li className="col-span-2">Year</li>
     </ul>
   );
