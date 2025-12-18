@@ -1,6 +1,6 @@
 import BaseCard from "@/components/cards/base-card";
 import SubmitBanner from "@/components/feat/submit/submit-project-banner";
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 
 const futureEvents = [

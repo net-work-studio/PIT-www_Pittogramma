@@ -1,6 +1,6 @@
 import SearchInput from "@/components/feat/search-input";
 import SubmitProjectBanner from "@/components/feat/submit/submit-project-banner";
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/shared/page-header";
 
 function StudioCard() {
   return (

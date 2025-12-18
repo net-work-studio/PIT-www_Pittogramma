@@ -18,7 +18,7 @@
         "noConsole": "warn"
       },
       "style": {
-        "noMagicNumbers": "off"
+        "noMagicNumbers": "info"
       },
       "performance": {
         "noNamespaceImport": "off"

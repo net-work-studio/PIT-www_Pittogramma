@@ -1,6 +1,6 @@
 import SearchInput from "@/components/feat/search-input";
-import PageHeader from "@/components/page-header";
-import ResourcesNavigation from "@/components/resources-navigation";
+import PageHeader from "@/components/shared/page-header";
+import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function BookCardList() {

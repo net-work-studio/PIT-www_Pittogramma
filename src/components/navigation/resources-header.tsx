@@ -1,6 +1,6 @@
-import SearchInput from "./feat/search-input";
-import PageHeader from "./page-header";
-import ResourcesNavigation from "./resources-navigation";
+import SearchInput from "../feat/search-input";
+import ResourcesNavigation from "../navigation/resources-navigation";
+import PageHeader from "../shared/page-header";
 
 export default function ResourcesHeader() {
   return (

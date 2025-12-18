@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/shared/page-header";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const data = [

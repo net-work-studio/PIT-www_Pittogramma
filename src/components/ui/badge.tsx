@@ -5,15 +5,15 @@ import type * as React from "react";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden whitespace-nowrap rounded-full border px-2.5 py-1 font-mono text-sm uppercase transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3",
+  "inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden whitespace-nowrap rounded-full px-2.5 py-1 font-mono text-sm uppercase outline outline-foreground transition-color focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3",
   {
     variants: {
       variant: {
-        project: "border-transparent bg-blue-700 text-white",
-        article: "border-transparent bg-orange-500 text-white",
-        interview: "border-transparent bg-yellow-500 text-black",
-        feat: "border-foreground bg-transparent text-foreground text-foreground",
-        event: "border-transparent bg-background text-foreground",
+        project: "hover:bg-blue-700 hover:text-white",
+        article: "hover:bg-orange-500 hover:text-white",
+        interview: "hover:bg-yellow-500 hover:text-black",
+        feat: "bg-background text-foreground",
+        event: "bg-background text-foreground",
       },
     },
     defaultVariants: {
