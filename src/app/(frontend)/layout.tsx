@@ -1,10 +1,10 @@
+import { draftMode } from "next/headers";
+import { VisualEditing } from "next-sanity/visual-editing";
+import { DisableDraftMode } from "@/components/disable-draft-mode";
 import Footer from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SanityLive } from "@/sanity/lib/live";
-import { draftMode } from 'next/headers'
-import { VisualEditing } from 'next-sanity/visual-editing'
-import { DisableDraftMode } from '@/components/disable-draft-mode'
 
 export default async function FrontendLayout({
   children,
@@ -19,16 +19,14 @@ export default async function FrontendLayout({
       enableSystem
     >
       <Header />
-      <main className="mt-14 mb-auto px-5">
-        {children}
-      </main>
-        <SanityLive />
-          {(await draftMode()).isEnabled && (
+      <main className="mt-14 mb-auto px-5">{children}</main>
+      <SanityLive />
+      {(await draftMode()).isEnabled ? (
         <>
           <DisableDraftMode />
           <VisualEditing />
         </>
-      )}
+      ) : null}
       <Footer />
     </ThemeProvider>
   );
