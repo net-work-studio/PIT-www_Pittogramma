@@ -12,7 +12,7 @@
  * ---------------------------------------------------------------------------------
  */
 
-// Source: schema.json
+// Source: src/sanity/extract.json
 export type TitleSlug = {
   _type: "titleSlug";
   title: string;
@@ -409,5 +409,30 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = TitleSlug | MainImage | Logo | Studio | Project | Teacher | Interview | History | Event | Slug | Edition | Designer | Institute | SanityImageCrop | SanityImageHotspot | Contributor | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes =
+  | TitleSlug
+  | MainImage
+  | Logo
+  | Studio
+  | Project
+  | Teacher
+  | Interview
+  | History
+  | Event
+  | Slug
+  | Edition
+  | Designer
+  | Institute
+  | SanityImageCrop
+  | SanityImageHotspot
+  | Contributor
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint;
+
 export declare const internalGroqTypeReferenceTo: unique symbol;
