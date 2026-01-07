@@ -4,6 +4,10 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
+const BASE_CARD_IMAGE_WIDTH = 4;
+const BASE_CARD_IMAGE_HEIGHT = 3;
+const BASE_CARD_IMAGE_RATIO = BASE_CARD_IMAGE_WIDTH / BASE_CARD_IMAGE_HEIGHT;
+
 type Author = {
   name: string;
 };
@@ -28,15 +32,18 @@ export default function BaseCard({
   return (
     <Link
       className={cn(
-        "span-col-1 flex h-fit w-full flex-col items-start justify-center gap-2.5 rounded-[1.25rem]",
+        "span-col-1 group flex h-fit w-full flex-col items-start justify-center gap-2.5 rounded-[1.25rem]",
         big ? "col-span-2" : "col-span-1"
       )}
       href={href}
     >
-      <AspectRatio className="relative rounded-lg" ratio={4 / 3}>
+      <AspectRatio
+        className="relative overflow-hidden rounded-lg"
+        ratio={BASE_CARD_IMAGE_RATIO}
+      >
         <Image
           alt=""
-          className="h-full w-full rounded-lg object-cover"
+          className="h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
           fill
           quality={75}
           src={image}

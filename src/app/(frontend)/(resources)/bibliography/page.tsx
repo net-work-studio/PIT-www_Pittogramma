@@ -1,6 +1,6 @@
 import SearchInput from "@/components/feat/search-input";
-import PageHeader from "@/components/shared/page-header";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
+import PageHeader from "@/components/shared/page-header";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function BookCardList() {
@@ -36,7 +36,7 @@ export default function Page() {
         <PageHeader
           className="pb-0"
           subtitle="A constantly updated list of books on graphic design"
-          title="Bibliography"
+          title="Resources"
         />
         <ResourcesNavigation />
         <SearchInput />

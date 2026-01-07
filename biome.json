@@ -18,7 +18,13 @@
         "noConsole": "warn"
       },
       "style": {
-        "noMagicNumbers": "info"
+        "noMagicNumbers": "off",
+        "useConsistentTypeDefinitions": {
+          "level": "warn",
+          "options": {
+            "style": "type"
+          }
+        }
       },
       "performance": {
         "noNamespaceImport": "off"

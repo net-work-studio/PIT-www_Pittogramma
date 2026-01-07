@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import type { Metadata } from "next";
+import { siteDefaults } from "@/lib/seo/siteDefaults";
 
 const sono = localFont({
   src: [
@@ -37,9 +38,20 @@ const aktual = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Pittogramma",
-  description:
-    "Pittogramma is a platform for sharing projects designed by young designers, resources, events and experiences from the world graphic design scene",
+  title: {
+    default: siteDefaults.title || "Pittogramma",
+    template: "%s – Pittogramma",
+  },
+  description: siteDefaults.description,
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: siteDefaults.title || "Pittogramma",
+    // Default OG image can be added here
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({

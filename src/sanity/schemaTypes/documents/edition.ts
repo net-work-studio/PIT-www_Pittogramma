@@ -18,7 +18,7 @@ export const edition = defineType({
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "mainImage",
+      type: "imageWithMetadata",
       name: "cover",
       title: "Cover",
       validation: (e) => e.required(),

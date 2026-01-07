@@ -38,7 +38,7 @@ export default function ResourcesNavigation() {
       <ul className="flex flex-row gap-2">
         {resources.map((res) => (
           <li key={res.href}>
-            <Button asChild>
+            <Button asChild variant="ghost">
               <Link href={res.href}>{res.label}</Link>
             </Button>
           </li>

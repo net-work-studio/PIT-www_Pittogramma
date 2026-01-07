@@ -1,15 +1,18 @@
 import HomeGrid from "@/components/home-grid";
 import PageHeader from "@/components/shared/page-header";
 
-export default function Home() {
+import { sampleHomeData } from "@/sample-data/sample-home-data";
+import { sanityFetch } from "@/sanity/lib/live";
+import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
+
+export default async function Home() {
+  const { data: siteSettings } = await sanityFetch({
+    query: SITE_SETTINGS_QUERY,
+  });
   return (
     <>
-      <PageHeader
-        subtitle="Digital platform for sharing projects designed by young designers,resources, events and experiences from the world graphic design scene"
-        title="Pittogramma"
-      />
-
-      <HomeGrid />
+      <PageHeader subtitle={siteSettings?.homeIntro} title="Pittogramma" />
+      <HomeGrid data={sampleHomeData} />
     </>
   );
 }

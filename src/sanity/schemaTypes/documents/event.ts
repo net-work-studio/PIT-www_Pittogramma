@@ -6,9 +6,18 @@ export const event = defineType({
   title: "Event",
   fields: [
     defineField({
-      type: "titleSlug",
-      name: "titleslug",
-      title: "TitleSlug",
+      type: "string",
+      name: "title",
+      title: "Title",
+      validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "slug",
+      name: "slug",
+      title: "Slug",
+      options: {
+        source: "title",
+      },
       validation: (e) => e.required(),
     }),
     defineField({
@@ -18,7 +27,7 @@ export const event = defineType({
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "mainImage",
+      type: "imageWithMetadata",
       name: "cover",
       title: "Cover",
       validation: (e) => e.required(),

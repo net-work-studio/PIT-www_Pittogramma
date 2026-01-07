@@ -1,4 +1,7 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
+
+const minYearFoundation = 1000;
+const maxYearFoundation = 2500;
 
 export const institute = defineType({
   type: "document",
@@ -12,15 +15,48 @@ export const institute = defineType({
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "date",
+      type: "number",
       name: "yearFoundation",
       title: "Year Foundation",
-      validation: (e) => e.required(),
+      validation: (e) =>
+        e
+          .required()
+          .min(minYearFoundation)
+          .custom((value) => {
+            if (
+              value &&
+              (value < minYearFoundation || value > maxYearFoundation)
+            ) {
+              return "Year foundation must be exactly 4 digits";
+            }
+            return true;
+          }),
     }),
     defineField({ type: "string", name: "url", title: "Url" }),
-    defineField({ type: "string", name: "language", title: "Language" }),
-    defineField({ type: "string", name: "country", title: "Country" }),
-    defineField({ type: "string", name: "city", title: "City" }),
+    defineField({
+      type: "array",
+      name: "languages",
+      title: "Languages",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          name: "language",
+          title: "Language",
+          to: [{ type: "language" }],
+        }),
+      ],
+    }),
+    defineField({
+      type: "location",
+      name: "location",
+      title: "Location",
+      validation: (e) => e.required(),
+    }),
     defineField({ type: "string", name: "address", title: "Address" }),
+    defineField({
+      type: "socialLinks",
+      name: "socialLinks",
+      title: "Social Links",
+    }),
   ],
 });
