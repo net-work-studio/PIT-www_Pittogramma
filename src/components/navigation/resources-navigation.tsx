@@ -3,16 +3,8 @@ import { Button } from "@/components/ui/button";
 
 const resources = [
   {
-    label: "Studios & Agencies",
-    href: "/studios-agencies",
-  },
-  {
-    label: "Type Foundries",
-    href: "/type-foundries",
-  },
-  {
-    label: "Institutes",
-    href: "/institutes",
+    label: "Bibliography",
+    href: "/bibliography",
   },
   {
     label: "Bookshops",
@@ -23,8 +15,16 @@ const resources = [
     href: "/glossary",
   },
   {
-    label: "Bibliography",
-    href: "/bibliography",
+    label: "Institutes",
+    href: "/institutes",
+  },
+  {
+    label: "Studios & Agencies",
+    href: "/studios-agencies",
+  },
+  {
+    label: "Type Foundries",
+    href: "/type-foundries",
   },
   {
     label: "Websites",

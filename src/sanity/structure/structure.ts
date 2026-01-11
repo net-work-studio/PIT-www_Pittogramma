@@ -34,14 +34,13 @@ export const structure: StructureResolver = (S) =>
       ]),
 
       group(S, "Resources", [
-        docListItem(S, "studio", "Studio"),
-        /* docListItem(S, "bibliography", "Bibliography"), */
-        /* docListItem(S, "bookshop", "Bookshop"), */
-        /* docListItem(S, "glossary", "Glossary"), */
-
+        docListItem(S, "bibliography", "Bibliography"),
+        docListItem(S, "bookshop", "Bookshop"),
+        docListItem(S, "glossary", "Glossary"),
         docListItem(S, "institute", "Institute"),
-        /* docListItem(S, "typeFoundry", "Type Foundry"), */
-        /* docListItem(S, "website", "Website"), */
+        docListItem(S, "studio", "Studio"),
+        docListItem(S, "typeFoundry", "Type Foundry"),
+        docListItem(S, "webSource", "Web Source"),
       ]),
 
       group(S, "Pages", [
@@ -52,12 +51,15 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
-      group(S, "Archive", [
+      group(S, "Metadata", [
         singleton(S, "city", "City", MapPin),
         docListItem(S, "country", "Country", Globe),
         docListItem(S, "language", "Language", Languages),
         docListItem(S, "tag", "Tag", Tag),
         docListItem(S, "contributor", "Contributor", Users),
+        docListItem(S, "category", "Category", Tag),
+        docListItem(S, "author", "Author", User),
+        docListItem(S, "publisher", "Publisher"),
       ]),
 
       S.divider(),

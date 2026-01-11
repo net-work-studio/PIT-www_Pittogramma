@@ -32,7 +32,6 @@ export const institute = defineType({
             return true;
           }),
     }),
-    defineField({ type: "string", name: "url", title: "Url" }),
     defineField({
       type: "array",
       name: "languages",

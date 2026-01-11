@@ -1,21 +1,14 @@
 import { defineField, defineType } from "sanity";
 
-export const studio = defineType({
+export const typeFoundry = defineType({
   type: "document",
-  name: "studio",
-  title: "Studio",
+  name: "typeFoundry",
+  title: "Type Foundry",
   fields: [
     defineField({
       type: "string",
       name: "name",
       title: "Name",
-      validation: (e) => e.required(),
-    }),
-    defineField({
-      type: "reference",
-      name: "category",
-      title: "Category",
-      to: [{ type: "category" }],
       validation: (e) => e.required(),
     }),
     defineField({

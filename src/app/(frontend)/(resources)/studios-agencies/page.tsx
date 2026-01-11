@@ -1,12 +1,12 @@
 import SearchInput from "@/components/feat/search-input";
-import PageHeader from "@/components/shared/page-header";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
+import PageHeader from "@/components/shared/page-header";
 
 function StudioCard() {
   return (
     <ul className="grid grid-cols-12 gap-2.5 rounded-lg bg-secondary p-2.5">
       <li className="col-span-4">Name</li>
-      <li className="col-span-2">Typology</li>
+      <li className="col-span-2">Category</li>
       <li className="col-span-2">Tag</li>
       <li className="col-span-2">City</li>
       <li className="col-span-2">County</li>
@@ -29,7 +29,7 @@ export default function Page() {
       <div className="space-y-5 pt-30">
         <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase">
           <li className="col-span-4">Name</li>
-          <li className="col-span-2">Typology</li>
+          <li className="col-span-2">Category</li>
           <li className="col-span-2">Tag</li>
           <li className="col-span-2">City</li>
           <li className="col-span-2">County</li>
