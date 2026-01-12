@@ -4,6 +4,7 @@ import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { sanityFetch } from "@/sanity/lib/live";
 import { PROJECT_QUERY } from "@/sanity/lib/queries";
+import { notFound } from "next/navigation";
 
 export default async function ProjectPage({
   params,
@@ -15,6 +16,10 @@ export default async function ProjectPage({
     query: PROJECT_QUERY,
     params: { slug },
   });
+
+  if (!project) {
+    notFound();
+  }
 
   return (
     <>

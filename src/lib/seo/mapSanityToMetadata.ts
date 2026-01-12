@@ -32,7 +32,7 @@ export function mapSanityToMetadata({
     page.seo?.metaDescription || page.description || siteDefaults.description;
 
   // Canonical URL
-  const canonicalUrl = page.seo?.canonicalURL || `${baseUrl}${path}`;
+  const canonicalUrl = page.seo?.canonicalURL ? `${baseUrl}${page.seo.canonicalURL}` : `${baseUrl}${path}`;
 
   // Image fallback chain:
   // 1. OG image → 2. X Card image → 3. Meta image → 4. Cover image → undefined

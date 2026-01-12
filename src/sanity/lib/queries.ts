@@ -37,7 +37,7 @@ export const PROJECTS_QUERY = defineQuery(`
       metaTitle,
       metaDescription,
       metaRobots,
-      canonicalURL,
+      canonicalPath,
       openGraph {
         title,
         description,
@@ -94,7 +94,7 @@ export const PROJECT_QUERY = defineQuery(`
       metaTitle,
       metaDescription,
       metaRobots,
-      canonicalURL,
+      canonicalPath,
       openGraph {
         title,
         description,

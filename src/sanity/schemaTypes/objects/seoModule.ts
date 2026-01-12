@@ -56,8 +56,8 @@ export const seoModule = defineType({
       initialValue: "index, follow",
     }),
     defineField({
-      name: "canonicalPath",
-      title: "Canonical Path",
+      name: "canonicalURL",
+      title: "Canonical URL",
       type: "string",
       description:
         "Path only (e.g., /blog/hello-world). Leave empty to use current page path.",

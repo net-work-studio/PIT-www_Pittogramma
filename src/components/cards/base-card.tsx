@@ -42,7 +42,7 @@ export default function BaseCard({
         ratio={BASE_CARD_IMAGE_RATIO}
       >
         <Image
-          alt=""
+          alt={title}
           className="h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
           fill
           quality={75}

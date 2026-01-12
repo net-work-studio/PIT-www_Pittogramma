@@ -13,38 +13,145 @@
  */
 
 // Source: src/sanity/extract.json
-export type PublishingDate = {
-  _type: "publishingDate";
-  date: string;
-};
-
-export type InstituteReference = {
+export type LanguageReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "institute";
+  [internalGroqTypeReferenceTo]?: "language";
 };
 
-export type StudioReference = {
+export type AuthorReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "studio";
+  [internalGroqTypeReferenceTo]?: "author";
 };
 
-export type Professional = {
+export type PublisherReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "publisher";
+};
+
+export type Bibliography = {
   _id: string;
-  _type: "professional";
+  _type: "bibliography";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   name: string;
-  portrait?: ImageWithMetadata;
-  birthYear?: number;
-  bio?: string;
-  teachingAt?: InstituteReference;
-  studio?: StudioReference;
-  location?: Location;
+  cover?: ImageWithMetadata;
+  languages?: Array<
+    {
+      _key: string;
+    } & LanguageReference
+  >;
+  authors?: Array<
+    {
+      _key: string;
+    } & AuthorReference
+  >;
+  publisher: PublisherReference;
+  tagSelector?: TagSelector;
+  affiliateLink?: string;
+};
+
+export type TagReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "tag";
+};
+
+export type TagSelector = {
+  _type: "tagSelector";
+  tags?: Array<
+    {
+      _key: string;
+    } & TagReference
+  >;
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type ImageWithMetadata = {
+  _type: "imageWithMetadata";
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  caption?: string;
+  alt?: string;
+};
+
+export type CategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "category";
+};
+
+export type WebSource = {
+  _id: string;
+  _type: "webSource";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  cover?: ImageWithMetadata;
+  category: CategoryReference;
+  tagSelector?: TagSelector;
+  affiliateLink?: string;
+};
+
+export type Publisher = {
+  _id: string;
+  _type: "publisher";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+};
+
+export type Author = {
+  _id: string;
+  _type: "author";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+};
+
+export type Glossary = {
+  _id: string;
+  _type: "glossary";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  description: string;
+  image?: ImageWithMetadata;
+};
+
+export type Bookshop = {
+  _id: string;
+  _type: "bookshop";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  tagSelector?: TagSelector;
+  location: Location;
+  address?: string;
   socialLinks?: SocialLinks;
 };
 
@@ -87,24 +194,51 @@ export type Location = {
   city: CityReference;
 };
 
-export type SanityImageAssetReference = {
+export type TypeFoundry = {
+  _id: string;
+  _type: "typeFoundry";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  tagSelector?: TagSelector;
+  location: Location;
+  socialLinks?: SocialLinks;
+};
+
+export type PublishingDate = {
+  _type: "publishingDate";
+  date: string;
+};
+
+export type InstituteReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  [internalGroqTypeReferenceTo]?: "institute";
 };
 
-export type ImageWithMetadata = {
-  _type: "imageWithMetadata";
-  image?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  caption?: string;
-  alt?: string;
+export type StudioReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "studio";
+};
+
+export type Professional = {
+  _id: string;
+  _type: "professional";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  portrait?: ImageWithMetadata;
+  birthYear?: number;
+  bio?: string;
+  teachingAt?: InstituteReference;
+  studio?: StudioReference;
+  location?: Location;
+  socialLinks?: SocialLinks;
 };
 
 export type SiteSettings = {
@@ -222,10 +356,19 @@ export type Studio = {
   _updatedAt: string;
   _rev: string;
   name: string;
-  type?: string;
-  tag?: string;
+  category: CategoryReference;
+  tagSelector?: TagSelector;
   location: Location;
   socialLinks?: SocialLinks;
+};
+
+export type Category = {
+  _id: string;
+  _type: "category";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
 };
 
 export type DesignerReference = {
@@ -240,13 +383,6 @@ export type TeacherReference = {
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "teacher";
-};
-
-export type TagReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "tag";
 };
 
 export type Project = {
@@ -425,13 +561,6 @@ export type Designer = {
   socialLinks?: SocialLinks;
 };
 
-export type LanguageReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "language";
-};
-
 export type Institute = {
   _id: string;
   _type: "institute";
@@ -440,7 +569,6 @@ export type Institute = {
   _rev: string;
   name: string;
   yearFoundation: number;
-  url?: string;
   languages?: Array<
     {
       _key: string;
@@ -575,16 +703,29 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
-  | PublishingDate
-  | InstituteReference
-  | StudioReference
-  | Professional
+  | LanguageReference
+  | AuthorReference
+  | PublisherReference
+  | Bibliography
+  | TagReference
+  | TagSelector
+  | SanityImageAssetReference
+  | ImageWithMetadata
+  | CategoryReference
+  | WebSource
+  | Publisher
+  | Author
+  | Glossary
+  | Bookshop
   | SocialLinks
   | CountryReference
   | CityReference
   | Location
-  | SanityImageAssetReference
-  | ImageWithMetadata
+  | TypeFoundry
+  | PublishingDate
+  | InstituteReference
+  | StudioReference
+  | Professional
   | SiteSettings
   | SeoModule
   | XCard
@@ -596,9 +737,9 @@ export type AllSanitySchemaTypes =
   | Slug
   | Logo
   | Studio
+  | Category
   | DesignerReference
   | TeacherReference
-  | TagReference
   | Project
   | Teacher
   | Language
@@ -608,7 +749,6 @@ export type AllSanitySchemaTypes =
   | Event
   | Edition
   | Designer
-  | LanguageReference
   | Institute
   | SanityImageCrop
   | SanityImageHotspot
@@ -636,7 +776,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type == "project"] | order(_createdAt desc) {    _id,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },    seo {      metaTitle,      metaDescription,      metaRobots,      canonicalURL,      openGraph {        title,        description,        image,        url      },      xCard {        cardType,        title,        description,        image      },      metaImage    }  }
+// Query: *[_type == "project"] | order(_createdAt desc) {    _id,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },    seo {      metaTitle,      metaDescription,      metaRobots,      canonicalPath,      openGraph {        title,        description,        image,        url      },      xCard {        cardType,        title,        description,        image      },      metaImage    }  }
 export type PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   cover: {
@@ -669,7 +809,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
       | "noindex, follow"
       | "noindex, nofollow"
       | null;
-    canonicalURL: null;
+    canonicalPath: string | null;
     openGraph: {
       title: string | null;
       description: string | null;
@@ -688,7 +828,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECT_QUERY
-// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },    teacher->{      _id,      name,    },    institute->{      _id,      name,    },    year,    gallery,    description,    seo {      metaTitle,      metaDescription,      metaRobots,      canonicalURL,      openGraph {        title,        description,        image,        url      },      xCard {        cardType,        title,        description,        image      },      metaImage    }  }
+// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },    teacher->{      _id,      name,    },    institute->{      _id,      name,    },    year,    gallery,    description,    seo {      metaTitle,      metaDescription,      metaRobots,      canonicalPath,      openGraph {        title,        description,        image,        url      },      xCard {        cardType,        title,        description,        image      },      metaImage    }  }
 export type PROJECT_QUERY_RESULT = {
   _id: string;
   cover: {
@@ -749,7 +889,7 @@ export type PROJECT_QUERY_RESULT = {
       | "noindex, follow"
       | "noindex, nofollow"
       | null;
-    canonicalURL: null;
+    canonicalPath: string | null;
     openGraph: {
       title: string | null;
       description: string | null;
@@ -771,7 +911,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "siteSettings"][0] {\n    homeIntro,\n    projectsIntro,\n    interviewsIntro,\n    designersIntro,\n  }\n': SITE_SETTINGS_QUERY_RESULT;
-    '\n  *[_type == "project"] | order(_createdAt desc) {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      metaRobots,\n      canonicalURL,\n      openGraph {\n        title,\n        description,\n        image,\n        url\n      },\n      xCard {\n        cardType,\n        title,\n        description,\n        image\n      },\n      metaImage\n    }\n  }\n': PROJECTS_QUERY_RESULT;
-    '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    teacher->{\n      _id,\n      name,\n    },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery,\n    description,\n    seo {\n      metaTitle,\n      metaDescription,\n      metaRobots,\n      canonicalURL,\n      openGraph {\n        title,\n        description,\n        image,\n        url\n      },\n      xCard {\n        cardType,\n        title,\n        description,\n        image\n      },\n      metaImage\n    }\n  }\n': PROJECT_QUERY_RESULT;
+    '\n  *[_type == "project"] | order(_createdAt desc) {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      metaRobots,\n      canonicalPath,\n      openGraph {\n        title,\n        description,\n        image,\n        url\n      },\n      xCard {\n        cardType,\n        title,\n        description,\n        image\n      },\n      metaImage\n    }\n  }\n': PROJECTS_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    teacher->{\n      _id,\n      name,\n    },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery,\n    description,\n    seo {\n      metaTitle,\n      metaDescription,\n      metaRobots,\n      canonicalPath,\n      openGraph {\n        title,\n        description,\n        image,\n        url\n      },\n      xCard {\n        cardType,\n        title,\n        description,\n        image\n      },\n      metaImage\n    }\n  }\n': PROJECT_QUERY_RESULT;
   }
 }

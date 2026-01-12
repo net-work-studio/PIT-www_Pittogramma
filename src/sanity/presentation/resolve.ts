@@ -5,8 +5,7 @@ import {
 
 export const resolve: PresentationPluginOptions["resolve"] = {
   locations: {
-    // Add more locations for other post types
-    post: defineLocations({
+    project: defineLocations({
       select: {
         title: "title",
         slug: "slug.current",
@@ -15,9 +14,39 @@ export const resolve: PresentationPluginOptions["resolve"] = {
         locations: [
           {
             title: doc?.title || "Untitled",
-            href: `/posts/${doc?.slug}`,
+            href: `/projects/${doc?.slug}`,
           },
-          { title: "Posts index", href: "/posts" },
+          { title: "Projects index", href: "/projects" },
+        ],
+      }),
+    }),
+    interview: defineLocations({
+      select: {
+        title: "title",
+        slug: "slug.current",
+      },
+      resolve: (doc) => ({
+        locations: [
+          {
+            title: doc?.title || "Untitled",
+            href: `/interviews/${doc?.slug}`,
+          },
+          { title: "Interviews index", href: "/interviews" },
+        ],
+      }),
+    }),
+    designer: defineLocations({
+      select: {
+        title: "title",
+        slug: "slug.current",
+      },
+      resolve: (doc) => ({
+        locations: [
+          {
+            title: doc?.title || "Untitled",
+            href: `/designers/${doc?.slug}`,
+          },
+          { title: "Designers index", href: "/designers" },
         ],
       }),
     }),
