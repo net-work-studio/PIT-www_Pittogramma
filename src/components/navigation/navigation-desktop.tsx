@@ -16,7 +16,7 @@ import {
 export function NavigationDesktop() {
   return (
     <NavigationMenu
-      className="-translate-x-1/2 absolute right-1/2 left-1/2"
+      className="absolute right-1/2 left-1/2 -translate-x-1/2"
       viewport={false}
     >
       <NavigationMenuList>
@@ -35,12 +35,12 @@ export function NavigationDesktop() {
           <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="w-[270px]">
-              <ListItem href="/studios-agencies" title="Studios & Agencies" />
-              <ListItem href="/type-foundries" title="Type Foundries" />
-              <ListItem href="/institutes" title="Institutes" />
+              <ListItem href="/bibliography" title="Bibliography" />
               <ListItem href="/bookshops" title="Bookshops" />
               <ListItem href="/glossary" title="Glossary" />
-              <ListItem href="/bibliography" title="Bibliography" />
+              <ListItem href="/institutes" title="Institutes" />
+              <ListItem href="/studios-agencies" title="Studios & Agencies" />
+              <ListItem href="/type-foundries" title="Type Foundries" />
               <ListItem href="/websites" title="Websites" />
             </ul>
           </NavigationMenuContent>
@@ -61,7 +61,6 @@ export function NavigationDesktop() {
             <ul className="w-content">
               <ListItem href="/about" title="About" />
               <ListItem href="/editions" title="Editions" />
-              <ListItem href="/studio" title="Studio" />
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>

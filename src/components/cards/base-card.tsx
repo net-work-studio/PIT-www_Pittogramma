@@ -4,6 +4,10 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
+const BASE_CARD_IMAGE_WIDTH = 4;
+const BASE_CARD_IMAGE_HEIGHT = 3;
+const BASE_CARD_IMAGE_RATIO = BASE_CARD_IMAGE_WIDTH / BASE_CARD_IMAGE_HEIGHT;
+
 type Author = {
   name: string;
 };
@@ -28,18 +32,30 @@ export default function BaseCard({
   return (
     <Link
       className={cn(
-        "span-col-1 flex h-fit w-full flex-col items-start justify-center gap-2.5 rounded-[1.25rem] bg-stone-50 p-2.5",
+        "span-col-1 group flex h-fit w-full flex-col items-start justify-center gap-2.5 rounded-[1.25rem]",
         big ? "col-span-2" : "col-span-1"
       )}
       href={href}
     >
-      {variant && <Badge variant={variant} />}
+      <AspectRatio
+        className="relative overflow-hidden rounded-lg"
+        ratio={BASE_CARD_IMAGE_RATIO}
+      >
+        <Image
+          alt={title}
+          className="h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
+          fill
+          quality={75}
+          src={image}
+        />
+      </AspectRatio>
+      {variant ? <Badge variant={variant} /> : null}
       <div className="inline-flex w-full flex-col items-start justify-start gap-3">
         <hgroup className="flex flex-col items-start justify-start gap-2 self-stretch">
           <h3 className="justify-start self-stretch font-normal font-sans text-base text-black">
             {title}
           </h3>
-          {authors && authors.length > 0 && (
+          {authors && authors.length > 0 ? (
             <ul className="flex items-start justify-start gap-1 font-normal font-sans text-neutral-400 text-xs">
               {authors.map((author, index) => (
                 <li key={author.name}>
@@ -48,18 +64,9 @@ export default function BaseCard({
                 </li>
               ))}
             </ul>
-          )}
+          ) : null}
         </hgroup>
       </div>
-      <AspectRatio className="relative rounded-lg" ratio={4 / 3}>
-        <Image
-          alt=""
-          className="h-full w-full rounded-lg object-cover"
-          fill
-          quality={75}
-          src={image}
-        />
-      </AspectRatio>
     </Link>
   );
 }

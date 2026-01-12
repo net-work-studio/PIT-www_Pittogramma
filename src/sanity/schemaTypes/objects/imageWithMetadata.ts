@@ -1,11 +1,16 @@
 import { defineField, defineType } from "sanity";
 
-export const mainImage = defineType({
+export const imageWithMetadata = defineType({
   type: "object",
-  name: "mainImage",
-  title: "Main Image",
+  name: "imageWithMetadata",
+  title: "Image with Metadata",
   fields: [
-    defineField({ type: "image", name: "image", title: "Image" }),
+    defineField({
+      type: "image",
+      name: "image",
+      title: "Image",
+      options: { hotspot: true },
+    }),
     defineField({
       type: "string",
       name: "caption",

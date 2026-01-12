@@ -12,22 +12,78 @@
  * ---------------------------------------------------------------------------------
  */
 
-// Source: schema.json
-export type TitleSlug = {
-  _type: "titleSlug";
-  title: string;
-  slug: Slug;
+// Source: src/sanity/extract.json
+export type LanguageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "language";
 };
 
-export type MainImage = {
-  _type: "mainImage";
+export type AuthorReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "author";
+};
+
+export type PublisherReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "publisher";
+};
+
+export type Bibliography = {
+  _id: string;
+  _type: "bibliography";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  cover?: ImageWithMetadata;
+  languages?: Array<
+    {
+      _key: string;
+    } & LanguageReference
+  >;
+  authors?: Array<
+    {
+      _key: string;
+    } & AuthorReference
+  >;
+  publisher: PublisherReference;
+  tagSelector?: TagSelector;
+  affiliateLink?: string;
+};
+
+export type TagReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "tag";
+};
+
+export type TagSelector = {
+  _type: "tagSelector";
+  tags?: Array<
+    {
+      _key: string;
+    } & TagReference
+  >;
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type ImageWithMetadata = {
+  _type: "imageWithMetadata";
   image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -37,27 +93,254 @@ export type MainImage = {
   alt?: string;
 };
 
+export type CategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "category";
+};
+
+export type WebSource = {
+  _id: string;
+  _type: "webSource";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  cover?: ImageWithMetadata;
+  category: CategoryReference;
+  tagSelector?: TagSelector;
+  affiliateLink?: string;
+};
+
+export type Publisher = {
+  _id: string;
+  _type: "publisher";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+};
+
+export type Author = {
+  _id: string;
+  _type: "author";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+};
+
+export type Glossary = {
+  _id: string;
+  _type: "glossary";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  description: string;
+  image?: ImageWithMetadata;
+};
+
+export type Bookshop = {
+  _id: string;
+  _type: "bookshop";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  tagSelector?: TagSelector;
+  location: Location;
+  address?: string;
+  socialLinks?: SocialLinks;
+};
+
+export type SocialLinks = {
+  _type: "socialLinks";
+  links?: Array<{
+    platform:
+      | "behance"
+      | "bluesky"
+      | "ig"
+      | "linkedin"
+      | "linktree"
+      | "mastodon"
+      | "tiktok"
+      | "x"
+      | "website";
+    url: string;
+    _type: "socialLink";
+    _key: string;
+  }>;
+};
+
+export type CountryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "country";
+};
+
+export type CityReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "city";
+};
+
+export type Location = {
+  _type: "location";
+  country: CountryReference;
+  city: CityReference;
+};
+
+export type TypeFoundry = {
+  _id: string;
+  _type: "typeFoundry";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  tagSelector?: TagSelector;
+  location: Location;
+  socialLinks?: SocialLinks;
+};
+
+export type PublishingDate = {
+  _type: "publishingDate";
+  date: string;
+};
+
+export type InstituteReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "institute";
+};
+
+export type StudioReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "studio";
+};
+
+export type Professional = {
+  _id: string;
+  _type: "professional";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  portrait?: ImageWithMetadata;
+  birthYear?: number;
+  bio?: string;
+  teachingAt?: InstituteReference;
+  studio?: StudioReference;
+  location?: Location;
+  socialLinks?: SocialLinks;
+};
+
+export type SiteSettings = {
+  _id: string;
+  _type: "siteSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  homeIntro: string;
+  projectsIntro: string;
+  interviewsIntro: string;
+  designersIntro: string;
+  projectsPage?: {
+    seo?: SeoModule;
+  };
+  blogPage?: {
+    seo?: SeoModule;
+  };
+};
+
+export type SeoModule = {
+  _type: "seoModule";
+  metaTitle: string;
+  metaDescription: string;
+  metaRobots?:
+    | "index, follow"
+    | "noindex, follow"
+    | "index, nofollow"
+    | "noindex, nofollow";
+  canonicalPath?: string;
+  openGraph?: OpenGraph;
+  xCard?: XCard;
+  metaImage?: ImageWithMetadata;
+};
+
+export type XCard = {
+  _type: "xCard";
+  cardType?: "summary" | "summary_large_image";
+  title?: string;
+  description?: string;
+  image?: ImageWithMetadata;
+};
+
+export type OpenGraph = {
+  _type: "openGraph";
+  title?: string;
+  description?: string;
+  image?: ImageWithMetadata;
+  url?: string;
+};
+
+export type Tag = {
+  _id: string;
+  _type: "tag";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+};
+
+export type Country = {
+  _id: string;
+  _type: "country";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+};
+
+export type City = {
+  _id: string;
+  _type: "city";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+};
+
+export type TitleSlug = {
+  _type: "titleSlug";
+  title: string;
+  slug: Slug;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
+};
+
 export type Logo = {
   _type: "logo";
   logoLight?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   };
   logoDark?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -73,10 +356,33 @@ export type Studio = {
   _updatedAt: string;
   _rev: string;
   name: string;
-  type?: string;
-  tag?: string;
-  country?: string;
-  city?: string;
+  category: CategoryReference;
+  tagSelector?: TagSelector;
+  location: Location;
+  socialLinks?: SocialLinks;
+};
+
+export type Category = {
+  _id: string;
+  _type: "category";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+};
+
+export type DesignerReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "designer";
+};
+
+export type TeacherReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "teacher";
 };
 
 export type Project = {
@@ -85,28 +391,19 @@ export type Project = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  titleslug: TitleSlug;
-  designer: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "designer";
-  };
-  cover: MainImage;
-  institute?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "institute";
-  };
-  teacher?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "teacher";
-  };
-  year: string;
-  disciplines?: string;
+  title: string;
+  slug: Slug;
+  publishingDate?: PublishingDate;
+  designer: DesignerReference;
+  cover: ImageWithMetadata;
+  institute?: InstituteReference;
+  teacher?: TeacherReference;
+  year: number;
+  tags?: Array<
+    {
+      _key: string;
+    } & TagReference
+  >;
   gallery?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -126,6 +423,7 @@ export type Project = {
     _key: string;
   }>;
   description?: string;
+  seo?: SeoModule;
 };
 
 export type Teacher = {
@@ -135,12 +433,16 @@ export type Teacher = {
   _updatedAt: string;
   _rev: string;
   name: string;
-  teachingAt?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "institute";
-  };
+  teachingAt?: InstituteReference;
+};
+
+export type Language = {
+  _id: string;
+  _type: "language";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
 };
 
 export type Interview = {
@@ -149,10 +451,16 @@ export type Interview = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  titleslug: TitleSlug;
-  cover: MainImage;
-  shortDescription: string;
-  bio?: string;
+  title: string;
+  slug: Slug;
+  publishingDate?: PublishingDate;
+  cover: ImageWithMetadata;
+  interviewTo: Array<
+    {
+      _key: string;
+    } & DesignerReference
+  >;
+  introText: string;
   interview?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -171,6 +479,13 @@ export type Interview = {
     _type: "block";
     _key: string;
   }>;
+};
+
+export type ContributorReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "contributor";
 };
 
 export type History = {
@@ -198,12 +513,7 @@ export type History = {
     _type: "block";
     _key: string;
   }>;
-  supporters?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "contributor";
-  };
+  supporters?: ContributorReference;
 };
 
 export type Event = {
@@ -212,32 +522,17 @@ export type Event = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  titleslug: TitleSlug;
+  title: string;
+  slug: Slug;
   type: string;
-  cover: MainImage;
+  cover: ImageWithMetadata;
   dateStart: string;
   dateEnd?: string;
   locationName?: string;
   locationAddress?: string;
   description?: string;
-  sponsor?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "contributor";
-  };
-  partner?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "contributor";
-  };
-};
-
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
+  sponsor?: ContributorReference;
+  partner?: ContributorReference;
 };
 
 export type Edition = {
@@ -248,7 +543,7 @@ export type Edition = {
   _rev: string;
   title: string;
   slug: Slug;
-  cover: MainImage;
+  cover: ImageWithMetadata;
 };
 
 export type Designer = {
@@ -258,17 +553,12 @@ export type Designer = {
   _updatedAt: string;
   _rev: string;
   name: string;
-  portrait?: MainImage;
-  birthYear: string;
+  portrait?: ImageWithMetadata;
+  birthYear: number;
   bio?: string;
-  institute?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "institute";
-  };
-  country?: string;
-  city?: string;
+  institute?: InstituteReference;
+  location: Location;
+  socialLinks?: SocialLinks;
 };
 
 export type Institute = {
@@ -278,12 +568,15 @@ export type Institute = {
   _updatedAt: string;
   _rev: string;
   name: string;
-  yearFoundation: string;
-  url?: string;
-  language?: string;
-  country?: string;
-  city?: string;
+  yearFoundation: number;
+  languages?: Array<
+    {
+      _key: string;
+    } & LanguageReference
+  >;
+  location: Location;
   address?: string;
+  socialLinks?: SocialLinks;
 };
 
 export type SanityImageCrop = {
@@ -409,5 +702,216 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = TitleSlug | MainImage | Logo | Studio | Project | Teacher | Interview | History | Event | Slug | Edition | Designer | Institute | SanityImageCrop | SanityImageHotspot | Contributor | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes =
+  | LanguageReference
+  | AuthorReference
+  | PublisherReference
+  | Bibliography
+  | TagReference
+  | TagSelector
+  | SanityImageAssetReference
+  | ImageWithMetadata
+  | CategoryReference
+  | WebSource
+  | Publisher
+  | Author
+  | Glossary
+  | Bookshop
+  | SocialLinks
+  | CountryReference
+  | CityReference
+  | Location
+  | TypeFoundry
+  | PublishingDate
+  | InstituteReference
+  | StudioReference
+  | Professional
+  | SiteSettings
+  | SeoModule
+  | XCard
+  | OpenGraph
+  | Tag
+  | Country
+  | City
+  | TitleSlug
+  | Slug
+  | Logo
+  | Studio
+  | Category
+  | DesignerReference
+  | TeacherReference
+  | Project
+  | Teacher
+  | Language
+  | Interview
+  | ContributorReference
+  | History
+  | Event
+  | Edition
+  | Designer
+  | Institute
+  | SanityImageCrop
+  | SanityImageHotspot
+  | Contributor
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint;
+
 export declare const internalGroqTypeReferenceTo: unique symbol;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: SITE_SETTINGS_QUERY
+// Query: *[_type == "siteSettings"][0] {    homeIntro,    projectsIntro,    interviewsIntro,    designersIntro,  }
+export type SITE_SETTINGS_QUERY_RESULT = {
+  homeIntro: string;
+  projectsIntro: string;
+  interviewsIntro: string;
+  designersIntro: string;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: PROJECTS_QUERY
+// Query: *[_type == "project"] | order(_createdAt desc) {    _id,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },    seo {      metaTitle,      metaDescription,      metaRobots,      canonicalPath,      openGraph {        title,        description,        image,        url      },      xCard {        cardType,        title,        description,        image      },      metaImage    }  }
+export type PROJECTS_QUERY_RESULT = Array<{
+  _id: string;
+  cover: {
+    image: {
+      asset: SanityImageAssetReference | null;
+      alt: null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+  };
+  title: string;
+  slug: Slug;
+  designer: {
+    _id: string;
+    name: string;
+    slug: null;
+    portrait: ImageWithMetadata | null;
+  };
+  tags: Array<{
+    _id: string;
+    name: string;
+    slug: null;
+  }> | null;
+  seo: {
+    metaTitle: string;
+    metaDescription: string;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalPath: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      image: ImageWithMetadata | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      cardType: "summary_large_image" | "summary" | null;
+      title: string | null;
+      description: string | null;
+      image: ImageWithMetadata | null;
+    } | null;
+    metaImage: ImageWithMetadata | null;
+  } | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: PROJECT_QUERY
+// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },    teacher->{      _id,      name,    },    institute->{      _id,      name,    },    year,    gallery,    description,    seo {      metaTitle,      metaDescription,      metaRobots,      canonicalPath,      openGraph {        title,        description,        image,        url      },      xCard {        cardType,        title,        description,        image      },      metaImage    }  }
+export type PROJECT_QUERY_RESULT = {
+  _id: string;
+  cover: {
+    image: {
+      asset: SanityImageAssetReference | null;
+      alt: null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+  };
+  title: string;
+  slug: Slug;
+  designer: {
+    _id: string;
+    name: string;
+    slug: null;
+    portrait: ImageWithMetadata | null;
+  };
+  tags: Array<{
+    _id: string;
+    name: string;
+    slug: null;
+  }> | null;
+  teacher: {
+    _id: string;
+    name: string;
+  } | null;
+  institute: {
+    _id: string;
+    name: string;
+  } | null;
+  year: number;
+  gallery: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  description: string | null;
+  seo: {
+    metaTitle: string;
+    metaDescription: string;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalPath: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      image: ImageWithMetadata | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      cardType: "summary_large_image" | "summary" | null;
+      title: string | null;
+      description: string | null;
+      image: ImageWithMetadata | null;
+    } | null;
+    metaImage: ImageWithMetadata | null;
+  } | null;
+} | null;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    '\n  *[_type == "siteSettings"][0] {\n    homeIntro,\n    projectsIntro,\n    interviewsIntro,\n    designersIntro,\n  }\n': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[_type == "project"] | order(_createdAt desc) {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      metaRobots,\n      canonicalPath,\n      openGraph {\n        title,\n        description,\n        image,\n        url\n      },\n      xCard {\n        cardType,\n        title,\n        description,\n        image\n      },\n      metaImage\n    }\n  }\n': PROJECTS_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    teacher->{\n      _id,\n      name,\n    },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery,\n    description,\n    seo {\n      metaTitle,\n      metaDescription,\n      metaRobots,\n      canonicalPath,\n      openGraph {\n        title,\n        description,\n        image,\n        url\n      },\n      xCard {\n        cardType,\n        title,\n        description,\n        image\n      },\n      metaImage\n    }\n  }\n': PROJECT_QUERY_RESULT;
+  }
+}

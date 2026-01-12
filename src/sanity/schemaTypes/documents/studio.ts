@@ -6,14 +6,33 @@ export const studio = defineType({
   title: "Studio",
   fields: [
     defineField({
-      type: "text",
+      type: "string",
       name: "name",
       title: "Name",
       validation: (e) => e.required(),
     }),
-    defineField({ type: "string", name: "type", title: "Type" }),
-    defineField({ type: "string", name: "tag", title: "Tag" }),
-    defineField({ type: "string", name: "country", title: "Country" }),
-    defineField({ type: "string", name: "city", title: "City" }),
+    defineField({
+      type: "reference",
+      name: "category",
+      title: "Category",
+      to: [{ type: "category" }],
+      validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "tagSelector",
+      name: "tagSelector",
+      title: "Tags",
+    }),
+    defineField({
+      type: "location",
+      name: "location",
+      title: "Location",
+      validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "socialLinks",
+      name: "socialLinks",
+      title: "Social Links",
+    }),
   ],
 });

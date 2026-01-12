@@ -6,24 +6,51 @@ export const interview = defineType({
   title: "Interview",
   fields: [
     defineField({
-      type: "titleSlug",
-      name: "titleslug",
-      title: "TitleSlug",
+      type: "string",
+      name: "title",
+      title: "Title",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "mainImage",
+      type: "slug",
+      name: "slug",
+      title: "Slug",
+      options: {
+        source: "title",
+      },
+      validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "publishingDate",
+      name: "publishingDate",
+      title: "Publishing Date",
+    }),
+    defineField({
+      type: "imageWithMetadata",
       name: "cover",
       title: "Cover",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "text",
-      name: "shortDescription",
-      title: "Short Description",
+      type: "array",
+      name: "interviewTo",
+      title: "Interview To",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          name: "designer",
+          title: "Designer",
+          to: [{ type: "designer" }],
+        }),
+      ],
       validation: (e) => e.required(),
     }),
-    defineField({ type: "text", name: "bio", title: "Bio" }),
+    defineField({
+      type: "text",
+      name: "introText",
+      title: "Intro Text",
+      validation: (e) => e.required(),
+    }),
     defineField({
       type: "array",
       name: "interview",
@@ -31,4 +58,10 @@ export const interview = defineType({
       of: [defineArrayMember({ type: "block" })],
     }),
   ],
+  preview: {
+    select: {
+      title: "title",
+      media: "cover.image",
+    },
+  },
 });

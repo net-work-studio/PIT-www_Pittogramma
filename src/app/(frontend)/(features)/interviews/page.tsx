@@ -1,6 +1,7 @@
+import type { Metadata } from "next";
 import BaseCard from "@/components/cards/base-card";
 import SubmitBanner from "@/components/feat/submit/submit-project-banner";
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 
 const cards = [
@@ -41,7 +42,13 @@ const cards = [
   },
 ];
 
-export default function Page() {
+export const metadata: Metadata = {
+  title: "Interviews",
+  description:
+    "We interview interesting professionals to give an overview to the youngsters about the industry thorough insights, suggestions and different perspectives",
+};
+
+export default function InterviewsPage() {
   return (
     <>
       <PageHeader

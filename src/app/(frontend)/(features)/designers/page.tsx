@@ -1,19 +1,38 @@
-import SearchInput from "@/components/feat/search-input";
+import { Search } from "lucide-react";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Filter from "@/components/feat/filter/filter";
 import SubmitProjectBanner from "@/components/feat/submit/submit-project-banner";
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/shared/page-header";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { sampleDesignersData } from "@/sample-data/sample-designers-data";
 
-function StudioCard() {
+export const metadata: Metadata = {
+  title: "Designers",
+  description:
+    "The complete list of young graphic designers who have a project published on the platform",
+};
+
+function DesignerCard() {
   return (
-    <ul className="grid grid-cols-12 gap-2.5 rounded-lg bg-secondary p-2.5">
-      <li className="col-span-6">Name</li>
-      <li className="col-span-2">City</li>
-      <li className="col-span-2">Country</li>
-      <li className="col-span-2">Year</li>
-    </ul>
+    <div className="flex flex-col gap-1">
+      <AspectRatio className="relative" ratio={4 / 3}>
+        <Image
+          alt="Designer Card"
+          className="rounded-lg bg-gray-600"
+          fill
+          src="https://placehold.co/400x300/png"
+        />
+      </AspectRatio>
+      <ul className="flex justify-between">
+        <li className="col-span-6">Name Designer</li>
+        <li className="col-span-2">City, Country</li>
+      </ul>
+    </div>
   );
 }
 
-export default function Page() {
+export default function DesignersPage() {
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-7.5">
@@ -22,18 +41,15 @@ export default function Page() {
           subtitle="The complete list of young graphic designers who have a project published on the platform"
           title="Designers"
         />
-        <SearchInput />
       </div>
       <div className="space-y-5 pt-30">
-        <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase">
-          <li className="col-span-6">Name</li>
-          <li className="col-span-2">City</li>
-          <li className="col-span-2">Country</li>
-          <li className="col-span-2">Year</li>
-        </ul>
-        <section className="flex flex-col gap-1.5">
-          {Array.from({ length: 20 }).map((_, index) => (
-            <StudioCard key={index} />
+        <div className="flex justify-between">
+          <Filter />
+          <Search />
+        </div>
+        <section className="grid grid-cols-4 gap-2.5">
+          {sampleDesignersData.map((_, index) => (
+            <DesignerCard key={index} />
           ))}
         </section>
         <SubmitProjectBanner />

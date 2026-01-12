@@ -59,9 +59,7 @@ export default function Footer() {
           </li>
         </ul>
 
-        <div className="place-self-end">
-          <ModeToggle />
-        </div>
+      
       </div>
     </footer>
   );

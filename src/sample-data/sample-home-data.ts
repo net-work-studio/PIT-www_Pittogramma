@@ -1,0 +1,43 @@
+export const sampleHomeData = [
+  {
+    id: "1",
+    title: "Typography Masterclass",
+    authors: [{ name: "Sarah Chen" }, { name: "Alex Rivera" }],
+    image: "https://placehold.co/400x300/png",
+    variant: "project" as const,
+    big: true,
+    href: "/",
+  },
+  {
+    id: "2",
+    title: "Design Trends 2025",
+    authors: [{ name: "Maria Garcia" }],
+    image: "https://placehold.co/400x300/png",
+    variant: "article" as const,
+    href: "/",
+  },
+  {
+    id: "3",
+    title: "Interview with Creative Director",
+    authors: [{ name: "John Smith" }],
+    image: "https://placehold.co/400x300/png",
+    variant: "interview" as const,
+    href: "/",
+  },
+  {
+    id: "4",
+    title: "Featured Designer Spotlight",
+    authors: [{ name: "Emma Wilson" }],
+    image: "https://placehold.co/400x300/png",
+    variant: "feat" as const,
+    href: "/",
+  },
+  {
+    id: "5",
+    title: "Design Conference 2025",
+    authors: [{ name: "Conference Team" }],
+    image: "https://placehold.co/400x300/png",
+    variant: "event" as const,
+    href: "/",
+  },
+];

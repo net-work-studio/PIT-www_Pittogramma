@@ -1,5 +1,5 @@
 import Image from "next/image";
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/shared/page-header";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export default function Page() {
