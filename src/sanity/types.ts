@@ -269,7 +269,7 @@ export type SeoModule = {
     | "noindex, follow"
     | "index, nofollow"
     | "noindex, nofollow";
-  canonicalPath?: string;
+  canonicalURL?: string;
   openGraph?: OpenGraph;
   xCard?: XCard;
   metaImage?: ImageWithMetadata;
@@ -809,7 +809,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
       | "noindex, follow"
       | "noindex, nofollow"
       | null;
-    canonicalPath: string | null;
+    canonicalPath: null;
     openGraph: {
       title: string | null;
       description: string | null;
@@ -828,16 +828,18 @@ export type PROJECTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECT_QUERY
-// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },    teacher->{      _id,      name,    },    institute->{      _id,      name,    },    year,    gallery,    description,    seo {      metaTitle,      metaDescription,      metaRobots,      canonicalPath,      openGraph {        title,        description,        image,        url      },      xCard {        cardType,        title,        description,        image      },      metaImage    }  }
+// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    cover {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },    teacher->{      _id,      name,    },    institute->{      _id,      name,    },    year,    gallery,    description,    seo {      metaTitle,      metaDescription,      metaRobots,      canonicalPath,      openGraph {        title,        description,        image,        url      },      xCard {        cardType,        title,        description,        image      },      metaImage    }  }
 export type PROJECT_QUERY_RESULT = {
   _id: string;
   cover: {
+    _type: "imageWithMetadata";
     image: {
+      _type: "image";
       asset: SanityImageAssetReference | null;
-      alt: null;
       hotspot: SanityImageHotspot | null;
       crop: SanityImageCrop | null;
     } | null;
+    alt: string | null;
   };
   title: string;
   slug: Slug;
@@ -889,7 +891,7 @@ export type PROJECT_QUERY_RESULT = {
       | "noindex, follow"
       | "noindex, nofollow"
       | null;
-    canonicalPath: string | null;
+    canonicalPath: null;
     openGraph: {
       title: string | null;
       description: string | null;
@@ -912,6 +914,6 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "siteSettings"][0] {\n    homeIntro,\n    projectsIntro,\n    interviewsIntro,\n    designersIntro,\n  }\n': SITE_SETTINGS_QUERY_RESULT;
     '\n  *[_type == "project"] | order(_createdAt desc) {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      metaRobots,\n      canonicalPath,\n      openGraph {\n        title,\n        description,\n        image,\n        url\n      },\n      xCard {\n        cardType,\n        title,\n        description,\n        image\n      },\n      metaImage\n    }\n  }\n': PROJECTS_QUERY_RESULT;
-    '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    teacher->{\n      _id,\n      name,\n    },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery,\n    description,\n    seo {\n      metaTitle,\n      metaDescription,\n      metaRobots,\n      canonicalPath,\n      openGraph {\n        title,\n        description,\n        image,\n        url\n      },\n      xCard {\n        cardType,\n        title,\n        description,\n        image\n      },\n      metaImage\n    }\n  }\n': PROJECT_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    teacher->{\n      _id,\n      name,\n    },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery,\n    description,\n    seo {\n      metaTitle,\n      metaDescription,\n      metaRobots,\n      canonicalPath,\n      openGraph {\n        title,\n        description,\n        image,\n        url\n      },\n      xCard {\n        cardType,\n        title,\n        description,\n        image\n      },\n      metaImage\n    }\n  }\n': PROJECT_QUERY_RESULT;
   }
 }

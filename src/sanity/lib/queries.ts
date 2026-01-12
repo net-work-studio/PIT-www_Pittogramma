@@ -59,12 +59,14 @@ export const PROJECT_QUERY = defineQuery(`
   *[_type == "project" && slug.current == $slug][0] {
     _id,
     cover {
+      _type,
       image {
+        _type,
         asset,
-        alt,
         hotspot,
         crop
-      }
+      },
+      alt
     },
     title,
     slug,

@@ -46,8 +46,12 @@ export function mapSanityToMetadata({
     if (!image) {
       return;
     }
+    const builder = urlForImage(image);
+    if (!builder) {
+      return;
+    }
     return {
-      url: urlForImage(image).url(),
+      url: builder.url(),
       width: image.metadata?.dimensions?.width || 1200,
       height: image.metadata?.dimensions?.height || 630,
       alt: image.alt || altFallback,
@@ -81,19 +85,19 @@ export function mapSanityToMetadata({
             "summary_large_image",
           title: page.seo.xCard.title || title,
           description: page.seo.xCard.description || description,
-          images: xImage ? [urlForImage(xImage).url()] : undefined,
+          images: xImage ? [urlForImage(xImage)?.url()].filter(Boolean) as string[] : undefined,
         }
       : {
           card: "summary_large_image",
           title,
           description,
-          images: xImage ? [urlForImage(xImage).url()] : undefined,
+          images: xImage ? [urlForImage(xImage)?.url()].filter(Boolean) as string[] : undefined,
         },
     // For standard meta tags
-    ...(metaImage && {
+    ...(metaImage && urlForImage(metaImage)?.url() && {
       // You can add custom meta tags if needed
       other: {
-        "og:image": urlForImage(metaImage).url(),
+        "og:image": urlForImage(metaImage)?.url(),
       },
     }),
   };

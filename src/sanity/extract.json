@@ -1307,7 +1307,7 @@
           },
           "optional": true
         },
-        "canonicalPath": {
+        "canonicalURL": {
           "type": "objectAttribute",
           "value": {
             "type": "string"

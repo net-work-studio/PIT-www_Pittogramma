@@ -3,8 +3,19 @@ import { cn } from "@/lib/utils";
 import { urlForImage } from "@/sanity/lib/image";
 import type { ImageWithMetadata } from "@/sanity/types";
 
+type ImageLike = {
+  _type?: string;
+  image?: {
+    _type?: string;
+    asset?: unknown;
+    hotspot?: unknown;
+    crop?: unknown;
+  } | null;
+  alt?: string | null;
+};
+
 type Props = {
-  source: ImageWithMetadata | null | undefined;
+  source: ImageWithMetadata | ImageLike | null | undefined;
   blurQuality?: number;
   blurWidth?: number;
   blurHeight?: number;

@@ -1,4 +1,5 @@
 import BaseCard from "@/components/cards/base-card";
+import { sampleHomeData } from "@/sample-data/sample-home-data";
 
 export default function HomeGrid({ data }: { data: typeof sampleHomeData }) {
   return (
