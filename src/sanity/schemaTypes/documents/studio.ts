@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const studio = defineType({
   type: "document",
@@ -24,10 +24,14 @@ export const studio = defineType({
       title: "Tags",
     }),
     defineField({
-      type: "location",
-      name: "location",
-      title: "Location",
-      validation: (e) => e.required(),
+      type: "array",
+      name: "locations",
+      title: "Locations",
+      of: [
+        defineArrayMember({
+          type: "location",
+        }),
+      ],
     }),
     defineField({
       type: "socialLinks",

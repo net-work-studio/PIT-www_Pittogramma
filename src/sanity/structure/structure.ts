@@ -52,7 +52,7 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
 
       group(S, "Metadata", [
-        singleton(S, "city", "City", MapPin),
+        docListItem(S, "city", "City", MapPin),
         docListItem(S, "country", "Country", Globe),
         docListItem(S, "language", "Language", Languages),
         docListItem(S, "tag", "Tag", Tag),

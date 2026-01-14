@@ -349,6 +349,13 @@ export type Logo = {
   alt?: string;
 };
 
+export type LocationReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "location";
+};
+
 export type Studio = {
   _id: string;
   _type: "studio";
@@ -358,7 +365,11 @@ export type Studio = {
   name: string;
   category: CategoryReference;
   tagSelector?: TagSelector;
-  location: Location;
+  locations?: Array<
+    {
+      _key: string;
+    } & LocationReference
+  >;
   socialLinks?: SocialLinks;
 };
 
@@ -639,6 +650,7 @@ export type SanityImageMetadata = {
   palette?: SanityImagePalette;
   lqip?: string;
   blurHash?: string;
+  thumbHash?: string;
   hasAlpha?: boolean;
   isOpaque?: boolean;
 };
@@ -736,6 +748,7 @@ export type AllSanitySchemaTypes =
   | TitleSlug
   | Slug
   | Logo
+  | LocationReference
   | Studio
   | Category
   | DesignerReference
@@ -763,6 +776,12 @@ export type AllSanitySchemaTypes =
   | Geopoint;
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
+
+type ArrayOf<T> = Array<
+  T & {
+    _key: string;
+  }
+>;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY

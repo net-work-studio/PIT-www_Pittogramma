@@ -26,4 +26,16 @@ export const location = defineType({
       validation: (e) => e.required(),
     }),
   ],
+  preview: {
+    select: {
+      countryName: "country.name",
+      cityName: "city.name",
+    },
+    prepare({ countryName, cityName }) {
+      const parts = [cityName, countryName].filter(Boolean);
+      return {
+        title: parts.join(", ") || "Location",
+      };
+    },
+  },
 });

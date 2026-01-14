@@ -1752,6 +1752,36 @@
     }
   },
   {
+    "type": "type",
+    "name": "location.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "location"
+    }
+  },
+  {
     "name": "studio",
     "type": "document",
     "attributes": {
@@ -1809,13 +1839,27 @@
         },
         "optional": true
       },
-      "location": {
+      "locations": {
         "type": "objectAttribute",
         "value": {
-          "type": "inline",
-          "name": "location"
+          "type": "array",
+          "of": {
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "rest": {
+              "type": "inline",
+              "name": "location.reference"
+            }
+          }
         },
-        "optional": false
+        "optional": true
       },
       "socialLinks": {
         "type": "objectAttribute",
@@ -3588,6 +3632,13 @@
           "optional": true
         },
         "blurHash": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "thumbHash": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
