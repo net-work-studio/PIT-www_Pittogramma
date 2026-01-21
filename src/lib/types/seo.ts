@@ -1,4 +1,4 @@
-export type SeoModule = {
+export interface SeoModule {
   metaTitle?: string;
   metaDescription?: string;
   metaRobots?: string;
@@ -16,11 +16,11 @@ export type SeoModule = {
     image?: any;
   };
   metaImage?: any;
-};
+}
 
-export type PageWithSeo = {
+export interface PageWithSeo {
   title: string;
   description?: string;
   coverImage?: any;
   seo?: SeoModule;
-};
+}

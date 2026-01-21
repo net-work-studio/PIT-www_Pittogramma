@@ -1,12 +1,12 @@
-type Tag = {
+interface Tag {
   _id: string;
   name: string;
-};
+}
 
-type TagsDisplayProps = {
+interface TagsDisplayProps {
   tags: Tag[] | null | undefined;
   separator?: string;
-};
+}
 
 export function TagsDisplay({ tags, separator = ", " }: TagsDisplayProps) {
   if (!tags || tags.length === 0) {

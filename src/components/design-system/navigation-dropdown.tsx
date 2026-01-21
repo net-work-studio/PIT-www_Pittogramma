@@ -7,10 +7,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-type NavigationDropdownProps = {
+interface NavigationDropdownProps {
   title: string;
   links: { href: string; label: string }[];
-};
+}
 
 export default function NavigationDropdown({
   title,

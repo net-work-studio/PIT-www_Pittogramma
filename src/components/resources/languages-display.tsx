@@ -1,12 +1,12 @@
-type Language = {
+interface Language {
   _id: string;
   name: string;
-};
+}
 
-type LanguagesDisplayProps = {
+interface LanguagesDisplayProps {
   languages: Language[] | null | undefined;
   separator?: string;
-};
+}
 
 export function LanguagesDisplay({
   languages,

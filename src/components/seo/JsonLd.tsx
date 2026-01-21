@@ -6,10 +6,10 @@ type JsonLdType =
   | "WebSite"
   | "Person";
 
-type JsonLdProps = {
+interface JsonLdProps {
   type: JsonLdType;
   data: Record<string, unknown>;
-};
+}
 
 export function JsonLd({ type, data }: JsonLdProps) {
   const jsonLd = {

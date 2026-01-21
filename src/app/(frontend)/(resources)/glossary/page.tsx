@@ -13,10 +13,10 @@ import type { GLOSSARY_QUERY_RESULT } from "@/sanity/types";
 
 type GlossaryItem = GLOSSARY_QUERY_RESULT[number];
 
-type GroupedGlossary = {
+interface GroupedGlossary {
   letter: string;
   words: GlossaryItem[];
-};
+}
 
 function groupByFirstLetter(items: GlossaryItem[]): GroupedGlossary[] {
   const grouped = items.reduce<Record<string, GlossaryItem[]>>((acc, item) => {
@@ -50,10 +50,10 @@ function LetterSection({ letter, words }: GroupedGlossary) {
   );
 }
 
-type GlossaryCardProps = {
+interface GlossaryCardProps {
   word: string;
   definition: string;
-};
+}
 
 function GlossaryCard({ word, definition }: GlossaryCardProps) {
   return (

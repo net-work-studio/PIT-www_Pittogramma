@@ -8,18 +8,18 @@ const BASE_CARD_IMAGE_WIDTH = 4;
 const BASE_CARD_IMAGE_HEIGHT = 3;
 const BASE_CARD_IMAGE_RATIO = BASE_CARD_IMAGE_WIDTH / BASE_CARD_IMAGE_HEIGHT;
 
-type Author = {
+interface Author {
   name: string;
-};
+}
 
-type BaseCardProps = {
+interface BaseCardProps {
   title: string;
   authors?: Author[];
   image: string;
   href: string;
   variant?: "project" | "article" | "interview" | "feat" | "event";
   big?: boolean;
-};
+}
 
 export default function BaseCard({
   title,

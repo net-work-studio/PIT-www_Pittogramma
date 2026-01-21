@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
 
-type ResourceListItemProps = {
+interface ResourceListItemProps {
   children: React.ReactNode;
   className?: string;
-};
+}
 
 export function ResourceListItem({
   children,

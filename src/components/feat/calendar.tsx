@@ -1,4 +1,4 @@
-type Event = {
+interface Event {
   id: string;
   title: string;
   date: string;
@@ -7,11 +7,11 @@ type Event = {
     link: string;
   };
   category?: "event" | "interview" | "article" | "project";
-};
+}
 
-type CalendarProps = {
+interface CalendarProps {
   events: Event[];
-};
+}
 
 export default function Calendar({ events }: CalendarProps) {
   return (

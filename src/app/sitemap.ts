@@ -18,11 +18,11 @@ const SITEMAP_QUERY = `{
   }
 }`;
 
-type SitemapData = {
+interface SitemapData {
   projects: Array<{ slug: string; _updatedAt: string }>;
   interviews: Array<{ slug: string; _updatedAt: string }>;
   editions: Array<{ slug: string; _updatedAt: string }>;
-};
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteDefaults.baseUrl;

@@ -1,13 +1,13 @@
-type LocationData = {
+interface LocationData {
   country?: { _id: string; name: string } | null;
   city?: { _id: string; name: string } | null;
-};
+}
 
-type LocationDisplayProps = {
+interface LocationDisplayProps {
   location: LocationData | null | undefined;
   showCity?: boolean;
   showCountry?: boolean;
-};
+}
 
 export function LocationDisplay({
   location,
