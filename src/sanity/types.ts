@@ -349,13 +349,6 @@ export type Logo = {
   alt?: string;
 };
 
-export type LocationReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "location";
-};
-
 export type Studio = {
   _id: string;
   _type: "studio";
@@ -368,7 +361,7 @@ export type Studio = {
   locations?: Array<
     {
       _key: string;
-    } & LocationReference
+    } & Location
   >;
   socialLinks?: SocialLinks;
 };
@@ -567,7 +560,13 @@ export type Designer = {
   portrait?: ImageWithMetadata;
   birthYear: number;
   bio?: string;
-  institute?: InstituteReference;
+  education?: Array<{
+    institute: InstituteReference;
+    degree: "Bachelor" | "Master" | "PhD" | "Other";
+    year?: number;
+    _type: "instituteEducation";
+    _key: string;
+  }>;
   location: Location;
   socialLinks?: SocialLinks;
 };
@@ -748,7 +747,6 @@ export type AllSanitySchemaTypes =
   | TitleSlug
   | Slug
   | Logo
-  | LocationReference
   | Studio
   | Category
   | DesignerReference

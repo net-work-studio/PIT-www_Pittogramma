@@ -1752,36 +1752,6 @@
     }
   },
   {
-    "type": "type",
-    "name": "location.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "location"
-    }
-  },
-  {
     "name": "studio",
     "type": "document",
     "attributes": {
@@ -1855,7 +1825,7 @@
             },
             "rest": {
               "type": "inline",
-              "name": "location.reference"
+              "name": "location"
             }
           }
         },
@@ -3165,11 +3135,73 @@
         },
         "optional": true
       },
-      "institute": {
+      "education": {
         "type": "objectAttribute",
         "value": {
-          "type": "inline",
-          "name": "institute.reference"
+          "type": "array",
+          "of": {
+            "type": "object",
+            "attributes": {
+              "institute": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "institute.reference"
+                },
+                "optional": false
+              },
+              "degree": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "union",
+                  "of": [
+                    {
+                      "type": "string",
+                      "value": "Bachelor"
+                    },
+                    {
+                      "type": "string",
+                      "value": "Master"
+                    },
+                    {
+                      "type": "string",
+                      "value": "PhD"
+                    },
+                    {
+                      "type": "string",
+                      "value": "Other"
+                    }
+                  ]
+                },
+                "optional": false
+              },
+              "year": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "number"
+                },
+                "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "instituteEducation"
+                }
+              }
+            },
+            "rest": {
+              "type": "object",
+              "attributes": {
+                "_key": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         },
         "optional": true
       },

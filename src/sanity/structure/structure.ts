@@ -24,21 +24,18 @@ export const structure: StructureResolver = (S) =>
         (item) => !singletonTypes.has(item.getId() || "")
       ), */
 
-      group(S, "Features", [
-        docListItem(S, "project", "Project", Briefcase),
-        docListItem(S, "interview", "Interview", MessageCircle),
-        docListItem(S, "designer", "Designer", User),
-        docListItem(S, "professional", "Professional", User),
-        docListItem(S, "teacher", "Teacher", GraduationCap),
-        /* docListItem(S, "billboard", "Billboard"), */
-      ]),
+      docListItem(S, "project", "Project", Briefcase),
+      docListItem(S, "interview", "Interview", MessageCircle),
 
       group(S, "Resources", [
         docListItem(S, "bibliography", "Bibliography"),
         docListItem(S, "bookshop", "Bookshop"),
         docListItem(S, "glossary", "Glossary"),
+        docListItem(S, "designer", "Designer", User),
         docListItem(S, "institute", "Institute"),
+        docListItem(S, "professional", "Professional", User),
         docListItem(S, "studio", "Studio"),
+        docListItem(S, "teacher", "Teacher", GraduationCap),
         docListItem(S, "typeFoundry", "Type Foundry"),
         docListItem(S, "webSource", "Web Source"),
       ]),
