@@ -55,6 +55,18 @@ export const bibliography = defineType({
       title: "Tags",
     }),
     defineField({
+      type: "number",
+      name: "year",
+      title: "Year",
+      description: "Publication year",
+      validation: (e) =>
+        e
+          .min(1000)
+          .max(9999)
+          .integer()
+          .warning("Please enter a valid 4-digit year"),
+    }),
+    defineField({
       type: "url",
       name: "affiliateLink",
       title: "Affiliate Link",

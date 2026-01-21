@@ -54,6 +54,7 @@ export type Bibliography = {
   >;
   publisher: PublisherReference;
   tagSelector?: TagSelector;
+  year?: number;
   affiliateLink?: string;
 };
 
@@ -1044,6 +1045,246 @@ export type INTERVIEW_QUERY_RESULT = {
   } | null;
 } | null;
 
+// Source: src/sanity/lib/queries.ts
+// Variable: BIBLIOGRAPHY_QUERY
+// Query: *[_type == "bibliography"] | order(name asc) {    _id,    name,    year,    cover {      image { asset },      alt    },    languages[]->{      _id,      name    },    authors[]->{      _id,      name    },    publisher->{      _id,      name    },    tagSelector {      tags[]->{        _id,        name      }    },    affiliateLink  }
+export type BIBLIOGRAPHY_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  year: number | null;
+  cover: {
+    image: {
+      asset: SanityImageAssetReference | null;
+    } | null;
+    alt: string | null;
+  } | null;
+  languages: Array<{
+    _id: string;
+    name: string;
+  }> | null;
+  authors: Array<{
+    _id: string;
+    name: string;
+  }> | null;
+  publisher: {
+    _id: string;
+    name: string;
+  };
+  tagSelector: {
+    tags: Array<{
+      _id: string;
+      name: string;
+    }> | null;
+  } | null;
+  affiliateLink: string | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: BOOKSHOPS_QUERY
+// Query: *[_type == "bookshop"] | order(name asc) {    _id,    name,    tagSelector {      tags[]->{        _id,        name      }    },    location {      country->{        _id,        name      },      city->{        _id,        name      }    },    address,    socialLinks {      links[] {        _key,        platform,        url      }    }  }
+export type BOOKSHOPS_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  tagSelector: {
+    tags: Array<{
+      _id: string;
+      name: string;
+    }> | null;
+  } | null;
+  location: {
+    country: {
+      _id: string;
+      name: string;
+    };
+    city: {
+      _id: string;
+      name: string;
+    };
+  };
+  address: string | null;
+  socialLinks: {
+    links: Array<{
+      _key: string;
+      platform:
+        | "behance"
+        | "bluesky"
+        | "ig"
+        | "linkedin"
+        | "linktree"
+        | "mastodon"
+        | "tiktok"
+        | "website"
+        | "x";
+      url: string;
+    }> | null;
+  } | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: GLOSSARY_QUERY
+// Query: *[_type == "glossary"] | order(name asc) {    _id,    name,    description,    image {      image { asset },      alt    }  }
+export type GLOSSARY_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  description: string;
+  image: {
+    image: {
+      asset: SanityImageAssetReference | null;
+    } | null;
+    alt: string | null;
+  } | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: INSTITUTES_QUERY
+// Query: *[_type == "institute"] | order(name asc) {    _id,    name,    yearFoundation,    languages[]->{      _id,      name    },    location {      country->{        _id,        name      },      city->{        _id,        name      }    },    address,    socialLinks {      links[] {        _key,        platform,        url      }    }  }
+export type INSTITUTES_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  yearFoundation: number;
+  languages: Array<{
+    _id: string;
+    name: string;
+  }> | null;
+  location: {
+    country: {
+      _id: string;
+      name: string;
+    };
+    city: {
+      _id: string;
+      name: string;
+    };
+  };
+  address: string | null;
+  socialLinks: {
+    links: Array<{
+      _key: string;
+      platform:
+        | "behance"
+        | "bluesky"
+        | "ig"
+        | "linkedin"
+        | "linktree"
+        | "mastodon"
+        | "tiktok"
+        | "website"
+        | "x";
+      url: string;
+    }> | null;
+  } | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: STUDIOS_QUERY
+// Query: *[_type == "studio"] | order(name asc) {    _id,    name,    category->{      _id,      name    },    tagSelector {      tags[]->{        _id,        name      }    },    locations[] {      _key,      country->{        _id,        name      },      city->{        _id,        name      }    },    socialLinks {      links[] {        _key,        platform,        url      }    }  }
+export type STUDIOS_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  category: {
+    _id: string;
+    name: string;
+  };
+  tagSelector: {
+    tags: Array<{
+      _id: string;
+      name: string;
+    }> | null;
+  } | null;
+  locations: Array<{
+    _key: string;
+    country: {
+      _id: string;
+      name: string;
+    };
+    city: {
+      _id: string;
+      name: string;
+    };
+  }> | null;
+  socialLinks: {
+    links: Array<{
+      _key: string;
+      platform:
+        | "behance"
+        | "bluesky"
+        | "ig"
+        | "linkedin"
+        | "linktree"
+        | "mastodon"
+        | "tiktok"
+        | "website"
+        | "x";
+      url: string;
+    }> | null;
+  } | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: TYPE_FOUNDRIES_QUERY
+// Query: *[_type == "typeFoundry"] | order(name asc) {    _id,    name,    tagSelector {      tags[]->{        _id,        name      }    },    location {      country->{        _id,        name      },      city->{        _id,        name      }    },    socialLinks {      links[] {        _key,        platform,        url      }    }  }
+export type TYPE_FOUNDRIES_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  tagSelector: {
+    tags: Array<{
+      _id: string;
+      name: string;
+    }> | null;
+  } | null;
+  location: {
+    country: {
+      _id: string;
+      name: string;
+    };
+    city: {
+      _id: string;
+      name: string;
+    };
+  };
+  socialLinks: {
+    links: Array<{
+      _key: string;
+      platform:
+        | "behance"
+        | "bluesky"
+        | "ig"
+        | "linkedin"
+        | "linktree"
+        | "mastodon"
+        | "tiktok"
+        | "website"
+        | "x";
+      url: string;
+    }> | null;
+  } | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: WEB_SOURCES_QUERY
+// Query: *[_type == "webSource"] | order(name asc) {    _id,    name,    cover {      image { asset },      alt    },    category->{      _id,      name    },    tagSelector {      tags[]->{        _id,        name      }    },    affiliateLink  }
+export type WEB_SOURCES_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  cover: {
+    image: {
+      asset: SanityImageAssetReference | null;
+    } | null;
+    alt: string | null;
+  } | null;
+  category: {
+    _id: string;
+    name: string;
+  };
+  tagSelector: {
+    tags: Array<{
+      _id: string;
+      name: string;
+    }> | null;
+  } | null;
+  affiliateLink: string | null;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -1053,5 +1294,12 @@ declare module "@sanity/client" {
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    teacher->{\n      _id,\n      name,\n    },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery,\n    description,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      image,\n      url\n    },\n    xCard {\n      cardType,\n      title,\n      description,\n      image\n    },\n    metaImage\n  }\n\n  }\n': PROJECT_QUERY_RESULT;
     '\n  *[_type == "interview"] | order(publishingDate.date desc) {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    interviewTo[]->{\n      _id,\n      name\n    },\n    introText,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      image,\n      url\n    },\n    xCard {\n      cardType,\n      title,\n      description,\n      image\n    },\n    metaImage\n  }\n\n  }\n': INTERVIEWS_QUERY_RESULT;
     '\n  *[_type == "interview" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    interviewTo[]->{\n      _id,\n      name,\n      portrait\n    },\n    introText,\n    interview,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      image,\n      url\n    },\n    xCard {\n      cardType,\n      title,\n      description,\n      image\n    },\n    metaImage\n  }\n\n  }\n': INTERVIEW_QUERY_RESULT;
+    '\n  *[_type == "bibliography"] | order(name asc) {\n    _id,\n    name,\n    year,\n    cover {\n      image { asset },\n      alt\n    },\n    languages[]->{\n      _id,\n      name\n    },\n    authors[]->{\n      _id,\n      name\n    },\n    publisher->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    affiliateLink\n  }\n': BIBLIOGRAPHY_QUERY_RESULT;
+    '\n  *[_type == "bookshop"] | order(name asc) {\n    _id,\n    name,\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    location {\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    address,\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': BOOKSHOPS_QUERY_RESULT;
+    '\n  *[_type == "glossary"] | order(name asc) {\n    _id,\n    name,\n    description,\n    image {\n      image { asset },\n      alt\n    }\n  }\n': GLOSSARY_QUERY_RESULT;
+    '\n  *[_type == "institute"] | order(name asc) {\n    _id,\n    name,\n    yearFoundation,\n    languages[]->{\n      _id,\n      name\n    },\n    location {\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    address,\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': INSTITUTES_QUERY_RESULT;
+    '\n  *[_type == "studio"] | order(name asc) {\n    _id,\n    name,\n    category->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    locations[] {\n      _key,\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': STUDIOS_QUERY_RESULT;
+    '\n  *[_type == "typeFoundry"] | order(name asc) {\n    _id,\n    name,\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    location {\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': TYPE_FOUNDRIES_QUERY_RESULT;
+    '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    cover {\n      image { asset },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    affiliateLink\n  }\n': WEB_SOURCES_QUERY_RESULT;
   }
 }

@@ -1,20 +1,55 @@
 import SearchInput from "@/components/feat/search-input";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
+import { ResourceListItem } from "@/components/resources/resource-list-item";
+import { TagsDisplay } from "@/components/resources/tags-display";
 import PageHeader from "@/components/shared/page-header";
+import { sanityFetch } from "@/sanity/lib/live";
+import { STUDIOS_QUERY } from "@/sanity/lib/queries";
+import type { STUDIOS_QUERY_RESULT } from "@/sanity/types";
 
-function StudioCard() {
+type Studio = STUDIOS_QUERY_RESULT[number];
+
+function getCities(locations: Studio["locations"]) {
+  if (!locations || locations.length === 0) {
+    return "-";
+  }
   return (
-    <ul className="grid grid-cols-12 gap-2.5 rounded-lg bg-secondary p-2.5">
-      <li className="col-span-4">Name</li>
-      <li className="col-span-2">Category</li>
-      <li className="col-span-2">Tag</li>
-      <li className="col-span-2">City</li>
-      <li className="col-span-2">County</li>
-    </ul>
+    locations
+      .map((loc) => loc.city?.name)
+      .filter(Boolean)
+      .join(", ") || "-"
   );
 }
 
-export default function Page() {
+function getCountries(locations: Studio["locations"]) {
+  if (!locations || locations.length === 0) {
+    return "-";
+  }
+  const uniqueCountries = [
+    ...new Set(locations.map((loc) => loc.country?.name).filter(Boolean)),
+  ];
+  return uniqueCountries.join(", ") || "-";
+}
+
+function StudioCard({ studio }: { studio: Studio }) {
+  return (
+    <ResourceListItem>
+      <li className="col-span-4">{studio.name}</li>
+      <li className="col-span-2">{studio.category?.name || "-"}</li>
+      <li className="col-span-2">
+        <TagsDisplay tags={studio.tagSelector?.tags} />
+      </li>
+      <li className="col-span-2">{getCities(studio.locations)}</li>
+      <li className="col-span-2">{getCountries(studio.locations)}</li>
+    </ResourceListItem>
+  );
+}
+
+export default async function Page() {
+  const { data: studios } = await sanityFetch({
+    query: STUDIOS_QUERY,
+  });
+
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-7.5">
@@ -32,12 +67,18 @@ export default function Page() {
           <li className="col-span-2">Category</li>
           <li className="col-span-2">Tag</li>
           <li className="col-span-2">City</li>
-          <li className="col-span-2">County</li>
+          <li className="col-span-2">Country</li>
         </ul>
         <section className="flex flex-col gap-1.5">
-          {Array.from({ length: 20 }).map((_, index) => (
-            <StudioCard key={index} />
-          ))}
+          {studios.length > 0 ? (
+            studios.map((studio) => (
+              <StudioCard key={studio._id} studio={studio} />
+            ))
+          ) : (
+            <p className="text-center text-muted-foreground">
+              No studios or agencies available yet.
+            </p>
+          )}
         </section>
       </div>
     </>

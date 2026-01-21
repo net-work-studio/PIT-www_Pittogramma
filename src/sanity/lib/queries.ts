@@ -150,3 +150,196 @@ export const INTERVIEW_QUERY = defineQuery(`
     ${SEO_FIELDS}
   }
 `);
+
+// ==================== RESOURCE QUERIES ====================
+
+export const BIBLIOGRAPHY_QUERY = defineQuery(`
+  *[_type == "bibliography"] | order(name asc) {
+    _id,
+    name,
+    year,
+    cover {
+      image { asset },
+      alt
+    },
+    languages[]->{
+      _id,
+      name
+    },
+    authors[]->{
+      _id,
+      name
+    },
+    publisher->{
+      _id,
+      name
+    },
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
+    affiliateLink
+  }
+`);
+
+export const BOOKSHOPS_QUERY = defineQuery(`
+  *[_type == "bookshop"] | order(name asc) {
+    _id,
+    name,
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
+    location {
+      country->{
+        _id,
+        name
+      },
+      city->{
+        _id,
+        name
+      }
+    },
+    address,
+    socialLinks {
+      links[] {
+        _key,
+        platform,
+        url
+      }
+    }
+  }
+`);
+
+export const GLOSSARY_QUERY = defineQuery(`
+  *[_type == "glossary"] | order(name asc) {
+    _id,
+    name,
+    description,
+    image {
+      image { asset },
+      alt
+    }
+  }
+`);
+
+export const INSTITUTES_QUERY = defineQuery(`
+  *[_type == "institute"] | order(name asc) {
+    _id,
+    name,
+    yearFoundation,
+    languages[]->{
+      _id,
+      name
+    },
+    location {
+      country->{
+        _id,
+        name
+      },
+      city->{
+        _id,
+        name
+      }
+    },
+    address,
+    socialLinks {
+      links[] {
+        _key,
+        platform,
+        url
+      }
+    }
+  }
+`);
+
+export const STUDIOS_QUERY = defineQuery(`
+  *[_type == "studio"] | order(name asc) {
+    _id,
+    name,
+    category->{
+      _id,
+      name
+    },
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
+    locations[] {
+      _key,
+      country->{
+        _id,
+        name
+      },
+      city->{
+        _id,
+        name
+      }
+    },
+    socialLinks {
+      links[] {
+        _key,
+        platform,
+        url
+      }
+    }
+  }
+`);
+
+export const TYPE_FOUNDRIES_QUERY = defineQuery(`
+  *[_type == "typeFoundry"] | order(name asc) {
+    _id,
+    name,
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
+    location {
+      country->{
+        _id,
+        name
+      },
+      city->{
+        _id,
+        name
+      }
+    },
+    socialLinks {
+      links[] {
+        _key,
+        platform,
+        url
+      }
+    }
+  }
+`);
+
+export const WEB_SOURCES_QUERY = defineQuery(`
+  *[_type == "webSource"] | order(name asc) {
+    _id,
+    name,
+    cover {
+      image { asset },
+      alt
+    },
+    category->{
+      _id,
+      name
+    },
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
+    affiliateLink
+  }
+`);
