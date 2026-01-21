@@ -22,5 +22,10 @@ export const glossary = defineType({
       name: "image",
       title: "Image",
     }),
+    defineField({
+      type: "seoModule",
+      name: "seo",
+      title: "SEO",
+    }),
   ],
 });

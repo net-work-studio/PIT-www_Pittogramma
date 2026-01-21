@@ -1,5 +1,28 @@
 import { defineQuery } from "next-sanity";
 
+// Reusable SEO fields fragment
+const SEO_FIELDS = `
+  seo {
+    metaTitle,
+    metaDescription,
+    metaRobots,
+    canonicalURL,
+    openGraph {
+      title,
+      description,
+      image,
+      url
+    },
+    xCard {
+      cardType,
+      title,
+      description,
+      image
+    },
+    metaImage
+  }
+`;
+
 export const SITE_SETTINGS_QUERY = defineQuery(`
   *[_type == "siteSettings"][0] {
     homeIntro,
@@ -33,25 +56,7 @@ export const PROJECTS_QUERY = defineQuery(`
       name,
       slug
     },
-    seo {
-      metaTitle,
-      metaDescription,
-      metaRobots,
-      canonicalPath,
-      openGraph {
-        title,
-        description,
-        image,
-        url
-      },
-      xCard {
-        cardType,
-        title,
-        description,
-        image
-      },
-      metaImage
-    }
+    ${SEO_FIELDS}
   }
 `);
 
@@ -92,24 +97,56 @@ export const PROJECT_QUERY = defineQuery(`
     year,
     gallery,
     description,
-    seo {
-      metaTitle,
-      metaDescription,
-      metaRobots,
-      canonicalPath,
-      openGraph {
-        title,
-        description,
-        image,
-        url
+    ${SEO_FIELDS}
+  }
+`);
+
+export const INTERVIEWS_QUERY = defineQuery(`
+  *[_type == "interview"] | order(publishingDate.date desc) {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      image {
+        asset,
+        alt,
+        hotspot,
+        crop
+      }
+    },
+    interviewTo[]->{
+      _id,
+      name
+    },
+    introText,
+    ${SEO_FIELDS}
+  }
+`);
+
+export const INTERVIEW_QUERY = defineQuery(`
+  *[_type == "interview" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      _type,
+      image {
+        _type,
+        asset,
+        hotspot,
+        crop
       },
-      xCard {
-        cardType,
-        title,
-        description,
-        image
-      },
-      metaImage
-    }
+      alt
+    },
+    interviewTo[]->{
+      _id,
+      name,
+      portrait
+    },
+    introText,
+    interview,
+    ${SEO_FIELDS}
   }
 `);

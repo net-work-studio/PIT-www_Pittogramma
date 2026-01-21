@@ -23,5 +23,10 @@ export const edition = defineType({
       title: "Cover",
       validation: (e) => e.required(),
     }),
+    defineField({
+      type: "seoModule",
+      name: "seo",
+      title: "SEO",
+    }),
   ],
 });

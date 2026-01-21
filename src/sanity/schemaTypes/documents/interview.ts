@@ -57,6 +57,11 @@ export const interview = defineType({
       title: "Interview",
       of: [defineArrayMember({ type: "block" })],
     }),
+    defineField({
+      type: "seoModule",
+      name: "seo",
+      title: "SEO",
+    }),
   ],
   preview: {
     select: {

@@ -140,6 +140,22 @@ export type Glossary = {
   name: string;
   description: string;
   image?: ImageWithMetadata;
+  seo?: SeoModule;
+};
+
+export type SeoModule = {
+  _type: "seoModule";
+  metaTitle: string;
+  metaDescription: string;
+  metaRobots?:
+    | "index, follow"
+    | "noindex, follow"
+    | "index, nofollow"
+    | "noindex, nofollow";
+  canonicalURL?: string;
+  openGraph?: OpenGraph;
+  xCard?: XCard;
+  metaImage?: ImageWithMetadata;
 };
 
 export type Bookshop = {
@@ -258,21 +274,6 @@ export type SiteSettings = {
   blogPage?: {
     seo?: SeoModule;
   };
-};
-
-export type SeoModule = {
-  _type: "seoModule";
-  metaTitle: string;
-  metaDescription: string;
-  metaRobots?:
-    | "index, follow"
-    | "noindex, follow"
-    | "index, nofollow"
-    | "noindex, nofollow";
-  canonicalURL?: string;
-  openGraph?: OpenGraph;
-  xCard?: XCard;
-  metaImage?: ImageWithMetadata;
 };
 
 export type XCard = {
@@ -483,6 +484,7 @@ export type Interview = {
     _type: "block";
     _key: string;
   }>;
+  seo?: SeoModule;
 };
 
 export type ContributorReference = {
@@ -548,6 +550,7 @@ export type Edition = {
   title: string;
   slug: Slug;
   cover: ImageWithMetadata;
+  seo?: SeoModule;
 };
 
 export type Designer = {
@@ -569,6 +572,7 @@ export type Designer = {
   }>;
   location: Location;
   socialLinks?: SocialLinks;
+  seo?: SeoModule;
 };
 
 export type Institute = {
@@ -727,6 +731,7 @@ export type AllSanitySchemaTypes =
   | Publisher
   | Author
   | Glossary
+  | SeoModule
   | Bookshop
   | SocialLinks
   | CountryReference
@@ -738,7 +743,6 @@ export type AllSanitySchemaTypes =
   | StudioReference
   | Professional
   | SiteSettings
-  | SeoModule
   | XCard
   | OpenGraph
   | Tag
@@ -793,7 +797,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type == "project"] | order(_createdAt desc) {    _id,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },    seo {      metaTitle,      metaDescription,      metaRobots,      canonicalPath,      openGraph {        title,        description,        image,        url      },      xCard {        cardType,        title,        description,        image      },      metaImage    }  }
+// Query: *[_type == "project"] | order(_createdAt desc) {    _id,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      image,      url    },    xCard {      cardType,      title,      description,      image    },    metaImage  }  }
 export type PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   cover: {
@@ -826,7 +830,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
       | "noindex, follow"
       | "noindex, nofollow"
       | null;
-    canonicalPath: null;
+    canonicalURL: string | null;
     openGraph: {
       title: string | null;
       description: string | null;
@@ -845,7 +849,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECT_QUERY
-// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    cover {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },    teacher->{      _id,      name,    },    institute->{      _id,      name,    },    year,    gallery,    description,    seo {      metaTitle,      metaDescription,      metaRobots,      canonicalPath,      openGraph {        title,        description,        image,        url      },      xCard {        cardType,        title,        description,        image      },      metaImage    }  }
+// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    cover {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },    teacher->{      _id,      name,    },    institute->{      _id,      name,    },    year,    gallery,    description,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      image,      url    },    xCard {      cardType,      title,      description,      image    },    metaImage  }  }
 export type PROJECT_QUERY_RESULT = {
   _id: string;
   cover: {
@@ -908,7 +912,122 @@ export type PROJECT_QUERY_RESULT = {
       | "noindex, follow"
       | "noindex, nofollow"
       | null;
-    canonicalPath: null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      image: ImageWithMetadata | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      cardType: "summary_large_image" | "summary" | null;
+      title: string | null;
+      description: string | null;
+      image: ImageWithMetadata | null;
+    } | null;
+    metaImage: ImageWithMetadata | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: INTERVIEWS_QUERY
+// Query: *[_type == "interview"] | order(publishingDate.date desc) {    _id,    title,    slug,    publishingDate,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    interviewTo[]->{      _id,      name    },    introText,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      image,      url    },    xCard {      cardType,      title,      description,      image    },    metaImage  }  }
+export type INTERVIEWS_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  slug: Slug;
+  publishingDate: PublishingDate | null;
+  cover: {
+    image: {
+      asset: SanityImageAssetReference | null;
+      alt: null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+  };
+  interviewTo: Array<{
+    _id: string;
+    name: string;
+  }>;
+  introText: string;
+  seo: {
+    metaTitle: string;
+    metaDescription: string;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      image: ImageWithMetadata | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      cardType: "summary_large_image" | "summary" | null;
+      title: string | null;
+      description: string | null;
+      image: ImageWithMetadata | null;
+    } | null;
+    metaImage: ImageWithMetadata | null;
+  } | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: INTERVIEW_QUERY
+// Query: *[_type == "interview" && slug.current == $slug][0] {    _id,    title,    slug,    publishingDate,    cover {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt    },    interviewTo[]->{      _id,      name,      portrait    },    introText,    interview,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      image,      url    },    xCard {      cardType,      title,      description,      image    },    metaImage  }  }
+export type INTERVIEW_QUERY_RESULT = {
+  _id: string;
+  title: string;
+  slug: Slug;
+  publishingDate: PublishingDate | null;
+  cover: {
+    _type: "imageWithMetadata";
+    image: {
+      _type: "image";
+      asset: SanityImageAssetReference | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+    alt: string | null;
+  };
+  interviewTo: Array<{
+    _id: string;
+    name: string;
+    portrait: ImageWithMetadata | null;
+  }>;
+  introText: string;
+  interview: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  seo: {
+    metaTitle: string;
+    metaDescription: string;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
     openGraph: {
       title: string | null;
       description: string | null;
@@ -930,7 +1049,9 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "siteSettings"][0] {\n    homeIntro,\n    projectsIntro,\n    interviewsIntro,\n    designersIntro,\n  }\n': SITE_SETTINGS_QUERY_RESULT;
-    '\n  *[_type == "project"] | order(_createdAt desc) {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      metaRobots,\n      canonicalPath,\n      openGraph {\n        title,\n        description,\n        image,\n        url\n      },\n      xCard {\n        cardType,\n        title,\n        description,\n        image\n      },\n      metaImage\n    }\n  }\n': PROJECTS_QUERY_RESULT;
-    '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    teacher->{\n      _id,\n      name,\n    },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery,\n    description,\n    seo {\n      metaTitle,\n      metaDescription,\n      metaRobots,\n      canonicalPath,\n      openGraph {\n        title,\n        description,\n        image,\n        url\n      },\n      xCard {\n        cardType,\n        title,\n        description,\n        image\n      },\n      metaImage\n    }\n  }\n': PROJECT_QUERY_RESULT;
+    '\n  *[_type == "project"] | order(_createdAt desc) {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      image,\n      url\n    },\n    xCard {\n      cardType,\n      title,\n      description,\n      image\n    },\n    metaImage\n  }\n\n  }\n': PROJECTS_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    teacher->{\n      _id,\n      name,\n    },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery,\n    description,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      image,\n      url\n    },\n    xCard {\n      cardType,\n      title,\n      description,\n      image\n    },\n    metaImage\n  }\n\n  }\n': PROJECT_QUERY_RESULT;
+    '\n  *[_type == "interview"] | order(publishingDate.date desc) {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    interviewTo[]->{\n      _id,\n      name\n    },\n    introText,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      image,\n      url\n    },\n    xCard {\n      cardType,\n      title,\n      description,\n      image\n    },\n    metaImage\n  }\n\n  }\n': INTERVIEWS_QUERY_RESULT;
+    '\n  *[_type == "interview" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    interviewTo[]->{\n      _id,\n      name,\n      portrait\n    },\n    introText,\n    interview,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      image,\n      url\n    },\n    xCard {\n      cardType,\n      title,\n      description,\n      image\n    },\n    metaImage\n  }\n\n  }\n': INTERVIEW_QUERY_RESULT;
   }
 }

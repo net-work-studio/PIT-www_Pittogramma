@@ -1,7 +1,10 @@
-import localFont from "next/font/local";
-import "./globals.css";
 import type { Metadata } from "next";
+import localFont from "next/font/local";
+
+import { JsonLd } from "@/components/seo/JsonLd";
 import { siteDefaults } from "@/lib/seo/siteDefaults";
+
+import "./globals.css";
 
 const sono = localFont({
   src: [
@@ -61,6 +64,24 @@ export default function RootLayout({
 }>) {
   return (
     <html className="bg-background" lang="en" suppressHydrationWarning>
+      <head>
+        <JsonLd
+          type="Organization"
+          data={{
+            name: siteDefaults.title,
+            description: siteDefaults.description,
+            url: siteDefaults.baseUrl,
+          }}
+        />
+        <JsonLd
+          type="WebSite"
+          data={{
+            name: siteDefaults.title,
+            description: siteDefaults.description,
+            url: siteDefaults.baseUrl,
+          }}
+        />
+      </head>
       <body
         className={`${aktual.variable} ${sono.variable} flex min-h-screen flex-col justify-between bg-background text-foreground antialiased`}
       >
