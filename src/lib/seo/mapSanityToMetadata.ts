@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import type { SeoModule } from "@/lib/types/seo";
 import { urlForImage } from "@/sanity/lib/image";
 
-type MapSanityToMetadataProps = {
+interface MapSanityToMetadataProps {
   page: {
     title: string;
     description?: string;
@@ -16,7 +16,7 @@ type MapSanityToMetadataProps = {
     title: string;
     description: string;
   };
-};
+}
 
 export function mapSanityToMetadata({
   page,
@@ -32,7 +32,9 @@ export function mapSanityToMetadata({
     page.seo?.metaDescription || page.description || siteDefaults.description;
 
   // Canonical URL
-  const canonicalUrl = page.seo?.canonicalURL ? `${baseUrl}${page.seo.canonicalURL}` : `${baseUrl}${path}`;
+  const canonicalUrl = page.seo?.canonicalURL
+    ? `${baseUrl}${page.seo.canonicalURL}`
+    : `${baseUrl}${path}`;
 
   // Image fallback chain:
   // 1. OG image → 2. X Card image → 3. Meta image → 4. Cover image → undefined
@@ -58,6 +60,40 @@ export function mapSanityToMetadata({
     };
   };
 
+  const buildOpenGraph = (): Metadata["openGraph"] => {
+    const imageMeta = ogImage ? buildImageMeta(ogImage, title) : undefined;
+    return {
+      title: page.seo?.openGraph?.title || title,
+      description: page.seo?.openGraph?.description || description,
+      url: page.seo?.openGraph?.url || canonicalUrl,
+      images: imageMeta ? [imageMeta] : undefined,
+    };
+  };
+
+  const buildTwitter = (): Metadata["twitter"] => {
+    const cardType =
+      (page.seo?.xCard?.cardType as "summary" | "summary_large_image") ||
+      "summary_large_image";
+    const images = xImage
+      ? ([urlForImage(xImage)?.url()].filter(Boolean) as string[])
+      : undefined;
+
+    return {
+      card: cardType,
+      title: page.seo?.xCard?.title || title,
+      description: page.seo?.xCard?.description || description,
+      images,
+    };
+  };
+
+  const buildOtherMeta = (): Metadata["other"] | undefined => {
+    const imageUrl = metaImage ? urlForImage(metaImage)?.url() : undefined;
+    if (!imageUrl) {
+      return undefined;
+    }
+    return { "og:image": imageUrl };
+  };
+
   return {
     title,
     description,
@@ -65,40 +101,8 @@ export function mapSanityToMetadata({
     alternates: {
       canonical: canonicalUrl,
     },
-    openGraph: page.seo?.openGraph
-      ? {
-          title: page.seo.openGraph.title || title,
-          description: page.seo.openGraph.description || description,
-          url: page.seo.openGraph.url || canonicalUrl,
-          images: ogImage ? [buildImageMeta(ogImage, title)] : undefined,
-        }
-      : {
-          title,
-          description,
-          url: canonicalUrl,
-          images: ogImage ? [buildImageMeta(ogImage, title)] : undefined,
-        },
-    twitter: page.seo?.xCard
-      ? {
-          card:
-            (page.seo.xCard.cardType as "summary" | "summary_large_image") ||
-            "summary_large_image",
-          title: page.seo.xCard.title || title,
-          description: page.seo.xCard.description || description,
-          images: xImage ? [urlForImage(xImage)?.url()].filter(Boolean) as string[] : undefined,
-        }
-      : {
-          card: "summary_large_image",
-          title,
-          description,
-          images: xImage ? [urlForImage(xImage)?.url()].filter(Boolean) as string[] : undefined,
-        },
-    // For standard meta tags
-    ...(metaImage && urlForImage(metaImage)?.url() && {
-      // You can add custom meta tags if needed
-      other: {
-        "og:image": urlForImage(metaImage)?.url(),
-      },
-    }),
+    openGraph: buildOpenGraph(),
+    twitter: buildTwitter(),
+    other: buildOtherMeta(),
   };
 }
