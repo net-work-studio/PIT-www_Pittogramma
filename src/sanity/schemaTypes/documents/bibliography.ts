@@ -18,7 +18,8 @@ export const bibliography = defineType({
       type: "string",
       name: "isbn",
       title: "ISBN",
-      description: "Enter ISBN and click 'Fetch Data' to auto-fill book information",
+      description:
+        "Enter ISBN and click 'Fetch Data' to auto-fill book information",
       group: "main",
       components: {
         input: IsbnInput,
@@ -90,7 +91,8 @@ export const bibliography = defineType({
       type: "string",
       name: "fetchedLanguages",
       title: "Fetched Language (from Google Books)",
-      description: "Language code from Google Books - use this to find/create the correct Language reference above",
+      description:
+        "Language code from Google Books - use this to find/create the correct Language reference above",
       group: "main",
       readOnly: true,
     }),
@@ -114,7 +116,8 @@ export const bibliography = defineType({
       type: "string",
       name: "fetchedAuthors",
       title: "Fetched Authors (from Google Books)",
-      description: "Suggestion from Google Books - use this to find/create the correct Author references above",
+      description:
+        "Suggestion from Google Books - use this to find/create the correct Author references above",
       group: "main",
       readOnly: true,
     }),
@@ -132,7 +135,8 @@ export const bibliography = defineType({
       type: "string",
       name: "fetchedPublisher",
       title: "Fetched Publisher (from Google Books)",
-      description: "Suggestion from Google Books - use this to find/create the correct Publisher reference above",
+      description:
+        "Suggestion from Google Books - use this to find/create the correct Publisher reference above",
       group: "main",
       readOnly: true,
     }),
@@ -148,7 +152,8 @@ export const bibliography = defineType({
       type: "string",
       name: "fetchedCategories",
       title: "Fetched Categories (from Google Books)",
-      description: "Category suggestions from Google Books - use these to create/select appropriate tags above",
+      description:
+        "Category suggestions from Google Books - use these to create/select appropriate tags above",
       group: "main",
       readOnly: true,
     }),
@@ -183,4 +188,11 @@ export const bibliography = defineType({
       hidden: true,
     }),
   ],
+  preview: {
+    select: {
+      title: "name",
+      media: "cover.image",
+      subtitle: "year",
+    },
+  },
 });
