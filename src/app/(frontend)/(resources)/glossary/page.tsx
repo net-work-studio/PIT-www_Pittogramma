@@ -19,14 +19,15 @@ interface GroupedGlossary {
 }
 
 function groupByFirstLetter(items: GlossaryItem[]): GroupedGlossary[] {
-  const grouped = items.reduce<Record<string, GlossaryItem[]>>((acc, item) => {
+  const grouped: Record<string, GlossaryItem[]> = {};
+
+  for (const item of items) {
     const firstLetter = item.name.charAt(0).toUpperCase();
-    if (!acc[firstLetter]) {
-      acc[firstLetter] = [];
+    if (!grouped[firstLetter]) {
+      grouped[firstLetter] = [];
     }
-    acc[firstLetter].push(item);
-    return acc;
-  }, {});
+    grouped[firstLetter].push(item);
+  }
 
   return Object.entries(grouped)
     .sort(([a], [b]) => a.localeCompare(b))

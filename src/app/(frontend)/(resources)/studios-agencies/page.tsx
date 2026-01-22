@@ -13,22 +13,22 @@ function getCities(locations: Studio["locations"]) {
   if (!locations || locations.length === 0) {
     return "-";
   }
-  return (
-    locations
-      .map((loc) => loc.city?.name)
-      .filter(Boolean)
-      .join(", ") || "-"
-  );
+  const cities: string[] = [];
+  for (const loc of locations) {
+    if (loc.city?.name) cities.push(loc.city.name);
+  }
+  return cities.length > 0 ? cities.join(", ") : "-";
 }
 
 function getCountries(locations: Studio["locations"]) {
   if (!locations || locations.length === 0) {
     return "-";
   }
-  const uniqueCountries = [
-    ...new Set(locations.map((loc) => loc.country?.name).filter(Boolean)),
-  ];
-  return uniqueCountries.join(", ") || "-";
+  const uniqueCountries = new Set<string>();
+  for (const loc of locations) {
+    if (loc.country?.name) uniqueCountries.add(loc.country.name);
+  }
+  return uniqueCountries.size > 0 ? Array.from(uniqueCountries).join(", ") : "-";
 }
 
 function StudioCard({ studio }: { studio: Studio }) {
