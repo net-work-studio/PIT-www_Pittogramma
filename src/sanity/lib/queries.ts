@@ -177,7 +177,11 @@ export const BIBLIOGRAPHY_QUERY = defineQuery(`
         name
       }
     },
-    affiliateLink
+    affiliateLink,
+    isbn,
+    description,
+    pageCount,
+    categories
   }
 `);
 

@@ -124,6 +124,13 @@
           "type": "string"
         }
       },
+      "isbn": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "name": {
         "type": "objectAttribute",
         "value": {
@@ -183,6 +190,13 @@
         },
         "optional": true
       },
+      "fetchedAuthors": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "publisher": {
         "type": "objectAttribute",
         "value": {
@@ -190,6 +204,13 @@
           "name": "publisher.reference"
         },
         "optional": false
+      },
+      "fetchedPublisher": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       },
       "tagSelector": {
         "type": "objectAttribute",
@@ -207,6 +228,37 @@
         "optional": true
       },
       "affiliateLink": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "description": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "pageCount": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
+      "categories": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "array",
+          "of": {
+            "type": "string"
+          }
+        },
+        "optional": true
+      },
+      "googleBooksId": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -1985,19 +2037,19 @@
         },
         "optional": true
       },
-      "designer": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "designer.reference"
-        },
-        "optional": false
-      },
       "cover": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
           "name": "imageWithMetadata"
+        },
+        "optional": false
+      },
+      "designer": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "designer.reference"
         },
         "optional": false
       },
