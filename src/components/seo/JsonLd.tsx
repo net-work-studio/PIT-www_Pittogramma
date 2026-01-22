@@ -19,8 +19,10 @@ export function JsonLd({ type, data }: JsonLdProps) {
   };
 
   return (
-    <script id={`json-ld-${type.toLowerCase()}`} type="application/ld+json">
-      {JSON.stringify(jsonLd)}
-    </script>
+    <script
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      id={`json-ld-${type.toLowerCase()}`}
+      type="application/ld+json"
+    />
   );
 }
