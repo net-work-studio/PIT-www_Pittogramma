@@ -34,7 +34,6 @@ export interface SeoModule {
     url?: string;
   };
   xCard?: {
-    cardType?: string;
     title?: string;
     description?: string;
   };

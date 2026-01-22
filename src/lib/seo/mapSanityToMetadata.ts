@@ -59,26 +59,16 @@ export function mapSanityToMetadata({
   };
 
   const buildTwitter = (): Metadata["twitter"] => {
-    const cardType =
-      (page.seo?.xCard?.cardType as "summary" | "summary_large_image") ||
-      "summary_large_image";
-
     let images: string[] | undefined;
     if (sharedImage) {
       const imageBuilder = urlForImage(sharedImage);
       if (imageBuilder) {
-        const dimensions =
-          cardType === "summary"
-            ? { width: 800, height: 800 }
-            : { width: 1200, height: 630 };
-        images = [
-          imageBuilder.width(dimensions.width).height(dimensions.height).url(),
-        ];
+        images = [imageBuilder.width(1200).height(630).url()];
       }
     }
 
     return {
-      card: cardType,
+      card: "summary_large_image",
       title: page.seo?.xCard?.title || title,
       description: page.seo?.xCard?.description || description,
       images,

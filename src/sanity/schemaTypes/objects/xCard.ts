@@ -6,19 +6,6 @@ export const xCard = defineType({
   type: "object",
   fields: [
     defineField({
-      name: "cardType",
-      title: "Card Type",
-      type: "string",
-      options: {
-        list: [
-          { title: "Summary", value: "summary" },
-          { title: "Summary with Large Image", value: "summary_large_image" },
-        ],
-        layout: "radio",
-      },
-      initialValue: "summary_large_image",
-    }),
-    defineField({
       name: "title",
       title: "X Title",
       type: "string",
