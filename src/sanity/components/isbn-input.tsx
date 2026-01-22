@@ -230,6 +230,9 @@ export function IsbnInput(props: StringInputProps) {
           tone="primary"
         />
       </Flex>
+      <Text muted size={1}>
+        Limited to 10 requests per minute
+      </Text>
 
       {error && (
         <Card padding={3} radius={2} tone="critical">
