@@ -10,7 +10,7 @@ export const xCard = defineType({
       title: "X Title",
       type: "string",
       description:
-        "Title for X/Twitter sharing (fallbacks to OG title if empty).",
+        "Optional override for X/Twitter. Uses Meta Title by default.",
     }),
     defineField({
       name: "description",
@@ -18,7 +18,7 @@ export const xCard = defineType({
       type: "text",
       rows: 3,
       description:
-        "Description for X/Twitter sharing (fallbacks to OG description if empty).",
+        "Optional override for X/Twitter. Uses Meta Description by default.",
     }),
   ],
 });

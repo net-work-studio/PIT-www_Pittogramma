@@ -9,14 +9,16 @@ export const openGraph = defineType({
       name: "title",
       title: "OG Title",
       type: "string",
-      description: "Title used when sharing on social platforms.",
+      description:
+        "Optional override for social sharing. Uses Meta Title by default.",
     }),
     defineField({
       name: "description",
       title: "OG Description",
       type: "text",
       rows: 3,
-      description: "Description used when sharing on social platforms.",
+      description:
+        "Optional override for social sharing. Uses Meta Description by default.",
     }),
     defineField({
       name: "url",
