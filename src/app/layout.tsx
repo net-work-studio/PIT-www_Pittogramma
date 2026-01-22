@@ -64,27 +64,25 @@ export default function RootLayout({
 }>) {
   return (
     <html className="bg-background" lang="en" suppressHydrationWarning>
-      <head>
-        <JsonLd
-          type="Organization"
-          data={{
-            name: siteDefaults.title,
-            description: siteDefaults.description,
-            url: siteDefaults.baseUrl,
-          }}
-        />
-        <JsonLd
-          type="WebSite"
-          data={{
-            name: siteDefaults.title,
-            description: siteDefaults.description,
-            url: siteDefaults.baseUrl,
-          }}
-        />
-      </head>
       <body
         className={`${aktual.variable} ${sono.variable} flex min-h-screen flex-col justify-between bg-background text-foreground antialiased`}
       >
+        <JsonLd
+          data={{
+            name: siteDefaults.title,
+            description: siteDefaults.description,
+            url: siteDefaults.baseUrl,
+          }}
+          type="Organization"
+        />
+        <JsonLd
+          data={{
+            name: siteDefaults.title,
+            description: siteDefaults.description,
+            url: siteDefaults.baseUrl,
+          }}
+          type="WebSite"
+        />
         {children}
       </body>
     </html>
