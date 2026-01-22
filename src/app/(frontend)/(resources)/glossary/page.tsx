@@ -3,12 +3,6 @@ import type { Metadata } from "next";
 import SearchInput from "@/components/feat/search-input";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import PageHeader from "@/components/shared/page-header";
-
-export const metadata: Metadata = {
-  title: "Glossary",
-  description:
-    "A list of the most common and used terms in the design industry",
-};
 import {
   Accordion,
   AccordionContent,
@@ -18,6 +12,12 @@ import {
 import { sanityFetch } from "@/sanity/lib/live";
 import { GLOSSARY_QUERY } from "@/sanity/lib/queries";
 import type { GLOSSARY_QUERY_RESULT } from "@/sanity/types";
+
+export const metadata: Metadata = {
+  title: "Glossary",
+  description:
+    "A list of the most common and used terms in the design industry",
+};
 
 type GlossaryItem = GLOSSARY_QUERY_RESULT[number];
 
@@ -84,9 +84,7 @@ function GlossaryCard({ word, definition }: GlossaryCardProps) {
 }
 
 export default async function Page() {
-  const { data: glossaryItems } = await sanityFetch({
-    query: GLOSSARY_QUERY,
-  });
+  const { data: glossaryItems } = await sanityFetch({ query: GLOSSARY_QUERY });
 
   const groupedGlossary = groupByFirstLetter(glossaryItems);
 

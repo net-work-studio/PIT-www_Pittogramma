@@ -677,6 +677,14 @@
           },
           "optional": false
         },
+        "metaImage": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "imageWithMetadata"
+          },
+          "optional": true
+        },
         "metaRobots": {
           "type": "objectAttribute",
           "value": {
@@ -722,14 +730,6 @@
           "value": {
             "type": "inline",
             "name": "xCard"
-          },
-          "optional": true
-        },
-        "metaImage": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "imageWithMetadata"
           },
           "optional": true
         }
@@ -1369,23 +1369,6 @@
             "value": "xCard"
           }
         },
-        "cardType": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "summary"
-              },
-              {
-                "type": "string",
-                "value": "summary_large_image"
-              }
-            ]
-          },
-          "optional": true
-        },
         "title": {
           "type": "objectAttribute",
           "value": {
@@ -1397,14 +1380,6 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
-          },
-          "optional": true
-        },
-        "image": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "imageWithMetadata"
           },
           "optional": true
         }
@@ -1435,14 +1410,6 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
-          },
-          "optional": true
-        },
-        "image": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "imageWithMetadata"
           },
           "optional": true
         },

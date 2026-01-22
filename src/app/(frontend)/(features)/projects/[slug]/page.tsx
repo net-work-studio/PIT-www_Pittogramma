@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { cache } from "react";
 
 import ProjectInfo from "@/components/modules/project/project-info";
 import DiscoverMore from "@/components/modules/shared/discover-more";
@@ -14,20 +13,16 @@ import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { PROJECT_QUERY } from "@/sanity/lib/queries";
 
-const getProject = cache(async (slug: string) => {
-  return sanityFetch({
-    query: PROJECT_QUERY,
-    params: { slug },
-  });
-});
-
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const { data: project } = await getProject(slug);
+  const { data: project } = await sanityFetch({
+    query: PROJECT_QUERY,
+    params: { slug },
+  });
 
   if (!project) {
     return {};
@@ -52,7 +47,10 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const { data: project } = await getProject(slug);
+  const { data: project } = await sanityFetch({
+    query: PROJECT_QUERY,
+    params: { slug },
+  });
 
   if (!project) {
     notFound();

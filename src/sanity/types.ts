@@ -148,6 +148,7 @@ export type SeoModule = {
   _type: "seoModule";
   metaTitle: string;
   metaDescription: string;
+  metaImage?: ImageWithMetadata;
   metaRobots?:
     | "index, follow"
     | "noindex, follow"
@@ -156,7 +157,6 @@ export type SeoModule = {
   canonicalURL?: string;
   openGraph?: OpenGraph;
   xCard?: XCard;
-  metaImage?: ImageWithMetadata;
 };
 
 export type Bookshop = {
@@ -279,17 +279,14 @@ export type SiteSettings = {
 
 export type XCard = {
   _type: "xCard";
-  cardType?: "summary" | "summary_large_image";
   title?: string;
   description?: string;
-  image?: ImageWithMetadata;
 };
 
 export type OpenGraph = {
   _type: "openGraph";
   title?: string;
   description?: string;
-  image?: ImageWithMetadata;
   url?: string;
 };
 
@@ -835,14 +832,14 @@ export type PROJECTS_QUERY_RESULT = Array<{
     openGraph: {
       title: string | null;
       description: string | null;
-      image: ImageWithMetadata | null;
+      image: null;
       url: string | null;
     } | null;
     xCard: {
-      cardType: "summary_large_image" | "summary" | null;
+      cardType: null;
       title: string | null;
       description: string | null;
-      image: ImageWithMetadata | null;
+      image: null;
     } | null;
     metaImage: ImageWithMetadata | null;
   } | null;
@@ -917,14 +914,14 @@ export type PROJECT_QUERY_RESULT = {
     openGraph: {
       title: string | null;
       description: string | null;
-      image: ImageWithMetadata | null;
+      image: null;
       url: string | null;
     } | null;
     xCard: {
-      cardType: "summary_large_image" | "summary" | null;
+      cardType: null;
       title: string | null;
       description: string | null;
-      image: ImageWithMetadata | null;
+      image: null;
     } | null;
     metaImage: ImageWithMetadata | null;
   } | null;
@@ -964,14 +961,14 @@ export type INTERVIEWS_QUERY_RESULT = Array<{
     openGraph: {
       title: string | null;
       description: string | null;
-      image: ImageWithMetadata | null;
+      image: null;
       url: string | null;
     } | null;
     xCard: {
-      cardType: "summary_large_image" | "summary" | null;
+      cardType: null;
       title: string | null;
       description: string | null;
-      image: ImageWithMetadata | null;
+      image: null;
     } | null;
     metaImage: ImageWithMetadata | null;
   } | null;
@@ -1032,14 +1029,14 @@ export type INTERVIEW_QUERY_RESULT = {
     openGraph: {
       title: string | null;
       description: string | null;
-      image: ImageWithMetadata | null;
+      image: null;
       url: string | null;
     } | null;
     xCard: {
-      cardType: "summary_large_image" | "summary" | null;
+      cardType: null;
       title: string | null;
       description: string | null;
-      image: ImageWithMetadata | null;
+      image: null;
     } | null;
     metaImage: ImageWithMetadata | null;
   } | null;
