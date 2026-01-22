@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import SearchInput from "@/components/feat/search-input";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import { LanguagesDisplay } from "@/components/resources/languages-display";
@@ -8,6 +10,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { sanityFetch } from "@/sanity/lib/live";
 import { BIBLIOGRAPHY_QUERY } from "@/sanity/lib/queries";
 import type { BIBLIOGRAPHY_QUERY_RESULT } from "@/sanity/types";
+
+export const metadata: Metadata = {
+  title: "Bibliography",
+  description: "A constantly updated list of books on graphic design",
+};
 
 type BibliographyItem = BIBLIOGRAPHY_QUERY_RESULT[number];
 
