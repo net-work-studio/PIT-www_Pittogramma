@@ -16,7 +16,17 @@ const SEO_FIELDS = `
       title,
       description
     },
-    metaImage
+    metaImage {
+      _type,
+      image {
+        _type,
+        asset,
+        hotspot,
+        crop
+      },
+      alt,
+      caption
+    }
   }
 `;
 
