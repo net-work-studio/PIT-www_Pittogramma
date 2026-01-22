@@ -4,10 +4,6 @@ export const xCard = defineType({
   name: "xCard",
   title: "X (Twitter) Card",
   type: "object",
-  options: {
-    collapsible: true,
-    collapsed: false,
-  },
   fields: [
     defineField({
       name: "cardType",
@@ -36,13 +32,6 @@ export const xCard = defineType({
       rows: 3,
       description:
         "Description for X/Twitter sharing (fallbacks to OG description if empty).",
-    }),
-    defineField({
-      name: "image",
-      title: "X Image",
-      type: "imageWithMetadata",
-      description:
-        "Image for X/Twitter sharing (fallbacks to OG image if empty).",
     }),
   ],
 });

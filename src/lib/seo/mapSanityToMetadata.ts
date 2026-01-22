@@ -36,35 +36,20 @@ export function mapSanityToMetadata({
     ? `${baseUrl}${page.seo.canonicalURL}`
     : `${baseUrl}${path}`;
 
-  // Image fallback chain:
-  // 1. OG image → 2. X Card image → 3. Meta image → 4. Cover image → undefined
-  const ogImage =
-    page.seo?.openGraph?.image || page.seo?.metaImage || page.coverImage;
-  const xImage = page.seo?.xCard?.image || ogImage;
-  const metaImage = page.seo?.metaImage || page.coverImage;
-
-  // Helper to build image metadata
-  const buildImageMeta = (
-    image: SeoImageSource | null | undefined,
-    altFallback: string
-  ) => {
-    if (!image) {
-      return;
-    }
-    const builder = urlForImage(image);
-    if (!builder) {
-      return;
-    }
-    return {
-      url: builder.url(),
-      width: 1200,
-      height: 630,
-      alt: image.alt || altFallback,
-    };
-  };
+  // Single image source for all platforms
+  const sharedImage = page.seo?.metaImage || page.coverImage;
 
   const buildOpenGraph = (): Metadata["openGraph"] => {
-    const imageMeta = ogImage ? buildImageMeta(ogImage, title) : undefined;
+    const imageBuilder = sharedImage ? urlForImage(sharedImage) : undefined;
+    const imageMeta = imageBuilder
+      ? {
+          url: imageBuilder.width(1200).height(630).url(),
+          width: 1200,
+          height: 630,
+          alt: sharedImage?.alt || title,
+        }
+      : undefined;
+
     return {
       title: page.seo?.openGraph?.title || title,
       description: page.seo?.openGraph?.description || description,
@@ -77,9 +62,20 @@ export function mapSanityToMetadata({
     const cardType =
       (page.seo?.xCard?.cardType as "summary" | "summary_large_image") ||
       "summary_large_image";
-    const images = xImage
-      ? ([urlForImage(xImage)?.url()].filter(Boolean) as string[])
-      : undefined;
+
+    let images: string[] | undefined;
+    if (sharedImage) {
+      const imageBuilder = urlForImage(sharedImage);
+      if (imageBuilder) {
+        const dimensions =
+          cardType === "summary"
+            ? { width: 800, height: 800 }
+            : { width: 1200, height: 630 };
+        images = [
+          imageBuilder.width(dimensions.width).height(dimensions.height).url(),
+        ];
+      }
+    }
 
     return {
       card: cardType,
@@ -87,14 +83,6 @@ export function mapSanityToMetadata({
       description: page.seo?.xCard?.description || description,
       images,
     };
-  };
-
-  const buildOtherMeta = (): Metadata["other"] | undefined => {
-    const imageUrl = metaImage ? urlForImage(metaImage)?.url() : undefined;
-    if (!imageUrl) {
-      return undefined;
-    }
-    return { "og:image": imageUrl };
   };
 
   return {
@@ -106,6 +94,5 @@ export function mapSanityToMetadata({
     },
     openGraph: buildOpenGraph(),
     twitter: buildTwitter(),
-    other: buildOtherMeta(),
   };
 }

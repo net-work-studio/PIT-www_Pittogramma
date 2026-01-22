@@ -31,14 +31,12 @@ export interface SeoModule {
   openGraph?: {
     title?: string;
     description?: string;
-    image?: SeoImageSource;
     url?: string;
   };
   xCard?: {
     cardType?: string;
     title?: string;
     description?: string;
-    image?: SeoImageSource;
   };
   metaImage?: SeoImageSource;
 }
