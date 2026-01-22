@@ -1,10 +1,25 @@
 "use client";
 
-import { Button, Card, Flex, Stack, Text, TextInput, useToast } from "@sanity/ui";
+import {
+  Button,
+  Card,
+  Flex,
+  Stack,
+  Text,
+  TextInput,
+  useToast,
+} from "@sanity/ui";
 import { useCallback, useState } from "react";
-import { type StringInputProps, set, unset, useClient, useFormValue } from "sanity";
+import {
+  type StringInputProps,
+  set,
+  unset,
+  useClient,
+  useFormValue,
+} from "sanity";
+import { apiVersion } from "@/sanity/env";
 
-interface BookData {
+type BookData = {
   title: string | null;
   authors: string | null;
   publisher: string | null;
@@ -15,6 +30,51 @@ interface BookData {
   language: string | null;
   thumbnailUrl: string | null;
   googleBooksId: string | null;
+};
+
+function buildPatchData(data: BookData): Record<string, unknown> {
+  const patchData: Record<string, unknown> = {};
+
+  if (data.title) {
+    patchData.name = data.title;
+  }
+  if (data.year) {
+    patchData.year = data.year;
+  }
+  if (data.description) {
+    patchData.description = data.description;
+  }
+  if (data.pageCount) {
+    patchData.pageCount = data.pageCount;
+  }
+  if (data.categories && data.categories.length > 0) {
+    patchData.categories = data.categories;
+    patchData.fetchedCategories = data.categories.join(", ");
+  }
+  if (data.googleBooksId) {
+    patchData.googleBooksId = data.googleBooksId;
+  }
+  if (data.authors) {
+    patchData.fetchedAuthors = data.authors;
+  }
+  if (data.publisher) {
+    patchData.fetchedPublisher = data.publisher;
+  }
+  if (data.language) {
+    patchData.fetchedLanguages = data.language;
+  }
+
+  return patchData;
+}
+
+function getButtonText(isLoading: boolean, isPatching: boolean): string {
+  if (isLoading) {
+    return "Fetching...";
+  }
+  if (isPatching) {
+    return "Populating...";
+  }
+  return "Fetch Data";
 }
 
 export function IsbnInput(props: StringInputProps) {
@@ -26,7 +86,7 @@ export function IsbnInput(props: StringInputProps) {
 
   // Get the document form context to patch other fields
   const documentId = useFormValue(["_id"]) as string | undefined;
-  const client = useClient({ apiVersion: "2024-01-01" });
+  const client = useClient({ apiVersion });
   const toast = useToast();
 
   const handleChange = useCallback(
@@ -40,86 +100,85 @@ export function IsbnInput(props: StringInputProps) {
     [onChange]
   );
 
+  const uploadCoverImage = useCallback(
+    async (
+      thumbnailUrl: string,
+      title: string | null
+    ): Promise<Record<string, unknown> | null> => {
+      const imageResponse = await fetch(
+        `/api/books/fetch-image?url=${encodeURIComponent(thumbnailUrl)}`
+      );
+
+      if (!imageResponse.ok) {
+        return null;
+      }
+
+      const imageBlob = await imageResponse.blob();
+      const imageAsset = await client.assets.upload("image", imageBlob, {
+        filename: `cover-${value || "book"}.jpg`,
+      });
+
+      return {
+        _type: "imageWithMetadata",
+        image: {
+          _type: "image",
+          asset: {
+            _type: "reference",
+            _ref: imageAsset._id,
+          },
+        },
+        alt: title || "Book cover",
+      };
+    },
+    [client, value]
+  );
+
   const patchDocumentFields = useCallback(
     async (data: BookData) => {
       if (!documentId) {
-        setError("Cannot patch: document ID not found. Please save the document first.");
+        setError(
+          "Cannot patch: document ID not found. Please save the document first."
+        );
         return;
       }
 
       setIsPatching(true);
 
       try {
-        // Build the patch object with non-null values
-        const patchData: Record<string, unknown> = {};
+        const patchData = buildPatchData(data);
 
-        if (data.title) patchData.name = data.title;
-        if (data.year) patchData.year = data.year;
-        if (data.description) patchData.description = data.description;
-        if (data.pageCount) patchData.pageCount = data.pageCount;
-        if (data.categories && data.categories.length > 0) {
-          patchData.categories = data.categories;
-        }
-        if (data.googleBooksId) patchData.googleBooksId = data.googleBooksId;
-        if (data.authors) patchData.fetchedAuthors = data.authors;
-        if (data.publisher) patchData.fetchedPublisher = data.publisher;
-        if (data.language) patchData.fetchedLanguages = data.language;
-        if (data.categories && data.categories.length > 0) {
-          patchData.fetchedCategories = data.categories.join(", ");
-        }
-
-        // Handle cover image upload if thumbnail URL exists
         if (data.thumbnailUrl) {
-          try {
-            // Fetch the image as blob via our proxy endpoint
-            const imageResponse = await fetch(
-              `/api/books/fetch-image?url=${encodeURIComponent(data.thumbnailUrl)}`
-            );
-
-            if (imageResponse.ok) {
-              const imageBlob = await imageResponse.blob();
-
-              // Upload to Sanity
-              const imageAsset = await client.assets.upload("image", imageBlob, {
-                filename: `cover-${value || "book"}.jpg`,
-              });
-
-              // Set cover field with correct nested structure
-              patchData.cover = {
-                _type: "imageWithMetadata",
-                image: {
-                  _type: "image",
-                  asset: {
-                    _type: "reference",
-                    _ref: imageAsset._id,
-                  },
-                },
-                alt: data.title || "Book cover",
-              };
-            }
-          } catch (imgErr) {
-            console.error("Failed to upload cover image:", imgErr);
-            // Continue without the image - don't fail the whole operation
+          const coverData = await uploadCoverImage(
+            data.thumbnailUrl,
+            data.title
+          );
+          if (coverData) {
+            patchData.cover = coverData;
           }
         }
 
-        // Patch the document - handle draft prefix
-        const patchId = documentId.startsWith("drafts.") ? documentId : `drafts.${documentId}`;
+        const patchId = documentId.startsWith("drafts.")
+          ? documentId
+          : `drafts.${documentId}`;
         await client.patch(patchId).set(patchData).commit();
 
         toast.push({
           status: "success",
           title: "Fields populated",
-          description: "Book data has been auto-filled. Please link Authors and Publisher manually.",
+          description:
+            "Book data has been auto-filled. Please link Authors and Publisher manually.",
         });
       } catch (err) {
-        console.error("Failed to patch document:", err);
-        setError(err instanceof Error ? err.message : "Failed to update document fields");
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to update document fields"
+        );
       } finally {
         setIsPatching(false);
       }
     },
-    [documentId, client, toast, value]
+    [documentId, client, toast, uploadCoverImage]
   );
 
   const handleFetch = useCallback(async () => {
@@ -167,7 +226,7 @@ export function IsbnInput(props: StringInputProps) {
           disabled={isLoading || isPatching || !value}
           mode="ghost"
           onClick={handleFetch}
-          text={isLoading ? "Fetching..." : isPatching ? "Populating..." : "Fetch Data"}
+          text={getButtonText(isLoading, isPatching)}
           tone="primary"
         />
       </Flex>
@@ -181,7 +240,9 @@ export function IsbnInput(props: StringInputProps) {
       {(isLoading || isPatching) && (
         <Card padding={3} radius={2} tone="primary">
           <Text size={1}>
-            {isLoading ? "Fetching book data..." : "Updating document fields..."}
+            {isLoading
+              ? "Fetching book data..."
+              : "Updating document fields..."}
           </Text>
         </Card>
       )}
@@ -238,7 +299,8 @@ export function IsbnInput(props: StringInputProps) {
             </Stack>
             <Card padding={2} radius={2} tone="caution">
               <Text size={1}>
-                Please scroll down and link Authors and Publisher references manually.
+                Please scroll down and link Authors and Publisher references
+                manually.
               </Text>
             </Card>
           </Stack>

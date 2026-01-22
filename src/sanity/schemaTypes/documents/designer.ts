@@ -1,3 +1,4 @@
+import { UserIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 const minBirthYear = 1900;
@@ -7,11 +8,21 @@ export const designer = defineType({
   type: "document",
   name: "designer",
   title: "Designer",
+  icon: UserIcon,
   fields: [
     defineField({
       type: "string",
       name: "name",
       title: "Name",
+      validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "slug",
+      name: "slug",
+      title: "Slug",
+      options: {
+        source: "name",
+      },
       validation: (e) => e.required(),
     }),
     defineField({
@@ -73,7 +84,7 @@ export const designer = defineType({
               validation: (e) =>
                 e.min(minBirthYear).custom((value) => {
                   if (value && (value < minBirthYear || value > maxBirthYear)) {
-                    return "Birth year must be exactly 4 digits";
+                    return "Year must be exactly 4 digits";
                   }
                   return true;
                 }),

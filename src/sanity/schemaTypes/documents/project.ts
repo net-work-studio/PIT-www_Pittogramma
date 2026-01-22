@@ -1,3 +1,4 @@
+import { ProjectsIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { groups } from "@/sanity/utils/groups";
 
@@ -8,6 +9,7 @@ export const project = defineType({
   type: "document",
   name: "project",
   title: "Project",
+  icon: ProjectsIcon,
   groups,
   fields: [
     defineField({

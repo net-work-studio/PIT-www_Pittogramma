@@ -43,11 +43,15 @@ export type Bibliography = {
   isbn?: string;
   name: string;
   cover?: ImageWithMetadata;
+  year?: number;
+  description?: string;
+  pageCount?: number;
   languages?: Array<
     {
       _key: string;
     } & LanguageReference
   >;
+  fetchedLanguages?: string;
   authors?: Array<
     {
       _key: string;
@@ -57,10 +61,8 @@ export type Bibliography = {
   publisher: PublisherReference;
   fetchedPublisher?: string;
   tagSelector?: TagSelector;
-  year?: number;
+  fetchedCategories?: string;
   affiliateLink?: string;
-  description?: string;
-  pageCount?: number;
   categories?: Array<string>;
   googleBooksId?: string;
 };
@@ -565,6 +567,7 @@ export type Designer = {
   _updatedAt: string;
   _rev: string;
   name: string;
+  slug: Slug;
   portrait?: ImageWithMetadata;
   birthYear: number;
   bio?: string;
@@ -802,7 +805,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type == "project"] | order(_createdAt desc) {    _id,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage  }  }
+// Query: *[_type == "project"] | order(_createdAt desc) {    _id,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]{ _key, ...@->{ _id, name, slug } },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage  }  }
 export type PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   cover: {
@@ -818,10 +821,11 @@ export type PROJECTS_QUERY_RESULT = Array<{
   designer: {
     _id: string;
     name: string;
-    slug: null;
+    slug: Slug;
     portrait: ImageWithMetadata | null;
   };
   tags: Array<{
+    _key: string;
     _id: string;
     name: string;
     slug: null;
@@ -851,7 +855,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECT_QUERY
-// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    cover {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]->{      _id,      name,      slug    },    teacher->{      _id,      name,    },    institute->{      _id,      name,    },    year,    gallery,    description,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage  }  }
+// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    cover {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt    },    title,    slug,    designer->{      _id,      name,      slug,      portrait    },    tags[]{ _key, ...@->{ _id, name, slug } },    teacher->{      _id,      name,    },    institute->{      _id,      name,    },    year,    gallery,    description,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage  }  }
 export type PROJECT_QUERY_RESULT = {
   _id: string;
   cover: {
@@ -869,10 +873,11 @@ export type PROJECT_QUERY_RESULT = {
   designer: {
     _id: string;
     name: string;
-    slug: null;
+    slug: Slug;
     portrait: ImageWithMetadata | null;
   };
   tags: Array<{
+    _key: string;
     _id: string;
     name: string;
     slug: null;
@@ -930,7 +935,7 @@ export type PROJECT_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: INTERVIEWS_QUERY
-// Query: *[_type == "interview"] | order(publishingDate.date desc) {    _id,    title,    slug,    publishingDate,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    interviewTo[]->{      _id,      name    },    introText,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage  }  }
+// Query: *[_type == "interview"] | order(publishingDate.date desc) {    _id,    title,    slug,    publishingDate,    cover {      image {        asset,        alt,        hotspot,        crop      }    },    interviewTo[]{ _key, ...@->{ _id, name } },    introText,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage  }  }
 export type INTERVIEWS_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -945,6 +950,7 @@ export type INTERVIEWS_QUERY_RESULT = Array<{
     } | null;
   };
   interviewTo: Array<{
+    _key: string;
     _id: string;
     name: string;
   }>;
@@ -974,7 +980,7 @@ export type INTERVIEWS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: INTERVIEW_QUERY
-// Query: *[_type == "interview" && slug.current == $slug][0] {    _id,    title,    slug,    publishingDate,    cover {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt    },    interviewTo[]->{      _id,      name,      portrait    },    introText,    interview,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage  }  }
+// Query: *[_type == "interview" && slug.current == $slug][0] {    _id,    title,    slug,    publishingDate,    cover {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt    },    interviewTo[]{ _key, ...@->{ _id, name, portrait } },    introText,    interview,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage  }  }
 export type INTERVIEW_QUERY_RESULT = {
   _id: string;
   title: string;
@@ -991,6 +997,7 @@ export type INTERVIEW_QUERY_RESULT = {
     alt: string | null;
   };
   interviewTo: Array<{
+    _key: string;
     _id: string;
     name: string;
     portrait: ImageWithMetadata | null;
@@ -1039,7 +1046,7 @@ export type INTERVIEW_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: BIBLIOGRAPHY_QUERY
-// Query: *[_type == "bibliography"] | order(name asc) {    _id,    name,    year,    cover {      image { asset },      alt    },    languages[]->{      _id,      name    },    authors[]->{      _id,      name    },    publisher->{      _id,      name    },    tagSelector {      tags[]->{        _id,        name      }    },    affiliateLink,    isbn,    description,    pageCount,    categories  }
+// Query: *[_type == "bibliography"] | order(name asc) {    _id,    name,    year,    cover {      image { asset, hotspot, crop },      alt    },    languages[]{ _key, ...@->{ _id, name } },    authors[]{ _key, ...@->{ _id, name } },    publisher->{      _id,      name    },    tagSelector {      tags[]->{        _id,        name      }    },    affiliateLink,    isbn,    description,    pageCount,    categories  }
 export type BIBLIOGRAPHY_QUERY_RESULT = Array<{
   _id: string;
   name: string;
@@ -1047,14 +1054,18 @@ export type BIBLIOGRAPHY_QUERY_RESULT = Array<{
   cover: {
     image: {
       asset: SanityImageAssetReference | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
     } | null;
     alt: string | null;
   } | null;
   languages: Array<{
+    _key: string;
     _id: string;
     name: string;
   }> | null;
   authors: Array<{
+    _key: string;
     _id: string;
     name: string;
   }> | null;
@@ -1118,7 +1129,7 @@ export type BOOKSHOPS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: GLOSSARY_QUERY
-// Query: *[_type == "glossary"] | order(name asc) {    _id,    name,    description,    image {      image { asset },      alt    }  }
+// Query: *[_type == "glossary"] | order(name asc) {    _id,    name,    description,    image {      image { asset, hotspot, crop },      alt    }  }
 export type GLOSSARY_QUERY_RESULT = Array<{
   _id: string;
   name: string;
@@ -1126,6 +1137,8 @@ export type GLOSSARY_QUERY_RESULT = Array<{
   image: {
     image: {
       asset: SanityImageAssetReference | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
     } | null;
     alt: string | null;
   } | null;
@@ -1258,13 +1271,15 @@ export type TYPE_FOUNDRIES_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: WEB_SOURCES_QUERY
-// Query: *[_type == "webSource"] | order(name asc) {    _id,    name,    cover {      image { asset },      alt    },    category->{      _id,      name    },    tagSelector {      tags[]->{        _id,        name      }    },    affiliateLink  }
+// Query: *[_type == "webSource"] | order(name asc) {    _id,    name,    cover {      image { asset, hotspot, crop },      alt    },    category->{      _id,      name    },    tagSelector {      tags[]{ _key, ...@->{ _id, name } }    },    affiliateLink  }
 export type WEB_SOURCES_QUERY_RESULT = Array<{
   _id: string;
   name: string;
   cover: {
     image: {
       asset: SanityImageAssetReference | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
     } | null;
     alt: string | null;
   } | null;
@@ -1274,6 +1289,7 @@ export type WEB_SOURCES_QUERY_RESULT = Array<{
   };
   tagSelector: {
     tags: Array<{
+      _key: string;
       _id: string;
       name: string;
     }> | null;
@@ -1286,16 +1302,16 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "siteSettings"][0] {\n    homeIntro,\n    projectsIntro,\n    interviewsIntro,\n    designersIntro,\n  }\n': SITE_SETTINGS_QUERY_RESULT;
-    '\n  *[_type == "project"] | order(_createdAt desc) {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage\n  }\n\n  }\n': PROJECTS_QUERY_RESULT;
-    '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]->{\n      _id,\n      name,\n      slug\n    },\n    teacher->{\n      _id,\n      name,\n    },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery,\n    description,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage\n  }\n\n  }\n': PROJECT_QUERY_RESULT;
-    '\n  *[_type == "interview"] | order(publishingDate.date desc) {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    interviewTo[]->{\n      _id,\n      name\n    },\n    introText,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage\n  }\n\n  }\n': INTERVIEWS_QUERY_RESULT;
-    '\n  *[_type == "interview" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    interviewTo[]->{\n      _id,\n      name,\n      portrait\n    },\n    introText,\n    interview,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage\n  }\n\n  }\n': INTERVIEW_QUERY_RESULT;
-    '\n  *[_type == "bibliography"] | order(name asc) {\n    _id,\n    name,\n    year,\n    cover {\n      image { asset },\n      alt\n    },\n    languages[]->{\n      _id,\n      name\n    },\n    authors[]->{\n      _id,\n      name\n    },\n    publisher->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    affiliateLink,\n    isbn,\n    description,\n    pageCount,\n    categories\n  }\n': BIBLIOGRAPHY_QUERY_RESULT;
+    '\n  *[_type == "project"] | order(_createdAt desc) {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]{ _key, ...@->{ _id, name, slug } },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage\n  }\n\n  }\n': PROJECTS_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]{ _key, ...@->{ _id, name, slug } },\n    teacher->{\n      _id,\n      name,\n    },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery,\n    description,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage\n  }\n\n  }\n': PROJECT_QUERY_RESULT;
+    '\n  *[_type == "interview"] | order(publishingDate.date desc) {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    interviewTo[]{ _key, ...@->{ _id, name } },\n    introText,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage\n  }\n\n  }\n': INTERVIEWS_QUERY_RESULT;
+    '\n  *[_type == "interview" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    interviewTo[]{ _key, ...@->{ _id, name, portrait } },\n    introText,\n    interview,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage\n  }\n\n  }\n': INTERVIEW_QUERY_RESULT;
+    '\n  *[_type == "bibliography"] | order(name asc) {\n    _id,\n    name,\n    year,\n    cover {\n      image { asset, hotspot, crop },\n      alt\n    },\n    languages[]{ _key, ...@->{ _id, name } },\n    authors[]{ _key, ...@->{ _id, name } },\n    publisher->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    affiliateLink,\n    isbn,\n    description,\n    pageCount,\n    categories\n  }\n': BIBLIOGRAPHY_QUERY_RESULT;
     '\n  *[_type == "bookshop"] | order(name asc) {\n    _id,\n    name,\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    location {\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    address,\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': BOOKSHOPS_QUERY_RESULT;
-    '\n  *[_type == "glossary"] | order(name asc) {\n    _id,\n    name,\n    description,\n    image {\n      image { asset },\n      alt\n    }\n  }\n': GLOSSARY_QUERY_RESULT;
+    '\n  *[_type == "glossary"] | order(name asc) {\n    _id,\n    name,\n    description,\n    image {\n      image { asset, hotspot, crop },\n      alt\n    }\n  }\n': GLOSSARY_QUERY_RESULT;
     '\n  *[_type == "institute"] | order(name asc) {\n    _id,\n    name,\n    yearFoundation,\n    languages[]->{\n      _id,\n      name\n    },\n    location {\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    address,\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': INSTITUTES_QUERY_RESULT;
     '\n  *[_type == "studio"] | order(name asc) {\n    _id,\n    name,\n    category->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    locations[] {\n      _key,\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': STUDIOS_QUERY_RESULT;
     '\n  *[_type == "typeFoundry"] | order(name asc) {\n    _id,\n    name,\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    location {\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': TYPE_FOUNDRIES_QUERY_RESULT;
-    '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    cover {\n      image { asset },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    affiliateLink\n  }\n': WEB_SOURCES_QUERY_RESULT;
+    '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    cover {\n      image { asset, hotspot, crop },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]{ _key, ...@->{ _id, name } }\n    },\n    affiliateLink\n  }\n': WEB_SOURCES_QUERY_RESULT;
   }
 }

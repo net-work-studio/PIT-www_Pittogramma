@@ -1,9 +1,11 @@
+import { ClockIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const history = defineType({
   type: "document",
   name: "history",
   title: "History",
+  icon: ClockIcon,
   fields: [
     defineField({
       type: "string",

@@ -1,9 +1,11 @@
+import { BlockquoteIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const glossary = defineType({
   type: "document",
   name: "glossary",
   title: "Glossary",
+  icon: BlockquoteIcon,
   fields: [
     defineField({
       type: "string",

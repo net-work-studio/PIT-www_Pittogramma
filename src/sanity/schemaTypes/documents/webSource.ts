@@ -1,9 +1,11 @@
+import { LinkIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const webSource = defineType({
   type: "document",
   name: "webSource",
   title: "Web Source",
+  icon: LinkIcon,
   fields: [
     defineField({
       type: "string",

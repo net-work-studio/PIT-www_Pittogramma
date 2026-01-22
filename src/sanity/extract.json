@@ -146,6 +146,27 @@
         },
         "optional": true
       },
+      "year": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
+      "description": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "pageCount": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
       "languages": {
         "type": "objectAttribute",
         "value": {
@@ -165,6 +186,13 @@
               "name": "language.reference"
             }
           }
+        },
+        "optional": true
+      },
+      "fetchedLanguages": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
@@ -220,10 +248,10 @@
         },
         "optional": true
       },
-      "year": {
+      "fetchedCategories": {
         "type": "objectAttribute",
         "value": {
-          "type": "number"
+          "type": "string"
         },
         "optional": true
       },
@@ -231,20 +259,6 @@
         "type": "objectAttribute",
         "value": {
           "type": "string"
-        },
-        "optional": true
-      },
-      "description": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "pageCount": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "number"
         },
         "optional": true
       },
@@ -3160,6 +3174,14 @@
         "type": "objectAttribute",
         "value": {
           "type": "string"
+        },
+        "optional": false
+      },
+      "slug": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "slug"
         },
         "optional": false
       },

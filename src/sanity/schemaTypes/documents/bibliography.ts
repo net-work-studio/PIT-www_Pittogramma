@@ -1,3 +1,4 @@
+import { BookIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { IsbnInput } from "@/sanity/components/isbn-input";
 
@@ -5,6 +6,7 @@ export const bibliography = defineType({
   type: "document",
   name: "bibliography",
   title: "Bibliography",
+  icon: BookIcon,
   groups: [
     { name: "main", title: "Main", default: true },
     { name: "details", title: "Details" },
@@ -102,7 +104,7 @@ export const bibliography = defineType({
         defineArrayMember({
           type: "reference",
           name: "author",
-          title: "Tag",
+          title: "Author",
           to: [{ type: "author" }],
         }),
       ],

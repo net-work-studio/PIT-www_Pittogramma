@@ -1,3 +1,4 @@
+import { CommentIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { groups } from "@/sanity/utils/groups";
 
@@ -5,6 +6,7 @@ export const interview = defineType({
   type: "document",
   name: "interview",
   title: "Interview",
+  icon: CommentIcon,
   groups,
   fields: [
     defineField({

@@ -48,11 +48,7 @@ export const PROJECTS_QUERY = defineQuery(`
       slug,
       portrait
     },
-    tags[]->{
-      _id,
-      name,
-      slug
-    },
+    tags[]{ _key, ...@->{ _id, name, slug } },
     ${SEO_FIELDS}
   }
 `);
@@ -78,11 +74,7 @@ export const PROJECT_QUERY = defineQuery(`
       slug,
       portrait
     },
-    tags[]->{
-      _id,
-      name,
-      slug
-    },
+    tags[]{ _key, ...@->{ _id, name, slug } },
     teacher->{
       _id,
       name,
@@ -112,10 +104,7 @@ export const INTERVIEWS_QUERY = defineQuery(`
         crop
       }
     },
-    interviewTo[]->{
-      _id,
-      name
-    },
+    interviewTo[]{ _key, ...@->{ _id, name } },
     introText,
     ${SEO_FIELDS}
   }
@@ -137,11 +126,7 @@ export const INTERVIEW_QUERY = defineQuery(`
       },
       alt
     },
-    interviewTo[]->{
-      _id,
-      name,
-      portrait
-    },
+    interviewTo[]{ _key, ...@->{ _id, name, portrait } },
     introText,
     interview,
     ${SEO_FIELDS}
@@ -156,17 +141,11 @@ export const BIBLIOGRAPHY_QUERY = defineQuery(`
     name,
     year,
     cover {
-      image { asset },
+      image { asset, hotspot, crop },
       alt
     },
-    languages[]->{
-      _id,
-      name
-    },
-    authors[]->{
-      _id,
-      name
-    },
+    languages[]{ _key, ...@->{ _id, name } },
+    authors[]{ _key, ...@->{ _id, name } },
     publisher->{
       _id,
       name
@@ -222,7 +201,7 @@ export const GLOSSARY_QUERY = defineQuery(`
     name,
     description,
     image {
-      image { asset },
+      image { asset, hotspot, crop },
       alt
     }
   }
@@ -328,7 +307,7 @@ export const WEB_SOURCES_QUERY = defineQuery(`
     _id,
     name,
     cover {
-      image { asset },
+      image { asset, hotspot, crop },
       alt
     },
     category->{
@@ -336,10 +315,7 @@ export const WEB_SOURCES_QUERY = defineQuery(`
       name
     },
     tagSelector {
-      tags[]->{
-        _id,
-        name
-      }
+      tags[]{ _key, ...@->{ _id, name } }
     },
     affiliateLink
   }

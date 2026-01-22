@@ -1,9 +1,11 @@
+import { TextIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const typeFoundry = defineType({
   type: "document",
   name: "typeFoundry",
   title: "Type Foundry",
+  icon: TextIcon,
   fields: [
     defineField({
       type: "string",
