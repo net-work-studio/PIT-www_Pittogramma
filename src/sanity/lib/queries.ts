@@ -10,14 +10,11 @@ const SEO_FIELDS = `
     openGraph {
       title,
       description,
-      image,
       url
     },
     xCard {
-      cardType,
       title,
-      description,
-      image
+      description
     },
     metaImage
   }
