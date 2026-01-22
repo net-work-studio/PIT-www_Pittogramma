@@ -1,13 +1,13 @@
 // lib/seo/mapSanityToMetadata.ts
 import type { Metadata } from "next";
-import type { SeoModule } from "@/lib/types/seo";
+import type { SeoImageSource, SeoModule } from "@/lib/types/seo";
 import { urlForImage } from "@/sanity/lib/image";
 
 interface MapSanityToMetadataProps {
   page: {
     title: string;
     description?: string;
-    coverImage?: any;
+    coverImage?: SeoImageSource;
     seo?: SeoModule;
   };
   baseUrl: string;
@@ -44,7 +44,10 @@ export function mapSanityToMetadata({
   const metaImage = page.seo?.metaImage || page.coverImage;
 
   // Helper to build image metadata
-  const buildImageMeta = (image: any, altFallback: string) => {
+  const buildImageMeta = (
+    image: SeoImageSource | null | undefined,
+    altFallback: string
+  ) => {
     if (!image) {
       return;
     }
@@ -54,8 +57,8 @@ export function mapSanityToMetadata({
     }
     return {
       url: builder.url(),
-      width: image.metadata?.dimensions?.width || 1200,
-      height: image.metadata?.dimensions?.height || 630,
+      width: 1200,
+      height: 630,
       alt: image.alt || altFallback,
     };
   };

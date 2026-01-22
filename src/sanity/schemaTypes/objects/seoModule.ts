@@ -40,6 +40,12 @@ export const seoModule = defineType({
       ],
     }),
     defineField({
+      name: "metaImage",
+      title: "Meta Image",
+      type: "imageWithMetadata",
+      description: "Default image representing this page in search or shares.",
+    }),
+    defineField({
       name: "metaRobots",
       title: "Meta Robots",
       type: "string",
@@ -75,12 +81,6 @@ export const seoModule = defineType({
       name: "xCard",
       title: "X (Twitter) Card",
       type: "xCard",
-    }),
-    defineField({
-      name: "metaImage",
-      title: "Meta Image",
-      type: "imageWithMetadata",
-      description: "Default image representing this page in search or shares.",
     }),
   ],
 });

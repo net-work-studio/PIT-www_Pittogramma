@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { cache } from "react";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import ProjectInfo from "@/components/modules/project/project-info";
 import DiscoverMore from "@/components/modules/shared/discover-more";
@@ -37,7 +37,7 @@ export async function generateMetadata({
     page: {
       title: project.title,
       description: project.description ?? undefined,
-      coverImage: project.cover?.image,
+      coverImage: project.cover ?? undefined,
       seo: project.seo as SeoModule | undefined,
     },
     baseUrl: siteDefaults.baseUrl,

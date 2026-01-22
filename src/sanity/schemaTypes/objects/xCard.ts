@@ -6,7 +6,7 @@ export const xCard = defineType({
   type: "object",
   options: {
     collapsible: true,
-    collapsed: true,
+    collapsed: false,
   },
   fields: [
     defineField({
