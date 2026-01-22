@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
+
 import SearchInput from "@/components/feat/search-input";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import PageHeader from "@/components/shared/page-header";
+
+export const metadata: Metadata = {
+  title: "Glossary",
+  description:
+    "A list of the most common and used terms in the design industry",
+};
 import {
   Accordion,
   AccordionContent,
