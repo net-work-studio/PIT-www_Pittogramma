@@ -89,7 +89,7 @@ function parseBookData(book: GoogleBooksItem): BookData {
 }
 
 export async function GET(request: Request) {
-  const ip = request.headers.get("x-forwarded-for") ?? "unknown";
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
   if (isRateLimited(ip)) {
     return NextResponse.json(
       { error: "Too many requests. Please try again later." },

@@ -7,7 +7,9 @@ const ALLOWED_HOSTNAMES = [
   "books.googleapis.com",
 ];
 
-// Simple in-memory rate limiter
+// In-memory rate limiter - resets on restart, doesn't share state across serverless instances.
+// Acceptable here since this API is only used for backend updates, not high-frequency calls.
+// For production-scale use, consider Upstash Redis or Vercel KV.
 const rateLimit = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT = 30; // requests per window
 const RATE_WINDOW = 60 * 1000; // 1 minute in ms
@@ -29,7 +31,7 @@ function isRateLimited(ip: string): boolean {
 }
 
 export async function GET(request: Request) {
-  const ip = request.headers.get("x-forwarded-for") ?? "unknown";
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
   if (isRateLimited(ip)) {
     return NextResponse.json(
       { error: "Too many requests. Please try again later." },
