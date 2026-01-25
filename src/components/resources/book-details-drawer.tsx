@@ -9,6 +9,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { buildTrackedLink, type UtmSettings } from "@/lib/tracked-link";
 import { urlForImage } from "@/sanity/lib/image";
 import type { BIBLIOGRAPHY_QUERY_RESULT } from "@/sanity/types";
 
@@ -18,6 +19,7 @@ interface BookDetailsDrawerProps {
   book: BookItem | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  utmSettings?: UtmSettings;
 }
 
 function getAuthors(authors: BookItem["authors"]) {
@@ -31,6 +33,7 @@ export function BookDetailsDrawer({
   book,
   open,
   onOpenChange,
+  utmSettings,
 }: BookDetailsDrawerProps) {
   if (!book) return null;
 
@@ -122,7 +125,7 @@ export function BookDetailsDrawer({
           {book.affiliateLink && (
             <Button asChild className="mt-auto w-full">
               <a
-                href={book.affiliateLink}
+                href={buildTrackedLink(book.affiliateLink, "book", utmSettings)}
                 target="_blank"
                 rel="noopener noreferrer"
               >

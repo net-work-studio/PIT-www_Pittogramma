@@ -5,6 +5,7 @@ import { LanguagesDisplay } from "@/components/resources/languages-display";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import { TagsDisplay } from "@/components/resources/tags-display";
 import { BookDetailsDrawer } from "@/components/resources/book-details-drawer";
+import type { UtmSettings } from "@/lib/tracked-link";
 import type { BIBLIOGRAPHY_QUERY_RESULT } from "@/sanity/types";
 
 type BibliographyItem = BIBLIOGRAPHY_QUERY_RESULT[number];
@@ -79,9 +80,10 @@ function BookCardGrid({ book, onClick }: BookCardGridProps) {
 interface BibliographyListProps {
   books: BIBLIOGRAPHY_QUERY_RESULT;
   view: "list" | "grid";
+  utmSettings?: UtmSettings;
 }
 
-export function BibliographyList({ books, view }: BibliographyListProps) {
+export function BibliographyList({ books, view, utmSettings }: BibliographyListProps) {
   const [selectedBook, setSelectedBook] = useState<BibliographyItem | null>(
     null
   );
@@ -134,6 +136,7 @@ export function BibliographyList({ books, view }: BibliographyListProps) {
         book={selectedBook}
         open={drawerOpen}
         onOpenChange={setDrawerOpen}
+        utmSettings={utmSettings}
       />
     </>
   );

@@ -4,8 +4,9 @@ import SearchInput from "@/components/feat/search-input";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import PageHeader from "@/components/shared/page-header";
 import { BibliographyContent } from "@/components/resources/bibliography-content";
+import type { UtmSettings } from "@/lib/tracked-link";
 import { sanityFetch } from "@/sanity/lib/live";
-import { BIBLIOGRAPHY_QUERY } from "@/sanity/lib/queries";
+import { BIBLIOGRAPHY_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
   title: "Bibliography",
@@ -13,9 +14,16 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const { data: books } = await sanityFetch({
-    query: BIBLIOGRAPHY_QUERY,
-  });
+  const [{ data: books }, { data: settings }] = await Promise.all([
+    sanityFetch({ query: BIBLIOGRAPHY_QUERY }),
+    sanityFetch({ query: SITE_SETTINGS_QUERY }),
+  ]);
+
+  const utmSettings: UtmSettings = {
+    utmSource: settings?.utmSource,
+    utmMedium: settings?.utmMedium,
+    utmCampaign: settings?.utmCampaign,
+  };
 
   return (
     <>
@@ -37,7 +45,7 @@ export default async function Page() {
           <li className="col-span-2">Tag</li>
           <li className="col-span-1">Year</li>
         </ul>
-        <BibliographyContent books={books} />
+        <BibliographyContent books={books} utmSettings={utmSettings} />
       </div>
     </>
   );

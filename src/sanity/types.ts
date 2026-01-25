@@ -116,11 +116,16 @@ export type WebSource = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  sourceUrl: string;
   name: string;
+  description?: string;
   cover?: ImageWithMetadata;
   category: CategoryReference;
   tagSelector?: TagSelector;
-  affiliateLink?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogSiteName?: string;
+  ogImageUrl?: string;
 };
 
 export type Publisher = {
@@ -278,6 +283,9 @@ export type SiteSettings = {
   projectsIntro: string;
   interviewsIntro: string;
   designersIntro: string;
+  utmSource: string;
+  utmMedium?: string;
+  utmCampaign?: string;
   projectsPage?: {
     seo?: SeoModule;
   };
@@ -795,12 +803,15 @@ type ArrayOf<T> = Array<
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_type == "siteSettings"][0] {    homeIntro,    projectsIntro,    interviewsIntro,    designersIntro,  }
+// Query: *[_type == "siteSettings"][0] {    homeIntro,    projectsIntro,    interviewsIntro,    designersIntro,    utmSource,    utmMedium,    utmCampaign  }
 export type SITE_SETTINGS_QUERY_RESULT = {
   homeIntro: string;
   projectsIntro: string;
   interviewsIntro: string;
   designersIntro: string;
+  utmSource: string;
+  utmMedium: string | null;
+  utmCampaign: string | null;
 } | null;
 
 // Source: src/sanity/lib/queries.ts
@@ -1311,10 +1322,11 @@ export type TYPE_FOUNDRIES_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: WEB_SOURCES_QUERY
-// Query: *[_type == "webSource"] | order(name asc) {    _id,    name,    cover {      image { asset, hotspot, crop },      alt    },    category->{      _id,      name    },    tagSelector {      tags[]{ _key, ...@->{ _id, name } }    },    affiliateLink  }
+// Query: *[_type == "webSource"] | order(name asc) {    _id,    name,    description,    cover {      image { asset, hotspot, crop },      alt    },    category->{      _id,      name    },    tagSelector {      tags[]{ _key, ...@->{ _id, name } }    },    sourceUrl,    ogTitle,    ogDescription,    ogSiteName,    ogImageUrl  }
 export type WEB_SOURCES_QUERY_RESULT = Array<{
   _id: string;
   name: string;
+  description: string | null;
   cover: {
     image: {
       asset: SanityImageAssetReference | null;
@@ -1334,14 +1346,18 @@ export type WEB_SOURCES_QUERY_RESULT = Array<{
       name: string;
     }> | null;
   } | null;
-  affiliateLink: string | null;
+  sourceUrl: string;
+  ogTitle: string | null;
+  ogDescription: string | null;
+  ogSiteName: string | null;
+  ogImageUrl: string | null;
 }>;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "siteSettings"][0] {\n    homeIntro,\n    projectsIntro,\n    interviewsIntro,\n    designersIntro,\n  }\n': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[_type == "siteSettings"][0] {\n    homeIntro,\n    projectsIntro,\n    interviewsIntro,\n    designersIntro,\n    utmSource,\n    utmMedium,\n    utmCampaign\n  }\n': SITE_SETTINGS_QUERY_RESULT;
     '\n  *[_type == "project"] | order(_createdAt desc) {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]{ _key, ...@->{ _id, name, slug } },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': PROJECTS_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]{ _key, ...@->{ _id, name, slug } },\n    teacher->{\n      _id,\n      name,\n    },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery,\n    description,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': PROJECT_QUERY_RESULT;
     '\n  *[_type == "interview"] | order(publishingDate.date desc) {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    interviewTo[]{ _key, ...@->{ _id, name } },\n    introText,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': INTERVIEWS_QUERY_RESULT;
@@ -1352,6 +1368,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "institute"] | order(name asc) {\n    _id,\n    name,\n    yearFoundation,\n    languages[]->{\n      _id,\n      name\n    },\n    location {\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    address,\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': INSTITUTES_QUERY_RESULT;
     '\n  *[_type == "studio"] | order(name asc) {\n    _id,\n    name,\n    category->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    locations[] {\n      _key,\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': STUDIOS_QUERY_RESULT;
     '\n  *[_type == "typeFoundry"] | order(name asc) {\n    _id,\n    name,\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    location {\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': TYPE_FOUNDRIES_QUERY_RESULT;
-    '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    cover {\n      image { asset, hotspot, crop },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]{ _key, ...@->{ _id, name } }\n    },\n    affiliateLink\n  }\n': WEB_SOURCES_QUERY_RESULT;
+    '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    description,\n    cover {\n      image { asset, hotspot, crop },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]{ _key, ...@->{ _id, name } }\n    },\n    sourceUrl,\n    ogTitle,\n    ogDescription,\n    ogSiteName,\n    ogImageUrl\n  }\n': WEB_SOURCES_QUERY_RESULT;
   }
 }

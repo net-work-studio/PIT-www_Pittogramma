@@ -36,6 +36,9 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     projectsIntro,
     interviewsIntro,
     designersIntro,
+    utmSource,
+    utmMedium,
+    utmCampaign
   }
 `);
 
@@ -316,6 +319,7 @@ export const WEB_SOURCES_QUERY = defineQuery(`
   *[_type == "webSource"] | order(name asc) {
     _id,
     name,
+    description,
     cover {
       image { asset, hotspot, crop },
       alt
@@ -327,6 +331,10 @@ export const WEB_SOURCES_QUERY = defineQuery(`
     tagSelector {
       tags[]{ _key, ...@->{ _id, name } }
     },
-    affiliateLink
+    sourceUrl,
+    ogTitle,
+    ogDescription,
+    ogSiteName,
+    ogImageUrl
   }
 `);
