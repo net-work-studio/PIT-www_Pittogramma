@@ -149,11 +149,21 @@ export async function GET(request: Request) {
         Accept: "text/html,application/xhtml+xml",
       },
       redirect: "follow",
+      signal: AbortSignal.timeout(10000),
     });
 
     if (!response.ok) {
       return NextResponse.json(
         { error: `Failed to fetch URL: ${response.status}` },
+        { status: 502 }
+      );
+    }
+
+    const contentLength = response.headers.get("content-length");
+    const MAX_HTML_SIZE = 5 * 1024 * 1024; // 5MB
+    if (contentLength && parseInt(contentLength) > MAX_HTML_SIZE) {
+      return NextResponse.json(
+        { error: "Response too large" },
         { status: 502 }
       );
     }

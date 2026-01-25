@@ -182,7 +182,8 @@ export function UrlInput(props: StringInputProps) {
 
     try {
       const response = await fetch(
-        `/api/websites/fetch-og?url=${encodeURIComponent(value)}`
+        `/api/websites/fetch-og?url=${encodeURIComponent(value)}`,
+        { signal: AbortSignal.timeout(15000) }
       );
       const data = await response.json();
 
@@ -195,7 +196,11 @@ export function UrlInput(props: StringInputProps) {
       // Automatically patch the document fields
       await patchDocumentFields(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      if (err instanceof Error && err.name === "TimeoutError") {
+        setError("Request timed out. The website may be slow or unreachable.");
+      } else {
+        setError(err instanceof Error ? err.message : "An error occurred");
+      }
     } finally {
       setIsLoading(false);
     }

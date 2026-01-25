@@ -52,6 +52,7 @@ export async function GET(request: Request) {
       headers: {
         "User-Agent": "Mozilla/5.0 (compatible; PittogrammaBot/1.0)",
       },
+      signal: AbortSignal.timeout(10000),
     });
 
     if (!response.ok) {
@@ -64,6 +65,16 @@ export async function GET(request: Request) {
     if (!contentType.startsWith("image/")) {
       return NextResponse.json(
         { error: "URL does not point to a valid image" },
+        { status: 400 }
+      );
+    }
+
+    // Validate size before loading into memory
+    const contentLength = response.headers.get("content-length");
+    const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+    if (contentLength && parseInt(contentLength) > MAX_SIZE) {
+      return NextResponse.json(
+        { error: "Image too large (max 10MB)" },
         { status: 400 }
       );
     }
