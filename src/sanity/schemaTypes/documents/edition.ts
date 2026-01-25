@@ -1,9 +1,11 @@
+import { DocumentsIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const edition = defineType({
   type: "document",
   name: "edition",
   title: "Edition",
+  icon: DocumentsIcon,
   fields: [
     defineField({
       type: "string",
@@ -22,6 +24,11 @@ export const edition = defineType({
       name: "cover",
       title: "Cover",
       validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "seoModule",
+      name: "seo",
+      title: "SEO",
     }),
   ],
 });

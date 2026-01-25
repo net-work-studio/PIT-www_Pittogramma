@@ -1,20 +1,41 @@
 import SearchInput from "@/components/feat/search-input";
-import PageHeader from "@/components/shared/page-header";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
+import { LanguagesDisplay } from "@/components/resources/languages-display";
+import {
+  CityDisplay,
+  CountryDisplay,
+} from "@/components/resources/location-display";
+import { ResourceListItem } from "@/components/resources/resource-list-item";
+import PageHeader from "@/components/shared/page-header";
+import { sanityFetch } from "@/sanity/lib/live";
+import { INSTITUTES_QUERY } from "@/sanity/lib/queries";
+import type { INSTITUTES_QUERY_RESULT } from "@/sanity/types";
 
-function InstituteCard() {
+type Institute = INSTITUTES_QUERY_RESULT[number];
+
+function InstituteCard({ institute }: { institute: Institute }) {
   return (
-    <ul className="grid grid-cols-12 gap-2.5 rounded-lg bg-secondary p-2.5">
-      <li className="col-span-4">Name</li>
-      <li className="col-span-2">ITA</li>
-      <li className="col-span-2">City</li>
-      <li className="col-span-2">Country</li>
-      <li className="col-span-2">2000</li>
-    </ul>
+    <ResourceListItem>
+      <li className="col-span-4">{institute.name}</li>
+      <li className="col-span-2">
+        <LanguagesDisplay languages={institute.languages} />
+      </li>
+      <li className="col-span-2">
+        <CityDisplay location={institute.location} />
+      </li>
+      <li className="col-span-2">
+        <CountryDisplay location={institute.location} />
+      </li>
+      <li className="col-span-2">{institute.yearFoundation || "-"}</li>
+    </ResourceListItem>
   );
 }
 
-export default function Page() {
+export default async function Page() {
+  const { data: institutes } = await sanityFetch({
+    query: INSTITUTES_QUERY,
+  });
+
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-7.5">
@@ -35,9 +56,15 @@ export default function Page() {
           <li className="col-span-2">Foundation</li>
         </ul>
         <section className="flex flex-col gap-1.5">
-          {Array.from({ length: 20 }).map((_, index) => (
-            <InstituteCard key={index} />
-          ))}
+          {institutes.length > 0 ? (
+            institutes.map((institute) => (
+              <InstituteCard institute={institute} key={institute._id} />
+            ))
+          ) : (
+            <p className="text-center text-muted-foreground">
+              No institutes available yet.
+            </p>
+          )}
         </section>
       </div>
     </>

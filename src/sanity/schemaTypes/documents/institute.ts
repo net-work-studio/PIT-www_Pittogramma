@@ -1,3 +1,4 @@
+import { HomeIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 const minYearFoundation = 1000;
@@ -7,6 +8,7 @@ export const institute = defineType({
   type: "document",
   name: "institute",
   title: "Institute",
+  icon: HomeIcon,
   fields: [
     defineField({
       type: "string",

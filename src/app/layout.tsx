@@ -1,7 +1,10 @@
-import localFont from "next/font/local";
-import "./globals.css";
 import type { Metadata } from "next";
+import localFont from "next/font/local";
+
+import { JsonLd } from "@/components/seo/JsonLd";
 import { siteDefaults } from "@/lib/seo/siteDefaults";
+
+import "./globals.css";
 
 const sono = localFont({
   src: [
@@ -64,6 +67,22 @@ export default function RootLayout({
       <body
         className={`${aktual.variable} ${sono.variable} flex min-h-screen flex-col justify-between bg-background text-foreground antialiased`}
       >
+        <JsonLd
+          data={{
+            name: siteDefaults.title,
+            description: siteDefaults.description,
+            url: siteDefaults.baseUrl,
+          }}
+          type="Organization"
+        />
+        <JsonLd
+          data={{
+            name: siteDefaults.title,
+            description: siteDefaults.description,
+            url: siteDefaults.baseUrl,
+          }}
+          type="WebSite"
+        />
         {children}
       </body>
     </html>

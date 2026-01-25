@@ -5,7 +5,7 @@ import {
 import { dataset, projectId } from "../env";
 import type { ImageWithMetadata } from "../types";
 
-type ImageLike = {
+interface ImageLike {
   _type?: string;
   image?: {
     _type?: string;
@@ -14,7 +14,7 @@ type ImageLike = {
     crop?: unknown;
   } | null;
   alt?: string | null;
-};
+}
 
 // https://www.sanity.io/docs/image-url
 const builder = createImageUrlBuilder({ projectId, dataset });
@@ -27,7 +27,9 @@ export const getImageSource = (
 ): SanityImageSource | null => source?.image ?? null;
 
 /** Build URL directly from imageWithMetadata */
-export const urlForImage = (source: ImageWithMetadata | ImageLike | null | undefined) => {
+export const urlForImage = (
+  source: ImageWithMetadata | ImageLike | null | undefined
+) => {
   const img = getImageSource(source);
   return img ? builder.image(img) : null;
 };

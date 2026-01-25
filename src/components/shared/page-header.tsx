@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
 
-type PageHeaderProps = {
+interface PageHeaderProps {
   title: string;
   subtitle?: string;
   className?: string;
-};
+}
 
 export default function PageHeader({
   title,

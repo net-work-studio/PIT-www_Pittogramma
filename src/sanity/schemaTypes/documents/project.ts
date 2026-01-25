@@ -1,4 +1,6 @@
+import { ProjectsIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { groups } from "@/sanity/utils/groups";
 
 const minYear = 1900;
 const maxYear = 2500;
@@ -7,17 +9,21 @@ export const project = defineType({
   type: "document",
   name: "project",
   title: "Project",
+  icon: ProjectsIcon,
+  groups,
   fields: [
     defineField({
       type: "string",
       name: "title",
       title: "Title",
+      group: "metadata",
       validation: (e) => e.required(),
     }),
     defineField({
       type: "slug",
       name: "slug",
       title: "Slug",
+      group: "metadata",
       options: {
         source: "title",
       },
@@ -27,43 +33,50 @@ export const project = defineType({
       type: "publishingDate",
       name: "publishingDate",
       title: "Publishing Date",
+      group: "metadata",
+    }),
+
+    defineField({
+      type: "imageWithMetadata",
+      name: "cover",
+      group: "content",
+      title: "Cover",
+      validation: (e) => e.required(),
     }),
     defineField({
       type: "reference",
       name: "designer",
       title: "Designer",
+      group: "content",
       to: [{ type: "designer" }],
-      validation: (e) => e.required(),
-    }),
-    defineField({
-      type: "imageWithMetadata",
-      name: "cover",
-      title: "Cover",
       validation: (e) => e.required(),
     }),
     defineField({
       type: "reference",
       name: "institute",
       title: "Institute",
+      group: "content",
       to: [{ type: "institute" }],
     }),
     defineField({
       type: "reference",
       name: "teacher",
       title: "Teacher",
+      group: "content",
       to: [{ type: "teacher" }],
     }),
     defineField({
       type: "number",
       name: "year",
       title: "Year",
+      group: "content",
       validation: (e) =>
         e
           .required()
           .min(minYear)
           .custom((value) => {
             if (value && (value < minYear || value > maxYear)) {
-              return "Birth year must be exactly 4 digits";
+              return "Project year must be exactly 4 digits";
             }
             return true;
           }),
@@ -72,6 +85,7 @@ export const project = defineType({
       type: "array",
       name: "tags",
       title: "Tags",
+      group: "content",
       of: [
         defineArrayMember({
           type: "reference",
@@ -85,6 +99,7 @@ export const project = defineType({
       type: "array",
       name: "gallery",
       title: "Gallery",
+      group: "content",
       of: [defineArrayMember({ type: "block" })],
     }),
     defineField({ type: "text", name: "description", title: "Description" }),
@@ -92,6 +107,7 @@ export const project = defineType({
       type: "seoModule",
       name: "seo",
       title: "SEO",
+      group: "seo",
     }),
   ],
   preview: {

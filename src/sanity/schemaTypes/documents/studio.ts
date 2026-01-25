@@ -1,9 +1,11 @@
+import { DesktopIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const studio = defineType({
   type: "document",
   name: "studio",
   title: "Studio",
+  icon: DesktopIcon,
   fields: [
     defineField({
       type: "string",

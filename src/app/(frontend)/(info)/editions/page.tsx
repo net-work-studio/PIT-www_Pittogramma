@@ -16,11 +16,11 @@ const data = [
   },
 ];
 
-type EditionCardProps = {
+interface EditionCardProps {
   slug: string;
   cover: string;
   title: string;
-};
+}
 
 function EditionCard({ slug, cover, title }: EditionCardProps) {
   return (

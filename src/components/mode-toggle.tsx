@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import { useCallback } from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
@@ -15,6 +15,10 @@ import {
 export function ModeToggle() {
   const { setTheme } = useTheme()
 
+  const setLightTheme = useCallback(() => setTheme("light"), [setTheme])
+  const setDarkTheme = useCallback(() => setTheme("dark"), [setTheme])
+  const setSystemTheme = useCallback(() => setTheme("system"), [setTheme])
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -25,13 +29,13 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem onClick={setLightTheme}>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem onClick={setDarkTheme}>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem onClick={setSystemTheme}>
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

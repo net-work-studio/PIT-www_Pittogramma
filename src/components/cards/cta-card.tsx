@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 
-type CtaCardProps = {
+interface CtaCardProps {
   title: string;
   description: string;
   buttonText: string;
-};
+}
 
 export default function CtaCard({
   title,

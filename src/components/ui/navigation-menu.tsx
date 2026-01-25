@@ -1,8 +1,10 @@
+"use client";
+
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
 import { ChevronDownIcon } from "lucide-react";
 import type * as React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -18,16 +20,17 @@ function NavigationMenu({
   const isOpen = value !== "";
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = originalOverflow;
     };
   }, [isOpen]);
+
+  const handleClose = useCallback(() => setValue(""), []);
 
   return (
     <>
@@ -35,7 +38,7 @@ function NavigationMenu({
         <button
           aria-label="Close menu"
           className="fade-in-0 fixed inset-0 z-40 animate-in bg-background/50 backdrop-blur-xl duration-200"
-          onClick={() => setValue("")}
+          onClick={handleClose}
           type="button"
         />
       ) : null}

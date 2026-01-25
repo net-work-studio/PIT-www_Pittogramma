@@ -1,13 +1,13 @@
 // lib/seo/mapSanityToMetadata.ts
 import type { Metadata } from "next";
-import type { SeoModule } from "@/lib/types/seo";
+import type { SeoImageSource, SeoModule } from "@/lib/types/seo";
 import { urlForImage } from "@/sanity/lib/image";
 
-type MapSanityToMetadataProps = {
+interface MapSanityToMetadataProps {
   page: {
     title: string;
     description?: string;
-    coverImage?: any;
+    coverImage?: SeoImageSource;
     seo?: SeoModule;
   };
   baseUrl: string;
@@ -16,7 +16,7 @@ type MapSanityToMetadataProps = {
     title: string;
     description: string;
   };
-};
+}
 
 export function mapSanityToMetadata({
   page,
@@ -32,29 +32,46 @@ export function mapSanityToMetadata({
     page.seo?.metaDescription || page.description || siteDefaults.description;
 
   // Canonical URL
-  const canonicalUrl = page.seo?.canonicalURL ? `${baseUrl}${page.seo.canonicalURL}` : `${baseUrl}${path}`;
+  const canonicalUrl = page.seo?.canonicalURL
+    ? `${baseUrl}${page.seo.canonicalURL}`
+    : `${baseUrl}${path}`;
 
-  // Image fallback chain:
-  // 1. OG image → 2. X Card image → 3. Meta image → 4. Cover image → undefined
-  const ogImage =
-    page.seo?.openGraph?.image || page.seo?.metaImage || page.coverImage;
-  const xImage = page.seo?.xCard?.image || ogImage;
-  const metaImage = page.seo?.metaImage || page.coverImage;
+  // Single image source for all platforms
+  const sharedImage = page.seo?.metaImage || page.coverImage;
 
-  // Helper to build image metadata
-  const buildImageMeta = (image: any, altFallback: string) => {
-    if (!image) {
-      return;
-    }
-    const builder = urlForImage(image);
-    if (!builder) {
-      return;
-    }
+  const buildOpenGraph = (): Metadata["openGraph"] => {
+    const imageBuilder = sharedImage ? urlForImage(sharedImage) : undefined;
+    const imageMeta = imageBuilder
+      ? {
+          url: imageBuilder.width(1200).height(630).url(),
+          width: 1200,
+          height: 630,
+          alt: sharedImage?.alt || title,
+        }
+      : undefined;
+
     return {
-      url: builder.url(),
-      width: image.metadata?.dimensions?.width || 1200,
-      height: image.metadata?.dimensions?.height || 630,
-      alt: image.alt || altFallback,
+      title: page.seo?.openGraph?.title || title,
+      description: page.seo?.openGraph?.description || description,
+      url: page.seo?.openGraph?.url || canonicalUrl,
+      images: imageMeta ? [imageMeta] : undefined,
+    };
+  };
+
+  const buildTwitter = (): Metadata["twitter"] => {
+    let images: string[] | undefined;
+    if (sharedImage) {
+      const imageBuilder = urlForImage(sharedImage);
+      if (imageBuilder) {
+        images = [imageBuilder.width(1200).height(630).url()];
+      }
+    }
+
+    return {
+      card: "summary_large_image",
+      title: page.seo?.xCard?.title || title,
+      description: page.seo?.xCard?.description || description,
+      images,
     };
   };
 
@@ -65,40 +82,7 @@ export function mapSanityToMetadata({
     alternates: {
       canonical: canonicalUrl,
     },
-    openGraph: page.seo?.openGraph
-      ? {
-          title: page.seo.openGraph.title || title,
-          description: page.seo.openGraph.description || description,
-          url: page.seo.openGraph.url || canonicalUrl,
-          images: ogImage ? [buildImageMeta(ogImage, title)] : undefined,
-        }
-      : {
-          title,
-          description,
-          url: canonicalUrl,
-          images: ogImage ? [buildImageMeta(ogImage, title)] : undefined,
-        },
-    twitter: page.seo?.xCard
-      ? {
-          card:
-            (page.seo.xCard.cardType as "summary" | "summary_large_image") ||
-            "summary_large_image",
-          title: page.seo.xCard.title || title,
-          description: page.seo.xCard.description || description,
-          images: xImage ? [urlForImage(xImage)?.url()].filter(Boolean) as string[] : undefined,
-        }
-      : {
-          card: "summary_large_image",
-          title,
-          description,
-          images: xImage ? [urlForImage(xImage)?.url()].filter(Boolean) as string[] : undefined,
-        },
-    // For standard meta tags
-    ...(metaImage && urlForImage(metaImage)?.url() && {
-      // You can add custom meta tags if needed
-      other: {
-        "og:image": urlForImage(metaImage)?.url(),
-      },
-    }),
+    openGraph: buildOpenGraph(),
+    twitter: buildTwitter(),
   };
 }

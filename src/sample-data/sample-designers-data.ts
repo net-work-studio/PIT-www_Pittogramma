@@ -1,10 +1,10 @@
-type DesignerSample = {
+interface DesignerSample {
   id: string;
   name: string;
   portrait: string;
   location: { city: string; country: string };
   birthYear: number;
-};
+}
 
 export const sampleDesignersData: DesignerSample[] = [
   {

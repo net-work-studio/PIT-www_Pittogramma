@@ -1,3 +1,4 @@
+import { UserIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 const minBirthYear = 1900;
@@ -7,6 +8,7 @@ export const professional = defineType({
   type: "document",
   name: "professional",
   title: "Professional",
+  icon: UserIcon,
   fields: [
     defineField({
       type: "string",

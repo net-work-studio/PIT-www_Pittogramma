@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { urlForImage } from "@/sanity/lib/image";
 import type { ImageWithMetadata } from "@/sanity/types";
 
-type ImageLike = {
+interface ImageLike {
   _type?: string;
   image?: {
     _type?: string;
@@ -12,7 +12,7 @@ type ImageLike = {
     crop?: unknown;
   } | null;
   alt?: string | null;
-};
+}
 
 type Props = {
   source: ImageWithMetadata | ImageLike | null | undefined;

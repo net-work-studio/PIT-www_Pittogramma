@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 
-type ProjectHeaderProps = {
+interface ProjectHeaderProps {
   designer?: string | null;
   title?: string | null;
   description?: string | null;
@@ -8,7 +8,7 @@ type ProjectHeaderProps = {
   tags?: Array<{ _id: string; name: string; slug: unknown }> | null;
   teacher?: string | null;
   institute?: string | null;
-};
+}
 
 export default function ProjectHeader({
   designer,
