@@ -2,6 +2,7 @@ import {
   BookOpen,
   Briefcase,
   Calendar,
+  FileText,
   Globe,
   GraduationCap,
   Languages,
@@ -26,6 +27,7 @@ export const structure: StructureResolver = (S) =>
 
       docListItem(S, "project", "Project", Briefcase),
       docListItem(S, "interview", "Interview", MessageCircle),
+      docListItem(S, "journal", "Journal", FileText),
 
       group(S, "Resources", [
         docListItem(S, "bibliography", "Bibliography"),

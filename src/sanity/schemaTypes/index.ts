@@ -13,6 +13,7 @@ import { glossary } from "./documents/glossary";
 import { history } from "./documents/history";
 import { institute } from "./documents/institute";
 import { interview } from "./documents/interview";
+import { journal } from "./documents/journal";
 import { language } from "./documents/language";
 import { professional } from "./documents/professional";
 import { project } from "./documents/project";
@@ -43,6 +44,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     history,
     institute,
     interview,
+    journal,
     language,
     project,
     studio,
