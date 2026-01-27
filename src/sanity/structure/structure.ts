@@ -36,6 +36,7 @@ export const structure: StructureResolver = (S) =>
         docListItem(S, "designer", "Designer", User),
         docListItem(S, "institute", "Institute"),
         docListItem(S, "professional", "Professional", User),
+        docListItem(S, "publisher", "Publisher"),
         docListItem(S, "studio", "Studio"),
         docListItem(S, "teacher", "Teacher", GraduationCap),
         docListItem(S, "typeFoundry", "Type Foundry"),
@@ -58,7 +59,6 @@ export const structure: StructureResolver = (S) =>
         docListItem(S, "contributor", "Contributor", Users),
         docListItem(S, "category", "Category", Tag),
         docListItem(S, "author", "Author", User),
-        docListItem(S, "publisher", "Publisher"),
       ]),
 
       S.divider(),

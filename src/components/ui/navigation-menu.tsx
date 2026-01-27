@@ -20,7 +20,9 @@ function NavigationMenu({
   const isOpen = value !== "";
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      return;
+    }
 
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -50,6 +52,7 @@ function NavigationMenu({
         data-slot="navigation-menu"
         data-viewport={viewport}
         onValueChange={setValue}
+        skipDelayDuration={0}
         value={value}
         {...props}
       >
@@ -102,6 +105,8 @@ function NavigationMenuTrigger({
     <NavigationMenuPrimitive.Trigger
       className={cn(navigationMenuTriggerStyle(), "group", className)}
       data-slot="navigation-menu-trigger"
+      onPointerLeave={(event) => event.preventDefault()}
+      onPointerMove={(event) => event.preventDefault()}
       {...props}
     >
       {children}{" "}
@@ -146,6 +151,7 @@ function NavigationMenuViewport({
           className
         )}
         data-slot="navigation-menu-viewport"
+        onPointerLeave={(event) => event.preventDefault()}
         {...props}
       />
     </div>
