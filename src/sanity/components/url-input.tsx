@@ -183,7 +183,7 @@ export function UrlInput(props: StringInputProps) {
     try {
       const response = await fetch(
         `/api/websites/fetch-og?url=${encodeURIComponent(value)}`,
-        { signal: AbortSignal.timeout(15000) }
+        { signal: AbortSignal.timeout(15_000) }
       );
       const data = await response.json();
 
