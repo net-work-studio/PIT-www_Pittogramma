@@ -465,6 +465,48 @@ export type Language = {
   name: string;
 };
 
+export type Journal = {
+  _id: string;
+  _type: "journal";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  publishingDate?: PublishingDate;
+  cover: ImageWithMetadata;
+  authors?: Array<
+    {
+      _key: string;
+    } & AuthorReference
+  >;
+  excerpt?: string;
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  tags?: Array<
+    {
+      _key: string;
+    } & TagReference
+  >;
+  seo?: SeoModule;
+};
+
 export type Interview = {
   _id: string;
   _type: "interview";
@@ -774,6 +816,7 @@ export type AllSanitySchemaTypes =
   | Project
   | Teacher
   | Language
+  | Journal
   | Interview
   | ContributorReference
   | History
