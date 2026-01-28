@@ -96,7 +96,8 @@ export function UrlInput(props: StringInputProps) {
       siteName: string | null
     ): Promise<Record<string, unknown> | null> => {
       const imageResponse = await fetch(
-        `/api/websites/fetch-image?url=${encodeURIComponent(imageUrl)}`
+        `/api/websites/fetch-image?url=${encodeURIComponent(imageUrl)}`,
+        { signal: AbortSignal.timeout(15_000) }
       );
 
       if (!imageResponse.ok) {

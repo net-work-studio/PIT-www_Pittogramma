@@ -52,11 +52,7 @@ export default async function Page() {
         <div className="sticky top-0 bg-background pt-16 pb-2.5">
           <div className="flex pb-2.5">
             <div className="flex-1">dropdown filter</div>
-            <Input
-              id="input-demo-api-key"
-              placeholder="Search"
-              type="password"
-            />
+            <Input id="input-demo-api-key" placeholder="Search" type="search" />
           </div>
           <ul className="grid grid-cols-12 gap-2.5 rounded-md border px-2.5 py-2 font-mono text-xs uppercase">
             <li className="col-span-4">Name</li>
