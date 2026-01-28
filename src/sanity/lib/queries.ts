@@ -56,7 +56,10 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     designersIntro,
     utmSource,
     utmMedium,
-    utmCampaign
+    utmCampaign,
+    substackUrl,
+    instagramUrl,
+    spotifyUrl
   }
 `);
 

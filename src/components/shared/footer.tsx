@@ -1,7 +1,10 @@
 import Link from "next/link";
-import { ModeToggle } from "@/components/mode-toggle";
+import { client } from "@/sanity/lib/client";
+import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
-export default function Footer() {
+export default async function Footer() {
+  const siteSettings = await client.fetch(SITE_SETTINGS_QUERY);
+
   return (
     <footer className="p-4">
       <div className="grid grid-cols-4 rounded-lg bg-secondary p-4">
@@ -17,33 +20,39 @@ export default function Footer() {
         </ul>
         {/* Col 2 */}
         <ul>
-          <li>
-            <a
-              href="https://www.substack.com//"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Subscribe to our Substack
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.instagram.com/pittogramma/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Follow us on Instagram
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M?si=5857091609b34546"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Listen our music on Spotify
-            </a>
-          </li>
+          {siteSettings?.substackUrl && (
+            <li>
+              <a
+                href={siteSettings.substackUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Subscribe to our Substack
+              </a>
+            </li>
+          )}
+          {siteSettings?.instagramUrl && (
+            <li>
+              <a
+                href={siteSettings.instagramUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Follow us on Instagram
+              </a>
+            </li>
+          )}
+          {siteSettings?.spotifyUrl && (
+            <li>
+              <a
+                href={siteSettings.spotifyUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Listen our music on Spotify
+              </a>
+            </li>
+          )}
         </ul>
 
         {/* Col 3 */}
@@ -58,8 +67,6 @@ export default function Footer() {
             <Link href="/donate">Donate to the project</Link>
           </li>
         </ul>
-
-      
       </div>
     </footer>
   );

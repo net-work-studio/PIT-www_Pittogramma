@@ -7,6 +7,7 @@ export const siteSettings = defineType({
   __experimental_omnisearch_visibility: false,
   groups: [
     { name: "seo", title: "SEO", default: true },
+    { name: "footer", title: "Footer" },
     { name: "tracking", title: "Tracking" },
   ],
   fields: [
@@ -23,6 +24,24 @@ export const siteSettings = defineType({
       type: "seoModule",
       group: "seo",
       description: "Default SEO settings for the site and homepage",
+    }),
+    defineField({
+      name: "substackUrl",
+      title: "Substack URL",
+      type: "url",
+      group: "footer",
+    }),
+    defineField({
+      name: "instagramUrl",
+      title: "Instagram URL",
+      type: "url",
+      group: "footer",
+    }),
+    defineField({
+      name: "spotifyUrl",
+      title: "Spotify URL",
+      type: "url",
+      group: "footer",
     }),
     defineField({
       name: "utmSource",

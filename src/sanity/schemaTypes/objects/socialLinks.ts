@@ -27,6 +27,8 @@ export const socialLinks = defineType({
                   { title: "LinkedIn", value: "linkedin" },
                   { title: "Linktree", value: "linktree" },
                   { title: "Mastodon", value: "mastodon" },
+                  { title: "Spotify", value: "spotify" },
+                  { title: "Substack", value: "substack" },
                   { title: "TikTok", value: "tiktok" },
                   { title: "X (Twitter)", value: "x" },
                   { title: "Website", value: "website" },

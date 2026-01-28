@@ -574,6 +574,7 @@ export type HomePage = {
   title?: string;
   introText: string;
   endOfPageCta?: CtaReference;
+  seo?: SeoModule;
 };
 
 export type Edition = {
@@ -1004,6 +1005,374 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   utmSource: string;
   utmMedium: string | null;
   utmCampaign: string | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: HOME_PAGE_QUERY
+// Query: *[_type == "homePage"][0] {    _id,    title,    introText,      endOfPageCta->{    _id,    title,    variant,    headline,    image,    buttonText,    linkType,    internalLink->{      _type,      "slug": slug    },    externalUrl  },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt,      caption    }  }  }
+export type HOME_PAGE_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  introText: string;
+  endOfPageCta: {
+    _id: string;
+    title: string;
+    variant: "simple" | "withImage" | null;
+    headline: string | null;
+    image: ImageWithMetadata | null;
+    buttonText: string;
+    linkType: "external" | "internal" | null;
+    internalLink:
+      | {
+          _type: "designer";
+          slug: Slug;
+        }
+      | {
+          _type: "designersPage";
+          slug: null;
+        }
+      | {
+          _type: "edition";
+          slug: Slug;
+        }
+      | {
+          _type: "event";
+          slug: Slug;
+        }
+      | {
+          _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "interview";
+          slug: Slug;
+        }
+      | {
+          _type: "interviewsPage";
+          slug: null;
+        }
+      | {
+          _type: "journal";
+          slug: Slug;
+        }
+      | {
+          _type: "project";
+          slug: Slug;
+        }
+      | {
+          _type: "projectsPage";
+          slug: null;
+        }
+      | null;
+    externalUrl: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: SanityImageAssetReference | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: PROJECTS_PAGE_QUERY
+// Query: *[_type == "projectsPage"][0] {    _id,    title,    introText,      endOfPageCta->{    _id,    title,    variant,    headline,    image,    buttonText,    linkType,    internalLink->{      _type,      "slug": slug    },    externalUrl  },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt,      caption    }  }  }
+export type PROJECTS_PAGE_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  introText: string;
+  endOfPageCta: {
+    _id: string;
+    title: string;
+    variant: "simple" | "withImage" | null;
+    headline: string | null;
+    image: ImageWithMetadata | null;
+    buttonText: string;
+    linkType: "external" | "internal" | null;
+    internalLink:
+      | {
+          _type: "designer";
+          slug: Slug;
+        }
+      | {
+          _type: "designersPage";
+          slug: null;
+        }
+      | {
+          _type: "edition";
+          slug: Slug;
+        }
+      | {
+          _type: "event";
+          slug: Slug;
+        }
+      | {
+          _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "interview";
+          slug: Slug;
+        }
+      | {
+          _type: "interviewsPage";
+          slug: null;
+        }
+      | {
+          _type: "journal";
+          slug: Slug;
+        }
+      | {
+          _type: "project";
+          slug: Slug;
+        }
+      | {
+          _type: "projectsPage";
+          slug: null;
+        }
+      | null;
+    externalUrl: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: SanityImageAssetReference | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: INTERVIEWS_PAGE_QUERY
+// Query: *[_type == "interviewsPage"][0] {    _id,    title,    introText,      endOfPageCta->{    _id,    title,    variant,    headline,    image,    buttonText,    linkType,    internalLink->{      _type,      "slug": slug    },    externalUrl  },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt,      caption    }  }  }
+export type INTERVIEWS_PAGE_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  introText: string;
+  endOfPageCta: {
+    _id: string;
+    title: string;
+    variant: "simple" | "withImage" | null;
+    headline: string | null;
+    image: ImageWithMetadata | null;
+    buttonText: string;
+    linkType: "external" | "internal" | null;
+    internalLink:
+      | {
+          _type: "designer";
+          slug: Slug;
+        }
+      | {
+          _type: "designersPage";
+          slug: null;
+        }
+      | {
+          _type: "edition";
+          slug: Slug;
+        }
+      | {
+          _type: "event";
+          slug: Slug;
+        }
+      | {
+          _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "interview";
+          slug: Slug;
+        }
+      | {
+          _type: "interviewsPage";
+          slug: null;
+        }
+      | {
+          _type: "journal";
+          slug: Slug;
+        }
+      | {
+          _type: "project";
+          slug: Slug;
+        }
+      | {
+          _type: "projectsPage";
+          slug: null;
+        }
+      | null;
+    externalUrl: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: SanityImageAssetReference | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: DESIGNERS_PAGE_QUERY
+// Query: *[_type == "designersPage"][0] {    _id,    title,    introText,      endOfPageCta->{    _id,    title,    variant,    headline,    image,    buttonText,    linkType,    internalLink->{      _type,      "slug": slug    },    externalUrl  },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt,      caption    }  }  }
+export type DESIGNERS_PAGE_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  introText: string;
+  endOfPageCta: {
+    _id: string;
+    title: string;
+    variant: "simple" | "withImage" | null;
+    headline: string | null;
+    image: ImageWithMetadata | null;
+    buttonText: string;
+    linkType: "external" | "internal" | null;
+    internalLink:
+      | {
+          _type: "designer";
+          slug: Slug;
+        }
+      | {
+          _type: "designersPage";
+          slug: null;
+        }
+      | {
+          _type: "edition";
+          slug: Slug;
+        }
+      | {
+          _type: "event";
+          slug: Slug;
+        }
+      | {
+          _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "interview";
+          slug: Slug;
+        }
+      | {
+          _type: "interviewsPage";
+          slug: null;
+        }
+      | {
+          _type: "journal";
+          slug: Slug;
+        }
+      | {
+          _type: "project";
+          slug: Slug;
+        }
+      | {
+          _type: "projectsPage";
+          slug: null;
+        }
+      | null;
+    externalUrl: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: SanityImageAssetReference | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
 } | null;
 
 // Source: src/sanity/lib/queries.ts
@@ -1550,6 +1919,10 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "siteSettings"][0] {\n    homeIntro,\n    projectsIntro,\n    interviewsIntro,\n    designersIntro,\n    utmSource,\n    utmMedium,\n    utmCampaign\n  }\n': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[_type == "homePage"][0] {\n    _id,\n    title,\n    introText,\n    \n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image,\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  }\n,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': HOME_PAGE_QUERY_RESULT;
+    '\n  *[_type == "projectsPage"][0] {\n    _id,\n    title,\n    introText,\n    \n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image,\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  }\n,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': PROJECTS_PAGE_QUERY_RESULT;
+    '\n  *[_type == "interviewsPage"][0] {\n    _id,\n    title,\n    introText,\n    \n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image,\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  }\n,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': INTERVIEWS_PAGE_QUERY_RESULT;
+    '\n  *[_type == "designersPage"][0] {\n    _id,\n    title,\n    introText,\n    \n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image,\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  }\n,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': DESIGNERS_PAGE_QUERY_RESULT;
     '\n  *[_type == "project"] | order(_createdAt desc) {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]{ _key, ...@->{ _id, name, slug } },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': PROJECTS_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    title,\n    slug,\n    designer->{\n      _id,\n      name,\n      slug,\n      portrait\n    },\n    tags[]{ _key, ...@->{ _id, name, slug } },\n    teacher->{\n      _id,\n      name,\n    },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery,\n    description,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': PROJECT_QUERY_RESULT;
     '\n  *[_type == "interview"] | order(publishingDate.date desc) {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    interviewTo[]{ _key, ...@->{ _id, name } },\n    introText,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': INTERVIEWS_QUERY_RESULT;

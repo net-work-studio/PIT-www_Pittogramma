@@ -2983,6 +2983,14 @@
           "name": "cta.reference"
         },
         "optional": true
+      },
+      "seo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "seoModule"
+        },
+        "optional": true
       }
     }
   },
