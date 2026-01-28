@@ -66,11 +66,11 @@ export default async function ProjectPage({
         data={{
           name: project.title,
           description: project.description,
-          creator: project.designer?.name
-            ? {
+          creator: project.designers?.length
+            ? project.designers.map((d) => ({
                 "@type": "Person",
-                name: project.designer.name,
-              }
+                name: d.name,
+              }))
             : undefined,
           dateCreated: project.year ? String(project.year) : undefined,
           image: imageUrl,
@@ -81,10 +81,10 @@ export default async function ProjectPage({
       <div className="flex pt-16">
         <ProjectInfo
           description={project?.description}
-          designer={project?.designer?.name}
+          designers={project?.designers}
           institute={project?.institute?.name}
           tags={project?.tags}
-          teacher={project?.teacher?.name}
+          teachers={project?.teachers}
           title={project?.title}
           year={project?.year}
         />

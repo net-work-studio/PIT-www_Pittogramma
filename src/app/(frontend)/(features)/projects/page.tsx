@@ -44,8 +44,8 @@ export default async function ProjectsPage() {
         : "";
 
       return {
-        authors: project.designer?.name
-          ? [{ name: project.designer.name }]
+        authors: project.designers?.length
+          ? project.designers.map((d) => ({ name: d.name ?? "" }))
           : undefined,
         href: `/projects/${project.slug.current}`,
         id: project._id,

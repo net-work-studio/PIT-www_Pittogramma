@@ -1,28 +1,50 @@
 import { Button } from "@/components/ui/button";
 
+interface Designer {
+  _id: string;
+  name: string | null;
+  slug: unknown;
+  portrait: unknown;
+}
+
+interface Teacher {
+  _id: string;
+  name: string | null;
+}
+
 interface ProjectHeaderProps {
-  designer?: string | null;
+  designers?: Designer[] | null;
   title?: string | null;
   description?: string | null;
   year?: number | null;
   tags?: Array<{ _id: string; name: string; slug: unknown }> | null;
-  teacher?: string | null;
+  teachers?: Teacher[] | null;
   institute?: string | null;
 }
 
 export default function ProjectHeader({
-  designer,
+  designers,
   title,
   description,
   year,
   tags,
-  teacher,
+  teachers,
   institute,
 }: ProjectHeaderProps) {
+  const designerNames = designers
+    ?.map((d) => d.name)
+    .filter(Boolean)
+    .join(", ");
+
+  const teacherNames = teachers
+    ?.map((t) => t.name)
+    .filter(Boolean)
+    .join(", ");
+
   return (
     <div className="sticky top-16 h-fit w-1/3">
       <hgroup className="text-3xl">
-        {designer ? <h2>{designer}</h2> : null}
+        {designerNames ? <h2>{designerNames}</h2> : null}
         {title ? <h1>{title}</h1> : null}
       </hgroup>
       <div>
@@ -32,8 +54,8 @@ export default function ProjectHeader({
       <dl className="grid grid-cols-2 gap-1">
         {institute ? <dt className="font-mono uppercase">Institute</dt> : null}
         {institute ? <dd>{institute}</dd> : null}
-        {teacher ? <dt className="font-mono uppercase">Teacher</dt> : null}
-        {teacher ? <dd>{teacher}</dd> : null}
+        {teacherNames ? <dt className="font-mono uppercase">Teacher</dt> : null}
+        {teacherNames ? <dd>{teacherNames}</dd> : null}
         {year ? <dt className="font-mono uppercase">Year</dt> : null}
         {year ? <dd>{year}</dd> : null}
         {tags ? <dt className="font-mono uppercase">Tags</dt> : null}

@@ -118,12 +118,7 @@ export const PROJECTS_QUERY = defineQuery(`
     },
     title,
     slug,
-    designer->{
-      _id,
-      name,
-      slug,
-      portrait
-    },
+    designers[]{ _key, ...@->{ _id, name, slug, portrait } },
     tags[]{ _key, ...@->{ _id, name, slug } },
     ${SEO_FIELDS}
   }
@@ -144,17 +139,9 @@ export const PROJECT_QUERY = defineQuery(`
     },
     title,
     slug,
-    designer->{
-      _id,
-      name,
-      slug,
-      portrait
-    },
+    designers[]{ _key, ...@->{ _id, name, slug, portrait } },
     tags[]{ _key, ...@->{ _id, name, slug } },
-    teacher->{
-      _id,
-      name,
-    },
+    teachers[]{ _key, ...@->{ _id, name } },
     institute->{
       _id,
       name,
