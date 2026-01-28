@@ -55,6 +55,46 @@ export const interview = defineType({
       validation: (e) => e.required(),
     }),
     defineField({
+      type: "reference",
+      name: "studio",
+      title: "Studio",
+      group: "content",
+      to: [{ type: "studio" }],
+    }),
+    defineField({
+      type: "reference",
+      name: "city",
+      title: "City",
+      group: "content",
+      to: [{ type: "city" }],
+    }),
+    defineField({
+      type: "reference",
+      name: "country",
+      title: "Country",
+      group: "content",
+      to: [{ type: "country" }],
+    }),
+    defineField({
+      type: "number",
+      name: "readingTime",
+      title: "Reading Time (minutes)",
+      group: "content",
+      validation: (e) => e.min(1).integer(),
+    }),
+    defineField({
+      type: "array",
+      name: "tags",
+      title: "Tags",
+      group: "content",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "tag" }],
+        }),
+      ],
+    }),
+    defineField({
       type: "text",
       name: "introText",
       title: "Intro Text",
@@ -66,7 +106,60 @@ export const interview = defineType({
       name: "interview",
       title: "Interview",
       group: "content",
-      of: [defineArrayMember({ type: "block" })],
+      of: [
+        defineArrayMember({ type: "block" }),
+        defineArrayMember({
+          type: "object",
+          name: "imageBlock",
+          title: "Image",
+          fields: [
+            defineField({
+              type: "imageWithMetadata",
+              name: "image",
+              title: "Image",
+              validation: (e) => e.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              media: "image.image",
+              caption: "image.caption",
+            },
+            prepare({ media, caption }) {
+              return {
+                title: caption || "Image",
+                media,
+              };
+            },
+          },
+        }),
+        defineArrayMember({
+          type: "object",
+          name: "multipleImageBlock",
+          title: "Multiple Images",
+          fields: [
+            defineField({
+              type: "array",
+              name: "images",
+              title: "Images",
+              of: [defineArrayMember({ type: "imageWithMetadata" })],
+              validation: (e) => e.required().min(2),
+            }),
+          ],
+          preview: {
+            select: {
+              images: "images",
+            },
+            prepare({ images }) {
+              const count = images?.length || 0;
+              return {
+                title: `${count} Images`,
+                media: images?.[0]?.image,
+              };
+            },
+          },
+        }),
+      ],
     }),
     defineField({
       type: "seoModule",

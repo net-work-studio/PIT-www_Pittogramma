@@ -168,6 +168,20 @@ export const INTERVIEWS_QUERY = defineQuery(`
       }
     },
     interviewTo[]{ _key, ...@->{ _id, name } },
+    studio->{
+      _id,
+      name
+    },
+    city->{
+      _id,
+      name
+    },
+    country->{
+      _id,
+      name
+    },
+    readingTime,
+    tags[]{ _key, ...@->{ _id, name, slug } },
     introText,
     ${SEO_FIELDS}
   }
@@ -190,8 +204,51 @@ export const INTERVIEW_QUERY = defineQuery(`
       alt
     },
     interviewTo[]{ _key, ...@->{ _id, name, portrait } },
+    studio->{
+      _id,
+      name
+    },
+    city->{
+      _id,
+      name
+    },
+    country->{
+      _id,
+      name
+    },
+    readingTime,
+    tags[]{ _key, ...@->{ _id, name, slug } },
     introText,
-    interview,
+    interview[] {
+      ...,
+      _type == "imageBlock" => {
+        _key,
+        _type,
+        image {
+          image {
+            asset,
+            hotspot,
+            crop
+          },
+          alt,
+          caption
+        }
+      },
+      _type == "multipleImageBlock" => {
+        _key,
+        _type,
+        images[] {
+          _key,
+          image {
+            asset,
+            hotspot,
+            crop
+          },
+          alt,
+          caption
+        }
+      }
+    },
     ${SEO_FIELDS}
   }
 `);

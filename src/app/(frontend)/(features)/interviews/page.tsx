@@ -9,44 +9,6 @@ import type { SeoModule } from "@/lib/types/seo";
 import { sanityFetch } from "@/sanity/lib/live";
 import { INTERVIEWS_PAGE_QUERY } from "@/sanity/lib/queries";
 
-const cards = [
-  {
-    id: "1",
-    title: "Typography Masterclass",
-    authors: [{ name: "Sarah Chen" }, { name: "Alex Rivera" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-  },
-  {
-    id: "2",
-    title: "Design Trends 2025",
-    authors: [{ name: "Maria Garcia" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-  },
-  {
-    id: "3",
-    title: "Interview with Creative Director",
-    authors: [{ name: "John Smith" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-  },
-  {
-    id: "4",
-    title: "Featured Designer Spotlight",
-    authors: [{ name: "Emma Wilson" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-  },
-  {
-    id: "5",
-    title: "Design Conference 2025",
-    authors: [{ name: "Conference Team" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-  },
-];
-
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
     query: INTERVIEWS_PAGE_QUERY,
@@ -65,11 +27,36 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function InterviewsPage() {
-  const { data: pageSettings } = await sanityFetch({
-    query: INTERVIEWS_PAGE_QUERY,
-  });
+  const [{ data: interviews }, { data: pageSettings }] = await Promise.all([
+    sanityFetch({ query: INTERVIEWS_QUERY }),
+    sanityFetch({ query: INTERVIEWS_PAGE_QUERY }),
+  ]);
 
   const cta = pageSettings?.endOfPageCta;
+
+  const interviewCards = interviews.map(
+    (interview: INTERVIEWS_QUERY_RESULT[number]) => {
+      const image = interview.cover?.image
+        ? urlFor(interview.cover.image).width(1200).height(900).url()
+        : "";
+
+      return {
+        authors: interview.interviewTo?.length
+          ? interview.interviewTo.map((d) => ({ name: d.name ?? "" }))
+          : undefined,
+        href: `/interviews/${interview.slug?.current}`,
+        id: interview._id,
+        image,
+        title: interview.title,
+        readingTime: interview.readingTime,
+        studio: interview.studio?.name,
+        location:
+          [interview.city?.name, interview.country?.name]
+            .filter(Boolean)
+            .join(", ") || undefined,
+      };
+    }
+  );
 
   return (
     <>
@@ -82,7 +69,7 @@ export default async function InterviewsPage() {
           <Button className="font-mono uppercase">Filters</Button>
         </div>
         <section className="col-span-1 grid grid-cols-1 gap-4 md:grid-cols-3 lg:col-span-3 xl:grid-cols-4">
-          {cards.map((card) => (
+          {interviewCards.map((card) => (
             <BaseCard
               authors={card.authors}
               href={card.href}
