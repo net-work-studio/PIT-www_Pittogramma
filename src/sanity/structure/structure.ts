@@ -5,9 +5,11 @@ import {
   FileText,
   Globe,
   GraduationCap,
+  Home,
   Languages,
   MapPin,
   MessageCircle,
+  MousePointerClick,
   Settings,
   Tag,
   User,
@@ -44,10 +46,17 @@ export const structure: StructureResolver = (S) =>
       ]),
 
       group(S, "Pages", [
+        singleton(S, "homePage", "Home", Home),
+        singleton(S, "projectsPage", "Projects", Briefcase),
+        singleton(S, "interviewsPage", "Interviews", MessageCircle),
+        singleton(S, "designersPage", "Designers", User),
+        S.divider(),
         singleton(S, "history", "History"),
         docListItem(S, "event", "Event", Calendar),
         docListItem(S, "edition", "Edition", BookOpen),
       ]),
+
+      docListItem(S, "cta", "CTAs", MousePointerClick),
 
       S.divider(),
 

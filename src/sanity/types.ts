@@ -160,8 +160,8 @@ export type Glossary = {
 
 export type SeoModule = {
   _type: "seoModule";
-  metaTitle: string;
-  metaDescription: string;
+  metaTitle?: string;
+  metaDescription?: string;
   metaImage?: ImageWithMetadata;
   metaRobots?:
     | "index, follow"
@@ -279,19 +279,10 @@ export type SiteSettings = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  homeIntro: string;
-  projectsIntro: string;
-  interviewsIntro: string;
-  designersIntro: string;
+  seo?: SeoModule;
   utmSource: string;
   utmMedium?: string;
   utmCampaign?: string;
-  projectsPage?: {
-    seo?: SeoModule;
-  };
-  blogPage?: {
-    seo?: SeoModule;
-  };
 };
 
 export type XCard = {
@@ -391,40 +382,30 @@ export type Category = {
   name: string;
 };
 
-export type DesignerReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "designer";
-};
-
-export type TeacherReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "teacher";
-};
-
-export type Project = {
+export type Language = {
   _id: string;
-  _type: "project";
+  _type: "language";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+};
+
+export type ContributorReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "contributor";
+};
+
+export type History = {
+  _id: string;
+  _type: "history";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title: string;
-  slug: Slug;
-  publishingDate?: PublishingDate;
-  cover: ImageWithMetadata;
-  designer: DesignerReference;
-  institute?: InstituteReference;
-  teacher?: TeacherReference;
-  year: number;
-  tags?: Array<
-    {
-      _key: string;
-    } & TagReference
-  >;
-  gallery?: Array<{
+  content?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -442,27 +423,188 @@ export type Project = {
     _type: "block";
     _key: string;
   }>;
-  description?: string;
+  supporters?: ContributorReference;
+};
+
+export type ProjectReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "project";
+};
+
+export type InterviewReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "interview";
+};
+
+export type JournalReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "journal";
+};
+
+export type DesignerReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "designer";
+};
+
+export type EventReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "event";
+};
+
+export type EditionReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "edition";
+};
+
+export type HomePageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "homePage";
+};
+
+export type ProjectsPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "projectsPage";
+};
+
+export type InterviewsPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "interviewsPage";
+};
+
+export type DesignersPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "designersPage";
+};
+
+export type Cta = {
+  _id: string;
+  _type: "cta";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  variant?: "simple" | "withImage";
+  headline?: string;
+  image?: ImageWithMetadata;
+  buttonText: string;
+  linkType?: "internal" | "external";
+  internalLink?:
+    | ProjectReference
+    | InterviewReference
+    | JournalReference
+    | DesignerReference
+    | EventReference
+    | EditionReference
+    | HomePageReference
+    | ProjectsPageReference
+    | InterviewsPageReference
+    | DesignersPageReference;
+  externalUrl?: string;
+};
+
+export type CtaReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "cta";
+};
+
+export type DesignersPage = {
+  _id: string;
+  _type: "designersPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  introText: string;
+  endOfPageCta?: CtaReference;
   seo?: SeoModule;
 };
 
-export type Teacher = {
+export type InterviewsPage = {
   _id: string;
-  _type: "teacher";
+  _type: "interviewsPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-  teachingAt?: InstituteReference;
+  title?: string;
+  introText: string;
+  endOfPageCta?: CtaReference;
+  seo?: SeoModule;
 };
 
-export type Language = {
+export type ProjectsPage = {
   _id: string;
-  _type: "language";
+  _type: "projectsPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
+  title?: string;
+  introText: string;
+  endOfPageCta?: CtaReference;
+  seo?: SeoModule;
+};
+
+export type HomePage = {
+  _id: string;
+  _type: "homePage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  introText: string;
+  endOfPageCta?: CtaReference;
+};
+
+export type Edition = {
+  _id: string;
+  _type: "edition";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  cover: ImageWithMetadata;
+  seo?: SeoModule;
+};
+
+export type Event = {
+  _id: string;
+  _type: "event";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  type: string;
+  cover: ImageWithMetadata;
+  dateStart: string;
+  dateEnd?: string;
+  locationName?: string;
+  locationAddress?: string;
+  description?: string;
+  sponsor?: ContributorReference;
+  partner?: ContributorReference;
 };
 
 export type Journal = {
@@ -544,21 +686,33 @@ export type Interview = {
   seo?: SeoModule;
 };
 
-export type ContributorReference = {
+export type TeacherReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "contributor";
+  [internalGroqTypeReferenceTo]?: "teacher";
 };
 
-export type History = {
+export type Project = {
   _id: string;
-  _type: "history";
+  _type: "project";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title: string;
-  content?: Array<{
+  slug: Slug;
+  publishingDate?: PublishingDate;
+  cover: ImageWithMetadata;
+  designer: DesignerReference;
+  institute?: InstituteReference;
+  teacher?: TeacherReference;
+  year: number;
+  tags?: Array<
+    {
+      _key: string;
+    } & TagReference
+  >;
+  gallery?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -576,38 +730,18 @@ export type History = {
     _type: "block";
     _key: string;
   }>;
-  supporters?: ContributorReference;
-};
-
-export type Event = {
-  _id: string;
-  _type: "event";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title: string;
-  slug: Slug;
-  type: string;
-  cover: ImageWithMetadata;
-  dateStart: string;
-  dateEnd?: string;
-  locationName?: string;
-  locationAddress?: string;
   description?: string;
-  sponsor?: ContributorReference;
-  partner?: ContributorReference;
+  seo?: SeoModule;
 };
 
-export type Edition = {
+export type Teacher = {
   _id: string;
-  _type: "edition";
+  _type: "teacher";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
-  slug: Slug;
-  cover: ImageWithMetadata;
-  seo?: SeoModule;
+  name: string;
+  teachingAt?: InstituteReference;
 };
 
 export type Designer = {
@@ -811,17 +945,32 @@ export type AllSanitySchemaTypes =
   | Logo
   | Studio
   | Category
+  | Language
+  | ContributorReference
+  | History
+  | ProjectReference
+  | InterviewReference
+  | JournalReference
   | DesignerReference
+  | EventReference
+  | EditionReference
+  | HomePageReference
+  | ProjectsPageReference
+  | InterviewsPageReference
+  | DesignersPageReference
+  | Cta
+  | CtaReference
+  | DesignersPage
+  | InterviewsPage
+  | ProjectsPage
+  | HomePage
+  | Edition
+  | Event
+  | Journal
+  | Interview
   | TeacherReference
   | Project
   | Teacher
-  | Language
-  | Journal
-  | Interview
-  | ContributorReference
-  | History
-  | Event
-  | Edition
   | Designer
   | Institute
   | SanityImageCrop
@@ -848,10 +997,10 @@ type ArrayOf<T> = Array<
 // Variable: SITE_SETTINGS_QUERY
 // Query: *[_type == "siteSettings"][0] {    homeIntro,    projectsIntro,    interviewsIntro,    designersIntro,    utmSource,    utmMedium,    utmCampaign  }
 export type SITE_SETTINGS_QUERY_RESULT = {
-  homeIntro: string;
-  projectsIntro: string;
-  interviewsIntro: string;
-  designersIntro: string;
+  homeIntro: null;
+  projectsIntro: null;
+  interviewsIntro: null;
+  designersIntro: null;
   utmSource: string;
   utmMedium: string | null;
   utmCampaign: string | null;
@@ -885,8 +1034,8 @@ export type PROJECTS_QUERY_RESULT = Array<{
     slug: null;
   }> | null;
   seo: {
-    metaTitle: string;
-    metaDescription: string;
+    metaTitle: string | null;
+    metaDescription: string | null;
     metaRobots:
       | "index, follow"
       | "index, nofollow"
@@ -975,8 +1124,8 @@ export type PROJECT_QUERY_RESULT = {
   }> | null;
   description: string | null;
   seo: {
-    metaTitle: string;
-    metaDescription: string;
+    metaTitle: string | null;
+    metaDescription: string | null;
     metaRobots:
       | "index, follow"
       | "index, nofollow"
@@ -1030,8 +1179,8 @@ export type INTERVIEWS_QUERY_RESULT = Array<{
   }>;
   introText: string;
   seo: {
-    metaTitle: string;
-    metaDescription: string;
+    metaTitle: string | null;
+    metaDescription: string | null;
     metaRobots:
       | "index, follow"
       | "index, nofollow"
@@ -1106,8 +1255,8 @@ export type INTERVIEW_QUERY_RESULT = {
     _key: string;
   }> | null;
   seo: {
-    metaTitle: string;
-    metaDescription: string;
+    metaTitle: string | null;
+    metaDescription: string | null;
     metaRobots:
       | "index, follow"
       | "index, nofollow"

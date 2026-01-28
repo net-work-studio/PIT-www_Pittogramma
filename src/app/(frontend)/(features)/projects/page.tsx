@@ -1,24 +1,41 @@
 import type { Metadata } from "next";
 import BaseCard from "@/components/cards/base-card";
+import CtaCard from "@/components/cards/cta-card";
 import Filter from "@/components/feat/filter/filter";
-import SubmitBanner from "@/components/feat/submit/submit-project-banner";
 import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
+import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
+import { siteDefaults } from "@/lib/seo/siteDefaults";
+import type { SeoModule } from "@/lib/types/seo";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
-import { PROJECTS_QUERY } from "@/sanity/lib/queries";
+import { PROJECTS_PAGE_QUERY, PROJECTS_QUERY } from "@/sanity/lib/queries";
 import type { PROJECTS_QUERY_RESULT } from "@/sanity/types";
 
-export const metadata: Metadata = {
-  title: "Projects",
-  description:
-    "The most interesting and visionary projects designed by talented young graphic designers around the world who highlights new styles and trends",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { data: page } = await sanityFetch({
+    query: PROJECTS_PAGE_QUERY,
+  });
+
+  return mapSanityToMetadata({
+    page: {
+      title: page?.title ?? "Projects",
+      description: page?.introText,
+      seo: page?.seo as SeoModule | undefined,
+    },
+    baseUrl: siteDefaults.baseUrl,
+    path: "/projects",
+    siteDefaults,
+  });
+}
 
 export default async function ProjectsPage() {
-  const { data: projects } = await sanityFetch({
-    query: PROJECTS_QUERY,
-  });
+  const [{ data: projects }, { data: pageSettings }] = await Promise.all([
+    sanityFetch({ query: PROJECTS_QUERY }),
+    sanityFetch({ query: PROJECTS_PAGE_QUERY }),
+  ]);
+
+  const cta = pageSettings?.endOfPageCta;
 
   const projectCards = projects.map(
     (project: PROJECTS_QUERY_RESULT[number]) => {
@@ -41,8 +58,8 @@ export default async function ProjectsPage() {
   return (
     <>
       <PageHeader
-        subtitle="The most interesting and visionary projects designed by talented young graphic designers around the world who highlights new styles and trends"
-        title="Projects"
+        subtitle={pageSettings?.introText}
+        title={pageSettings?.title ?? "Projects"}
       />
       <div className="space-y-10 pb-10">
         <Filter />
@@ -64,7 +81,17 @@ export default async function ProjectsPage() {
           <Button className="rounded-full font-mono uppercase">3</Button>
         </div>
       </div>
-      <SubmitBanner />
+      {cta && (
+        <CtaCard
+          buttonText={cta.buttonText}
+          externalUrl={cta.externalUrl}
+          headline={cta.headline}
+          image={cta.image}
+          internalLink={cta.internalLink}
+          linkType={cta.linkType}
+          variant={cta.variant}
+        />
+      )}
     </>
   );
 }

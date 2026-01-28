@@ -6,6 +6,7 @@ import { category } from "./documents/category";
 import { city } from "./documents/city";
 import { contributor } from "./documents/contributor";
 import { country } from "./documents/country";
+import { cta } from "./documents/cta";
 import { designer } from "./documents/designer";
 import { edition } from "./documents/edition";
 import { event } from "./documents/event";
@@ -33,11 +34,16 @@ import { socialLinks } from "./objects/socialLinks";
 import { tagSelector } from "./objects/tagSelector";
 import { titleSlug } from "./objects/titleSlug";
 import { xCard } from "./objects/xCard";
+import { designersPage } from "./singletons/pages/designersPage";
+import { homePage } from "./singletons/pages/homePage";
+import { interviewsPage } from "./singletons/pages/interviewsPage";
+import { projectsPage } from "./singletons/pages/projectsPage";
 import { siteSettings } from "./singletons/siteSettings";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     contributor,
+    cta,
     designer,
     edition,
     event,
@@ -60,6 +66,10 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     openGraph,
     xCard,
     siteSettings,
+    homePage,
+    projectsPage,
+    interviewsPage,
+    designersPage,
     socialLinks,
     professional,
     publishingDate,

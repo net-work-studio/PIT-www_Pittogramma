@@ -17,27 +17,23 @@ export const seoModule = defineType({
       title: "Meta Title",
       type: "string",
       description:
-        "Title shown in search results and browser tabs. Aim for ~60 characters.",
-      validation: (rule) => [
-        rule.required().error("Meta title is required"),
+        "Title shown in search results and browser tabs. Aim for ~60 characters. Falls back to site settings if empty.",
+      validation: (rule) =>
         rule
           .max(65)
           .warning("Titles longer than ~60–65 chars may be truncated"),
-      ],
     }),
     defineField({
       name: "metaDescription",
       title: "Meta Description",
       type: "text",
       description:
-        "Short summary for search results. Aim for ~155–160 characters.",
+        "Short summary for search results. Aim for ~155–160 characters. Falls back to site settings if empty.",
       rows: 3,
-      validation: (rule) => [
-        rule.required().error("Meta description is required"),
+      validation: (rule) =>
         rule
           .max(160)
           .warning("Descriptions longer than ~155–160 chars may be truncated"),
-      ],
     }),
     defineField({
       name: "metaImage",

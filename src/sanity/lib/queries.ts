@@ -1,5 +1,23 @@
 import { defineQuery } from "next-sanity";
 
+// Reusable CTA fields fragment - dereferences the CTA and its internal link
+const CTA_FIELDS = `
+  endOfPageCta->{
+    _id,
+    title,
+    variant,
+    headline,
+    image,
+    buttonText,
+    linkType,
+    internalLink->{
+      _type,
+      "slug": slug
+    },
+    externalUrl
+  }
+`;
+
 // Reusable SEO fields fragment
 const SEO_FIELDS = `
   seo {
@@ -39,6 +57,48 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     utmSource,
     utmMedium,
     utmCampaign
+  }
+`);
+
+// ==================== PAGE QUERIES ====================
+
+export const HOME_PAGE_QUERY = defineQuery(`
+  *[_type == "homePage"][0] {
+    _id,
+    title,
+    introText,
+    ${CTA_FIELDS},
+    ${SEO_FIELDS}
+  }
+`);
+
+export const PROJECTS_PAGE_QUERY = defineQuery(`
+  *[_type == "projectsPage"][0] {
+    _id,
+    title,
+    introText,
+    ${CTA_FIELDS},
+    ${SEO_FIELDS}
+  }
+`);
+
+export const INTERVIEWS_PAGE_QUERY = defineQuery(`
+  *[_type == "interviewsPage"][0] {
+    _id,
+    title,
+    introText,
+    ${CTA_FIELDS},
+    ${SEO_FIELDS}
+  }
+`);
+
+export const DESIGNERS_PAGE_QUERY = defineQuery(`
+  *[_type == "designersPage"][0] {
+    _id,
+    title,
+    introText,
+    ${CTA_FIELDS},
+    ${SEO_FIELDS}
   }
 `);
 

@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import type { ListItemBuilder, StructureBuilder } from "sanity/structure";
+import type { StructureBuilder } from "sanity/structure";
 
 export const singleton = (
   S: StructureBuilder,
@@ -20,7 +20,7 @@ export const singleton = (
 export const group = (
   S: StructureBuilder,
   title: string,
-  items: ListItemBuilder[],
+  items: Parameters<ReturnType<StructureBuilder["list"]>["items"]>[0],
   id?: string,
   icon?: LucideIcon
 ) =>

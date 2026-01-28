@@ -1,5 +1,4 @@
 import BaseCard from "@/components/cards/base-card";
-import SubmitBanner from "@/components/feat/submit/submit-project-banner";
 import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 
@@ -134,7 +133,6 @@ export default function Page() {
           <Button className="rounded-full font-mono uppercase">3</Button>
         </div>
       </div>
-      <SubmitBanner />
     </>
   );
 }

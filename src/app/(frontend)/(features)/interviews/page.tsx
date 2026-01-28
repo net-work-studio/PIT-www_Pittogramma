@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import BaseCard from "@/components/cards/base-card";
-import SubmitBanner from "@/components/feat/submit/submit-project-banner";
+import CtaCard from "@/components/cards/cta-card";
 import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
+import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
+import { siteDefaults } from "@/lib/seo/siteDefaults";
+import type { SeoModule } from "@/lib/types/seo";
+import { sanityFetch } from "@/sanity/lib/live";
+import { INTERVIEWS_PAGE_QUERY } from "@/sanity/lib/queries";
 
 const cards = [
   {
@@ -42,18 +47,35 @@ const cards = [
   },
 ];
 
-export const metadata: Metadata = {
-  title: "Interviews",
-  description:
-    "We interview interesting professionals to give an overview to the youngsters about the industry thorough insights, suggestions and different perspectives",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { data: page } = await sanityFetch({
+    query: INTERVIEWS_PAGE_QUERY,
+  });
 
-export default function InterviewsPage() {
+  return mapSanityToMetadata({
+    page: {
+      title: page?.title ?? "Interviews",
+      description: page?.introText,
+      seo: page?.seo as SeoModule | undefined,
+    },
+    baseUrl: siteDefaults.baseUrl,
+    path: "/interviews",
+    siteDefaults,
+  });
+}
+
+export default async function InterviewsPage() {
+  const { data: pageSettings } = await sanityFetch({
+    query: INTERVIEWS_PAGE_QUERY,
+  });
+
+  const cta = pageSettings?.endOfPageCta;
+
   return (
     <>
       <PageHeader
-        subtitle="We interview interesting professionals to give an overview to the youngsters about the industry thorough insights, suggestions and different perspectives "
-        title="Interviews"
+        subtitle={pageSettings?.introText}
+        title={pageSettings?.title ?? "Interviews"}
       />
       <div className="space-y-10 pb-10">
         <div>
@@ -76,7 +98,17 @@ export default function InterviewsPage() {
           <Button className="rounded-full font-mono uppercase">3</Button>
         </div>
       </div>
-      <SubmitBanner />
+      {cta && (
+        <CtaCard
+          buttonText={cta.buttonText}
+          externalUrl={cta.externalUrl}
+          headline={cta.headline}
+          image={cta.image}
+          internalLink={cta.internalLink}
+          linkType={cta.linkType}
+          variant={cta.variant}
+        />
+      )}
     </>
   );
 }
