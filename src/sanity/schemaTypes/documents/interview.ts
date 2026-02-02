@@ -1,6 +1,37 @@
 import { CommentIcon } from "@sanity/icons";
+import { createElement } from "react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { groups } from "@/sanity/utils/groups";
+
+const QuestionStyle = (props: { children: React.ReactNode }) =>
+  createElement(
+    "span",
+    {
+      style: {
+        fontWeight: 600,
+        color: "#1a1a1a",
+        paddingLeft: "0em",
+        borderTop: "1px solid #1a1a1a",
+        paddingTop: "0.75em",
+        display: "block",
+      },
+    },
+    props.children
+  );
+
+const AnswerStyle = (props: { children: React.ReactNode }) =>
+  createElement(
+    "span",
+    {
+      style: {
+        fontWeight: 400,
+        color: "#666",
+        paddingBottom: "2.5em",
+        display: "block",
+      },
+    },
+    props.children
+  );
 
 export const interview = defineType({
   type: "document",
@@ -127,58 +158,30 @@ export const interview = defineType({
       title: "Interview",
       group: "content",
       of: [
-        defineArrayMember({ type: "block" }),
         defineArrayMember({
-          type: "object",
-          name: "imageBlock",
-          title: "Image",
-          fields: [
-            defineField({
-              type: "imageWithMetadata",
-              name: "image",
-              title: "Image",
-              validation: (e) => e.required(),
-            }),
+          type: "block",
+          styles: [
+            { title: "Question", value: "normal", component: QuestionStyle },
+            { title: "Answer", value: "answer", component: AnswerStyle },
+            { title: "Quote", value: "blockquote" },
           ],
-          preview: {
-            select: {
-              media: "image.image",
-              caption: "image.caption",
-            },
-            prepare({ media, caption }) {
-              return {
-                title: caption || "Image",
-                media,
-              };
-            },
+          lists: [],
+          marks: {
+            decorators: [
+              { title: "Strong", value: "strong" },
+              { title: "Emphasis", value: "em" },
+            ],
+            annotations: [],
           },
         }),
-        defineArrayMember({
-          type: "object",
-          name: "multipleImageBlock",
-          title: "Multiple Images",
-          fields: [
-            defineField({
-              type: "array",
-              name: "images",
-              title: "Images",
-              of: [defineArrayMember({ type: "imageWithMetadata" })],
-              validation: (e) => e.required().min(2),
-            }),
-          ],
-          preview: {
-            select: {
-              images: "images",
-            },
-            prepare({ images }) {
-              const count = images?.length || 0;
-              return {
-                title: `${count} Images`,
-                media: images?.[0]?.image,
-              };
-            },
-          },
-        }),
+        // Single asset (image or video)
+        defineArrayMember({ type: "singleMediaBlock" }),
+        // Side by side (2 items)
+        defineArrayMember({ type: "sideBySideMediaBlock" }),
+        // 3 side by side
+        defineArrayMember({ type: "threeSideBySideMediaBlock" }),
+        // Grid of 4
+        defineArrayMember({ type: "gridFourMediaBlock" }),
       ],
     }),
     defineField({

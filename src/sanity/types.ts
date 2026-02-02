@@ -324,6 +324,59 @@ export type Slug = {
   source?: string;
 };
 
+export type GridFourMediaBlock = {
+  _type: "gridFourMediaBlock";
+  topLeft: MediaItem;
+  topRight: MediaItem;
+  bottomLeft: MediaItem;
+  bottomRight: MediaItem;
+};
+
+export type ThreeSideBySideMediaBlock = {
+  _type: "threeSideBySideMediaBlock";
+  left: MediaItem;
+  center: MediaItem;
+  right: MediaItem;
+};
+
+export type SideBySideMediaBlock = {
+  _type: "sideBySideMediaBlock";
+  left: MediaItem;
+  right: MediaItem;
+};
+
+export type SingleMediaBlock = {
+  _type: "singleMediaBlock";
+  media: MediaItem;
+};
+
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type MediaItem = {
+  _type: "mediaItem";
+  type: "image" | "videoUpload" | "videoEmbed";
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  video?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  videoUrl?: string;
+  caption?: string;
+  alt?: string;
+};
+
 export type Logo = {
   _type: "logo";
   logoLight?: {
@@ -654,7 +707,8 @@ export type Interview = {
   slug: Slug;
   publishingDate?: PublishingDate;
   cover: ImageWithMetadata;
-  interviewTo: Array<
+  interviewToType: "designers" | "studio";
+  designers?: Array<
     {
       _key: string;
     } & DesignerReference
@@ -677,39 +731,25 @@ export type Interview = {
           _type: "span";
           _key: string;
         }>;
-        style?:
-          | "normal"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "blockquote";
-        listItem?: "bullet" | "number";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
+        style?: "normal" | "answer" | "blockquote";
+        listItem?: never;
+        markDefs?: null;
         level?: number;
         _type: "block";
         _key: string;
       }
-    | {
-        image: ImageWithMetadata;
-        _type: "imageBlock";
+    | ({
         _key: string;
-      }
-    | {
-        images: Array<
-          {
-            _key: string;
-          } & ImageWithMetadata
-        >;
-        _type: "multipleImageBlock";
+      } & SingleMediaBlock)
+    | ({
         _key: string;
-      }
+      } & SideBySideMediaBlock)
+    | ({
+        _key: string;
+      } & ThreeSideBySideMediaBlock)
+    | ({
+        _key: string;
+      } & GridFourMediaBlock)
   >;
   seo?: SeoModule;
 };
@@ -792,26 +832,32 @@ export type Project = {
       _key: string;
     } & TagReference
   >;
-  gallery?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
   description?: string;
+  gallery?: Array<
+    | ({
+        _key: string;
+      } & SingleMediaBlock)
+    | ({
+        _key: string;
+      } & SideBySideMediaBlock)
+  >;
   seo?: SeoModule;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
 };
 
 export type Institute = {
@@ -830,22 +876,6 @@ export type Institute = {
   location: Location;
   address?: string;
   socialLinks?: SocialLinks;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
 };
 
 export type Contributor = {
@@ -987,6 +1017,12 @@ export type AllSanitySchemaTypes =
   | Tag
   | TitleSlug
   | Slug
+  | GridFourMediaBlock
+  | ThreeSideBySideMediaBlock
+  | SideBySideMediaBlock
+  | SingleMediaBlock
+  | SanityFileAssetReference
+  | MediaItem
   | Logo
   | Teacher
   | Language
@@ -1019,9 +1055,9 @@ export type AllSanitySchemaTypes =
   | Category
   | TeacherReference
   | Project
-  | Institute
   | SanityImageCrop
   | SanityImageHotspot
+  | Institute
   | Contributor
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -1525,24 +1561,14 @@ export type PROJECT_QUERY_RESULT = {
     name: string;
   } | null;
   year: number;
-  gallery: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
+  gallery: Array<
+    | ({
+        _key: string;
+      } & SideBySideMediaBlock)
+    | ({
+        _key: string;
+      } & SingleMediaBlock)
+  > | null;
   description: string | null;
   seo: {
     metaTitle: string | null;
@@ -1593,11 +1619,7 @@ export type INTERVIEWS_QUERY_RESULT = Array<{
       crop: SanityImageCrop | null;
     } | null;
   };
-  interviewTo: Array<{
-    _key: string;
-    _id: string;
-    name: string;
-  }>;
+  interviewTo: null;
   studio: {
     _id: string;
     name: string;
@@ -1669,12 +1691,7 @@ export type INTERVIEW_QUERY_RESULT = {
     } | null;
     alt: string | null;
   };
-  interviewTo: Array<{
-    _key: string;
-    _id: string;
-    name: string;
-    portrait: ImageWithMetadata | null;
-  }>;
+  interviewTo: null;
   studio: {
     _id: string;
     name: string;
@@ -1703,51 +1720,38 @@ export type INTERVIEW_QUERY_RESULT = {
           _type: "span";
           _key: string;
         }>;
-        style?:
-          | "blockquote"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "normal";
-        listItem?: "bullet" | "number";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
+        style?: "answer" | "blockquote" | "normal";
+        listItem?: never;
+        markDefs?: null;
         level?: number;
         _type: "block";
         _key: string;
       }
     | {
-        image: {
-          image: {
-            asset: SanityImageAssetReference | null;
-            hotspot: SanityImageHotspot | null;
-            crop: SanityImageCrop | null;
-          } | null;
-          alt: string | null;
-          caption: string | null;
-        };
-        _type: "imageBlock";
         _key: string;
+        _type: "gridFourMediaBlock";
+        topLeft: MediaItem;
+        topRight: MediaItem;
+        bottomLeft: MediaItem;
+        bottomRight: MediaItem;
       }
     | {
-        images: Array<{
-          _key: string;
-          image: {
-            asset: SanityImageAssetReference | null;
-            hotspot: SanityImageHotspot | null;
-            crop: SanityImageCrop | null;
-          } | null;
-          alt: string | null;
-          caption: string | null;
-        }>;
-        _type: "multipleImageBlock";
         _key: string;
+        _type: "sideBySideMediaBlock";
+        left: MediaItem;
+        right: MediaItem;
+      }
+    | {
+        _key: string;
+        _type: "singleMediaBlock";
+        media: MediaItem;
+      }
+    | {
+        _key: string;
+        _type: "threeSideBySideMediaBlock";
+        left: MediaItem;
+        center: MediaItem;
+        right: MediaItem;
       }
   > | null;
   seo: {

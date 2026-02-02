@@ -116,7 +116,10 @@ export const project = defineType({
       name: "gallery",
       title: "Gallery",
       group: "content",
-      of: [defineArrayMember({ type: "block" })],
+      of: [
+        defineArrayMember({ type: "singleMediaBlock" }),
+        defineArrayMember({ type: "sideBySideMediaBlock" }),
+      ],
     }),
 
     defineField({
