@@ -90,7 +90,7 @@ export default async function InterviewPage({
         <InterviewInfo
           city={interview.city?.name}
           country={interview.country?.name}
-          interviewTo={interview.interviewTo}
+          interviewTo={interview.designers}
           introText={interview.introText}
           readingTime={interview.readingTime}
           studio={interview.studio?.name}

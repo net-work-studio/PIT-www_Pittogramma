@@ -12,7 +12,7 @@ export default async function Footer() {
         <ul>
           <li>© {new Date().getFullYear()} Pittogramma</li>
           <li>
-            <p>All Rights Resereved</p>
+            <p>All Rights Reserved</p>
           </li>
           <li>
             <Link href="/terms-of-service">Privacy Policy</Link>
