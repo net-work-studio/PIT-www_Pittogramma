@@ -61,7 +61,7 @@ export default async function InterviewPage({
     ? urlForImage(interview.cover.image)?.url()
     : undefined;
 
-  const interviewees = interview.interviewTo
+  const interviewees = interview.designers
     ?.map((person: { name: string }) => person.name)
     .filter(Boolean);
 
