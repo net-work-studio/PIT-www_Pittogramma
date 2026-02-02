@@ -44,12 +44,17 @@ export const project = defineType({
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "reference",
-      name: "designer",
-      title: "Designer",
+      type: "array",
+      name: "designers",
+      title: "Designers",
       group: "content",
-      to: [{ type: "designer" }],
-      validation: (e) => e.required(),
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "designer" }],
+        }),
+      ],
+      validation: (e) => e.required().min(1),
     }),
     defineField({
       type: "reference",
@@ -59,11 +64,16 @@ export const project = defineType({
       to: [{ type: "institute" }],
     }),
     defineField({
-      type: "reference",
-      name: "teacher",
-      title: "Teacher",
+      type: "array",
+      name: "teachers",
+      title: "Teachers",
       group: "content",
-      to: [{ type: "teacher" }],
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "teacher" }],
+        }),
+      ],
     }),
     defineField({
       type: "number",
@@ -96,13 +106,22 @@ export const project = defineType({
       ],
     }),
     defineField({
+      type: "text",
+      name: "description",
+      title: "Description",
+      group: "content",
+    }),
+    defineField({
       type: "array",
       name: "gallery",
       title: "Gallery",
       group: "content",
-      of: [defineArrayMember({ type: "block" })],
+      of: [
+        defineArrayMember({ type: "singleMediaBlock" }),
+        defineArrayMember({ type: "sideBySideMediaBlock" }),
+      ],
     }),
-    defineField({ type: "text", name: "description", title: "Description" }),
+
     defineField({
       type: "seoModule",
       name: "seo",

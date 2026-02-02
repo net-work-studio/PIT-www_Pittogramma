@@ -23,23 +23,11 @@ const CALENDAR_EVENTS = [
 export default function HomeAside() {
   return (
     <aside className="col-span-1 space-y-2.5 md:col-span-1">
-      <CtaCard
-        buttonText={"Call to action"}
-        description={"Description text"}
-        title={"SECTION TITLE"}
-      />
+      <CtaCard buttonText="Call to action" headline="SECTION TITLE" />
       <Calendar events={CALENDAR_EVENTS} />
       <NewsletterCard />
-      <CtaCard
-        buttonText={"Call to action"}
-        description={"Description text"}
-        title={"SECTION TITLE"}
-      />
-      <CtaCard
-        buttonText={"Call to action"}
-        description={"Description text"}
-        title={"SECTION TITLE"}
-      />
+      <CtaCard buttonText="Call to action" headline="SECTION TITLE" />
+      <CtaCard buttonText="Call to action" headline="SECTION TITLE" />
     </aside>
   );
 }

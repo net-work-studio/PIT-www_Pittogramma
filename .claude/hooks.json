@@ -1,0 +1,18 @@
+{
+  "hooks": [
+    {
+      "matcher": {
+        "tool": "Bash",
+        "pattern": "git commit*"
+      },
+      "hooks": [
+        {
+          "type": "command",
+          "command": "bunx ultracite fix && git add -A",
+          "timeout": 30000,
+          "runMode": "pre"
+        }
+      ]
+    }
+  ]
+}

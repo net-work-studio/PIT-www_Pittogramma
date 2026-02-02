@@ -50,7 +50,7 @@ export default async function Page() {
         </ul>
         <section className="flex flex-col gap-1.5">
           {bookshops.length > 0 ? (
-            bookshops.map((bookshop) => (
+            bookshops.map((bookshop: Bookshop) => (
               <BookshopCard bookshop={bookshop} key={bookshop._id} />
             ))
           ) : (

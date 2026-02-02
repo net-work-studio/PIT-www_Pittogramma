@@ -3,8 +3,9 @@ import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import { TagsDisplay } from "@/components/resources/tags-display";
 import PageHeader from "@/components/shared/page-header";
+import { buildTrackedLink, type UtmSettings } from "@/lib/tracked-link";
 import { sanityFetch } from "@/sanity/lib/live";
-import { WEB_SOURCES_QUERY } from "@/sanity/lib/queries";
+import { SITE_SETTINGS_QUERY, WEB_SOURCES_QUERY } from "@/sanity/lib/queries";
 import type { WEB_SOURCES_QUERY_RESULT } from "@/sanity/types";
 
 type WebSource = WEB_SOURCES_QUERY_RESULT[number];
@@ -23,7 +24,13 @@ function formatUrl(url: string | null): string {
   }
 }
 
-function WebSourceCard({ source }: { source: WebSource }) {
+function WebSourceCard({
+  source,
+  utmSettings,
+}: {
+  source: WebSource;
+  utmSettings: UtmSettings;
+}) {
   return (
     <ResourceListItem>
       <li className="col-span-4">{source.name}</li>
@@ -32,14 +39,14 @@ function WebSourceCard({ source }: { source: WebSource }) {
         <TagsDisplay tags={source.tagSelector?.tags} />
       </li>
       <li className="col-span-4">
-        {source.affiliateLink ? (
+        {source.sourceUrl ? (
           <a
             className="underline hover:no-underline"
-            href={source.affiliateLink}
+            href={buildTrackedLink(source.sourceUrl, "website", utmSettings)}
             rel="noopener noreferrer"
             target="_blank"
           >
-            {formatUrl(source.affiliateLink)}
+            {formatUrl(source.sourceUrl)}
           </a>
         ) : (
           "-"
@@ -50,9 +57,16 @@ function WebSourceCard({ source }: { source: WebSource }) {
 }
 
 export default async function Page() {
-  const { data: sources } = await sanityFetch({
-    query: WEB_SOURCES_QUERY,
-  });
+  const [{ data: sources }, { data: settings }] = await Promise.all([
+    sanityFetch({ query: WEB_SOURCES_QUERY }),
+    sanityFetch({ query: SITE_SETTINGS_QUERY }),
+  ]);
+
+  const utmSettings: UtmSettings = {
+    utmSource: settings?.utmSource,
+    utmMedium: settings?.utmMedium,
+    utmCampaign: settings?.utmCampaign,
+  };
 
   return (
     <>
@@ -74,8 +88,12 @@ export default async function Page() {
         </ul>
         <section className="flex flex-col gap-1.5">
           {sources.length > 0 ? (
-            sources.map((source) => (
-              <WebSourceCard key={source._id} source={source} />
+            sources.map((source: WebSource) => (
+              <WebSourceCard
+                key={source._id}
+                source={source}
+                utmSettings={utmSettings}
+              />
             ))
           ) : (
             <p className="text-center text-muted-foreground">

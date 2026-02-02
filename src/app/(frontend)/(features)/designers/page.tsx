@@ -1,17 +1,33 @@
 import { Search } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
+import CtaCard from "@/components/cards/cta-card";
 import Filter from "@/components/feat/filter/filter";
-import SubmitProjectBanner from "@/components/feat/submit/submit-project-banner";
 import PageHeader from "@/components/shared/page-header";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
+import { siteDefaults } from "@/lib/seo/siteDefaults";
+import type { SeoModule } from "@/lib/types/seo";
 import { sampleDesignersData } from "@/sample-data/sample-designers-data";
+import { sanityFetch } from "@/sanity/lib/live";
+import { DESIGNERS_PAGE_QUERY } from "@/sanity/lib/queries";
 
-export const metadata: Metadata = {
-  title: "Designers",
-  description:
-    "The complete list of young graphic designers who have a project published on the platform",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { data: page } = await sanityFetch({
+    query: DESIGNERS_PAGE_QUERY,
+  });
+
+  return mapSanityToMetadata({
+    page: {
+      title: page?.title ?? "Designers",
+      description: page?.introText,
+      seo: page?.seo as SeoModule | undefined,
+    },
+    baseUrl: siteDefaults.baseUrl,
+    path: "/designers",
+    siteDefaults,
+  });
+}
 
 function DesignerCard() {
   return (
@@ -32,14 +48,20 @@ function DesignerCard() {
   );
 }
 
-export default function DesignersPage() {
+export default async function DesignersPage() {
+  const { data: pageSettings } = await sanityFetch({
+    query: DESIGNERS_PAGE_QUERY,
+  });
+
+  const cta = pageSettings?.endOfPageCta;
+
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-7.5">
         <PageHeader
           className="pb-0"
-          subtitle="The complete list of young graphic designers who have a project published on the platform"
-          title="Designers"
+          subtitle={pageSettings?.introText}
+          title={pageSettings?.title ?? "Designers"}
         />
       </div>
       <div className="space-y-5 pt-30">
@@ -52,7 +74,17 @@ export default function DesignersPage() {
             <DesignerCard key={index} />
           ))}
         </section>
-        <SubmitProjectBanner />
+        {cta && (
+          <CtaCard
+            buttonText={cta.buttonText}
+            externalUrl={cta.externalUrl}
+            headline={cta.headline}
+            image={cta.image}
+            internalLink={cta.internalLink}
+            linkType={cta.linkType}
+            variant={cta.variant}
+          />
+        )}
       </div>
     </>
   );

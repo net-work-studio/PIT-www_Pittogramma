@@ -47,7 +47,7 @@ function LetterSection({ letter, words }: GroupedGlossary) {
     <div className="space-y-5">
       <h2 className="border-b pb-2 pl-2.5 text-xs uppercase">{letter}</h2>
       <div className="space-y-1.5">
-        {words.map((item) => (
+        {words.map((item: GlossaryItem) => (
           <GlossaryCard
             definition={item.description}
             key={item._id}
@@ -101,7 +101,7 @@ export default async function Page() {
       </div>
       <section className="columns-2 gap-2.5 space-y-5 pt-30">
         {groupedGlossary.length > 0 ? (
-          groupedGlossary.map((group) => (
+          groupedGlossary.map((group: GroupedGlossary) => (
             <LetterSection
               key={group.letter}
               letter={group.letter}

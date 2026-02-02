@@ -2,11 +2,14 @@ import {
   BookOpen,
   Briefcase,
   Calendar,
+  FileText,
   Globe,
   GraduationCap,
+  Home,
   Languages,
   MapPin,
   MessageCircle,
+  MousePointerClick,
   Settings,
   Tag,
   User,
@@ -26,6 +29,7 @@ export const structure: StructureResolver = (S) =>
 
       docListItem(S, "project", "Project", Briefcase),
       docListItem(S, "interview", "Interview", MessageCircle),
+      docListItem(S, "journal", "Journal", FileText),
 
       group(S, "Resources", [
         docListItem(S, "bibliography", "Bibliography"),
@@ -34,6 +38,7 @@ export const structure: StructureResolver = (S) =>
         docListItem(S, "designer", "Designer", User),
         docListItem(S, "institute", "Institute"),
         docListItem(S, "professional", "Professional", User),
+        docListItem(S, "publisher", "Publisher"),
         docListItem(S, "studio", "Studio"),
         docListItem(S, "teacher", "Teacher", GraduationCap),
         docListItem(S, "typeFoundry", "Type Foundry"),
@@ -41,10 +46,17 @@ export const structure: StructureResolver = (S) =>
       ]),
 
       group(S, "Pages", [
+        singleton(S, "homePage", "Home", Home),
+        singleton(S, "projectsPage", "Projects", Briefcase),
+        singleton(S, "interviewsPage", "Interviews", MessageCircle),
+        singleton(S, "designersPage", "Designers", User),
+        S.divider(),
         singleton(S, "history", "History"),
         docListItem(S, "event", "Event", Calendar),
         docListItem(S, "edition", "Edition", BookOpen),
       ]),
+
+      docListItem(S, "cta", "CTAs", MousePointerClick),
 
       S.divider(),
 
@@ -56,7 +68,6 @@ export const structure: StructureResolver = (S) =>
         docListItem(S, "contributor", "Contributor", Users),
         docListItem(S, "category", "Category", Tag),
         docListItem(S, "author", "Author", User),
-        docListItem(S, "publisher", "Publisher"),
       ]),
 
       S.divider(),

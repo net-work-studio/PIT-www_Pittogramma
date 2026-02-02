@@ -3,13 +3,15 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BibliographyList } from "@/components/resources/bibliography-list";
+import type { UtmSettings } from "@/lib/tracked-link";
 import type { BIBLIOGRAPHY_QUERY_RESULT } from "@/sanity/types";
 
 interface BibliographyContentProps {
   books: BIBLIOGRAPHY_QUERY_RESULT;
+  utmSettings?: UtmSettings;
 }
 
-export function BibliographyContent({ books }: BibliographyContentProps) {
+export function BibliographyContent({ books, utmSettings }: BibliographyContentProps) {
   const [view, setView] = useState<"list" | "grid">("list");
 
   return (
@@ -24,10 +26,10 @@ export function BibliographyContent({ books }: BibliographyContentProps) {
           <TabsTrigger value="grid">Grid</TabsTrigger>
         </TabsList>
         <TabsContent className="w-full" value="list">
-          <BibliographyList books={books} view="list" />
+          <BibliographyList books={books} view="list" utmSettings={utmSettings} />
         </TabsContent>
         <TabsContent className="w-full" value="grid">
-          <BibliographyList books={books} view="grid" />
+          <BibliographyList books={books} view="grid" utmSettings={utmSettings} />
         </TabsContent>
       </Tabs>
     </section>

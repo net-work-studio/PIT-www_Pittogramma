@@ -1,6 +1,37 @@
 import { CommentIcon } from "@sanity/icons";
+import { createElement } from "react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { groups } from "@/sanity/utils/groups";
+
+const QuestionStyle = (props: { children: React.ReactNode }) =>
+  createElement(
+    "span",
+    {
+      style: {
+        fontWeight: 600,
+        color: "#1a1a1a",
+        paddingLeft: "0em",
+        borderTop: "1px solid #1a1a1a",
+        paddingTop: "0.75em",
+        display: "block",
+      },
+    },
+    props.children
+  );
+
+const AnswerStyle = (props: { children: React.ReactNode }) =>
+  createElement(
+    "span",
+    {
+      style: {
+        fontWeight: 400,
+        color: "#666",
+        paddingBottom: "2.5em",
+        display: "block",
+      },
+    },
+    props.children
+  );
 
 export const interview = defineType({
   type: "document",
@@ -40,19 +71,79 @@ export const interview = defineType({
       group: "content",
     }),
     defineField({
-      type: "array",
-      name: "interviewTo",
+      type: "string",
+      name: "interviewToType",
       title: "Interview To",
+      group: "content",
+      options: {
+        list: [
+          { title: "Designers", value: "designers" },
+          { title: "Studio", value: "studio" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "designers",
+      validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "array",
+      name: "designers",
+      title: "Designers",
       group: "content",
       of: [
         defineArrayMember({
           type: "reference",
-          name: "designer",
-          title: "Designer",
           to: [{ type: "designer" }],
         }),
       ],
-      validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "reference",
+      name: "studio",
+      title: "Studio",
+      group: "content",
+      to: [{ type: "studio" }],
+      validation: (e) =>
+        e.custom((value, context) => {
+          const parent = context.parent as { interviewToType?: string };
+          if (parent?.interviewToType === "studio" && !value) {
+            return "Studio is required";
+          }
+          return true;
+        }),
+    }),
+    defineField({
+      type: "reference",
+      name: "city",
+      title: "City",
+      group: "content",
+      to: [{ type: "city" }],
+    }),
+    defineField({
+      type: "reference",
+      name: "country",
+      title: "Country",
+      group: "content",
+      to: [{ type: "country" }],
+    }),
+    defineField({
+      type: "number",
+      name: "readingTime",
+      title: "Reading Time (minutes)",
+      group: "content",
+      validation: (e) => e.min(1).integer(),
+    }),
+    defineField({
+      type: "array",
+      name: "tags",
+      title: "Tags",
+      group: "content",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "tag" }],
+        }),
+      ],
     }),
     defineField({
       type: "text",
@@ -66,7 +157,32 @@ export const interview = defineType({
       name: "interview",
       title: "Interview",
       group: "content",
-      of: [defineArrayMember({ type: "block" })],
+      of: [
+        defineArrayMember({
+          type: "block",
+          styles: [
+            { title: "Question", value: "normal", component: QuestionStyle },
+            { title: "Answer", value: "answer", component: AnswerStyle },
+            { title: "Quote", value: "blockquote" },
+          ],
+          lists: [],
+          marks: {
+            decorators: [
+              { title: "Strong", value: "strong" },
+              { title: "Emphasis", value: "em" },
+            ],
+            annotations: [],
+          },
+        }),
+        // Single asset (image or video)
+        defineArrayMember({ type: "singleMediaBlock" }),
+        // Side by side (2 items)
+        defineArrayMember({ type: "sideBySideMediaBlock" }),
+        // 3 side by side
+        defineArrayMember({ type: "threeSideBySideMediaBlock" }),
+        // Grid of 4
+        defineArrayMember({ type: "gridFourMediaBlock" }),
+      ],
     }),
     defineField({
       type: "seoModule",

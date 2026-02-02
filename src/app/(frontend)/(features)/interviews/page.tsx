@@ -1,66 +1,90 @@
 import type { Metadata } from "next";
 import BaseCard from "@/components/cards/base-card";
-import SubmitBanner from "@/components/feat/submit/submit-project-banner";
+import CtaCard from "@/components/cards/cta-card";
 import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
+import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
+import { siteDefaults } from "@/lib/seo/siteDefaults";
+import type { SeoModule } from "@/lib/types/seo";
+import { urlFor } from "@/sanity/lib/image";
+import { sanityFetch } from "@/sanity/lib/live";
+import { INTERVIEWS_PAGE_QUERY, INTERVIEWS_QUERY } from "@/sanity/lib/queries";
+import type { INTERVIEWS_QUERY_RESULT } from "@/sanity/types";
 
-const cards = [
-  {
-    id: "1",
-    title: "Typography Masterclass",
-    authors: [{ name: "Sarah Chen" }, { name: "Alex Rivera" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-  },
-  {
-    id: "2",
-    title: "Design Trends 2025",
-    authors: [{ name: "Maria Garcia" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-  },
-  {
-    id: "3",
-    title: "Interview with Creative Director",
-    authors: [{ name: "John Smith" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-  },
-  {
-    id: "4",
-    title: "Featured Designer Spotlight",
-    authors: [{ name: "Emma Wilson" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-  },
-  {
-    id: "5",
-    title: "Design Conference 2025",
-    authors: [{ name: "Conference Team" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-  },
-];
+export async function generateMetadata(): Promise<Metadata> {
+  const { data: page } = await sanityFetch({
+    query: INTERVIEWS_PAGE_QUERY,
+  });
 
-export const metadata: Metadata = {
-  title: "Interviews",
-  description:
-    "We interview interesting professionals to give an overview to the youngsters about the industry thorough insights, suggestions and different perspectives",
-};
+  return mapSanityToMetadata({
+    page: {
+      title: page?.title ?? "Interviews",
+      description: page?.introText,
+      seo: page?.seo as SeoModule | undefined,
+    },
+    baseUrl: siteDefaults.baseUrl,
+    path: "/interviews",
+    siteDefaults,
+  });
+}
 
-export default function InterviewsPage() {
+export default async function InterviewsPage() {
+  const [{ data: interviews }, { data: pageSettings }] = await Promise.all([
+    sanityFetch({ query: INTERVIEWS_QUERY }),
+    sanityFetch({ query: INTERVIEWS_PAGE_QUERY }),
+  ]);
+
+  const cta = pageSettings?.endOfPageCta;
+
+  interface InterviewCard {
+    authors: { name: string }[] | undefined;
+    href: string;
+    id: string;
+    image: string;
+    title: string;
+    readingTime: number | null;
+    studio: string | undefined | null;
+    location: string | undefined;
+  }
+
+  const interviewCards: InterviewCard[] = interviews
+    .filter(
+      (interview: INTERVIEWS_QUERY_RESULT[number]) => interview.slug?.current
+    )
+    .map((interview: INTERVIEWS_QUERY_RESULT[number]) => {
+      const image = interview.cover?.image
+        ? urlFor(interview.cover.image).width(1200).height(900).url()
+        : "";
+
+      return {
+        authors: interview.designers?.length
+          ? interview.designers.map((d) => ({ name: d.name ?? "" }))
+          : undefined,
+        href: `/interviews/${interview.slug?.current ?? ""}`,
+        id: interview._id,
+        image,
+        title: interview.title ?? "",
+        readingTime: interview.readingTime,
+        studio: interview.studio?.name,
+        location:
+          [interview.city?.name, interview.country?.name]
+            .filter(Boolean)
+            .join(", ") || undefined,
+      };
+    });
+
   return (
     <>
       <PageHeader
-        subtitle="We interview interesting professionals to give an overview to the youngsters about the industry thorough insights, suggestions and different perspectives "
-        title="Interviews"
+        subtitle={pageSettings?.introText}
+        title={pageSettings?.title ?? "Interviews"}
       />
       <div className="space-y-10 pb-10">
         <div>
           <Button className="font-mono uppercase">Filters</Button>
         </div>
         <section className="col-span-1 grid grid-cols-1 gap-4 md:grid-cols-3 lg:col-span-3 xl:grid-cols-4">
-          {cards.map((card) => (
+          {interviewCards.map((card) => (
             <BaseCard
               authors={card.authors}
               href={card.href}
@@ -76,7 +100,17 @@ export default function InterviewsPage() {
           <Button className="rounded-full font-mono uppercase">3</Button>
         </div>
       </div>
-      <SubmitBanner />
+      {cta && (
+        <CtaCard
+          buttonText={cta.buttonText}
+          externalUrl={cta.externalUrl}
+          headline={cta.headline}
+          image={cta.image}
+          internalLink={cta.internalLink}
+          linkType={cta.linkType}
+          variant={cta.variant}
+        />
+      )}
     </>
   );
 }

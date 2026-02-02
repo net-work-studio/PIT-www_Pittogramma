@@ -9,6 +9,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { buildTrackedLink, type UtmSettings } from "@/lib/tracked-link";
 import { urlForImage } from "@/sanity/lib/image";
 import type { BIBLIOGRAPHY_QUERY_RESULT } from "@/sanity/types";
 
@@ -18,6 +19,7 @@ interface BookDetailsDrawerProps {
   book: BookItem | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  utmSettings?: UtmSettings;
 }
 
 function getAuthors(authors: BookItem["authors"]) {
@@ -31,14 +33,17 @@ export function BookDetailsDrawer({
   book,
   open,
   onOpenChange,
+  utmSettings,
 }: BookDetailsDrawerProps) {
-  if (!book) return null;
+  if (!book) {
+    return null;
+  }
 
   const coverUrl = urlForImage(book.cover)?.width(400).height(600).url();
   const authors = getAuthors(book.authors);
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
+    <Sheet onOpenChange={onOpenChange} open={open}>
       <SheetContent className="overflow-y-auto">
         <SheetHeader>
           <SheetTitle>{book.name}</SheetTitle>
@@ -47,13 +52,13 @@ export function BookDetailsDrawer({
 
         <div className="flex flex-col gap-6 p-6">
           {coverUrl && (
-            <div className="relative aspect-[2/3] w-full max-w-[200px] overflow-hidden rounded-md bg-muted">
+            <div className="relative aspect-2/3 w-full max-w-[200px] overflow-hidden rounded-md bg-muted">
               <Image
-                src={coverUrl}
                 alt={book.cover?.alt || book.name || "Book cover"}
-                fill
                 className="object-cover"
+                fill
                 sizes="200px"
+                src={coverUrl}
               />
             </div>
           )}
@@ -97,8 +102,8 @@ export function BookDetailsDrawer({
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {book.categories.map((category, index) => (
                     <span
-                      key={index}
                       className="rounded-full bg-secondary px-2.5 py-0.5 text-xs"
+                      key={index}
                     >
                       {category}
                     </span>
@@ -122,9 +127,9 @@ export function BookDetailsDrawer({
           {book.affiliateLink && (
             <Button asChild className="mt-auto w-full">
               <a
-                href={book.affiliateLink}
-                target="_blank"
+                href={buildTrackedLink(book.affiliateLink, "book", utmSettings)}
                 rel="noopener noreferrer"
+                target="_blank"
               >
                 Buy
               </a>
