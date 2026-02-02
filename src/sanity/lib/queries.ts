@@ -50,10 +50,6 @@ const SEO_FIELDS = `
 
 export const SITE_SETTINGS_QUERY = defineQuery(`
   *[_type == "siteSettings"][0] {
-    homeIntro,
-    projectsIntro,
-    interviewsIntro,
-    designersIntro,
     utmSource,
     utmMedium,
     utmCampaign,
@@ -167,7 +163,7 @@ export const INTERVIEWS_QUERY = defineQuery(`
         crop
       }
     },
-    interviewTo[]{ _key, ...@->{ _id, name } },
+    designers[]{ _key, ...@->{ _id, name } },
     studio->{
       _id,
       name
@@ -203,7 +199,7 @@ export const INTERVIEW_QUERY = defineQuery(`
       },
       alt
     },
-    interviewTo[]{ _key, ...@->{ _id, name, portrait } },
+    designers[]{ _key, ...@->{ _id, name, portrait } },
     studio->{
       _id,
       name

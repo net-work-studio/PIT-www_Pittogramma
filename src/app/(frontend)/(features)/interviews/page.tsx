@@ -6,8 +6,13 @@ import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
 import { siteDefaults } from "@/lib/seo/siteDefaults";
 import type { SeoModule } from "@/lib/types/seo";
+import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
-import { INTERVIEWS_PAGE_QUERY } from "@/sanity/lib/queries";
+import {
+  INTERVIEWS_PAGE_QUERY,
+  INTERVIEWS_QUERY,
+} from "@/sanity/lib/queries";
+import type { INTERVIEWS_QUERY_RESULT } from "@/sanity/types";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -41,8 +46,8 @@ export default async function InterviewsPage() {
         : "";
 
       return {
-        authors: interview.interviewTo?.length
-          ? interview.interviewTo.map((d) => ({ name: d.name ?? "" }))
+        authors: interview.designers?.length
+          ? interview.designers.map((d) => ({ name: d.name ?? "" }))
           : undefined,
         href: `/interviews/${interview.slug?.current}`,
         id: interview._id,

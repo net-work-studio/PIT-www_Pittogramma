@@ -36,7 +36,7 @@ export default async function Home() {
 
   return (
     <>
-      <PageHeader subtitle={siteSettings?.homeIntro} title="Pittogramma" />
+      <PageHeader subtitle={homePage?.introText} title="Pittogramma" />
       <HomeGrid data={sampleHomeData} />
       {cta && (
         <CtaCard
