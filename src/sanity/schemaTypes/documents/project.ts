@@ -106,13 +106,19 @@ export const project = defineType({
       ],
     }),
     defineField({
+      type: "text",
+      name: "description",
+      title: "Description",
+      group: "content",
+    }),
+    defineField({
       type: "array",
       name: "gallery",
       title: "Gallery",
       group: "content",
       of: [defineArrayMember({ type: "block" })],
     }),
-    defineField({ type: "text", name: "description", title: "Description" }),
+
     defineField({
       type: "seoModule",
       name: "seo",

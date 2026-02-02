@@ -62,7 +62,7 @@ export default async function InterviewPage({
     : undefined;
 
   const interviewees = interview.interviewTo
-    ?.map((person) => person.name)
+    ?.map((person: { name: string }) => person.name)
     .filter(Boolean);
 
   const location = [interview.city?.name, interview.country?.name]
@@ -76,7 +76,7 @@ export default async function InterviewPage({
           name: interview.title,
           description: interview.introText,
           author: interviewees?.length
-            ? interviewees.map((name) => ({
+            ? interviewees.map((name: string) => ({
                 "@type": "Person",
                 name,
               }))

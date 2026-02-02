@@ -40,19 +40,31 @@ export const interview = defineType({
       group: "content",
     }),
     defineField({
-      type: "array",
-      name: "interviewTo",
+      type: "string",
+      name: "interviewToType",
       title: "Interview To",
+      group: "content",
+      options: {
+        list: [
+          { title: "Designers", value: "designers" },
+          { title: "Studio", value: "studio" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "designers",
+      validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "array",
+      name: "designers",
+      title: "Designers",
       group: "content",
       of: [
         defineArrayMember({
           type: "reference",
-          name: "designer",
-          title: "Designer",
           to: [{ type: "designer" }],
         }),
       ],
-      validation: (e) => e.required(),
     }),
     defineField({
       type: "reference",
@@ -60,6 +72,14 @@ export const interview = defineType({
       title: "Studio",
       group: "content",
       to: [{ type: "studio" }],
+      validation: (e) =>
+        e.custom((value, context) => {
+          const parent = context.parent as { interviewToType?: string };
+          if (parent?.interviewToType === "studio" && !value) {
+            return "Studio is required";
+          }
+          return true;
+        }),
     }),
     defineField({
       type: "reference",
