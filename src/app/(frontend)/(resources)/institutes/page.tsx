@@ -64,7 +64,7 @@ export default async function Page() {
         </div>
         <section className="flex flex-col gap-1.5">
           {institutes.length > 0 ? (
-            institutes.map((institute) => (
+            institutes.map((institute: Institute) => (
               <InstituteCard institute={institute} key={institute._id} />
             ))
           ) : (

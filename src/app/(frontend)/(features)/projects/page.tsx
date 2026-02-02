@@ -37,7 +37,15 @@ export default async function ProjectsPage() {
 
   const cta = pageSettings?.endOfPageCta;
 
-  const projectCards = projects.map(
+  interface ProjectCard {
+    authors: { name: string }[] | undefined;
+    href: string;
+    id: string;
+    image: string;
+    title: string;
+  }
+
+  const projectCards: ProjectCard[] = projects.map(
     (project: PROJECTS_QUERY_RESULT[number]) => {
       const image = project.cover?.image
         ? urlFor(project.cover.image).width(1200).height(900).url()
@@ -45,7 +53,11 @@ export default async function ProjectsPage() {
 
       return {
         authors: project.designers?.length
-          ? project.designers.map((d) => ({ name: d.name ?? "" }))
+          ? project.designers.map(
+              (d: PROJECTS_QUERY_RESULT[number]["designers"][number]) => ({
+                name: d.name ?? "",
+              })
+            )
           : undefined,
         href: `/projects/${project.slug.current}`,
         id: project._id,

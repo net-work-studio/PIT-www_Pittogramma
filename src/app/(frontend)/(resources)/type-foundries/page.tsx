@@ -55,7 +55,7 @@ export default async function Page() {
         </ul>
         <section className="flex flex-col gap-1.5">
           {foundries.length > 0 ? (
-            foundries.map((foundry) => (
+            foundries.map((foundry: TypeFoundry) => (
               <TypeFoundryCard foundry={foundry} key={foundry._id} />
             ))
           ) : (

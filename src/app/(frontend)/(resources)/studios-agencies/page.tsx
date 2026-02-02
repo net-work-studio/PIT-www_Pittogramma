@@ -15,7 +15,9 @@ function getCities(locations: Studio["locations"]) {
   }
   const cities: string[] = [];
   for (const loc of locations) {
-    if (loc.city?.name) cities.push(loc.city.name);
+    if (loc.city?.name) {
+      cities.push(loc.city.name);
+    }
   }
   return cities.length > 0 ? cities.join(", ") : "-";
 }
@@ -26,9 +28,13 @@ function getCountries(locations: Studio["locations"]) {
   }
   const uniqueCountries = new Set<string>();
   for (const loc of locations) {
-    if (loc.country?.name) uniqueCountries.add(loc.country.name);
+    if (loc.country?.name) {
+      uniqueCountries.add(loc.country.name);
+    }
   }
-  return uniqueCountries.size > 0 ? Array.from(uniqueCountries).join(", ") : "-";
+  return uniqueCountries.size > 0
+    ? Array.from(uniqueCountries).join(", ")
+    : "-";
 }
 
 function StudioCard({ studio }: { studio: Studio }) {
@@ -71,7 +77,7 @@ export default async function Page() {
         </ul>
         <section className="flex flex-col gap-1.5">
           {studios.length > 0 ? (
-            studios.map((studio) => (
+            studios.map((studio: Studio) => (
               <StudioCard key={studio._id} studio={studio} />
             ))
           ) : (

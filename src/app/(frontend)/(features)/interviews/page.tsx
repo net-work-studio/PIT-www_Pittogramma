@@ -8,10 +8,7 @@ import { siteDefaults } from "@/lib/seo/siteDefaults";
 import type { SeoModule } from "@/lib/types/seo";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
-import {
-  INTERVIEWS_PAGE_QUERY,
-  INTERVIEWS_QUERY,
-} from "@/sanity/lib/queries";
+import { INTERVIEWS_PAGE_QUERY, INTERVIEWS_QUERY } from "@/sanity/lib/queries";
 import type { INTERVIEWS_QUERY_RESULT } from "@/sanity/types";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -39,8 +36,22 @@ export default async function InterviewsPage() {
 
   const cta = pageSettings?.endOfPageCta;
 
-  const interviewCards = interviews.map(
-    (interview: INTERVIEWS_QUERY_RESULT[number]) => {
+  interface InterviewCard {
+    authors: { name: string }[] | undefined;
+    href: string;
+    id: string;
+    image: string;
+    title: string;
+    readingTime: number | null;
+    studio: string | undefined | null;
+    location: string | undefined;
+  }
+
+  const interviewCards: InterviewCard[] = interviews
+    .filter(
+      (interview: INTERVIEWS_QUERY_RESULT[number]) => interview.slug?.current
+    )
+    .map((interview: INTERVIEWS_QUERY_RESULT[number]) => {
       const image = interview.cover?.image
         ? urlFor(interview.cover.image).width(1200).height(900).url()
         : "";
@@ -49,10 +60,10 @@ export default async function InterviewsPage() {
         authors: interview.designers?.length
           ? interview.designers.map((d) => ({ name: d.name ?? "" }))
           : undefined,
-        href: `/interviews/${interview.slug?.current}`,
+        href: `/interviews/${interview.slug?.current ?? ""}`,
         id: interview._id,
         image,
-        title: interview.title,
+        title: interview.title ?? "",
         readingTime: interview.readingTime,
         studio: interview.studio?.name,
         location:
@@ -60,8 +71,7 @@ export default async function InterviewsPage() {
             .filter(Boolean)
             .join(", ") || undefined,
       };
-    }
-  );
+    });
 
   return (
     <>

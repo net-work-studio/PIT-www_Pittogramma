@@ -94,6 +94,12 @@ GOOGLE_BOOKS_API_KEY            # For ISBN book data (optional)
 - **Field groups**: metadata, content, seo (organized in Sanity Studio)
 - **Media handling**: `imageWithMetadata` object includes alt text and caption
 
+## TypeScript Conventions
+
+- **Prefer `interface` over `type`** for object shapes (aligns with Biome's `useConsistentTypeDefinitions` rule)
+- **Explicit type annotations** in map/filter callbacks when working with Sanity query results
+- **Avoid non-null assertions** (`!`) - use optional chaining with fallbacks (`??`) instead
+
 ## Linting
 
 Uses Biome via Ultracite with these project-specific rules:
@@ -101,5 +107,6 @@ Uses Biome via Ultracite with these project-specific rules:
 - `noConsole`: warn
 - `noMagicNumbers`: off
 - `noNamespaceImport`: off (Sanity uses namespace imports)
+- `noNonNullAssertion`: error (use optional chaining instead)
 
 Excluded from linting: `sanity/types.ts`, `.next/`, `admin/`

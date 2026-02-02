@@ -12,6 +12,7 @@ import type { SeoModule } from "@/lib/types/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { PROJECT_QUERY } from "@/sanity/lib/queries";
+import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 export async function generateMetadata({
   params,
@@ -67,10 +68,12 @@ export default async function ProjectPage({
           name: project.title,
           description: project.description,
           creator: project.designers?.length
-            ? project.designers.map((d) => ({
-                "@type": "Person",
-                name: d.name,
-              }))
+            ? project.designers.map(
+                (d: NonNullable<PROJECT_QUERY_RESULT>["designers"][number]) => ({
+                  "@type": "Person",
+                  name: d.name,
+                })
+              )
             : undefined,
           dateCreated: project.year ? String(project.year) : undefined,
           image: imageUrl,

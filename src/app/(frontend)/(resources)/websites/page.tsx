@@ -88,7 +88,7 @@ export default async function Page() {
         </ul>
         <section className="flex flex-col gap-1.5">
           {sources.length > 0 ? (
-            sources.map((source) => (
+            sources.map((source: WebSource) => (
               <WebSourceCard
                 key={source._id}
                 source={source}
