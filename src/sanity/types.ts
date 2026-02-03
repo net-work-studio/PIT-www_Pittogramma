@@ -697,6 +697,13 @@ export type Journal = {
   seo?: SeoModule;
 };
 
+export type ProfessionalReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "professional";
+};
+
 export type Interview = {
   _id: string;
   _type: "interview";
@@ -708,11 +715,7 @@ export type Interview = {
   publishingDate?: PublishingDate;
   cover: ImageWithMetadata;
   interviewToType: "designers" | "studio";
-  designers?: Array<
-    {
-      _key: string;
-    } & DesignerReference
-  >;
+  designers?: ArrayOf<DesignerReference | ProfessionalReference>;
   studio?: StudioReference;
   city?: CityReference;
   country?: CountryReference;
@@ -1048,6 +1051,7 @@ export type AllSanitySchemaTypes =
   | Event
   | Designer
   | Journal
+  | ProfessionalReference
   | Interview
   | Country
   | City
@@ -1616,7 +1620,7 @@ export type INTERVIEWS_QUERY_RESULT = Array<{
     } | null;
   };
   designers: Array<{
-    _key: string;
+    _key: null;
     _id: string;
     name: string;
   }> | null;
@@ -1692,7 +1696,7 @@ export type INTERVIEW_QUERY_RESULT = {
     alt: string | null;
   };
   designers: Array<{
-    _key: string;
+    _key: null;
     _id: string;
     name: string;
     portrait: ImageWithMetadata | null;

@@ -87,13 +87,13 @@ export const interview = defineType({
     }),
     defineField({
       type: "array",
-      name: "designers",
-      title: "Designers",
+      name: "designersAndProfessionals",
+      title: "Designers and Professionals",
       group: "content",
       of: [
         defineArrayMember({
           type: "reference",
-          to: [{ type: "designer" }],
+          to: [{ type: "designer" }, { type: "professional" }],
         }),
       ],
     }),
