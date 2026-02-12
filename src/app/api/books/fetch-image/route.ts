@@ -31,7 +31,8 @@ function isRateLimited(ip: string): boolean {
 }
 
 export async function GET(request: Request) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
   if (isRateLimited(ip)) {
     return NextResponse.json(
       { error: "Too many requests. Please try again later." },
@@ -43,14 +44,20 @@ export async function GET(request: Request) {
   const imageUrl = searchParams.get("url");
 
   if (!imageUrl) {
-    return NextResponse.json({ error: "Image URL is required" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Image URL is required" },
+      { status: 400 }
+    );
   }
 
   try {
     // Validate URL is from allowed Google Books hostnames (exact match prevents subdomain attacks)
     const url = new URL(imageUrl);
     if (!ALLOWED_HOSTNAMES.includes(url.hostname)) {
-      return NextResponse.json({ error: "Invalid image source" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid image source" },
+        { status: 400 }
+      );
     }
 
     const response = await fetch(imageUrl);
@@ -70,6 +77,9 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     console.error("Error fetching image:", error);
-    return NextResponse.json({ error: "Failed to fetch image" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch image" },
+      { status: 500 }
+    );
   }
 }

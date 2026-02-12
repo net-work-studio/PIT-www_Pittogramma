@@ -44,7 +44,9 @@ export default function ProjectHeader({
   return (
     <div className="sticky top-16 h-fit w-1/3">
       <hgroup className="text-3xl">
-        {designerNames ? <h2>{designerNames}</h2> : null}
+        {designerNames ? (
+          <h2 className="text-secondary">{designerNames}</h2>
+        ) : null}
         {title ? <h1>{title}</h1> : null}
       </hgroup>
       <div>

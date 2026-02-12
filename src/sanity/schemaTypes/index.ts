@@ -24,7 +24,12 @@ import { tag } from "./documents/tag";
 import { teacher } from "./documents/teacher";
 import { typeFoundry } from "./documents/typeFoundry";
 import { webSource } from "./documents/webSource";
-import { singleMediaBlock, sideBySideMediaBlock, threeSideBySideMediaBlock, gridFourMediaBlock } from "./objects/galleryBlocks";
+import {
+  gridFourMediaBlock,
+  sideBySideMediaBlock,
+  singleMediaBlock,
+  threeSideBySideMediaBlock,
+} from "./objects/galleryBlocks";
 import { imageWithMetadata } from "./objects/imageWithMetadata";
 import { location } from "./objects/location";
 import { logo } from "./objects/logo";

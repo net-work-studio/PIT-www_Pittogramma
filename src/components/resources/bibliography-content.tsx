@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BibliographyList } from "@/components/resources/bibliography-list";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { BIBLIOGRAPHY_QUERY_RESULT } from "@/sanity/types";
 
@@ -11,7 +11,10 @@ interface BibliographyContentProps {
   utmSettings?: UtmSettings;
 }
 
-export function BibliographyContent({ books, utmSettings }: BibliographyContentProps) {
+export function BibliographyContent({
+  books,
+  utmSettings,
+}: BibliographyContentProps) {
   const [view, setView] = useState<"list" | "grid">("list");
 
   return (
@@ -26,10 +29,18 @@ export function BibliographyContent({ books, utmSettings }: BibliographyContentP
           <TabsTrigger value="grid">Grid</TabsTrigger>
         </TabsList>
         <TabsContent className="w-full" value="list">
-          <BibliographyList books={books} view="list" utmSettings={utmSettings} />
+          <BibliographyList
+            books={books}
+            utmSettings={utmSettings}
+            view="list"
+          />
         </TabsContent>
         <TabsContent className="w-full" value="grid">
-          <BibliographyList books={books} view="grid" utmSettings={utmSettings} />
+          <BibliographyList
+            books={books}
+            utmSettings={utmSettings}
+            view="grid"
+          />
         </TabsContent>
       </Tabs>
     </section>

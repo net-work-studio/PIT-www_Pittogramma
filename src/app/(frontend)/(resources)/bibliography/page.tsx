@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 import SearchInput from "@/components/feat/search-input";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
-import PageHeader from "@/components/shared/page-header";
 import { BibliographyContent } from "@/components/resources/bibliography-content";
+import PageHeader from "@/components/shared/page-header";
 import type { UtmSettings } from "@/lib/tracked-link";
 import { sanityFetch } from "@/sanity/lib/live";
 import { BIBLIOGRAPHY_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";

@@ -3,7 +3,6 @@
   "extends": ["ultracite/core", "ultracite/next", "ultracite/react"],
   "files": {
     "includes": [
-      "**",
       "!*sanity.cli.ts",
       "!**/.next",
       "!**/sanity/types.ts",

@@ -37,9 +37,15 @@ export function buildTrackedLink(
     const campaign = settings?.utmCampaign ?? DEFAULT_UTM.utmCampaign;
 
     // Add UTM parameters
-    if (source) parsedUrl.searchParams.set("utm_source", source);
-    if (medium) parsedUrl.searchParams.set("utm_medium", medium);
-    if (campaign) parsedUrl.searchParams.set("utm_campaign", campaign);
+    if (source) {
+      parsedUrl.searchParams.set("utm_source", source);
+    }
+    if (medium) {
+      parsedUrl.searchParams.set("utm_medium", medium);
+    }
+    if (campaign) {
+      parsedUrl.searchParams.set("utm_campaign", campaign);
+    }
 
     if (resourceType) {
       parsedUrl.searchParams.set("utm_content", resourceType);

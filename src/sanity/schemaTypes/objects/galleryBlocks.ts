@@ -1,8 +1,14 @@
-import { ImageIcon, SquareIcon, InlineIcon, ThLargeIcon, BlockElementIcon } from "@sanity/icons";
+import {
+  BlockElementIcon,
+  ImageIcon,
+  InlineIcon,
+  SquareIcon,
+  ThLargeIcon,
+} from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { GridFourInput } from "@/sanity/components/grid-four-input";
 import { SideBySideInput } from "@/sanity/components/side-by-side-input";
 import { ThreeSideBySideInput } from "@/sanity/components/three-side-by-side-input";
-import { GridFourInput } from "@/sanity/components/grid-four-input";
 
 export const singleMediaBlock = defineType({
   type: "object",
@@ -62,7 +68,9 @@ export const sideBySideMediaBlock = defineType({
       leftImage: "left.image",
     },
     prepare({ leftCaption, rightCaption, leftImage }) {
-      const title = [leftCaption, rightCaption].filter(Boolean).join(" | ") || "Side by Side";
+      const title =
+        [leftCaption, rightCaption].filter(Boolean).join(" | ") ||
+        "Side by Side";
       return {
         title,
         subtitle: "2 items",
@@ -108,7 +116,10 @@ export const threeSideBySideMediaBlock = defineType({
       leftImage: "left.image",
     },
     prepare({ leftCaption, centerCaption, rightCaption, leftImage }) {
-      const title = [leftCaption, centerCaption, rightCaption].filter(Boolean).join(" | ") || "3 Side by Side";
+      const title =
+        [leftCaption, centerCaption, rightCaption]
+          .filter(Boolean)
+          .join(" | ") || "3 Side by Side";
       return {
         title,
         subtitle: "3 items",
@@ -160,8 +171,17 @@ export const gridFourMediaBlock = defineType({
       bottomRightCaption: "bottomRight.caption",
       topLeftImage: "topLeft.image",
     },
-    prepare({ topLeftCaption, topRightCaption, bottomLeftCaption, bottomRightCaption, topLeftImage }) {
-      const title = [topLeftCaption, topRightCaption, bottomLeftCaption, bottomRightCaption].filter(Boolean).join(" | ") || "Grid of 4";
+    prepare({
+      topLeftCaption,
+      topRightCaption,
+      bottomLeftCaption,
+      bottomRightCaption,
+      topLeftImage,
+    }) {
+      const title =
+        [topLeftCaption, topRightCaption, bottomLeftCaption, bottomRightCaption]
+          .filter(Boolean)
+          .join(" | ") || "Grid of 4";
       return {
         title,
         subtitle: "4 items",

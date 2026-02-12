@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { BookDetailsDrawer } from "@/components/resources/book-details-drawer";
 import { LanguagesDisplay } from "@/components/resources/languages-display";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import { TagsDisplay } from "@/components/resources/tags-display";
-import { BookDetailsDrawer } from "@/components/resources/book-details-drawer";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { BIBLIOGRAPHY_QUERY_RESULT } from "@/sanity/types";
 
@@ -27,9 +27,9 @@ function BookCardList({ book, onClick }: BookCardListProps) {
     <ResourceListItem className="cursor-pointer transition-colors hover:bg-secondary/80">
       <li className="col-span-3">
         <button
-          type="button"
-          onClick={onClick}
           className="text-left underline hover:no-underline"
+          onClick={onClick}
+          type="button"
         >
           {book.name}
         </button>
@@ -83,7 +83,11 @@ interface BibliographyListProps {
   utmSettings?: UtmSettings;
 }
 
-export function BibliographyList({ books, view, utmSettings }: BibliographyListProps) {
+export function BibliographyList({
+  books,
+  view,
+  utmSettings,
+}: BibliographyListProps) {
   const [selectedBook, setSelectedBook] = useState<BibliographyItem | null>(
     null
   );
@@ -134,8 +138,8 @@ export function BibliographyList({ books, view, utmSettings }: BibliographyListP
 
       <BookDetailsDrawer
         book={selectedBook}
-        open={drawerOpen}
         onOpenChange={setDrawerOpen}
+        open={drawerOpen}
         utmSettings={utmSettings}
       />
     </>
