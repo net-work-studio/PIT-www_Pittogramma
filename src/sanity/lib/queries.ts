@@ -163,8 +163,29 @@ export const PROJECT_QUERY = defineQuery(`
       name,
     },
     year,
-    gallery,
+    gallery[] {
+      _key,
+      _type,
+      _type == "singleMediaBlock" => {
+        media { type, image { asset, hotspot, crop }, caption, alt }
+      },
+      _type == "sideBySideMediaBlock" => {
+        left { type, image { asset, hotspot, crop }, caption, alt },
+        right { type, image { asset, hotspot, crop }, caption, alt }
+      }
+    },
     description,
+    "relatedProjects": *[
+      _type == "project" &&
+      slug.current != ^.slug.current &&
+      count(tagSelector.tags[@._ref in ^.tagSelector.tags[]._ref]) > 0
+    ] | order(_createdAt desc) [0...4] {
+      _id,
+      cover { image { asset, alt, hotspot, crop } },
+      title,
+      slug,
+      designers[]{ _key, ...@->{ _id, name } }
+    },
     ${SEO_FIELDS}
   }
 `);
