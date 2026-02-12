@@ -50,6 +50,7 @@ export const structure: StructureResolver = (S) =>
         singleton(S, "projectsPage", "Projects", Briefcase),
         singleton(S, "interviewsPage", "Interviews", MessageCircle),
         singleton(S, "designersPage", "Designers", User),
+        singleton(S, "eventsPage", "Events", Calendar),
         S.divider(),
         singleton(S, "history", "History"),
         docListItem(S, "event", "Event", Calendar),

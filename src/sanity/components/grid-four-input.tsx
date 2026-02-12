@@ -1,13 +1,17 @@
 "use client";
 
-import { LinkIcon, PlayIcon, ImageIcon, EditIcon } from "@sanity/icons";
+import { EditIcon, ImageIcon, LinkIcon, PlayIcon } from "@sanity/icons";
 import { Box, Card, Dialog, Flex, Stack, Text } from "@sanity/ui";
-import { useState, useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { ObjectInputMember, type ObjectInputProps } from "sanity";
-import imageUrlBuilder from "@sanity/image-url";
-import { dataset, projectId } from "@/sanity/env";
+import SanityImage from "@/components/modules/shared/sanity-image";
 
-type GridPosition = "topLeft" | "topRight" | "bottomLeft" | "bottomRight" | null;
+type GridPosition =
+  | "topLeft"
+  | "topRight"
+  | "bottomLeft"
+  | "bottomRight"
+  | null;
 
 type MediaItemValue = {
   _type?: string;
@@ -29,13 +33,6 @@ type GridFourValue = {
   bottomRight?: MediaItemValue;
 };
 
-const builder = imageUrlBuilder({ projectId, dataset });
-
-function getImageUrl(media: MediaItemValue | undefined): string | null {
-  if (!media?.image?.asset?._ref) return null;
-  return builder.image(media.image).width(200).height(150).fit("crop").url();
-}
-
 function getMediaIcon(type: string | undefined) {
   switch (type) {
     case "videoUpload":
@@ -56,19 +53,17 @@ function MediaThumbnail({
   label: string;
   onClick: () => void;
 }) {
-  const imageUrl = getImageUrl(media);
+  const hasImage = !!media?.image?.asset?._ref;
   const Icon = getMediaIcon(media?.type);
   const hasMedia = media?.type;
 
   return (
     <Card
       as="button"
-      type="button"
       onClick={onClick}
       padding={3}
       radius={2}
       shadow={1}
-      tone={hasMedia ? "default" : "transparent"}
       style={{
         flex: 1,
         cursor: "pointer",
@@ -77,6 +72,8 @@ function MediaThumbnail({
         position: "relative",
         overflow: "hidden",
       }}
+      tone={hasMedia ? "default" : "transparent"}
+      type="button"
     >
       <Stack space={2}>
         <Box
@@ -88,42 +85,40 @@ function MediaThumbnail({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            position: "relative",
           }}
         >
-          {imageUrl ? (
-            <img
-              src={imageUrl}
+          {hasImage ? (
+            <SanityImage
               alt={media?.caption || label}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
+              fill
+              sizes="200px"
+              source={media}
             />
           ) : (
-            <Text size={4} muted>
+            <Text muted size={4}>
               <Icon />
             </Text>
           )}
         </Box>
 
         <Flex align="center" gap={2}>
-          <Text size={1} weight="semibold" muted>
+          <Text muted size={1} weight="semibold">
             {label}
           </Text>
-          <Text size={0} muted>
+          <Text muted size={0}>
             <EditIcon />
           </Text>
         </Flex>
 
         {media?.caption && (
-          <Text size={1} muted>
+          <Text muted size={1}>
             {media.caption}
           </Text>
         )}
 
         {!hasMedia && (
-          <Text size={1} muted>
+          <Text muted size={1}>
             Click to add media
           </Text>
         )}
@@ -133,8 +128,14 @@ function MediaThumbnail({
 }
 
 export function GridFourInput(props: ObjectInputProps) {
-  const { value, members, renderField, renderInput, renderItem, renderPreview } =
-    props;
+  const {
+    value,
+    members,
+    renderField,
+    renderInput,
+    renderItem,
+    renderPreview,
+  } = props;
   const [expandedPosition, setExpandedPosition] = useState<GridPosition>(null);
 
   const typedValue = value as GridFourValue | undefined;
@@ -176,7 +177,13 @@ export function GridFourInput(props: ObjectInputProps) {
       default:
         return undefined;
     }
-  }, [expandedPosition, topLeftMember, topRightMember, bottomLeftMember, bottomRightMember]);
+  }, [
+    expandedPosition,
+    topLeftMember,
+    topRightMember,
+    bottomLeftMember,
+    bottomRightMember,
+  ]);
 
   const positionLabel = useMemo(() => {
     switch (expandedPosition) {
@@ -206,13 +213,13 @@ export function GridFourInput(props: ObjectInputProps) {
         {/* Top row */}
         <Flex gap={3}>
           <MediaThumbnail
-            media={typedValue?.topLeft}
             label="Top Left"
+            media={typedValue?.topLeft}
             onClick={() => setExpandedPosition("topLeft")}
           />
           <MediaThumbnail
-            media={typedValue?.topRight}
             label="Top Right"
+            media={typedValue?.topRight}
             onClick={() => setExpandedPosition("topRight")}
           />
         </Flex>
@@ -220,13 +227,13 @@ export function GridFourInput(props: ObjectInputProps) {
         {/* Bottom row */}
         <Flex gap={3}>
           <MediaThumbnail
-            media={typedValue?.bottomLeft}
             label="Bottom Left"
+            media={typedValue?.bottomLeft}
             onClick={() => setExpandedPosition("bottomLeft")}
           />
           <MediaThumbnail
-            media={typedValue?.bottomRight}
             label="Bottom Right"
+            media={typedValue?.bottomRight}
             onClick={() => setExpandedPosition("bottomRight")}
           />
         </Flex>

@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import BaseCard from "@/components/cards/base-card";
+import CtaCard from "@/components/cards/cta-card";
 import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
+import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
+import { siteDefaults } from "@/lib/seo/siteDefaults";
+import type { SeoModule } from "@/lib/types/seo";
+import { sanityFetch } from "@/sanity/lib/live";
+import { EVENTS_PAGE_QUERY } from "@/sanity/lib/queries";
 
 const futureEvents = [
   {
@@ -80,12 +87,38 @@ const pastEvents = [
   },
 ];
 
-export default function Page() {
+export async function generateMetadata(): Promise<Metadata> {
+  const { data: page } = await sanityFetch({
+    query: EVENTS_PAGE_QUERY,
+  });
+
+  return mapSanityToMetadata({
+    page: {
+      title: page?.title ?? "Events",
+      description: page?.introText,
+      seo: page?.seo as SeoModule | undefined,
+    },
+    baseUrl: siteDefaults.baseUrl,
+    path: "/events",
+    siteDefaults,
+  });
+}
+
+export default async function Page() {
+  const { data: pageSettings } = await sanityFetch({
+    query: EVENTS_PAGE_QUERY,
+  });
+
+  const cta = pageSettings?.endOfPageCta;
+
   return (
     <>
       <PageHeader
-        subtitle="Through events, talks and workshops, Pittogramma creates moments of dialogue around graphic design, visual culture and the territories they intersect"
-        title="Events"
+        subtitle={
+          pageSettings?.introText ??
+          "Through events, talks and workshops, Pittogramma creates moments of dialogue around graphic design, visual culture and the territories they intersect"
+        }
+        title={pageSettings?.title ?? "Events"}
       />
       <div className="space-y-10 pb-10">
         <div>
@@ -133,6 +166,17 @@ export default function Page() {
           <Button className="rounded-full font-mono uppercase">3</Button>
         </div>
       </div>
+      {cta && (
+        <CtaCard
+          buttonText={cta.buttonText}
+          externalUrl={cta.externalUrl}
+          headline={cta.headline}
+          image={cta.image}
+          internalLink={cta.internalLink}
+          linkType={cta.linkType}
+          variant={cta.variant}
+        />
+      )}
     </>
   );
 }

@@ -37,6 +37,7 @@ import { tagSelector } from "./objects/tagSelector";
 import { titleSlug } from "./objects/titleSlug";
 import { xCard } from "./objects/xCard";
 import { designersPage } from "./singletons/pages/designersPage";
+import { eventsPage } from "./singletons/pages/eventsPage";
 import { homePage } from "./singletons/pages/homePage";
 import { interviewsPage } from "./singletons/pages/interviewsPage";
 import { projectsPage } from "./singletons/pages/projectsPage";
@@ -77,6 +78,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     projectsPage,
     interviewsPage,
     designersPage,
+    eventsPage,
     socialLinks,
     professional,
     publishingDate,

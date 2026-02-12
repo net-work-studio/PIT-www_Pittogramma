@@ -34,6 +34,7 @@ export const project = defineType({
       name: "publishingDate",
       title: "Publishing Date",
       group: "metadata",
+      validation: (e) => e.required(),
     }),
 
     defineField({

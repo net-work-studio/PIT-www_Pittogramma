@@ -1,14 +1,16 @@
-import { HomeIcon } from "@sanity/icons";
+import { CalendarIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { groups } from "@/sanity/utils/groups";
 
-export const homePage = defineType({
-  name: "homePage",
-  title: "Home Page",
+export const eventsPage = defineType({
+  name: "eventsPage",
+  title: "Events Page",
   type: "document",
-  icon: HomeIcon,
+  icon: CalendarIcon,
   __experimental_omnisearch_visibility: false,
-  groups,
+  groups: [
+    { name: "content", title: "Content", default: true },
+    { name: "seo", title: "SEO" },
+  ],
   fields: [
     defineField({
       name: "title",

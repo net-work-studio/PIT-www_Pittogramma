@@ -101,6 +101,16 @@ export const DESIGNERS_PAGE_QUERY = defineQuery(`
   }
 `);
 
+export const EVENTS_PAGE_QUERY = defineQuery(`
+  *[_type == "eventsPage"][0] {
+    _id,
+    title,
+    introText,
+    ${CTA_FIELDS},
+    ${SEO_FIELDS}
+  }
+`);
+
 export const PROJECTS_QUERY = defineQuery(`
   *[_type == "project"] | order(_createdAt desc) {
     _id,

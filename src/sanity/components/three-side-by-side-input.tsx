@@ -1,15 +1,14 @@
 "use client";
 
-import { LinkIcon, PlayIcon, ImageIcon, EditIcon } from "@sanity/icons";
+import { EditIcon, ImageIcon, LinkIcon, PlayIcon } from "@sanity/icons";
 import { Box, Card, Dialog, Flex, Stack, Text } from "@sanity/ui";
-import { useState, useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { ObjectInputMember, type ObjectInputProps } from "sanity";
-import imageUrlBuilder from "@sanity/image-url";
-import { dataset, projectId } from "@/sanity/env";
+import SanityImage from "@/components/modules/shared/sanity-image";
 
 type MediaPosition = "left" | "center" | "right" | null;
 
-type MediaItemValue = {
+interface MediaItemValue {
   _type?: string;
   type?: "image" | "videoUpload" | "videoEmbed";
   image?: {
@@ -19,20 +18,13 @@ type MediaItemValue = {
     };
   };
   caption?: string;
-};
+}
 
-type ThreeSideBySideValue = {
+interface ThreeSideBySideValue {
   _type?: string;
   left?: MediaItemValue;
   center?: MediaItemValue;
   right?: MediaItemValue;
-};
-
-const builder = imageUrlBuilder({ projectId, dataset });
-
-function getImageUrl(media: MediaItemValue | undefined): string | null {
-  if (!media?.image?.asset?._ref) return null;
-  return builder.image(media.image).width(200).height(150).fit("crop").url();
 }
 
 function getMediaIcon(type: string | undefined) {
@@ -55,19 +47,17 @@ function MediaThumbnail({
   label: string;
   onClick: () => void;
 }) {
-  const imageUrl = getImageUrl(media);
+  const hasImage = !!media?.image?.asset?._ref;
   const Icon = getMediaIcon(media?.type);
   const hasMedia = media?.type;
 
   return (
     <Card
       as="button"
-      type="button"
       onClick={onClick}
       padding={3}
       radius={2}
       shadow={1}
-      tone={hasMedia ? "default" : "transparent"}
       style={{
         flex: 1,
         cursor: "pointer",
@@ -76,6 +66,8 @@ function MediaThumbnail({
         position: "relative",
         overflow: "hidden",
       }}
+      tone={hasMedia ? "default" : "transparent"}
+      type="button"
     >
       <Stack space={2}>
         <Box
@@ -87,42 +79,40 @@ function MediaThumbnail({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            position: "relative",
           }}
         >
-          {imageUrl ? (
-            <img
-              src={imageUrl}
+          {hasImage ? (
+            <SanityImage
               alt={media?.caption || label}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
+              fill
+              sizes="200px"
+              source={media}
             />
           ) : (
-            <Text size={4} muted>
+            <Text muted size={4}>
               <Icon />
             </Text>
           )}
         </Box>
 
         <Flex align="center" gap={2}>
-          <Text size={1} weight="semibold" muted>
+          <Text muted size={1} weight="semibold">
             {label}
           </Text>
-          <Text size={0} muted>
+          <Text muted size={0}>
             <EditIcon />
           </Text>
         </Flex>
 
         {media?.caption && (
-          <Text size={1} muted>
+          <Text muted size={1}>
             {media.caption}
           </Text>
         )}
 
         {!hasMedia && (
-          <Text size={1} muted>
+          <Text muted size={1}>
             Click to add media
           </Text>
         )}
@@ -132,8 +122,14 @@ function MediaThumbnail({
 }
 
 export function ThreeSideBySideInput(props: ObjectInputProps) {
-  const { value, members, renderField, renderInput, renderItem, renderPreview } =
-    props;
+  const {
+    value,
+    members,
+    renderField,
+    renderInput,
+    renderItem,
+    renderPreview,
+  } = props;
   const [expandedPosition, setExpandedPosition] = useState<MediaPosition>(null);
 
   const typedValue = value as ThreeSideBySideValue | undefined;
@@ -194,18 +190,18 @@ export function ThreeSideBySideInput(props: ObjectInputProps) {
     <Stack space={4}>
       <Flex gap={3}>
         <MediaThumbnail
-          media={typedValue?.left}
           label="Left"
+          media={typedValue?.left}
           onClick={() => setExpandedPosition("left")}
         />
         <MediaThumbnail
-          media={typedValue?.center}
           label="Center"
+          media={typedValue?.center}
           onClick={() => setExpandedPosition("center")}
         />
         <MediaThumbnail
-          media={typedValue?.right}
           label="Right"
+          media={typedValue?.right}
           onClick={() => setExpandedPosition("right")}
         />
       </Flex>
