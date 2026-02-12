@@ -173,7 +173,7 @@ export const INTERVIEWS_QUERY = defineQuery(`
         crop
       }
     },
-    designers[]{ _key, ...@->{ _id, name } },
+    designersAndProfessionals[]{ _key, ...@->{ _id, name } },
     studio->{
       _id,
       name
@@ -209,7 +209,7 @@ export const INTERVIEW_QUERY = defineQuery(`
       },
       alt
     },
-    designers[]{ _key, ...@->{ _id, name, portrait } },
+    designersAndProfessionals[]{ _key, ...@->{ _id, name, portrait } },
     studio->{
       _id,
       name

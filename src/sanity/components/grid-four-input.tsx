@@ -85,15 +85,14 @@ function MediaThumbnail({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            position: "relative",
           }}
         >
           {hasImage ? (
             <SanityImage
               alt={media?.caption || label}
-              fill
-              sizes="200px"
+              height={150}
               source={media}
+              width={200}
             />
           ) : (
             <Text muted size={4}>

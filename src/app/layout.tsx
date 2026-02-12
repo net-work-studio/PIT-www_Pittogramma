@@ -46,6 +46,9 @@ export const metadata: Metadata = {
     template: "%s – Pittogramma",
   },
   description: siteDefaults.description,
+  appleWebApp: {
+    title: "Pittogramma",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -67,7 +70,6 @@ export default function RootLayout({
       <body
         className={`${aktual.variable} ${sono.variable} flex min-h-screen flex-col justify-between bg-background text-foreground antialiased`}
       >
-        <meta content="Pittogramma" name="apple-mobile-web-app-title" />
         <JsonLd
           data={{
             name: siteDefaults.title,

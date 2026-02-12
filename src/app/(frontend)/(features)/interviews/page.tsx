@@ -57,8 +57,10 @@ export default async function InterviewsPage() {
         : "";
 
       return {
-        authors: interview.designers?.length
-          ? interview.designers.map((d) => ({ name: d.name ?? "" }))
+        authors: interview.designersAndProfessionals?.length
+          ? interview.designersAndProfessionals.map((d) => ({
+              name: d.name ?? "",
+            }))
           : undefined,
         href: `/interviews/${interview.slug?.current ?? ""}`,
         id: interview._id,

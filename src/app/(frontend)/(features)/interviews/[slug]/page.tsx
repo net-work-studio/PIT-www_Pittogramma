@@ -61,7 +61,7 @@ export default async function InterviewPage({
     ? urlForImage(interview.cover.image)?.url()
     : undefined;
 
-  const interviewees = interview.designers
+  const interviewees = interview.designersAndProfessionals
     ?.map((person: { name: string }) => person.name)
     .filter(Boolean);
 
@@ -90,7 +90,7 @@ export default async function InterviewPage({
         <InterviewInfo
           city={interview.city?.name}
           country={interview.country?.name}
-          interviewTo={interview.designers}
+          interviewTo={interview.designersAndProfessionals}
           introText={interview.introText}
           readingTime={interview.readingTime}
           studio={interview.studio?.name}
