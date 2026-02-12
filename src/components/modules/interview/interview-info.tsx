@@ -9,7 +9,6 @@ interface Person {
 interface Tag {
   _id: string;
   name: string | null;
-  slug: unknown;
 }
 
 interface InterviewInfoProps {

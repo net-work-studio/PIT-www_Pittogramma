@@ -4054,25 +4054,11 @@
         },
         "optional": true
       },
-      "tags": {
+      "tagSelector": {
         "type": "objectAttribute",
         "value": {
-          "type": "array",
-          "of": {
-            "type": "object",
-            "attributes": {
-              "_key": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            "rest": {
-              "type": "inline",
-              "name": "tag.reference"
-            }
-          }
+          "type": "inline",
+          "name": "tagSelector"
         },
         "optional": true
       },
@@ -4655,25 +4641,11 @@
         },
         "optional": false
       },
-      "tags": {
+      "tagSelector": {
         "type": "objectAttribute",
         "value": {
-          "type": "array",
-          "of": {
-            "type": "object",
-            "attributes": {
-              "_key": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            "rest": {
-              "type": "inline",
-              "name": "tag.reference"
-            }
-          }
+          "type": "inline",
+          "name": "tagSelector"
         },
         "optional": true
       },

@@ -94,7 +94,7 @@ export default async function InterviewPage({
           introText={interview.introText}
           readingTime={interview.readingTime}
           studio={interview.studio?.name}
-          tags={interview.tags}
+          tags={interview.tagSelector?.tags}
           title={interview.title}
         />
         <div className="w-2/3">

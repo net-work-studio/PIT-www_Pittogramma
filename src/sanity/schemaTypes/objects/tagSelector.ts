@@ -17,6 +17,8 @@ export const tagSelector = defineType({
           to: [{ type: "tag" }],
         }),
       ],
+      validation: (rule) =>
+        rule.unique().error("You cannot add the same tag twice"),
     }),
   ],
 });

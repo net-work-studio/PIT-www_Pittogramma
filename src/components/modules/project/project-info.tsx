@@ -17,7 +17,7 @@ interface ProjectHeaderProps {
   title?: string | null;
   description?: string | null;
   year?: number | null;
-  tags?: Array<{ _id: string; name: string; slug: unknown }> | null;
+  tags?: Array<{ _id: string; name: string }> | null;
   teachers?: Teacher[] | null;
   institute?: string | null;
 }

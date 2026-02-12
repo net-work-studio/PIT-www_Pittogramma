@@ -125,7 +125,12 @@ export const PROJECTS_QUERY = defineQuery(`
     title,
     slug,
     designers[]{ _key, ...@->{ _id, name, slug, portrait } },
-    tags[]{ _key, ...@->{ _id, name, slug } },
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
     ${SEO_FIELDS}
   }
 `);
@@ -146,7 +151,12 @@ export const PROJECT_QUERY = defineQuery(`
     title,
     slug,
     designers[]{ _key, ...@->{ _id, name, slug, portrait } },
-    tags[]{ _key, ...@->{ _id, name, slug } },
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
     teachers[]{ _key, ...@->{ _id, name } },
     institute->{
       _id,
@@ -187,7 +197,12 @@ export const INTERVIEWS_QUERY = defineQuery(`
       name
     },
     readingTime,
-    tags[]{ _key, ...@->{ _id, name, slug } },
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
     introText,
     ${SEO_FIELDS}
   }
@@ -223,7 +238,12 @@ export const INTERVIEW_QUERY = defineQuery(`
       name
     },
     readingTime,
-    tags[]{ _key, ...@->{ _id, name, slug } },
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
     introText,
     interview[] {
       ...,

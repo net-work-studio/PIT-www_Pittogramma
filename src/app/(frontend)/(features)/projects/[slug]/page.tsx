@@ -69,7 +69,9 @@ export default async function ProjectPage({
           description: project.description,
           creator: project.designers?.length
             ? project.designers.map(
-                (d: NonNullable<PROJECT_QUERY_RESULT>["designers"][number]) => ({
+                (
+                  d: NonNullable<PROJECT_QUERY_RESULT>["designers"][number]
+                ) => ({
                   "@type": "Person",
                   name: d.name,
                 })
@@ -86,7 +88,7 @@ export default async function ProjectPage({
           description={project?.description}
           designers={project?.designers}
           institute={project?.institute?.name}
-          tags={project?.tags}
+          tags={project?.tagSelector?.tags}
           teachers={project?.teachers}
           title={project?.title}
           year={project?.year}

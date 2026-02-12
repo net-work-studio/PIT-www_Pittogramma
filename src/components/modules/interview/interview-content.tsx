@@ -1,7 +1,8 @@
-import { PortableText, type PortableTextComponents, type PortableTextBlock } from "next-sanity";
+import { PortableText, type PortableTextComponents } from "next-sanity";
 
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import type { INTERVIEW_QUERY_RESULT } from "@/sanity/types";
 
 // MediaItem type for the gallery blocks
 interface MediaItemValue {
@@ -23,7 +24,9 @@ interface MediaItemValue {
 
 // MediaRenderer component to handle image, video upload, and video embed
 function MediaRenderer({ media }: { media?: MediaItemValue }) {
-  if (!media) return null;
+  if (!media) {
+    return null;
+  }
 
   const { type, image, video, videoUrl, caption } = media;
 
@@ -124,7 +127,9 @@ interface GridFourMediaBlockProps {
 }
 
 function SingleMediaBlock({ value }: SingleMediaBlockProps) {
-  if (!value.media) return null;
+  if (!value.media) {
+    return null;
+  }
 
   return (
     <div className="my-8">
@@ -165,9 +170,7 @@ function GridFourMediaBlock({ value }: GridFourMediaBlockProps) {
 
 const components: PortableTextComponents = {
   block: {
-    normal: ({ children }) => (
-      <p className="interview-question">{children}</p>
-    ),
+    normal: ({ children }) => <p className="interview-question">{children}</p>,
     answer: ({ children }) => <p className="interview-answer">{children}</p>,
     blockquote: ({ children }) => (
       <blockquote className="interview-quote">{children}</blockquote>
@@ -181,12 +184,18 @@ const components: PortableTextComponents = {
   },
 };
 
+type InterviewContent = NonNullable<
+  NonNullable<INTERVIEW_QUERY_RESULT>["interview"]
+>;
+
 interface InterviewContentProps {
-  content?: PortableTextBlock[] | null;
+  content?: InterviewContent | null;
 }
 
 export default function InterviewContent({ content }: InterviewContentProps) {
-  if (!content) return null;
+  if (!content) {
+    return null;
+  }
 
   return (
     <div className="prose prose-lg max-w-none">

@@ -96,6 +96,8 @@ export const interview = defineType({
           to: [{ type: "designer" }, { type: "professional" }],
         }),
       ],
+      validation: (rule) =>
+        rule.unique().error("You cannot add the same person twice"),
     }),
     defineField({
       type: "reference",
@@ -134,16 +136,9 @@ export const interview = defineType({
       validation: (e) => e.min(1).integer(),
     }),
     defineField({
-      type: "array",
-      name: "tags",
+      type: "tagSelector",
+      name: "tagSelector",
       title: "Tags",
-      group: "content",
-      of: [
-        defineArrayMember({
-          type: "reference",
-          to: [{ type: "tag" }],
-        }),
-      ],
     }),
     defineField({
       type: "text",
@@ -174,13 +169,10 @@ export const interview = defineType({
             annotations: [],
           },
         }),
-        // Single asset (image or video)
+
         defineArrayMember({ type: "singleMediaBlock" }),
-        // Side by side (2 items)
         defineArrayMember({ type: "sideBySideMediaBlock" }),
-        // 3 side by side
         defineArrayMember({ type: "threeSideBySideMediaBlock" }),
-        // Grid of 4
         defineArrayMember({ type: "gridFourMediaBlock" }),
       ],
     }),
