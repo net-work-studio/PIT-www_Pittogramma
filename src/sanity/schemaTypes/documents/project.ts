@@ -103,6 +103,7 @@ export const project = defineType({
       type: "tagSelector",
       name: "tagSelector",
       title: "Tags",
+      group: "content",
     }),
     defineField({
       type: "text",
