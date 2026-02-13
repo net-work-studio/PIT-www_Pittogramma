@@ -306,7 +306,7 @@ export type JournalPage = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  introText?: string;
+  introText: string;
   featuredArticle?: JournalReference;
   endOfPageCta?: CtaReference;
   seo?: SeoModule;
@@ -1865,7 +1865,7 @@ export type PROJECT_QUERY_RESULT = {
 export type JOURNAL_PAGE_QUERY_RESULT = {
   _id: string;
   title: string | null;
-  introText: string | null;
+  introText: string;
   featuredArticle: {
     _id: string;
     title: string;

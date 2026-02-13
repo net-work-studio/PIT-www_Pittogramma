@@ -1525,7 +1525,7 @@
         "value": {
           "type": "string"
         },
-        "optional": true
+        "optional": false
       },
       "featuredArticle": {
         "type": "objectAttribute",
