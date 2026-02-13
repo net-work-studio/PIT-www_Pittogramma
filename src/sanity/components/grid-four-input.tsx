@@ -27,6 +27,7 @@ type MediaItemValue = {
 
 type GridFourValue = {
   _type?: string;
+  orientation?: string;
   topLeft?: MediaItemValue;
   topRight?: MediaItemValue;
   bottomLeft?: MediaItemValue;
@@ -48,10 +49,12 @@ function MediaThumbnail({
   media,
   label,
   onClick,
+  aspectRatio = "4/3",
 }: {
   media: MediaItemValue | undefined;
   label: string;
   onClick: () => void;
+  aspectRatio?: string;
 }) {
   const hasImage = !!media?.image?.asset?._ref;
   const Icon = getMediaIcon(media?.type);
@@ -78,7 +81,7 @@ function MediaThumbnail({
       <Stack space={2}>
         <Box
           style={{
-            aspectRatio: "4/3",
+            aspectRatio,
             borderRadius: 4,
             overflow: "hidden",
             backgroundColor: "var(--card-muted-bg-color)",
@@ -163,6 +166,13 @@ export function GridFourInput(props: ObjectInputProps) {
     [members]
   );
 
+  const orientationMember = useMemo(
+    () => members.find((m) => m.kind === "field" && m.name === "orientation"),
+    [members]
+  );
+
+  const aspectRatio = typedValue?.orientation === "portrait" ? "3/4" : "4/3";
+
   const expandedMember = useMemo(() => {
     switch (expandedPosition) {
       case "topLeft":
@@ -208,15 +218,22 @@ export function GridFourInput(props: ObjectInputProps) {
 
   return (
     <Stack space={4}>
+      {/* Orientation selector */}
+      {orientationMember && (
+        <ObjectInputMember member={orientationMember} {...renderProps} />
+      )}
+
       <Stack space={3}>
         {/* Top row */}
         <Flex gap={3}>
           <MediaThumbnail
+            aspectRatio={aspectRatio}
             label="Top Left"
             media={typedValue?.topLeft}
             onClick={() => setExpandedPosition("topLeft")}
           />
           <MediaThumbnail
+            aspectRatio={aspectRatio}
             label="Top Right"
             media={typedValue?.topRight}
             onClick={() => setExpandedPosition("topRight")}
@@ -226,11 +243,13 @@ export function GridFourInput(props: ObjectInputProps) {
         {/* Bottom row */}
         <Flex gap={3}>
           <MediaThumbnail
+            aspectRatio={aspectRatio}
             label="Bottom Left"
             media={typedValue?.bottomLeft}
             onClick={() => setExpandedPosition("bottomLeft")}
           />
           <MediaThumbnail
+            aspectRatio={aspectRatio}
             label="Bottom Right"
             media={typedValue?.bottomRight}
             onClick={() => setExpandedPosition("bottomRight")}

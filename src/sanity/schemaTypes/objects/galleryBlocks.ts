@@ -10,12 +10,28 @@ import { GridFourInput } from "@/sanity/components/grid-four-input";
 import { SideBySideInput } from "@/sanity/components/side-by-side-input";
 import { ThreeSideBySideInput } from "@/sanity/components/three-side-by-side-input";
 
+const orientationField = defineField({
+  type: "string",
+  name: "orientation",
+  title: "Orientation",
+  options: {
+    list: [
+      { title: "Landscape (4:3)", value: "landscape" },
+      { title: "Portrait (3:4)", value: "portrait" },
+    ],
+    layout: "radio",
+  },
+  initialValue: "landscape",
+  validation: (e) => e.required(),
+});
+
 export const singleMediaBlock = defineType({
   type: "object",
   name: "singleMediaBlock",
   title: "Single Media",
   icon: SquareIcon,
   fields: [
+    orientationField,
     defineField({
       type: "mediaItem",
       name: "media",
@@ -48,6 +64,7 @@ export const sideBySideMediaBlock = defineType({
     input: SideBySideInput,
   },
   fields: [
+    orientationField,
     defineField({
       type: "mediaItem",
       name: "left",
@@ -89,6 +106,7 @@ export const threeSideBySideMediaBlock = defineType({
     input: ThreeSideBySideInput,
   },
   fields: [
+    orientationField,
     defineField({
       type: "mediaItem",
       name: "left",
@@ -138,6 +156,7 @@ export const gridFourMediaBlock = defineType({
     input: GridFourInput,
   },
   fields: [
+    orientationField,
     defineField({
       type: "mediaItem",
       name: "topLeft",

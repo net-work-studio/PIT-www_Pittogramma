@@ -119,6 +119,8 @@ export const project = defineType({
       of: [
         defineArrayMember({ type: "singleMediaBlock" }),
         defineArrayMember({ type: "sideBySideMediaBlock" }),
+        defineArrayMember({ type: "threeSideBySideMediaBlock" }),
+        defineArrayMember({ type: "gridFourMediaBlock" }),
       ],
     }),
 

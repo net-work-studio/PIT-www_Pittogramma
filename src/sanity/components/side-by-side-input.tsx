@@ -22,6 +22,7 @@ interface MediaItemValue {
 
 interface SideBySideValue {
   _type?: string;
+  orientation?: string;
   left?: MediaItemValue;
   right?: MediaItemValue;
 }
@@ -41,10 +42,12 @@ function MediaThumbnail({
   media,
   label,
   onClick,
+  aspectRatio = "4/3",
 }: {
   media: MediaItemValue | undefined;
   label: string;
   onClick: () => void;
+  aspectRatio?: string;
 }) {
   const hasImage = !!media?.image?.asset?._ref;
   const Icon = getMediaIcon(media?.type);
@@ -72,7 +75,7 @@ function MediaThumbnail({
         {/* Thumbnail preview */}
         <Box
           style={{
-            aspectRatio: "4/3",
+            aspectRatio,
             borderRadius: 4,
             overflow: "hidden",
             backgroundColor: "var(--card-muted-bg-color)",
@@ -149,7 +152,14 @@ export function SideBySideInput(props: ObjectInputProps) {
     [members]
   );
 
+  const orientationMember = useMemo(
+    () => members.find((m) => m.kind === "field" && m.name === "orientation"),
+    [members]
+  );
+
   const expandedMember = expandedSide === "left" ? leftMember : rightMember;
+
+  const aspectRatio = typedValue?.orientation === "portrait" ? "3/4" : "4/3";
 
   // Render props for ObjectInputMember
   const renderProps = {
@@ -161,14 +171,21 @@ export function SideBySideInput(props: ObjectInputProps) {
 
   return (
     <Stack space={4}>
+      {/* Orientation selector */}
+      {orientationMember && (
+        <ObjectInputMember member={orientationMember} {...renderProps} />
+      )}
+
       {/* Side-by-side thumbnails */}
       <Flex gap={3}>
         <MediaThumbnail
+          aspectRatio={aspectRatio}
           label="Left"
           media={typedValue?.left}
           onClick={() => setExpandedSide("left")}
         />
         <MediaThumbnail
+          aspectRatio={aspectRatio}
           label="Right"
           media={typedValue?.right}
           onClick={() => setExpandedSide("right")}

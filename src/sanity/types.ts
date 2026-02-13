@@ -345,6 +345,7 @@ export type Slug = {
 
 export type GridFourMediaBlock = {
   _type: "gridFourMediaBlock";
+  orientation: "landscape" | "portrait";
   topLeft: MediaItem;
   topRight: MediaItem;
   bottomLeft: MediaItem;
@@ -353,6 +354,7 @@ export type GridFourMediaBlock = {
 
 export type ThreeSideBySideMediaBlock = {
   _type: "threeSideBySideMediaBlock";
+  orientation: "landscape" | "portrait";
   left: MediaItem;
   center: MediaItem;
   right: MediaItem;
@@ -360,12 +362,14 @@ export type ThreeSideBySideMediaBlock = {
 
 export type SideBySideMediaBlock = {
   _type: "sideBySideMediaBlock";
+  orientation: "landscape" | "portrait";
   left: MediaItem;
   right: MediaItem;
 };
 
 export type SingleMediaBlock = {
   _type: "singleMediaBlock";
+  orientation: "landscape" | "portrait";
   media: MediaItem;
 };
 
@@ -849,6 +853,12 @@ export type Project = {
     | ({
         _key: string;
       } & SideBySideMediaBlock)
+    | ({
+        _key: string;
+      } & ThreeSideBySideMediaBlock)
+    | ({
+        _key: string;
+      } & GridFourMediaBlock)
   >;
   seo?: SeoModule;
 };
@@ -1622,7 +1632,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECT_QUERY
-// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    cover {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt    },    title,    slug,    designers[]{ _key, ...@->{ _id, name, slug, portrait } },    tagSelector {      tags[]->{        _id,        name      }    },    teachers[]{ _key, ...@->{ _id, name } },    institute->{      _id,      name,    },    year,    gallery[] {      _key,      _type,      _type == "singleMediaBlock" => {        media { type, image { asset, hotspot, crop }, caption, alt }      },      _type == "sideBySideMediaBlock" => {        left { type, image { asset, hotspot, crop }, caption, alt },        right { type, image { asset, hotspot, crop }, caption, alt }      },      _type == "threeSideBySideMediaBlock" => {        left { type, image { asset, hotspot, crop }, caption, alt },        center { type, image { asset, hotspot, crop }, caption, alt },        right { type, image { asset, hotspot, crop }, caption, alt }      },      _type == "gridFourMediaBlock" => {        topLeft { type, image { asset, hotspot, crop }, caption, alt },        topRight { type, image { asset, hotspot, crop }, caption, alt },        bottomLeft { type, image { asset, hotspot, crop }, caption, alt },        bottomRight { type, image { asset, hotspot, crop }, caption, alt }      }    },    description,    "relatedProjects": *[      _type == "project" &&      slug.current != ^.slug.current &&      count(tagSelector.tags[@._ref in ^.tagSelector.tags[]._ref]) > 0    ] | order(_createdAt desc) [0...4] {      _id,      cover { image { asset, alt, hotspot, crop } },      title,      slug,      designers[]{ _key, ...@->{ _id, name } }    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt,      caption    }  }  }
+// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    cover {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt    },    title,    slug,    designers[]{ _key, ...@->{ _id, name, slug, portrait } },    tagSelector {      tags[]->{        _id,        name      }    },    teachers[]{ _key, ...@->{ _id, name } },    institute->{      _id,      name,    },    year,    gallery[] {      _key,      _type,      _type == "singleMediaBlock" => {        orientation,        media { type, image { asset, hotspot, crop }, caption, alt }      },      _type == "sideBySideMediaBlock" => {        orientation,        left { type, image { asset, hotspot, crop }, caption, alt },        right { type, image { asset, hotspot, crop }, caption, alt }      },      _type == "threeSideBySideMediaBlock" => {        orientation,        left { type, image { asset, hotspot, crop }, caption, alt },        center { type, image { asset, hotspot, crop }, caption, alt },        right { type, image { asset, hotspot, crop }, caption, alt }      },      _type == "gridFourMediaBlock" => {        orientation,        topLeft { type, image { asset, hotspot, crop }, caption, alt },        topRight { type, image { asset, hotspot, crop }, caption, alt },        bottomLeft { type, image { asset, hotspot, crop }, caption, alt },        bottomRight { type, image { asset, hotspot, crop }, caption, alt }      }    },    description,    "relatedProjects": *[      _type == "project" &&      slug.current != ^.slug.current &&      count(tagSelector.tags[@._ref in ^.tagSelector.tags[]._ref]) > 0    ] | order(_createdAt desc) [0...4] {      _id,      cover { image { asset, alt, hotspot, crop } },      title,      slug,      designers[]{ _key, ...@->{ _id, name } }    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,        asset,        hotspot,        crop      },      alt,      caption    }  }  }
 export type PROJECT_QUERY_RESULT = {
   _id: string;
   cover: {
@@ -1663,7 +1673,53 @@ export type PROJECT_QUERY_RESULT = {
   gallery: Array<
     | {
         _key: string;
+        _type: "gridFourMediaBlock";
+        orientation: "landscape" | "portrait";
+        topLeft: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: SanityImageAssetReference | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          caption: string | null;
+          alt: string | null;
+        };
+        topRight: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: SanityImageAssetReference | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          caption: string | null;
+          alt: string | null;
+        };
+        bottomLeft: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: SanityImageAssetReference | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          caption: string | null;
+          alt: string | null;
+        };
+        bottomRight: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: SanityImageAssetReference | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          caption: string | null;
+          alt: string | null;
+        };
+      }
+    | {
+        _key: string;
         _type: "sideBySideMediaBlock";
+        orientation: "landscape" | "portrait";
         left: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -1688,7 +1744,43 @@ export type PROJECT_QUERY_RESULT = {
     | {
         _key: string;
         _type: "singleMediaBlock";
+        orientation: "landscape" | "portrait";
         media: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: SanityImageAssetReference | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          caption: string | null;
+          alt: string | null;
+        };
+      }
+    | {
+        _key: string;
+        _type: "threeSideBySideMediaBlock";
+        orientation: "landscape" | "portrait";
+        left: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: SanityImageAssetReference | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          caption: string | null;
+          alt: string | null;
+        };
+        center: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: SanityImageAssetReference | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          caption: string | null;
+          alt: string | null;
+        };
+        right: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
             asset: SanityImageAssetReference | null;
@@ -1888,6 +1980,7 @@ export type INTERVIEW_QUERY_RESULT = {
     | {
         _key: string;
         _type: "gridFourMediaBlock";
+        orientation: "landscape" | "portrait";
         topLeft: MediaItem;
         topRight: MediaItem;
         bottomLeft: MediaItem;
@@ -1896,17 +1989,20 @@ export type INTERVIEW_QUERY_RESULT = {
     | {
         _key: string;
         _type: "sideBySideMediaBlock";
+        orientation: "landscape" | "portrait";
         left: MediaItem;
         right: MediaItem;
       }
     | {
         _key: string;
         _type: "singleMediaBlock";
+        orientation: "landscape" | "portrait";
         media: MediaItem;
       }
     | {
         _key: string;
         _type: "threeSideBySideMediaBlock";
+        orientation: "landscape" | "portrait";
         left: MediaItem;
         center: MediaItem;
         right: MediaItem;
@@ -2222,7 +2318,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "designersPage"][0] {\n    _id,\n    title,\n    introText,\n    \n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image,\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  }\n,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': DESIGNERS_PAGE_QUERY_RESULT;
     '\n  *[_type == "eventsPage"][0] {\n    _id,\n    title,\n    introText,\n    \n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image,\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  }\n,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': EVENTS_PAGE_QUERY_RESULT;
     '\n  *[_type == "project"] | order(_createdAt desc) {\n    _id,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    title,\n    slug,\n    designers[]{ _key, ...@->{ _id, name, slug, portrait } },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': PROJECTS_QUERY_RESULT;
-    '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    title,\n    slug,\n    designers[]{ _key, ...@->{ _id, name, slug, portrait } },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    teachers[]{ _key, ...@->{ _id, name } },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery[] {\n      _key,\n      _type,\n      _type == "singleMediaBlock" => {\n        media { type, image { asset, hotspot, crop }, caption, alt }\n      },\n      _type == "sideBySideMediaBlock" => {\n        left { type, image { asset, hotspot, crop }, caption, alt },\n        right { type, image { asset, hotspot, crop }, caption, alt }\n      },\n      _type == "threeSideBySideMediaBlock" => {\n        left { type, image { asset, hotspot, crop }, caption, alt },\n        center { type, image { asset, hotspot, crop }, caption, alt },\n        right { type, image { asset, hotspot, crop }, caption, alt }\n      },\n      _type == "gridFourMediaBlock" => {\n        topLeft { type, image { asset, hotspot, crop }, caption, alt },\n        topRight { type, image { asset, hotspot, crop }, caption, alt },\n        bottomLeft { type, image { asset, hotspot, crop }, caption, alt },\n        bottomRight { type, image { asset, hotspot, crop }, caption, alt }\n      }\n    },\n    description,\n    "relatedProjects": *[\n      _type == "project" &&\n      slug.current != ^.slug.current &&\n      count(tagSelector.tags[@._ref in ^.tagSelector.tags[]._ref]) > 0\n    ] | order(_createdAt desc) [0...4] {\n      _id,\n      cover { image { asset, alt, hotspot, crop } },\n      title,\n      slug,\n      designers[]{ _key, ...@->{ _id, name } }\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': PROJECT_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    title,\n    slug,\n    designers[]{ _key, ...@->{ _id, name, slug, portrait } },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    teachers[]{ _key, ...@->{ _id, name } },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery[] {\n      _key,\n      _type,\n      _type == "singleMediaBlock" => {\n        orientation,\n        media { type, image { asset, hotspot, crop }, caption, alt }\n      },\n      _type == "sideBySideMediaBlock" => {\n        orientation,\n        left { type, image { asset, hotspot, crop }, caption, alt },\n        right { type, image { asset, hotspot, crop }, caption, alt }\n      },\n      _type == "threeSideBySideMediaBlock" => {\n        orientation,\n        left { type, image { asset, hotspot, crop }, caption, alt },\n        center { type, image { asset, hotspot, crop }, caption, alt },\n        right { type, image { asset, hotspot, crop }, caption, alt }\n      },\n      _type == "gridFourMediaBlock" => {\n        orientation,\n        topLeft { type, image { asset, hotspot, crop }, caption, alt },\n        topRight { type, image { asset, hotspot, crop }, caption, alt },\n        bottomLeft { type, image { asset, hotspot, crop }, caption, alt },\n        bottomRight { type, image { asset, hotspot, crop }, caption, alt }\n      }\n    },\n    description,\n    "relatedProjects": *[\n      _type == "project" &&\n      slug.current != ^.slug.current &&\n      count(tagSelector.tags[@._ref in ^.tagSelector.tags[]._ref]) > 0\n    ] | order(_createdAt desc) [0...4] {\n      _id,\n      cover { image { asset, alt, hotspot, crop } },\n      title,\n      slug,\n      designers[]{ _key, ...@->{ _id, name } }\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': PROJECT_QUERY_RESULT;
     '\n  *[_type == "interview"] | order(publishingDate.date desc) {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      image {\n        asset,\n        alt,\n        hotspot,\n        crop\n      }\n    },\n    designersAndProfessionals[]{ _key, ...@->{ _id, name } },\n    studio->{\n      _id,\n      name\n    },\n    city->{\n      _id,\n      name\n    },\n    country->{\n      _id,\n      name\n    },\n    readingTime,\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    introText,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': INTERVIEWS_QUERY_RESULT;
     '\n  *[_type == "interview" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt\n    },\n    designersAndProfessionals[]{ _key, ...@->{ _id, name, portrait } },\n    studio->{\n      _id,\n      name\n    },\n    city->{\n      _id,\n      name\n    },\n    country->{\n      _id,\n      name\n    },\n    readingTime,\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    introText,\n    interview[] {\n      ...,\n      _type == "imageBlock" => {\n        _key,\n        _type,\n        image {\n          image {\n            asset,\n            hotspot,\n            crop\n          },\n          alt,\n          caption\n        }\n      },\n      _type == "multipleImageBlock" => {\n        _key,\n        _type,\n        images[] {\n          _key,\n          image {\n            asset,\n            hotspot,\n            crop\n          },\n          alt,\n          caption\n        }\n      }\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        asset,\n        hotspot,\n        crop\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': INTERVIEW_QUERY_RESULT;
     '\n  *[_type == "bibliography"] | order(name asc) {\n    _id,\n    name,\n    year,\n    cover {\n      image { asset, hotspot, crop },\n      alt\n    },\n    languages[]{ _key, ...@->{ _id, name } },\n    authors[]{ _key, ...@->{ _id, name } },\n    publisher->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    affiliateLink,\n    isbn,\n    description,\n    pageCount,\n    categories\n  }\n': BIBLIOGRAPHY_QUERY_RESULT;

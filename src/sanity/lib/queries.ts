@@ -167,11 +167,26 @@ export const PROJECT_QUERY = defineQuery(`
       _key,
       _type,
       _type == "singleMediaBlock" => {
+        orientation,
         media { type, image { asset, hotspot, crop }, caption, alt }
       },
       _type == "sideBySideMediaBlock" => {
+        orientation,
         left { type, image { asset, hotspot, crop }, caption, alt },
         right { type, image { asset, hotspot, crop }, caption, alt }
+      },
+      _type == "threeSideBySideMediaBlock" => {
+        orientation,
+        left { type, image { asset, hotspot, crop }, caption, alt },
+        center { type, image { asset, hotspot, crop }, caption, alt },
+        right { type, image { asset, hotspot, crop }, caption, alt }
+      },
+      _type == "gridFourMediaBlock" => {
+        orientation,
+        topLeft { type, image { asset, hotspot, crop }, caption, alt },
+        topRight { type, image { asset, hotspot, crop }, caption, alt },
+        bottomLeft { type, image { asset, hotspot, crop }, caption, alt },
+        bottomRight { type, image { asset, hotspot, crop }, caption, alt }
       }
     },
     description,

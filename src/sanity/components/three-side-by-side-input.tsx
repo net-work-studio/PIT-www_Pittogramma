@@ -22,6 +22,7 @@ interface MediaItemValue {
 
 interface ThreeSideBySideValue {
   _type?: string;
+  orientation?: string;
   left?: MediaItemValue;
   center?: MediaItemValue;
   right?: MediaItemValue;
@@ -42,10 +43,12 @@ function MediaThumbnail({
   media,
   label,
   onClick,
+  aspectRatio = "4/3",
 }: {
   media: MediaItemValue | undefined;
   label: string;
   onClick: () => void;
+  aspectRatio?: string;
 }) {
   const hasImage = !!media?.image?.asset?._ref;
   const Icon = getMediaIcon(media?.type);
@@ -72,7 +75,7 @@ function MediaThumbnail({
       <Stack space={2}>
         <Box
           style={{
-            aspectRatio: "4/3",
+            aspectRatio,
             borderRadius: 4,
             overflow: "hidden",
             backgroundColor: "var(--card-muted-bg-color)",
@@ -152,6 +155,13 @@ export function ThreeSideBySideInput(props: ObjectInputProps) {
     [members]
   );
 
+  const orientationMember = useMemo(
+    () => members.find((m) => m.kind === "field" && m.name === "orientation"),
+    [members]
+  );
+
+  const aspectRatio = typedValue?.orientation === "portrait" ? "3/4" : "4/3";
+
   const expandedMember = useMemo(() => {
     switch (expandedPosition) {
       case "left":
@@ -187,18 +197,26 @@ export function ThreeSideBySideInput(props: ObjectInputProps) {
 
   return (
     <Stack space={4}>
+      {/* Orientation selector */}
+      {orientationMember && (
+        <ObjectInputMember member={orientationMember} {...renderProps} />
+      )}
+
       <Flex gap={3}>
         <MediaThumbnail
+          aspectRatio={aspectRatio}
           label="Left"
           media={typedValue?.left}
           onClick={() => setExpandedPosition("left")}
         />
         <MediaThumbnail
+          aspectRatio={aspectRatio}
           label="Center"
           media={typedValue?.center}
           onClick={() => setExpandedPosition("center")}
         />
         <MediaThumbnail
+          aspectRatio={aspectRatio}
           label="Right"
           media={typedValue?.right}
           onClick={() => setExpandedPosition("right")}

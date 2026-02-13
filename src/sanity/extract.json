@@ -1735,6 +1735,23 @@
             "value": "gridFourMediaBlock"
           }
         },
+        "orientation": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "landscape"
+              },
+              {
+                "type": "string",
+                "value": "portrait"
+              }
+            ]
+          },
+          "optional": false
+        },
         "topLeft": {
           "type": "objectAttribute",
           "value": {
@@ -1783,6 +1800,23 @@
             "value": "threeSideBySideMediaBlock"
           }
         },
+        "orientation": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "landscape"
+              },
+              {
+                "type": "string",
+                "value": "portrait"
+              }
+            ]
+          },
+          "optional": false
+        },
         "left": {
           "type": "objectAttribute",
           "value": {
@@ -1823,6 +1857,23 @@
             "value": "sideBySideMediaBlock"
           }
         },
+        "orientation": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "landscape"
+              },
+              {
+                "type": "string",
+                "value": "portrait"
+              }
+            ]
+          },
+          "optional": false
+        },
         "left": {
           "type": "objectAttribute",
           "value": {
@@ -1854,6 +1905,23 @@
             "type": "string",
             "value": "singleMediaBlock"
           }
+        },
+        "orientation": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "landscape"
+              },
+              {
+                "type": "string",
+                "value": "portrait"
+              }
+            ]
+          },
+          "optional": false
         },
         "media": {
           "type": "objectAttribute",
@@ -4691,6 +4759,36 @@
                 "rest": {
                   "type": "inline",
                   "name": "sideBySideMediaBlock"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "threeSideBySideMediaBlock"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "gridFourMediaBlock"
                 }
               }
             ]

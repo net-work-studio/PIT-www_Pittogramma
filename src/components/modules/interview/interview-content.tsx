@@ -2,6 +2,7 @@ import { PortableText, type PortableTextComponents } from "next-sanity";
 
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { getGalleryRatio } from "@/lib/gallery";
 import type { INTERVIEW_QUERY_RESULT } from "@/sanity/types";
 
 // MediaItem type for the gallery blocks
@@ -23,7 +24,13 @@ interface MediaItemValue {
 }
 
 // MediaRenderer component to handle image, video upload, and video embed
-function MediaRenderer({ media }: { media?: MediaItemValue }) {
+function MediaRenderer({
+  media,
+  ratio = 4 / 3,
+}: {
+  media?: MediaItemValue;
+  ratio?: number;
+}) {
   if (!media) {
     return null;
   }
@@ -33,7 +40,7 @@ function MediaRenderer({ media }: { media?: MediaItemValue }) {
   return (
     <figure>
       {type === "image" && image ? (
-        <AspectRatio className="relative w-full" ratio={4 / 3}>
+        <AspectRatio className="relative w-full" ratio={ratio}>
           <SanityImage
             className="rounded-lg object-cover"
             fill
@@ -92,6 +99,7 @@ interface SingleMediaBlockProps {
   value: {
     _key: string;
     _type: "singleMediaBlock";
+    orientation?: string;
     media?: MediaItemValue;
   };
 }
@@ -100,6 +108,7 @@ interface SideBySideMediaBlockProps {
   value: {
     _key: string;
     _type: "sideBySideMediaBlock";
+    orientation?: string;
     left?: MediaItemValue;
     right?: MediaItemValue;
   };
@@ -109,6 +118,7 @@ interface ThreeSideBySideMediaBlockProps {
   value: {
     _key: string;
     _type: "threeSideBySideMediaBlock";
+    orientation?: string;
     left?: MediaItemValue;
     center?: MediaItemValue;
     right?: MediaItemValue;
@@ -119,6 +129,7 @@ interface GridFourMediaBlockProps {
   value: {
     _key: string;
     _type: "gridFourMediaBlock";
+    orientation?: string;
     topLeft?: MediaItemValue;
     topRight?: MediaItemValue;
     bottomLeft?: MediaItemValue;
@@ -131,39 +142,43 @@ function SingleMediaBlock({ value }: SingleMediaBlockProps) {
     return null;
   }
 
+  const ratio = getGalleryRatio(value.orientation);
   return (
     <div className="my-8">
-      <MediaRenderer media={value.media} />
+      <MediaRenderer media={value.media} ratio={ratio} />
     </div>
   );
 }
 
 function SideBySideMediaBlock({ value }: SideBySideMediaBlockProps) {
+  const ratio = getGalleryRatio(value.orientation);
   return (
     <div className="my-8 grid grid-cols-2 gap-4">
-      <MediaRenderer media={value.left} />
-      <MediaRenderer media={value.right} />
+      <MediaRenderer media={value.left} ratio={ratio} />
+      <MediaRenderer media={value.right} ratio={ratio} />
     </div>
   );
 }
 
 function ThreeSideBySideMediaBlock({ value }: ThreeSideBySideMediaBlockProps) {
+  const ratio = getGalleryRatio(value.orientation);
   return (
     <div className="my-8 grid grid-cols-3 gap-4">
-      <MediaRenderer media={value.left} />
-      <MediaRenderer media={value.center} />
-      <MediaRenderer media={value.right} />
+      <MediaRenderer media={value.left} ratio={ratio} />
+      <MediaRenderer media={value.center} ratio={ratio} />
+      <MediaRenderer media={value.right} ratio={ratio} />
     </div>
   );
 }
 
 function GridFourMediaBlock({ value }: GridFourMediaBlockProps) {
+  const ratio = getGalleryRatio(value.orientation);
   return (
     <div className="my-8 grid grid-cols-2 gap-4">
-      <MediaRenderer media={value.topLeft} />
-      <MediaRenderer media={value.topRight} />
-      <MediaRenderer media={value.bottomLeft} />
-      <MediaRenderer media={value.bottomRight} />
+      <MediaRenderer media={value.topLeft} ratio={ratio} />
+      <MediaRenderer media={value.topRight} ratio={ratio} />
+      <MediaRenderer media={value.bottomLeft} ratio={ratio} />
+      <MediaRenderer media={value.bottomRight} ratio={ratio} />
     </div>
   );
 }

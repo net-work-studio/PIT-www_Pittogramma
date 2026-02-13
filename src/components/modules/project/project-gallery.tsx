@@ -1,5 +1,7 @@
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { getGalleryRatio } from "@/lib/gallery";
+import { cn } from "@/lib/utils";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 type GalleryBlock = NonNullable<
@@ -24,7 +26,7 @@ function MediaImage({
   }
   return (
     <SanityImage
-      className={className}
+      className={cn("rounded-xl", className)}
       fill
       priority={priority}
       source={{ image: media.image, alt: media.alt }}
@@ -39,8 +41,9 @@ function SingleBlock({
   block: Extract<GalleryBlock, { _type: "singleMediaBlock" }>;
   priority?: boolean;
 }) {
+  const ratio = getGalleryRatio(block.orientation);
   return (
-    <AspectRatio className="relative overflow-hidden rounded-3xl" ratio={4 / 3}>
+    <AspectRatio className="relative overflow-hidden rounded-3xl" ratio={ratio}>
       <MediaImage
         className="rounded-3xl"
         media={block.media}
@@ -55,24 +58,97 @@ function SideBySideBlock({
 }: {
   block: Extract<GalleryBlock, { _type: "sideBySideMediaBlock" }>;
 }) {
+  const ratio = getGalleryRatio(block.orientation);
   return (
     <div className="flex flex-col gap-2.5 sm:flex-row">
       <div className="flex-1">
         <AspectRatio
           className="relative overflow-hidden rounded-xl"
-          ratio={4 / 3}
+          ratio={ratio}
         >
-          <MediaImage className="rounded-xl" media={block.left} />
+          <MediaImage media={block.left} />
         </AspectRatio>
       </div>
       <div className="flex-1">
         <AspectRatio
           className="relative overflow-hidden rounded-xl"
-          ratio={4 / 3}
+          ratio={ratio}
         >
-          <MediaImage className="rounded-xl" media={block.right} />
+          <MediaImage media={block.right} />
         </AspectRatio>
       </div>
+    </div>
+  );
+}
+
+function ThreeSideBySideBlock({
+  block,
+}: {
+  block: Extract<GalleryBlock, { _type: "threeSideBySideMediaBlock" }>;
+}) {
+  const ratio = getGalleryRatio(block.orientation);
+  return (
+    <div className="flex flex-col gap-2.5 sm:flex-row">
+      <div className="flex-1">
+        <AspectRatio
+          className="relative overflow-hidden rounded-xl"
+          ratio={ratio}
+        >
+          <MediaImage media={block.left} />
+        </AspectRatio>
+      </div>
+      <div className="flex-1">
+        <AspectRatio
+          className="relative overflow-hidden rounded-xl"
+          ratio={ratio}
+        >
+          <MediaImage media={block.center} />
+        </AspectRatio>
+      </div>
+      <div className="flex-1">
+        <AspectRatio
+          className="relative overflow-hidden rounded-xl"
+          ratio={ratio}
+        >
+          <MediaImage media={block.right} />
+        </AspectRatio>
+      </div>
+    </div>
+  );
+}
+
+function GridFourBlock({
+  block,
+}: {
+  block: Extract<GalleryBlock, { _type: "gridFourMediaBlock" }>;
+}) {
+  const ratio = getGalleryRatio(block.orientation);
+  return (
+    <div className="grid grid-cols-2 gap-2.5">
+      <AspectRatio
+        className="relative overflow-hidden rounded-xl"
+        ratio={ratio}
+      >
+        <MediaImage media={block.topLeft} />
+      </AspectRatio>
+      <AspectRatio
+        className="relative overflow-hidden rounded-xl"
+        ratio={ratio}
+      >
+        <MediaImage media={block.topRight} />
+      </AspectRatio>
+      <AspectRatio
+        className="relative overflow-hidden rounded-xl"
+        ratio={ratio}
+      >
+        <MediaImage media={block.bottomLeft} />
+      </AspectRatio>
+      <AspectRatio
+        className="relative overflow-hidden rounded-xl"
+        ratio={ratio}
+      >
+        <MediaImage media={block.bottomRight} />
+      </AspectRatio>
     </div>
   );
 }
@@ -96,6 +172,12 @@ export default function ProjectGallery({ gallery }: ProjectGalleryProps) {
         }
         if (block._type === "sideBySideMediaBlock") {
           return <SideBySideBlock block={block} key={block._key} />;
+        }
+        if (block._type === "threeSideBySideMediaBlock") {
+          return <ThreeSideBySideBlock block={block} key={block._key} />;
+        }
+        if (block._type === "gridFourMediaBlock") {
+          return <GridFourBlock block={block} key={block._key} />;
         }
         return null;
       })}

@@ -96,7 +96,7 @@ GOOGLE_BOOKS_API_KEY            # For ISBN book data (optional)
 
 ## TypeScript Conventions
 
-- **Prefer `interface` over `type`** for object shapes (aligns with Biome's `useConsistentTypeDefinitions` rule)
+- **Always use `interface`, never `type`** for object shapes (enforced by Biome's `useConsistentTypeDefinitions` rule)
 - **Explicit type annotations** in map/filter callbacks when working with Sanity query results
 - **Avoid non-null assertions** (`!`) - use optional chaining with fallbacks (`??`) instead
 
