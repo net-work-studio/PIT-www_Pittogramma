@@ -26,16 +26,19 @@ const components: PortableTextComponents = {
     ),
   },
   marks: {
-    link: ({ children, value }) => (
-      <a
-        className="underline"
-        href={value?.href}
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        {children}
-      </a>
-    ),
+    link: ({ children, value }) =>
+      value?.href ? (
+        <a
+          className="underline"
+          href={value.href}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {children}
+        </a>
+      ) : (
+        <>{children}</>
+      ),
   },
 };
 

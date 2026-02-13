@@ -20,6 +20,14 @@ export const journalPage = defineType({
       readOnly: true,
     }),
     defineField({
+      name: "introText",
+      title: "Intro Text",
+      type: "text",
+      group: "content",
+      rows: 3,
+      validation: (Rule) => Rule.max(170),
+    }),
+    defineField({
       name: "featuredArticle",
       title: "Featured Article",
       type: "reference",

@@ -9,6 +9,10 @@ export default async function JournalArticleCta() {
 
   const substackUrl = settings?.substackUrl;
 
+  if (!substackUrl) {
+    return null;
+  }
+
   return (
     <div className="mx-auto max-w-[700px] rounded-lg bg-foreground p-6 text-background">
       <p className="font-mono text-[10px] uppercase">Newsletter</p>
@@ -20,7 +24,7 @@ export default async function JournalArticleCta() {
         className="mt-4 rounded-full font-mono uppercase"
         variant="outline"
       >
-        <a href={substackUrl ?? "#"} rel="noopener noreferrer" target="_blank">
+        <a href={substackUrl} rel="noopener noreferrer" target="_blank">
           Subscribe to our newsletter
         </a>
       </Button>

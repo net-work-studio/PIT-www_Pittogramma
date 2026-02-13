@@ -87,9 +87,9 @@ function MediaThumbnail({
           {hasImage ? (
             <SanityImage
               alt={media?.caption || label}
-              height={150}
+              height={aspectRatio === "3/4" ? 200 : 150}
               source={media}
-              width={200}
+              width={aspectRatio === "3/4" ? 150 : 200}
             />
           ) : (
             <Text muted size={4}>

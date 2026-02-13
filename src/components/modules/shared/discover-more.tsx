@@ -19,9 +19,14 @@ export default function DiscoverMore({ projects }: DiscoverMoreProps) {
       <h2 className="mb-4 text-base">Discover More</h2>
       <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
         {projects.map((project: RelatedProject) => {
-          const image = project.cover?.image
-            ? urlFor(project.cover.image).width(600).height(450).url()
-            : "";
+          const slug = project.slug?.current;
+          const coverImage = project.cover?.image;
+
+          if (!slug || !coverImage) {
+            return null;
+          }
+
+          const image = urlFor(coverImage).width(600).height(450).url();
 
           const authors = project.designers?.length
             ? project.designers.map(
@@ -34,7 +39,7 @@ export default function DiscoverMore({ projects }: DiscoverMoreProps) {
           return (
             <BaseCard
               authors={authors}
-              href={`/projects/${project.slug?.current}`}
+              href={`/projects/${slug}`}
               image={image}
               key={project._id}
               title={project.title}

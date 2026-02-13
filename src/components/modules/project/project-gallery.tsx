@@ -16,10 +16,12 @@ function MediaImage({
   media,
   className,
   priority,
+  sizes = "100vw",
 }: {
   media: { image?: unknown; alt?: string | null } | null | undefined;
   className?: string;
   priority?: boolean;
+  sizes?: string;
 }) {
   if (!media?.image) {
     return null;
@@ -29,6 +31,7 @@ function MediaImage({
       className={cn("rounded-xl", className)}
       fill
       priority={priority}
+      sizes={sizes}
       source={{ image: media.image, alt: media.alt }}
     />
   );
@@ -66,7 +69,7 @@ function SideBySideBlock({
           className="relative overflow-hidden rounded-xl"
           ratio={ratio}
         >
-          <MediaImage media={block.left} />
+          <MediaImage media={block.left} sizes="(min-width: 640px) 50vw, 100vw" />
         </AspectRatio>
       </div>
       <div className="flex-1">
@@ -74,7 +77,7 @@ function SideBySideBlock({
           className="relative overflow-hidden rounded-xl"
           ratio={ratio}
         >
-          <MediaImage media={block.right} />
+          <MediaImage media={block.right} sizes="(min-width: 640px) 50vw, 100vw" />
         </AspectRatio>
       </div>
     </div>
@@ -94,7 +97,7 @@ function ThreeSideBySideBlock({
           className="relative overflow-hidden rounded-xl"
           ratio={ratio}
         >
-          <MediaImage media={block.left} />
+          <MediaImage media={block.left} sizes="(min-width: 640px) 33vw, 100vw" />
         </AspectRatio>
       </div>
       <div className="flex-1">
@@ -102,7 +105,7 @@ function ThreeSideBySideBlock({
           className="relative overflow-hidden rounded-xl"
           ratio={ratio}
         >
-          <MediaImage media={block.center} />
+          <MediaImage media={block.center} sizes="(min-width: 640px) 33vw, 100vw" />
         </AspectRatio>
       </div>
       <div className="flex-1">
@@ -110,7 +113,7 @@ function ThreeSideBySideBlock({
           className="relative overflow-hidden rounded-xl"
           ratio={ratio}
         >
-          <MediaImage media={block.right} />
+          <MediaImage media={block.right} sizes="(min-width: 640px) 33vw, 100vw" />
         </AspectRatio>
       </div>
     </div>
@@ -129,25 +132,25 @@ function GridFourBlock({
         className="relative overflow-hidden rounded-xl"
         ratio={ratio}
       >
-        <MediaImage media={block.topLeft} />
+        <MediaImage media={block.topLeft} sizes="50vw" />
       </AspectRatio>
       <AspectRatio
         className="relative overflow-hidden rounded-xl"
         ratio={ratio}
       >
-        <MediaImage media={block.topRight} />
+        <MediaImage media={block.topRight} sizes="50vw" />
       </AspectRatio>
       <AspectRatio
         className="relative overflow-hidden rounded-xl"
         ratio={ratio}
       >
-        <MediaImage media={block.bottomLeft} />
+        <MediaImage media={block.bottomLeft} sizes="50vw" />
       </AspectRatio>
       <AspectRatio
         className="relative overflow-hidden rounded-xl"
         ratio={ratio}
       >
-        <MediaImage media={block.bottomRight} />
+        <MediaImage media={block.bottomRight} sizes="50vw" />
       </AspectRatio>
     </div>
   );

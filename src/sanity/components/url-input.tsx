@@ -312,14 +312,14 @@ export function UrlInput(props: StringInputProps) {
               <Flex align="center" gap={2}>
                 <Text muted size={1}>
                   Suggested name:{" "}
-                  <strong>{fetchedData.siteName ?? fetchedData.title}</strong>
+                  <strong>{fetchedData.siteName || fetchedData.title}</strong>
                 </Text>
                 <Button
                   fontSize={1}
                   mode="ghost"
                   onClick={() =>
                     handleApplyName(
-                      (fetchedData.siteName ?? fetchedData.title) as string
+                      (fetchedData.siteName || fetchedData.title) as string
                     )
                   }
                   padding={2}
