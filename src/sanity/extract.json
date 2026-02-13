@@ -740,100 +740,6 @@
           "name": "imageWithMetadata"
         },
         "optional": true
-      },
-      "seo": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "seoModule"
-        },
-        "optional": true
-      }
-    }
-  },
-  {
-    "name": "seoModule",
-    "type": "type",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "seoModule"
-          }
-        },
-        "metaTitle": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "metaDescription": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "metaImage": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "imageWithMetadata"
-          },
-          "optional": true
-        },
-        "metaRobots": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "index, follow"
-              },
-              {
-                "type": "string",
-                "value": "noindex, follow"
-              },
-              {
-                "type": "string",
-                "value": "index, nofollow"
-              },
-              {
-                "type": "string",
-                "value": "noindex, nofollow"
-              }
-            ]
-          },
-          "optional": true
-        },
-        "canonicalURL": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "openGraph": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "openGraph"
-          },
-          "optional": true
-        },
-        "xCard": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "xCard"
-          },
-          "optional": true
-        }
       }
     }
   },
@@ -1453,6 +1359,92 @@
           "name": "seoModule"
         },
         "optional": true
+      }
+    }
+  },
+  {
+    "name": "seoModule",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "seoModule"
+          }
+        },
+        "metaTitle": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "metaDescription": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "metaImage": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "imageWithMetadata"
+          },
+          "optional": true
+        },
+        "metaRobots": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "index, follow"
+              },
+              {
+                "type": "string",
+                "value": "noindex, follow"
+              },
+              {
+                "type": "string",
+                "value": "index, nofollow"
+              },
+              {
+                "type": "string",
+                "value": "noindex, nofollow"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "canonicalURL": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "openGraph": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "openGraph"
+          },
+          "optional": true
+        },
+        "xCard": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "xCard"
+          },
+          "optional": true
+        }
       }
     }
   },
@@ -3641,14 +3633,6 @@
           "name": "socialLinks"
         },
         "optional": true
-      },
-      "seo": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "seoModule"
-        },
-        "optional": true
       }
     }
   },
@@ -3717,6 +3701,14 @@
           "name": "imageWithMetadata"
         },
         "optional": false
+      },
+      "tagSelector": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "tagSelector"
+        },
+        "optional": true
       },
       "authors": {
         "type": "objectAttribute",
@@ -3921,28 +3913,6 @@
                   }
                 }
               }
-            }
-          }
-        },
-        "optional": true
-      },
-      "tags": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "array",
-          "of": {
-            "type": "object",
-            "attributes": {
-              "_key": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            "rest": {
-              "type": "inline",
-              "name": "tag.reference"
             }
           }
         },
@@ -4462,6 +4432,28 @@
         },
         "optional": false
       },
+      "websiteUrl": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "description": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "cover": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "imageWithMetadata"
+        },
+        "optional": true
+      },
       "category": {
         "type": "objectAttribute",
         "value": {
@@ -4505,6 +4497,34 @@
         "value": {
           "type": "inline",
           "name": "socialLinks"
+        },
+        "optional": true
+      },
+      "ogTitle": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "ogDescription": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "ogSiteName": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "ogImageUrl": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       }

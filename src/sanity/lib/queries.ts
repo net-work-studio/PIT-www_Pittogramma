@@ -423,6 +423,12 @@ export const STUDIOS_QUERY = defineQuery(`
   *[_type == "studio"] | order(name asc) {
     _id,
     name,
+    websiteUrl,
+    description,
+    cover {
+      image { asset, hotspot, crop },
+      alt
+    },
     category->{
       _id,
       name

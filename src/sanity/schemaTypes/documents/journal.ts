@@ -31,6 +31,7 @@ export const journal = defineType({
       name: "publishingDate",
       title: "Publishing Date",
       group: "metadata",
+      validation: (e) => e.required(),
     }),
     defineField({
       type: "imageWithMetadata",

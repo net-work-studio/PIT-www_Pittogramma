@@ -7,10 +7,6 @@ export const seoModule = defineType({
   name: "seoModule",
   title: "SEO",
   type: "object",
-  options: {
-    collapsible: true,
-    collapsed: false,
-  },
   fields: [
     defineField({
       name: "metaTitle",

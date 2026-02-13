@@ -155,22 +155,6 @@ export type Glossary = {
   name: string;
   description: string;
   image?: ImageWithMetadata;
-  seo?: SeoModule;
-};
-
-export type SeoModule = {
-  _type: "seoModule";
-  metaTitle?: string;
-  metaDescription?: string;
-  metaImage?: ImageWithMetadata;
-  metaRobots?:
-    | "index, follow"
-    | "noindex, follow"
-    | "index, nofollow"
-    | "noindex, nofollow";
-  canonicalURL?: string;
-  openGraph?: OpenGraph;
-  xCard?: XCard;
 };
 
 export type Bookshop = {
@@ -291,6 +275,21 @@ export type EventsPage = {
   introText: string;
   endOfPageCta?: CtaReference;
   seo?: SeoModule;
+};
+
+export type SeoModule = {
+  _type: "seoModule";
+  metaTitle?: string;
+  metaDescription?: string;
+  metaImage?: ImageWithMetadata;
+  metaRobots?:
+    | "index, follow"
+    | "noindex, follow"
+    | "index, nofollow"
+    | "noindex, nofollow";
+  canonicalURL?: string;
+  openGraph?: OpenGraph;
+  xCard?: XCard;
 };
 
 export type SiteSettings = {
@@ -668,7 +667,6 @@ export type Designer = {
   }>;
   location: Location;
   socialLinks?: SocialLinks;
-  seo?: SeoModule;
 };
 
 export type Journal = {
@@ -681,6 +679,7 @@ export type Journal = {
   slug: Slug;
   publishingDate?: PublishingDate;
   cover: ImageWithMetadata;
+  tagSelector?: TagSelector;
   authors?: Array<
     {
       _key: string;
@@ -705,11 +704,6 @@ export type Journal = {
     _type: "block";
     _key: string;
   }>;
-  tags?: Array<
-    {
-      _key: string;
-    } & TagReference
-  >;
   seo?: SeoModule;
 };
 
@@ -796,6 +790,9 @@ export type Studio = {
   _updatedAt: string;
   _rev: string;
   name: string;
+  websiteUrl?: string;
+  description?: string;
+  cover?: ImageWithMetadata;
   category: CategoryReference;
   tagSelector?: TagSelector;
   locations?: Array<
@@ -804,6 +801,10 @@ export type Studio = {
     } & Location
   >;
   socialLinks?: SocialLinks;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogSiteName?: string;
+  ogImageUrl?: string;
 };
 
 export type Category = {
@@ -1019,7 +1020,6 @@ export type AllSanitySchemaTypes =
   | Publisher
   | Author
   | Glossary
-  | SeoModule
   | Bookshop
   | SocialLinks
   | CountryReference
@@ -1032,6 +1032,7 @@ export type AllSanitySchemaTypes =
   | Professional
   | CtaReference
   | EventsPage
+  | SeoModule
   | SiteSettings
   | XCard
   | OpenGraph
@@ -2187,10 +2188,20 @@ export type INSTITUTES_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: STUDIOS_QUERY
-// Query: *[_type == "studio"] | order(name asc) {    _id,    name,    category->{      _id,      name    },    tagSelector {      tags[]->{        _id,        name      }    },    locations[] {      _key,      country->{        _id,        name      },      city->{        _id,        name      }    },    socialLinks {      links[] {        _key,        platform,        url      }    }  }
+// Query: *[_type == "studio"] | order(name asc) {    _id,    name,    websiteUrl,    description,    cover {      image { asset, hotspot, crop },      alt    },    category->{      _id,      name    },    tagSelector {      tags[]->{        _id,        name      }    },    locations[] {      _key,      country->{        _id,        name      },      city->{        _id,        name      }    },    socialLinks {      links[] {        _key,        platform,        url      }    }  }
 export type STUDIOS_QUERY_RESULT = Array<{
   _id: string;
   name: string;
+  websiteUrl: string | null;
+  description: string | null;
+  cover: {
+    image: {
+      asset: SanityImageAssetReference | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+    alt: string | null;
+  } | null;
   category: {
     _id: string;
     name: string;
@@ -2325,7 +2336,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "bookshop"] | order(name asc) {\n    _id,\n    name,\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    location {\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    address,\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': BOOKSHOPS_QUERY_RESULT;
     '\n  *[_type == "glossary"] | order(name asc) {\n    _id,\n    name,\n    description,\n    image {\n      image { asset, hotspot, crop },\n      alt\n    }\n  }\n': GLOSSARY_QUERY_RESULT;
     '\n  *[_type == "institute"] | order(name asc) {\n    _id,\n    name,\n    yearFoundation,\n    languages[]->{\n      _id,\n      name\n    },\n    location {\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    address,\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': INSTITUTES_QUERY_RESULT;
-    '\n  *[_type == "studio"] | order(name asc) {\n    _id,\n    name,\n    category->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    locations[] {\n      _key,\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': STUDIOS_QUERY_RESULT;
+    '\n  *[_type == "studio"] | order(name asc) {\n    _id,\n    name,\n    websiteUrl,\n    description,\n    cover {\n      image { asset, hotspot, crop },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    locations[] {\n      _key,\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': STUDIOS_QUERY_RESULT;
     '\n  *[_type == "typeFoundry"] | order(name asc) {\n    _id,\n    name,\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    location {\n      country->{\n        _id,\n        name\n      },\n      city->{\n        _id,\n        name\n      }\n    },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': TYPE_FOUNDRIES_QUERY_RESULT;
     '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    description,\n    cover {\n      image { asset, hotspot, crop },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]{ _key, ...@->{ _id, name } }\n    },\n    sourceUrl,\n    ogTitle,\n    ogDescription,\n    ogSiteName,\n    ogImageUrl\n  }\n': WEB_SOURCES_QUERY_RESULT;
   }

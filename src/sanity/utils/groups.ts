@@ -1,4 +1,4 @@
-import { DatabaseIcon, DocumentTextIcon, SearchIcon } from "@sanity/icons";
+import { DatabaseIcon, DocumentTextIcon, SearchIcon, InfoOutlineIcon } from "@sanity/icons";
 
 export const groups = [
   {
@@ -11,6 +11,11 @@ export const groups = [
     title: "Content",
     default: true,
     icon: DocumentTextIcon,
+  },
+  {
+    name: "og",
+    title: "Open Graph Data",
+    icon: InfoOutlineIcon,
   },
   {
     name: "seo",

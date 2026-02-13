@@ -36,7 +36,6 @@ export const project = defineType({
       group: "metadata",
       validation: (e) => e.required(),
     }),
-
     defineField({
       type: "imageWithMetadata",
       name: "cover",
