@@ -104,11 +104,6 @@ export const designer = defineType({
       name: "socialLinks",
       title: "Social Links",
     }),
-    defineField({
-      type: "seoModule",
-      name: "seo",
-      title: "SEO",
-    }),
   ],
   preview: {
     select: {

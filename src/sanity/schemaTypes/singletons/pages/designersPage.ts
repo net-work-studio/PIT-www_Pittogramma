@@ -16,7 +16,7 @@ export const designersPage = defineType({
       name: "title",
       title: "Title",
       type: "string",
-      hidden: true,
+      group: "content",
       readOnly: true,
     }),
     defineField({

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import ProjectDescription from "@/components/modules/project/project-description";
 
 interface Designer {
   _id: string;
@@ -12,17 +12,17 @@ interface Teacher {
   name: string | null;
 }
 
-interface ProjectHeaderProps {
+interface ProjectInfoProps {
   designers?: Designer[] | null;
   title?: string | null;
   description?: string | null;
   year?: number | null;
-  tags?: Array<{ _id: string; name: string; slug: unknown }> | null;
+  tags?: Array<{ _id: string; name: string }> | null;
   teachers?: Teacher[] | null;
   institute?: string | null;
 }
 
-export default function ProjectHeader({
+export default function ProjectInfo({
   designers,
   title,
   description,
@@ -30,46 +30,78 @@ export default function ProjectHeader({
   tags,
   teachers,
   institute,
-}: ProjectHeaderProps) {
+}: ProjectInfoProps) {
   const designerNames = designers
-    ?.map((d) => d.name)
+    ?.map((d: Designer) => d.name)
     .filter(Boolean)
     .join(", ");
 
   const teacherNames = teachers
-    ?.map((t) => t.name)
+    ?.map((t: Teacher) => t.name)
     .filter(Boolean)
     .join(", ");
 
   return (
-    <div className="sticky top-16 h-fit w-1/3">
-      <hgroup className="text-3xl">
-        {designerNames ? <h2>{designerNames}</h2> : null}
-        {title ? <h1>{title}</h1> : null}
-      </hgroup>
-      <div>
-        <p>{description}</p>
-        <Button variant="link">Read More</Button>
+    <div className="h-fit w-full pr-10 lg:sticky lg:top-14 lg:w-1/3">
+      <div className="flex flex-col gap-[50px]">
+        <hgroup className="flex flex-col gap-1">
+          {designerNames ? (
+            <h2 className="text-[2rem] text-muted-foreground leading-tight">
+              {designerNames}
+            </h2>
+          ) : null}
+          {title ? (
+            <h1 className="text-[2rem] leading-tight">{title}</h1>
+          ) : null}
+        </hgroup>
+
+        <div className="flex flex-col gap-20">
+          <ProjectDescription description={description ?? null} />
+
+          <dl className="flex flex-col gap-4">
+            {institute ? (
+              <div className="flex gap-x-8">
+                <dt className="font-mono text-muted-foreground text-sm uppercase">
+                  Institute
+                </dt>
+                <dd className="text-sm">{institute}</dd>
+              </div>
+            ) : null}
+            {teacherNames ? (
+              <div className="flex gap-x-8">
+                <dt className="font-mono text-muted-foreground text-sm uppercase">
+                  Teacher
+                </dt>
+                <dd className="text-sm">{teacherNames}</dd>
+              </div>
+            ) : null}
+            {year ? (
+              <div className="flex gap-x-8">
+                <dt className="font-mono text-muted-foreground text-sm uppercase">
+                  Year
+                </dt>
+                <dd className="text-sm">{year}</dd>
+              </div>
+            ) : null}
+            {tags?.length ? (
+              <div className="flex gap-x-8">
+                <dt className="font-mono text-muted-foreground text-sm uppercase">
+                  Disciplines
+                </dt>
+                <dd>
+                  <ul className="flex flex-col">
+                    {tags.map((tag: { _id: string; name: string }) => (
+                      <li className="text-sm underline" key={tag._id}>
+                        {tag.name}
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            ) : null}
+          </dl>
+        </div>
       </div>
-      <dl className="grid grid-cols-2 gap-1">
-        {institute ? <dt className="font-mono uppercase">Institute</dt> : null}
-        {institute ? <dd>{institute}</dd> : null}
-        {teacherNames ? <dt className="font-mono uppercase">Teacher</dt> : null}
-        {teacherNames ? <dd>{teacherNames}</dd> : null}
-        {year ? <dt className="font-mono uppercase">Year</dt> : null}
-        {year ? <dd>{year}</dd> : null}
-        {tags ? <dt className="font-mono uppercase">Tags</dt> : null}
-        {tags ? (
-          <dd>
-            <ul>
-              {tags.map((tag) => (
-                /* TODO add link to search page */
-                <li key={tag._id}>{tag.name}</li>
-              ))}
-            </ul>
-          </dd>
-        ) : null}
-      </dl>
     </div>
   );
 }

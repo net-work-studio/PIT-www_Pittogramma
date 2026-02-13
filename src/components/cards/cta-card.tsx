@@ -13,9 +13,9 @@ interface InternalLinkDoc {
 interface CtaCardProps {
   headline?: string | null;
   buttonText: string;
-  variant?: "simple" | "withImage";
+  variant?: "simple" | "withImage" | null;
   image?: ImageWithMetadata | null;
-  linkType?: "internal" | "external";
+  linkType?: "internal" | "external" | null;
   internalLink?: InternalLinkDoc | null;
   externalUrl?: string | null;
 }
@@ -23,16 +23,21 @@ interface CtaCardProps {
 export default function CtaCard({
   headline,
   buttonText,
-  variant = "simple",
+  variant,
   image,
-  linkType = "internal",
+  linkType,
   internalLink,
   externalUrl,
 }: CtaCardProps) {
-  const href =
-    linkType === "external" ? externalUrl : resolveInternalLink(internalLink);
+  const resolvedVariant = variant ?? "simple";
+  const resolvedLinkType = linkType ?? "internal";
 
-  const isExternal = linkType === "external" && externalUrl;
+  const href =
+    resolvedLinkType === "external"
+      ? externalUrl
+      : resolveInternalLink(internalLink);
+
+  const isExternal = resolvedLinkType === "external" && externalUrl;
 
   const buttonElement = href ? (
     <Button asChild variant="outline">
@@ -48,7 +53,7 @@ export default function CtaCard({
     <Button variant="outline">{buttonText}</Button>
   );
 
-  if (variant === "withImage" && image) {
+  if (resolvedVariant === "withImage" && image) {
     return (
       <div className="relative overflow-hidden rounded-[10px]">
         <div className="relative aspect-4/3">

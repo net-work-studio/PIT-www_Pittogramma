@@ -24,18 +24,30 @@ const ROUTE_MAP: Record<string, string> = {
 /**
  * Resolves a Sanity document reference to its frontend URL
  */
-export function resolveInternalLink(doc: InternalLinkDoc | null | undefined): string | null {
-  if (!doc?._type) return null;
+export function resolveInternalLink(
+  doc: InternalLinkDoc | null | undefined
+): string | null {
+  if (!doc?._type) {
+    return null;
+  }
 
   const basePath = ROUTE_MAP[doc._type];
-  if (!basePath) return null;
+  if (!basePath) {
+    return null;
+  }
 
   // Singleton pages don't need a slug
-  if (["homePage", "projectsPage", "interviewsPage", "designersPage"].includes(doc._type)) {
+  if (
+    ["homePage", "projectsPage", "interviewsPage", "designersPage"].includes(
+      doc._type
+    )
+  ) {
     return basePath;
   }
 
   // Document types with slugs
-  if (!doc.slug?.current) return null;
+  if (!doc.slug?.current) {
+    return null;
+  }
   return `${basePath}/${doc.slug.current}`;
 }

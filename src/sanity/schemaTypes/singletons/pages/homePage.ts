@@ -14,7 +14,7 @@ export const homePage = defineType({
       name: "title",
       title: "Title",
       type: "string",
-      hidden: true,
+      group: "content",
       readOnly: true,
     }),
     defineField({

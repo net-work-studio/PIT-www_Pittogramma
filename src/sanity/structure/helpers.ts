@@ -12,9 +12,7 @@ export const singleton = (
     .id(typeName)
     .icon(icon)
     .child(
-      S.document()
-        .schemaType(typeName)
-        .documentId(typeName) // fixed ID
+      S.document().schemaType(typeName).documentId(typeName) // fixed ID
     );
 
 export const group = (

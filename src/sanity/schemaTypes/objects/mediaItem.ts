@@ -1,4 +1,4 @@
-import { ImageIcon, PlayIcon, LinkIcon } from "@sanity/icons";
+import { ImageIcon, LinkIcon, PlayIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const mediaItem = defineType({
@@ -74,7 +74,8 @@ export const mediaItem = defineType({
         videoEmbed: LinkIcon,
       };
       return {
-        title: caption || typeLabels[type as keyof typeof typeLabels] || "Media",
+        title:
+          caption || typeLabels[type as keyof typeof typeLabels] || "Media",
         subtitle: typeLabels[type as keyof typeof typeLabels],
         media: type === "image" ? image : icons[type as keyof typeof icons],
       };

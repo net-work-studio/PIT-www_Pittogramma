@@ -46,6 +46,9 @@ export const metadata: Metadata = {
     template: "%s – Pittogramma",
   },
   description: siteDefaults.description,
+  appleWebApp: {
+    title: "Pittogramma",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",

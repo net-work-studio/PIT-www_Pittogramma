@@ -23,7 +23,8 @@ function isRateLimited(ip: string): boolean {
 }
 
 export async function GET(request: Request) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
   if (isRateLimited(ip)) {
     return NextResponse.json(
       { error: "Too many requests. Please try again later." },
@@ -35,7 +36,10 @@ export async function GET(request: Request) {
   const imageUrl = searchParams.get("url");
 
   if (!imageUrl) {
-    return NextResponse.json({ error: "Image URL is required" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Image URL is required" },
+      { status: 400 }
+    );
   }
 
   try {
@@ -52,7 +56,7 @@ export async function GET(request: Request) {
       headers: {
         "User-Agent": "Mozilla/5.0 (compatible; PittogrammaBot/1.0)",
       },
-      signal: AbortSignal.timeout(10000),
+      signal: AbortSignal.timeout(10_000),
     });
 
     if (!response.ok) {
@@ -72,7 +76,7 @@ export async function GET(request: Request) {
     // Validate size before loading into memory
     const contentLength = response.headers.get("content-length");
     const MAX_SIZE = 10 * 1024 * 1024; // 10MB
-    if (contentLength && parseInt(contentLength) > MAX_SIZE) {
+    if (contentLength && Number.parseInt(contentLength) > MAX_SIZE) {
       return NextResponse.json(
         { error: "Image too large (max 10MB)" },
         { status: 400 }
@@ -89,6 +93,9 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     console.error("Error fetching image:", error);
-    return NextResponse.json({ error: "Failed to fetch image" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch image" },
+      { status: 500 }
+    );
   }
 }

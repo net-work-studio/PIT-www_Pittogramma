@@ -101,6 +101,16 @@ export const DESIGNERS_PAGE_QUERY = defineQuery(`
   }
 `);
 
+export const EVENTS_PAGE_QUERY = defineQuery(`
+  *[_type == "eventsPage"][0] {
+    _id,
+    title,
+    introText,
+    ${CTA_FIELDS},
+    ${SEO_FIELDS}
+  }
+`);
+
 export const PROJECTS_QUERY = defineQuery(`
   *[_type == "project"] | order(_createdAt desc) {
     _id,
@@ -115,7 +125,12 @@ export const PROJECTS_QUERY = defineQuery(`
     title,
     slug,
     designers[]{ _key, ...@->{ _id, name, slug, portrait } },
-    tags[]{ _key, ...@->{ _id, name, slug } },
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
     ${SEO_FIELDS}
   }
 `);
@@ -136,15 +151,131 @@ export const PROJECT_QUERY = defineQuery(`
     title,
     slug,
     designers[]{ _key, ...@->{ _id, name, slug, portrait } },
-    tags[]{ _key, ...@->{ _id, name, slug } },
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
     teachers[]{ _key, ...@->{ _id, name } },
     institute->{
       _id,
       name,
     },
     year,
-    gallery,
+    gallery[] {
+      _key,
+      _type,
+      _type == "singleMediaBlock" => {
+        orientation,
+        media { type, image { asset, hotspot, crop }, caption, alt }
+      },
+      _type == "sideBySideMediaBlock" => {
+        orientation,
+        left { type, image { asset, hotspot, crop }, caption, alt },
+        right { type, image { asset, hotspot, crop }, caption, alt }
+      },
+      _type == "threeSideBySideMediaBlock" => {
+        orientation,
+        left { type, image { asset, hotspot, crop }, caption, alt },
+        center { type, image { asset, hotspot, crop }, caption, alt },
+        right { type, image { asset, hotspot, crop }, caption, alt }
+      },
+      _type == "gridFourMediaBlock" => {
+        orientation,
+        topLeft { type, image { asset, hotspot, crop }, caption, alt },
+        topRight { type, image { asset, hotspot, crop }, caption, alt },
+        bottomLeft { type, image { asset, hotspot, crop }, caption, alt },
+        bottomRight { type, image { asset, hotspot, crop }, caption, alt }
+      }
+    },
     description,
+    "relatedProjects": *[
+      _type == "project" &&
+      slug.current != ^.slug.current &&
+      count(tagSelector.tags[@._ref in ^.tagSelector.tags[]._ref]) > 0
+    ] | order(_createdAt desc) [0...4] {
+      _id,
+      cover { image { asset, hotspot, crop }, alt },
+      title,
+      slug,
+      designers[]{ _key, ...@->{ _id, name } }
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
+export const JOURNAL_PAGE_QUERY = defineQuery(`
+  *[_type == "journalPage"][0] {
+    _id,
+    title,
+    introText,
+    featuredArticle->{
+      _id,
+      title,
+      slug,
+      publishingDate,
+      excerpt,
+      cover { image { asset, alt, hotspot, crop } },
+      authors[]{ _key, ...@->{ _id, name } },
+      tagSelector { tags[]->{ _id, name } }
+    },
+    ${CTA_FIELDS},
+    ${SEO_FIELDS}
+  }
+`);
+
+export const JOURNAL_QUERY = defineQuery(`
+  *[_type == "journal"] | order(publishingDate.date desc) {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      image {
+        asset,
+        alt,
+        hotspot,
+        crop
+      }
+    },
+    authors[]{ _key, ...@->{ _id, name } },
+    excerpt,
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
+export const JOURNAL_ARTICLE_QUERY = defineQuery(`
+  *[_type == "journal" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      _type,
+      image {
+        _type,
+        asset,
+        hotspot,
+        crop
+      },
+      alt
+    },
+    authors[]{ _key, ...@->{ _id, name } },
+    excerpt,
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
+    content[] { ... },
     ${SEO_FIELDS}
   }
 `);
@@ -163,7 +294,7 @@ export const INTERVIEWS_QUERY = defineQuery(`
         crop
       }
     },
-    designers[]{ _key, ...@->{ _id, name } },
+    designersAndProfessionals[]{ _key, ...@->{ _id, name } },
     studio->{
       _id,
       name
@@ -177,7 +308,12 @@ export const INTERVIEWS_QUERY = defineQuery(`
       name
     },
     readingTime,
-    tags[]{ _key, ...@->{ _id, name, slug } },
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
     introText,
     ${SEO_FIELDS}
   }
@@ -199,7 +335,7 @@ export const INTERVIEW_QUERY = defineQuery(`
       },
       alt
     },
-    designers[]{ _key, ...@->{ _id, name, portrait } },
+    designersAndProfessionals[]{ _key, ...@->{ _id, name, portrait } },
     studio->{
       _id,
       name
@@ -213,7 +349,12 @@ export const INTERVIEW_QUERY = defineQuery(`
       name
     },
     readingTime,
-    tags[]{ _key, ...@->{ _id, name, slug } },
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
     introText,
     interview[] {
       ...,
@@ -357,6 +498,12 @@ export const STUDIOS_QUERY = defineQuery(`
   *[_type == "studio"] | order(name asc) {
     _id,
     name,
+    websiteUrl,
+    description,
+    cover {
+      image { asset, hotspot, crop },
+      alt
+    },
     category->{
       _id,
       name

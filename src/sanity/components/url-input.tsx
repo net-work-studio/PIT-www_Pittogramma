@@ -26,14 +26,20 @@ type OgData = {
   imageUrl: string | null;
 };
 
-function buildPatchData(data: OgData): Record<string, unknown> {
+function buildPatchData(
+  data: OgData,
+  options?: { autoFillName?: boolean }
+): Record<string, unknown> {
   const patchData: Record<string, unknown> = {};
+  const autoFillName = options?.autoFillName ?? true;
 
   // Use siteName as name, fallback to title
-  if (data.siteName) {
-    patchData.name = data.siteName;
-  } else if (data.title) {
-    patchData.name = data.title;
+  if (autoFillName) {
+    if (data.siteName) {
+      patchData.name = data.siteName;
+    } else if (data.title) {
+      patchData.name = data.title;
+    }
   }
 
   if (data.description) {
@@ -69,6 +75,9 @@ function getButtonText(isLoading: boolean, isPatching: boolean): string {
 
 export function UrlInput(props: StringInputProps) {
   const { onChange, value = "", elementProps } = props;
+  const autoFillName =
+    (props.schemaType.options as { autoFillName?: boolean } | undefined)
+      ?.autoFillName ?? true;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fetchedData, setFetchedData] = useState<OgData | null>(null);
@@ -136,7 +145,7 @@ export function UrlInput(props: StringInputProps) {
       setIsPatching(true);
 
       try {
-        const patchData = buildPatchData(data);
+        const patchData = buildPatchData(data, { autoFillName });
 
         if (data.imageUrl) {
           const coverData = await uploadCoverImage(
@@ -168,7 +177,31 @@ export function UrlInput(props: StringInputProps) {
         setIsPatching(false);
       }
     },
-    [documentId, client, toast, uploadCoverImage]
+    [documentId, client, toast, uploadCoverImage, autoFillName]
+  );
+
+  const handleApplyName = useCallback(
+    async (suggestedName: string) => {
+      if (!documentId) {
+        return;
+      }
+      try {
+        const patchId = documentId.startsWith("drafts.")
+          ? documentId
+          : `drafts.${documentId}`;
+        await client.patch(patchId).set({ name: suggestedName }).commit();
+        toast.push({
+          status: "success",
+          title: "Name applied",
+        });
+      } catch {
+        toast.push({
+          status: "error",
+          title: "Failed to apply name",
+        });
+      }
+    },
+    [documentId, client, toast]
   );
 
   const handleFetch = useCallback(async () => {
@@ -275,6 +308,26 @@ export function UrlInput(props: StringInputProps) {
                 </Text>
               )}
             </Stack>
+            {!autoFillName && (fetchedData.siteName || fetchedData.title) && (
+              <Flex align="center" gap={2}>
+                <Text muted size={1}>
+                  Suggested name:{" "}
+                  <strong>{fetchedData.siteName || fetchedData.title}</strong>
+                </Text>
+                <Button
+                  fontSize={1}
+                  mode="ghost"
+                  onClick={() =>
+                    handleApplyName(
+                      (fetchedData.siteName || fetchedData.title) as string
+                    )
+                  }
+                  padding={2}
+                  text="Use as name"
+                  tone="primary"
+                />
+              </Flex>
+            )}
           </Stack>
         </Card>
       )}

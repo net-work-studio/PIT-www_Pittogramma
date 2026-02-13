@@ -31,6 +31,7 @@ export const journal = defineType({
       name: "publishingDate",
       title: "Publishing Date",
       group: "metadata",
+      validation: (e) => e.required(),
     }),
     defineField({
       type: "imageWithMetadata",
@@ -38,6 +39,12 @@ export const journal = defineType({
       title: "Cover",
       group: "content",
       validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "tagSelector",
+      name: "tagSelector",
+      title: "Tags",
+      group: "content",
     }),
     defineField({
       type: "array",
@@ -66,20 +73,6 @@ export const journal = defineType({
       title: "Content",
       group: "content",
       of: [defineArrayMember({ type: "block" })],
-    }),
-    defineField({
-      type: "array",
-      name: "tags",
-      title: "Tags",
-      group: "content",
-      of: [
-        defineArrayMember({
-          type: "reference",
-          name: "tag",
-          title: "Tag",
-          to: [{ type: "tag" }],
-        }),
-      ],
     }),
     defineField({
       type: "seoModule",

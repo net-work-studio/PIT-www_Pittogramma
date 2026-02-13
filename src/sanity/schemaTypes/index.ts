@@ -24,7 +24,12 @@ import { tag } from "./documents/tag";
 import { teacher } from "./documents/teacher";
 import { typeFoundry } from "./documents/typeFoundry";
 import { webSource } from "./documents/webSource";
-import { singleMediaBlock, sideBySideMediaBlock, threeSideBySideMediaBlock, gridFourMediaBlock } from "./objects/galleryBlocks";
+import {
+  gridFourMediaBlock,
+  sideBySideMediaBlock,
+  singleMediaBlock,
+  threeSideBySideMediaBlock,
+} from "./objects/galleryBlocks";
 import { imageWithMetadata } from "./objects/imageWithMetadata";
 import { location } from "./objects/location";
 import { logo } from "./objects/logo";
@@ -37,8 +42,10 @@ import { tagSelector } from "./objects/tagSelector";
 import { titleSlug } from "./objects/titleSlug";
 import { xCard } from "./objects/xCard";
 import { designersPage } from "./singletons/pages/designersPage";
+import { eventsPage } from "./singletons/pages/eventsPage";
 import { homePage } from "./singletons/pages/homePage";
 import { interviewsPage } from "./singletons/pages/interviewsPage";
+import { journalPage } from "./singletons/pages/journalPage";
 import { projectsPage } from "./singletons/pages/projectsPage";
 import { siteSettings } from "./singletons/siteSettings";
 
@@ -76,7 +83,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     homePage,
     projectsPage,
     interviewsPage,
+    journalPage,
     designersPage,
+    eventsPage,
     socialLinks,
     professional,
     publishingDate,

@@ -34,8 +34,8 @@ export const project = defineType({
       name: "publishingDate",
       title: "Publishing Date",
       group: "metadata",
+      validation: (e) => e.required(),
     }),
-
     defineField({
       type: "imageWithMetadata",
       name: "cover",
@@ -54,7 +54,12 @@ export const project = defineType({
           to: [{ type: "designer" }],
         }),
       ],
-      validation: (e) => e.required().min(1),
+      validation: (e) =>
+        e
+          .required()
+          .min(1)
+          .unique()
+          .error("You cannot add the same designer twice"),
     }),
     defineField({
       type: "reference",
@@ -74,6 +79,8 @@ export const project = defineType({
           to: [{ type: "teacher" }],
         }),
       ],
+      validation: (rule) =>
+        rule.unique().error("You cannot add the same teacher twice"),
     }),
     defineField({
       type: "number",
@@ -92,18 +99,10 @@ export const project = defineType({
           }),
     }),
     defineField({
-      type: "array",
-      name: "tags",
+      type: "tagSelector",
+      name: "tagSelector",
       title: "Tags",
       group: "content",
-      of: [
-        defineArrayMember({
-          type: "reference",
-          name: "tag",
-          title: "Tag",
-          to: [{ type: "tag" }],
-        }),
-      ],
     }),
     defineField({
       type: "text",
@@ -119,6 +118,8 @@ export const project = defineType({
       of: [
         defineArrayMember({ type: "singleMediaBlock" }),
         defineArrayMember({ type: "sideBySideMediaBlock" }),
+        defineArrayMember({ type: "threeSideBySideMediaBlock" }),
+        defineArrayMember({ type: "gridFourMediaBlock" }),
       ],
     }),
 
