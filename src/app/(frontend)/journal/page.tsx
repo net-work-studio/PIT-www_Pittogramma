@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return mapSanityToMetadata({
     page: {
       title: page?.title ?? "Journal",
-      description: page?.introText,
+      description: page?.introText ?? undefined,
       seo: page?.seo as SeoModule | undefined,
     },
     baseUrl: siteDefaults.baseUrl,
@@ -77,8 +77,8 @@ export default async function JournalPage() {
   return (
     <>
       <PageHeader
-        subtitle={pageSettings?.introText}
-        title={pageSettings?.title}
+        subtitle={pageSettings?.introText ?? undefined}
+        title={pageSettings?.title ?? "Journal"}
         onlySeoTitle
       />
       <div className="space-y-10 pb-10">
