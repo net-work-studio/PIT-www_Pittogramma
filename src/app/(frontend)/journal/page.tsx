@@ -78,7 +78,8 @@ export default async function JournalPage() {
     <>
       <PageHeader
         subtitle={pageSettings?.introText}
-        title={pageSettings?.title ?? "Journal"}
+        title={pageSettings?.title}
+        onlySeoTitle
       />
       <div className="space-y-10 pb-10">
         {featuredArticle && featuredImage && (
@@ -101,11 +102,13 @@ export default async function JournalPage() {
         )}
 
         {/* Section divider */}
-        <div className="flex items-center gap-4 border-t pt-4">
-          <span className="font-mono text-muted-foreground text-sm uppercase">
-            Read more
-          </span>
-        </div>
+        {featuredArticle && featuredImage && (
+          <div className="flex items-center gap-4 border-t pt-4">
+            <span className="font-mono text-muted-foreground text-sm uppercase">
+              Read more
+            </span>
+          </div>
+        )}
 
         <div>
           <Button className="font-mono uppercase">Filters</Button>

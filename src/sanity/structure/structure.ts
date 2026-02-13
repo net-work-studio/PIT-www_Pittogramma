@@ -29,7 +29,6 @@ export const structure: StructureResolver = (S) =>
 
       docListItem(S, "project", "Project", Briefcase),
       docListItem(S, "interview", "Interview", MessageCircle),
-      docListItem(S, "journal", "Journal", FileText),
 
       group(S, "Resources", [
         docListItem(S, "bibliography", "Bibliography"),
@@ -50,17 +49,17 @@ export const structure: StructureResolver = (S) =>
         singleton(S, "projectsPage", "Projects", Briefcase),
         singleton(S, "interviewsPage", "Interviews", MessageCircle),
         singleton(S, "designersPage", "Designers", User),
-        singleton(S, "journalPage", "Journal", FileText),
-        singleton(S, "eventsPage", "Events", Calendar),
-        S.divider(),
+        singleton(S, "journalPage", "Journal Page", FileText),
+        singleton(S, "eventsPage", "Events Page", Calendar),
         singleton(S, "history", "History"),
-        docListItem(S, "event", "Event", Calendar),
-        docListItem(S, "edition", "Edition", BookOpen),
+        S.divider(),
+        docListItem(S, "journal", "Journals Items", FileText),
+        docListItem(S, "event", "Events Items", Calendar),
+        docListItem(S, "edition", "Editions Items", BookOpen),
       ]),
 
-      docListItem(S, "cta", "CTAs", MousePointerClick),
-
       S.divider(),
+      docListItem(S, "cta", "CTAs", MousePointerClick),
 
       group(S, "Metadata", [
         docListItem(S, "city", "City", MapPin),

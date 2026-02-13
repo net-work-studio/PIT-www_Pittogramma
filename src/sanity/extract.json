@@ -1520,13 +1520,6 @@
         },
         "optional": true
       },
-      "introText": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
       "featuredArticle": {
         "type": "objectAttribute",
         "value": {

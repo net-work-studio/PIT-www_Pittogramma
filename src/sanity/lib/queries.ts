@@ -251,6 +251,35 @@ export const JOURNAL_QUERY = defineQuery(`
   }
 `);
 
+export const JOURNAL_ARTICLE_QUERY = defineQuery(`
+  *[_type == "journal" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      _type,
+      image {
+        _type,
+        asset,
+        hotspot,
+        crop
+      },
+      alt
+    },
+    authors[]{ _key, ...@->{ _id, name } },
+    excerpt,
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
+    content[] { ... },
+    ${SEO_FIELDS}
+  }
+`);
+
 export const INTERVIEWS_QUERY = defineQuery(`
   *[_type == "interview"] | order(publishingDate.date desc) {
     _id,
