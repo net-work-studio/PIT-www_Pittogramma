@@ -13,12 +13,16 @@ export default function ProjectDescription({
   const [isClamped, setIsClamped] = useState(false);
   const textRef = useRef<HTMLParagraphElement>(null);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: description triggers re-measurement of clamped state when text content changes
   useEffect(() => {
+    if (expanded) {
+      return;
+    }
     const el = textRef.current;
     if (el) {
       setIsClamped(el.scrollHeight > el.clientHeight);
     }
-  }, [description]);
+  }, [description, expanded]);
 
   if (!description) {
     return null;

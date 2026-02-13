@@ -25,7 +25,7 @@ export const journalPage = defineType({
       type: "text",
       group: "content",
       rows: 3,
-      validation: (Rule) => Rule.max(170),
+      validation: (Rule) => Rule.required().max(170),
     }),
     defineField({
       name: "featuredArticle",
