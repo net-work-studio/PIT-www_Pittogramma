@@ -28,7 +28,7 @@ const platforms = [
 
 export default function ShareLinks({ url, title }: ShareLinksProps) {
   return (
-    <div className="mt-10 flex items-center gap-2.5">
+    <div className="mt-10 flex flex-wrap items-center gap-2.5">
       <span className="font-mono text-muted-foreground text-sm uppercase">
         Share
       </span>

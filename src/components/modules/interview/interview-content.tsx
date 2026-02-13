@@ -144,7 +144,7 @@ function SingleMediaBlock({ value }: SingleMediaBlockProps) {
 
   const ratio = getGalleryRatio(value.orientation);
   return (
-    <div className="mx-auto my-10 max-w-[65%]">
+    <div className="my-10 lg:mx-auto lg:max-w-[65%]">
       <MediaRenderer media={value.media} ratio={ratio} />
     </div>
   );
@@ -153,7 +153,7 @@ function SingleMediaBlock({ value }: SingleMediaBlockProps) {
 function SideBySideMediaBlock({ value }: SideBySideMediaBlockProps) {
   const ratio = getGalleryRatio(value.orientation);
   return (
-    <div className="my-10 grid grid-cols-2 gap-2.5 px-2.5">
+    <div className="my-10 grid grid-cols-1 gap-2.5 px-2.5 lg:grid-cols-2">
       <MediaRenderer media={value.left} ratio={ratio} />
       <MediaRenderer media={value.right} ratio={ratio} />
     </div>
@@ -163,7 +163,7 @@ function SideBySideMediaBlock({ value }: SideBySideMediaBlockProps) {
 function ThreeSideBySideMediaBlock({ value }: ThreeSideBySideMediaBlockProps) {
   const ratio = getGalleryRatio(value.orientation);
   return (
-    <div className="my-10 grid grid-cols-3 gap-2.5 px-2.5">
+    <div className="my-10 grid grid-cols-1 gap-2.5 px-2.5 lg:grid-cols-3">
       <MediaRenderer media={value.left} ratio={ratio} />
       <MediaRenderer media={value.center} ratio={ratio} />
       <MediaRenderer media={value.right} ratio={ratio} />
@@ -174,7 +174,7 @@ function ThreeSideBySideMediaBlock({ value }: ThreeSideBySideMediaBlockProps) {
 function GridFourMediaBlock({ value }: GridFourMediaBlockProps) {
   const ratio = getGalleryRatio(value.orientation);
   return (
-    <div className="mx-auto my-10 grid max-w-[65%] grid-cols-2 gap-2.5">
+    <div className="my-10 grid grid-cols-1 gap-2.5 lg:mx-auto lg:max-w-[65%] lg:grid-cols-2">
       <MediaRenderer media={value.topLeft} ratio={ratio} />
       <MediaRenderer media={value.topRight} ratio={ratio} />
       <MediaRenderer media={value.bottomLeft} ratio={ratio} />
@@ -186,17 +186,17 @@ function GridFourMediaBlock({ value }: GridFourMediaBlockProps) {
 const components: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="mx-auto mb-2 max-w-[700px] text-2xl text-muted-foreground">
+      <p className="mx-auto mb-2 max-w-[700px] text-muted-foreground text-xl lg:text-2xl">
         {children}
       </p>
     ),
     answer: ({ children }) => (
-      <p className="mx-auto mb-6 max-w-[700px] font-serif text-2xl">
+      <p className="mx-auto mb-6 max-w-[700px] font-serif text-xl lg:text-2xl">
         {children}
       </p>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="mx-auto my-8 max-w-[700px] text-[2.5rem] leading-tight">
+      <blockquote className="mx-auto my-8 max-w-[700px] text-2xl leading-tight lg:text-[2.5rem]">
         {children}
       </blockquote>
     ),

@@ -86,61 +86,123 @@ export default async function InterviewPage({
         type="Article"
       />
 
-      {/* Hero Section */}
-      <div className="flex flex-col gap-10 px-2.5 pt-16 lg:flex-row">
-        <InterviewInfo
-          city={interview.city?.name}
-          country={interview.country?.name}
-          interviewTo={interview.designersAndProfessionals}
-          publishingDate={interview.publishingDate?.date}
-          readingTime={interview.readingTime}
-          studio={interview.studio?.name}
-          tags={interview.tagSelector?.tags}
-          title={interview.title}
-        />
-        <div className="w-full lg:w-[49%] lg:shrink-0">
-          <AspectRatio
-            className="relative w-full overflow-hidden rounded-lg"
-            ratio={4 / 3}
-          >
-            <SanityImage
-              className="rounded-lg object-cover"
-              fill
-              priority
-              source={interview.cover}
-            />
-          </AspectRatio>
-          {interview.cover?.alt ? (
-            <p className="mt-1.5 font-mono text-[0.5rem] text-muted-foreground uppercase">
-              {interview.cover.alt}
+      <div className="flex flex-col">
+        {/* Hero Section */}
+        <div className="order-1 flex flex-col gap-6 px-2.5 pt-6 lg:flex-row lg:gap-10 lg:pt-16">
+          <InterviewInfo
+            city={interview.city?.name}
+            country={interview.country?.name}
+            interviewTo={interview.designersAndProfessionals}
+            publishingDate={interview.publishingDate?.date}
+            readingTime={interview.readingTime}
+            studio={interview.studio?.name}
+            tags={interview.tagSelector?.tags}
+            title={interview.title}
+          />
+          <div className="w-full lg:w-[49%] lg:shrink-0">
+            <AspectRatio
+              className="relative w-full overflow-hidden rounded-lg"
+              ratio={4 / 3}
+            >
+              <SanityImage
+                className="rounded-lg object-cover"
+                fill
+                priority
+                source={interview.cover}
+              />
+            </AspectRatio>
+            {interview.cover?.alt ? (
+              <p className="mt-1.5 font-mono text-[0.5rem] text-muted-foreground uppercase">
+                {interview.cover.alt}
+              </p>
+            ) : null}
+          </div>
+        </div>
+
+        {/* Bio Section */}
+        {interview.introText ? (
+          <div className="order-3 border-foreground border-t-[0.5px] px-2.5 pt-6 lg:order-2 lg:border-t-0 lg:pt-20">
+            <p className="font-mono text-muted-foreground text-xs uppercase lg:text-2xl">
+              Bio
             </p>
-          ) : null}
+            <p className="text-base leading-normal lg:text-[2rem] lg:leading-tight">
+              {interview.introText}
+            </p>
+
+            {/* Mobile-only metadata */}
+            <dl className="mt-6 flex flex-col gap-1 lg:hidden">
+              {interview.publishingDate?.date ? (
+                <div className="flex gap-x-12">
+                  <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
+                    Date
+                  </dt>
+                  <dd className="text-sm">{interview.publishingDate.date}</dd>
+                </div>
+              ) : null}
+              {interview.readingTime ? (
+                <div className="flex gap-x-12">
+                  <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
+                    Reading Time
+                  </dt>
+                  <dd className="text-sm">{interview.readingTime} min</dd>
+                </div>
+              ) : null}
+              {interview.city?.name || interview.country?.name ? (
+                <div className="flex gap-x-12">
+                  <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
+                    Place
+                  </dt>
+                  <dd className="text-sm">
+                    {[interview.city?.name, interview.country?.name]
+                      .filter(Boolean)
+                      .join(", ")}
+                  </dd>
+                </div>
+              ) : null}
+              {interview.studio?.name ? (
+                <div className="flex gap-x-12">
+                  <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
+                    Studio
+                  </dt>
+                  <dd className="text-sm">{interview.studio.name}</dd>
+                </div>
+              ) : null}
+              {interview.tagSelector?.tags?.length ? (
+                <div className="flex gap-x-12">
+                  <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
+                    Disciplines
+                  </dt>
+                  <dd>
+                    <ul className="flex flex-col">
+                      {interview.tagSelector.tags.map(
+                        (tag: { _id: string; name: string | null }) => (
+                          <li className="text-sm underline" key={tag._id}>
+                            {tag.name}
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </dd>
+                </div>
+              ) : null}
+            </dl>
+          </div>
+        ) : null}
+
+        {/* Interview Content */}
+        <div className="order-2 overflow-x-hidden py-10 lg:order-3 lg:py-16">
+          <InterviewContent content={interview.interview} />
         </div>
-      </div>
 
-      {/* Bio Section */}
-      {interview.introText ? (
-        <div className="px-2.5 pt-20">
-          <p className="font-mono text-2xl text-muted-foreground uppercase">
-            Bio
-          </p>
-          <p className="text-[2rem] leading-tight">{interview.introText}</p>
+        {/* Share Links */}
+        <div className="order-4 px-2.5">
+          <ShareLinks title={interview.title ?? ""} url={interviewUrl} />
         </div>
-      ) : null}
 
-      {/* Interview Content */}
-      <div className="overflow-x-hidden py-16">
-        <InterviewContent content={interview.interview} />
-      </div>
-
-      {/* Share Links */}
-      <div className="px-2.5">
-        <ShareLinks title={interview.title ?? ""} url={interviewUrl} />
-      </div>
-
-      {/* Related Content */}
-      <div className="px-2.5 pt-10 pb-4">
-        <DiscoverMore />
+        {/* Related Content */}
+        <div className="order-5 px-2.5 pt-10 pb-4">
+          <DiscoverMore />
+        </div>
       </div>
     </>
   );

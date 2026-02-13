@@ -40,15 +40,18 @@ export default function InterviewInfo({
   return (
     <div className="flex flex-1 flex-col justify-between gap-8">
       <hgroup className="flex flex-col gap-2">
-        {title ? <h1 className="text-[2rem] leading-tight">{title}</h1> : null}
+        {title ? (
+          <h1 className="text-2xl leading-tight lg:text-[2rem]">{title}</h1>
+        ) : null}
         {intervieweeNames ? (
-          <h2 className="text-[2rem] text-muted-foreground leading-tight">
-            Interview to {intervieweeNames}
+          <h2 className="text-base text-muted-foreground leading-tight lg:text-[2rem]">
+            <span className="hidden lg:inline">Interview to </span>
+            {intervieweeNames}
           </h2>
         ) : null}
       </hgroup>
 
-      <dl className="flex flex-col gap-1">
+      <dl className="hidden flex-col gap-1 lg:flex">
         {publishingDate ? (
           <div className="flex gap-x-8">
             <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
