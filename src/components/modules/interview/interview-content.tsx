@@ -67,7 +67,7 @@ function MediaRenderer({
         </AspectRatio>
       ) : null}
       {caption ? (
-        <figcaption className="mt-2 text-center text-gray-500 text-sm">
+        <figcaption className="mt-1.5 font-mono text-[0.5rem] text-muted-foreground uppercase">
           {caption}
         </figcaption>
       ) : null}
@@ -144,7 +144,7 @@ function SingleMediaBlock({ value }: SingleMediaBlockProps) {
 
   const ratio = getGalleryRatio(value.orientation);
   return (
-    <div className="my-8">
+    <div className="mx-auto my-10 max-w-[65%]">
       <MediaRenderer media={value.media} ratio={ratio} />
     </div>
   );
@@ -153,7 +153,7 @@ function SingleMediaBlock({ value }: SingleMediaBlockProps) {
 function SideBySideMediaBlock({ value }: SideBySideMediaBlockProps) {
   const ratio = getGalleryRatio(value.orientation);
   return (
-    <div className="my-8 grid grid-cols-2 gap-4">
+    <div className="my-10 grid grid-cols-2 gap-2.5 px-2.5">
       <MediaRenderer media={value.left} ratio={ratio} />
       <MediaRenderer media={value.right} ratio={ratio} />
     </div>
@@ -163,7 +163,7 @@ function SideBySideMediaBlock({ value }: SideBySideMediaBlockProps) {
 function ThreeSideBySideMediaBlock({ value }: ThreeSideBySideMediaBlockProps) {
   const ratio = getGalleryRatio(value.orientation);
   return (
-    <div className="my-8 grid grid-cols-3 gap-4">
+    <div className="my-10 grid grid-cols-3 gap-2.5 px-2.5">
       <MediaRenderer media={value.left} ratio={ratio} />
       <MediaRenderer media={value.center} ratio={ratio} />
       <MediaRenderer media={value.right} ratio={ratio} />
@@ -174,7 +174,7 @@ function ThreeSideBySideMediaBlock({ value }: ThreeSideBySideMediaBlockProps) {
 function GridFourMediaBlock({ value }: GridFourMediaBlockProps) {
   const ratio = getGalleryRatio(value.orientation);
   return (
-    <div className="my-8 grid grid-cols-2 gap-4">
+    <div className="mx-auto my-10 grid max-w-[65%] grid-cols-2 gap-2.5">
       <MediaRenderer media={value.topLeft} ratio={ratio} />
       <MediaRenderer media={value.topRight} ratio={ratio} />
       <MediaRenderer media={value.bottomLeft} ratio={ratio} />
@@ -185,10 +185,20 @@ function GridFourMediaBlock({ value }: GridFourMediaBlockProps) {
 
 const components: PortableTextComponents = {
   block: {
-    normal: ({ children }) => <p className="interview-question">{children}</p>,
-    answer: ({ children }) => <p className="interview-answer">{children}</p>,
+    normal: ({ children }) => (
+      <p className="mx-auto mb-2 max-w-[700px] text-2xl text-muted-foreground">
+        {children}
+      </p>
+    ),
+    answer: ({ children }) => (
+      <p className="mx-auto mb-6 max-w-[700px] font-serif text-2xl">
+        {children}
+      </p>
+    ),
     blockquote: ({ children }) => (
-      <blockquote className="interview-quote">{children}</blockquote>
+      <blockquote className="mx-auto my-8 max-w-[700px] text-[2.5rem] leading-tight">
+        {children}
+      </blockquote>
     ),
   },
   types: {
@@ -213,7 +223,7 @@ export default function InterviewContent({ content }: InterviewContentProps) {
   }
 
   return (
-    <div className="prose prose-lg max-w-none">
+    <div>
       <PortableText components={components} value={content} />
     </div>
   );
