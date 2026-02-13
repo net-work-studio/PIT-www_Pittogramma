@@ -1,17 +1,14 @@
 import { BookIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { IsbnInput } from "@/sanity/components/isbn-input";
+import { groups } from "@/sanity/utils/groups";
 
 export const bibliography = defineType({
   type: "document",
   name: "bibliography",
   title: "Bibliography",
   icon: BookIcon,
-  groups: [
-    { name: "main", title: "Main", default: true },
-    { name: "details", title: "Details" },
-    { name: "metadata", title: "Metadata" },
-  ],
+  groups,
   fields: [
     // 1. ISBN (with Fetch button)
     defineField({
@@ -20,7 +17,7 @@ export const bibliography = defineType({
       title: "ISBN",
       description:
         "Enter ISBN and click 'Fetch Data' to auto-fill book information",
-      group: "main",
+      group: "content",
       components: {
         input: IsbnInput,
       },
@@ -31,14 +28,14 @@ export const bibliography = defineType({
       name: "name",
       title: "Name",
       validation: (e) => e.required(),
-      group: "main",
+      group: "content",
     }),
     // 3. Cover (autofilled)
     defineField({
       type: "imageWithMetadata",
       name: "cover",
       title: "Cover",
-      group: "main",
+      group: "content",
     }),
     // 4. Year (autofilled)
     defineField({
@@ -46,7 +43,7 @@ export const bibliography = defineType({
       name: "year",
       title: "Year",
       description: "Publication year",
-      group: "main",
+      group: "content",
       validation: (e) =>
         e
           .min(1000)
@@ -60,7 +57,7 @@ export const bibliography = defineType({
       name: "description",
       title: "Description",
       description: "Book description/summary",
-      group: "main",
+      group: "content",
     }),
     // 6. Page Count (autofilled)
     defineField({
@@ -68,7 +65,7 @@ export const bibliography = defineType({
       name: "pageCount",
       title: "Page Count",
       description: "Number of pages",
-      group: "main",
+      group: "content",
       validation: (e) => e.positive().integer(),
     }),
     // 7. Languages (manual)
@@ -76,7 +73,7 @@ export const bibliography = defineType({
       type: "array",
       name: "languages",
       title: "Languages",
-      group: "main",
+      group: "content",
       of: [
         defineArrayMember({
           type: "reference",
@@ -93,7 +90,7 @@ export const bibliography = defineType({
       title: "Fetched Language (from Google Books)",
       description:
         "Language code from Google Books - use this to find/create the correct Language reference above",
-      group: "main",
+      group: "content",
       readOnly: true,
     }),
     // 8. Authors (manual reference)
@@ -101,7 +98,7 @@ export const bibliography = defineType({
       type: "array",
       name: "authors",
       title: "Authors",
-      group: "main",
+      group: "content",
       of: [
         defineArrayMember({
           type: "reference",
@@ -118,7 +115,7 @@ export const bibliography = defineType({
       title: "Fetched Authors (from Google Books)",
       description:
         "Suggestion from Google Books - use this to find/create the correct Author references above",
-      group: "main",
+      group: "content",
       readOnly: true,
     }),
     // 10. Publisher (manual reference)
@@ -128,7 +125,7 @@ export const bibliography = defineType({
       title: "Publisher",
       to: [{ type: "publisher" }],
       validation: (e) => e.required(),
-      group: "main",
+      group: "content",
     }),
     // 11. Fetched Publisher (suggestion)
     defineField({
@@ -137,7 +134,7 @@ export const bibliography = defineType({
       title: "Fetched Publisher (from Google Books)",
       description:
         "Suggestion from Google Books - use this to find/create the correct Publisher reference above",
-      group: "main",
+      group: "content",
       readOnly: true,
     }),
     // 12. Tags (manual)
@@ -145,7 +142,7 @@ export const bibliography = defineType({
       type: "tagSelector",
       name: "tagSelector",
       title: "Tags",
-      group: "main",
+      group: "content",
     }),
     // 13. Fetched Categories (suggestion - new)
     defineField({
@@ -154,7 +151,7 @@ export const bibliography = defineType({
       title: "Fetched Categories (from Google Books)",
       description:
         "Category suggestions from Google Books - use these to create/select appropriate tags above",
-      group: "main",
+      group: "content",
       readOnly: true,
     }),
     // 14. Affiliate Link (manual)
@@ -162,7 +159,7 @@ export const bibliography = defineType({
       type: "url",
       name: "affiliateLink",
       title: "Affiliate Link",
-      group: "main",
+      group: "content",
     }),
     // 15. Categories (autofilled, in details group)
     defineField({
@@ -170,7 +167,7 @@ export const bibliography = defineType({
       name: "categories",
       title: "Categories",
       description: "Book categories/subjects from Google Books",
-      group: "details",
+      group: "content",
       of: [
         defineArrayMember({
           type: "string",
@@ -183,7 +180,7 @@ export const bibliography = defineType({
       name: "googleBooksId",
       title: "Google Books ID",
       description: "Reference ID from Google Books API",
-      group: "metadata",
+      group: "content",
       readOnly: true,
       hidden: true,
     }),
