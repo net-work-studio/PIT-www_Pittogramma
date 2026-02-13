@@ -182,7 +182,9 @@ export function UrlInput(props: StringInputProps) {
 
   const handleApplyName = useCallback(
     async (suggestedName: string) => {
-      if (!documentId) return;
+      if (!documentId) {
+        return;
+      }
       try {
         const patchId = documentId.startsWith("drafts.")
           ? documentId
@@ -306,29 +308,26 @@ export function UrlInput(props: StringInputProps) {
                 </Text>
               )}
             </Stack>
-            {!autoFillName &&
-              (fetchedData.siteName || fetchedData.title) && (
-                <Flex align="center" gap={2}>
-                  <Text size={1} muted>
-                    Suggested name:{" "}
-                    <strong>
-                      {fetchedData.siteName ?? fetchedData.title}
-                    </strong>
-                  </Text>
-                  <Button
-                    fontSize={1}
-                    mode="ghost"
-                    onClick={() =>
-                      handleApplyName(
-                        (fetchedData.siteName ?? fetchedData.title) as string
-                      )
-                    }
-                    padding={2}
-                    text="Use as name"
-                    tone="primary"
-                  />
-                </Flex>
-              )}
+            {!autoFillName && (fetchedData.siteName || fetchedData.title) && (
+              <Flex align="center" gap={2}>
+                <Text muted size={1}>
+                  Suggested name:{" "}
+                  <strong>{fetchedData.siteName ?? fetchedData.title}</strong>
+                </Text>
+                <Button
+                  fontSize={1}
+                  mode="ghost"
+                  onClick={() =>
+                    handleApplyName(
+                      (fetchedData.siteName ?? fetchedData.title) as string
+                    )
+                  }
+                  padding={2}
+                  text="Use as name"
+                  tone="primary"
+                />
+              </Flex>
+            )}
           </Stack>
         </Card>
       )}

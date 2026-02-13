@@ -45,6 +45,7 @@ import { designersPage } from "./singletons/pages/designersPage";
 import { eventsPage } from "./singletons/pages/eventsPage";
 import { homePage } from "./singletons/pages/homePage";
 import { interviewsPage } from "./singletons/pages/interviewsPage";
+import { journalPage } from "./singletons/pages/journalPage";
 import { projectsPage } from "./singletons/pages/projectsPage";
 import { siteSettings } from "./singletons/siteSettings";
 
@@ -82,6 +83,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     homePage,
     projectsPage,
     interviewsPage,
+    journalPage,
     designersPage,
     eventsPage,
     socialLinks,

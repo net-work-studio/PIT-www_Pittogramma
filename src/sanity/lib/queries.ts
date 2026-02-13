@@ -205,6 +205,52 @@ export const PROJECT_QUERY = defineQuery(`
   }
 `);
 
+export const JOURNAL_PAGE_QUERY = defineQuery(`
+  *[_type == "journalPage"][0] {
+    _id,
+    title,
+    introText,
+    featuredArticle->{
+      _id,
+      title,
+      slug,
+      publishingDate,
+      excerpt,
+      cover { image { asset, alt, hotspot, crop } },
+      authors[]{ _key, ...@->{ _id, name } },
+      tagSelector { tags[]->{ _id, name } }
+    },
+    ${CTA_FIELDS},
+    ${SEO_FIELDS}
+  }
+`);
+
+export const JOURNAL_QUERY = defineQuery(`
+  *[_type == "journal"] | order(publishingDate.date desc) {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      image {
+        asset,
+        alt,
+        hotspot,
+        crop
+      }
+    },
+    authors[]{ _key, ...@->{ _id, name } },
+    excerpt,
+    tagSelector {
+      tags[]->{
+        _id,
+        name
+      }
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
 export const INTERVIEWS_QUERY = defineQuery(`
   *[_type == "interview"] | order(publishingDate.date desc) {
     _id,

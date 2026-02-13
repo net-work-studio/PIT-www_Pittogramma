@@ -1,4 +1,9 @@
-import { DatabaseIcon, DocumentTextIcon, SearchIcon, InfoOutlineIcon } from "@sanity/icons";
+import {
+  DatabaseIcon,
+  DocumentTextIcon,
+  InfoOutlineIcon,
+  SearchIcon,
+} from "@sanity/icons";
 
 export const groups = [
   {
