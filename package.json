@@ -10,7 +10,6 @@
     "check": "bunx ultracite check",
     "fix": "bun ultracite fix",
     "predev": "bun run typegen",
-    "prebuild": "bun run typegen",
     "typegen": "bunx sanity schema extract --enforce-required-fields --path ./src/sanity/extract.json && bunx sanity typegen generate",
     "cleanup": "rm -rf node_modules .next"
   },
