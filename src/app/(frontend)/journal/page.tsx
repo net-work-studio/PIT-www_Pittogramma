@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
 import { siteDefaults } from "@/lib/seo/siteDefaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { urlFor } from "@/sanity/lib/image";
+import { getLqip, urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { JOURNAL_PAGE_QUERY, JOURNAL_QUERY } from "@/sanity/lib/queries";
 import type { JOURNAL_QUERY_RESULT } from "@/sanity/types";
@@ -48,6 +48,7 @@ export default async function JournalPage() {
 
   interface JournalCard {
     authors: { name: string }[] | undefined;
+    blurDataURL: string | undefined;
     href: string;
     id: string;
     image: string;
@@ -68,6 +69,7 @@ export default async function JournalPage() {
         authors: article.authors?.length
           ? article.authors.map((a) => ({ name: a.name ?? "" }))
           : undefined,
+        blurDataURL: getLqip(article.cover),
         href: `/journal/${article.slug?.current ?? ""}`,
         id: article._id,
         image,
@@ -89,6 +91,7 @@ export default async function JournalPage() {
               featuredArticle.authors?.map((a) => ({ name: a.name ?? "" })) ??
               []
             }
+            blurDataURL={getLqip(featuredArticle.cover)}
             date={featuredDate}
             excerpt={featuredArticle.excerpt}
             href={`/journal/${featuredArticle.slug?.current ?? ""}`}
@@ -120,6 +123,7 @@ export default async function JournalPage() {
             {journalCards.map((card) => (
               <BaseCard
                 authors={card.authors}
+                blurDataURL={card.blurDataURL}
                 href={card.href}
                 image={card.image}
                 key={card.id}

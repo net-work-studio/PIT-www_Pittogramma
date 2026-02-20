@@ -13,18 +13,20 @@ interface Author {
 }
 
 interface BaseCardProps {
-  title: string;
   authors?: Author[];
-  image: string;
-  href: string;
-  variant?: "project" | "article" | "interview" | "feat" | "event";
   big?: boolean;
+  blurDataURL?: string;
+  href: string;
+  image: string;
+  title: string;
+  variant?: "project" | "article" | "interview" | "feat" | "event";
 }
 
 export default function BaseCard({
   title,
   authors,
   image,
+  blurDataURL,
   variant,
   href,
   big,
@@ -47,6 +49,9 @@ export default function BaseCard({
           fill
           quality={75}
           src={image}
+          {...(blurDataURL
+            ? { placeholder: "blur" as const, blurDataURL }
+            : {})}
         />
       </AspectRatio>
       {variant ? <Badge variant={variant} /> : null}

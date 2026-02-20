@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
 import { siteDefaults } from "@/lib/seo/siteDefaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { urlFor } from "@/sanity/lib/image";
+import { getLqip, urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { PROJECTS_PAGE_QUERY, PROJECTS_QUERY } from "@/sanity/lib/queries";
 import type { PROJECTS_QUERY_RESULT } from "@/sanity/types";
@@ -40,6 +40,7 @@ export default async function ProjectsPage() {
 
   interface ProjectCard {
     authors: { name: string }[] | undefined;
+    blurDataURL: string | undefined;
     href: string;
     id: string;
     image: string;
@@ -60,6 +61,7 @@ export default async function ProjectsPage() {
               })
             )
           : undefined,
+        blurDataURL: getLqip(project.cover),
         href: `/projects/${project.slug.current}`,
         id: project._id,
         image,
@@ -80,6 +82,7 @@ export default async function ProjectsPage() {
           {projectCards.map((project) => (
             <BaseCard
               authors={project.authors}
+              blurDataURL={project.blurDataURL}
               href={project.href}
               image={project.image}
               key={project.id}

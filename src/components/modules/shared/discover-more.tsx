@@ -1,5 +1,5 @@
 import BaseCard from "@/components/cards/base-card";
-import { urlFor } from "@/sanity/lib/image";
+import { getLqip, urlFor } from "@/sanity/lib/image";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 type RelatedProject =
@@ -39,6 +39,7 @@ export default function DiscoverMore({ projects }: DiscoverMoreProps) {
           return (
             <BaseCard
               authors={authors}
+              blurDataURL={getLqip(project.cover)}
               href={`/projects/${slug}`}
               image={image}
               key={project._id}
