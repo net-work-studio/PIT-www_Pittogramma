@@ -12,6 +12,7 @@ import { HOME_PAGE_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
     query: HOME_PAGE_QUERY,
+    stega: false,
   });
 
   return mapSanityToMetadata({

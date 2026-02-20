@@ -1,13 +1,13 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { urlForImage } from "@/sanity/lib/image";
+import { getBlurDataUrl, urlForImage } from "@/sanity/lib/image";
 import type { ImageWithMetadata } from "@/sanity/types";
 
 interface ImageLike {
   _type?: string;
   image?: {
     _type?: string;
-    asset?: unknown;
+    asset?: { _id?: string; url?: string; metadata?: { lqip?: string; dimensions?: { width: number; height: number } } } | unknown;
     hotspot?: unknown;
     crop?: unknown;
   } | null;
@@ -16,9 +16,6 @@ interface ImageLike {
 
 type Props = {
   source: ImageWithMetadata | ImageLike | null | undefined;
-  blurQuality?: number;
-  blurWidth?: number;
-  blurHeight?: number;
 } & Partial<React.ComponentProps<typeof Image>>;
 
 export default function SanityImage({
@@ -31,9 +28,6 @@ export default function SanityImage({
   className,
   priority,
   quality = 75,
-  blurQuality = 5,
-  blurWidth = 24,
-  blurHeight = 24,
   ...props
 }: Props) {
   const builder = urlForImage(source);
@@ -41,8 +35,6 @@ export default function SanityImage({
     return null;
   }
 
-  // For fill: only width (preserves aspect ratio, CSS handles display)
-  // For fixed: both dimensions
   const url = fill
     ? builder.width(1920).quality(Number(quality)).auto("format").url()
     : builder
@@ -56,21 +48,7 @@ export default function SanityImage({
     return null;
   }
 
-  let blurDataUrl: string | undefined;
-  try {
-    const blurBuilder = urlForImage(source);
-    if (blurBuilder) {
-      blurDataUrl = blurBuilder
-        .width(Number(blurWidth))
-        .height(Number(blurHeight))
-        .quality(Number(blurQuality))
-        .auto("format")
-        .url();
-    }
-  } catch {
-    blurDataUrl = undefined;
-  }
-
+  const blurDataUrl = getBlurDataUrl(source);
   const imageAlt = source?.alt ?? alt ?? "";
   const blurProps = blurDataUrl
     ? { blurDataURL: blurDataUrl, placeholder: "blur" as const }

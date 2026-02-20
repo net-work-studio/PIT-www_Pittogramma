@@ -1,4 +1,4 @@
-import { PortableText, type PortableTextComponents } from "next-sanity";
+import { PortableText, type PortableTextComponents, stegaClean } from "next-sanity";
 
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -35,7 +35,8 @@ function MediaRenderer({
     return null;
   }
 
-  const { type, image, video, videoUrl, caption } = media;
+  const { type: rawType, image, video, videoUrl, caption } = media;
+  const type = stegaClean(rawType);
 
   return (
     <figure>

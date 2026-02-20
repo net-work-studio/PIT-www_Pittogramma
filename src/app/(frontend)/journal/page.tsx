@@ -15,6 +15,7 @@ import type { JOURNAL_QUERY_RESULT } from "@/sanity/types";
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
     query: JOURNAL_PAGE_QUERY,
+    stega: false,
   });
 
   return mapSanityToMetadata({

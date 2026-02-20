@@ -15,6 +15,7 @@ import { DESIGNERS_PAGE_QUERY } from "@/sanity/lib/queries";
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
     query: DESIGNERS_PAGE_QUERY,
+    stega: false,
   });
 
   return mapSanityToMetadata({

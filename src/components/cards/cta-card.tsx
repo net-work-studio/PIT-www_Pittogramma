@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { stegaClean } from "next-sanity";
 
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { Button } from "@/components/ui/button";
@@ -29,8 +30,8 @@ export default function CtaCard({
   internalLink,
   externalUrl,
 }: CtaCardProps) {
-  const resolvedVariant = variant ?? "simple";
-  const resolvedLinkType = linkType ?? "internal";
+  const resolvedVariant = stegaClean(variant) ?? "simple";
+  const resolvedLinkType = stegaClean(linkType) ?? "internal";
 
   const href =
     resolvedLinkType === "external"

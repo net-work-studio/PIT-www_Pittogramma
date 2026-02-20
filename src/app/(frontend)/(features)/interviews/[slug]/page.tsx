@@ -24,6 +24,7 @@ export async function generateMetadata({
   const { data: interview } = await sanityFetch({
     query: INTERVIEW_QUERY,
     params: { slug },
+    stega: false,
   });
 
   if (!interview) {

@@ -25,6 +25,7 @@ export async function generateMetadata({
   const { data: project } = await sanityFetch({
     query: PROJECT_QUERY,
     params: { slug },
+    stega: false,
   });
 
   if (!project) {

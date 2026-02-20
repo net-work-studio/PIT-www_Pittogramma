@@ -90,6 +90,7 @@ const pastEvents = [
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
     query: EVENTS_PAGE_QUERY,
+    stega: false,
   });
 
   return mapSanityToMetadata({

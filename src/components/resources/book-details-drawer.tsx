@@ -100,10 +100,10 @@ export function BookDetailsDrawer({
                   Categories
                 </p>
                 <div className="flex flex-wrap gap-1.5 pt-1">
-                  {book.categories.map((category, index) => (
+                  {book.categories.map((category) => (
                     <span
                       className="rounded-full bg-secondary px-2.5 py-0.5 text-xs"
-                      key={index}
+                      key={category}
                     >
                       {category}
                     </span>
