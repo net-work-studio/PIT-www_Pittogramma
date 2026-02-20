@@ -37,7 +37,7 @@ export const resolve: PresentationPluginOptions["resolve"] = {
     }),
     designer: defineLocations({
       select: {
-        title: "title",
+        title: "name",
         slug: "slug.current",
       },
       resolve: (doc) => ({
@@ -47,6 +47,36 @@ export const resolve: PresentationPluginOptions["resolve"] = {
             href: `/designers/${doc?.slug}`,
           },
           { title: "Designers index", href: "/designers" },
+        ],
+      }),
+    }),
+    journal: defineLocations({
+      select: {
+        title: "title",
+        slug: "slug.current",
+      },
+      resolve: (doc) => ({
+        locations: [
+          {
+            title: doc?.title || "Untitled",
+            href: `/journal/${doc?.slug}`,
+          },
+          { title: "Journal index", href: "/journal" },
+        ],
+      }),
+    }),
+    event: defineLocations({
+      select: {
+        title: "title",
+        slug: "slug.current",
+      },
+      resolve: (doc) => ({
+        locations: [
+          {
+            title: doc?.title || "Untitled",
+            href: `/events/${doc?.slug}`,
+          },
+          { title: "Events index", href: "/events" },
         ],
       }),
     }),
