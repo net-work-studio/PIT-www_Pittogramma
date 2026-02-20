@@ -1,16 +1,14 @@
 import { Search } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import CtaCard from "@/components/cards/cta-card";
 import Filter from "@/components/feat/filter/filter";
+import DesignerGrid from "@/components/modules/designer/designer-grid";
 import PageHeader from "@/components/shared/page-header";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
 import { siteDefaults } from "@/lib/seo/siteDefaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { sampleDesignersData } from "@/sample-data/sample-designers-data";
 import { sanityFetch } from "@/sanity/lib/live";
-import { DESIGNERS_PAGE_QUERY } from "@/sanity/lib/queries";
+import { DESIGNERS_PAGE_QUERY, DESIGNERS_QUERY } from "@/sanity/lib/queries";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -30,29 +28,11 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-function DesignerCard() {
-  return (
-    <div className="flex flex-col gap-1">
-      <AspectRatio className="relative" ratio={4 / 3}>
-        <Image
-          alt="Designer Card"
-          className="rounded-lg bg-gray-600"
-          fill
-          src="https://placehold.co/400x300/png"
-        />
-      </AspectRatio>
-      <ul className="flex justify-between">
-        <li className="col-span-6">Name Designer</li>
-        <li className="col-span-2">City, Country</li>
-      </ul>
-    </div>
-  );
-}
-
 export default async function DesignersPage() {
-  const { data: pageSettings } = await sanityFetch({
-    query: DESIGNERS_PAGE_QUERY,
-  });
+  const [{ data: designers }, { data: pageSettings }] = await Promise.all([
+    sanityFetch({ query: DESIGNERS_QUERY }),
+    sanityFetch({ query: DESIGNERS_PAGE_QUERY }),
+  ]);
 
   const cta = pageSettings?.endOfPageCta;
 
@@ -70,11 +50,7 @@ export default async function DesignersPage() {
           <Filter />
           <Search />
         </div>
-        <section className="grid grid-cols-4 gap-2.5">
-          {sampleDesignersData.map((_, index) => (
-            <DesignerCard key={index} />
-          ))}
-        </section>
+        <DesignerGrid designers={designers} />
         {cta && (
           <CtaCard
             buttonText={cta.buttonText}

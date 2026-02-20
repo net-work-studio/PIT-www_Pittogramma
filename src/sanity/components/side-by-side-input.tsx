@@ -10,20 +10,20 @@ type MediaSide = "left" | "right" | null;
 
 interface MediaItemValue {
   _type?: string;
-  type?: "image" | "videoUpload" | "videoEmbed";
+  caption?: string;
   image?: {
     _type?: string;
     asset?: {
       _ref?: string;
     };
   };
-  caption?: string;
+  type?: "image" | "videoUpload" | "videoEmbed";
 }
 
 interface SideBySideValue {
   _type?: string;
-  orientation?: string;
   left?: MediaItemValue;
+  orientation?: string;
   right?: MediaItemValue;
 }
 

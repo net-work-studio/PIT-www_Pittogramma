@@ -1,6 +1,6 @@
 interface LocationData {
-  country?: { _id: string; name: string } | null;
   city?: { _id: string; name: string } | null;
+  country?: { _id: string; name: string } | null;
 }
 
 interface LocationDisplayProps {

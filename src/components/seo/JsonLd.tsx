@@ -7,8 +7,8 @@ type JsonLdType =
   | "Person";
 
 interface JsonLdProps {
-  type: JsonLdType;
   data: Record<string, unknown>;
+  type: JsonLdType;
 }
 
 export function JsonLd({ type, data }: JsonLdProps) {

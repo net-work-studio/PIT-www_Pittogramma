@@ -10,21 +10,21 @@ type MediaPosition = "left" | "center" | "right" | null;
 
 interface MediaItemValue {
   _type?: string;
-  type?: "image" | "videoUpload" | "videoEmbed";
+  caption?: string;
   image?: {
     _type?: string;
     asset?: {
       _ref?: string;
     };
   };
-  caption?: string;
+  type?: "image" | "videoUpload" | "videoEmbed";
 }
 
 interface ThreeSideBySideValue {
   _type?: string;
-  orientation?: string;
-  left?: MediaItemValue;
   center?: MediaItemValue;
+  left?: MediaItemValue;
+  orientation?: string;
   right?: MediaItemValue;
 }
 

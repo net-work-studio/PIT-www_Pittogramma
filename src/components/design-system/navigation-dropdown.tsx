@@ -8,8 +8,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 interface NavigationDropdownProps {
-  title: string;
   links: { href: string; label: string }[];
+  title: string;
 }
 
 export default function NavigationDropdown({

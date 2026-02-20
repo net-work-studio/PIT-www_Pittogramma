@@ -3,8 +3,8 @@ import ProjectDescription from "@/components/modules/project/project-description
 interface Designer {
   _id: string;
   name: string | null;
-  slug: unknown;
   portrait: unknown;
+  slug: unknown;
 }
 
 interface Teacher {
@@ -13,13 +13,13 @@ interface Teacher {
 }
 
 interface ProjectInfoProps {
-  designers?: Designer[] | null;
-  title?: string | null;
   description?: string | null;
-  year?: number | null;
+  designers?: Designer[] | null;
+  institute?: string | null;
   tags?: Array<{ _id: string; name: string }> | null;
   teachers?: Teacher[] | null;
-  institute?: string | null;
+  title?: string | null;
+  year?: number | null;
 }
 
 export default function ProjectInfo({

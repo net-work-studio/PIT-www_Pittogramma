@@ -65,10 +65,10 @@ function decodeHtmlEntities(text: string): string {
 }
 
 export interface OgData {
-  title: string | null;
   description: string | null;
-  siteName: string | null;
   imageUrl: string | null;
+  siteName: string | null;
+  title: string | null;
 }
 
 function parseOgData(html: string, baseUrl: string): OgData {

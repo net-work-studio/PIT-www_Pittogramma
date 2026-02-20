@@ -24,18 +24,18 @@ function isRateLimited(ip: string): boolean {
 }
 
 interface GoogleBooksVolumeInfo {
-  title?: string;
   authors?: string[];
-  publisher?: string;
-  publishedDate?: string;
-  description?: string;
-  pageCount?: number;
   categories?: string[];
-  language?: string;
+  description?: string;
   imageLinks?: {
     thumbnail?: string;
     smallThumbnail?: string;
   };
+  language?: string;
+  pageCount?: number;
+  publishedDate?: string;
+  publisher?: string;
+  title?: string;
 }
 
 interface GoogleBooksItem {
@@ -44,21 +44,21 @@ interface GoogleBooksItem {
 }
 
 interface GoogleBooksResponse {
-  totalItems: number;
   items?: GoogleBooksItem[];
+  totalItems: number;
 }
 
 export interface BookData {
-  title: string | null;
   authors: string | null;
-  publisher: string | null;
-  year: number | null;
-  description: string | null;
-  pageCount: number | null;
   categories: string[] | null;
-  language: string | null;
-  thumbnailUrl: string | null;
+  description: string | null;
   googleBooksId: string | null;
+  language: string | null;
+  pageCount: number | null;
+  publisher: string | null;
+  thumbnailUrl: string | null;
+  title: string | null;
+  year: number | null;
 }
 
 function parseBookData(book: GoogleBooksItem): BookData {

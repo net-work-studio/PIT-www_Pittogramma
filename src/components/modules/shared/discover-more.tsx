@@ -22,7 +22,7 @@ export default function DiscoverMore({ projects }: DiscoverMoreProps) {
           const slug = project.slug?.current;
           const coverImage = project.cover?.image;
 
-          if (!slug || !coverImage) {
+          if (!(slug && coverImage)) {
             return null;
           }
 

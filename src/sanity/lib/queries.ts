@@ -127,6 +127,97 @@ export const EVENTS_PAGE_QUERY = defineQuery(`
   }
 `);
 
+export const DESIGNERS_QUERY = defineQuery(`
+  *[_type == "designer"] | order(name asc) {
+    _id,
+    name,
+    slug,
+    portrait {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    birthYear,
+    bio,
+    location {
+      country->{ _id, name },
+      city->{ _id, name }
+    }
+  }
+`);
+
+export const DESIGNER_QUERY = defineQuery(`
+  *[_type == "designer" && slug.current == $slug][0] {
+    _id,
+    name,
+    slug,
+    portrait {
+      _type,
+      image {
+        _type,
+        ${IMAGE_FIELDS}
+      },
+      alt,
+      caption
+    },
+    birthYear,
+    bio,
+    education[] {
+      _key,
+      institute->{ _id, name },
+      degree,
+      year
+    },
+    location {
+      country->{ _id, name },
+      city->{ _id, name }
+    },
+    socialLinks {
+      links[] {
+        _key,
+        platform,
+        url
+      }
+    },
+    "relatedProjects": *[_type == "project" && references(^._id)] | order(_createdAt desc) [0...4] {
+      _id,
+      cover { image { ${IMAGE_FIELDS} }, alt },
+      title,
+      slug,
+      designers[]{ _key, ...@->{ _id, name } }
+    },
+    "relatedInterviews": *[_type == "interview" && references(^._id)] | order(publishingDate.date desc) [0...4] {
+      _id,
+      title,
+      slug,
+      cover { image { ${IMAGE_FIELDS} }, alt },
+      designersAndProfessionals[]{ _key, ...@->{ _id, name } }
+    }
+  }
+`);
+
+export const EVENTS_QUERY = defineQuery(`
+  *[_type == "event"] | order(dateStart desc) {
+    _id,
+    title,
+    slug,
+    type,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    dateStart,
+    dateEnd,
+    locationName,
+    description,
+    sponsor->{ _id, name },
+    partner->{ _id, name },
+    tagSelector {
+      tags[]->{ _id, name }
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
 export const PROJECTS_QUERY = defineQuery(`
   *[_type == "project"] | order(_createdAt desc) {
     _id,
@@ -569,7 +660,7 @@ export const WEB_SOURCES_QUERY = defineQuery(`
       name
     },
     tagSelector {
-      tags[]{ _key, ...@->{ _id, name } }
+      tags[]->{ _id, name }
     },
     sourceUrl,
     ogTitle,

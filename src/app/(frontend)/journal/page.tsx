@@ -80,16 +80,17 @@ export default async function JournalPage() {
   return (
     <>
       <PageHeader
+        onlySeoTitle
         subtitle={pageSettings?.introText ?? undefined}
         title={pageSettings?.title ?? "Journal"}
-        onlySeoTitle
       />
       <div className="space-y-10 pb-10">
         {featuredArticle && featuredImage && (
           <FeaturedArticle
             authors={
-              featuredArticle.authors?.map((a) => ({ name: a.name ?? "" })) ??
-              []
+              featuredArticle.authors?.map((a: { name: string | null }) => ({
+                name: a.name ?? "",
+              })) ?? []
             }
             blurDataURL={getLqip(featuredArticle.cover)}
             date={featuredDate}
@@ -97,7 +98,7 @@ export default async function JournalPage() {
             href={`/journal/${featuredArticle.slug?.current ?? ""}`}
             image={featuredImage}
             tags={
-              featuredArticle.tagSelector?.tags?.map((t) => ({
+              featuredArticle.tagSelector?.tags?.map((t: { name: string }) => ({
                 name: t.name ?? "",
               })) ?? []
             }

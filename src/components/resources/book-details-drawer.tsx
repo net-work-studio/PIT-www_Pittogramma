@@ -17,8 +17,8 @@ type BookItem = BIBLIOGRAPHY_QUERY_RESULT[number];
 
 interface BookDetailsDrawerProps {
   book: BookItem | null;
-  open: boolean;
   onOpenChange: (open: boolean) => void;
+  open: boolean;
   utmSettings?: UtmSettings;
 }
 
@@ -60,7 +60,9 @@ export function BookDetailsDrawer({
                 fill
                 sizes="200px"
                 src={coverUrl}
-                {...(blurDataURL ? { placeholder: "blur" as const, blurDataURL } : {})}
+                {...(blurDataURL
+                  ? { placeholder: "blur" as const, blurDataURL }
+                  : {})}
               />
             </div>
           )}

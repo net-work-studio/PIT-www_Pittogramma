@@ -12,13 +12,13 @@ interface InternalLinkDoc {
 }
 
 interface CtaCardProps {
-  headline?: string | null;
   buttonText: string;
-  variant?: "simple" | "withImage" | null;
-  image?: ImageWithMetadata | null;
-  linkType?: "internal" | "external" | null;
-  internalLink?: InternalLinkDoc | null;
   externalUrl?: string | null;
+  headline?: string | null;
+  image?: ImageWithMetadata | null;
+  internalLink?: InternalLinkDoc | null;
+  linkType?: "internal" | "external" | null;
+  variant?: "simple" | "withImage" | null;
 }
 
 export default function CtaCard({

@@ -79,8 +79,8 @@ function BookCardGrid({ book, onClick }: BookCardGridProps) {
 
 interface BibliographyListProps {
   books: BIBLIOGRAPHY_QUERY_RESULT;
-  view: "list" | "grid";
   utmSettings?: UtmSettings;
+  view: "list" | "grid";
 }
 
 export function BibliographyList({

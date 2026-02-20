@@ -24,10 +24,11 @@ export type SeoImageSource =
     };
 
 export interface SeoModule {
-  metaTitle?: string;
-  metaDescription?: string;
-  metaRobots?: string;
   canonicalURL?: string;
+  metaDescription?: string;
+  metaImage?: SeoImageSource;
+  metaRobots?: string;
+  metaTitle?: string;
   openGraph?: {
     title?: string;
     description?: string;
@@ -37,12 +38,11 @@ export interface SeoModule {
     title?: string;
     description?: string;
   };
-  metaImage?: SeoImageSource;
 }
 
 export interface PageWithSeo {
-  title: string;
-  description?: string;
   coverImage?: SeoImageSource;
+  description?: string;
   seo?: SeoModule;
+  title: string;
 }

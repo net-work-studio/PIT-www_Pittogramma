@@ -43,16 +43,20 @@ export default function BaseCard({
         className="relative overflow-hidden rounded-lg"
         ratio={BASE_CARD_IMAGE_RATIO}
       >
-        <Image
-          alt={title}
-          className="h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
-          fill
-          quality={75}
-          src={image}
-          {...(blurDataURL
-            ? { placeholder: "blur" as const, blurDataURL }
-            : {})}
-        />
+        {image ? (
+          <Image
+            alt={title}
+            className="h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
+            fill
+            quality={75}
+            src={image}
+            {...(blurDataURL
+              ? { placeholder: "blur" as const, blurDataURL }
+              : {})}
+          />
+        ) : (
+          <div className="h-full w-full rounded-lg bg-neutral-200" />
+        )}
       </AspectRatio>
       {variant ? <Badge variant={variant} /> : null}
       <div className="inline-flex w-full flex-col items-start justify-start gap-3">

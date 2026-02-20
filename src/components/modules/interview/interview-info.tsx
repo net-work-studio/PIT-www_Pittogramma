@@ -10,14 +10,14 @@ interface Tag {
 }
 
 interface InterviewInfoProps {
-  title?: string | null;
-  interviewTo?: Person[] | null;
-  studio?: string | null;
   city?: string | null;
   country?: string | null;
-  readingTime?: number | null;
+  interviewTo?: Person[] | null;
   publishingDate?: string | null;
+  readingTime?: number | null;
+  studio?: string | null;
   tags?: Tag[] | null;
+  title?: string | null;
 }
 
 export default function InterviewInfo({

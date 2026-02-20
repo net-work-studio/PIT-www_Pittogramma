@@ -4,13 +4,13 @@ import type { SeoImageSource, SeoModule } from "@/lib/types/seo";
 import { urlForImage } from "@/sanity/lib/image";
 
 interface MapSanityToMetadataProps {
+  baseUrl: string;
   page: {
     title: string;
     description?: string;
     coverImage?: SeoImageSource;
     seo?: SeoModule;
   };
-  baseUrl: string;
   path: string;
   siteDefaults: {
     title: string;

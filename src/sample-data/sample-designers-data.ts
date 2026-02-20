@@ -1,9 +1,9 @@
 interface DesignerSample {
+  birthYear: number;
   id: string;
+  location: { city: string; country: string };
   name: string;
   portrait: string;
-  location: { city: string; country: string };
-  birthYear: number;
 }
 
 export const sampleDesignersData: DesignerSample[] = [

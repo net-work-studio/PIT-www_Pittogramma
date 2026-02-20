@@ -1,6 +1,6 @@
 interface ShareLinksProps {
-  url: string;
   title: string;
+  url: string;
 }
 
 const platforms = [

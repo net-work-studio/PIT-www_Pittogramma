@@ -43,10 +43,10 @@ export default async function InterviewsPage() {
     href: string;
     id: string;
     image: string;
-    title: string;
+    location: string | undefined;
     readingTime: number | null;
     studio: string | undefined | null;
-    location: string | undefined;
+    title: string;
   }
 
   const interviewCards: InterviewCard[] = interviews

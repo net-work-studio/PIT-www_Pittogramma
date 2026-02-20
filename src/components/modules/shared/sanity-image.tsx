@@ -5,13 +5,22 @@ import type { ImageWithMetadata } from "@/sanity/types";
 
 interface ImageLike {
   _type?: string;
+  alt?: string | null;
   image?: {
     _type?: string;
-    asset?: { _id?: string; url?: string; metadata?: { lqip?: string; dimensions?: { width: number; height: number } } } | unknown;
+    asset?:
+      | {
+          _id?: string;
+          url?: string;
+          metadata?: {
+            lqip?: string;
+            dimensions?: { width: number; height: number };
+          };
+        }
+      | unknown;
     hotspot?: unknown;
     crop?: unknown;
   } | null;
-  alt?: string | null;
 }
 
 type Props = {

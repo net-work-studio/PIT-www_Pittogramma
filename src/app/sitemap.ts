@@ -19,9 +19,9 @@ const SITEMAP_QUERY = `{
 }`;
 
 interface SitemapData {
-  projects: Array<{ slug: string; _updatedAt: string }>;
-  interviews: Array<{ slug: string; _updatedAt: string }>;
   editions: Array<{ slug: string; _updatedAt: string }>;
+  interviews: Array<{ slug: string; _updatedAt: string }>;
+  projects: Array<{ slug: string; _updatedAt: string }>;
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

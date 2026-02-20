@@ -1,12 +1,12 @@
 interface Event {
-  id: string;
-  title: string;
-  date: string;
+  category?: "event" | "interview" | "article" | "project";
   cta?: {
     text: string;
     link: string;
   };
-  category?: "event" | "interview" | "article" | "project";
+  date: string;
+  id: string;
+  title: string;
 }
 
 interface CalendarProps {
