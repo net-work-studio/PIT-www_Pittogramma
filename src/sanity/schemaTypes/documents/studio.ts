@@ -61,12 +61,13 @@ export const studio = defineType({
     }),
     defineField({
       type: "array",
-      name: "locations",
+      name: "places",
       title: "Locations",
       group: "content",
       of: [
         defineArrayMember({
-          type: "location",
+          type: "reference",
+          to: [{ type: "place" }],
         }),
       ],
     }),

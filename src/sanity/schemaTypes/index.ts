@@ -3,9 +3,7 @@ import { author } from "./documents/author";
 import { bibliography } from "./documents/bibliography";
 import { bookshop } from "./documents/bookshop";
 import { category } from "./documents/category";
-import { city } from "./documents/city";
 import { contributor } from "./documents/contributor";
-import { country } from "./documents/country";
 import { cta } from "./documents/cta";
 import { designer } from "./documents/designer";
 import { edition } from "./documents/edition";
@@ -16,6 +14,7 @@ import { institute } from "./documents/institute";
 import { interview } from "./documents/interview";
 import { journal } from "./documents/journal";
 import { language } from "./documents/language";
+import { place } from "./documents/place";
 import { professional } from "./documents/professional";
 import { project } from "./documents/project";
 import { publisher } from "./documents/publisher";
@@ -31,7 +30,6 @@ import {
   threeSideBySideMediaBlock,
 } from "./objects/galleryBlocks";
 import { imageWithMetadata } from "./objects/imageWithMetadata";
-import { location } from "./objects/location";
 import { logo } from "./objects/logo";
 import { mediaItem } from "./objects/mediaItem";
 import { openGraph } from "./objects/openGraph";
@@ -72,9 +70,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     threeSideBySideMediaBlock,
     gridFourMediaBlock,
     titleSlug,
-    city,
-    country,
-    location,
+    place,
     tag,
     seoModule,
     openGraph,

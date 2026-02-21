@@ -13,9 +13,10 @@ export const directoryFields = [
     title: "Tags",
   }),
   defineField({
-    type: "location",
-    name: "location",
-    title: "Location",
+    type: "reference",
+    name: "place",
+    title: "Place",
+    to: [{ type: "place" }],
     validation: (e) => e.required(),
   }),
   defineField({

@@ -48,9 +48,10 @@ export const institute = defineType({
       ],
     }),
     defineField({
-      type: "location",
-      name: "location",
-      title: "Location",
+      type: "reference",
+      name: "place",
+      title: "Place",
+      to: [{ type: "place" }],
       validation: (e) => e.required(),
     }),
     defineField({ type: "string", name: "address", title: "Address" }),
