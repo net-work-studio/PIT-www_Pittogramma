@@ -37,10 +37,9 @@ export default function DesignerPreviewDialog({
 
   const blurDataURL = getLqip(designer.portrait);
 
-  const locationParts = [
-    designer.location?.city?.name,
-    designer.location?.country?.name,
-  ].filter(Boolean);
+  const locationParts = [designer.place?.city, designer.place?.country].filter(
+    Boolean
+  );
 
   const bio = designer.bio ?? "";
   const truncatedBio =

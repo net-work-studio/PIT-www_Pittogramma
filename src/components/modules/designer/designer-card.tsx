@@ -19,10 +19,9 @@ export default function DesignerCard({ designer, onClick }: DesignerCardProps) {
 
   const blurDataURL = getLqip(designer.portrait);
 
-  const locationParts = [
-    designer.location?.city?.name,
-    designer.location?.country?.name,
-  ].filter(Boolean);
+  const locationParts = [designer.place?.city, designer.place?.country].filter(
+    Boolean
+  );
 
   return (
     <button

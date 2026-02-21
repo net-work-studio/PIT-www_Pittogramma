@@ -72,7 +72,7 @@ export default async function InterviewsPage() {
         readingTime: interview.readingTime,
         studio: interview.studio?.name,
         location:
-          [interview.city?.name, interview.country?.name]
+          [interview.place?.city, interview.place?.country]
             .filter(Boolean)
             .join(", ") || undefined,
       };

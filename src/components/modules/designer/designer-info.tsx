@@ -6,8 +6,8 @@ interface DesignerInfoProps {
   bio: Designer["bio"];
   birthYear: Designer["birthYear"];
   education: Designer["education"];
-  location: Designer["location"];
   name: Designer["name"];
+  place: Designer["place"];
   socialLinks: Designer["socialLinks"];
 }
 
@@ -16,12 +16,10 @@ export default function DesignerInfo({
   bio,
   birthYear,
   education,
-  location,
+  place,
   socialLinks,
 }: DesignerInfoProps) {
-  const locationParts = [location?.city?.name, location?.country?.name].filter(
-    Boolean
-  );
+  const locationParts = [place?.city, place?.country].filter(Boolean);
 
   const links = socialLinks?.links;
 

@@ -9,27 +9,27 @@ import type { STUDIOS_QUERY_RESULT } from "@/sanity/types";
 
 type Studio = STUDIOS_QUERY_RESULT[number];
 
-function getCities(locations: Studio["locations"]) {
-  if (!locations || locations.length === 0) {
+function getCities(places: Studio["places"]) {
+  if (!places || places.length === 0) {
     return "-";
   }
   const cities: string[] = [];
-  for (const loc of locations) {
-    if (loc.city?.name) {
-      cities.push(loc.city.name);
+  for (const place of places) {
+    if (place?.city) {
+      cities.push(place.city);
     }
   }
   return cities.length > 0 ? cities.join(", ") : "-";
 }
 
-function getCountries(locations: Studio["locations"]) {
-  if (!locations || locations.length === 0) {
+function getCountries(places: Studio["places"]) {
+  if (!places || places.length === 0) {
     return "-";
   }
   const uniqueCountries = new Set<string>();
-  for (const loc of locations) {
-    if (loc.country?.name) {
-      uniqueCountries.add(loc.country.name);
+  for (const place of places) {
+    if (place?.country) {
+      uniqueCountries.add(place.country);
     }
   }
   return uniqueCountries.size > 0
@@ -45,8 +45,8 @@ function StudioCard({ studio }: { studio: Studio }) {
       <li className="col-span-2">
         <TagsDisplay tags={studio.tagSelector?.tags} />
       </li>
-      <li className="col-span-2">{getCities(studio.locations)}</li>
-      <li className="col-span-2">{getCountries(studio.locations)}</li>
+      <li className="col-span-2">{getCities(studio.places)}</li>
+      <li className="col-span-2">{getCountries(studio.places)}</li>
     </ResourceListItem>
   );
 }

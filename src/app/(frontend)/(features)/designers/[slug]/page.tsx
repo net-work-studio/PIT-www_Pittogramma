@@ -67,10 +67,9 @@ export default async function DesignerPage({
 
   const designerUrl = `${siteDefaults.baseUrl}/designers/${slug}`;
 
-  const locationParts = [
-    designer.location?.city?.name,
-    designer.location?.country?.name,
-  ].filter(Boolean);
+  const locationParts = [designer.place?.city, designer.place?.country].filter(
+    Boolean
+  );
 
   return (
     <>
@@ -84,8 +83,8 @@ export default async function DesignerPage({
             ? {
                 address: {
                   "@type": "PostalAddress",
-                  addressLocality: designer.location?.city?.name,
-                  addressCountry: designer.location?.country?.name,
+                  addressLocality: designer.place?.city,
+                  addressCountry: designer.place?.country,
                 },
               }
             : {}),
@@ -97,8 +96,8 @@ export default async function DesignerPage({
           bio={designer.bio}
           birthYear={designer.birthYear}
           education={designer.education}
-          location={designer.location}
           name={designer.name}
+          place={designer.place}
           socialLinks={designer.socialLinks}
         />
         <div className="w-full lg:w-2/3">
