@@ -108,7 +108,11 @@ defineType({
   name: 'contactInfo',
   type: 'object',
   fields: [
-    defineField({ name: 'email', type: 'email' }),
+    defineField({
+      name: 'email',
+      type: 'string',
+      validation: (rule) => rule.email(),
+    }),
     defineField({ name: 'phone', type: 'string' }),
     defineField({ name: 'address', type: 'text' }),
   ]

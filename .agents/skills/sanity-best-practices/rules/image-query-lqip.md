@@ -72,8 +72,8 @@ export function SanityImage({ value, width = 800 }: SanityImageProps) {
       width={width}
       height={Math.round(width / aspectRatio)}
       // Blur placeholder from LQIP
-      placeholder={value.asset.metadata?.lqip ? 'blur' : 'empty'}
-      blurDataURL={value.asset.metadata?.lqip}
+      placeholder={getBlurDataUrl(value) ? 'blur' : 'empty'}
+      blurDataURL={getBlurDataUrl(value)}
     />
   )
 }

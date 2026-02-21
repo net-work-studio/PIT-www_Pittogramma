@@ -208,6 +208,7 @@ async function main() {
   console.log("\n=== Cleanup Complete ===");
   if (allClean && unsetErrors === 0 && deleteErrors === 0) {
     console.log("  All old data has been removed successfully!");
+    process.exit(0);
   } else {
     console.log("  WARNING: Some old data still remains. Check errors above.");
     process.exit(1);

@@ -18,10 +18,11 @@ export async function GET(request: NextRequest) {
 
   // Enforce Nominatim rate limit: 1 request per second
   const now = Date.now();
-  const elapsed = now - lastRequestTime;
-  lastRequestTime = now;
-  if (elapsed < 1000) {
-    await new Promise((resolve) => setTimeout(resolve, 1000 - elapsed));
+  const nextAllowed = lastRequestTime + 1000;
+  const sendTime = Math.max(now, nextAllowed);
+  lastRequestTime = sendTime;
+  if (sendTime > now) {
+    await new Promise((resolve) => setTimeout(resolve, sendTime - now));
   }
 
   const url = new URL(NOMINATIM_URL);

@@ -83,10 +83,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 Prevent duplicate content issues:
 
 ```typescript
-export async function generateMetadata({ params }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
   return {
     alternates: {
-      canonical: `https://example.com/${params.slug}`,
+      canonical: `https://example.com/${slug}`,
     },
   }
 }

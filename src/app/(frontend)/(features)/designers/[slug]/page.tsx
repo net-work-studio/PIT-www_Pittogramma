@@ -10,7 +10,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
 import { siteDefaults } from "@/lib/seo/siteDefaults";
-import { getLqip, urlFor, urlForImage } from "@/sanity/lib/image";
+import { getBlurDataUrl, urlFor, urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { DESIGNER_QUERY } from "@/sanity/lib/queries";
 import type { DESIGNER_QUERY_RESULT } from "@/sanity/types";
@@ -146,7 +146,7 @@ export default async function DesignerPage({
               return (
                 <BaseCard
                   authors={authors}
-                  blurDataURL={getLqip(interview.cover)}
+                  blurDataURL={getBlurDataUrl(interview.cover)}
                   href={`/interviews/${interviewSlug}`}
                   image={image}
                   key={interview._id}

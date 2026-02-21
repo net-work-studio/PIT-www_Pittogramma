@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
 import { siteDefaults } from "@/lib/seo/siteDefaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { getLqip, urlFor } from "@/sanity/lib/image";
+import { getBlurDataUrl, urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { EVENTS_PAGE_QUERY, EVENTS_QUERY } from "@/sanity/lib/queries";
 import type { EVENTS_QUERY_RESULT } from "@/sanity/types";
@@ -47,7 +47,7 @@ function mapEventToCard(event: EVENTS_QUERY_RESULT[number]): EventCard {
 
   return {
     authors: subtitle ? [{ name: subtitle }] : undefined,
-    blurDataURL: getLqip(event.cover),
+    blurDataURL: getBlurDataUrl(event.cover),
     href: `/events/${event.slug?.current}`,
     id: event._id,
     image,
