@@ -15,8 +15,7 @@ import { createClient } from "@sanity/client";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
-const token =
-  process.env.SANITY_API_WRITE_TOKEN || process.env.SANITY_API_READ_TOKEN;
+const token = process.env.SANITY_API_WRITE_TOKEN;
 
 if (!(projectId && dataset && token)) {
   console.error(
@@ -207,10 +206,11 @@ async function main() {
   console.log(`  Remaining studio locations fields: ${verifyStudioLocations}`);
 
   console.log("\n=== Cleanup Complete ===");
-  if (allClean) {
+  if (allClean && unsetErrors === 0 && deleteErrors === 0) {
     console.log("  All old data has been removed successfully!");
   } else {
     console.log("  WARNING: Some old data still remains. Check errors above.");
+    process.exit(1);
   }
 }
 

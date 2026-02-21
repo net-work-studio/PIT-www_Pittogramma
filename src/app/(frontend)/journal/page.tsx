@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
 import { siteDefaults } from "@/lib/seo/siteDefaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { getLqip, urlFor } from "@/sanity/lib/image";
+import { getBlurDataUrl, urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { JOURNAL_PAGE_QUERY, JOURNAL_QUERY } from "@/sanity/lib/queries";
 import type { JOURNAL_QUERY_RESULT } from "@/sanity/types";
@@ -69,7 +69,7 @@ export default async function JournalPage() {
         authors: article.authors?.length
           ? article.authors.map((a) => ({ name: a.name ?? "" }))
           : undefined,
-        blurDataURL: getLqip(article.cover),
+        blurDataURL: getBlurDataUrl(article.cover),
         href: `/journal/${article.slug?.current ?? ""}`,
         id: article._id,
         image,
@@ -92,7 +92,7 @@ export default async function JournalPage() {
                 name: a.name ?? "",
               })) ?? []
             }
-            blurDataURL={getLqip(featuredArticle.cover)}
+            blurDataURL={getBlurDataUrl(featuredArticle.cover)}
             date={featuredDate}
             excerpt={featuredArticle.excerpt}
             href={`/journal/${featuredArticle.slug?.current ?? ""}`}

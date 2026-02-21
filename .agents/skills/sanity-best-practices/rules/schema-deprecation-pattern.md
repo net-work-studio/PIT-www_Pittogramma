@@ -37,8 +37,6 @@ defineField({
   readOnly: true,
   // 3. Hide from NEW documents (where value is undefined)
   hidden: ({ value }) => value === undefined,
-  // 4. Ensure new documents don't get this field
-  initialValue: undefined
 })
 ```
 

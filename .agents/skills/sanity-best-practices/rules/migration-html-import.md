@@ -112,12 +112,21 @@ Wrap this in `defineMigration` for reproducible imports:
 // migrations/import-wordpress-posts/index.ts
 import {defineMigration, createOrReplace} from 'sanity/migrate'
 import {htmlToBlocks} from '@portabletext/block-tools'
+import {Schema} from '@sanity/schema'
+import {JSDOM} from 'jsdom'
+
+// Define a minimal schema to get the block content type
+const defaultSchema = Schema.compile({
+  name: 'default',
+  types: [{ name: 'post', type: 'document', fields: [{ name: 'body', type: 'array', of: [{ type: 'block' }] }] }],
+})
+const blockContentType = defaultSchema.get('post').fields.find((f: { name: string }) => f.name === 'body').type
 
 export default defineMigration({
   title: 'Import WordPress posts',
   async *migrate(documents, context) {
     const posts = await fetchWordPressPosts() // Your import source
-    
+
     for (const post of posts) {
       const blocks = htmlToBlocks(post.content, blockContentType, {
         parseHtml: html => new JSDOM(html).window.document,

@@ -66,11 +66,11 @@ export default async function Page() {
   const typedEvents = events as EVENTS_QUERY_RESULT;
 
   const futureEvents = typedEvents
-    .filter((e) => e.dateStart >= now)
+    .filter((e) => e.slug?.current && e.dateStart >= now)
     .map(mapEventToCard);
 
   const pastEvents = typedEvents
-    .filter((e) => e.dateStart < now)
+    .filter((e) => e.slug?.current && e.dateStart < now)
     .map(mapEventToCard);
 
   return (

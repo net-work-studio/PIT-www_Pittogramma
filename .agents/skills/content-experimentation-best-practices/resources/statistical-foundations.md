@@ -49,8 +49,9 @@ Where:
 ```
 
 For a 5% baseline conversion rate, detecting a 1% absolute lift (5% → 6%):
-- Need ~3,000 visitors per variant
-- Total: ~6,000 visitors minimum
+- σ² = 0.05 × 0.95 = 0.0475
+- Need ~7,600 visitors per variant (16 × 0.0475 / 0.01²)
+- Total: ~15,200 visitors minimum
 
 ## Common Statistical Mistakes
 

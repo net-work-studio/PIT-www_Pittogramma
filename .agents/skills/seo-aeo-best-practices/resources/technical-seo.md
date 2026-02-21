@@ -28,7 +28,8 @@ Essential technical SEO elements for modern web applications.
 ### Sanity + Next.js Implementation
 
 ```typescript
-export async function generateMetadata({ params }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
   const { data } = await sanityFetch({
     query: PAGE_QUERY,
     stega: false,  // Critical: no stega in metadata

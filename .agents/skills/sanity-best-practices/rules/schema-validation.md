@@ -89,10 +89,10 @@ defineField({
     
     const client = context.getClient({ apiVersion: '2024-01-01' })
     const id = context.document?._id?.replace(/^drafts\./, '')
-    
+
     const existing = await client.fetch(
-      `count(*[_type == "post" && slug.current == $slug && _id != $id])`,
-      { slug: slug.current, id }
+      `count(*[_type == "post" && slug.current == $slug && !(_id in [$draft, $published])])`,
+      { slug: slug.current, draft: `drafts.${id}`, published: id }
     )
     
     return existing === 0 || 'Slug already exists'

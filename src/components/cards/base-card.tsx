@@ -49,6 +49,7 @@ export default function BaseCard({
             className="h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
             fill
             quality={75}
+            sizes={big ? "(min-width: 640px) 50vw, 100vw" : "(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"}
             src={image}
             {...(blurDataURL
               ? { placeholder: "blur" as const, blurDataURL }

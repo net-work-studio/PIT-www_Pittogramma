@@ -61,7 +61,7 @@ Use conditional projections for different contexts:
 ```groq
 *[_type == "post"]{
   title,
-  slug,
+  "slug": slug.current,
   // Only include body for single post view
   $includeBody == true => { body }
 }

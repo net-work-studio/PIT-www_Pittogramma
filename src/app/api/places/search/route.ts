@@ -19,10 +19,10 @@ export async function GET(request: NextRequest) {
   // Enforce Nominatim rate limit: 1 request per second
   const now = Date.now();
   const elapsed = now - lastRequestTime;
+  lastRequestTime = now;
   if (elapsed < 1000) {
     await new Promise((resolve) => setTimeout(resolve, 1000 - elapsed));
   }
-  lastRequestTime = Date.now();
 
   const url = new URL(NOMINATIM_URL);
   url.searchParams.set("q", query.trim());
@@ -30,20 +30,27 @@ export async function GET(request: NextRequest) {
   url.searchParams.set("addressdetails", "1");
   url.searchParams.set("limit", "5");
 
-  const response = await fetch(url.toString(), {
-    headers: {
-      "User-Agent": USER_AGENT,
-      Accept: "application/json",
-    },
-  });
+  try {
+    const response = await fetch(url.toString(), {
+      headers: {
+        "User-Agent": USER_AGENT,
+        Accept: "application/json",
+      },
+    });
 
-  if (!response.ok) {
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: "Failed to fetch from Nominatim" },
+        { status: response.status }
+      );
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch {
     return NextResponse.json(
-      { error: "Failed to fetch from Nominatim" },
-      { status: response.status }
+      { error: "Failed to connect to geocoding service" },
+      { status: 502 }
     );
   }
-
-  const data = await response.json();
-  return NextResponse.json(data);
 }

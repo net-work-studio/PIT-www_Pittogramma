@@ -109,6 +109,7 @@ export default async function DesignerPage({
               className="rounded-3xl"
               fill
               priority
+              sizes="(min-width: 1024px) 66vw, 100vw"
               source={designer.portrait}
             />
           </AspectRatio>

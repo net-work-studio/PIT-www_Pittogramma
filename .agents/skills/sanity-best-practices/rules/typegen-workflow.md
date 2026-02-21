@@ -60,7 +60,7 @@ function PostList({ posts }: { posts: POST_QUERYResult }) {
 **Option B: Generate in CI (larger teams)**
 ```gitignore
 # .gitignore
-sanity.types.ts
+src/sanity/types.ts
 schema.json
 ```
 

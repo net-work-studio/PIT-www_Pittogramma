@@ -91,6 +91,7 @@ defineType({
 // Content with EEAT metadata
 defineType({
   name: 'post',
+  type: 'document',
   fields: [
     defineField({ name: 'author', type: 'reference', to: [{ type: 'author' }] }),
     defineField({ name: 'publishedAt', type: 'datetime' }),
