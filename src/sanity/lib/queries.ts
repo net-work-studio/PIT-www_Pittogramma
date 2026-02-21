@@ -138,10 +138,7 @@ export const DESIGNERS_QUERY = defineQuery(`
     },
     birthYear,
     bio,
-    location {
-      country->{ _id, name },
-      city->{ _id, name }
-    }
+    place->{ _id, name, city, country, countryCode, lat, lng }
   }
 `);
 
@@ -167,10 +164,7 @@ export const DESIGNER_QUERY = defineQuery(`
       degree,
       year
     },
-    location {
-      country->{ _id, name },
-      city->{ _id, name }
-    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
     socialLinks {
       links[] {
         _key,
@@ -390,14 +384,7 @@ export const INTERVIEWS_QUERY = defineQuery(`
       _id,
       name
     },
-    city->{
-      _id,
-      name
-    },
-    country->{
-      _id,
-      name
-    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
     readingTime,
     tagSelector {
       tags[]->{
@@ -429,14 +416,7 @@ export const INTERVIEW_QUERY = defineQuery(`
       _id,
       name
     },
-    city->{
-      _id,
-      name
-    },
-    country->{
-      _id,
-      name
-    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
     readingTime,
     tagSelector {
       tags[]->{
@@ -512,16 +492,7 @@ export const BOOKSHOPS_QUERY = defineQuery(`
         name
       }
     },
-    location {
-      country->{
-        _id,
-        name
-      },
-      city->{
-        _id,
-        name
-      }
-    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
     address,
     socialLinks {
       links[] {
@@ -554,16 +525,7 @@ export const INSTITUTES_QUERY = defineQuery(`
       _id,
       name
     },
-    location {
-      country->{
-        _id,
-        name
-      },
-      city->{
-        _id,
-        name
-      }
-    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
     address,
     socialLinks {
       links[] {
@@ -595,17 +557,7 @@ export const STUDIOS_QUERY = defineQuery(`
         name
       }
     },
-    locations[] {
-      _key,
-      country->{
-        _id,
-        name
-      },
-      city->{
-        _id,
-        name
-      }
-    },
+    places[]->{ _id, name, city, country, countryCode, lat, lng },
     socialLinks {
       links[] {
         _key,
@@ -626,16 +578,7 @@ export const TYPE_FOUNDRIES_QUERY = defineQuery(`
         name
       }
     },
-    location {
-      country->{
-        _id,
-        name
-      },
-      city->{
-        _id,
-        name
-      }
-    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
     socialLinks {
       links[] {
         _key,
@@ -667,5 +610,24 @@ export const WEB_SOURCES_QUERY = defineQuery(`
     ogDescription,
     ogSiteName,
     ogImageUrl
+  }
+`);
+
+// ==================== MAP QUERIES ====================
+
+export const MAP_PLACES_QUERY = defineQuery(`
+  *[_type == "place" && defined(lat) && defined(lng)] {
+    _id,
+    name,
+    city,
+    country,
+    countryCode,
+    lat,
+    lng,
+    "designers": *[_type == "designer" && place._ref == ^._id] { _id, name, slug },
+    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },
+    "studios": *[_type == "studio" && references(^._id)] { _id, name },
+    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },
+    "typeFoundries": *[_type == "typeFoundry" && place._ref == ^._id] { _id, name }
   }
 `);

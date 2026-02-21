@@ -744,6 +744,36 @@
     }
   },
   {
+    "type": "type",
+    "name": "place.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "place"
+    }
+  },
+  {
     "name": "bookshop",
     "type": "document",
     "attributes": {
@@ -793,11 +823,11 @@
         },
         "optional": true
       },
-      "location": {
+      "place": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "location"
+          "name": "place.reference"
         },
         "optional": false
       },
@@ -868,11 +898,11 @@
         },
         "optional": true
       },
-      "location": {
+      "place": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "location"
+          "name": "place.reference"
         },
         "optional": false
       },
@@ -988,98 +1018,6 @@
             }
           },
           "optional": true
-        }
-      }
-    }
-  },
-  {
-    "type": "type",
-    "name": "country.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "country"
-    }
-  },
-  {
-    "type": "type",
-    "name": "city.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "city"
-    }
-  },
-  {
-    "name": "location",
-    "type": "type",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "location"
-          }
-        },
-        "country": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "country.reference"
-          },
-          "optional": false
-        },
-        "city": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "city.reference"
-          },
-          "optional": false
         }
       }
     }
@@ -1247,11 +1185,11 @@
         },
         "optional": true
       },
-      "location": {
+      "place": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "location"
+          "name": "place.reference"
         },
         "optional": true
       },
@@ -3725,11 +3663,11 @@
         },
         "optional": true
       },
-      "location": {
+      "place": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "location"
+          "name": "place.reference"
         },
         "optional": false
       },
@@ -4176,19 +4114,11 @@
         },
         "optional": true
       },
-      "city": {
+      "place": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "city.reference"
-        },
-        "optional": true
-      },
-      "country": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "country.reference"
+          "name": "place.reference"
         },
         "optional": true
       },
@@ -4410,94 +4340,6 @@
     }
   },
   {
-    "name": "country",
-    "type": "document",
-    "attributes": {
-      "_id": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_type": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string",
-          "value": "country"
-        }
-      },
-      "_createdAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_updatedAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_rev": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "name": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      }
-    }
-  },
-  {
-    "name": "city",
-    "type": "document",
-    "attributes": {
-      "_id": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_type": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string",
-          "value": "city"
-        }
-      },
-      "_createdAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_updatedAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_rev": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "name": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      }
-    }
-  },
-  {
     "name": "studio",
     "type": "document",
     "attributes": {
@@ -4577,7 +4419,7 @@
         },
         "optional": true
       },
-      "locations": {
+      "places": {
         "type": "objectAttribute",
         "value": {
           "type": "array",
@@ -4593,7 +4435,7 @@
             },
             "rest": {
               "type": "inline",
-              "name": "location"
+              "name": "place.reference"
             }
           }
         },
@@ -5100,11 +4942,11 @@
         },
         "optional": true
       },
-      "location": {
+      "place": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "location"
+          "name": "place.reference"
         },
         "optional": false
       },
@@ -5120,6 +4962,113 @@
         "value": {
           "type": "inline",
           "name": "socialLinks"
+        },
+        "optional": true
+      }
+    }
+  },
+  {
+    "name": "place",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "place"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "name": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "city": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "country": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "countryCode": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "state": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "lat": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
+      "lng": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
+      "osmId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
+      "osmType": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "formattedAddress": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       }
