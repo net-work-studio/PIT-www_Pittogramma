@@ -10,7 +10,7 @@ Pittogramma is a design-focused content platform built with Next.js 16 and Sanit
 
 ```bash
 bun dev          # Development server (runs typegen first)
-bun build        # Production build (runs typegen first)
+bun build        # Production build
 bun typecheck    # TypeScript type checking
 bun run check    # Biome lint check (via Ultracite)
 bun run fix      # Biome auto-fix
@@ -36,27 +36,42 @@ src/
 │   │   ├── (features)/       # projects, interviews, designers, billboard
 │   │   ├── (resources)/      # bibliography, bookshops, glossary, etc.
 │   │   ├── (support)/        # donate, submit, contribute
-│   │   └── (info)/           # about, editions
+│   │   ├── (info)/           # about, editions
+│   │   ├── events/           # Events listing
+│   │   ├── journal/          # Journal articles
+│   │   ├── map/              # Interactive map (Leaflet)
+│   │   └── design-system/    # Design system reference
 │   ├── admin/[[...tool]]/    # Sanity Studio at /admin
-│   └── api/                  # API routes (books, websites, draft-mode)
+│   └── api/                  # API routes (books, places, websites, draft-mode)
 ├── components/
 │   ├── ui/                   # shadcn/ui primitives
-│   ├── cards/                # BaseCard, CTACard
+│   ├── brand/                # Brand mark/logo
+│   ├── cards/                # BaseCard, CTACard, NewsletterCard
+│   ├── feat/                 # Feature components (search, filter, submit, calendar)
+│   ├── journal/              # Journal-specific (featured article)
+│   ├── modules/              # Feature modules (project, interview, designer, journal)
 │   ├── navigation/           # Desktop, mobile, resources nav
-│   ├── modules/              # Feature-specific modules
-│   └── shared/               # PageHeader, Footer
+│   ├── resources/            # Resource list items, bibliography, tags, locations
+│   ├── seo/                  # JSON-LD structured data
+│   └── shared/               # PageHeader, Footer, SanityImage, LocationMap
 ├── sanity/
 │   ├── schemaTypes/
-│   │   ├── documents/        # 25 document types
-│   │   ├── objects/          # 12 object types (media, SEO, etc.)
+│   │   ├── documents/        # 24 document types
+│   │   ├── objects/          # 11 object types (media, SEO, etc.)
 │   │   └── singletons/       # Site settings, page configs
 │   ├── lib/
 │   │   ├── queries.ts        # All GROQ queries
 │   │   ├── client.ts         # Sanity client
-│   │   └── live.ts           # Live content queries
+│   │   ├── live.ts           # Live content queries
+│   │   ├── image.ts          # Image URL builder
+│   │   └── token.ts          # API token config
 │   └── types.ts              # Generated types (DO NOT EDIT)
 └── lib/
     ├── seo/                  # SEO utilities
+    ├── types/                # Shared TypeScript types
+    ├── gallery.ts            # Gallery utilities
+    ├── resolve-link.ts       # Internal link resolver
+    ├── tracked-link.ts       # Link tracking
     └── utils.ts              # cn() classname helper
 ```
 
@@ -74,7 +89,9 @@ src/
 - **Generated types** - Sanity types in `sanity/types.ts` are auto-generated; regenerate with `bun run typegen` after schema changes
 - **GROQ fragments** - Reusable query fragments like `CTA_FIELDS` and `SEO_FIELDS` in queries.ts
 - **Media blocks** - Multiple gallery layouts (side-by-side, grid, single) defined as Sanity objects
-- **SEO module** - Comprehensive SEO with OpenGraph and X Card support per document
+- **SEO module** - Comprehensive SEO with OpenGraph, X Card, and JSON-LD structured data per document
+- **Dark mode** - Theme system via `next-themes` with `ThemeProvider` and `ModeToggle`
+- **Interactive maps** - Leaflet/react-leaflet for location-based content (dynamically imported, client-only)
 
 ### Environment Variables
 
@@ -90,7 +107,7 @@ GOOGLE_BOOKS_API_KEY            # For ISBN book data (optional)
 ## Sanity Schema Conventions
 
 - **Document types**: project, interview, designer, journal, event, edition, etc.
-- **Singletons**: siteSettings, homePage, projectsPage, interviewsPage, designersPage
+- **Singletons**: siteSettings, homePage, projectsPage, interviewsPage, designersPage, eventsPage, journalPage
 - **Field groups**: metadata, content, seo (organized in Sanity Studio)
 - **Media handling**: `imageWithMetadata` object includes alt text and caption
 
@@ -107,6 +124,6 @@ Uses Biome via Ultracite with these project-specific rules:
 - `noConsole`: warn
 - `noMagicNumbers`: off
 - `noNamespaceImport`: off (Sanity uses namespace imports)
-- `noNonNullAssertion`: error (use optional chaining instead)
+- `noNonNullAssertion`: error (from Ultracite defaults — use optional chaining instead)
 
-Excluded from linting: `sanity/types.ts`, `.next/`, `admin/`
+Excluded from linting: `sanity/types.ts`, `sanity.cli.ts`, `.next/`, `admin/`
