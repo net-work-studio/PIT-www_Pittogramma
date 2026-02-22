@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { getLqip, urlFor } from "@/sanity/lib/image";
+import { getBlurDataUrl, urlFor } from "@/sanity/lib/image";
 import type { DESIGNERS_QUERY_RESULT } from "@/sanity/types";
 
 type Designer = DESIGNERS_QUERY_RESULT[number];
@@ -17,7 +17,7 @@ export default function DesignerCard({ designer, onClick }: DesignerCardProps) {
     ? urlFor(designer.portrait.image).width(800).height(600).url()
     : "";
 
-  const blurDataURL = getLqip(designer.portrait);
+  const blurDataURL = getBlurDataUrl(designer.portrait);
 
   const locationParts = [designer.place?.city, designer.place?.country].filter(
     Boolean

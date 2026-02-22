@@ -10,7 +10,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { buildTrackedLink, type UtmSettings } from "@/lib/tracked-link";
-import { getLqip, urlForImage } from "@/sanity/lib/image";
+import { getBlurDataUrl, urlForImage } from "@/sanity/lib/image";
 import type { BIBLIOGRAPHY_QUERY_RESULT } from "@/sanity/types";
 
 type BookItem = BIBLIOGRAPHY_QUERY_RESULT[number];
@@ -40,7 +40,7 @@ export function BookDetailsDrawer({
   }
 
   const coverUrl = urlForImage(book.cover)?.width(400).height(600).url();
-  const blurDataURL = getLqip(book.cover);
+  const blurDataURL = getBlurDataUrl(book.cover);
   const authors = getAuthors(book.authors);
 
   return (
