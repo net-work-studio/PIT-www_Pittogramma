@@ -1,11 +1,7 @@
-import dynamic from "next/dynamic";
+import LocationMap from "@/components/shared/location-map-wrapper";
 import PageHeader from "@/components/shared/page-header";
 import { sanityFetch } from "@/sanity/lib/live";
 import { MAP_PLACES_QUERY } from "@/sanity/lib/queries";
-
-const LocationMap = dynamic(() => import("@/components/shared/location-map"), {
-  ssr: false,
-});
 
 export default async function MapPage() {
   const { data: places } = await sanityFetch({
