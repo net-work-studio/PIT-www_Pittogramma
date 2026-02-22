@@ -6,90 +6,15 @@ import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
 import { siteDefaults } from "@/lib/seo/siteDefaults";
 import type { SeoModule } from "@/lib/types/seo";
+import { getBlurDataUrl, urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
-import { EVENTS_PAGE_QUERY } from "@/sanity/lib/queries";
-
-const futureEvents = [
-  {
-    id: "1",
-    title: "Typography Masterclass",
-    authors: [{ name: "Sarah Chen" }, { name: "Alex Rivera" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-    date: "2025-02-15",
-    location: "Milan Design Week",
-  },
-  {
-    id: "2",
-    title: "Design Trends 2025",
-    authors: [{ name: "Maria Garcia" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-    date: "2025-03-20",
-    location: "Online",
-  },
-  {
-    id: "3",
-    title: "Portfolio Review Session",
-    authors: [{ name: "John Smith" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-    date: "2025-04-10",
-    location: "Studio Space",
-  },
-  {
-    id: "4",
-    title: "Brand Identity Workshop",
-    authors: [{ name: "Emma Wilson" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-    date: "2025-05-05",
-    location: "Design Institute",
-  },
-];
-
-const pastEvents = [
-  {
-    id: "5",
-    title: "Design Conference 2024",
-    authors: [{ name: "Conference Team" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-    date: "2024-11-15",
-    location: "Convention Center",
-  },
-  {
-    id: "6",
-    title: "Print Design Symposium",
-    authors: [{ name: "Print Collective" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-    date: "2024-10-08",
-    location: "Art Gallery",
-  },
-  {
-    id: "7",
-    title: "Digital Art Exhibition",
-    authors: [{ name: "Digital Artists" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-    date: "2024-09-22",
-    location: "Museum of Design",
-  },
-  {
-    id: "8",
-    title: "Student Portfolio Show",
-    authors: [{ name: "Design Students" }],
-    image: "https://placehold.co/400x300/png",
-    href: "/",
-    date: "2024-08-30",
-    location: "University Campus",
-  },
-];
+import { EVENTS_PAGE_QUERY, EVENTS_QUERY } from "@/sanity/lib/queries";
+import type { EVENTS_QUERY_RESULT } from "@/sanity/types";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
     query: EVENTS_PAGE_QUERY,
+    stega: false,
   });
 
   return mapSanityToMetadata({
@@ -104,12 +29,49 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
+interface EventCard {
+  authors: { name: string }[] | undefined;
+  blurDataURL: string | undefined;
+  href: string;
+  id: string;
+  image: string;
+  title: string;
+}
+
+function mapEventToCard(event: EVENTS_QUERY_RESULT[number]): EventCard {
+  const image = event.cover?.image
+    ? urlFor(event.cover.image).width(800).height(600).url()
+    : "";
+
+  const subtitle = event.locationName ?? event.type;
+
+  return {
+    authors: subtitle ? [{ name: subtitle }] : undefined,
+    blurDataURL: getBlurDataUrl(event.cover),
+    href: `/events/${event.slug?.current}`,
+    id: event._id,
+    image,
+    title: event.title,
+  };
+}
+
 export default async function Page() {
-  const { data: pageSettings } = await sanityFetch({
-    query: EVENTS_PAGE_QUERY,
-  });
+  const [{ data: events }, { data: pageSettings }] = await Promise.all([
+    sanityFetch({ query: EVENTS_QUERY }),
+    sanityFetch({ query: EVENTS_PAGE_QUERY }),
+  ]);
 
   const cta = pageSettings?.endOfPageCta;
+  const now = new Date().toISOString().split("T")[0];
+  const typedEvents = events as EVENTS_QUERY_RESULT;
+
+  const futureEvents = typedEvents
+    .filter((e) => e.slug?.current && e.dateStart >= now)
+    .map(mapEventToCard);
+
+  const pastEvents = typedEvents
+    .filter((e) => e.slug?.current && e.dateStart < now)
+    .map(mapEventToCard);
 
   return (
     <>
@@ -133,6 +95,7 @@ export default async function Page() {
             {futureEvents.map((event) => (
               <BaseCard
                 authors={event.authors}
+                blurDataURL={event.blurDataURL}
                 href={event.href}
                 image={event.image}
                 key={event.id}
@@ -151,6 +114,7 @@ export default async function Page() {
             {pastEvents.map((event) => (
               <BaseCard
                 authors={event.authors}
+                blurDataURL={event.blurDataURL}
                 href={event.href}
                 image={event.image}
                 key={event.id}

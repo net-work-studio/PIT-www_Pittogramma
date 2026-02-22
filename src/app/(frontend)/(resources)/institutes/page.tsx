@@ -21,10 +21,10 @@ function InstituteCard({ institute }: { institute: Institute }) {
         <LanguagesDisplay languages={institute.languages} />
       </li>
       <li className="col-span-2">
-        <CityDisplay location={institute.location} />
+        <CityDisplay place={institute.place} />
       </li>
       <li className="col-span-2">
-        <CountryDisplay location={institute.location} />
+        <CountryDisplay place={institute.place} />
       </li>
       <li className="col-span-2">{institute.yearFoundation || "-"}</li>
     </ResourceListItem>

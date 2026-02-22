@@ -1,56 +1,56 @@
-interface LocationData {
-  country?: { _id: string; name: string } | null;
-  city?: { _id: string; name: string } | null;
+interface PlaceData {
+  city?: string | null;
+  country?: string | null;
 }
 
 interface LocationDisplayProps {
-  location: LocationData | null | undefined;
+  place: PlaceData | null | undefined;
   showCity?: boolean;
   showCountry?: boolean;
 }
 
 export function LocationDisplay({
-  location,
+  place,
   showCity = true,
   showCountry = true,
 }: LocationDisplayProps) {
-  if (!location) {
+  if (!place) {
     return null;
   }
 
   if (showCity && showCountry) {
     return (
       <>
-        {location.city?.name || "-"}
+        {place.city || "-"}
         {", "}
-        {location.country?.name || "-"}
+        {place.country || "-"}
       </>
     );
   }
 
   if (showCity) {
-    return <>{location.city?.name || "-"}</>;
+    return <>{place.city || "-"}</>;
   }
 
   if (showCountry) {
-    return <>{location.country?.name || "-"}</>;
+    return <>{place.country || "-"}</>;
   }
 
   return null;
 }
 
 export function CityDisplay({
-  location,
+  place,
 }: {
-  location: LocationData | null | undefined;
+  place: PlaceData | null | undefined;
 }) {
-  return <LocationDisplay location={location} showCity showCountry={false} />;
+  return <LocationDisplay place={place} showCity showCountry={false} />;
 }
 
 export function CountryDisplay({
-  location,
+  place,
 }: {
-  location: LocationData | null | undefined;
+  place: PlaceData | null | undefined;
 }) {
-  return <LocationDisplay location={location} showCity={false} showCountry />;
+  return <LocationDisplay place={place} showCity={false} showCountry />;
 }

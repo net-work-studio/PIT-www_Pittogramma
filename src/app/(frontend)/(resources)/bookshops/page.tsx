@@ -17,10 +17,10 @@ function BookshopCard({ bookshop }: { bookshop: Bookshop }) {
     <ResourceListItem>
       <li className="col-span-6">{bookshop.name}</li>
       <li className="col-span-3">
-        <CityDisplay location={bookshop.location} />
+        <CityDisplay place={bookshop.place} />
       </li>
       <li className="col-span-3">
-        <CountryDisplay location={bookshop.location} />
+        <CountryDisplay place={bookshop.place} />
       </li>
     </ResourceListItem>
   );

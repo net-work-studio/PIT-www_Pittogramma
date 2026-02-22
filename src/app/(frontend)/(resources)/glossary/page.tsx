@@ -60,8 +60,8 @@ function LetterSection({ letter, words }: GroupedGlossary) {
 }
 
 interface GlossaryCardProps {
-  word: string;
   definition: string;
+  word: string;
 }
 
 function GlossaryCard({ word, definition }: GlossaryCardProps) {

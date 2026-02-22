@@ -3,7 +3,6 @@ import {
   Briefcase,
   Calendar,
   FileText,
-  Globe,
   GraduationCap,
   Home,
   Languages,
@@ -62,8 +61,7 @@ export const structure: StructureResolver = (S) =>
       docListItem(S, "cta", "CTAs", MousePointerClick),
 
       group(S, "Metadata", [
-        docListItem(S, "city", "City", MapPin),
-        docListItem(S, "country", "Country", Globe),
+        docListItem(S, "place", "Place", MapPin),
         docListItem(S, "language", "Language", Languages),
         docListItem(S, "tag", "Tag", Tag),
         docListItem(S, "contributor", "Contributor", Users),

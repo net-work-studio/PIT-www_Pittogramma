@@ -17,8 +17,8 @@ const data = [
 ];
 
 interface EditionCardProps {
-  slug: string;
   cover: string;
+  slug: string;
   title: string;
 }
 

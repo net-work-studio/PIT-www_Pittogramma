@@ -4,8 +4,8 @@ interface Tag {
 }
 
 interface TagsDisplayProps {
-  tags: Tag[] | null | undefined;
   separator?: string;
+  tags: Tag[] | null | undefined;
 }
 
 export function TagsDisplay({ tags, separator = ", " }: TagsDisplayProps) {

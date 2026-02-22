@@ -3,19 +3,21 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 interface FeaturedArticleProps {
-  title: string;
-  excerpt?: string | null;
-  image: string;
-  href: string;
-  date?: string | null;
-  tags?: { name: string }[];
   authors?: { name: string }[];
+  blurDataURL?: string;
+  date?: string | null;
+  excerpt?: string | null;
+  href: string;
+  image: string;
+  tags?: { name: string }[];
+  title: string;
 }
 
 export default function FeaturedArticle({
   title,
   excerpt,
   image,
+  blurDataURL,
   href,
   date,
   tags,
@@ -75,6 +77,9 @@ export default function FeaturedArticle({
           quality={75}
           sizes="(max-width: 768px) 100vw, 66vw"
           src={image}
+          {...(blurDataURL
+            ? { placeholder: "blur" as const, blurDataURL }
+            : {})}
         />
       </div>
     </Link>

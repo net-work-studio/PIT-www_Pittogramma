@@ -13,18 +13,20 @@ interface Author {
 }
 
 interface BaseCardProps {
-  title: string;
   authors?: Author[];
-  image: string;
-  href: string;
-  variant?: "project" | "article" | "interview" | "feat" | "event";
   big?: boolean;
+  blurDataURL?: string;
+  href: string;
+  image: string;
+  title: string;
+  variant?: "project" | "article" | "interview" | "feat" | "event";
 }
 
 export default function BaseCard({
   title,
   authors,
   image,
+  blurDataURL,
   variant,
   href,
   big,
@@ -41,13 +43,21 @@ export default function BaseCard({
         className="relative overflow-hidden rounded-lg"
         ratio={BASE_CARD_IMAGE_RATIO}
       >
-        <Image
-          alt={title}
-          className="h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
-          fill
-          quality={75}
-          src={image}
-        />
+        {image ? (
+          <Image
+            alt={title}
+            className="h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
+            fill
+            quality={75}
+            sizes={big ? "(min-width: 640px) 50vw, 100vw" : "(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"}
+            src={image}
+            {...(blurDataURL
+              ? { placeholder: "blur" as const, blurDataURL }
+              : {})}
+          />
+        ) : (
+          <div className="h-full w-full rounded-lg bg-neutral-200" />
+        )}
       </AspectRatio>
       {variant ? <Badge variant={variant} /> : null}
       <div className="inline-flex w-full flex-col items-start justify-start gap-3">

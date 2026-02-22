@@ -13,5 +13,18 @@ export const tag = defineType({
       title: "Name",
       validation: (e) => e.required(),
     }),
+    defineField({
+      type: "slug",
+      name: "slug",
+      title: "Slug",
+      options: { source: "name" },
+      validation: (e) => e.required(),
+    }),
   ],
+  preview: {
+    select: {
+      title: "name",
+      subtitle: "slug.current",
+    },
+  },
 });

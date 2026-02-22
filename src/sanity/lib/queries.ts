@@ -1,5 +1,19 @@
 import { defineQuery } from "next-sanity";
 
+// Reusable image fields fragment with LQIP for blur placeholders
+const IMAGE_FIELDS = /* groq */ `
+  asset->{
+    _id,
+    url,
+    metadata {
+      lqip,
+      dimensions { width, height }
+    }
+  },
+  hotspot,
+  crop
+`;
+
 // Reusable CTA fields fragment - dereferences the CTA and its internal link
 const CTA_FIELDS = `
   endOfPageCta->{
@@ -7,7 +21,11 @@ const CTA_FIELDS = `
     title,
     variant,
     headline,
-    image,
+    image {
+      image { ${IMAGE_FIELDS} },
+      alt,
+      caption
+    },
     buttonText,
     linkType,
     internalLink->{
@@ -38,9 +56,7 @@ const SEO_FIELDS = `
       _type,
       image {
         _type,
-        asset,
-        hotspot,
-        crop
+        ${IMAGE_FIELDS}
       },
       alt,
       caption
@@ -111,16 +127,97 @@ export const EVENTS_PAGE_QUERY = defineQuery(`
   }
 `);
 
+export const DESIGNERS_QUERY = defineQuery(`
+  *[_type == "designer"] | order(name asc) {
+    _id,
+    name,
+    slug,
+    portrait {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    birthYear,
+    bio,
+    place->{ _id, name, city, country, countryCode, lat, lng }
+  }
+`);
+
+export const DESIGNER_QUERY = defineQuery(`
+  *[_type == "designer" && slug.current == $slug][0] {
+    _id,
+    name,
+    slug,
+    portrait {
+      _type,
+      image {
+        _type,
+        ${IMAGE_FIELDS}
+      },
+      alt,
+      caption
+    },
+    birthYear,
+    bio,
+    education[] {
+      _key,
+      institute->{ _id, name },
+      degree,
+      year
+    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
+    socialLinks {
+      links[] {
+        _key,
+        platform,
+        url
+      }
+    },
+    "relatedProjects": *[_type == "project" && references(^._id)] | order(_createdAt desc) [0...4] {
+      _id,
+      cover { image { ${IMAGE_FIELDS} }, alt },
+      title,
+      slug,
+      designers[]{ _key, ...@->{ _id, name } }
+    },
+    "relatedInterviews": *[_type == "interview" && references(^._id)] | order(publishingDate.date desc) [0...4] {
+      _id,
+      title,
+      slug,
+      cover { image { ${IMAGE_FIELDS} }, alt },
+      designersAndProfessionals[]{ _key, ...@->{ _id, name } }
+    }
+  }
+`);
+
+export const EVENTS_QUERY = defineQuery(`
+  *[_type == "event"] | order(dateStart desc) {
+    _id,
+    title,
+    slug,
+    type,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    dateStart,
+    dateEnd,
+    locationName,
+    description,
+    sponsor->{ _id, name },
+    partner->{ _id, name },
+    tagSelector {
+      tags[]->{ _id, name }
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
 export const PROJECTS_QUERY = defineQuery(`
   *[_type == "project"] | order(_createdAt desc) {
     _id,
     cover {
-      image {
-        asset,
-        alt,
-        hotspot,
-        crop
-      }
+      image { ${IMAGE_FIELDS} },
+      alt
     },
     title,
     slug,
@@ -142,9 +239,7 @@ export const PROJECT_QUERY = defineQuery(`
       _type,
       image {
         _type,
-        asset,
-        hotspot,
-        crop
+        ${IMAGE_FIELDS}
       },
       alt
     },
@@ -168,25 +263,25 @@ export const PROJECT_QUERY = defineQuery(`
       _type,
       _type == "singleMediaBlock" => {
         orientation,
-        media { type, image { asset, hotspot, crop }, caption, alt }
+        media { type, image { ${IMAGE_FIELDS} }, caption, alt }
       },
       _type == "sideBySideMediaBlock" => {
         orientation,
-        left { type, image { asset, hotspot, crop }, caption, alt },
-        right { type, image { asset, hotspot, crop }, caption, alt }
+        left { type, image { ${IMAGE_FIELDS} }, caption, alt },
+        right { type, image { ${IMAGE_FIELDS} }, caption, alt }
       },
       _type == "threeSideBySideMediaBlock" => {
         orientation,
-        left { type, image { asset, hotspot, crop }, caption, alt },
-        center { type, image { asset, hotspot, crop }, caption, alt },
-        right { type, image { asset, hotspot, crop }, caption, alt }
+        left { type, image { ${IMAGE_FIELDS} }, caption, alt },
+        center { type, image { ${IMAGE_FIELDS} }, caption, alt },
+        right { type, image { ${IMAGE_FIELDS} }, caption, alt }
       },
       _type == "gridFourMediaBlock" => {
         orientation,
-        topLeft { type, image { asset, hotspot, crop }, caption, alt },
-        topRight { type, image { asset, hotspot, crop }, caption, alt },
-        bottomLeft { type, image { asset, hotspot, crop }, caption, alt },
-        bottomRight { type, image { asset, hotspot, crop }, caption, alt }
+        topLeft { type, image { ${IMAGE_FIELDS} }, caption, alt },
+        topRight { type, image { ${IMAGE_FIELDS} }, caption, alt },
+        bottomLeft { type, image { ${IMAGE_FIELDS} }, caption, alt },
+        bottomRight { type, image { ${IMAGE_FIELDS} }, caption, alt }
       }
     },
     description,
@@ -196,7 +291,7 @@ export const PROJECT_QUERY = defineQuery(`
       count(tagSelector.tags[@._ref in ^.tagSelector.tags[]._ref]) > 0
     ] | order(_createdAt desc) [0...4] {
       _id,
-      cover { image { asset, hotspot, crop }, alt },
+      cover { image { ${IMAGE_FIELDS} }, alt },
       title,
       slug,
       designers[]{ _key, ...@->{ _id, name } }
@@ -216,7 +311,7 @@ export const JOURNAL_PAGE_QUERY = defineQuery(`
       slug,
       publishingDate,
       excerpt,
-      cover { image { asset, alt, hotspot, crop } },
+      cover { image { ${IMAGE_FIELDS} }, alt },
       authors[]{ _key, ...@->{ _id, name } },
       tagSelector { tags[]->{ _id, name } }
     },
@@ -232,12 +327,8 @@ export const JOURNAL_QUERY = defineQuery(`
     slug,
     publishingDate,
     cover {
-      image {
-        asset,
-        alt,
-        hotspot,
-        crop
-      }
+      image { ${IMAGE_FIELDS} },
+      alt
     },
     authors[]{ _key, ...@->{ _id, name } },
     excerpt,
@@ -261,9 +352,7 @@ export const JOURNAL_ARTICLE_QUERY = defineQuery(`
       _type,
       image {
         _type,
-        asset,
-        hotspot,
-        crop
+        ${IMAGE_FIELDS}
       },
       alt
     },
@@ -287,26 +376,15 @@ export const INTERVIEWS_QUERY = defineQuery(`
     slug,
     publishingDate,
     cover {
-      image {
-        asset,
-        alt,
-        hotspot,
-        crop
-      }
+      image { ${IMAGE_FIELDS} },
+      alt
     },
     designersAndProfessionals[]{ _key, ...@->{ _id, name } },
     studio->{
       _id,
       name
     },
-    city->{
-      _id,
-      name
-    },
-    country->{
-      _id,
-      name
-    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
     readingTime,
     tagSelector {
       tags[]->{
@@ -329,9 +407,7 @@ export const INTERVIEW_QUERY = defineQuery(`
       _type,
       image {
         _type,
-        asset,
-        hotspot,
-        crop
+        ${IMAGE_FIELDS}
       },
       alt
     },
@@ -340,14 +416,7 @@ export const INTERVIEW_QUERY = defineQuery(`
       _id,
       name
     },
-    city->{
-      _id,
-      name
-    },
-    country->{
-      _id,
-      name
-    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
     readingTime,
     tagSelector {
       tags[]->{
@@ -362,11 +431,7 @@ export const INTERVIEW_QUERY = defineQuery(`
         _key,
         _type,
         image {
-          image {
-            asset,
-            hotspot,
-            crop
-          },
+          image { ${IMAGE_FIELDS} },
           alt,
           caption
         }
@@ -376,11 +441,7 @@ export const INTERVIEW_QUERY = defineQuery(`
         _type,
         images[] {
           _key,
-          image {
-            asset,
-            hotspot,
-            crop
-          },
+          image { ${IMAGE_FIELDS} },
           alt,
           caption
         }
@@ -398,7 +459,7 @@ export const BIBLIOGRAPHY_QUERY = defineQuery(`
     name,
     year,
     cover {
-      image { asset, hotspot, crop },
+      image { ${IMAGE_FIELDS} },
       alt
     },
     languages[]{ _key, ...@->{ _id, name } },
@@ -431,16 +492,7 @@ export const BOOKSHOPS_QUERY = defineQuery(`
         name
       }
     },
-    location {
-      country->{
-        _id,
-        name
-      },
-      city->{
-        _id,
-        name
-      }
-    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
     address,
     socialLinks {
       links[] {
@@ -458,7 +510,7 @@ export const GLOSSARY_QUERY = defineQuery(`
     name,
     description,
     image {
-      image { asset, hotspot, crop },
+      image { ${IMAGE_FIELDS} },
       alt
     }
   }
@@ -473,16 +525,7 @@ export const INSTITUTES_QUERY = defineQuery(`
       _id,
       name
     },
-    location {
-      country->{
-        _id,
-        name
-      },
-      city->{
-        _id,
-        name
-      }
-    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
     address,
     socialLinks {
       links[] {
@@ -501,7 +544,7 @@ export const STUDIOS_QUERY = defineQuery(`
     websiteUrl,
     description,
     cover {
-      image { asset, hotspot, crop },
+      image { ${IMAGE_FIELDS} },
       alt
     },
     category->{
@@ -514,17 +557,7 @@ export const STUDIOS_QUERY = defineQuery(`
         name
       }
     },
-    locations[] {
-      _key,
-      country->{
-        _id,
-        name
-      },
-      city->{
-        _id,
-        name
-      }
-    },
+    places[]->{ _id, name, city, country, countryCode, lat, lng },
     socialLinks {
       links[] {
         _key,
@@ -545,16 +578,7 @@ export const TYPE_FOUNDRIES_QUERY = defineQuery(`
         name
       }
     },
-    location {
-      country->{
-        _id,
-        name
-      },
-      city->{
-        _id,
-        name
-      }
-    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
     socialLinks {
       links[] {
         _key,
@@ -571,7 +595,7 @@ export const WEB_SOURCES_QUERY = defineQuery(`
     name,
     description,
     cover {
-      image { asset, hotspot, crop },
+      image { ${IMAGE_FIELDS} },
       alt
     },
     category->{
@@ -579,12 +603,31 @@ export const WEB_SOURCES_QUERY = defineQuery(`
       name
     },
     tagSelector {
-      tags[]{ _key, ...@->{ _id, name } }
+      tags[]->{ _id, name }
     },
     sourceUrl,
     ogTitle,
     ogDescription,
     ogSiteName,
     ogImageUrl
+  }
+`);
+
+// ==================== MAP QUERIES ====================
+
+export const MAP_PLACES_QUERY = defineQuery(`
+  *[_type == "place" && defined(lat) && defined(lng)] {
+    _id,
+    name,
+    city,
+    country,
+    countryCode,
+    lat,
+    lng,
+    "designers": *[_type == "designer" && place._ref == ^._id] { _id, name, slug },
+    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },
+    "studios": *[_type == "studio" && references(^._id)] { _id, name },
+    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },
+    "typeFoundries": *[_type == "typeFoundry" && place._ref == ^._id] { _id, name }
   }
 `);

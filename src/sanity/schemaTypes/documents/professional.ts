@@ -47,9 +47,10 @@ export const professional = defineType({
       to: [{ type: "studio" }],
     }),
     defineField({
-      type: "location",
-      name: "location",
-      title: "Location",
+      type: "reference",
+      name: "place",
+      title: "Place",
+      to: [{ type: "place" }],
     }),
     defineField({
       type: "socialLinks",

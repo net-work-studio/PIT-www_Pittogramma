@@ -116,17 +116,10 @@ export const interview = defineType({
     }),
     defineField({
       type: "reference",
-      name: "city",
-      title: "City",
+      name: "place",
+      title: "Place",
       group: "content",
-      to: [{ type: "city" }],
-    }),
-    defineField({
-      type: "reference",
-      name: "country",
-      title: "Country",
-      group: "content",
-      to: [{ type: "country" }],
+      to: [{ type: "place" }],
     }),
     defineField({
       type: "number",

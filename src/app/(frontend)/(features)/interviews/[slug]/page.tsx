@@ -24,6 +24,7 @@ export async function generateMetadata({
   const { data: interview } = await sanityFetch({
     query: INTERVIEW_QUERY,
     params: { slug },
+    stega: false,
   });
 
   if (!interview) {
@@ -90,9 +91,8 @@ export default async function InterviewPage({
         {/* Hero Section */}
         <div className="order-1 flex flex-col gap-6 px-2.5 pt-6 lg:flex-row lg:gap-10 lg:pt-16">
           <InterviewInfo
-            city={interview.city?.name}
-            country={interview.country?.name}
             interviewTo={interview.designersAndProfessionals}
+            place={interview.place}
             publishingDate={interview.publishingDate?.date}
             readingTime={interview.readingTime}
             studio={interview.studio?.name}
@@ -149,13 +149,13 @@ export default async function InterviewPage({
               <dd className="text-sm">{interview.readingTime} min</dd>
             </div>
           ) : null}
-          {interview.city?.name || interview.country?.name ? (
+          {interview.place?.city || interview.place?.country ? (
             <div className="flex gap-x-12">
               <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
                 Place
               </dt>
               <dd className="text-sm">
-                {[interview.city?.name, interview.country?.name]
+                {[interview.place?.city, interview.place?.country]
                   .filter(Boolean)
                   .join(", ")}
               </dd>

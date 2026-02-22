@@ -69,7 +69,10 @@ function SideBySideBlock({
           className="relative overflow-hidden rounded-xl"
           ratio={ratio}
         >
-          <MediaImage media={block.left} sizes="(min-width: 640px) 50vw, 100vw" />
+          <MediaImage
+            media={block.left}
+            sizes="(min-width: 640px) 50vw, 100vw"
+          />
         </AspectRatio>
       </div>
       <div className="flex-1">
@@ -77,7 +80,10 @@ function SideBySideBlock({
           className="relative overflow-hidden rounded-xl"
           ratio={ratio}
         >
-          <MediaImage media={block.right} sizes="(min-width: 640px) 50vw, 100vw" />
+          <MediaImage
+            media={block.right}
+            sizes="(min-width: 640px) 50vw, 100vw"
+          />
         </AspectRatio>
       </div>
     </div>
@@ -97,7 +103,10 @@ function ThreeSideBySideBlock({
           className="relative overflow-hidden rounded-xl"
           ratio={ratio}
         >
-          <MediaImage media={block.left} sizes="(min-width: 640px) 33vw, 100vw" />
+          <MediaImage
+            media={block.left}
+            sizes="(min-width: 640px) 33vw, 100vw"
+          />
         </AspectRatio>
       </div>
       <div className="flex-1">
@@ -105,7 +114,10 @@ function ThreeSideBySideBlock({
           className="relative overflow-hidden rounded-xl"
           ratio={ratio}
         >
-          <MediaImage media={block.center} sizes="(min-width: 640px) 33vw, 100vw" />
+          <MediaImage
+            media={block.center}
+            sizes="(min-width: 640px) 33vw, 100vw"
+          />
         </AspectRatio>
       </div>
       <div className="flex-1">
@@ -113,7 +125,10 @@ function ThreeSideBySideBlock({
           className="relative overflow-hidden rounded-xl"
           ratio={ratio}
         >
-          <MediaImage media={block.right} sizes="(min-width: 640px) 33vw, 100vw" />
+          <MediaImage
+            media={block.right}
+            sizes="(min-width: 640px) 33vw, 100vw"
+          />
         </AspectRatio>
       </div>
     </div>

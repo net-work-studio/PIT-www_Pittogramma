@@ -21,22 +21,28 @@ function estimateReadingTime(
     Awaited<
       ReturnType<typeof sanityFetch<typeof JOURNAL_ARTICLE_QUERY>>
     >["data"]
-  >["content"],
+  >["content"]
 ): number {
   if (!content) {
     return 0;
   }
-  const words = content.reduce((count: number, block) => {
-    if (block._type === "block" && block.children) {
-      return (
-        count +
-        block.children.reduce((acc: number, child) => {
-          return acc + (child.text?.split(WHITESPACE_RE).length ?? 0);
-        }, 0)
-      );
-    }
-    return count;
-  }, 0);
+  const words = content.reduce(
+    (count: number, block: (typeof content)[number]) => {
+      if (block._type === "block" && block.children) {
+        return (
+          count +
+          block.children.reduce(
+            (acc: number, child: (typeof block.children)[number]) => {
+              return acc + (child.text?.split(WHITESPACE_RE).length ?? 0);
+            },
+            0
+          )
+        );
+      }
+      return count;
+    },
+    0
+  );
   return Math.max(1, Math.ceil(words / 200));
 }
 
@@ -49,6 +55,7 @@ export async function generateMetadata({
   const { data: article } = await sanityFetch({
     query: JOURNAL_ARTICLE_QUERY,
     params: { slug },
+    stega: false,
   });
 
   if (!article) {
@@ -166,7 +173,7 @@ export default async function JournalArticlePage({
                           <li className="text-sm underline" key={tag._id}>
                             {tag.name}
                           </li>
-                        ),
+                        )
                       )}
                     </ul>
                   </dd>
@@ -234,7 +241,7 @@ export default async function JournalArticlePage({
                       <li className="text-sm underline" key={tag._id}>
                         {tag.name}
                       </li>
-                    ),
+                    )
                   )}
                 </ul>
               </dd>

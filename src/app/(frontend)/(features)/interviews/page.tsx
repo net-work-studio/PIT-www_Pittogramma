@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
 import { siteDefaults } from "@/lib/seo/siteDefaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { urlFor } from "@/sanity/lib/image";
+import { getBlurDataUrl, urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { INTERVIEWS_PAGE_QUERY, INTERVIEWS_QUERY } from "@/sanity/lib/queries";
 import type { INTERVIEWS_QUERY_RESULT } from "@/sanity/types";
@@ -14,6 +14,7 @@ import type { INTERVIEWS_QUERY_RESULT } from "@/sanity/types";
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
     query: INTERVIEWS_PAGE_QUERY,
+    stega: false,
   });
 
   return mapSanityToMetadata({
@@ -38,13 +39,14 @@ export default async function InterviewsPage() {
 
   interface InterviewCard {
     authors: { name: string }[] | undefined;
+    blurDataURL: string | undefined;
     href: string;
     id: string;
     image: string;
-    title: string;
+    location: string | undefined;
     readingTime: number | null;
     studio: string | undefined | null;
-    location: string | undefined;
+    title: string;
   }
 
   const interviewCards: InterviewCard[] = interviews
@@ -62,6 +64,7 @@ export default async function InterviewsPage() {
               name: d.name ?? "",
             }))
           : undefined,
+        blurDataURL: getBlurDataUrl(interview.cover),
         href: `/interviews/${interview.slug?.current ?? ""}`,
         id: interview._id,
         image,
@@ -69,7 +72,7 @@ export default async function InterviewsPage() {
         readingTime: interview.readingTime,
         studio: interview.studio?.name,
         location:
-          [interview.city?.name, interview.country?.name]
+          [interview.place?.city, interview.place?.country]
             .filter(Boolean)
             .join(", ") || undefined,
       };
@@ -89,6 +92,7 @@ export default async function InterviewsPage() {
           {interviewCards.map((card) => (
             <BaseCard
               authors={card.authors}
+              blurDataURL={card.blurDataURL}
               href={card.href}
               image={card.image}
               key={card.id}

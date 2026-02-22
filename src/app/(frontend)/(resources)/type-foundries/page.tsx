@@ -21,10 +21,10 @@ function TypeFoundryCard({ foundry }: { foundry: TypeFoundry }) {
         <TagsDisplay tags={foundry.tagSelector?.tags} />
       </li>
       <li className="col-span-2">
-        <CityDisplay location={foundry.location} />
+        <CityDisplay place={foundry.place} />
       </li>
       <li className="col-span-2">
-        <CountryDisplay location={foundry.location} />
+        <CountryDisplay place={foundry.place} />
       </li>
     </ResourceListItem>
   );

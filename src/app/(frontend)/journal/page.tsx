@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
 import { siteDefaults } from "@/lib/seo/siteDefaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { urlFor } from "@/sanity/lib/image";
+import { getBlurDataUrl, urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { JOURNAL_PAGE_QUERY, JOURNAL_QUERY } from "@/sanity/lib/queries";
 import type { JOURNAL_QUERY_RESULT } from "@/sanity/types";
@@ -15,6 +15,7 @@ import type { JOURNAL_QUERY_RESULT } from "@/sanity/types";
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
     query: JOURNAL_PAGE_QUERY,
+    stega: false,
   });
 
   return mapSanityToMetadata({
@@ -47,6 +48,7 @@ export default async function JournalPage() {
 
   interface JournalCard {
     authors: { name: string }[] | undefined;
+    blurDataURL: string | undefined;
     href: string;
     id: string;
     image: string;
@@ -67,6 +69,7 @@ export default async function JournalPage() {
         authors: article.authors?.length
           ? article.authors.map((a) => ({ name: a.name ?? "" }))
           : undefined,
+        blurDataURL: getBlurDataUrl(article.cover),
         href: `/journal/${article.slug?.current ?? ""}`,
         id: article._id,
         image,
@@ -77,23 +80,25 @@ export default async function JournalPage() {
   return (
     <>
       <PageHeader
+        onlySeoTitle
         subtitle={pageSettings?.introText ?? undefined}
         title={pageSettings?.title ?? "Journal"}
-        onlySeoTitle
       />
       <div className="space-y-10 pb-10">
         {featuredArticle && featuredImage && (
           <FeaturedArticle
             authors={
-              featuredArticle.authors?.map((a) => ({ name: a.name ?? "" })) ??
-              []
+              featuredArticle.authors?.map((a: { name: string | null }) => ({
+                name: a.name ?? "",
+              })) ?? []
             }
+            blurDataURL={getBlurDataUrl(featuredArticle.cover)}
             date={featuredDate}
             excerpt={featuredArticle.excerpt}
             href={`/journal/${featuredArticle.slug?.current ?? ""}`}
             image={featuredImage}
             tags={
-              featuredArticle.tagSelector?.tags?.map((t) => ({
+              featuredArticle.tagSelector?.tags?.map((t: { name: string }) => ({
                 name: t.name ?? "",
               })) ?? []
             }
@@ -119,6 +124,7 @@ export default async function JournalPage() {
             {journalCards.map((card) => (
               <BaseCard
                 authors={card.authors}
+                blurDataURL={card.blurDataURL}
                 href={card.href}
                 image={card.image}
                 key={card.id}

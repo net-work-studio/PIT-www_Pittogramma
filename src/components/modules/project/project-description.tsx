@@ -30,7 +30,7 @@ export default function ProjectDescription({
 
   return (
     <div>
-      <p ref={textRef} className={expanded ? "" : "line-clamp-3"}>
+      <p className={expanded ? "" : "line-clamp-3"} ref={textRef}>
         {description}
       </p>
       {(isClamped || expanded) && (

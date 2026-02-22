@@ -1,4 +1,8 @@
-import { PortableText, type PortableTextComponents } from "next-sanity";
+import {
+  PortableText,
+  type PortableTextComponents,
+  stegaClean,
+} from "next-sanity";
 
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -7,20 +11,20 @@ import type { INTERVIEW_QUERY_RESULT } from "@/sanity/types";
 
 // MediaItem type for the gallery blocks
 interface MediaItemValue {
-  type?: "image" | "videoUpload" | "videoEmbed";
+  alt?: string | null;
+  caption?: string | null;
   image?: {
     asset?: unknown;
     hotspot?: unknown;
     crop?: unknown;
   };
+  type?: "image" | "videoUpload" | "videoEmbed";
   video?: {
     asset?: {
       url?: string;
     };
   };
   videoUrl?: string;
-  caption?: string | null;
-  alt?: string | null;
 }
 
 // MediaRenderer component to handle image, video upload, and video embed
@@ -35,7 +39,8 @@ function MediaRenderer({
     return null;
   }
 
-  const { type, image, video, videoUrl, caption } = media;
+  const { type: rawType, image, video, videoUrl, caption } = media;
+  const type = stegaClean(rawType);
 
   return (
     <figure>

@@ -9,23 +9,26 @@ interface Tag {
   name: string | null;
 }
 
-interface InterviewInfoProps {
-  title?: string | null;
-  interviewTo?: Person[] | null;
-  studio?: string | null;
+interface PlaceData {
   city?: string | null;
   country?: string | null;
-  readingTime?: number | null;
+}
+
+interface InterviewInfoProps {
+  interviewTo?: Person[] | null;
+  place?: PlaceData | null;
   publishingDate?: string | null;
+  readingTime?: number | null;
+  studio?: string | null;
   tags?: Tag[] | null;
+  title?: string | null;
 }
 
 export default function InterviewInfo({
   title,
   interviewTo,
   studio,
-  city,
-  country,
+  place,
   readingTime,
   publishingDate,
   tags,
@@ -35,7 +38,7 @@ export default function InterviewInfo({
     .filter(Boolean)
     .join(", ");
 
-  const location = [city, country].filter(Boolean).join(", ");
+  const location = [place?.city, place?.country].filter(Boolean).join(", ");
 
   return (
     <div className="flex flex-1 flex-col justify-between gap-8">

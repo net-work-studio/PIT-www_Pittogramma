@@ -10,15 +10,15 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { buildTrackedLink, type UtmSettings } from "@/lib/tracked-link";
-import { urlForImage } from "@/sanity/lib/image";
+import { getBlurDataUrl, urlForImage } from "@/sanity/lib/image";
 import type { BIBLIOGRAPHY_QUERY_RESULT } from "@/sanity/types";
 
 type BookItem = BIBLIOGRAPHY_QUERY_RESULT[number];
 
 interface BookDetailsDrawerProps {
   book: BookItem | null;
-  open: boolean;
   onOpenChange: (open: boolean) => void;
+  open: boolean;
   utmSettings?: UtmSettings;
 }
 
@@ -40,6 +40,7 @@ export function BookDetailsDrawer({
   }
 
   const coverUrl = urlForImage(book.cover)?.width(400).height(600).url();
+  const blurDataURL = getBlurDataUrl(book.cover);
   const authors = getAuthors(book.authors);
 
   return (
@@ -59,6 +60,9 @@ export function BookDetailsDrawer({
                 fill
                 sizes="200px"
                 src={coverUrl}
+                {...(blurDataURL
+                  ? { placeholder: "blur" as const, blurDataURL }
+                  : {})}
               />
             </div>
           )}
@@ -100,10 +104,10 @@ export function BookDetailsDrawer({
                   Categories
                 </p>
                 <div className="flex flex-wrap gap-1.5 pt-1">
-                  {book.categories.map((category, index) => (
+                  {book.categories.map((category) => (
                     <span
                       className="rounded-full bg-secondary px-2.5 py-0.5 text-xs"
-                      key={index}
+                      key={category}
                     >
                       {category}
                     </span>
