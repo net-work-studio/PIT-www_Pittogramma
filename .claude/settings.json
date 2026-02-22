@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r*)",
+      "Bash(grep -rh*)",
+      "Bash(gh repo view*)",
+      "Bash(gh pr view*)",
+      "Bash(git commit*)",
+      "Bash(git add*)",
+      "Bash(python3*)",
+      "mcp__cubic__list_wiki_pages",
+      "mcp__cubic__get_scan",
+      "mcp__cubic__list_learnings",
+      "mcp__cubic__get_wiki_page",
+      "mcp__claude_ai_Linear__list_teams",
+      "mcp__claude_ai_Linear__list_issue_labels",
+      "mcp__claude_ai_Linear__create_issue"
+    ]
+  }
+}
