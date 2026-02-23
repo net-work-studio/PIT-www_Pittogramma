@@ -177,18 +177,6 @@ export type Bookshop = {
   address?: string;
 };
 
-export type TypeFoundry = {
-  _id: string;
-  _type: "typeFoundry";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name: string;
-  tagSelector?: TagSelector;
-  place: PlaceReference;
-  socialLinks?: SocialLinks;
-};
-
 export type SocialLinks = {
   _type: "socialLinks";
   links?: Array<{
@@ -208,6 +196,22 @@ export type SocialLinks = {
     _type: "socialLink";
     _key: string;
   }>;
+};
+
+export type TypeFoundry = {
+  _id: string;
+  _type: "typeFoundry";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  tagSelector?: TagSelector;
+  places?: Array<
+    {
+      _key: string;
+    } & PlaceReference
+  >;
+  socialLinks?: SocialLinks;
 };
 
 export type PublishingDate = {
@@ -1026,8 +1030,8 @@ export type AllSanitySchemaTypes =
   | Glossary
   | PlaceReference
   | Bookshop
-  | TypeFoundry
   | SocialLinks
+  | TypeFoundry
   | PublishingDate
   | InstituteReference
   | StudioReference
@@ -3192,7 +3196,7 @@ export type STUDIOS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: TYPE_FOUNDRIES_QUERY
-// Query: *[_type == "typeFoundry"] | order(name asc) {    _id,    name,    tagSelector {      tags[]->{        _id,        name      }    },    place->{ _id, name, city, country, countryCode, lat, lng },    socialLinks {      links[] {        _key,        platform,        url      }    }  }
+// Query: *[_type == "typeFoundry"] | order(name asc) {    _id,    name,    tagSelector {      tags[]->{        _id,        name      }    },    places[]->{ _id, name, city, country, countryCode, lat, lng },    socialLinks {      links[] {        _key,        platform,        url      }    }  }
 export type TYPE_FOUNDRIES_QUERY_RESULT = Array<{
   _id: string;
   name: string;
@@ -3202,7 +3206,7 @@ export type TYPE_FOUNDRIES_QUERY_RESULT = Array<{
       name: string;
     }> | null;
   } | null;
-  place: {
+  places: Array<{
     _id: string;
     name: string;
     city: string | null;
@@ -3210,7 +3214,7 @@ export type TYPE_FOUNDRIES_QUERY_RESULT = Array<{
     countryCode: string | null;
     lat: number | null;
     lng: number | null;
-  };
+  }> | null;
   socialLinks: {
     links: Array<{
       _key: string;
@@ -3275,7 +3279,7 @@ export type WEB_SOURCES_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: MAP_PLACES_QUERY
-// Query: *[_type == "place" && defined(lat) && defined(lng)] {    _id,    name,    city,    country,    countryCode,    lat,    lng,    "designers": *[_type == "designer" && place._ref == ^._id] { _id, name, slug },    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },    "studios": *[_type == "studio" && references(^._id)] { _id, name },    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },    "typeFoundries": *[_type == "typeFoundry" && place._ref == ^._id] { _id, name }  }
+// Query: *[_type == "place" && defined(lat) && defined(lng)] {    _id,    name,    city,    country,    countryCode,    lat,    lng,    "designers": *[_type == "designer" && place._ref == ^._id] { _id, name, slug },    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },    "studios": *[_type == "studio" && references(^._id)] { _id, name },    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }  }
 export type MAP_PLACES_QUERY_RESULT = Array<{
   _id: string;
   name: string;
@@ -3332,8 +3336,8 @@ declare module "@sanity/client" {
     '\n  *[_type == "glossary"] | order(name asc) {\n    _id,\n    name,\n    description,\n    image {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    }\n  }\n': GLOSSARY_QUERY_RESULT;
     '\n  *[_type == "institute"] | order(name asc) {\n    _id,\n    name,\n    yearFoundation,\n    languages[]->{\n      _id,\n      name\n    },\n    place->{ _id, name, city, country, countryCode, lat, lng },\n    address,\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': INSTITUTES_QUERY_RESULT;
     '\n  *[_type == "studio"] | order(name asc) {\n    _id,\n    name,\n    websiteUrl,\n    description,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    places[]->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': STUDIOS_QUERY_RESULT;
-    '\n  *[_type == "typeFoundry"] | order(name asc) {\n    _id,\n    name,\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    place->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': TYPE_FOUNDRIES_QUERY_RESULT;
+    '\n  *[_type == "typeFoundry"] | order(name asc) {\n    _id,\n    name,\n    tagSelector {\n      tags[]->{\n        _id,\n        name\n      }\n    },\n    places[]->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': TYPE_FOUNDRIES_QUERY_RESULT;
     '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    description,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tagSelector {\n      tags[]->{ _id, name }\n    },\n    sourceUrl,\n    ogTitle,\n    ogDescription,\n    ogSiteName,\n    ogImageUrl\n  }\n': WEB_SOURCES_QUERY_RESULT;
-    '\n  *[_type == "place" && defined(lat) && defined(lng)] {\n    _id,\n    name,\n    city,\n    country,\n    countryCode,\n    lat,\n    lng,\n    "designers": *[_type == "designer" && place._ref == ^._id] { _id, name, slug },\n    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },\n    "studios": *[_type == "studio" && references(^._id)] { _id, name },\n    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },\n    "typeFoundries": *[_type == "typeFoundry" && place._ref == ^._id] { _id, name }\n  }\n': MAP_PLACES_QUERY_RESULT;
+    '\n  *[_type == "place" && defined(lat) && defined(lng)] {\n    _id,\n    name,\n    city,\n    country,\n    countryCode,\n    lat,\n    lng,\n    "designers": *[_type == "designer" && place._ref == ^._id] { _id, name, slug },\n    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },\n    "studios": *[_type == "studio" && references(^._id)] { _id, name },\n    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },\n    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }\n  }\n': MAP_PLACES_QUERY_RESULT;
   }
 }

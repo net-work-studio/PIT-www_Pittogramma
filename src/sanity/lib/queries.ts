@@ -578,7 +578,7 @@ export const TYPE_FOUNDRIES_QUERY = defineQuery(`
         name
       }
     },
-    place->{ _id, name, city, country, countryCode, lat, lng },
+    places[]->{ _id, name, city, country, countryCode, lat, lng },
     socialLinks {
       links[] {
         _key,
@@ -628,6 +628,6 @@ export const MAP_PLACES_QUERY = defineQuery(`
     "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },
     "studios": *[_type == "studio" && references(^._id)] { _id, name },
     "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },
-    "typeFoundries": *[_type == "typeFoundry" && place._ref == ^._id] { _id, name }
+    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }
   }
 `);

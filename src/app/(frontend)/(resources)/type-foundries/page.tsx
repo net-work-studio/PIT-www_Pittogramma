@@ -1,9 +1,5 @@
 import SearchInput from "@/components/feat/search-input";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
-import {
-  CityDisplay,
-  CountryDisplay,
-} from "@/components/resources/location-display";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import { TagsDisplay } from "@/components/resources/tags-display";
 import PageHeader from "@/components/shared/page-header";
@@ -13,6 +9,34 @@ import type { TYPE_FOUNDRIES_QUERY_RESULT } from "@/sanity/types";
 
 type TypeFoundry = TYPE_FOUNDRIES_QUERY_RESULT[number];
 
+function getCities(places: TypeFoundry["places"]) {
+  if (!places || places.length === 0) {
+    return "-";
+  }
+  const cities: string[] = [];
+  for (const place of places) {
+    if (place?.city) {
+      cities.push(place.city);
+    }
+  }
+  return cities.length > 0 ? cities.join(", ") : "-";
+}
+
+function getCountries(places: TypeFoundry["places"]) {
+  if (!places || places.length === 0) {
+    return "-";
+  }
+  const uniqueCountries = new Set<string>();
+  for (const place of places) {
+    if (place?.country) {
+      uniqueCountries.add(place.country);
+    }
+  }
+  return uniqueCountries.size > 0
+    ? Array.from(uniqueCountries).join(", ")
+    : "-";
+}
+
 function TypeFoundryCard({ foundry }: { foundry: TypeFoundry }) {
   return (
     <ResourceListItem>
@@ -20,12 +44,8 @@ function TypeFoundryCard({ foundry }: { foundry: TypeFoundry }) {
       <li className="col-span-4">
         <TagsDisplay tags={foundry.tagSelector?.tags} />
       </li>
-      <li className="col-span-2">
-        <CityDisplay place={foundry.place} />
-      </li>
-      <li className="col-span-2">
-        <CountryDisplay place={foundry.place} />
-      </li>
+      <li className="col-span-2">{getCities(foundry.places)}</li>
+      <li className="col-span-2">{getCountries(foundry.places)}</li>
     </ResourceListItem>
   );
 }
