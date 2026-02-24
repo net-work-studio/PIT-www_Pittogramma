@@ -162,6 +162,7 @@ export const DESIGNER_QUERY = defineQuery(`
       _key,
       institute->{ _id, name },
       degree,
+      courseName,
       year
     },
     place->{ _id, name, city, country, countryCode, lat, lng },

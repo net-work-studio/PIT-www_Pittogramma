@@ -57,7 +57,7 @@ export default function DesignerInfo({
                     {education.map(
                       (edu: NonNullable<Designer["education"]>[number]) => (
                         <li className="text-sm" key={edu._key}>
-                          {[edu.institute?.name, edu.degree, edu.year]
+                          {[edu.institute?.name, edu.degree, edu.courseName, edu.year]
                             .filter(Boolean)
                             .join(", ")}
                         </li>

@@ -72,10 +72,16 @@ export const designer = defineType({
                   { title: "Bachelor", value: "Bachelor" },
                   { title: "Master", value: "Master" },
                   { title: "PhD", value: "PhD" },
+                  { title: "Erasmus", value: "Erasmus" },
                   { title: "Other", value: "Other" },
                 ],
               },
               validation: (e) => e.required(),
+            }),
+            defineField({
+              type: "string",
+              name: "courseName",
+              title: "Course Name",
             }),
             defineField({
               type: "number",

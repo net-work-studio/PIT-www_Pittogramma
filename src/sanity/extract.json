@@ -3641,11 +3641,22 @@
                     },
                     {
                       "type": "string",
+                      "value": "Erasmus"
+                    },
+                    {
+                      "type": "string",
                       "value": "Other"
                     }
                   ]
                 },
                 "optional": false
+              },
+              "courseName": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
               },
               "year": {
                 "type": "objectAttribute",
