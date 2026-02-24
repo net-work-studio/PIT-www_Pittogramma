@@ -85,4 +85,11 @@ export const webSource = defineType({
       description: "Original OG image URL",
     }),
   ],
+  preview: {
+    select: {
+      title: "name",
+      subtitle: "sourceUrl",
+      media: "cover.image",
+    },
+  },
 });
