@@ -683,6 +683,9 @@ export type Designer = {
   }>;
   place: PlaceReference;
   socialLinks?: SocialLinks;
+  email?: string;
+  phone?: string;
+  seo?: SeoModule;
 };
 
 export type Journal = {
