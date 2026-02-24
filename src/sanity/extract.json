@@ -996,6 +996,36 @@
         },
         "optional": false
       },
+      "socialLinks": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "socialLinks"
+        },
+        "optional": true
+      },
+      "fetchWebsiteData": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "description": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "cover": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "imageWithMetadata"
+        },
+        "optional": true
+      },
       "tagSelector": {
         "type": "objectAttribute",
         "value": {
@@ -1026,11 +1056,31 @@
         },
         "optional": true
       },
-      "socialLinks": {
+      "ogTitle": {
         "type": "objectAttribute",
         "value": {
-          "type": "inline",
-          "name": "socialLinks"
+          "type": "string"
+        },
+        "optional": true
+      },
+      "ogDescription": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "ogSiteName": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "ogImageUrl": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       }
@@ -4406,7 +4456,15 @@
         },
         "optional": false
       },
-      "websiteUrl": {
+      "socialLinks": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "socialLinks"
+        },
+        "optional": true
+      },
+      "fetchWebsiteData": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -4425,22 +4483,6 @@
         "value": {
           "type": "inline",
           "name": "imageWithMetadata"
-        },
-        "optional": true
-      },
-      "category": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "category.reference"
-        },
-        "optional": false
-      },
-      "tagSelector": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "tagSelector"
         },
         "optional": true
       },
@@ -4466,11 +4508,19 @@
         },
         "optional": true
       },
-      "socialLinks": {
+      "category": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "socialLinks"
+          "name": "category.reference"
+        },
+        "optional": false
+      },
+      "tagSelector": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "tagSelector"
         },
         "optional": true
       },
