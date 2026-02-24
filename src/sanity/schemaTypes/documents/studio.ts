@@ -1,6 +1,6 @@
 import { DesktopIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { UrlInput } from "@/sanity/components/url-input";
+import { FetchWebsiteDataButton } from "@/sanity/components/fetch-website-data-button";
 import { groups } from "@/sanity/utils/groups";
 
 export const studio = defineType({
@@ -18,16 +18,19 @@ export const studio = defineType({
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "url",
-      name: "websiteUrl",
-      title: "Website URL",
-      description: "The URL of the studio website",
+      type: "socialLinks",
+      name: "socialLinks",
+      title: "Social Links",
       group: "content",
-      options: {
-        autoFillName: false,
-      } as Record<string, unknown>,
+    }),
+    defineField({
+      type: "string",
+      name: "fetchWebsiteData",
+      title: "Fetch Website Data",
+      description: "Fetches OG metadata from the Website URL in Social Links",
+      group: "content",
       components: {
-        input: UrlInput,
+        input: FetchWebsiteDataButton,
       },
     }),
     defineField({
@@ -46,20 +49,6 @@ export const studio = defineType({
       group: "content",
     }),
     defineField({
-      type: "reference",
-      name: "category",
-      title: "Category",
-      to: [{ type: "category" }],
-      group: "content",
-      validation: (e) => e.required(),
-    }),
-    defineField({
-      type: "tagSelector",
-      name: "tagSelector",
-      title: "Tags",
-      group: "content",
-    }),
-    defineField({
       type: "array",
       name: "places",
       title: "Locations",
@@ -72,9 +61,17 @@ export const studio = defineType({
       ],
     }),
     defineField({
-      type: "socialLinks",
-      name: "socialLinks",
-      title: "Social Links",
+      type: "reference",
+      name: "category",
+      title: "Category",
+      to: [{ type: "category" }],
+      group: "content",
+      validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "tagSelector",
+      name: "tagSelector",
+      title: "Tags",
       group: "content",
     }),
     // Read-only OG metadata fields for reference
@@ -118,6 +115,7 @@ export const studio = defineType({
   preview: {
     select: {
       title: "name",
+      subtitle: "fetchWebsiteData",
       media: "cover.image",
     },
   },

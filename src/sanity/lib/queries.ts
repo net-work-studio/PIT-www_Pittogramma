@@ -542,7 +542,6 @@ export const STUDIOS_QUERY = defineQuery(`
   *[_type == "studio"] | order(name asc) {
     _id,
     name,
-    websiteUrl,
     description,
     cover {
       image { ${IMAGE_FIELDS} },

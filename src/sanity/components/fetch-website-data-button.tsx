@@ -1,20 +1,10 @@
 "use client";
 
-import {
-  Button,
-  Card,
-  Flex,
-  Stack,
-  Text,
-  TextInput,
-  useToast,
-} from "@sanity/ui";
+import { Button, Card, Flex, Stack, Text, useToast } from "@sanity/ui";
 import { useCallback, useState } from "react";
 import {
   type SanityClient,
   type StringInputProps,
-  set,
-  unset,
   useClient,
   useFormValue,
 } from "sanity";
@@ -28,6 +18,12 @@ interface OgData {
   imageUrl: string | null;
   siteName: string | null;
   title: string | null;
+}
+
+interface SocialLink {
+  _key: string;
+  platform: string;
+  url: string;
 }
 
 /** Ensure a draft document exists — Studio doesn't auto-create one for custom button actions. */
@@ -49,27 +45,12 @@ async function ensureDraft(
   return draftId;
 }
 
-function buildPatchData(
-  data: OgData,
-  options?: { autoFillName?: boolean }
-): Record<string, unknown> {
+function buildPatchData(data: OgData): Record<string, unknown> {
   const patchData: Record<string, unknown> = {};
-  const autoFillName = options?.autoFillName ?? true;
-
-  // Use siteName as name, fallback to title
-  if (autoFillName) {
-    if (data.siteName) {
-      patchData.name = data.siteName;
-    } else if (data.title) {
-      patchData.name = data.title;
-    }
-  }
 
   if (data.description) {
     patchData.description = data.description;
   }
-
-  // Store raw OG values for reference
   if (data.title) {
     patchData.ogTitle = data.title;
   }
@@ -96,31 +77,23 @@ function getButtonText(isLoading: boolean, isPatching: boolean): string {
   return "Fetch Data";
 }
 
-export function UrlInput(props: StringInputProps) {
-  const { onChange, value = "", elementProps } = props;
-  const autoFillName =
-    (props.schemaType.options as { autoFillName?: boolean } | undefined)
-      ?.autoFillName ?? true;
+export function FetchWebsiteDataButton(_props: StringInputProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fetchedData, setFetchedData] = useState<OgData | null>(null);
   const [isPatching, setIsPatching] = useState(false);
 
-  // Get the document form context to patch other fields
   const documentId = useFormValue(["_id"]) as string | undefined;
+  const socialLinksLinks = useFormValue(["socialLinks", "links"]) as
+    | SocialLink[]
+    | undefined;
   const client = useClient({ apiVersion });
   const toast = useToast();
 
-  const handleChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const nextValue = event.currentTarget.value;
-      onChange(nextValue ? set(nextValue) : unset());
-      // Clear previous fetch results when URL changes
-      setFetchedData(null);
-      setError(null);
-    },
-    [onChange]
+  const websiteLink = socialLinksLinks?.find(
+    (link: SocialLink) => link.platform === "website"
   );
+  const websiteUrl = websiteLink?.url;
 
   const uploadCoverImage = useCallback(
     async (
@@ -180,7 +153,7 @@ export function UrlInput(props: StringInputProps) {
       setIsPatching(true);
 
       try {
-        const patchData = buildPatchData(data, { autoFillName });
+        const patchData = buildPatchData(data);
 
         if (data.imageUrl) {
           const coverData = await uploadCoverImage(
@@ -210,7 +183,7 @@ export function UrlInput(props: StringInputProps) {
         setIsPatching(false);
       }
     },
-    [documentId, client, toast, uploadCoverImage, autoFillName]
+    [documentId, client, toast, uploadCoverImage]
   );
 
   const handleApplyName = useCallback(
@@ -236,8 +209,7 @@ export function UrlInput(props: StringInputProps) {
   );
 
   const handleFetch = useCallback(async () => {
-    if (!value) {
-      setError("Please enter a URL first");
+    if (!websiteUrl) {
       return;
     }
 
@@ -247,7 +219,7 @@ export function UrlInput(props: StringInputProps) {
 
     try {
       const response = await fetch(
-        `/api/websites/fetch-og?url=${encodeURIComponent(value)}`,
+        `/api/websites/fetch-og?url=${encodeURIComponent(websiteUrl)}`,
         { signal: AbortSignal.timeout(15_000) }
       );
       const data = await response.json();
@@ -257,8 +229,6 @@ export function UrlInput(props: StringInputProps) {
       }
 
       setFetchedData(data);
-
-      // Automatically patch the document fields
       await patchDocumentFields(data);
     } catch (err) {
       if (err instanceof Error && err.name === "TimeoutError") {
@@ -269,29 +239,36 @@ export function UrlInput(props: StringInputProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [value, patchDocumentFields]);
+  }, [websiteUrl, patchDocumentFields]);
 
   return (
     <Stack space={3} style={{ width: "100%" }}>
       <Flex align="center" gap={2} style={{ width: "100%" }}>
-        <TextInput
-          {...elementProps}
-          onChange={handleChange}
-          placeholder="Enter website URL (https://...)"
-          style={{ flex: 1 }}
-          value={value}
-        />
-        <Button
-          disabled={isLoading || isPatching || !value}
-          mode="ghost"
-          onClick={handleFetch}
-          text={getButtonText(isLoading, isPatching)}
-          tone="primary"
-        />
+        {websiteUrl ? (
+          <>
+            <Text size={1} style={{ flex: 1 }}>
+              {websiteUrl}
+            </Text>
+            <Button
+              disabled={isLoading || isPatching}
+              mode="ghost"
+              onClick={handleFetch}
+              text={getButtonText(isLoading, isPatching)}
+              tone="primary"
+            />
+          </>
+        ) : (
+          <Text muted size={1}>
+            Add a Website link in Social Links first
+          </Text>
+        )}
       </Flex>
-      <Text muted size={1}>
-        Limited to 10 requests per minute
-      </Text>
+
+      {websiteUrl && (
+        <Text muted size={1}>
+          Limited to 10 requests per minute
+        </Text>
+      )}
 
       {error && (
         <Card padding={3} radius={2} tone="critical">
@@ -339,7 +316,7 @@ export function UrlInput(props: StringInputProps) {
                 </Text>
               )}
             </Stack>
-            {!autoFillName && (fetchedData.siteName || fetchedData.title) && (
+            {(fetchedData.siteName || fetchedData.title) && (
               <Flex align="center" gap={2}>
                 <Text muted size={1}>
                   Suggested name:{" "}
