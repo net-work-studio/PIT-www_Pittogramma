@@ -1,6 +1,6 @@
 import { HomeIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { directoryFields } from "@/sanity/utils/directoryFields";
+import { directoryFields } from "@/sanity/utils/directory-fields";
 
 export const bookshop = defineType({
   type: "document",

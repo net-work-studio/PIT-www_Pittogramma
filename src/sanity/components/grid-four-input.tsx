@@ -13,26 +13,26 @@ type GridPosition =
   | "bottomRight"
   | null;
 
-type MediaItemValue = {
+interface MediaItemValue {
   _type?: string;
-  type?: "image" | "videoUpload" | "videoEmbed";
+  caption?: string;
   image?: {
     _type?: string;
     asset?: {
       _ref?: string;
     };
   };
-  caption?: string;
-};
+  type?: "image" | "videoUpload" | "videoEmbed";
+}
 
-type GridFourValue = {
+interface GridFourValue {
   _type?: string;
+  bottomLeft?: MediaItemValue;
+  bottomRight?: MediaItemValue;
   orientation?: string;
   topLeft?: MediaItemValue;
   topRight?: MediaItemValue;
-  bottomLeft?: MediaItemValue;
-  bottomRight?: MediaItemValue;
-};
+}
 
 function getMediaIcon(type: string | undefined) {
   switch (type) {

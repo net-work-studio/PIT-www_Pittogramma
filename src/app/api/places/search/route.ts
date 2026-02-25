@@ -30,6 +30,7 @@ export async function GET(request: NextRequest) {
   url.searchParams.set("format", "jsonv2");
   url.searchParams.set("addressdetails", "1");
   url.searchParams.set("limit", "5");
+  url.searchParams.set("accept-language", "en");
 
   try {
     const response = await fetch(url.toString(), {

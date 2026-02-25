@@ -19,18 +19,18 @@ import {
 } from "sanity";
 import { apiVersion } from "@/sanity/env";
 
-type BookData = {
-  title: string | null;
+interface BookData {
   authors: string | null;
-  publisher: string | null;
-  year: number | null;
-  description: string | null;
-  pageCount: number | null;
   categories: string[] | null;
-  language: string | null;
-  thumbnailUrl: string | null;
+  description: string | null;
   googleBooksId: string | null;
-};
+  language: string | null;
+  pageCount: number | null;
+  publisher: string | null;
+  thumbnailUrl: string | null;
+  title: string | null;
+  year: number | null;
+}
 
 function buildPatchData(data: BookData): Record<string, unknown> {
   const patchData: Record<string, unknown> = {};

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-import { JsonLd } from "@/components/seo/JsonLd";
-import { siteDefaults } from "@/lib/seo/siteDefaults";
+import { JsonLd } from "@/components/seo/json-ld";
+import { siteDefaults } from "@/lib/seo/site-defaults";
 
 import "./globals.css";
 

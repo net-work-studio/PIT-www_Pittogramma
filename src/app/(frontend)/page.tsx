@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import CtaCard from "@/components/cards/cta-card";
 import HomeGrid from "@/components/home-grid";
 import PageHeader from "@/components/shared/page-header";
-import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
-import { siteDefaults } from "@/lib/seo/siteDefaults";
+import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
+import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
 import { sampleHomeData } from "@/sample-data/sample-home-data";
 import { sanityFetch } from "@/sanity/lib/live";
-import { HOME_PAGE_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
+import { HOME_PAGE_QUERY } from "@/sanity/lib/queries";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -28,10 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const [{ data: siteSettings }, { data: homePage }] = await Promise.all([
-    sanityFetch({ query: SITE_SETTINGS_QUERY }),
-    sanityFetch({ query: HOME_PAGE_QUERY }),
-  ]);
+  const { data: homePage } = await sanityFetch({ query: HOME_PAGE_QUERY });
 
   const cta = homePage?.endOfPageCta;
 

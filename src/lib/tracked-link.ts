@@ -1,8 +1,8 @@
-export type UtmSettings = {
-  utmSource?: string | null;
-  utmMedium?: string | null;
+export interface UtmSettings {
   utmCampaign?: string | null;
-};
+  utmMedium?: string | null;
+  utmSource?: string | null;
+}
 
 // Default values used when settings are not provided
 const DEFAULT_UTM: Required<UtmSettings> = {

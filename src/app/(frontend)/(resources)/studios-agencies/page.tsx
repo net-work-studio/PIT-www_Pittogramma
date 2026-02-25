@@ -13,13 +13,13 @@ function getCities(places: Studio["places"]) {
   if (!places || places.length === 0) {
     return "-";
   }
-  const cities: string[] = [];
+  const uniqueCities = new Set<string>();
   for (const place of places) {
     if (place?.city) {
-      cities.push(place.city);
+      uniqueCities.add(place.city);
     }
   }
-  return cities.length > 0 ? cities.join(", ") : "-";
+  return uniqueCities.size > 0 ? Array.from(uniqueCities).join(", ") : "-";
 }
 
 function getCountries(places: Studio["places"]) {

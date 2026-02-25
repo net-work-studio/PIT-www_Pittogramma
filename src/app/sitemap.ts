@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { siteDefaults } from "@/lib/seo/siteDefaults";
+import { siteDefaults } from "@/lib/seo/site-defaults";
 import { client } from "@/sanity/lib/client";
 
 const SITEMAP_QUERY = `{

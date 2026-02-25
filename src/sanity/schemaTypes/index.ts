@@ -21,31 +21,31 @@ import { publisher } from "./documents/publisher";
 import { studio } from "./documents/studio";
 import { tag } from "./documents/tag";
 import { teacher } from "./documents/teacher";
-import { typeFoundry } from "./documents/typeFoundry";
-import { webSource } from "./documents/webSource";
+import { typeFoundry } from "./documents/type-foundry";
+import { webSource } from "./documents/web-source";
 import {
   gridFourMediaBlock,
   sideBySideMediaBlock,
   singleMediaBlock,
   threeSideBySideMediaBlock,
-} from "./objects/galleryBlocks";
-import { imageWithMetadata } from "./objects/imageWithMetadata";
+} from "./objects/gallery-blocks";
+import { imageWithMetadata } from "./objects/image-with-metadata";
 import { logo } from "./objects/logo";
-import { mediaItem } from "./objects/mediaItem";
-import { openGraph } from "./objects/openGraph";
-import { publishingDate } from "./objects/publishingDate";
-import { seoModule } from "./objects/seoModule";
-import { socialLinks } from "./objects/socialLinks";
-import { tagSelector } from "./objects/tagSelector";
-import { titleSlug } from "./objects/titleSlug";
-import { xCard } from "./objects/xCard";
-import { designersPage } from "./singletons/pages/designersPage";
-import { eventsPage } from "./singletons/pages/eventsPage";
-import { homePage } from "./singletons/pages/homePage";
-import { interviewsPage } from "./singletons/pages/interviewsPage";
-import { journalPage } from "./singletons/pages/journalPage";
-import { projectsPage } from "./singletons/pages/projectsPage";
-import { siteSettings } from "./singletons/siteSettings";
+import { mediaItem } from "./objects/media-item";
+import { openGraph } from "./objects/open-graph";
+import { publishingDate } from "./objects/publishing-date";
+import { seoModule } from "./objects/seo-module";
+import { socialLinks } from "./objects/social-links";
+import { tagSelector } from "./objects/tag-selector";
+import { titleSlug } from "./objects/title-slug";
+import { xCard } from "./objects/x-card";
+import { designersPage } from "./singletons/pages/designers-page";
+import { eventsPage } from "./singletons/pages/events-page";
+import { homePage } from "./singletons/pages/home-page";
+import { interviewsPage } from "./singletons/pages/interviews-page";
+import { journalPage } from "./singletons/pages/journal-page";
+import { projectsPage } from "./singletons/pages/projects-page";
+import { siteSettings } from "./singletons/site-settings";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [

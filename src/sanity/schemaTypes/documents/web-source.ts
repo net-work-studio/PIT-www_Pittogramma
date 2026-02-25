@@ -1,44 +1,36 @@
-import { DesktopIcon } from "@sanity/icons";
-import { defineArrayMember, defineField, defineType } from "sanity";
-import { FetchWebsiteDataButton } from "@/sanity/components/fetch-website-data-button";
-import { groups } from "@/sanity/utils/groups";
+import { LinkIcon } from "@sanity/icons";
+import { defineField, defineType } from "sanity";
+import { UrlInput } from "@/sanity/components/url-input";
 
-export const studio = defineType({
+export const webSource = defineType({
   type: "document",
-  name: "studio",
-  title: "Studio",
-  groups,
-  icon: DesktopIcon,
+  name: "webSource",
+  title: "Web Source",
+  icon: LinkIcon,
   fields: [
+    defineField({
+      type: "url",
+      name: "sourceUrl",
+      title: "Source URL",
+      validation: (e) => e.required(),
+      description: "The URL of the source website",
+      components: {
+        input: UrlInput,
+      },
+    }),
     defineField({
       type: "string",
       name: "name",
       title: "Name",
-      group: "content",
       validation: (e) => e.required(),
+      description: "Auto-filled from OG site_name or title",
     }),
-    defineField({
-      type: "socialLinks",
-      name: "socialLinks",
-      title: "Social Links",
-      group: "content",
-    }),
-    defineField({
-      type: "string",
-      name: "fetchWebsiteData",
-      title: "Fetch Website Data",
-      description: "Fetches OG metadata from the Website URL in Social Links",
-      group: "content",
-      components: {
-        input: FetchWebsiteDataButton,
-      },
-    }),
+
     defineField({
       type: "text",
       name: "description",
       title: "Description",
       rows: 3,
-      group: "content",
       description: "Auto-filled from OG description",
     }),
     defineField({
@@ -46,40 +38,24 @@ export const studio = defineType({
       name: "cover",
       title: "Cover",
       description: "Auto-filled from OG image",
-      group: "content",
-    }),
-    defineField({
-      type: "array",
-      name: "places",
-      title: "Locations",
-      group: "content",
-      of: [
-        defineArrayMember({
-          type: "reference",
-          to: [{ type: "place" }],
-        }),
-      ],
     }),
     defineField({
       type: "reference",
       name: "category",
       title: "Category",
       to: [{ type: "category" }],
-      group: "content",
       validation: (e) => e.required(),
     }),
     defineField({
       type: "tagSelector",
       name: "tagSelector",
       title: "Tags",
-      group: "content",
     }),
     // Read-only OG metadata fields for reference
     defineField({
       type: "string",
       name: "ogTitle",
       title: "OG Title",
-      group: "og",
       readOnly: true,
       hidden: ({ document }) => !document?.ogTitle,
       description: "Raw OG title from the website",
@@ -88,7 +64,6 @@ export const studio = defineType({
       type: "string",
       name: "ogDescription",
       title: "OG Description",
-      group: "og",
       readOnly: true,
       hidden: ({ document }) => !document?.ogDescription,
       description: "Raw OG description from the website",
@@ -97,7 +72,6 @@ export const studio = defineType({
       type: "string",
       name: "ogSiteName",
       title: "OG Site Name",
-      group: "og",
       readOnly: true,
       hidden: ({ document }) => !document?.ogSiteName,
       description: "Raw OG site name from the website",
@@ -106,7 +80,6 @@ export const studio = defineType({
       type: "string",
       name: "ogImageUrl",
       title: "OG Image URL",
-      group: "og",
       readOnly: true,
       hidden: ({ document }) => !document?.ogImageUrl,
       description: "Original OG image URL",
@@ -115,7 +88,7 @@ export const studio = defineType({
   preview: {
     select: {
       title: "name",
-      subtitle: "description",
+      subtitle: "sourceUrl",
       media: "cover.image",
     },
   },
