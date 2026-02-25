@@ -11,8 +11,8 @@
  * 4. Verifies migration is complete
  */
 
-import { createClient } from "@sanity/client";
 import { randomBytes } from "node:crypto";
+import { createClient } from "@sanity/client";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -47,7 +47,9 @@ async function main() {
     `*[_type == "typeFoundry" && defined(place)]{ _id, place }`
   );
 
-  console.log(`Found ${docs.length} typeFoundry documents with old "place" field\n`);
+  console.log(
+    `Found ${docs.length} typeFoundry documents with old "place" field\n`
+  );
 
   if (docs.length === 0) {
     console.log("Nothing to migrate.");
@@ -102,7 +104,9 @@ async function main() {
     console.log("\n=== Migration successful! ===");
     process.exit(0);
   } else {
-    console.log("\n=== WARNING: Some documents were not migrated. Check errors above. ===");
+    console.log(
+      "\n=== WARNING: Some documents were not migrated. Check errors above. ==="
+    );
     process.exit(1);
   }
 }

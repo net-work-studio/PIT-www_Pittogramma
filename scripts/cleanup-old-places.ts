@@ -39,7 +39,9 @@ async function main() {
   console.log("=== Old Places Cleanup Script ===\n");
 
   // Phase 1: Unset old fields from ALL documents (published + drafts)
-  console.log("Phase 1: Unsetting old fields from documents (including drafts)...\n");
+  console.log(
+    "Phase 1: Unsetting old fields from documents (including drafts)...\n"
+  );
 
   let unsetSuccess = 0;
   let unsetErrors = 0;
@@ -91,9 +93,7 @@ async function main() {
   const studios: Array<{ _id: string }> = await rawClient.fetch(
     `*[_type == "studio" && defined(locations)]{ _id }`
   );
-  console.log(
-    `  Found ${studios.length} studios with old "locations" field`
-  );
+  console.log(`  Found ${studios.length} studios with old "locations" field`);
 
   for (const doc of studios) {
     try {
@@ -108,26 +108,35 @@ async function main() {
     }
   }
 
-  console.log(`\n  Phase 1 complete: ${unsetSuccess} succeeded, ${unsetErrors} errors\n`);
+  console.log(
+    `\n  Phase 1 complete: ${unsetSuccess} succeeded, ${unsetErrors} errors\n`
+  );
 
   // Phase 2: Find and clean any remaining references to city/country documents
-  console.log("Phase 2: Removing remaining references to city/country documents...\n");
+  console.log(
+    "Phase 2: Removing remaining references to city/country documents...\n"
+  );
 
   const cityIds: string[] = await rawClient.fetch(`*[_type == "city"]._id`);
-  const countryIds: string[] = await rawClient.fetch(`*[_type == "country"]._id`);
+  const countryIds: string[] = await rawClient.fetch(
+    `*[_type == "country"]._id`
+  );
 
   const allOldIds = [...cityIds, ...countryIds];
-  console.log(`  Found ${cityIds.length} city and ${countryIds.length} country documents`);
+  console.log(
+    `  Found ${cityIds.length} city and ${countryIds.length} country documents`
+  );
 
   if (allOldIds.length > 0) {
     // Find any documents still referencing these old IDs
     const referencingDocs: Array<{ _id: string; _type: string }> =
-      await rawClient.fetch(
-        `*[references($ids)]{ _id, _type }`,
-        { ids: allOldIds }
-      );
+      await rawClient.fetch("*[references($ids)]{ _id, _type }", {
+        ids: allOldIds,
+      });
 
-    console.log(`  Found ${referencingDocs.length} documents still referencing old city/country docs`);
+    console.log(
+      `  Found ${referencingDocs.length} documents still referencing old city/country docs`
+    );
 
     for (const doc of referencingDocs) {
       try {
@@ -151,8 +160,12 @@ async function main() {
   console.log("\nPhase 3: Deleting old city and country documents...\n");
 
   // Re-fetch in case IDs changed
-  const remainingCityIds: string[] = await rawClient.fetch(`*[_type == "city"]._id`);
-  const remainingCountryIds: string[] = await rawClient.fetch(`*[_type == "country"]._id`);
+  const remainingCityIds: string[] = await rawClient.fetch(
+    `*[_type == "city"]._id`
+  );
+  const remainingCountryIds: string[] = await rawClient.fetch(
+    `*[_type == "country"]._id`
+  );
 
   console.log(
     `  Found ${remainingCityIds.length} city documents and ${remainingCountryIds.length} country documents to delete`
@@ -175,7 +188,9 @@ async function main() {
     }
   }
 
-  console.log(`\n  Phase 3 complete: ${deleteSuccess} deleted, ${deleteErrors} errors\n`);
+  console.log(
+    `\n  Phase 3 complete: ${deleteSuccess} deleted, ${deleteErrors} errors\n`
+  );
 
   // Phase 4: Verify cleanup
   console.log("Phase 4: Verifying cleanup...\n");
@@ -202,7 +217,9 @@ async function main() {
   console.log(`  Remaining city documents: ${verifyCities}`);
   console.log(`  Remaining country documents: ${verifyCountries}`);
   console.log(`  Remaining location fields: ${verifyLocations}`);
-  console.log(`  Remaining interview city/country fields: ${verifyInterviewFields}`);
+  console.log(
+    `  Remaining interview city/country fields: ${verifyInterviewFields}`
+  );
   console.log(`  Remaining studio locations fields: ${verifyStudioLocations}`);
 
   console.log("\n=== Cleanup Complete ===");
