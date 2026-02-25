@@ -115,7 +115,7 @@ export const studio = defineType({
   preview: {
     select: {
       title: "name",
-      subtitle: "fetchWebsiteData",
+      subtitle: "description",
       media: "cover.image",
     },
   },

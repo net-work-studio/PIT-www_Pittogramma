@@ -7,7 +7,7 @@ import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
 import { sampleHomeData } from "@/sample-data/sample-home-data";
 import { sanityFetch } from "@/sanity/lib/live";
-import { HOME_PAGE_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
+import { HOME_PAGE_QUERY } from "@/sanity/lib/queries";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -28,10 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const [, { data: homePage }] = await Promise.all([
-    sanityFetch({ query: SITE_SETTINGS_QUERY }),
-    sanityFetch({ query: HOME_PAGE_QUERY }),
-  ]);
+  const { data: homePage } = await sanityFetch({ query: HOME_PAGE_QUERY });
 
   const cta = homePage?.endOfPageCta;
 

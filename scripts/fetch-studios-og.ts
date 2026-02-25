@@ -68,11 +68,7 @@ function decodeHtml(text: string): string {
     .replace(/&#x2F;/g, "/");
 }
 
-function extractMeta(
-  html: string,
-  re: RegExp,
-  revRe: RegExp
-): string | null {
+function extractMeta(html: string, re: RegExp, revRe: RegExp): string | null {
   const match = html.match(re) || html.match(revRe);
   return match ? decodeHtml(match[1]) : null;
 }
@@ -102,8 +98,7 @@ function parseOgData(html: string, baseUrl: string): OgData {
   }
 
   return {
-    title:
-      ogTitle || (titleTag ? decodeHtml(titleTag[1].trim()) : null),
+    title: ogTitle || (titleTag ? decodeHtml(titleTag[1].trim()) : null),
     description: ogDesc || metaDesc,
     siteName: ogSite,
     imageUrl: ogImage,
@@ -169,9 +164,10 @@ async function uploadImage(
       return null;
     }
 
+    const ext = contentType.split("/")[1]?.split(";")[0] || "jpg";
     const blob = await response.blob();
     const asset = await client.assets.upload("image", blob, {
-      filename: `cover-${siteName || "website"}.jpg`,
+      filename: `cover-${siteName || "website"}.${ext}`,
     });
 
     return {
@@ -229,7 +225,7 @@ async function main() {
     try {
       const ogData = await fetchOgData(doc.websiteUrl);
 
-      if (!ogData || !(ogData.title || ogData.siteName)) {
+      if (!(ogData && (ogData.title || ogData.siteName))) {
         console.log(`${progress} SKIP: ${doc.name} — no OG data found`);
         skipped++;
         await delay(500);

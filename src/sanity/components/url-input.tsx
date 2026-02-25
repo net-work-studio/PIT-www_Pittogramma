@@ -42,7 +42,8 @@ async function ensureDraft(
   if (!draft) {
     const published = await client.getDocument(publishedId);
     if (published) {
-      await client.createIfNotExists({ ...published, _id: draftId });
+      const { _rev, _createdAt, _updatedAt, ...docData } = published;
+      await client.createIfNotExists({ ...docData, _id: draftId });
     }
   }
 

@@ -40,28 +40,29 @@ const rawClient = client.withConfig({ perspective: "raw" });
 
 interface PlaceDoc {
   _id: string;
-  name: string;
   city: string;
   country: string;
-  state: string;
+  countryCode: string;
   formattedAddress: string;
   lat: number;
   lng: number;
+  name: string;
+  state: string;
 }
 
 interface NominatimAddress {
   city?: string;
-  town?: string;
-  village?: string;
-  municipality?: string;
   country?: string;
   country_code?: string;
+  municipality?: string;
   state?: string;
+  town?: string;
+  village?: string;
 }
 
 interface NominatimResult {
-  display_name: string;
   address: NominatimAddress;
+  display_name: string;
 }
 
 function delay(ms: number): Promise<void> {
@@ -87,7 +88,9 @@ async function reverseGeocode(
   });
 
   if (!response.ok) {
-    throw new Error(`Nominatim returned ${response.status}: ${response.statusText}`);
+    throw new Error(
+      `Nominatim returned ${response.status}: ${response.statusText}`
+    );
   }
 
   return response.json() as Promise<NominatimResult>;
@@ -98,7 +101,7 @@ async function main() {
 
   const docs: PlaceDoc[] = await rawClient.fetch(
     `*[_type == "place" && defined(lat) && defined(lng)]{
-      _id, name, city, country, state, formattedAddress, lat, lng
+      _id, name, city, country, countryCode, state, formattedAddress, lat, lng
     } | order(name asc)`
   );
 
@@ -132,10 +135,13 @@ async function main() {
       const formattedAddress = result.display_name;
 
       // Check if anything actually changed
+      const countryCode = addr.country_code?.toUpperCase() || "";
+
       if (
         doc.name === name &&
         doc.city === city &&
         doc.country === country &&
+        doc.countryCode === countryCode &&
         doc.state === state &&
         doc.formattedAddress === formattedAddress
       ) {
@@ -145,8 +151,12 @@ async function main() {
       }
 
       console.log(`  UPDATE: ${doc._id}`);
-      console.log(`    Before: "${doc.name}" | city="${doc.city}" country="${doc.country}"`);
-      console.log(`    After:  "${name}" | city="${city}" country="${country}"`);
+      console.log(
+        `    Before: "${doc.name}" | city="${doc.city}" country="${doc.country}"`
+      );
+      console.log(
+        `    After:  "${name}" | city="${city}" country="${country}"`
+      );
 
       await client
         .patch(doc._id)
@@ -154,7 +164,7 @@ async function main() {
           name,
           city,
           country,
-          countryCode: addr.country_code?.toUpperCase() || "",
+          countryCode,
           state,
           formattedAddress,
         })
