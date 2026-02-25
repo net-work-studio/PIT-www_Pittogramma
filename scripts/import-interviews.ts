@@ -698,9 +698,13 @@ async function processInterview(
   const tagRefs: { _type: "reference"; _ref: string; _key: string }[] = [];
   const tagPrimary = itFields.Tagprimary || "";
   const tagSecondary = itFields.Tagsecondary || "";
-  const tagSlugs = [tagPrimary, ...tagSecondary.split(",")]
-    .map((t) => t.trim())
-    .filter(Boolean);
+  const tagSlugs = [
+    ...new Set(
+      [tagPrimary, ...tagSecondary.split(",")]
+        .map((t) => t.trim())
+        .filter(Boolean),
+    ),
+  ];
   for (const tagSlug of tagSlugs) {
     const refId = await resolveOrCreateTag(tagSlug);
     tagRefs.push({
