@@ -12,8 +12,6 @@ export const tagSelector = defineType({
       of: [
         defineArrayMember({
           type: "reference",
-          name: "tag",
-          title: "Tag",
           to: [{ type: "tag" }],
         }),
       ],
