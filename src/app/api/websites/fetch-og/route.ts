@@ -161,7 +161,7 @@ export async function GET(request: Request) {
 
     const contentLength = response.headers.get("content-length");
     const MAX_HTML_SIZE = 5 * 1024 * 1024; // 5MB
-    if (contentLength && Number.parseInt(contentLength) > MAX_HTML_SIZE) {
+    if (contentLength && Number.parseInt(contentLength, 10) > MAX_HTML_SIZE) {
       return NextResponse.json(
         { error: "Response too large" },
         { status: 502 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { BibliographyList } from "@/components/resources/bibliography-list";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { UtmSettings } from "@/lib/tracked-link";
@@ -15,15 +14,9 @@ export function BibliographyContent({
   books,
   utmSettings,
 }: BibliographyContentProps) {
-  const [view, setView] = useState<"list" | "grid">("list");
-
   return (
     <section className="flex flex-col gap-1.5">
-      <Tabs
-        className="w-full"
-        defaultValue="list"
-        onValueChange={(value) => setView(value as "list" | "grid")}
-      >
+      <Tabs className="w-full" defaultValue="list">
         <TabsList>
           <TabsTrigger value="list">List</TabsTrigger>
           <TabsTrigger value="grid">Grid</TabsTrigger>

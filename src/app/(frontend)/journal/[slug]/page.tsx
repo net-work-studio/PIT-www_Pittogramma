@@ -5,10 +5,10 @@ import JournalArticleCta from "@/components/modules/journal/journal-article-cta"
 import JournalContent from "@/components/modules/journal/journal-content";
 import ShareLinks from "@/components/modules/project/share-links";
 import SanityImage from "@/components/modules/shared/sanity-image";
-import { JsonLd } from "@/components/seo/JsonLd";
+import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { mapSanityToMetadata } from "@/lib/seo/mapSanityToMetadata";
-import { siteDefaults } from "@/lib/seo/siteDefaults";
+import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
+import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";

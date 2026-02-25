@@ -76,7 +76,7 @@ export async function GET(request: Request) {
     // Validate size before loading into memory
     const contentLength = response.headers.get("content-length");
     const MAX_SIZE = 10 * 1024 * 1024; // 10MB
-    if (contentLength && Number.parseInt(contentLength) > MAX_SIZE) {
+    if (contentLength && Number.parseInt(contentLength, 10) > MAX_SIZE) {
       return NextResponse.json(
         { error: "Image too large (max 10MB)" },
         { status: 400 }

@@ -37,7 +37,7 @@ const components: PortableTextComponents = {
           {children}
         </a>
       ) : (
-        <>{children}</>
+        children
       ),
   },
 };

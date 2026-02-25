@@ -2,10 +2,10 @@
  * Resolves internal document references to their frontend URLs
  */
 
-type InternalLinkDoc = {
+interface InternalLinkDoc {
   _type: string;
   slug?: { current: string } | null;
-};
+}
 
 const ROUTE_MAP: Record<string, string> = {
   project: "/projects",

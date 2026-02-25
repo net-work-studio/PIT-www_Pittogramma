@@ -54,26 +54,20 @@ interface BookCardGridProps {
 
 function BookCardGrid({ book, onClick }: BookCardGridProps) {
   return (
-    <ul
-      className="col-span-2 grid cursor-pointer gap-2.5 rounded-lg bg-secondary p-2.5 transition-colors hover:bg-secondary/80"
+    <button
+      className="col-span-2 grid cursor-pointer gap-2.5 rounded-lg bg-secondary p-2.5 text-left transition-colors hover:bg-secondary/80"
       onClick={onClick}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          onClick();
-        }
-      }}
-      role="button"
-      tabIndex={0}
+      type="button"
     >
-      <li className="font-medium">{book.name}</li>
-      <li className="text-muted-foreground text-sm">
+      <span className="font-medium">{book.name}</span>
+      <span className="text-muted-foreground text-sm">
         {getAuthors(book.authors)}
-      </li>
-      <li className="text-muted-foreground text-sm">
+      </span>
+      <span className="text-muted-foreground text-sm">
         {book.publisher?.name || "-"}
-      </li>
-      <li className="text-sm">{book.year || "-"}</li>
-    </ul>
+      </span>
+      <span className="text-sm">{book.year || "-"}</span>
+    </button>
   );
 }
 

@@ -4,6 +4,7 @@ import { groups } from "@/sanity/utils/groups";
 
 const minBirthYear = 1900;
 const maxBirthYear = 2500;
+const PHONE_REGEX = /^[+\d][\d\s\-()]*$/;
 
 export const designer = defineType({
   type: "document",
@@ -141,7 +142,7 @@ export const designer = defineType({
       title: "Phone",
       group: "content",
       validation: (e) =>
-        e.regex(/^[+\d][\d\s\-()]*$/, {
+        e.regex(PHONE_REGEX, {
           name: "phone",
           invert: false,
         }),

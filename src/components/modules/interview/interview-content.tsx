@@ -39,28 +39,35 @@ function MediaRenderer({
     return null;
   }
 
-  const { type: rawType, image, video, videoUrl, caption } = media;
+  const { type: rawType, image, video, videoUrl, caption, alt } = media;
   const type = stegaClean(rawType);
 
-  return (
-    <figure>
-      {type === "image" && image ? (
+  function renderMedia() {
+    if (type === "image" && image) {
+      return (
         <AspectRatio className="relative w-full" ratio={ratio}>
           <SanityImage
             className="rounded-lg object-cover"
             fill
-            source={{ image, alt: media.alt }}
+            source={{ image, alt }}
           />
         </AspectRatio>
-      ) : type === "videoUpload" && video?.asset?.url ? (
+      );
+    }
+    if (type === "videoUpload" && video?.asset?.url) {
+      return (
         <AspectRatio className="relative w-full" ratio={16 / 9}>
+          {/* biome-ignore lint/a11y/useMediaCaption: captions not available for uploaded videos */}
           <video
             className="absolute inset-0 h-full w-full rounded-lg object-cover"
             controls
             src={video.asset.url}
           />
         </AspectRatio>
-      ) : type === "videoEmbed" && videoUrl ? (
+      );
+    }
+    if (type === "videoEmbed" && videoUrl) {
+      return (
         <AspectRatio className="relative w-full" ratio={16 / 9}>
           <iframe
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -70,7 +77,14 @@ function MediaRenderer({
             title="Video embed"
           />
         </AspectRatio>
-      ) : null}
+      );
+    }
+    return null;
+  }
+
+  return (
+    <figure>
+      {renderMedia()}
       {caption ? (
         <figcaption className="mt-1.5 font-mono text-[0.5rem] text-muted-foreground uppercase">
           {caption}
@@ -80,18 +94,19 @@ function MediaRenderer({
   );
 }
 
+// Regex patterns for video URL parsing (top-level for performance)
+const YOUTUBE_REGEX =
+  /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/;
+const VIMEO_REGEX = /vimeo\.com\/(\d+)/;
+
 // Helper function to convert video URLs to embed URLs
 function getEmbedUrl(url: string): string {
-  // YouTube
-  const youtubeMatch = url.match(
-    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/
-  );
+  const youtubeMatch = url.match(YOUTUBE_REGEX);
   if (youtubeMatch) {
     return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
   }
 
-  // Vimeo
-  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+  const vimeoMatch = url.match(VIMEO_REGEX);
   if (vimeoMatch) {
     return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
   }
