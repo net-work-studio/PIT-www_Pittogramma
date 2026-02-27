@@ -206,9 +206,7 @@ export const EVENTS_QUERY = defineQuery(`
     description,
     sponsor->{ _id, name },
     partner->{ _id, name },
-    tagSelector {
-      tags[]->{ _id, name }
-    },
+    tags[]->{ _id, name },
     ${SEO_FIELDS}
   }
 `);
@@ -223,11 +221,9 @@ export const PROJECTS_QUERY = defineQuery(`
     title,
     slug,
     designers[]{ _key, ...@->{ _id, name, slug, portrait } },
-    tagSelector {
-      tags[]->{
-        _id,
-        name
-      }
+    tags[]->{
+      _id,
+      name
     },
     ${SEO_FIELDS}
   }
@@ -247,11 +243,9 @@ export const PROJECT_QUERY = defineQuery(`
     title,
     slug,
     designers[]{ _key, ...@->{ _id, name, slug, portrait } },
-    tagSelector {
-      tags[]->{
-        _id,
-        name
-      }
+    tags[]->{
+      _id,
+      name
     },
     teachers[]{ _key, ...@->{ _id, name } },
     institute->{
@@ -289,7 +283,7 @@ export const PROJECT_QUERY = defineQuery(`
     "relatedProjects": *[
       _type == "project" &&
       slug.current != ^.slug.current &&
-      count(tagSelector.tags[@._ref in ^.tagSelector.tags[]._ref]) > 0
+      count(tags[@._ref in ^.tags[]._ref]) > 0
     ] | order(_createdAt desc) [0...4] {
       _id,
       cover { image { ${IMAGE_FIELDS} }, alt },
@@ -314,7 +308,7 @@ export const JOURNAL_PAGE_QUERY = defineQuery(`
       excerpt,
       cover { image { ${IMAGE_FIELDS} }, alt },
       authors[]{ _key, ...@->{ _id, name } },
-      tagSelector { tags[]->{ _id, name } }
+      tags[]->{ _id, name }
     },
     ${CTA_FIELDS},
     ${SEO_FIELDS}
@@ -333,11 +327,9 @@ export const JOURNAL_QUERY = defineQuery(`
     },
     authors[]{ _key, ...@->{ _id, name } },
     excerpt,
-    tagSelector {
-      tags[]->{
-        _id,
-        name
-      }
+    tags[]->{
+      _id,
+      name
     },
     ${SEO_FIELDS}
   }
@@ -359,11 +351,9 @@ export const JOURNAL_ARTICLE_QUERY = defineQuery(`
     },
     authors[]{ _key, ...@->{ _id, name } },
     excerpt,
-    tagSelector {
-      tags[]->{
-        _id,
-        name
-      }
+    tags[]->{
+      _id,
+      name
     },
     content[] { ... },
     ${SEO_FIELDS}
@@ -387,11 +377,9 @@ export const INTERVIEWS_QUERY = defineQuery(`
     },
     place->{ _id, name, city, country, countryCode, lat, lng },
     readingTime,
-    tagSelector {
-      tags[]->{
-        _id,
-        name
-      }
+    tags[]->{
+      _id,
+      name
     },
     introText,
     ${SEO_FIELDS}
@@ -419,11 +407,9 @@ export const INTERVIEW_QUERY = defineQuery(`
     },
     place->{ _id, name, city, country, countryCode, lat, lng },
     readingTime,
-    tagSelector {
-      tags[]->{
-        _id,
-        name
-      }
+    tags[]->{
+      _id,
+      name
     },
     introText,
     interview[] {
@@ -469,11 +455,9 @@ export const BIBLIOGRAPHY_QUERY = defineQuery(`
       _id,
       name
     },
-    tagSelector {
-      tags[]->{
-        _id,
-        name
-      }
+    tags[]->{
+      _id,
+      name
     },
     affiliateLink,
     isbn,
@@ -487,11 +471,9 @@ export const BOOKSHOPS_QUERY = defineQuery(`
   *[_type == "bookshop"] | order(name asc) {
     _id,
     name,
-    tagSelector {
-      tags[]->{
-        _id,
-        name
-      }
+    tags[]->{
+      _id,
+      name
     },
     place->{ _id, name, city, country, countryCode, lat, lng },
     address,
@@ -551,11 +533,9 @@ export const STUDIOS_QUERY = defineQuery(`
       _id,
       name
     },
-    tagSelector {
-      tags[]->{
-        _id,
-        name
-      }
+    tags[]->{
+      _id,
+      name
     },
     places[]->{ _id, name, city, country, countryCode, lat, lng },
     socialLinks {
@@ -572,11 +552,9 @@ export const TYPE_FOUNDRIES_QUERY = defineQuery(`
   *[_type == "typeFoundry"] | order(name asc) {
     _id,
     name,
-    tagSelector {
-      tags[]->{
-        _id,
-        name
-      }
+    tags[]->{
+      _id,
+      name
     },
     places[]->{ _id, name, city, country, countryCode, lat, lng },
     socialLinks {
@@ -602,9 +580,7 @@ export const WEB_SOURCES_QUERY = defineQuery(`
       _id,
       name
     },
-    tagSelector {
-      tags[]->{ _id, name }
-    },
+    tags[]->{ _id, name },
     sourceUrl,
     ogTitle,
     ogDescription,

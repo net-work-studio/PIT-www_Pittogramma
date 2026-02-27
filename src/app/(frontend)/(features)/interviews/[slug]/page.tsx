@@ -96,7 +96,7 @@ export default async function InterviewPage({
             publishingDate={interview.publishingDate?.date}
             readingTime={interview.readingTime}
             studio={interview.studio?.name}
-            tags={interview.tagSelector?.tags}
+            tags={interview.tags}
             title={interview.title}
           />
           <div className="w-full lg:w-[49%] lg:shrink-0">
@@ -169,14 +169,14 @@ export default async function InterviewPage({
               <dd className="text-sm">{interview.studio.name}</dd>
             </div>
           ) : null}
-          {interview.tagSelector?.tags?.length ? (
+          {interview.tags?.length ? (
             <div className="flex gap-x-12">
               <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
                 Disciplines
               </dt>
               <dd>
                 <ul className="flex flex-col">
-                  {interview.tagSelector.tags.map(
+                  {interview.tags.map(
                     (tag: { _id: string; name: string | null }) => (
                       <li className="text-sm underline" key={tag._id}>
                         {tag.name}

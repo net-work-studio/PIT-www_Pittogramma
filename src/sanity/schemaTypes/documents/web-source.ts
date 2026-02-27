@@ -1,5 +1,6 @@
 import { LinkIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { UrlInput } from "@/sanity/components/url-input";
 
 export const webSource = defineType({
@@ -46,11 +47,7 @@ export const webSource = defineType({
       to: [{ type: "category" }],
       validation: (e) => e.required(),
     }),
-    defineField({
-      type: "tagSelector",
-      name: "tagSelector",
-      title: "Tags",
-    }),
+    tagsField(),
     // Read-only OG metadata fields for reference
     defineField({
       type: "string",

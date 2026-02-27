@@ -1,5 +1,6 @@
 import { CalendarIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
 
 export const event = defineType({
@@ -85,12 +86,7 @@ export const event = defineType({
       group: "content",
       to: [{ type: "contributor" }],
     }),
-    defineField({
-      type: "tagSelector",
-      name: "tagSelector",
-      title: "Tags",
-      group: "content",
-    }),
+    tagsField("content"),
     defineField({
       type: "seoModule",
       name: "seo",

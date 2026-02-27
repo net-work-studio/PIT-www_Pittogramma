@@ -1,6 +1,7 @@
 import { TextIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { FetchWebsiteDataButton } from "@/sanity/components/fetch-website-data-button";
+import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
 
 export const typeFoundry = defineType({
@@ -48,12 +49,7 @@ export const typeFoundry = defineType({
       description: "Auto-filled from OG image",
       group: "content",
     }),
-    defineField({
-      type: "tagSelector",
-      name: "tagSelector",
-      title: "Tags",
-      group: "content",
-    }),
+    tagsField("content"),
     defineField({
       type: "array",
       name: "places",

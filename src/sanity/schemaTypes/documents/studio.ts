@@ -1,6 +1,7 @@
 import { DesktopIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { FetchWebsiteDataButton } from "@/sanity/components/fetch-website-data-button";
+import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
 
 export const studio = defineType({
@@ -68,12 +69,7 @@ export const studio = defineType({
       group: "content",
       validation: (e) => e.required(),
     }),
-    defineField({
-      type: "tagSelector",
-      name: "tagSelector",
-      title: "Tags",
-      group: "content",
-    }),
+    tagsField("content"),
     // Read-only OG metadata fields for reference
     defineField({
       type: "string",

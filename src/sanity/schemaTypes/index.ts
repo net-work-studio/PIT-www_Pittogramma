@@ -36,7 +36,6 @@ import { openGraph } from "./objects/open-graph";
 import { publishingDate } from "./objects/publishing-date";
 import { seoModule } from "./objects/seo-module";
 import { socialLinks } from "./objects/social-links";
-import { tagSelector } from "./objects/tag-selector";
 import { titleSlug } from "./objects/title-slug";
 import { xCard } from "./objects/x-card";
 import { designersPage } from "./singletons/pages/designers-page";
@@ -85,7 +84,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     socialLinks,
     professional,
     publishingDate,
-    tagSelector,
     category,
     typeFoundry,
     bookshop,

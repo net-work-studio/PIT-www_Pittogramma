@@ -40,7 +40,7 @@ function BookCardList({ book, onClick }: BookCardListProps) {
       <li className="col-span-3">{getAuthors(book.authors)}</li>
       <li className="col-span-2">{book.publisher?.name || "-"}</li>
       <li className="col-span-2">
-        <TagsDisplay tags={book.tagSelector?.tags} />
+        <TagsDisplay tags={book.tags} />
       </li>
       <li className="col-span-1">{book.year || "-"}</li>
     </ResourceListItem>

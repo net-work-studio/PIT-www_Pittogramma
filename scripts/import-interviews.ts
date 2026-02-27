@@ -754,7 +754,7 @@ async function processInterview(
   if (placeRef) doc.place = placeRef;
   if (readingTime && !isNaN(readingTime)) doc.readingTime = readingTime;
   if (tagRefs.length > 0) {
-    doc.tagSelector = { _type: "tagSelector", tags: tagRefs };
+    doc.tags = tagRefs;
   }
   if (interviewBlocks.length > 0) doc.interview = interviewBlocks;
   if (Object.keys(seo).length > 1) doc.seo = seo;
@@ -796,7 +796,7 @@ async function verify(): Promise<void> {
         `count(*[_type == "interview" && _id match "interview-*" && count(designersAndProfessionals) > 0])`
       ),
       client.fetch<number>(
-        `count(*[_type == "interview" && _id match "interview-*" && defined(tagSelector.tags)])`
+        `count(*[_type == "interview" && _id match "interview-*" && defined(tags)])`
       ),
     ]);
 

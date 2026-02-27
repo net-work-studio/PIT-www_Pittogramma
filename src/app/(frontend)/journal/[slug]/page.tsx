@@ -161,14 +161,14 @@ export default async function JournalArticlePage({
                   <dd className="text-sm">{authors.join(", ")}</dd>
                 </div>
               ) : null}
-              {article.tagSelector?.tags?.length ? (
+              {article.tags?.length ? (
                 <div className="flex gap-x-8">
                   <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
                     Topics
                   </dt>
                   <dd>
                     <ul className="flex flex-col">
-                      {article.tagSelector.tags.map(
+                      {article.tags.map(
                         (tag: { _id: string; name: string }) => (
                           <li className="text-sm underline" key={tag._id}>
                             {tag.name}
@@ -229,14 +229,14 @@ export default async function JournalArticlePage({
               <dd className="text-sm">{authors.join(", ")}</dd>
             </div>
           ) : null}
-          {article.tagSelector?.tags?.length ? (
+          {article.tags?.length ? (
             <div className="flex gap-x-12">
               <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
                 Topics
               </dt>
               <dd>
                 <ul className="flex flex-col">
-                  {article.tagSelector.tags.map(
+                  {article.tags.map(
                     (tag: { _id: string; name: string }) => (
                       <li className="text-sm underline" key={tag._id}>
                         {tag.name}

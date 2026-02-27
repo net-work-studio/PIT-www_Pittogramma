@@ -45,7 +45,7 @@ export function BookDetailsDrawer({
 
   return (
     <Sheet onOpenChange={onOpenChange} open={open}>
-      <SheetContent className="overflow-y-auto">
+      <SheetContent className="mx-auto w-130 overflow-y-auto" side="bottom">
         <SheetHeader>
           <SheetTitle>{book.name}</SheetTitle>
           {authors && <SheetDescription>{authors}</SheetDescription>}
