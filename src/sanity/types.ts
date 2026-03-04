@@ -1013,14 +1013,14 @@ export type SanityFileAsset = {
   title?: string;
   description?: string;
   altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
+  sha1hash: string;
+  extension: string;
+  mimeType: string;
+  size: number;
+  assetId: string;
   uploadId?: string;
-  path?: string;
-  url?: string;
+  path: string;
+  url: string;
   source?: SanityAssetSourceData;
 };
 
@@ -1042,14 +1042,14 @@ export type SanityImageAsset = {
   title?: string;
   description?: string;
   altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
+  sha1hash: string;
+  extension: string;
+  mimeType: string;
+  size: number;
+  assetId: string;
   uploadId?: string;
-  path?: string;
-  url?: string;
+  path: string;
+  url: string;
   metadata?: SanityImageMetadata;
   source?: SanityAssetSourceData;
 };
@@ -1179,7 +1179,7 @@ export type HOME_PAGE_QUERY_RESULT = {
       image: {
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -1265,7 +1265,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -1299,7 +1299,7 @@ export type PROJECTS_PAGE_QUERY_RESULT = {
       image: {
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -1385,7 +1385,7 @@ export type PROJECTS_PAGE_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -1419,7 +1419,7 @@ export type INTERVIEWS_PAGE_QUERY_RESULT = {
       image: {
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -1505,7 +1505,7 @@ export type INTERVIEWS_PAGE_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -1539,7 +1539,7 @@ export type DESIGNERS_PAGE_QUERY_RESULT = {
       image: {
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -1625,7 +1625,7 @@ export type DESIGNERS_PAGE_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -1659,7 +1659,7 @@ export type EVENTS_PAGE_QUERY_RESULT = {
       image: {
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -1745,7 +1745,7 @@ export type EVENTS_PAGE_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -1774,7 +1774,7 @@ export type DESIGNERS_QUERY_RESULT = Array<{
     image: {
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
         metadata: {
           lqip: string | null;
           dimensions: {
@@ -1814,7 +1814,7 @@ export type DESIGNER_QUERY_RESULT = {
       _type: "image";
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
         metadata: {
           lqip: string | null;
           dimensions: {
@@ -1874,7 +1874,7 @@ export type DESIGNER_QUERY_RESULT = {
       image: {
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -1904,7 +1904,7 @@ export type DESIGNER_QUERY_RESULT = {
       image: {
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -1938,7 +1938,7 @@ export type EVENTS_QUERY_RESULT = Array<{
     image: {
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
         metadata: {
           lqip: string | null;
           dimensions: {
@@ -1993,7 +1993,7 @@ export type EVENTS_QUERY_RESULT = Array<{
         _type: "image";
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -2020,7 +2020,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
     image: {
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
         metadata: {
           lqip: string | null;
           dimensions: {
@@ -2072,7 +2072,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
         _type: "image";
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -2101,7 +2101,7 @@ export type PROJECT_QUERY_RESULT = {
       _type: "image";
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
         metadata: {
           lqip: string | null;
           dimensions: {
@@ -2148,7 +2148,7 @@ export type PROJECT_QUERY_RESULT = {
           image: {
             asset: {
               _id: string;
-              url: string | null;
+              url: string;
               metadata: {
                 lqip: string | null;
                 dimensions: {
@@ -2168,7 +2168,7 @@ export type PROJECT_QUERY_RESULT = {
           image: {
             asset: {
               _id: string;
-              url: string | null;
+              url: string;
               metadata: {
                 lqip: string | null;
                 dimensions: {
@@ -2188,7 +2188,7 @@ export type PROJECT_QUERY_RESULT = {
           image: {
             asset: {
               _id: string;
-              url: string | null;
+              url: string;
               metadata: {
                 lqip: string | null;
                 dimensions: {
@@ -2208,7 +2208,7 @@ export type PROJECT_QUERY_RESULT = {
           image: {
             asset: {
               _id: string;
-              url: string | null;
+              url: string;
               metadata: {
                 lqip: string | null;
                 dimensions: {
@@ -2233,7 +2233,7 @@ export type PROJECT_QUERY_RESULT = {
           image: {
             asset: {
               _id: string;
-              url: string | null;
+              url: string;
               metadata: {
                 lqip: string | null;
                 dimensions: {
@@ -2253,7 +2253,7 @@ export type PROJECT_QUERY_RESULT = {
           image: {
             asset: {
               _id: string;
-              url: string | null;
+              url: string;
               metadata: {
                 lqip: string | null;
                 dimensions: {
@@ -2278,7 +2278,7 @@ export type PROJECT_QUERY_RESULT = {
           image: {
             asset: {
               _id: string;
-              url: string | null;
+              url: string;
               metadata: {
                 lqip: string | null;
                 dimensions: {
@@ -2303,7 +2303,7 @@ export type PROJECT_QUERY_RESULT = {
           image: {
             asset: {
               _id: string;
-              url: string | null;
+              url: string;
               metadata: {
                 lqip: string | null;
                 dimensions: {
@@ -2323,7 +2323,7 @@ export type PROJECT_QUERY_RESULT = {
           image: {
             asset: {
               _id: string;
-              url: string | null;
+              url: string;
               metadata: {
                 lqip: string | null;
                 dimensions: {
@@ -2343,7 +2343,7 @@ export type PROJECT_QUERY_RESULT = {
           image: {
             asset: {
               _id: string;
-              url: string | null;
+              url: string;
               metadata: {
                 lqip: string | null;
                 dimensions: {
@@ -2367,7 +2367,7 @@ export type PROJECT_QUERY_RESULT = {
       image: {
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -2414,7 +2414,7 @@ export type PROJECT_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -2449,7 +2449,7 @@ export type JOURNAL_PAGE_QUERY_RESULT = {
       image: {
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -2482,7 +2482,7 @@ export type JOURNAL_PAGE_QUERY_RESULT = {
       image: {
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -2568,7 +2568,7 @@ export type JOURNAL_PAGE_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -2598,7 +2598,7 @@ export type JOURNAL_QUERY_RESULT = Array<{
     image: {
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
         metadata: {
           lqip: string | null;
           dimensions: {
@@ -2647,7 +2647,7 @@ export type JOURNAL_QUERY_RESULT = Array<{
         _type: "image";
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -2679,7 +2679,7 @@ export type JOURNAL_ARTICLE_QUERY_RESULT = {
       _type: "image";
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
         metadata: {
           lqip: string | null;
           dimensions: {
@@ -2746,7 +2746,7 @@ export type JOURNAL_ARTICLE_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -2776,7 +2776,7 @@ export type INTERVIEWS_QUERY_RESULT = Array<{
     image: {
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
         metadata: {
           lqip: string | null;
           dimensions: {
@@ -2839,7 +2839,7 @@ export type INTERVIEWS_QUERY_RESULT = Array<{
         _type: "image";
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -2871,7 +2871,7 @@ export type INTERVIEW_QUERY_RESULT = {
       _type: "image";
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
         metadata: {
           lqip: string | null;
           dimensions: {
@@ -2981,7 +2981,7 @@ export type INTERVIEW_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string | null;
+          url: string;
           metadata: {
             lqip: string | null;
             dimensions: {
@@ -3010,7 +3010,7 @@ export type BIBLIOGRAPHY_QUERY_RESULT = Array<{
     image: {
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
         metadata: {
           lqip: string | null;
           dimensions: {
@@ -3100,7 +3100,7 @@ export type GLOSSARY_QUERY_RESULT = Array<{
     image: {
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
         metadata: {
           lqip: string | null;
           dimensions: {
@@ -3168,7 +3168,7 @@ export type STUDIOS_QUERY_RESULT = Array<{
     image: {
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
         metadata: {
           lqip: string | null;
           dimensions: {
@@ -3269,7 +3269,7 @@ export type WEB_SOURCES_QUERY_RESULT = Array<{
     image: {
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
         metadata: {
           lqip: string | null;
           dimensions: {
