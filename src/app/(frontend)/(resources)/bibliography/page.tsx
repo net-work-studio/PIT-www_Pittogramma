@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import SearchInput from "@/components/feat/search-input";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import { BibliographyContent } from "@/components/resources/bibliography-content";
 import PageHeader from "@/components/shared/page-header";
@@ -34,19 +33,8 @@ export default async function Page() {
           title="Resources"
         />
         <ResourcesNavigation />
-        <SearchInput />
       </div>
-      <div className="space-y-5 pt-30">
-        <ul className="sticky top-15 grid grid-cols-12 gap-2.5 border-b bg-background px-2.5 pb-2 font-mono text-xs uppercase">
-          <li className="col-span-3">Title</li>
-          <li className="col-span-1">Language</li>
-          <li className="col-span-3">Author/s</li>
-          <li className="col-span-2">Publisher</li>
-          <li className="col-span-2">Tag</li>
-          <li className="col-span-1">Year</li>
-        </ul>
-        <BibliographyContent books={books} utmSettings={utmSettings} />
-      </div>
+      <BibliographyContent books={books} utmSettings={utmSettings} />
     </>
   );
 }

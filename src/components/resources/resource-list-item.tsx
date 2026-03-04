@@ -12,7 +12,7 @@ export function ResourceListItem({
   return (
     <ul
       className={cn(
-        "grid grid-cols-12 gap-2.5 rounded-lg bg-secondary p-2.5",
+        "grid grid-cols-12 gap-2.5 rounded-lg bg-muted p-2.5 transition-colors duration-75 hover:bg-foreground hover:text-background",
         className
       )}
     >

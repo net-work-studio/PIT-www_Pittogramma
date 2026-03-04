@@ -9,6 +9,7 @@ import { defineConfig } from "sanity";
 import { presentationTool } from "sanity/presentation";
 import { structureTool } from "sanity/structure";
 import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
+import { media } from "sanity-plugin-media";
 import Mark from "@/components/brand/mark";
 import { resolve } from "@/sanity/presentation/resolve";
 
@@ -31,6 +32,7 @@ export default defineConfig({
     // Vision is for querying with GROQ from inside the Studio
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
+    media(),
     presentationTool({
       resolve,
       previewUrl: {

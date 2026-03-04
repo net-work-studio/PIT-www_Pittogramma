@@ -1,6 +1,7 @@
 import { CommentIcon } from "@sanity/icons";
 import { createElement } from "react";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
 
 const QuestionStyle = (props: { children: React.ReactNode }) =>
@@ -128,12 +129,7 @@ export const interview = defineType({
       group: "content",
       validation: (e) => e.min(1).integer(),
     }),
-    defineField({
-      type: "tagSelector",
-      name: "tagSelector",
-      title: "Tags",
-      group: "content",
-    }),
+    tagsField("content"),
     defineField({
       type: "text",
       name: "introText",

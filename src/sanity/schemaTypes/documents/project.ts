@@ -1,5 +1,6 @@
 import { ProjectsIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
 
 const minYear = 1900;
@@ -98,12 +99,7 @@ export const project = defineType({
             return true;
           }),
     }),
-    defineField({
-      type: "tagSelector",
-      name: "tagSelector",
-      title: "Tags",
-      group: "content",
-    }),
+    tagsField("content"),
     defineField({
       type: "text",
       name: "description",

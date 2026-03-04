@@ -1,4 +1,5 @@
 import { defineField } from "sanity";
+import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 
 export const directoryFields = [
   defineField({
@@ -7,11 +8,7 @@ export const directoryFields = [
     title: "Name",
     validation: (e) => e.required(),
   }),
-  defineField({
-    type: "tagSelector",
-    name: "tagSelector",
-    title: "Tags",
-  }),
+  tagsField(),
   defineField({
     type: "reference",
     name: "place",

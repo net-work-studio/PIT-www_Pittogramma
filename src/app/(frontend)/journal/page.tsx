@@ -98,7 +98,7 @@ export default async function JournalPage() {
             href={`/journal/${featuredArticle.slug?.current ?? ""}`}
             image={featuredImage}
             tags={
-              featuredArticle.tagSelector?.tags?.map((t: { name: string }) => ({
+              featuredArticle.tags?.map((t: { name: string }) => ({
                 name: t.name ?? "",
               })) ?? []
             }

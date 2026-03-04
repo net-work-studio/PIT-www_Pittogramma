@@ -1,5 +1,6 @@
 import { DocumentTextIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
 
 export const journal = defineType({
@@ -40,12 +41,7 @@ export const journal = defineType({
       group: "content",
       validation: (e) => e.required(),
     }),
-    defineField({
-      type: "tagSelector",
-      name: "tagSelector",
-      title: "Tags",
-      group: "content",
-    }),
+    tagsField("content"),
     defineField({
       type: "array",
       name: "authors",

@@ -1,6 +1,7 @@
 import { BookIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { IsbnInput } from "@/sanity/components/isbn-input";
+import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
 
 export const bibliography = defineType({
@@ -138,12 +139,7 @@ export const bibliography = defineType({
       readOnly: true,
     }),
     // 12. Tags (manual)
-    defineField({
-      type: "tagSelector",
-      name: "tagSelector",
-      title: "Tags",
-      group: "content",
-    }),
+    tagsField("content"),
     // 13. Fetched Categories (suggestion - new)
     defineField({
       type: "string",
