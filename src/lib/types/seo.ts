@@ -7,7 +7,8 @@ import type {
 
 /**
  * A flexible image type compatible with both schema types and query results.
- * Query results use `null` while schema types use `undefined`.
+ * Query results expand asset references into full objects with _id/url/metadata,
+ * while schema types use SanityImageAssetReference with _ref/_type.
  */
 export type SeoImageSource =
   | ImageWithMetadata
@@ -15,7 +16,10 @@ export type SeoImageSource =
       _type?: "imageWithMetadata";
       image?: {
         _type?: "image";
-        asset?: SanityImageAssetReference | null;
+        asset?:
+          | SanityImageAssetReference
+          | { _id: string; url: string; metadata?: unknown }
+          | null;
         hotspot?: SanityImageHotspot | null;
         crop?: SanityImageCrop | null;
       } | null;
