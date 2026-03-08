@@ -68,7 +68,13 @@ export const journal = defineType({
       name: "content",
       title: "Content",
       group: "content",
-      of: [defineArrayMember({ type: "block" })],
+      of: [
+        defineArrayMember({ type: "block" }),
+        defineArrayMember({ type: "singleMediaBlock" }),
+        defineArrayMember({ type: "sideBySideMediaBlock" }),
+        defineArrayMember({ type: "threeSideBySideMediaBlock" }),
+        defineArrayMember({ type: "gridFourMediaBlock" }),
+      ],
     }),
     defineField({
       type: "seoModule",

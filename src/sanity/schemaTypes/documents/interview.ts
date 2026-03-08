@@ -40,6 +40,18 @@ export const interview = defineType({
   title: "Interview",
   icon: CommentIcon,
   groups,
+  orderings: [
+    {
+      title: "Publishing Date, Newest",
+      name: "publishingDateDesc",
+      by: [{ field: "publishingDate.date", direction: "desc" }],
+    },
+    {
+      title: "Publishing Date, Oldest",
+      name: "publishingDateAsc",
+      by: [{ field: "publishingDate.date", direction: "asc" }],
+    },
+  ],
   fields: [
     defineField({
       type: "string",
@@ -177,6 +189,14 @@ export const interview = defineType({
     select: {
       title: "title",
       media: "cover.image",
+      date: "publishingDate.date",
+    },
+    prepare({ title, media, date }) {
+      return {
+        title,
+        media,
+        subtitle: date,
+      };
     },
   },
 });

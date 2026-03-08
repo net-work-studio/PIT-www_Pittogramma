@@ -178,14 +178,14 @@ export const DESIGNER_QUERY = defineQuery(`
       cover { image { ${IMAGE_FIELDS} }, alt },
       title,
       slug,
-      designers[]{ _key, ...@->{ _id, name } }
+      designers[]{ ...@->{ _id, name }, _key }
     },
     "relatedInterviews": *[_type == "interview" && references(^._id)] | order(publishingDate.date desc) [0...4] {
       _id,
       title,
       slug,
       cover { image { ${IMAGE_FIELDS} }, alt },
-      designersAndProfessionals[]{ _key, ...@->{ _id, name } }
+      designersAndProfessionals[]{ ...@->{ _id, name }, _key }
     }
   }
 `);
@@ -220,7 +220,7 @@ export const PROJECTS_QUERY = defineQuery(`
     },
     title,
     slug,
-    designers[]{ _key, ...@->{ _id, name, slug, portrait } },
+    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
     tags[]->{
       _id,
       name
@@ -242,12 +242,12 @@ export const PROJECT_QUERY = defineQuery(`
     },
     title,
     slug,
-    designers[]{ _key, ...@->{ _id, name, slug, portrait } },
+    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
     tags[]->{
       _id,
       name
     },
-    teachers[]{ _key, ...@->{ _id, name } },
+    teachers[]{ ...@->{ _id, name }, _key },
     institute->{
       _id,
       name,
@@ -289,7 +289,7 @@ export const PROJECT_QUERY = defineQuery(`
       cover { image { ${IMAGE_FIELDS} }, alt },
       title,
       slug,
-      designers[]{ _key, ...@->{ _id, name } }
+      designers[]{ ...@->{ _id, name }, _key }
     },
     ${SEO_FIELDS}
   }
@@ -307,7 +307,7 @@ export const JOURNAL_PAGE_QUERY = defineQuery(`
       publishingDate,
       excerpt,
       cover { image { ${IMAGE_FIELDS} }, alt },
-      authors[]{ _key, ...@->{ _id, name } },
+      authors[]{ ...@->{ _id, name }, _key },
       tags[]->{ _id, name }
     },
     ${CTA_FIELDS},
@@ -325,7 +325,7 @@ export const JOURNAL_QUERY = defineQuery(`
       image { ${IMAGE_FIELDS} },
       alt
     },
-    authors[]{ _key, ...@->{ _id, name } },
+    authors[]{ ...@->{ _id, name }, _key },
     excerpt,
     tags[]->{
       _id,
@@ -349,7 +349,7 @@ export const JOURNAL_ARTICLE_QUERY = defineQuery(`
       },
       alt
     },
-    authors[]{ _key, ...@->{ _id, name } },
+    authors[]{ ...@->{ _id, name }, _key },
     excerpt,
     tags[]->{
       _id,
@@ -370,7 +370,7 @@ export const INTERVIEWS_QUERY = defineQuery(`
       image { ${IMAGE_FIELDS} },
       alt
     },
-    designersAndProfessionals[]{ _key, ...@->{ _id, name } },
+    designersAndProfessionals[]{ ...@->{ _id, name }, _key },
     studio->{
       _id,
       name
@@ -400,7 +400,7 @@ export const INTERVIEW_QUERY = defineQuery(`
       },
       alt
     },
-    designersAndProfessionals[]{ _key, ...@->{ _id, name, portrait } },
+    designersAndProfessionals[]{ ...@->{ _id, name, portrait }, _key },
     studio->{
       _id,
       name
@@ -449,8 +449,8 @@ export const BIBLIOGRAPHY_QUERY = defineQuery(`
       image { ${IMAGE_FIELDS} },
       alt
     },
-    languages[]{ _key, ...@->{ _id, name } },
-    authors[]{ _key, ...@->{ _id, name } },
+    languages[]{ ...@->{ _id, name }, _key },
+    authors[]{ ...@->{ _id, name }, _key },
     publisher->{
       _id,
       name
