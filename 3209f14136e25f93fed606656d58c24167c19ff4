@@ -1,0 +1,25 @@
+src/sanity/schemaTypes/documents/project.ts
+  c7ce0daadcd0e5fc 15-26,145-152
+src/sanity/schemaTypes/documents/interview.ts
+  c7ce0daadcd0e5fc 43-54,192-199
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.8",
+  "base_commit_sha": "3209f14136e25f93fed606656d58c24167c19ff4",
+  "prompts": {
+    "c7ce0daadcd0e5fc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "02cf15f1-5c81-4cc9-ada7-c9c2046d3ab2",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 40,
+      "total_deletions": 0,
+      "accepted_lines": 40,
+      "overriden_lines": 0
+    }
+  }
+}
