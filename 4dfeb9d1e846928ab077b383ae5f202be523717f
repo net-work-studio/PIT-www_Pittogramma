@@ -1,0 +1,23 @@
+src/sanity/schemaTypes/documents/journal.ts
+  b8561ea7b8c8b2e0 72-76
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.8",
+  "base_commit_sha": "4dfeb9d1e846928ab077b383ae5f202be523717f",
+  "prompts": {
+    "b8561ea7b8c8b2e0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6311bea4-c071-4bcc-81d9-cbc00600c33f",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 7,
+      "total_deletions": 1,
+      "accepted_lines": 5,
+      "overriden_lines": 0
+    }
+  }
+}
