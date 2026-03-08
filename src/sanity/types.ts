@@ -233,36 +233,6 @@ export type PublishingDate = {
   date: string;
 };
 
-export type InstituteReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "institute";
-};
-
-export type StudioReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "studio";
-};
-
-export type Professional = {
-  _id: string;
-  _type: "professional";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name: string;
-  portrait?: ImageWithMetadata;
-  birthYear?: number;
-  bio?: string;
-  teachingAt?: InstituteReference;
-  studio?: StudioReference;
-  place?: PlaceReference;
-  socialLinks?: SocialLinks;
-};
-
 export type CtaReference = {
   _ref: string;
   _type: "reference";
@@ -444,6 +414,13 @@ export type Logo = {
   alt?: string;
 };
 
+export type InstituteReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "institute";
+};
+
 export type Teacher = {
   _id: string;
   _type: "teacher";
@@ -520,6 +497,13 @@ export type DesignerReference = {
   [internalGroqTypeReferenceTo]?: "designer";
 };
 
+export type ProfessionalReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "professional";
+};
+
 export type EventReference = {
   _ref: string;
   _type: "reference";
@@ -579,6 +563,7 @@ export type Cta = {
     | InterviewReference
     | JournalReference
     | DesignerReference
+    | ProfessionalReference
     | EventReference
     | EditionReference
     | HomePageReference
@@ -673,6 +658,29 @@ export type Event = {
   seo?: SeoModule;
 };
 
+export type StudioReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "studio";
+};
+
+export type Professional = {
+  _id: string;
+  _type: "professional";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  portrait?: ImageWithMetadata;
+  birthYear?: number;
+  bio?: string;
+  teachingAt?: InstituteReference;
+  studio?: StudioReference;
+  place?: PlaceReference;
+  socialLinks?: SocialLinks;
+};
+
 export type Designer = {
   _id: string;
   _type: "designer";
@@ -739,13 +747,6 @@ export type Journal = {
     _key: string;
   }>;
   seo?: SeoModule;
-};
-
-export type ProfessionalReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "professional";
 };
 
 export type Interview = {
@@ -857,11 +858,7 @@ export type Project = {
   slug: Slug;
   publishingDate: PublishingDate;
   cover: ImageWithMetadata;
-  designers: Array<
-    {
-      _key: string;
-    } & DesignerReference
-  >;
+  designers: ArrayOf<DesignerReference | ProfessionalReference>;
   institute?: InstituteReference;
   teachers?: Array<
     {
@@ -1079,9 +1076,6 @@ export type AllSanitySchemaTypes =
   | SocialLinks
   | TypeFoundry
   | PublishingDate
-  | InstituteReference
-  | StudioReference
-  | Professional
   | CtaReference
   | EventsPage
   | SeoModule
@@ -1100,6 +1094,7 @@ export type AllSanitySchemaTypes =
   | SanityFileAssetReference
   | MediaItem
   | Logo
+  | InstituteReference
   | Teacher
   | Language
   | ContributorReference
@@ -1107,6 +1102,7 @@ export type AllSanitySchemaTypes =
   | ProjectReference
   | InterviewReference
   | DesignerReference
+  | ProfessionalReference
   | EventReference
   | EditionReference
   | HomePageReference
@@ -1120,9 +1116,10 @@ export type AllSanitySchemaTypes =
   | HomePage
   | Edition
   | Event
+  | StudioReference
+  | Professional
   | Designer
   | Journal
-  | ProfessionalReference
   | Interview
   | Studio
   | Category
@@ -1228,6 +1225,10 @@ export type HOME_PAGE_QUERY_RESULT = {
       | {
           _type: "journal";
           slug: Slug;
+        }
+      | {
+          _type: "professional";
+          slug: null;
         }
       | {
           _type: "project";
@@ -1350,6 +1351,10 @@ export type PROJECTS_PAGE_QUERY_RESULT = {
           slug: Slug;
         }
       | {
+          _type: "professional";
+          slug: null;
+        }
+      | {
           _type: "project";
           slug: Slug;
         }
@@ -1468,6 +1473,10 @@ export type INTERVIEWS_PAGE_QUERY_RESULT = {
       | {
           _type: "journal";
           slug: Slug;
+        }
+      | {
+          _type: "professional";
+          slug: null;
         }
       | {
           _type: "project";
@@ -1590,6 +1599,10 @@ export type DESIGNERS_PAGE_QUERY_RESULT = {
           slug: Slug;
         }
       | {
+          _type: "professional";
+          slug: null;
+        }
+      | {
           _type: "project";
           slug: Slug;
         }
@@ -1708,6 +1721,10 @@ export type EVENTS_PAGE_QUERY_RESULT = {
       | {
           _type: "journal";
           slug: Slug;
+        }
+      | {
+          _type: "professional";
+          slug: null;
         }
       | {
           _type: "project";
@@ -1891,7 +1908,7 @@ export type DESIGNER_QUERY_RESULT = {
     title: string;
     slug: Slug;
     designers: Array<{
-      _key: string;
+      _key: null;
       _id: string;
       name: string;
     }>;
@@ -2036,13 +2053,22 @@ export type PROJECTS_QUERY_RESULT = Array<{
   };
   title: string;
   slug: Slug;
-  designers: Array<{
-    _key: string;
-    _id: string;
-    name: string;
-    slug: Slug;
-    portrait: ImageWithMetadata | null;
-  }>;
+  designers: Array<
+    | {
+        _key: null;
+        _id: string;
+        name: string;
+        slug: Slug;
+        portrait: ImageWithMetadata | null;
+      }
+    | {
+        _key: null;
+        _id: string;
+        name: string;
+        slug: null;
+        portrait: ImageWithMetadata | null;
+      }
+  >;
   tags: Array<{
     _id: string;
     name: string;
@@ -2117,13 +2143,22 @@ export type PROJECT_QUERY_RESULT = {
   };
   title: string;
   slug: Slug;
-  designers: Array<{
-    _key: string;
-    _id: string;
-    name: string;
-    slug: Slug;
-    portrait: ImageWithMetadata | null;
-  }>;
+  designers: Array<
+    | {
+        _key: null;
+        _id: string;
+        name: string;
+        slug: Slug;
+        portrait: ImageWithMetadata | null;
+      }
+    | {
+        _key: null;
+        _id: string;
+        name: string;
+        slug: null;
+        portrait: ImageWithMetadata | null;
+      }
+  >;
   tags: Array<{
     _id: string;
     name: string;
@@ -2384,7 +2419,7 @@ export type PROJECT_QUERY_RESULT = {
     title: string;
     slug: Slug;
     designers: Array<{
-      _key: string;
+      _key: null;
       _id: string;
       name: string;
     }>;
@@ -2531,6 +2566,10 @@ export type JOURNAL_PAGE_QUERY_RESULT = {
       | {
           _type: "journal";
           slug: Slug;
+        }
+      | {
+          _type: "professional";
+          slug: null;
         }
       | {
           _type: "project";
