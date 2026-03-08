@@ -1,0 +1,41 @@
+src/sanity/schemaTypes/documents/cta.ts
+  de7a419904a5aee4 69
+src/sanity/schemaTypes/documents/project.ts
+  de7a419904a5aee4 55
+migrations/designer-to-professional/index.ts
+  de7a419904a5aee4 1-11,16,27-30,41-152
+  6b95e6f11fb69a35 12-15,17-26,31-40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.8",
+  "base_commit_sha": "1925f9e1ccb3072743a8238bf3e3c974abcdb6b2",
+  "prompts": {
+    "6b95e6f11fb69a35": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c1276155-8a84-40aa-ad78-92f5a54028a2",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 25,
+      "total_deletions": 27,
+      "accepted_lines": 24,
+      "overriden_lines": 0
+    },
+    "de7a419904a5aee4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b06287a5-732a-4875-ad34-92395ab07a25",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 207,
+      "total_deletions": 52,
+      "accepted_lines": 130,
+      "overriden_lines": 0
+    }
+  }
+}
