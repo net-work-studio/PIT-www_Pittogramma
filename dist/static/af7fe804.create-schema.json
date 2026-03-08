@@ -1,0 +1,3818 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "slug"
+      }
+    ],
+    "name": "media.tag",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "logo",
+        "type": "logo"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      }
+    ],
+    "name": "contributor",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Internal name for this CTA",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Simple",
+              "value": "simple"
+            },
+            {
+              "title": "With Image",
+              "value": "withImage"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "simple",
+        "name": "variant",
+        "type": "string",
+        "title": "Type"
+      },
+      {
+        "name": "headline",
+        "type": "text"
+      },
+      {
+        "hidden": "conditional",
+        "name": "image",
+        "type": "imageWithMetadata"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "buttonText",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Internal",
+              "value": "internal"
+            },
+            {
+              "title": "External",
+              "value": "external"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "internal",
+        "name": "linkType",
+        "type": "string"
+      },
+      {
+        "to": [
+          {
+            "type": "project"
+          },
+          {
+            "type": "interview"
+          },
+          {
+            "type": "journal"
+          },
+          {
+            "type": "designer"
+          },
+          {
+            "type": "professional"
+          },
+          {
+            "type": "event"
+          },
+          {
+            "type": "edition"
+          },
+          {
+            "type": "homePage"
+          },
+          {
+            "type": "projectsPage"
+          },
+          {
+            "type": "interviewsPage"
+          },
+          {
+            "type": "designersPage"
+          }
+        ],
+        "hidden": "conditional",
+        "name": "internalLink",
+        "type": "reference",
+        "title": "Internal Page"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "hidden": "conditional",
+        "name": "externalUrl",
+        "type": "url",
+        "title": "External URL"
+      }
+    ],
+    "name": "cta",
+    "type": "document",
+    "title": "CTA"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "name"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "name": "portrait",
+        "type": "imageWithMetadata"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1900
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "birthYear",
+        "type": "number"
+      },
+      {
+        "name": "bio",
+        "type": "text"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "to": [
+                  {
+                    "type": "institute"
+                  }
+                ],
+                "name": "institute",
+                "type": "reference"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Bachelor",
+                      "value": "Bachelor"
+                    },
+                    {
+                      "title": "Master",
+                      "value": "Master"
+                    },
+                    {
+                      "title": "PhD",
+                      "value": "PhD"
+                    },
+                    {
+                      "title": "Erasmus",
+                      "value": "Erasmus"
+                    },
+                    {
+                      "title": "Other",
+                      "value": "Other"
+                    }
+                  ]
+                },
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "valid",
+                        "constraint": [
+                          "Bachelor",
+                          "Master",
+                          "PhD",
+                          "Erasmus",
+                          "Other"
+                        ]
+                      },
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "degree",
+                "type": "string"
+              },
+              {
+                "name": "courseName",
+                "type": "string"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "min",
+                        "constraint": 1900
+                      },
+                      {
+                        "flag": "custom"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "year",
+                "type": "number"
+              }
+            ],
+            "type": "object",
+            "name": "instituteEducation"
+          }
+        ],
+        "name": "education",
+        "type": "array"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "to": [
+          {
+            "type": "place"
+          }
+        ],
+        "name": "place",
+        "type": "reference"
+      },
+      {
+        "name": "socialLinks",
+        "type": "socialLinks"
+      },
+      {
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^[+\\d][\\d\\s\\-()]*$/",
+                  "name": "phone",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "phone",
+        "type": "string"
+      },
+      {
+        "name": "seo",
+        "type": "seoModule",
+        "title": "SEO"
+      }
+    ],
+    "name": "designer",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "cover",
+        "type": "imageWithMetadata"
+      },
+      {
+        "name": "seo",
+        "type": "seoModule",
+        "title": "SEO"
+      }
+    ],
+    "name": "edition",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "cover",
+        "type": "imageWithMetadata"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "dateStart",
+        "type": "date"
+      },
+      {
+        "name": "dateEnd",
+        "type": "date"
+      },
+      {
+        "name": "locationName",
+        "type": "string"
+      },
+      {
+        "name": "locationAddress",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "to": [
+          {
+            "type": "contributor"
+          }
+        ],
+        "name": "sponsor",
+        "type": "reference"
+      },
+      {
+        "to": [
+          {
+            "type": "contributor"
+          }
+        ],
+        "name": "partner",
+        "type": "reference"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "tag"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to tag"
+          }
+        ],
+        "name": "tags",
+        "type": "array"
+      },
+      {
+        "name": "seo",
+        "type": "seoModule",
+        "title": "SEO"
+      }
+    ],
+    "name": "event",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "content",
+        "type": "array"
+      },
+      {
+        "to": [
+          {
+            "type": "contributor"
+          }
+        ],
+        "name": "supporters",
+        "type": "reference"
+      }
+    ],
+    "name": "history",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1000
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "yearFoundation",
+        "type": "number"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "language"
+              }
+            ],
+            "type": "reference",
+            "name": "language"
+          }
+        ],
+        "name": "languages",
+        "type": "array"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "to": [
+          {
+            "type": "place"
+          }
+        ],
+        "name": "place",
+        "type": "reference"
+      },
+      {
+        "name": "address",
+        "type": "string"
+      },
+      {
+        "name": "socialLinks",
+        "type": "socialLinks"
+      }
+    ],
+    "name": "institute",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "name": "publishingDate",
+        "type": "publishingDate"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "cover",
+        "type": "imageWithMetadata"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Designers",
+              "value": "designers"
+            },
+            {
+              "title": "Studio",
+              "value": "studio"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "designers",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "designers",
+                  "studio"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "interviewToType",
+        "type": "string",
+        "title": "Interview To"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "designer"
+              },
+              {
+                "type": "professional"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to designer or professional"
+          }
+        ],
+        "name": "designersAndProfessionals",
+        "type": "array",
+        "title": "Designers and Professionals"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "to": [
+          {
+            "type": "studio"
+          }
+        ],
+        "name": "studio",
+        "type": "reference"
+      },
+      {
+        "to": [
+          {
+            "type": "place"
+          }
+        ],
+        "name": "place",
+        "type": "reference"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "readingTime",
+        "type": "number",
+        "title": "Reading Time (minutes)"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "tag"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to tag"
+          }
+        ],
+        "name": "tags",
+        "type": "array"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "introText",
+        "type": "text"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Emphasis"
+                }
+              ]
+            },
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Question"
+              },
+              {
+                "value": "answer",
+                "title": "Answer"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          },
+          {
+            "type": "singleMediaBlock",
+            "title": "Single Media"
+          },
+          {
+            "type": "sideBySideMediaBlock",
+            "title": "Side by Side"
+          },
+          {
+            "type": "threeSideBySideMediaBlock",
+            "title": "3 Side by Side"
+          },
+          {
+            "type": "gridFourMediaBlock",
+            "title": "Grid of 4"
+          }
+        ],
+        "name": "interview",
+        "type": "array"
+      },
+      {
+        "name": "seo",
+        "type": "seoModule",
+        "title": "SEO"
+      }
+    ],
+    "name": "interview",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "publishingDate",
+        "type": "publishingDate"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "cover",
+        "type": "imageWithMetadata"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "tag"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to tag"
+          }
+        ],
+        "name": "tags",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "author"
+              }
+            ],
+            "type": "reference",
+            "name": "author"
+          }
+        ],
+        "name": "authors",
+        "type": "array"
+      },
+      {
+        "description": "A short summary of the article",
+        "name": "excerpt",
+        "type": "text"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "content",
+        "type": "array"
+      },
+      {
+        "name": "seo",
+        "type": "seoModule",
+        "title": "SEO"
+      }
+    ],
+    "name": "journal",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "name"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      }
+    ],
+    "name": "language",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "publishingDate",
+        "type": "publishingDate"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "cover",
+        "type": "imageWithMetadata"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error",
+            "message": "You cannot add the same designer twice"
+          }
+        ],
+        "of": [
+          {
+            "to": [
+              {
+                "type": "designer"
+              },
+              {
+                "type": "professional"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to designer or professional"
+          }
+        ],
+        "name": "designers",
+        "type": "array"
+      },
+      {
+        "to": [
+          {
+            "type": "institute"
+          }
+        ],
+        "name": "institute",
+        "type": "reference"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "teacher"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to teacher"
+          }
+        ],
+        "name": "teachers",
+        "type": "array"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1900
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "year",
+        "type": "number"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "tag"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to tag"
+          }
+        ],
+        "name": "tags",
+        "type": "array"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "of": [
+          {
+            "type": "singleMediaBlock",
+            "title": "Single Media"
+          },
+          {
+            "type": "sideBySideMediaBlock",
+            "title": "Side by Side"
+          },
+          {
+            "type": "threeSideBySideMediaBlock",
+            "title": "3 Side by Side"
+          },
+          {
+            "type": "gridFourMediaBlock",
+            "title": "Grid of 4"
+          }
+        ],
+        "name": "gallery",
+        "type": "array"
+      },
+      {
+        "name": "seo",
+        "type": "seoModule",
+        "title": "SEO"
+      }
+    ],
+    "name": "project",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "socialLinks",
+        "type": "socialLinks"
+      },
+      {
+        "description": "Fetches OG metadata from the Website URL in Social Links",
+        "name": "fetchWebsiteData",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "description": "Auto-filled from OG description",
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "description": "Auto-filled from OG image",
+        "name": "cover",
+        "type": "imageWithMetadata"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "place"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to place"
+          }
+        ],
+        "name": "places",
+        "type": "array",
+        "title": "Locations"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "to": [
+          {
+            "type": "category"
+          }
+        ],
+        "name": "category",
+        "type": "reference"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "tag"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to tag"
+          }
+        ],
+        "name": "tags",
+        "type": "array"
+      },
+      {
+        "description": "Raw OG title from the website",
+        "readOnly": true,
+        "hidden": "conditional",
+        "name": "ogTitle",
+        "type": "string",
+        "title": "OG Title"
+      },
+      {
+        "description": "Raw OG description from the website",
+        "readOnly": true,
+        "hidden": "conditional",
+        "name": "ogDescription",
+        "type": "string",
+        "title": "OG Description"
+      },
+      {
+        "description": "Raw OG site name from the website",
+        "readOnly": true,
+        "hidden": "conditional",
+        "name": "ogSiteName",
+        "type": "string",
+        "title": "OG Site Name"
+      },
+      {
+        "description": "Original OG image URL",
+        "readOnly": true,
+        "hidden": "conditional",
+        "name": "ogImageUrl",
+        "type": "string",
+        "title": "OG Image URL"
+      }
+    ],
+    "name": "studio",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "to": [
+          {
+            "type": "institute"
+          }
+        ],
+        "name": "teachingAt",
+        "type": "reference",
+        "title": "Teaching at"
+      }
+    ],
+    "name": "teacher",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "logoLight",
+        "type": "image"
+      },
+      {
+        "name": "logoDark",
+        "type": "image"
+      },
+      {
+        "name": "alt",
+        "type": "string"
+      }
+    ],
+    "name": "logo",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "name": "caption",
+        "type": "string",
+        "title": "Caption / Copyright"
+      },
+      {
+        "name": "alt",
+        "type": "string"
+      }
+    ],
+    "name": "imageWithMetadata",
+    "type": "object",
+    "title": "Image with Metadata"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Image",
+              "value": "image"
+            },
+            {
+              "title": "Video (Upload)",
+              "value": "videoUpload"
+            },
+            {
+              "title": "Video (Embed)",
+              "value": "videoEmbed"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "image",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "image",
+                  "videoUpload",
+                  "videoEmbed"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "hidden": "conditional",
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "options": {
+          "accept": "video/*"
+        },
+        "hidden": "conditional",
+        "name": "video",
+        "type": "file",
+        "title": "Video File"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "YouTube or Vimeo URL",
+        "hidden": "conditional",
+        "name": "videoUrl",
+        "type": "url",
+        "title": "Video URL"
+      },
+      {
+        "name": "caption",
+        "type": "string"
+      },
+      {
+        "hidden": "conditional",
+        "name": "alt",
+        "type": "string",
+        "title": "Alt Text"
+      }
+    ],
+    "name": "mediaItem",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Landscape (4:3)",
+              "value": "landscape"
+            },
+            {
+              "title": "Portrait (3:4)",
+              "value": "portrait"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "landscape",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "landscape",
+                  "portrait"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "orientation",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "media",
+        "type": "mediaItem"
+      }
+    ],
+    "name": "singleMediaBlock",
+    "type": "object",
+    "title": "Single Media"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Landscape (4:3)",
+              "value": "landscape"
+            },
+            {
+              "title": "Portrait (3:4)",
+              "value": "portrait"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "landscape",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "landscape",
+                  "portrait"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "orientation",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "left",
+        "type": "mediaItem"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "right",
+        "type": "mediaItem"
+      }
+    ],
+    "name": "sideBySideMediaBlock",
+    "type": "object",
+    "title": "Side by Side"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Landscape (4:3)",
+              "value": "landscape"
+            },
+            {
+              "title": "Portrait (3:4)",
+              "value": "portrait"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "landscape",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "landscape",
+                  "portrait"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "orientation",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "left",
+        "type": "mediaItem"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "center",
+        "type": "mediaItem"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "right",
+        "type": "mediaItem"
+      }
+    ],
+    "name": "threeSideBySideMediaBlock",
+    "type": "object",
+    "title": "3 Side by Side"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Landscape (4:3)",
+              "value": "landscape"
+            },
+            {
+              "title": "Portrait (3:4)",
+              "value": "portrait"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "landscape",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "landscape",
+                  "portrait"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "orientation",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "topLeft",
+        "type": "mediaItem"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "topRight",
+        "type": "mediaItem"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "bottomLeft",
+        "type": "mediaItem"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "bottomRight",
+        "type": "mediaItem"
+      }
+    ],
+    "name": "gridFourMediaBlock",
+    "type": "object",
+    "title": "Grid of 4"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      }
+    ],
+    "name": "titleSlug",
+    "type": "object",
+    "title": "TitleSlug"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Display name, e.g. Milan, Italy",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "readOnly": true,
+        "name": "city",
+        "type": "string"
+      },
+      {
+        "readOnly": true,
+        "name": "country",
+        "type": "string"
+      },
+      {
+        "description": "2-letter ISO country code",
+        "readOnly": true,
+        "name": "countryCode",
+        "type": "string"
+      },
+      {
+        "readOnly": true,
+        "name": "state",
+        "type": "string",
+        "title": "State / Region"
+      },
+      {
+        "readOnly": true,
+        "name": "lat",
+        "type": "number",
+        "title": "Latitude"
+      },
+      {
+        "readOnly": true,
+        "name": "lng",
+        "type": "number",
+        "title": "Longitude"
+      },
+      {
+        "readOnly": true,
+        "name": "osmId",
+        "type": "number",
+        "title": "OpenStreetMap ID"
+      },
+      {
+        "readOnly": true,
+        "name": "osmType",
+        "type": "string",
+        "title": "OSM Type"
+      },
+      {
+        "description": "Full display name from Nominatim",
+        "readOnly": true,
+        "name": "formattedAddress",
+        "type": "string"
+      }
+    ],
+    "name": "place",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "name"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      }
+    ],
+    "name": "tag",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 65
+              }
+            ],
+            "level": "warning",
+            "message": "Titles longer than ~60–65 chars may be truncated"
+          }
+        ],
+        "description": "Title shown in search results and browser tabs. Aim for ~60 characters. Falls back to site settings if empty.",
+        "name": "metaTitle",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 160
+              }
+            ],
+            "level": "warning",
+            "message": "Descriptions longer than ~155–160 chars may be truncated"
+          }
+        ],
+        "description": "Short summary for search results. Aim for ~155–160 characters. Falls back to site settings if empty.",
+        "name": "metaDescription",
+        "type": "text"
+      },
+      {
+        "description": "Default image representing this page in search or shares.",
+        "name": "metaImage",
+        "type": "imageWithMetadata"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Index, Follow",
+              "value": "index, follow"
+            },
+            {
+              "title": "No Index, Follow",
+              "value": "noindex, follow"
+            },
+            {
+              "title": "Index, No Follow",
+              "value": "index, nofollow"
+            },
+            {
+              "title": "No Index, No Follow",
+              "value": "noindex, nofollow"
+            }
+          ]
+        },
+        "initialValue": "index, follow",
+        "description": "Controls if search engines index this page and follow its links.",
+        "name": "metaRobots",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^\\/[a-z0-9\\-/]*$/i",
+                  "invert": false
+                }
+              }
+            ],
+            "level": "warning",
+            "message": "Must start with / and use valid path characters"
+          }
+        ],
+        "description": "Path only (e.g., /blog/hello-world). Leave empty to use current page path.",
+        "name": "canonicalURL",
+        "type": "string"
+      },
+      {
+        "name": "openGraph",
+        "type": "openGraph"
+      },
+      {
+        "name": "xCard",
+        "type": "xCard",
+        "title": "X (Twitter) Card"
+      }
+    ],
+    "name": "seoModule",
+    "type": "object",
+    "title": "SEO"
+  },
+  {
+    "fields": [
+      {
+        "description": "Optional override for social sharing. Uses Meta Title by default.",
+        "name": "title",
+        "type": "string",
+        "title": "OG Title"
+      },
+      {
+        "rows": 3,
+        "description": "Optional override for social sharing. Uses Meta Description by default.",
+        "name": "description",
+        "type": "text",
+        "title": "OG Description"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "URL used for social sharing (usually the canonical URL).",
+        "name": "url",
+        "type": "url",
+        "title": "OG URL"
+      }
+    ],
+    "name": "openGraph",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "description": "Optional override for X/Twitter. Uses Meta Title by default.",
+        "name": "title",
+        "type": "string",
+        "title": "X Title"
+      },
+      {
+        "rows": 3,
+        "description": "Optional override for X/Twitter. Uses Meta Description by default.",
+        "name": "description",
+        "type": "text",
+        "title": "X Description"
+      }
+    ],
+    "name": "xCard",
+    "type": "object",
+    "title": "X (Twitter) Card"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "hidden": true,
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "description": "Default SEO settings for the site and homepage",
+        "name": "seo",
+        "type": "seoModule",
+        "title": "Default SEO"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "substackUrl",
+        "type": "url",
+        "title": "Substack URL"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "instagramUrl",
+        "type": "url",
+        "title": "Instagram URL"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "spotifyUrl",
+        "type": "url",
+        "title": "Spotify URL"
+      },
+      {
+        "initialValue": "pittogramma",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The utm_source parameter for outbound links (e.g., 'pittogramma')",
+        "name": "utmSource",
+        "type": "string",
+        "title": "UTM Source"
+      },
+      {
+        "initialValue": "website",
+        "description": "The utm_medium parameter (e.g., 'website')",
+        "name": "utmMedium",
+        "type": "string",
+        "title": "UTM Medium"
+      },
+      {
+        "initialValue": "resources",
+        "description": "The utm_campaign parameter (e.g., 'resources')",
+        "name": "utmCampaign",
+        "type": "string",
+        "title": "UTM Campaign"
+      }
+    ],
+    "name": "siteSettings",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 170
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "introText",
+        "type": "text"
+      },
+      {
+        "to": [
+          {
+            "type": "cta"
+          }
+        ],
+        "name": "endOfPageCta",
+        "type": "reference",
+        "title": "End of Page CTA"
+      },
+      {
+        "name": "seo",
+        "type": "seoModule",
+        "title": "SEO"
+      }
+    ],
+    "name": "homePage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 170
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "introText",
+        "type": "text"
+      },
+      {
+        "to": [
+          {
+            "type": "cta"
+          }
+        ],
+        "name": "endOfPageCta",
+        "type": "reference",
+        "title": "End of Page CTA"
+      },
+      {
+        "name": "seo",
+        "type": "seoModule",
+        "title": "SEO"
+      }
+    ],
+    "name": "projectsPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 170
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "introText",
+        "type": "text"
+      },
+      {
+        "to": [
+          {
+            "type": "cta"
+          }
+        ],
+        "name": "endOfPageCta",
+        "type": "reference",
+        "title": "End of Page CTA"
+      },
+      {
+        "name": "seo",
+        "type": "seoModule",
+        "title": "SEO"
+      }
+    ],
+    "name": "interviewsPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 170
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "introText",
+        "type": "text"
+      },
+      {
+        "description": "Select an article to feature prominently at the top of the page",
+        "to": [
+          {
+            "type": "journal"
+          }
+        ],
+        "name": "featuredArticle",
+        "type": "reference"
+      },
+      {
+        "to": [
+          {
+            "type": "cta"
+          }
+        ],
+        "name": "endOfPageCta",
+        "type": "reference",
+        "title": "End of Page CTA"
+      },
+      {
+        "name": "seo",
+        "type": "seoModule",
+        "title": "SEO"
+      }
+    ],
+    "name": "journalPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 170
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "introText",
+        "type": "text"
+      },
+      {
+        "to": [
+          {
+            "type": "cta"
+          }
+        ],
+        "name": "endOfPageCta",
+        "type": "reference",
+        "title": "End of Page CTA"
+      },
+      {
+        "name": "seo",
+        "type": "seoModule",
+        "title": "SEO"
+      }
+    ],
+    "name": "designersPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 170
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "introText",
+        "type": "text"
+      },
+      {
+        "to": [
+          {
+            "type": "cta"
+          }
+        ],
+        "name": "endOfPageCta",
+        "type": "reference",
+        "title": "End of Page CTA"
+      },
+      {
+        "name": "seo",
+        "type": "seoModule",
+        "title": "SEO"
+      }
+    ],
+    "name": "eventsPage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Behance",
+                      "value": "behance"
+                    },
+                    {
+                      "title": "Bluesky",
+                      "value": "bluesky"
+                    },
+                    {
+                      "title": "Instagram",
+                      "value": "ig"
+                    },
+                    {
+                      "title": "LinkedIn",
+                      "value": "linkedin"
+                    },
+                    {
+                      "title": "Linktree",
+                      "value": "linktree"
+                    },
+                    {
+                      "title": "Mastodon",
+                      "value": "mastodon"
+                    },
+                    {
+                      "title": "Spotify",
+                      "value": "spotify"
+                    },
+                    {
+                      "title": "Substack",
+                      "value": "substack"
+                    },
+                    {
+                      "title": "TikTok",
+                      "value": "tiktok"
+                    },
+                    {
+                      "title": "X (Twitter)",
+                      "value": "x"
+                    },
+                    {
+                      "title": "Website",
+                      "value": "website"
+                    }
+                  ],
+                  "layout": "dropdown"
+                },
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "valid",
+                        "constraint": [
+                          "behance",
+                          "bluesky",
+                          "ig",
+                          "linkedin",
+                          "linktree",
+                          "mastodon",
+                          "spotify",
+                          "substack",
+                          "tiktok",
+                          "x",
+                          "website"
+                        ]
+                      },
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "platform",
+                "type": "string"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "uri",
+                        "constraint": {
+                          "options": {
+                            "scheme": [
+                              "/^http$/",
+                              "/^https$/"
+                            ],
+                            "allowRelative": false,
+                            "relativeOnly": false,
+                            "allowCredentials": false
+                          }
+                        }
+                      },
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "url",
+                "type": "url",
+                "title": "URL"
+              }
+            ],
+            "type": "object",
+            "name": "socialLink"
+          }
+        ],
+        "name": "links",
+        "type": "array"
+      }
+    ],
+    "name": "socialLinks",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "portrait",
+        "type": "imageWithMetadata"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1900
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "birthYear",
+        "type": "number"
+      },
+      {
+        "name": "bio",
+        "type": "text"
+      },
+      {
+        "to": [
+          {
+            "type": "institute"
+          }
+        ],
+        "name": "teachingAt",
+        "type": "reference",
+        "title": "Teaching at"
+      },
+      {
+        "to": [
+          {
+            "type": "studio"
+          }
+        ],
+        "name": "studio",
+        "type": "reference"
+      },
+      {
+        "to": [
+          {
+            "type": "place"
+          }
+        ],
+        "name": "place",
+        "type": "reference"
+      },
+      {
+        "name": "socialLinks",
+        "type": "socialLinks"
+      }
+    ],
+    "name": "professional",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "date",
+        "type": "date"
+      }
+    ],
+    "name": "publishingDate",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "name"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      }
+    ],
+    "name": "category",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "socialLinks",
+        "type": "socialLinks"
+      },
+      {
+        "description": "Fetches OG metadata from the Website URL in Social Links",
+        "name": "fetchWebsiteData",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "description": "Auto-filled from OG description",
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "description": "Auto-filled from OG image",
+        "name": "cover",
+        "type": "imageWithMetadata"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "tag"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to tag"
+          }
+        ],
+        "name": "tags",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "place"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to place"
+          }
+        ],
+        "name": "places",
+        "type": "array",
+        "title": "Locations"
+      },
+      {
+        "description": "Raw OG title from the website",
+        "readOnly": true,
+        "hidden": "conditional",
+        "name": "ogTitle",
+        "type": "string",
+        "title": "OG Title"
+      },
+      {
+        "description": "Raw OG description from the website",
+        "readOnly": true,
+        "hidden": "conditional",
+        "name": "ogDescription",
+        "type": "string",
+        "title": "OG Description"
+      },
+      {
+        "description": "Raw OG site name from the website",
+        "readOnly": true,
+        "hidden": "conditional",
+        "name": "ogSiteName",
+        "type": "string",
+        "title": "OG Site Name"
+      },
+      {
+        "description": "Original OG image URL",
+        "readOnly": true,
+        "hidden": "conditional",
+        "name": "ogImageUrl",
+        "type": "string",
+        "title": "OG Image URL"
+      }
+    ],
+    "name": "typeFoundry",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "tag"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to tag"
+          }
+        ],
+        "name": "tags",
+        "type": "array"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "to": [
+          {
+            "type": "place"
+          }
+        ],
+        "name": "place",
+        "type": "reference"
+      },
+      {
+        "name": "socialLinks",
+        "type": "socialLinks"
+      },
+      {
+        "name": "address",
+        "type": "string"
+      }
+    ],
+    "name": "bookshop",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "name": "image",
+        "type": "imageWithMetadata"
+      }
+    ],
+    "name": "glossary",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "name": "author",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "name": "publisher",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The URL of the source website",
+        "name": "sourceUrl",
+        "type": "url",
+        "title": "Source URL"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Auto-filled from OG site_name or title",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "description": "Auto-filled from OG description",
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "description": "Auto-filled from OG image",
+        "name": "cover",
+        "type": "imageWithMetadata"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "to": [
+          {
+            "type": "category"
+          }
+        ],
+        "name": "category",
+        "type": "reference"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "tag"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to tag"
+          }
+        ],
+        "name": "tags",
+        "type": "array"
+      },
+      {
+        "description": "Raw OG title from the website",
+        "readOnly": true,
+        "hidden": "conditional",
+        "name": "ogTitle",
+        "type": "string",
+        "title": "OG Title"
+      },
+      {
+        "description": "Raw OG description from the website",
+        "readOnly": true,
+        "hidden": "conditional",
+        "name": "ogDescription",
+        "type": "string",
+        "title": "OG Description"
+      },
+      {
+        "description": "Raw OG site name from the website",
+        "readOnly": true,
+        "hidden": "conditional",
+        "name": "ogSiteName",
+        "type": "string",
+        "title": "OG Site Name"
+      },
+      {
+        "description": "Original OG image URL",
+        "readOnly": true,
+        "hidden": "conditional",
+        "name": "ogImageUrl",
+        "type": "string",
+        "title": "OG Image URL"
+      }
+    ],
+    "name": "webSource",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "description": "Enter ISBN and click 'Fetch Data' to auto-fill book information",
+        "name": "isbn",
+        "type": "string",
+        "title": "ISBN"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "cover",
+        "type": "imageWithMetadata"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1000
+              },
+              {
+                "flag": "max",
+                "constraint": 9999
+              }
+            ],
+            "level": "warning",
+            "message": "Please enter a valid 4-digit year"
+          }
+        ],
+        "description": "Publication year",
+        "name": "year",
+        "type": "number"
+      },
+      {
+        "description": "Book description/summary",
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Number of pages",
+        "name": "pageCount",
+        "type": "number"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "language"
+              }
+            ],
+            "type": "reference",
+            "name": "language"
+          }
+        ],
+        "name": "languages",
+        "type": "array"
+      },
+      {
+        "description": "Language code from Google Books - use this to find/create the correct Language reference above",
+        "readOnly": true,
+        "name": "fetchedLanguages",
+        "type": "string",
+        "title": "Fetched Language (from Google Books)"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "author"
+              }
+            ],
+            "type": "reference",
+            "name": "author"
+          }
+        ],
+        "name": "authors",
+        "type": "array"
+      },
+      {
+        "description": "Suggestion from Google Books - use this to find/create the correct Author references above",
+        "readOnly": true,
+        "name": "fetchedAuthors",
+        "type": "string",
+        "title": "Fetched Authors (from Google Books)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "to": [
+          {
+            "type": "publisher"
+          }
+        ],
+        "name": "publisher",
+        "type": "reference"
+      },
+      {
+        "description": "Suggestion from Google Books - use this to find/create the correct Publisher reference above",
+        "readOnly": true,
+        "name": "fetchedPublisher",
+        "type": "string",
+        "title": "Fetched Publisher (from Google Books)"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "tag"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to tag"
+          }
+        ],
+        "name": "tags",
+        "type": "array"
+      },
+      {
+        "description": "Category suggestions from Google Books - use these to create/select appropriate tags above",
+        "readOnly": true,
+        "name": "fetchedCategories",
+        "type": "string",
+        "title": "Fetched Categories (from Google Books)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "affiliateLink",
+        "type": "url"
+      },
+      {
+        "description": "Book categories/subjects from Google Books",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "categories",
+        "type": "array"
+      },
+      {
+        "description": "Reference ID from Google Books API",
+        "readOnly": true,
+        "hidden": true,
+        "name": "googleBooksId",
+        "type": "string",
+        "title": "Google Books ID"
+      }
+    ],
+    "name": "bibliography",
+    "type": "document"
+  }
+]

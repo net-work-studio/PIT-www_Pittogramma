@@ -66,6 +66,7 @@ export const cta = defineType({
         { type: "interview" },
         { type: "journal" },
         { type: "designer" },
+        { type: "professional" },
         { type: "event" },
         { type: "edition" },
         { type: "homePage" },

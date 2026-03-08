@@ -52,7 +52,7 @@ export const project = defineType({
       of: [
         defineArrayMember({
           type: "reference",
-          to: [{ type: "designer" }],
+          to: [{ type: "designer" }, { type: "professional" }],
         }),
       ],
       validation: (e) =>
