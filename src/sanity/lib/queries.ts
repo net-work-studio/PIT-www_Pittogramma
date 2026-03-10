@@ -143,7 +143,7 @@ export const DESIGNERS_QUERY = defineQuery(`
 `);
 
 export const DESIGNER_QUERY = defineQuery(`
-  *[_type == "person" && slug.current == $slug][0] {
+  *[_type == "person" && "designer" in roles && slug.current == $slug][0] {
     _id,
     name,
     slug,

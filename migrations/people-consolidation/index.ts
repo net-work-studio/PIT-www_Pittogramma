@@ -76,7 +76,7 @@ async function run() {
   // Step 1: Fetch all old documents
   console.log("\n--- Step 1: Fetching all person-like documents ---");
   const oldDocs: OldDoc[] = await client.fetch(
-    `*[_type in ["designer", "professional", "author", "teacher"]]{ ... }`
+    `*[_type in ["designer", "professional", "author", "teacher"] && !(_id in path("drafts.**"))]{ ... }`
   );
   console.log(`Found ${oldDocs.length} total documents`);
 
@@ -235,7 +235,10 @@ async function run() {
       });
 
       if (changed) {
-        refTx.patch(doc._id, { set: { [field]: updated } });
+        const deduped = updated.filter(
+          (ref, i, arr) => arr.findIndex((r) => r._ref === ref._ref) === i
+        );
+        refTx.patch(doc._id, { set: { [field]: deduped } });
       }
     }
   }
