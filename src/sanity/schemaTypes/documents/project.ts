@@ -64,7 +64,10 @@ export const project = defineType({
       of: [
         defineArrayMember({
           type: "reference",
-          to: [{ type: "designer" }, { type: "professional" }],
+          to: [{ type: "person" }],
+          options: {
+            filter: '"designer" in roles || "professional" in roles',
+          },
         }),
       ],
       validation: (e) =>
@@ -89,7 +92,10 @@ export const project = defineType({
       of: [
         defineArrayMember({
           type: "reference",
-          to: [{ type: "teacher" }],
+          to: [{ type: "person" }],
+          options: {
+            filter: '"teacher" in roles',
+          },
         }),
       ],
       validation: (rule) =>

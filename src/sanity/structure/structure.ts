@@ -29,16 +29,57 @@ export const structure: StructureResolver = (S) =>
       docListItem(S, "project", "Project", Briefcase),
       docListItem(S, "interview", "Interview", MessageCircle),
 
+      group(S, "People", [
+        docListItem(S, "person", "All People", User),
+        S.listItem()
+          .title("Journal Authors")
+          .icon(User)
+          .child(
+            S.documentList()
+              .title("Journal Authors")
+              .filter(
+                '_type == "person" && _id in *[_type == "journal"].authors[]._ref'
+              )
+          ),
+        S.listItem()
+          .title("Project Designers")
+          .icon(User)
+          .child(
+            S.documentList()
+              .title("Project Designers")
+              .filter(
+                '_type == "person" && _id in *[_type == "project"].designers[]._ref'
+              )
+          ),
+        S.listItem()
+          .title("Interview People")
+          .icon(User)
+          .child(
+            S.documentList()
+              .title("Interview People")
+              .filter(
+                '_type == "person" && _id in *[_type == "interview"].designersAndProfessionals[]._ref'
+              )
+          ),
+        S.listItem()
+          .title("Bibliography Authors")
+          .icon(User)
+          .child(
+            S.documentList()
+              .title("Bibliography Authors")
+              .filter(
+                '_type == "person" && _id in *[_type == "bibliography"].authors[]._ref'
+              )
+          ),
+      ]),
+
       group(S, "Resources", [
         docListItem(S, "bibliography", "Bibliography"),
         docListItem(S, "bookshop", "Bookshop"),
         docListItem(S, "glossary", "Glossary"),
-        docListItem(S, "designer", "Designer", User),
         docListItem(S, "institute", "Institute"),
-        docListItem(S, "professional", "Professional", User),
         docListItem(S, "publisher", "Publisher"),
         docListItem(S, "studio", "Studio"),
-        docListItem(S, "teacher", "Teacher", GraduationCap),
         docListItem(S, "typeFoundry", "Type Foundry"),
         docListItem(S, "webSource", "Web Source"),
       ]),
@@ -66,7 +107,6 @@ export const structure: StructureResolver = (S) =>
         docListItem(S, "tag", "Tag", Tag),
         docListItem(S, "contributor", "Contributor", Users),
         docListItem(S, "category", "Category", Tag),
-        docListItem(S, "author", "Author", User),
       ]),
 
       S.divider(),

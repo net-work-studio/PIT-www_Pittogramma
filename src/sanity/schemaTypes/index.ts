@@ -1,12 +1,11 @@
 import type { SchemaTypeDefinition } from "sanity";
-import { author } from "./documents/author";
 import { bibliography } from "./documents/bibliography";
 import { bookshop } from "./documents/bookshop";
 import { category } from "./documents/category";
 import { contributor } from "./documents/contributor";
 import { cta } from "./documents/cta";
-import { designer } from "./documents/designer";
 import { edition } from "./documents/edition";
+import { person } from "./documents/person";
 import { event } from "./documents/event";
 import { glossary } from "./documents/glossary";
 import { history } from "./documents/history";
@@ -15,12 +14,10 @@ import { interview } from "./documents/interview";
 import { journal } from "./documents/journal";
 import { language } from "./documents/language";
 import { place } from "./documents/place";
-import { professional } from "./documents/professional";
 import { project } from "./documents/project";
 import { publisher } from "./documents/publisher";
 import { studio } from "./documents/studio";
 import { tag } from "./documents/tag";
-import { teacher } from "./documents/teacher";
 import { typeFoundry } from "./documents/type-foundry";
 import { webSource } from "./documents/web-source";
 import {
@@ -50,8 +47,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     contributor,
     cta,
-    designer,
     edition,
+    person,
     event,
     history,
     institute,
@@ -60,7 +57,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     language,
     project,
     studio,
-    teacher,
     logo,
     imageWithMetadata,
     mediaItem,
@@ -82,13 +78,11 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     designersPage,
     eventsPage,
     socialLinks,
-    professional,
     publishingDate,
     category,
     typeFoundry,
     bookshop,
     glossary,
-    author,
     publisher,
     webSource,
     bibliography,

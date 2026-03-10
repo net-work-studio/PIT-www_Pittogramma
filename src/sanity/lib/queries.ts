@@ -128,7 +128,7 @@ export const EVENTS_PAGE_QUERY = defineQuery(`
 `);
 
 export const DESIGNERS_QUERY = defineQuery(`
-  *[_type == "designer"] | order(name asc) {
+  *[_type == "person" && "designer" in roles] | order(name asc) {
     _id,
     name,
     slug,
@@ -143,7 +143,7 @@ export const DESIGNERS_QUERY = defineQuery(`
 `);
 
 export const DESIGNER_QUERY = defineQuery(`
-  *[_type == "designer" && slug.current == $slug][0] {
+  *[_type == "person" && "designer" in roles && slug.current == $slug][0] {
     _id,
     name,
     slug,
@@ -600,7 +600,7 @@ export const MAP_PLACES_QUERY = defineQuery(`
     countryCode,
     lat,
     lng,
-    "designers": *[_type == "designer" && place._ref == ^._id] { _id, name, slug },
+    "designers": *[_type == "person" && "designer" in roles && place._ref == ^._id] { _id, name, slug },
     "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },
     "studios": *[_type == "studio" && references(^._id)] { _id, name },
     "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },

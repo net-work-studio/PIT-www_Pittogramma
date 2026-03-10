@@ -20,11 +20,11 @@ export type LanguageReference = {
   [internalGroqTypeReferenceTo]?: "language";
 };
 
-export type AuthorReference = {
+export type PersonReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "author";
+  [internalGroqTypeReferenceTo]?: "person";
 };
 
 export type PublisherReference = {
@@ -48,7 +48,7 @@ export type Bibliography = {
   _updatedAt: string;
   _rev: string;
   isbn?: string;
-  name: string;
+  name?: string;
   cover?: ImageWithMetadata;
   year?: number;
   description?: string;
@@ -62,10 +62,10 @@ export type Bibliography = {
   authors?: Array<
     {
       _key: string;
-    } & AuthorReference
+    } & PersonReference
   >;
   fetchedAuthors?: string;
-  publisher: PublisherReference;
+  publisher?: PublisherReference;
   fetchedPublisher?: string;
   tags?: Array<
     {
@@ -111,11 +111,11 @@ export type WebSource = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  sourceUrl: string;
-  name: string;
+  sourceUrl?: string;
+  name?: string;
   description?: string;
   cover?: ImageWithMetadata;
-  category: CategoryReference;
+  category?: CategoryReference;
   tags?: Array<
     {
       _key: string;
@@ -133,16 +133,7 @@ export type Publisher = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-};
-
-export type Author = {
-  _id: string;
-  _type: "author";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name: string;
+  name?: string;
 };
 
 export type Glossary = {
@@ -151,8 +142,8 @@ export type Glossary = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-  description: string;
+  name?: string;
+  description?: string;
   image?: ImageWithMetadata;
 };
 
@@ -169,13 +160,13 @@ export type Bookshop = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
+  name?: string;
   tags?: Array<
     {
       _key: string;
     } & TagReference
   >;
-  place: PlaceReference;
+  place?: PlaceReference;
   socialLinks?: SocialLinks;
   address?: string;
 };
@@ -183,7 +174,7 @@ export type Bookshop = {
 export type SocialLinks = {
   _type: "socialLinks";
   links?: Array<{
-    platform:
+    platform?:
       | "behance"
       | "bluesky"
       | "ig"
@@ -195,7 +186,7 @@ export type SocialLinks = {
       | "tiktok"
       | "x"
       | "website";
-    url: string;
+    url?: string;
     _type: "socialLink";
     _key: string;
   }>;
@@ -207,7 +198,7 @@ export type TypeFoundry = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
+  name?: string;
   socialLinks?: SocialLinks;
   fetchWebsiteData?: string;
   description?: string;
@@ -230,7 +221,7 @@ export type TypeFoundry = {
 
 export type PublishingDate = {
   _type: "publishingDate";
-  date: string;
+  date?: string;
 };
 
 export type CtaReference = {
@@ -247,7 +238,7 @@ export type EventsPage = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  introText: string;
+  introText?: string;
   endOfPageCta?: CtaReference;
   seo?: SeoModule;
 };
@@ -281,7 +272,7 @@ export type JournalPage = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  introText: string;
+  introText?: string;
   featuredArticle?: JournalReference;
   endOfPageCta?: CtaReference;
   seo?: SeoModule;
@@ -298,7 +289,7 @@ export type SiteSettings = {
   substackUrl?: string;
   instagramUrl?: string;
   spotifyUrl?: string;
-  utmSource: string;
+  utmSource?: string;
   utmMedium?: string;
   utmCampaign?: string;
 };
@@ -322,50 +313,50 @@ export type Tag = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-  slug: Slug;
+  name?: string;
+  slug?: Slug;
 };
 
 export type Slug = {
   _type: "slug";
-  current: string;
+  current?: string;
   source?: string;
 };
 
 export type TitleSlug = {
   _type: "titleSlug";
-  title: string;
-  slug: Slug;
+  title?: string;
+  slug?: Slug;
 };
 
 export type GridFourMediaBlock = {
   _type: "gridFourMediaBlock";
-  orientation: "landscape" | "portrait";
-  topLeft: MediaItem;
-  topRight: MediaItem;
-  bottomLeft: MediaItem;
-  bottomRight: MediaItem;
+  orientation?: "landscape" | "portrait";
+  topLeft?: MediaItem;
+  topRight?: MediaItem;
+  bottomLeft?: MediaItem;
+  bottomRight?: MediaItem;
 };
 
 export type ThreeSideBySideMediaBlock = {
   _type: "threeSideBySideMediaBlock";
-  orientation: "landscape" | "portrait";
-  left: MediaItem;
-  center: MediaItem;
-  right: MediaItem;
+  orientation?: "landscape" | "portrait";
+  left?: MediaItem;
+  center?: MediaItem;
+  right?: MediaItem;
 };
 
 export type SideBySideMediaBlock = {
   _type: "sideBySideMediaBlock";
-  orientation: "landscape" | "portrait";
-  left: MediaItem;
-  right: MediaItem;
+  orientation?: "landscape" | "portrait";
+  left?: MediaItem;
+  right?: MediaItem;
 };
 
 export type SingleMediaBlock = {
   _type: "singleMediaBlock";
-  orientation: "landscape" | "portrait";
-  media: MediaItem;
+  orientation?: "landscape" | "portrait";
+  media?: MediaItem;
 };
 
 export type SanityFileAssetReference = {
@@ -377,7 +368,7 @@ export type SanityFileAssetReference = {
 
 export type MediaItem = {
   _type: "mediaItem";
-  type: "image" | "videoUpload" | "videoEmbed";
+  type?: "image" | "videoUpload" | "videoEmbed";
   image?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -414,31 +405,14 @@ export type Logo = {
   alt?: string;
 };
 
-export type InstituteReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "institute";
-};
-
-export type Teacher = {
-  _id: string;
-  _type: "teacher";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name: string;
-  teachingAt?: InstituteReference;
-};
-
 export type Language = {
   _id: string;
   _type: "language";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-  slug: Slug;
+  name?: string;
+  slug?: Slug;
 };
 
 export type ContributorReference = {
@@ -454,7 +428,7 @@ export type History = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
+  title?: string;
   content?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -488,20 +462,6 @@ export type InterviewReference = {
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "interview";
-};
-
-export type DesignerReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "designer";
-};
-
-export type ProfessionalReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "professional";
 };
 
 export type EventReference = {
@@ -552,18 +512,17 @@ export type Cta = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
+  title?: string;
   variant?: "simple" | "withImage";
   headline?: string;
   image?: ImageWithMetadata;
-  buttonText: string;
+  buttonText?: string;
   linkType?: "internal" | "external";
   internalLink?:
     | ProjectReference
     | InterviewReference
     | JournalReference
-    | DesignerReference
-    | ProfessionalReference
+    | PersonReference
     | EventReference
     | EditionReference
     | HomePageReference
@@ -580,7 +539,7 @@ export type DesignersPage = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  introText: string;
+  introText?: string;
   endOfPageCta?: CtaReference;
   seo?: SeoModule;
 };
@@ -592,7 +551,7 @@ export type InterviewsPage = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  introText: string;
+  introText?: string;
   endOfPageCta?: CtaReference;
   seo?: SeoModule;
 };
@@ -604,7 +563,7 @@ export type ProjectsPage = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  introText: string;
+  introText?: string;
   endOfPageCta?: CtaReference;
   seo?: SeoModule;
 };
@@ -616,7 +575,7 @@ export type HomePage = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  introText: string;
+  introText?: string;
   endOfPageCta?: CtaReference;
   seo?: SeoModule;
 };
@@ -627,9 +586,9 @@ export type Edition = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
-  slug: Slug;
-  cover: ImageWithMetadata;
+  title?: string;
+  slug?: Slug;
+  cover?: ImageWithMetadata;
   seo?: SeoModule;
 };
 
@@ -639,11 +598,11 @@ export type Event = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
-  slug: Slug;
-  type: string;
-  cover: ImageWithMetadata;
-  dateStart: string;
+  title?: string;
+  slug?: Slug;
+  type?: string;
+  cover?: ImageWithMetadata;
+  dateStart?: string;
   dateEnd?: string;
   locationName?: string;
   locationAddress?: string;
@@ -658,6 +617,13 @@ export type Event = {
   seo?: SeoModule;
 };
 
+export type InstituteReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "institute";
+};
+
 export type StudioReference = {
   _ref: string;
   _type: "reference";
@@ -665,45 +631,32 @@ export type StudioReference = {
   [internalGroqTypeReferenceTo]?: "studio";
 };
 
-export type Professional = {
+export type Person = {
   _id: string;
-  _type: "professional";
+  _type: "person";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
+  roles?: Array<string>;
+  name?: string;
+  slug?: Slug;
   portrait?: ImageWithMetadata;
   birthYear?: number;
   bio?: string;
-  teachingAt?: InstituteReference;
-  studio?: StudioReference;
-  place?: PlaceReference;
-  socialLinks?: SocialLinks;
-};
-
-export type Designer = {
-  _id: string;
-  _type: "designer";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name: string;
-  slug: Slug;
-  portrait?: ImageWithMetadata;
-  birthYear: number;
-  bio?: string;
   education?: Array<{
-    institute: InstituteReference;
-    degree: "Bachelor" | "Master" | "PhD" | "Erasmus" | "Other";
+    institute?: InstituteReference;
+    degree?: "Bachelor" | "Master" | "PhD" | "Erasmus" | "Other";
     courseName?: string;
     year?: number;
     _type: "instituteEducation";
     _key: string;
   }>;
-  place: PlaceReference;
+  place?: PlaceReference;
   socialLinks?: SocialLinks;
   email?: string;
   phone?: string;
+  teachingAt?: InstituteReference;
+  studio?: StudioReference;
   seo?: SeoModule;
 };
 
@@ -713,10 +666,10 @@ export type Journal = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
-  slug: Slug;
-  publishingDate: PublishingDate;
-  cover: ImageWithMetadata;
+  title?: string;
+  slug?: Slug;
+  publishingDate?: PublishingDate;
+  cover?: ImageWithMetadata;
   tags?: Array<
     {
       _key: string;
@@ -725,27 +678,49 @@ export type Journal = {
   authors?: Array<
     {
       _key: string;
-    } & AuthorReference
+    } & PersonReference
   >;
   excerpt?: string;
-  content?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
+  content?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & SingleMediaBlock)
+    | ({
+        _key: string;
+      } & SideBySideMediaBlock)
+    | ({
+        _key: string;
+      } & ThreeSideBySideMediaBlock)
+    | ({
+        _key: string;
+      } & GridFourMediaBlock)
+  >;
   seo?: SeoModule;
 };
 
@@ -755,13 +730,15 @@ export type Interview = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
-  slug: Slug;
+  title?: string;
+  slug?: Slug;
   publishingDate?: PublishingDate;
-  cover: ImageWithMetadata;
-  interviewToType: "designers" | "studio";
-  designersAndProfessionals?: ArrayOf<
-    DesignerReference | ProfessionalReference
+  cover?: ImageWithMetadata;
+  interviewToType?: "designers" | "studio";
+  designersAndProfessionals?: Array<
+    {
+      _key: string;
+    } & PersonReference
   >;
   studio?: StudioReference;
   place?: PlaceReference;
@@ -771,7 +748,7 @@ export type Interview = {
       _key: string;
     } & TagReference
   >;
-  introText: string;
+  introText?: string;
   interview?: Array<
     | {
         children?: Array<{
@@ -809,7 +786,7 @@ export type Studio = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
+  name?: string;
   socialLinks?: SocialLinks;
   fetchWebsiteData?: string;
   description?: string;
@@ -819,7 +796,7 @@ export type Studio = {
       _key: string;
     } & PlaceReference
   >;
-  category: CategoryReference;
+  category?: CategoryReference;
   tags?: Array<
     {
       _key: string;
@@ -837,15 +814,8 @@ export type Category = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-  slug: Slug;
-};
-
-export type TeacherReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "teacher";
+  name?: string;
+  slug?: Slug;
 };
 
 export type Project = {
@@ -854,18 +824,22 @@ export type Project = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
-  slug: Slug;
-  publishingDate: PublishingDate;
-  cover: ImageWithMetadata;
-  designers: ArrayOf<DesignerReference | ProfessionalReference>;
+  title?: string;
+  slug?: Slug;
+  publishingDate?: PublishingDate;
+  cover?: ImageWithMetadata;
+  designers?: Array<
+    {
+      _key: string;
+    } & PersonReference
+  >;
   institute?: InstituteReference;
   teachers?: Array<
     {
       _key: string;
-    } & TeacherReference
+    } & PersonReference
   >;
-  year: number;
+  year?: number;
   tags?: Array<
     {
       _key: string;
@@ -891,18 +865,18 @@ export type Project = {
 
 export type SanityImageCrop = {
   _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
 };
 
 export type SanityImageHotspot = {
   _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type Institute = {
@@ -911,14 +885,14 @@ export type Institute = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-  yearFoundation: number;
+  name?: string;
+  yearFoundation?: number;
   languages?: Array<
     {
       _key: string;
     } & LanguageReference
   >;
-  place: PlaceReference;
+  place?: PlaceReference;
   address?: string;
   socialLinks?: SocialLinks;
 };
@@ -929,7 +903,7 @@ export type Place = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
+  name?: string;
   city?: string;
   country?: string;
   countryCode?: string;
@@ -947,8 +921,8 @@ export type Contributor = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-  logo: Logo;
+  name?: string;
+  logo?: Logo;
   description?: string;
 };
 
@@ -982,9 +956,9 @@ export type SanityImagePalette = {
 
 export type SanityImageDimensions = {
   _type: "sanity.imageDimensions";
-  height: number;
-  width: number;
-  aspectRatio: number;
+  height?: number;
+  width?: number;
+  aspectRatio?: number;
 };
 
 export type SanityImageMetadata = {
@@ -1010,14 +984,14 @@ export type SanityFileAsset = {
   title?: string;
   description?: string;
   altText?: string;
-  sha1hash: string;
-  extension: string;
-  mimeType: string;
-  size: number;
-  assetId: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
   uploadId?: string;
-  path: string;
-  url: string;
+  path?: string;
+  url?: string;
   source?: SanityAssetSourceData;
 };
 
@@ -1039,14 +1013,14 @@ export type SanityImageAsset = {
   title?: string;
   description?: string;
   altText?: string;
-  sha1hash: string;
-  extension: string;
-  mimeType: string;
-  size: number;
-  assetId: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
   uploadId?: string;
-  path: string;
-  url: string;
+  path?: string;
+  url?: string;
   metadata?: SanityImageMetadata;
   source?: SanityAssetSourceData;
 };
@@ -1060,7 +1034,7 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | LanguageReference
-  | AuthorReference
+  | PersonReference
   | PublisherReference
   | TagReference
   | Bibliography
@@ -1069,7 +1043,6 @@ export type AllSanitySchemaTypes =
   | CategoryReference
   | WebSource
   | Publisher
-  | Author
   | Glossary
   | PlaceReference
   | Bookshop
@@ -1094,15 +1067,11 @@ export type AllSanitySchemaTypes =
   | SanityFileAssetReference
   | MediaItem
   | Logo
-  | InstituteReference
-  | Teacher
   | Language
   | ContributorReference
   | History
   | ProjectReference
   | InterviewReference
-  | DesignerReference
-  | ProfessionalReference
   | EventReference
   | EditionReference
   | HomePageReference
@@ -1116,14 +1085,13 @@ export type AllSanitySchemaTypes =
   | HomePage
   | Edition
   | Event
+  | InstituteReference
   | StudioReference
-  | Professional
-  | Designer
+  | Person
   | Journal
   | Interview
   | Studio
   | Category
-  | TeacherReference
   | Project
   | SanityImageCrop
   | SanityImageHotspot
@@ -1142,17 +1110,11 @@ export type AllSanitySchemaTypes =
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
-type ArrayOf<T> = Array<
-  T & {
-    _key: string;
-  }
->;
-
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
 // Query: *[_type == "siteSettings"][0] {    utmSource,    utmMedium,    utmCampaign,    substackUrl,    instagramUrl,    spotifyUrl  }
 export type SITE_SETTINGS_QUERY_RESULT = {
-  utmSource: string;
+  utmSource: string | null;
   utmMedium: string | null;
   utmCampaign: string | null;
   substackUrl: string | null;
@@ -1166,22 +1128,22 @@ export type SITE_SETTINGS_QUERY_RESULT = {
 export type HOME_PAGE_QUERY_RESULT = {
   _id: string;
   title: string | null;
-  introText: string;
+  introText: string | null;
   endOfPageCta: {
     _id: string;
-    title: string;
+    title: string | null;
     variant: "simple" | "withImage" | null;
     headline: string | null;
     image: {
       image: {
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -1191,24 +1153,20 @@ export type HOME_PAGE_QUERY_RESULT = {
       alt: string | null;
       caption: string | null;
     } | null;
-    buttonText: string;
+    buttonText: string | null;
     linkType: "external" | "internal" | null;
     internalLink:
-      | {
-          _type: "designer";
-          slug: Slug;
-        }
       | {
           _type: "designersPage";
           slug: null;
         }
       | {
           _type: "edition";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "event";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "homePage";
@@ -1216,7 +1174,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "interview";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "interviewsPage";
@@ -1224,15 +1182,15 @@ export type HOME_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "journal";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
-          _type: "professional";
-          slug: null;
+          _type: "person";
+          slug: Slug | null;
         }
       | {
           _type: "project";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "projectsPage";
@@ -1266,12 +1224,12 @@ export type HOME_PAGE_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -1290,22 +1248,22 @@ export type HOME_PAGE_QUERY_RESULT = {
 export type PROJECTS_PAGE_QUERY_RESULT = {
   _id: string;
   title: string | null;
-  introText: string;
+  introText: string | null;
   endOfPageCta: {
     _id: string;
-    title: string;
+    title: string | null;
     variant: "simple" | "withImage" | null;
     headline: string | null;
     image: {
       image: {
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -1315,24 +1273,20 @@ export type PROJECTS_PAGE_QUERY_RESULT = {
       alt: string | null;
       caption: string | null;
     } | null;
-    buttonText: string;
+    buttonText: string | null;
     linkType: "external" | "internal" | null;
     internalLink:
-      | {
-          _type: "designer";
-          slug: Slug;
-        }
       | {
           _type: "designersPage";
           slug: null;
         }
       | {
           _type: "edition";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "event";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "homePage";
@@ -1340,7 +1294,7 @@ export type PROJECTS_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "interview";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "interviewsPage";
@@ -1348,15 +1302,15 @@ export type PROJECTS_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "journal";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
-          _type: "professional";
-          slug: null;
+          _type: "person";
+          slug: Slug | null;
         }
       | {
           _type: "project";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "projectsPage";
@@ -1390,12 +1344,12 @@ export type PROJECTS_PAGE_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -1414,22 +1368,22 @@ export type PROJECTS_PAGE_QUERY_RESULT = {
 export type INTERVIEWS_PAGE_QUERY_RESULT = {
   _id: string;
   title: string | null;
-  introText: string;
+  introText: string | null;
   endOfPageCta: {
     _id: string;
-    title: string;
+    title: string | null;
     variant: "simple" | "withImage" | null;
     headline: string | null;
     image: {
       image: {
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -1439,24 +1393,20 @@ export type INTERVIEWS_PAGE_QUERY_RESULT = {
       alt: string | null;
       caption: string | null;
     } | null;
-    buttonText: string;
+    buttonText: string | null;
     linkType: "external" | "internal" | null;
     internalLink:
-      | {
-          _type: "designer";
-          slug: Slug;
-        }
       | {
           _type: "designersPage";
           slug: null;
         }
       | {
           _type: "edition";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "event";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "homePage";
@@ -1464,7 +1414,7 @@ export type INTERVIEWS_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "interview";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "interviewsPage";
@@ -1472,15 +1422,15 @@ export type INTERVIEWS_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "journal";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
-          _type: "professional";
-          slug: null;
+          _type: "person";
+          slug: Slug | null;
         }
       | {
           _type: "project";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "projectsPage";
@@ -1514,12 +1464,12 @@ export type INTERVIEWS_PAGE_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -1538,22 +1488,22 @@ export type INTERVIEWS_PAGE_QUERY_RESULT = {
 export type DESIGNERS_PAGE_QUERY_RESULT = {
   _id: string;
   title: string | null;
-  introText: string;
+  introText: string | null;
   endOfPageCta: {
     _id: string;
-    title: string;
+    title: string | null;
     variant: "simple" | "withImage" | null;
     headline: string | null;
     image: {
       image: {
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -1563,24 +1513,20 @@ export type DESIGNERS_PAGE_QUERY_RESULT = {
       alt: string | null;
       caption: string | null;
     } | null;
-    buttonText: string;
+    buttonText: string | null;
     linkType: "external" | "internal" | null;
     internalLink:
-      | {
-          _type: "designer";
-          slug: Slug;
-        }
       | {
           _type: "designersPage";
           slug: null;
         }
       | {
           _type: "edition";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "event";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "homePage";
@@ -1588,7 +1534,7 @@ export type DESIGNERS_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "interview";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "interviewsPage";
@@ -1596,15 +1542,15 @@ export type DESIGNERS_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "journal";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
-          _type: "professional";
-          slug: null;
+          _type: "person";
+          slug: Slug | null;
         }
       | {
           _type: "project";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "projectsPage";
@@ -1638,12 +1584,12 @@ export type DESIGNERS_PAGE_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -1662,22 +1608,22 @@ export type DESIGNERS_PAGE_QUERY_RESULT = {
 export type EVENTS_PAGE_QUERY_RESULT = {
   _id: string;
   title: string | null;
-  introText: string;
+  introText: string | null;
   endOfPageCta: {
     _id: string;
-    title: string;
+    title: string | null;
     variant: "simple" | "withImage" | null;
     headline: string | null;
     image: {
       image: {
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -1687,24 +1633,20 @@ export type EVENTS_PAGE_QUERY_RESULT = {
       alt: string | null;
       caption: string | null;
     } | null;
-    buttonText: string;
+    buttonText: string | null;
     linkType: "external" | "internal" | null;
     internalLink:
-      | {
-          _type: "designer";
-          slug: Slug;
-        }
       | {
           _type: "designersPage";
           slug: null;
         }
       | {
           _type: "edition";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "event";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "homePage";
@@ -1712,7 +1654,7 @@ export type EVENTS_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "interview";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "interviewsPage";
@@ -1720,15 +1662,15 @@ export type EVENTS_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "journal";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
-          _type: "professional";
-          slug: null;
+          _type: "person";
+          slug: Slug | null;
         }
       | {
           _type: "project";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "projectsPage";
@@ -1762,12 +1704,12 @@ export type EVENTS_PAGE_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -1782,21 +1724,21 @@ export type EVENTS_PAGE_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: DESIGNERS_QUERY
-// Query: *[_type == "designer"] | order(name asc) {    _id,    name,    slug,    portrait {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    birthYear,    bio,    place->{ _id, name, city, country, countryCode, lat, lng }  }
+// Query: *[_type == "person" && "designer" in roles] | order(name asc) {    _id,    name,    slug,    portrait {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    birthYear,    bio,    place->{ _id, name, city, country, countryCode, lat, lng }  }
 export type DESIGNERS_QUERY_RESULT = Array<{
   _id: string;
-  name: string;
-  slug: Slug;
+  name: string | null;
+  slug: Slug | null;
   portrait: {
     image: {
       asset: {
         _id: string;
-        url: string;
+        url: string | null;
         metadata: {
           lqip: string | null;
           dimensions: {
-            width: number;
-            height: number;
+            width: number | null;
+            height: number | null;
           } | null;
         } | null;
       } | null;
@@ -1805,38 +1747,38 @@ export type DESIGNERS_QUERY_RESULT = Array<{
     } | null;
     alt: string | null;
   } | null;
-  birthYear: number;
+  birthYear: number | null;
   bio: string | null;
   place: {
     _id: string;
-    name: string;
+    name: string | null;
     city: string | null;
     country: string | null;
     countryCode: string | null;
     lat: number | null;
     lng: number | null;
-  };
+  } | null;
 }>;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: DESIGNER_QUERY
-// Query: *[_type == "designer" && slug.current == $slug][0] {    _id,    name,    slug,    portrait {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    },    birthYear,    bio,    education[] {      _key,      institute->{ _id, name },      degree,      courseName,      year    },    place->{ _id, name, city, country, countryCode, lat, lng },    socialLinks {      links[] {        _key,        platform,        url      }    },    "relatedProjects": *[_type == "project" && references(^._id)] | order(_createdAt desc) [0...4] {      _id,      cover { image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop }, alt },      title,      slug,      designers[]{ ...@->{ _id, name }, _key }    },    "relatedInterviews": *[_type == "interview" && references(^._id)] | order(publishingDate.date desc) [0...4] {      _id,      title,      slug,      cover { image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop }, alt },      designersAndProfessionals[]{ ...@->{ _id, name }, _key }    }  }
+// Query: *[_type == "person" && slug.current == $slug][0] {    _id,    name,    slug,    portrait {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    },    birthYear,    bio,    education[] {      _key,      institute->{ _id, name },      degree,      courseName,      year    },    place->{ _id, name, city, country, countryCode, lat, lng },    socialLinks {      links[] {        _key,        platform,        url      }    },    "relatedProjects": *[_type == "project" && references(^._id)] | order(_createdAt desc) [0...4] {      _id,      cover { image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop }, alt },      title,      slug,      designers[]{ ...@->{ _id, name }, _key }    },    "relatedInterviews": *[_type == "interview" && references(^._id)] | order(publishingDate.date desc) [0...4] {      _id,      title,      slug,      cover { image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop }, alt },      designersAndProfessionals[]{ ...@->{ _id, name }, _key }    }  }
 export type DESIGNER_QUERY_RESULT = {
   _id: string;
-  name: string;
-  slug: Slug;
+  name: string | null;
+  slug: Slug | null;
   portrait: {
     _type: "imageWithMetadata";
     image: {
       _type: "image";
       asset: {
         _id: string;
-        url: string;
+        url: string | null;
         metadata: {
           lqip: string | null;
           dimensions: {
-            width: number;
-            height: number;
+            width: number | null;
+            height: number | null;
           } | null;
         } | null;
       } | null;
@@ -1846,27 +1788,27 @@ export type DESIGNER_QUERY_RESULT = {
     alt: string | null;
     caption: string | null;
   } | null;
-  birthYear: number;
+  birthYear: number | null;
   bio: string | null;
   education: Array<{
     _key: string;
     institute: {
       _id: string;
-      name: string;
-    };
-    degree: "Bachelor" | "Erasmus" | "Master" | "Other" | "PhD";
+      name: string | null;
+    } | null;
+    degree: "Bachelor" | "Erasmus" | "Master" | "Other" | "PhD" | null;
     courseName: string | null;
     year: number | null;
   }> | null;
   place: {
     _id: string;
-    name: string;
+    name: string | null;
     city: string | null;
     country: string | null;
     countryCode: string | null;
     lat: number | null;
     lng: number | null;
-  };
+  } | null;
   socialLinks: {
     links: Array<{
       _key: string;
@@ -1881,8 +1823,9 @@ export type DESIGNER_QUERY_RESULT = {
         | "substack"
         | "tiktok"
         | "website"
-        | "x";
-      url: string;
+        | "x"
+        | null;
+      url: string | null;
     }> | null;
   } | null;
   relatedProjects: Array<{
@@ -1891,12 +1834,12 @@ export type DESIGNER_QUERY_RESULT = {
       image: {
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -1904,29 +1847,29 @@ export type DESIGNER_QUERY_RESULT = {
         crop: SanityImageCrop | null;
       } | null;
       alt: string | null;
-    };
-    title: string;
-    slug: Slug;
+    } | null;
+    title: string | null;
+    slug: Slug | null;
     designers: Array<{
       _id: string;
-      name: string;
-      _key: null;
-    }>;
+      name: string | null;
+      _key: string;
+    }> | null;
   }>;
   relatedInterviews: Array<{
     _id: string;
-    title: string;
-    slug: Slug;
+    title: string | null;
+    slug: Slug | null;
     cover: {
       image: {
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -1934,11 +1877,11 @@ export type DESIGNER_QUERY_RESULT = {
         crop: SanityImageCrop | null;
       } | null;
       alt: string | null;
-    };
+    } | null;
     designersAndProfessionals: Array<{
       _id: string;
-      name: string;
-      _key: null;
+      name: string | null;
+      _key: string;
     }> | null;
   }>;
 } | null;
@@ -1948,19 +1891,19 @@ export type DESIGNER_QUERY_RESULT = {
 // Query: *[_type == "event"] | order(dateStart desc) {    _id,    title,    slug,    type,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    dateStart,    dateEnd,    locationName,    description,    sponsor->{ _id, name },    partner->{ _id, name },    tags[]->{ _id, name },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type EVENTS_QUERY_RESULT = Array<{
   _id: string;
-  title: string;
-  slug: Slug;
-  type: string;
+  title: string | null;
+  slug: Slug | null;
+  type: string | null;
   cover: {
     image: {
       asset: {
         _id: string;
-        url: string;
+        url: string | null;
         metadata: {
           lqip: string | null;
           dimensions: {
-            width: number;
-            height: number;
+            width: number | null;
+            height: number | null;
           } | null;
         } | null;
       } | null;
@@ -1968,22 +1911,22 @@ export type EVENTS_QUERY_RESULT = Array<{
       crop: SanityImageCrop | null;
     } | null;
     alt: string | null;
-  };
-  dateStart: string;
+  } | null;
+  dateStart: string | null;
   dateEnd: string | null;
   locationName: string | null;
   description: string | null;
   sponsor: {
     _id: string;
-    name: string;
+    name: string | null;
   } | null;
   partner: {
     _id: string;
-    name: string;
+    name: string | null;
   } | null;
   tags: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }> | null;
   seo: {
     metaTitle: string | null;
@@ -2010,12 +1953,12 @@ export type EVENTS_QUERY_RESULT = Array<{
         _type: "image";
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -2037,12 +1980,12 @@ export type PROJECTS_QUERY_RESULT = Array<{
     image: {
       asset: {
         _id: string;
-        url: string;
+        url: string | null;
         metadata: {
           lqip: string | null;
           dimensions: {
-            width: number;
-            height: number;
+            width: number | null;
+            height: number | null;
           } | null;
         } | null;
       } | null;
@@ -2050,28 +1993,19 @@ export type PROJECTS_QUERY_RESULT = Array<{
       crop: SanityImageCrop | null;
     } | null;
     alt: string | null;
-  };
-  title: string;
-  slug: Slug;
-  designers: Array<
-    | {
-        _id: string;
-        name: string;
-        slug: Slug;
-        portrait: ImageWithMetadata | null;
-        _key: null;
-      }
-    | {
-        _id: string;
-        name: string;
-        slug: null;
-        portrait: ImageWithMetadata | null;
-        _key: null;
-      }
-  >;
+  } | null;
+  title: string | null;
+  slug: Slug | null;
+  designers: Array<{
+    _id: string;
+    name: string | null;
+    slug: Slug | null;
+    portrait: ImageWithMetadata | null;
+    _key: string;
+  }> | null;
   tags: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }> | null;
   seo: {
     metaTitle: string | null;
@@ -2098,12 +2032,12 @@ export type PROJECTS_QUERY_RESULT = Array<{
         _type: "image";
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -2127,12 +2061,12 @@ export type PROJECT_QUERY_RESULT = {
       _type: "image";
       asset: {
         _id: string;
-        url: string;
+        url: string | null;
         metadata: {
           lqip: string | null;
           dimensions: {
-            width: number;
-            height: number;
+            width: number | null;
+            height: number | null;
           } | null;
         } | null;
       } | null;
@@ -2140,55 +2074,46 @@ export type PROJECT_QUERY_RESULT = {
       crop: SanityImageCrop | null;
     } | null;
     alt: string | null;
-  };
-  title: string;
-  slug: Slug;
-  designers: Array<
-    | {
-        _id: string;
-        name: string;
-        slug: Slug;
-        portrait: ImageWithMetadata | null;
-        _key: null;
-      }
-    | {
-        _id: string;
-        name: string;
-        slug: null;
-        portrait: ImageWithMetadata | null;
-        _key: null;
-      }
-  >;
+  } | null;
+  title: string | null;
+  slug: Slug | null;
+  designers: Array<{
+    _id: string;
+    name: string | null;
+    slug: Slug | null;
+    portrait: ImageWithMetadata | null;
+    _key: string;
+  }> | null;
   tags: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }> | null;
   teachers: Array<{
     _id: string;
-    name: string;
+    name: string | null;
     _key: string;
   }> | null;
   institute: {
     _id: string;
-    name: string;
+    name: string | null;
   } | null;
-  year: number;
+  year: number | null;
   gallery: Array<
     | {
         _key: string;
         _type: "gridFourMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "landscape" | "portrait" | null;
         topLeft: {
-          type: "image" | "videoEmbed" | "videoUpload";
+          type: "image" | "videoEmbed" | "videoUpload" | null;
           image: {
             asset: {
               _id: string;
-              url: string;
+              url: string | null;
               metadata: {
                 lqip: string | null;
                 dimensions: {
-                  width: number;
-                  height: number;
+                  width: number | null;
+                  height: number | null;
                 } | null;
               } | null;
             } | null;
@@ -2197,18 +2122,18 @@ export type PROJECT_QUERY_RESULT = {
           } | null;
           caption: string | null;
           alt: string | null;
-        };
+        } | null;
         topRight: {
-          type: "image" | "videoEmbed" | "videoUpload";
+          type: "image" | "videoEmbed" | "videoUpload" | null;
           image: {
             asset: {
               _id: string;
-              url: string;
+              url: string | null;
               metadata: {
                 lqip: string | null;
                 dimensions: {
-                  width: number;
-                  height: number;
+                  width: number | null;
+                  height: number | null;
                 } | null;
               } | null;
             } | null;
@@ -2217,18 +2142,18 @@ export type PROJECT_QUERY_RESULT = {
           } | null;
           caption: string | null;
           alt: string | null;
-        };
+        } | null;
         bottomLeft: {
-          type: "image" | "videoEmbed" | "videoUpload";
+          type: "image" | "videoEmbed" | "videoUpload" | null;
           image: {
             asset: {
               _id: string;
-              url: string;
+              url: string | null;
               metadata: {
                 lqip: string | null;
                 dimensions: {
-                  width: number;
-                  height: number;
+                  width: number | null;
+                  height: number | null;
                 } | null;
               } | null;
             } | null;
@@ -2237,18 +2162,18 @@ export type PROJECT_QUERY_RESULT = {
           } | null;
           caption: string | null;
           alt: string | null;
-        };
+        } | null;
         bottomRight: {
-          type: "image" | "videoEmbed" | "videoUpload";
+          type: "image" | "videoEmbed" | "videoUpload" | null;
           image: {
             asset: {
               _id: string;
-              url: string;
+              url: string | null;
               metadata: {
                 lqip: string | null;
                 dimensions: {
-                  width: number;
-                  height: number;
+                  width: number | null;
+                  height: number | null;
                 } | null;
               } | null;
             } | null;
@@ -2257,23 +2182,23 @@ export type PROJECT_QUERY_RESULT = {
           } | null;
           caption: string | null;
           alt: string | null;
-        };
+        } | null;
       }
     | {
         _key: string;
         _type: "sideBySideMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "landscape" | "portrait" | null;
         left: {
-          type: "image" | "videoEmbed" | "videoUpload";
+          type: "image" | "videoEmbed" | "videoUpload" | null;
           image: {
             asset: {
               _id: string;
-              url: string;
+              url: string | null;
               metadata: {
                 lqip: string | null;
                 dimensions: {
-                  width: number;
-                  height: number;
+                  width: number | null;
+                  height: number | null;
                 } | null;
               } | null;
             } | null;
@@ -2282,18 +2207,18 @@ export type PROJECT_QUERY_RESULT = {
           } | null;
           caption: string | null;
           alt: string | null;
-        };
+        } | null;
         right: {
-          type: "image" | "videoEmbed" | "videoUpload";
+          type: "image" | "videoEmbed" | "videoUpload" | null;
           image: {
             asset: {
               _id: string;
-              url: string;
+              url: string | null;
               metadata: {
                 lqip: string | null;
                 dimensions: {
-                  width: number;
-                  height: number;
+                  width: number | null;
+                  height: number | null;
                 } | null;
               } | null;
             } | null;
@@ -2302,23 +2227,23 @@ export type PROJECT_QUERY_RESULT = {
           } | null;
           caption: string | null;
           alt: string | null;
-        };
+        } | null;
       }
     | {
         _key: string;
         _type: "singleMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "landscape" | "portrait" | null;
         media: {
-          type: "image" | "videoEmbed" | "videoUpload";
+          type: "image" | "videoEmbed" | "videoUpload" | null;
           image: {
             asset: {
               _id: string;
-              url: string;
+              url: string | null;
               metadata: {
                 lqip: string | null;
                 dimensions: {
-                  width: number;
-                  height: number;
+                  width: number | null;
+                  height: number | null;
                 } | null;
               } | null;
             } | null;
@@ -2327,23 +2252,23 @@ export type PROJECT_QUERY_RESULT = {
           } | null;
           caption: string | null;
           alt: string | null;
-        };
+        } | null;
       }
     | {
         _key: string;
         _type: "threeSideBySideMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "landscape" | "portrait" | null;
         left: {
-          type: "image" | "videoEmbed" | "videoUpload";
+          type: "image" | "videoEmbed" | "videoUpload" | null;
           image: {
             asset: {
               _id: string;
-              url: string;
+              url: string | null;
               metadata: {
                 lqip: string | null;
                 dimensions: {
-                  width: number;
-                  height: number;
+                  width: number | null;
+                  height: number | null;
                 } | null;
               } | null;
             } | null;
@@ -2352,18 +2277,18 @@ export type PROJECT_QUERY_RESULT = {
           } | null;
           caption: string | null;
           alt: string | null;
-        };
+        } | null;
         center: {
-          type: "image" | "videoEmbed" | "videoUpload";
+          type: "image" | "videoEmbed" | "videoUpload" | null;
           image: {
             asset: {
               _id: string;
-              url: string;
+              url: string | null;
               metadata: {
                 lqip: string | null;
                 dimensions: {
-                  width: number;
-                  height: number;
+                  width: number | null;
+                  height: number | null;
                 } | null;
               } | null;
             } | null;
@@ -2372,18 +2297,18 @@ export type PROJECT_QUERY_RESULT = {
           } | null;
           caption: string | null;
           alt: string | null;
-        };
+        } | null;
         right: {
-          type: "image" | "videoEmbed" | "videoUpload";
+          type: "image" | "videoEmbed" | "videoUpload" | null;
           image: {
             asset: {
               _id: string;
-              url: string;
+              url: string | null;
               metadata: {
                 lqip: string | null;
                 dimensions: {
-                  width: number;
-                  height: number;
+                  width: number | null;
+                  height: number | null;
                 } | null;
               } | null;
             } | null;
@@ -2392,7 +2317,7 @@ export type PROJECT_QUERY_RESULT = {
           } | null;
           caption: string | null;
           alt: string | null;
-        };
+        } | null;
       }
   > | null;
   description: string | null;
@@ -2402,12 +2327,12 @@ export type PROJECT_QUERY_RESULT = {
       image: {
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -2415,14 +2340,14 @@ export type PROJECT_QUERY_RESULT = {
         crop: SanityImageCrop | null;
       } | null;
       alt: string | null;
-    };
-    title: string;
-    slug: Slug;
+    } | null;
+    title: string | null;
+    slug: Slug | null;
     designers: Array<{
       _id: string;
-      name: string;
-      _key: null;
-    }>;
+      name: string | null;
+      _key: string;
+    }> | null;
   }>;
   seo: {
     metaTitle: string | null;
@@ -2449,12 +2374,12 @@ export type PROJECT_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -2473,23 +2398,23 @@ export type PROJECT_QUERY_RESULT = {
 export type JOURNAL_PAGE_QUERY_RESULT = {
   _id: string;
   title: string | null;
-  introText: string;
+  introText: string | null;
   featuredArticle: {
     _id: string;
-    title: string;
-    slug: Slug;
-    publishingDate: PublishingDate;
+    title: string | null;
+    slug: Slug | null;
+    publishingDate: PublishingDate | null;
     excerpt: string | null;
     cover: {
       image: {
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -2497,32 +2422,32 @@ export type JOURNAL_PAGE_QUERY_RESULT = {
         crop: SanityImageCrop | null;
       } | null;
       alt: string | null;
-    };
+    } | null;
     authors: Array<{
       _id: string;
-      name: string;
+      name: string | null;
       _key: string;
     }> | null;
     tags: Array<{
       _id: string;
-      name: string;
+      name: string | null;
     }> | null;
   } | null;
   endOfPageCta: {
     _id: string;
-    title: string;
+    title: string | null;
     variant: "simple" | "withImage" | null;
     headline: string | null;
     image: {
       image: {
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -2532,24 +2457,20 @@ export type JOURNAL_PAGE_QUERY_RESULT = {
       alt: string | null;
       caption: string | null;
     } | null;
-    buttonText: string;
+    buttonText: string | null;
     linkType: "external" | "internal" | null;
     internalLink:
-      | {
-          _type: "designer";
-          slug: Slug;
-        }
       | {
           _type: "designersPage";
           slug: null;
         }
       | {
           _type: "edition";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "event";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "homePage";
@@ -2557,7 +2478,7 @@ export type JOURNAL_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "interview";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "interviewsPage";
@@ -2565,15 +2486,15 @@ export type JOURNAL_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "journal";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
-          _type: "professional";
-          slug: null;
+          _type: "person";
+          slug: Slug | null;
         }
       | {
           _type: "project";
-          slug: Slug;
+          slug: Slug | null;
         }
       | {
           _type: "projectsPage";
@@ -2607,12 +2528,12 @@ export type JOURNAL_PAGE_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -2630,19 +2551,19 @@ export type JOURNAL_PAGE_QUERY_RESULT = {
 // Query: *[_type == "journal"] | order(publishingDate.date desc) {    _id,    title,    slug,    publishingDate,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    authors[]{ ...@->{ _id, name }, _key },    excerpt,    tags[]->{      _id,      name    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type JOURNAL_QUERY_RESULT = Array<{
   _id: string;
-  title: string;
-  slug: Slug;
-  publishingDate: PublishingDate;
+  title: string | null;
+  slug: Slug | null;
+  publishingDate: PublishingDate | null;
   cover: {
     image: {
       asset: {
         _id: string;
-        url: string;
+        url: string | null;
         metadata: {
           lqip: string | null;
           dimensions: {
-            width: number;
-            height: number;
+            width: number | null;
+            height: number | null;
           } | null;
         } | null;
       } | null;
@@ -2650,16 +2571,16 @@ export type JOURNAL_QUERY_RESULT = Array<{
       crop: SanityImageCrop | null;
     } | null;
     alt: string | null;
-  };
+  } | null;
   authors: Array<{
     _id: string;
-    name: string;
+    name: string | null;
     _key: string;
   }> | null;
   excerpt: string | null;
   tags: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }> | null;
   seo: {
     metaTitle: string | null;
@@ -2686,12 +2607,12 @@ export type JOURNAL_QUERY_RESULT = Array<{
         _type: "image";
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -2709,21 +2630,21 @@ export type JOURNAL_QUERY_RESULT = Array<{
 // Query: *[_type == "journal" && slug.current == $slug][0] {    _id,    title,    slug,    publishingDate,    cover {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt    },    authors[]{ ...@->{ _id, name }, _key },    excerpt,    tags[]->{      _id,      name    },    content[] { ... },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type JOURNAL_ARTICLE_QUERY_RESULT = {
   _id: string;
-  title: string;
-  slug: Slug;
-  publishingDate: PublishingDate;
+  title: string | null;
+  slug: Slug | null;
+  publishingDate: PublishingDate | null;
   cover: {
     _type: "imageWithMetadata";
     image: {
       _type: "image";
       asset: {
         _id: string;
-        url: string;
+        url: string | null;
         metadata: {
           lqip: string | null;
           dimensions: {
-            width: number;
-            height: number;
+            width: number | null;
+            height: number | null;
           } | null;
         } | null;
       } | null;
@@ -2731,225 +2652,18 @@ export type JOURNAL_ARTICLE_QUERY_RESULT = {
       crop: SanityImageCrop | null;
     } | null;
     alt: string | null;
-  };
+  } | null;
   authors: Array<{
     _id: string;
-    name: string;
+    name: string | null;
     _key: string;
   }> | null;
   excerpt: string | null;
   tags: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }> | null;
-  content: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-  seo: {
-    metaTitle: string | null;
-    metaDescription: string | null;
-    metaRobots:
-      | "index, follow"
-      | "index, nofollow"
-      | "noindex, follow"
-      | "noindex, nofollow"
-      | null;
-    canonicalURL: string | null;
-    openGraph: {
-      title: string | null;
-      description: string | null;
-      url: string | null;
-    } | null;
-    xCard: {
-      title: string | null;
-      description: string | null;
-    } | null;
-    metaImage: {
-      _type: "imageWithMetadata";
-      image: {
-        _type: "image";
-        asset: {
-          _id: string;
-          url: string;
-          metadata: {
-            lqip: string | null;
-            dimensions: {
-              width: number;
-              height: number;
-            } | null;
-          } | null;
-        } | null;
-        hotspot: SanityImageHotspot | null;
-        crop: SanityImageCrop | null;
-      } | null;
-      alt: string | null;
-      caption: string | null;
-    } | null;
-  } | null;
-} | null;
-
-// Source: src/sanity/lib/queries.ts
-// Variable: INTERVIEWS_QUERY
-// Query: *[_type == "interview"] | order(publishingDate.date desc) {    _id,    title,    slug,    publishingDate,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    designersAndProfessionals[]{ ...@->{ _id, name }, _key },    studio->{      _id,      name    },    place->{ _id, name, city, country, countryCode, lat, lng },    readingTime,    tags[]->{      _id,      name    },    introText,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
-export type INTERVIEWS_QUERY_RESULT = Array<{
-  _id: string;
-  title: string;
-  slug: Slug;
-  publishingDate: PublishingDate | null;
-  cover: {
-    image: {
-      asset: {
-        _id: string;
-        url: string;
-        metadata: {
-          lqip: string | null;
-          dimensions: {
-            width: number;
-            height: number;
-          } | null;
-        } | null;
-      } | null;
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-    } | null;
-    alt: string | null;
-  };
-  designersAndProfessionals: Array<{
-    _id: string;
-    name: string;
-    _key: null;
-  }> | null;
-  studio: {
-    _id: string;
-    name: string;
-  } | null;
-  place: {
-    _id: string;
-    name: string;
-    city: string | null;
-    country: string | null;
-    countryCode: string | null;
-    lat: number | null;
-    lng: number | null;
-  } | null;
-  readingTime: number | null;
-  tags: Array<{
-    _id: string;
-    name: string;
-  }> | null;
-  introText: string;
-  seo: {
-    metaTitle: string | null;
-    metaDescription: string | null;
-    metaRobots:
-      | "index, follow"
-      | "index, nofollow"
-      | "noindex, follow"
-      | "noindex, nofollow"
-      | null;
-    canonicalURL: string | null;
-    openGraph: {
-      title: string | null;
-      description: string | null;
-      url: string | null;
-    } | null;
-    xCard: {
-      title: string | null;
-      description: string | null;
-    } | null;
-    metaImage: {
-      _type: "imageWithMetadata";
-      image: {
-        _type: "image";
-        asset: {
-          _id: string;
-          url: string;
-          metadata: {
-            lqip: string | null;
-            dimensions: {
-              width: number;
-              height: number;
-            } | null;
-          } | null;
-        } | null;
-        hotspot: SanityImageHotspot | null;
-        crop: SanityImageCrop | null;
-      } | null;
-      alt: string | null;
-      caption: string | null;
-    } | null;
-  } | null;
-}>;
-
-// Source: src/sanity/lib/queries.ts
-// Variable: INTERVIEW_QUERY
-// Query: *[_type == "interview" && slug.current == $slug][0] {    _id,    title,    slug,    publishingDate,    cover {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt    },    designersAndProfessionals[]{ ...@->{ _id, name, portrait }, _key },    studio->{      _id,      name    },    place->{ _id, name, city, country, countryCode, lat, lng },    readingTime,    tags[]->{      _id,      name    },    introText,    interview[] {      ...,      _type == "imageBlock" => {        _key,        _type,        image {          image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },          alt,          caption        }      },      _type == "multipleImageBlock" => {        _key,        _type,        images[] {          _key,          image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },          alt,          caption        }      }    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
-export type INTERVIEW_QUERY_RESULT = {
-  _id: string;
-  title: string;
-  slug: Slug;
-  publishingDate: PublishingDate | null;
-  cover: {
-    _type: "imageWithMetadata";
-    image: {
-      _type: "image";
-      asset: {
-        _id: string;
-        url: string;
-        metadata: {
-          lqip: string | null;
-          dimensions: {
-            width: number;
-            height: number;
-          } | null;
-        } | null;
-      } | null;
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-    } | null;
-    alt: string | null;
-  };
-  designersAndProfessionals: Array<{
-    _id: string;
-    name: string;
-    portrait: ImageWithMetadata | null;
-    _key: null;
-  }> | null;
-  studio: {
-    _id: string;
-    name: string;
-  } | null;
-  place: {
-    _id: string;
-    name: string;
-    city: string | null;
-    country: string | null;
-    countryCode: string | null;
-    lat: number | null;
-    lng: number | null;
-  } | null;
-  readingTime: number | null;
-  tags: Array<{
-    _id: string;
-    name: string;
-  }> | null;
-  introText: string;
-  interview: Array<
+  content: Array<
     | {
         children?: Array<{
           marks?: Array<string>;
@@ -2957,9 +2671,21 @@ export type INTERVIEW_QUERY_RESULT = {
           _type: "span";
           _key: string;
         }>;
-        style?: "answer" | "blockquote" | "normal";
-        listItem?: never;
-        markDefs?: null;
+        style?:
+          | "blockquote"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
         level?: number;
         _type: "block";
         _key: string;
@@ -2967,32 +2693,32 @@ export type INTERVIEW_QUERY_RESULT = {
     | {
         _key: string;
         _type: "gridFourMediaBlock";
-        orientation: "landscape" | "portrait";
-        topLeft: MediaItem;
-        topRight: MediaItem;
-        bottomLeft: MediaItem;
-        bottomRight: MediaItem;
+        orientation?: "landscape" | "portrait";
+        topLeft?: MediaItem;
+        topRight?: MediaItem;
+        bottomLeft?: MediaItem;
+        bottomRight?: MediaItem;
       }
     | {
         _key: string;
         _type: "sideBySideMediaBlock";
-        orientation: "landscape" | "portrait";
-        left: MediaItem;
-        right: MediaItem;
+        orientation?: "landscape" | "portrait";
+        left?: MediaItem;
+        right?: MediaItem;
       }
     | {
         _key: string;
         _type: "singleMediaBlock";
-        orientation: "landscape" | "portrait";
-        media: MediaItem;
+        orientation?: "landscape" | "portrait";
+        media?: MediaItem;
       }
     | {
         _key: string;
         _type: "threeSideBySideMediaBlock";
-        orientation: "landscape" | "portrait";
-        left: MediaItem;
-        center: MediaItem;
-        right: MediaItem;
+        orientation?: "landscape" | "portrait";
+        left?: MediaItem;
+        center?: MediaItem;
+        right?: MediaItem;
       }
   > | null;
   seo: {
@@ -3020,12 +2746,247 @@ export type INTERVIEW_QUERY_RESULT = {
         _type: "image";
         asset: {
           _id: string;
-          url: string;
+          url: string | null;
           metadata: {
             lqip: string | null;
             dimensions: {
-              width: number;
-              height: number;
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: INTERVIEWS_QUERY
+// Query: *[_type == "interview"] | order(publishingDate.date desc) {    _id,    title,    slug,    publishingDate,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    designersAndProfessionals[]{ ...@->{ _id, name }, _key },    studio->{      _id,      name    },    place->{ _id, name, city, country, countryCode, lat, lng },    readingTime,    tags[]->{      _id,      name    },    introText,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+export type INTERVIEWS_QUERY_RESULT = Array<{
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  publishingDate: PublishingDate | null;
+  cover: {
+    image: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+    alt: string | null;
+  } | null;
+  designersAndProfessionals: Array<{
+    _id: string;
+    name: string | null;
+    _key: string;
+  }> | null;
+  studio: {
+    _id: string;
+    name: string | null;
+  } | null;
+  place: {
+    _id: string;
+    name: string | null;
+    city: string | null;
+    country: string | null;
+    countryCode: string | null;
+    lat: number | null;
+    lng: number | null;
+  } | null;
+  readingTime: number | null;
+  tags: Array<{
+    _id: string;
+    name: string | null;
+  }> | null;
+  introText: string | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: {
+          _id: string;
+          url: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: INTERVIEW_QUERY
+// Query: *[_type == "interview" && slug.current == $slug][0] {    _id,    title,    slug,    publishingDate,    cover {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt    },    designersAndProfessionals[]{ ...@->{ _id, name, portrait }, _key },    studio->{      _id,      name    },    place->{ _id, name, city, country, countryCode, lat, lng },    readingTime,    tags[]->{      _id,      name    },    introText,    interview[] {      ...,      _type == "imageBlock" => {        _key,        _type,        image {          image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },          alt,          caption        }      },      _type == "multipleImageBlock" => {        _key,        _type,        images[] {          _key,          image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },          alt,          caption        }      }    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+export type INTERVIEW_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  publishingDate: PublishingDate | null;
+  cover: {
+    _type: "imageWithMetadata";
+    image: {
+      _type: "image";
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+    alt: string | null;
+  } | null;
+  designersAndProfessionals: Array<{
+    _id: string;
+    name: string | null;
+    portrait: ImageWithMetadata | null;
+    _key: string;
+  }> | null;
+  studio: {
+    _id: string;
+    name: string | null;
+  } | null;
+  place: {
+    _id: string;
+    name: string | null;
+    city: string | null;
+    country: string | null;
+    countryCode: string | null;
+    lat: number | null;
+    lng: number | null;
+  } | null;
+  readingTime: number | null;
+  tags: Array<{
+    _id: string;
+    name: string | null;
+  }> | null;
+  introText: string | null;
+  interview: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "answer" | "blockquote" | "normal";
+        listItem?: never;
+        markDefs?: null;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        _key: string;
+        _type: "gridFourMediaBlock";
+        orientation?: "landscape" | "portrait";
+        topLeft?: MediaItem;
+        topRight?: MediaItem;
+        bottomLeft?: MediaItem;
+        bottomRight?: MediaItem;
+      }
+    | {
+        _key: string;
+        _type: "sideBySideMediaBlock";
+        orientation?: "landscape" | "portrait";
+        left?: MediaItem;
+        right?: MediaItem;
+      }
+    | {
+        _key: string;
+        _type: "singleMediaBlock";
+        orientation?: "landscape" | "portrait";
+        media?: MediaItem;
+      }
+    | {
+        _key: string;
+        _type: "threeSideBySideMediaBlock";
+        orientation?: "landscape" | "portrait";
+        left?: MediaItem;
+        center?: MediaItem;
+        right?: MediaItem;
+      }
+  > | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: {
+          _id: string;
+          url: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
             } | null;
           } | null;
         } | null;
@@ -3043,18 +3004,18 @@ export type INTERVIEW_QUERY_RESULT = {
 // Query: *[_type == "bibliography"] | order(name asc) {    _id,    name,    year,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    languages[]{ ...@->{ _id, name }, _key },    authors[]{ ...@->{ _id, name }, _key },    publisher->{      _id,      name    },    tags[]->{      _id,      name    },    affiliateLink,    isbn,    description,    pageCount,    categories  }
 export type BIBLIOGRAPHY_QUERY_RESULT = Array<{
   _id: string;
-  name: string;
+  name: string | null;
   year: number | null;
   cover: {
     image: {
       asset: {
         _id: string;
-        url: string;
+        url: string | null;
         metadata: {
           lqip: string | null;
           dimensions: {
-            width: number;
-            height: number;
+            width: number | null;
+            height: number | null;
           } | null;
         } | null;
       } | null;
@@ -3065,21 +3026,21 @@ export type BIBLIOGRAPHY_QUERY_RESULT = Array<{
   } | null;
   languages: Array<{
     _id: string;
-    name: string;
+    name: string | null;
     _key: string;
   }> | null;
   authors: Array<{
     _id: string;
-    name: string;
+    name: string | null;
     _key: string;
   }> | null;
   publisher: {
     _id: string;
-    name: string;
-  };
+    name: string | null;
+  } | null;
   tags: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }> | null;
   affiliateLink: string | null;
   isbn: string | null;
@@ -3093,20 +3054,20 @@ export type BIBLIOGRAPHY_QUERY_RESULT = Array<{
 // Query: *[_type == "bookshop"] | order(name asc) {    _id,    name,    tags[]->{      _id,      name    },    place->{ _id, name, city, country, countryCode, lat, lng },    address,    socialLinks {      links[] {        _key,        platform,        url      }    }  }
 export type BOOKSHOPS_QUERY_RESULT = Array<{
   _id: string;
-  name: string;
+  name: string | null;
   tags: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }> | null;
   place: {
     _id: string;
-    name: string;
+    name: string | null;
     city: string | null;
     country: string | null;
     countryCode: string | null;
     lat: number | null;
     lng: number | null;
-  };
+  } | null;
   address: string | null;
   socialLinks: {
     links: Array<{
@@ -3122,8 +3083,9 @@ export type BOOKSHOPS_QUERY_RESULT = Array<{
         | "substack"
         | "tiktok"
         | "website"
-        | "x";
-      url: string;
+        | "x"
+        | null;
+      url: string | null;
     }> | null;
   } | null;
 }>;
@@ -3133,18 +3095,18 @@ export type BOOKSHOPS_QUERY_RESULT = Array<{
 // Query: *[_type == "glossary"] | order(name asc) {    _id,    name,    description,    image {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    }  }
 export type GLOSSARY_QUERY_RESULT = Array<{
   _id: string;
-  name: string;
-  description: string;
+  name: string | null;
+  description: string | null;
   image: {
     image: {
       asset: {
         _id: string;
-        url: string;
+        url: string | null;
         metadata: {
           lqip: string | null;
           dimensions: {
-            width: number;
-            height: number;
+            width: number | null;
+            height: number | null;
           } | null;
         } | null;
       } | null;
@@ -3160,21 +3122,21 @@ export type GLOSSARY_QUERY_RESULT = Array<{
 // Query: *[_type == "institute"] | order(name asc) {    _id,    name,    yearFoundation,    languages[]->{      _id,      name    },    place->{ _id, name, city, country, countryCode, lat, lng },    address,    socialLinks {      links[] {        _key,        platform,        url      }    }  }
 export type INSTITUTES_QUERY_RESULT = Array<{
   _id: string;
-  name: string;
-  yearFoundation: number;
+  name: string | null;
+  yearFoundation: number | null;
   languages: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }> | null;
   place: {
     _id: string;
-    name: string;
+    name: string | null;
     city: string | null;
     country: string | null;
     countryCode: string | null;
     lat: number | null;
     lng: number | null;
-  };
+  } | null;
   address: string | null;
   socialLinks: {
     links: Array<{
@@ -3190,8 +3152,9 @@ export type INSTITUTES_QUERY_RESULT = Array<{
         | "substack"
         | "tiktok"
         | "website"
-        | "x";
-      url: string;
+        | "x"
+        | null;
+      url: string | null;
     }> | null;
   } | null;
 }>;
@@ -3201,18 +3164,18 @@ export type INSTITUTES_QUERY_RESULT = Array<{
 // Query: *[_type == "studio"] | order(name asc) {    _id,    name,    description,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    category->{      _id,      name    },    tags[]->{      _id,      name    },    places[]->{ _id, name, city, country, countryCode, lat, lng },    socialLinks {      links[] {        _key,        platform,        url      }    }  }
 export type STUDIOS_QUERY_RESULT = Array<{
   _id: string;
-  name: string;
+  name: string | null;
   description: string | null;
   cover: {
     image: {
       asset: {
         _id: string;
-        url: string;
+        url: string | null;
         metadata: {
           lqip: string | null;
           dimensions: {
-            width: number;
-            height: number;
+            width: number | null;
+            height: number | null;
           } | null;
         } | null;
       } | null;
@@ -3223,15 +3186,15 @@ export type STUDIOS_QUERY_RESULT = Array<{
   } | null;
   category: {
     _id: string;
-    name: string;
-  };
+    name: string | null;
+  } | null;
   tags: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }> | null;
   places: Array<{
     _id: string;
-    name: string;
+    name: string | null;
     city: string | null;
     country: string | null;
     countryCode: string | null;
@@ -3252,8 +3215,9 @@ export type STUDIOS_QUERY_RESULT = Array<{
         | "substack"
         | "tiktok"
         | "website"
-        | "x";
-      url: string;
+        | "x"
+        | null;
+      url: string | null;
     }> | null;
   } | null;
 }>;
@@ -3263,14 +3227,14 @@ export type STUDIOS_QUERY_RESULT = Array<{
 // Query: *[_type == "typeFoundry"] | order(name asc) {    _id,    name,    tags[]->{      _id,      name    },    places[]->{ _id, name, city, country, countryCode, lat, lng },    socialLinks {      links[] {        _key,        platform,        url      }    }  }
 export type TYPE_FOUNDRIES_QUERY_RESULT = Array<{
   _id: string;
-  name: string;
+  name: string | null;
   tags: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }> | null;
   places: Array<{
     _id: string;
-    name: string;
+    name: string | null;
     city: string | null;
     country: string | null;
     countryCode: string | null;
@@ -3291,8 +3255,9 @@ export type TYPE_FOUNDRIES_QUERY_RESULT = Array<{
         | "substack"
         | "tiktok"
         | "website"
-        | "x";
-      url: string;
+        | "x"
+        | null;
+      url: string | null;
     }> | null;
   } | null;
 }>;
@@ -3302,18 +3267,18 @@ export type TYPE_FOUNDRIES_QUERY_RESULT = Array<{
 // Query: *[_type == "webSource"] | order(name asc) {    _id,    name,    description,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    category->{      _id,      name    },    tags[]->{ _id, name },    sourceUrl,    ogTitle,    ogDescription,    ogSiteName,    ogImageUrl  }
 export type WEB_SOURCES_QUERY_RESULT = Array<{
   _id: string;
-  name: string;
+  name: string | null;
   description: string | null;
   cover: {
     image: {
       asset: {
         _id: string;
-        url: string;
+        url: string | null;
         metadata: {
           lqip: string | null;
           dimensions: {
-            width: number;
-            height: number;
+            width: number | null;
+            height: number | null;
           } | null;
         } | null;
       } | null;
@@ -3324,13 +3289,13 @@ export type WEB_SOURCES_QUERY_RESULT = Array<{
   } | null;
   category: {
     _id: string;
-    name: string;
-  };
+    name: string | null;
+  } | null;
   tags: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }> | null;
-  sourceUrl: string;
+  sourceUrl: string | null;
   ogTitle: string | null;
   ogDescription: string | null;
   ogSiteName: string | null;
@@ -3339,10 +3304,10 @@ export type WEB_SOURCES_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: MAP_PLACES_QUERY
-// Query: *[_type == "place" && defined(lat) && defined(lng)] {    _id,    name,    city,    country,    countryCode,    lat,    lng,    "designers": *[_type == "designer" && place._ref == ^._id] { _id, name, slug },    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },    "studios": *[_type == "studio" && references(^._id)] { _id, name },    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }  }
+// Query: *[_type == "place" && defined(lat) && defined(lng)] {    _id,    name,    city,    country,    countryCode,    lat,    lng,    "designers": *[_type == "person" && "designer" in roles && place._ref == ^._id] { _id, name, slug },    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },    "studios": *[_type == "studio" && references(^._id)] { _id, name },    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }  }
 export type MAP_PLACES_QUERY_RESULT = Array<{
   _id: string;
-  name: string;
+  name: string | null;
   city: string | null;
   country: string | null;
   countryCode: string | null;
@@ -3350,24 +3315,24 @@ export type MAP_PLACES_QUERY_RESULT = Array<{
   lng: number;
   designers: Array<{
     _id: string;
-    name: string;
-    slug: Slug;
+    name: string | null;
+    slug: Slug | null;
   }>;
   bookshops: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }>;
   studios: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }>;
   institutes: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }>;
   typeFoundries: Array<{
     _id: string;
-    name: string;
+    name: string | null;
   }>;
 }>;
 
@@ -3381,8 +3346,8 @@ declare module "@sanity/client" {
     '\n  *[_type == "interviewsPage"][0] {\n    _id,\n    title,\n    introText,\n    \n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  }\n,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': INTERVIEWS_PAGE_QUERY_RESULT;
     '\n  *[_type == "designersPage"][0] {\n    _id,\n    title,\n    introText,\n    \n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  }\n,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': DESIGNERS_PAGE_QUERY_RESULT;
     '\n  *[_type == "eventsPage"][0] {\n    _id,\n    title,\n    introText,\n    \n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  }\n,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': EVENTS_PAGE_QUERY_RESULT;
-    '\n  *[_type == "designer"] | order(name asc) {\n    _id,\n    name,\n    slug,\n    portrait {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    birthYear,\n    bio,\n    place->{ _id, name, city, country, countryCode, lat, lng }\n  }\n': DESIGNERS_QUERY_RESULT;
-    '\n  *[_type == "designer" && slug.current == $slug][0] {\n    _id,\n    name,\n    slug,\n    portrait {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    },\n    birthYear,\n    bio,\n    education[] {\n      _key,\n      institute->{ _id, name },\n      degree,\n      courseName,\n      year\n    },\n    place->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    },\n    "relatedProjects": *[_type == "project" && references(^._id)] | order(_createdAt desc) [0...4] {\n      _id,\n      cover { image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, alt },\n      title,\n      slug,\n      designers[]{ ...@->{ _id, name }, _key }\n    },\n    "relatedInterviews": *[_type == "interview" && references(^._id)] | order(publishingDate.date desc) [0...4] {\n      _id,\n      title,\n      slug,\n      cover { image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, alt },\n      designersAndProfessionals[]{ ...@->{ _id, name }, _key }\n    }\n  }\n': DESIGNER_QUERY_RESULT;
+    '\n  *[_type == "person" && "designer" in roles] | order(name asc) {\n    _id,\n    name,\n    slug,\n    portrait {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    birthYear,\n    bio,\n    place->{ _id, name, city, country, countryCode, lat, lng }\n  }\n': DESIGNERS_QUERY_RESULT;
+    '\n  *[_type == "person" && slug.current == $slug][0] {\n    _id,\n    name,\n    slug,\n    portrait {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    },\n    birthYear,\n    bio,\n    education[] {\n      _key,\n      institute->{ _id, name },\n      degree,\n      courseName,\n      year\n    },\n    place->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    },\n    "relatedProjects": *[_type == "project" && references(^._id)] | order(_createdAt desc) [0...4] {\n      _id,\n      cover { image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, alt },\n      title,\n      slug,\n      designers[]{ ...@->{ _id, name }, _key }\n    },\n    "relatedInterviews": *[_type == "interview" && references(^._id)] | order(publishingDate.date desc) [0...4] {\n      _id,\n      title,\n      slug,\n      cover { image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, alt },\n      designersAndProfessionals[]{ ...@->{ _id, name }, _key }\n    }\n  }\n': DESIGNER_QUERY_RESULT;
     '\n  *[_type == "event"] | order(dateStart desc) {\n    _id,\n    title,\n    slug,\n    type,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    dateStart,\n    dateEnd,\n    locationName,\n    description,\n    sponsor->{ _id, name },\n    partner->{ _id, name },\n    tags[]->{ _id, name },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': EVENTS_QUERY_RESULT;
     '\n  *[_type == "project"] | order(_createdAt desc) {\n    _id,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    title,\n    slug,\n    designers[]{ ...@->{ _id, name, slug, portrait }, _key },\n    tags[]->{\n      _id,\n      name\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': PROJECTS_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    cover {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt\n    },\n    title,\n    slug,\n    designers[]{ ...@->{ _id, name, slug, portrait }, _key },\n    tags[]->{\n      _id,\n      name\n    },\n    teachers[]{ ...@->{ _id, name }, _key },\n    institute->{\n      _id,\n      name,\n    },\n    year,\n    gallery[] {\n      _key,\n      _type,\n      _type == "singleMediaBlock" => {\n        orientation,\n        media { type, image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, caption, alt }\n      },\n      _type == "sideBySideMediaBlock" => {\n        orientation,\n        left { type, image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, caption, alt },\n        right { type, image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, caption, alt }\n      },\n      _type == "threeSideBySideMediaBlock" => {\n        orientation,\n        left { type, image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, caption, alt },\n        center { type, image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, caption, alt },\n        right { type, image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, caption, alt }\n      },\n      _type == "gridFourMediaBlock" => {\n        orientation,\n        topLeft { type, image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, caption, alt },\n        topRight { type, image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, caption, alt },\n        bottomLeft { type, image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, caption, alt },\n        bottomRight { type, image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, caption, alt }\n      }\n    },\n    description,\n    "relatedProjects": *[\n      _type == "project" &&\n      slug.current != ^.slug.current &&\n      count(tags[@._ref in ^.tags[]._ref]) > 0\n    ] | order(_createdAt desc) [0...4] {\n      _id,\n      cover { image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, alt },\n      title,\n      slug,\n      designers[]{ ...@->{ _id, name }, _key }\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': PROJECT_QUERY_RESULT;
@@ -3398,6 +3363,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "studio"] | order(name asc) {\n    _id,\n    name,\n    description,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tags[]->{\n      _id,\n      name\n    },\n    places[]->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': STUDIOS_QUERY_RESULT;
     '\n  *[_type == "typeFoundry"] | order(name asc) {\n    _id,\n    name,\n    tags[]->{\n      _id,\n      name\n    },\n    places[]->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': TYPE_FOUNDRIES_QUERY_RESULT;
     '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    description,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tags[]->{ _id, name },\n    sourceUrl,\n    ogTitle,\n    ogDescription,\n    ogSiteName,\n    ogImageUrl\n  }\n': WEB_SOURCES_QUERY_RESULT;
-    '\n  *[_type == "place" && defined(lat) && defined(lng)] {\n    _id,\n    name,\n    city,\n    country,\n    countryCode,\n    lat,\n    lng,\n    "designers": *[_type == "designer" && place._ref == ^._id] { _id, name, slug },\n    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },\n    "studios": *[_type == "studio" && references(^._id)] { _id, name },\n    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },\n    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }\n  }\n': MAP_PLACES_QUERY_RESULT;
+    '\n  *[_type == "place" && defined(lat) && defined(lng)] {\n    _id,\n    name,\n    city,\n    country,\n    countryCode,\n    lat,\n    lng,\n    "designers": *[_type == "person" && "designer" in roles && place._ref == ^._id] { _id, name, slug },\n    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },\n    "studios": *[_type == "studio" && references(^._id)] { _id, name },\n    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },\n    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }\n  }\n': MAP_PLACES_QUERY_RESULT;
   }
 }
