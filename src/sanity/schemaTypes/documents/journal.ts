@@ -52,7 +52,10 @@ export const journal = defineType({
           type: "reference",
           name: "author",
           title: "Author",
-          to: [{ type: "author" }],
+          to: [{ type: "person" }],
+          options: {
+            filter: '"author" in roles',
+          },
         }),
       ],
     }),

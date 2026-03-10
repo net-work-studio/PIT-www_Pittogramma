@@ -106,7 +106,10 @@ export const interview = defineType({
       of: [
         defineArrayMember({
           type: "reference",
-          to: [{ type: "designer" }, { type: "professional" }],
+          to: [{ type: "person" }],
+          options: {
+            filter: '"designer" in roles || "professional" in roles',
+          },
         }),
       ],
       validation: (rule) =>

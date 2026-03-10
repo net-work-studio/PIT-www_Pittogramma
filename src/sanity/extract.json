@@ -31,7 +31,7 @@
   },
   {
     "type": "type",
-    "name": "author.reference",
+    "name": "person.reference",
     "value": {
       "type": "object",
       "attributes": {
@@ -56,7 +56,7 @@
           "optional": true
         }
       },
-      "dereferencesTo": "author"
+      "dereferencesTo": "person"
     }
   },
   {
@@ -166,7 +166,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "cover": {
         "type": "objectAttribute",
@@ -242,7 +242,7 @@
             },
             "rest": {
               "type": "inline",
-              "name": "author.reference"
+              "name": "person.reference"
             }
           }
         },
@@ -261,7 +261,7 @@
           "type": "inline",
           "name": "publisher.reference"
         },
-        "optional": false
+        "optional": true
       },
       "fetchedPublisher": {
         "type": "objectAttribute",
@@ -502,14 +502,14 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "name": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "description": {
         "type": "objectAttribute",
@@ -532,7 +532,7 @@
           "type": "inline",
           "name": "category.reference"
         },
-        "optional": false
+        "optional": true
       },
       "tags": {
         "type": "objectAttribute",
@@ -626,51 +626,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
-      }
-    }
-  },
-  {
-    "name": "author",
-    "type": "document",
-    "attributes": {
-      "_id": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_type": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string",
-          "value": "author"
-        }
-      },
-      "_createdAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_updatedAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_rev": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "name": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
+        "optional": true
       }
     }
   },
@@ -714,14 +670,14 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "description": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "image": {
         "type": "objectAttribute",
@@ -803,7 +759,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "tags": {
         "type": "objectAttribute",
@@ -833,7 +789,7 @@
           "type": "inline",
           "name": "place.reference"
         },
-        "optional": false
+        "optional": true
       },
       "socialLinks": {
         "type": "objectAttribute",
@@ -923,14 +879,14 @@
                       }
                     ]
                   },
-                  "optional": false
+                  "optional": true
                 },
                 "url": {
                   "type": "objectAttribute",
                   "value": {
                     "type": "string"
                   },
-                  "optional": false
+                  "optional": true
                 },
                 "_type": {
                   "type": "objectAttribute",
@@ -998,7 +954,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "socialLinks": {
         "type": "objectAttribute",
@@ -1122,7 +1078,7 @@
           "value": {
             "type": "string"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -1204,7 +1160,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "endOfPageCta": {
         "type": "objectAttribute",
@@ -1387,7 +1343,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "featuredArticle": {
         "type": "objectAttribute",
@@ -1491,7 +1447,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "utmMedium": {
         "type": "objectAttribute",
@@ -1616,7 +1572,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -1624,7 +1580,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       }
     }
   },
@@ -1646,7 +1602,7 @@
           "value": {
             "type": "string"
           },
-          "optional": false
+          "optional": true
         },
         "source": {
           "type": "objectAttribute",
@@ -1676,7 +1632,7 @@
           "value": {
             "type": "string"
           },
-          "optional": false
+          "optional": true
         },
         "slug": {
           "type": "objectAttribute",
@@ -1684,7 +1640,7 @@
             "type": "inline",
             "name": "slug"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -1717,7 +1673,7 @@
               }
             ]
           },
-          "optional": false
+          "optional": true
         },
         "topLeft": {
           "type": "objectAttribute",
@@ -1725,7 +1681,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         },
         "topRight": {
           "type": "objectAttribute",
@@ -1733,7 +1689,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         },
         "bottomLeft": {
           "type": "objectAttribute",
@@ -1741,7 +1697,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         },
         "bottomRight": {
           "type": "objectAttribute",
@@ -1749,7 +1705,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -1782,7 +1738,7 @@
               }
             ]
           },
-          "optional": false
+          "optional": true
         },
         "left": {
           "type": "objectAttribute",
@@ -1790,7 +1746,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         },
         "center": {
           "type": "objectAttribute",
@@ -1798,7 +1754,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         },
         "right": {
           "type": "objectAttribute",
@@ -1806,7 +1762,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -1839,7 +1795,7 @@
               }
             ]
           },
-          "optional": false
+          "optional": true
         },
         "left": {
           "type": "objectAttribute",
@@ -1847,7 +1803,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         },
         "right": {
           "type": "objectAttribute",
@@ -1855,7 +1811,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -1888,7 +1844,7 @@
               }
             ]
           },
-          "optional": false
+          "optional": true
         },
         "media": {
           "type": "objectAttribute",
@@ -1896,7 +1852,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -1963,7 +1919,7 @@
               }
             ]
           },
-          "optional": false
+          "optional": true
         },
         "image": {
           "type": "objectAttribute",
@@ -2185,88 +2141,6 @@
     }
   },
   {
-    "type": "type",
-    "name": "institute.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "institute"
-    }
-  },
-  {
-    "name": "teacher",
-    "type": "document",
-    "attributes": {
-      "_id": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_type": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string",
-          "value": "teacher"
-        }
-      },
-      "_createdAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_updatedAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_rev": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "name": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "teachingAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "institute.reference"
-        },
-        "optional": true
-      }
-    }
-  },
-  {
     "name": "language",
     "type": "document",
     "attributes": {
@@ -2306,7 +2180,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -2314,7 +2188,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       }
     }
   },
@@ -2388,7 +2262,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "content": {
         "type": "objectAttribute",
@@ -2641,66 +2515,6 @@
   },
   {
     "type": "type",
-    "name": "designer.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "designer"
-    }
-  },
-  {
-    "type": "type",
-    "name": "professional.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "professional"
-    }
-  },
-  {
-    "type": "type",
     "name": "event.reference",
     "value": {
       "type": "object",
@@ -2919,7 +2733,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "variant": {
         "type": "objectAttribute",
@@ -2958,7 +2772,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "linkType": {
         "type": "objectAttribute",
@@ -2996,11 +2810,7 @@
             },
             {
               "type": "inline",
-              "name": "designer.reference"
-            },
-            {
-              "type": "inline",
-              "name": "professional.reference"
+              "name": "person.reference"
             },
             {
               "type": "inline",
@@ -3086,7 +2896,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "endOfPageCta": {
         "type": "objectAttribute",
@@ -3153,7 +2963,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "endOfPageCta": {
         "type": "objectAttribute",
@@ -3220,7 +3030,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "endOfPageCta": {
         "type": "objectAttribute",
@@ -3287,7 +3097,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "endOfPageCta": {
         "type": "objectAttribute",
@@ -3347,7 +3157,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -3355,7 +3165,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       },
       "cover": {
         "type": "objectAttribute",
@@ -3363,7 +3173,7 @@
           "type": "inline",
           "name": "imageWithMetadata"
         },
-        "optional": false
+        "optional": true
       },
       "seo": {
         "type": "objectAttribute",
@@ -3415,7 +3225,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -3423,14 +3233,14 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       },
       "type": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "cover": {
         "type": "objectAttribute",
@@ -3438,14 +3248,14 @@
           "type": "inline",
           "name": "imageWithMetadata"
         },
-        "optional": false
+        "optional": true
       },
       "dateStart": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "dateEnd": {
         "type": "objectAttribute",
@@ -3525,6 +3335,36 @@
   },
   {
     "type": "type",
+    "name": "institute.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "institute"
+    }
+  },
+  {
+    "type": "type",
     "name": "studio.reference",
     "value": {
       "type": "object",
@@ -3554,7 +3394,7 @@
     }
   },
   {
-    "name": "professional",
+    "name": "person",
     "type": "document",
     "attributes": {
       "_id": {
@@ -3567,7 +3407,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "professional"
+          "value": "person"
         }
       },
       "_createdAt": {
@@ -3588,110 +3428,22 @@
           "type": "string"
         }
       },
-      "name": {
+      "roles": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "portrait": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "imageWithMetadata"
+          "type": "array",
+          "of": {
+            "type": "string"
+          }
         },
         "optional": true
-      },
-      "birthYear": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "number"
-        },
-        "optional": true
-      },
-      "bio": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "teachingAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "institute.reference"
-        },
-        "optional": true
-      },
-      "studio": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "studio.reference"
-        },
-        "optional": true
-      },
-      "place": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "place.reference"
-        },
-        "optional": true
-      },
-      "socialLinks": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "socialLinks"
-        },
-        "optional": true
-      }
-    }
-  },
-  {
-    "name": "designer",
-    "type": "document",
-    "attributes": {
-      "_id": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_type": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string",
-          "value": "designer"
-        }
-      },
-      "_createdAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_updatedAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_rev": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
       },
       "name": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -3699,7 +3451,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       },
       "portrait": {
         "type": "objectAttribute",
@@ -3714,7 +3466,7 @@
         "value": {
           "type": "number"
         },
-        "optional": false
+        "optional": true
       },
       "bio": {
         "type": "objectAttribute",
@@ -3736,7 +3488,7 @@
                   "type": "inline",
                   "name": "institute.reference"
                 },
-                "optional": false
+                "optional": true
               },
               "degree": {
                 "type": "objectAttribute",
@@ -3765,7 +3517,7 @@
                     }
                   ]
                 },
-                "optional": false
+                "optional": true
               },
               "courseName": {
                 "type": "objectAttribute",
@@ -3810,7 +3562,7 @@
           "type": "inline",
           "name": "place.reference"
         },
-        "optional": false
+        "optional": true
       },
       "socialLinks": {
         "type": "objectAttribute",
@@ -3831,6 +3583,22 @@
         "type": "objectAttribute",
         "value": {
           "type": "string"
+        },
+        "optional": true
+      },
+      "teachingAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "institute.reference"
+        },
+        "optional": true
+      },
+      "studio": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "studio.reference"
         },
         "optional": true
       },
@@ -3884,7 +3652,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -3892,7 +3660,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       },
       "publishingDate": {
         "type": "objectAttribute",
@@ -3900,7 +3668,7 @@
           "type": "inline",
           "name": "publishingDate"
         },
-        "optional": false
+        "optional": true
       },
       "cover": {
         "type": "objectAttribute",
@@ -3908,7 +3676,7 @@
           "type": "inline",
           "name": "imageWithMetadata"
         },
-        "optional": false
+        "optional": true
       },
       "tags": {
         "type": "objectAttribute",
@@ -3948,7 +3716,7 @@
             },
             "rest": {
               "type": "inline",
-              "name": "author.reference"
+              "name": "person.reference"
             }
           }
         },
@@ -3966,176 +3734,241 @@
         "value": {
           "type": "array",
           "of": {
-            "type": "object",
-            "attributes": {
-              "children": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "array",
-                  "of": {
-                    "type": "object",
-                    "attributes": {
-                      "marks": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "array",
-                          "of": {
-                            "type": "string"
+            "type": "union",
+            "of": [
+              {
+                "type": "object",
+                "attributes": {
+                  "children": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "array",
+                      "of": {
+                        "type": "object",
+                        "attributes": {
+                          "marks": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "array",
+                              "of": {
+                                "type": "string"
+                              }
+                            },
+                            "optional": true
+                          },
+                          "text": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string"
+                            },
+                            "optional": true
+                          },
+                          "_type": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string",
+                              "value": "span"
+                            }
                           }
                         },
-                        "optional": true
-                      },
-                      "text": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string"
-                        },
-                        "optional": true
-                      },
-                      "_type": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string",
-                          "value": "span"
+                        "rest": {
+                          "type": "object",
+                          "attributes": {
+                            "_key": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
                         }
                       }
                     },
-                    "rest": {
-                      "type": "object",
-                      "attributes": {
-                        "_key": {
-                          "type": "objectAttribute",
-                          "value": {
-                            "type": "string"
+                    "optional": true
+                  },
+                  "style": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "union",
+                      "of": [
+                        {
+                          "type": "string",
+                          "value": "normal"
+                        },
+                        {
+                          "type": "string",
+                          "value": "h1"
+                        },
+                        {
+                          "type": "string",
+                          "value": "h2"
+                        },
+                        {
+                          "type": "string",
+                          "value": "h3"
+                        },
+                        {
+                          "type": "string",
+                          "value": "h4"
+                        },
+                        {
+                          "type": "string",
+                          "value": "h5"
+                        },
+                        {
+                          "type": "string",
+                          "value": "h6"
+                        },
+                        {
+                          "type": "string",
+                          "value": "blockquote"
+                        }
+                      ]
+                    },
+                    "optional": true
+                  },
+                  "listItem": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "union",
+                      "of": [
+                        {
+                          "type": "string",
+                          "value": "bullet"
+                        },
+                        {
+                          "type": "string",
+                          "value": "number"
+                        }
+                      ]
+                    },
+                    "optional": true
+                  },
+                  "markDefs": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "array",
+                      "of": {
+                        "type": "object",
+                        "attributes": {
+                          "href": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string"
+                            },
+                            "optional": true
+                          },
+                          "_type": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string",
+                              "value": "link"
+                            }
+                          }
+                        },
+                        "rest": {
+                          "type": "object",
+                          "attributes": {
+                            "_key": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
                           }
                         }
                       }
+                    },
+                    "optional": true
+                  },
+                  "level": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "number"
+                    },
+                    "optional": true
+                  },
+                  "_type": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string",
+                      "value": "block"
                     }
                   }
                 },
-                "optional": true
-              },
-              "style": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "normal"
-                    },
-                    {
-                      "type": "string",
-                      "value": "h1"
-                    },
-                    {
-                      "type": "string",
-                      "value": "h2"
-                    },
-                    {
-                      "type": "string",
-                      "value": "h3"
-                    },
-                    {
-                      "type": "string",
-                      "value": "h4"
-                    },
-                    {
-                      "type": "string",
-                      "value": "h5"
-                    },
-                    {
-                      "type": "string",
-                      "value": "h6"
-                    },
-                    {
-                      "type": "string",
-                      "value": "blockquote"
-                    }
-                  ]
-                },
-                "optional": true
-              },
-              "listItem": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "bullet"
-                    },
-                    {
-                      "type": "string",
-                      "value": "number"
-                    }
-                  ]
-                },
-                "optional": true
-              },
-              "markDefs": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "array",
-                  "of": {
-                    "type": "object",
-                    "attributes": {
-                      "href": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string"
-                        },
-                        "optional": true
-                      },
-                      "_type": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string",
-                          "value": "link"
-                        }
-                      }
-                    },
-                    "rest": {
-                      "type": "object",
-                      "attributes": {
-                        "_key": {
-                          "type": "objectAttribute",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
+                "rest": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
                       }
                     }
                   }
-                },
-                "optional": true
+                }
               },
-              "level": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "number"
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 },
-                "optional": true
+                "rest": {
+                  "type": "inline",
+                  "name": "singleMediaBlock"
+                }
               },
-              "_type": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string",
-                  "value": "block"
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "sideBySideMediaBlock"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "threeSideBySideMediaBlock"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "gridFourMediaBlock"
                 }
               }
-            },
-            "rest": {
-              "type": "object",
-              "attributes": {
-                "_key": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
+            ]
           }
         },
         "optional": true
@@ -4190,7 +4023,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -4198,7 +4031,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       },
       "publishingDate": {
         "type": "objectAttribute",
@@ -4214,7 +4047,7 @@
           "type": "inline",
           "name": "imageWithMetadata"
         },
-        "optional": false
+        "optional": true
       },
       "interviewToType": {
         "type": "objectAttribute",
@@ -4231,24 +4064,26 @@
             }
           ]
         },
-        "optional": false
+        "optional": true
       },
       "designersAndProfessionals": {
         "type": "objectAttribute",
         "value": {
           "type": "array",
           "of": {
-            "type": "union",
-            "of": [
-              {
-                "type": "inline",
-                "name": "designer.reference"
-              },
-              {
-                "type": "inline",
-                "name": "professional.reference"
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
               }
-            ]
+            },
+            "rest": {
+              "type": "inline",
+              "name": "person.reference"
+            }
           }
         },
         "optional": true
@@ -4303,7 +4138,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "interview": {
         "type": "objectAttribute",
@@ -4540,7 +4375,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "socialLinks": {
         "type": "objectAttribute",
@@ -4600,7 +4435,7 @@
           "type": "inline",
           "name": "category.reference"
         },
-        "optional": false
+        "optional": true
       },
       "tags": {
         "type": "objectAttribute",
@@ -4694,7 +4529,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -4702,38 +4537,8 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       }
-    }
-  },
-  {
-    "type": "type",
-    "name": "teacher.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "teacher"
     }
   },
   {
@@ -4776,7 +4581,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -4784,7 +4589,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       },
       "publishingDate": {
         "type": "objectAttribute",
@@ -4792,7 +4597,7 @@
           "type": "inline",
           "name": "publishingDate"
         },
-        "optional": false
+        "optional": true
       },
       "cover": {
         "type": "objectAttribute",
@@ -4800,27 +4605,29 @@
           "type": "inline",
           "name": "imageWithMetadata"
         },
-        "optional": false
+        "optional": true
       },
       "designers": {
         "type": "objectAttribute",
         "value": {
           "type": "array",
           "of": {
-            "type": "union",
-            "of": [
-              {
-                "type": "inline",
-                "name": "designer.reference"
-              },
-              {
-                "type": "inline",
-                "name": "professional.reference"
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
               }
-            ]
+            },
+            "rest": {
+              "type": "inline",
+              "name": "person.reference"
+            }
           }
         },
-        "optional": false
+        "optional": true
       },
       "institute": {
         "type": "objectAttribute",
@@ -4846,7 +4653,7 @@
             },
             "rest": {
               "type": "inline",
-              "name": "teacher.reference"
+              "name": "person.reference"
             }
           }
         },
@@ -4857,7 +4664,7 @@
         "value": {
           "type": "number"
         },
-        "optional": false
+        "optional": true
       },
       "tags": {
         "type": "objectAttribute",
@@ -4988,28 +4795,28 @@
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "bottom": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "left": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "right": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -5032,28 +4839,28 @@
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "y": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "height": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "width": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -5098,14 +4905,14 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "yearFoundation": {
         "type": "objectAttribute",
         "value": {
           "type": "number"
         },
-        "optional": false
+        "optional": true
       },
       "languages": {
         "type": "objectAttribute",
@@ -5135,7 +4942,7 @@
           "type": "inline",
           "name": "place.reference"
         },
-        "optional": false
+        "optional": true
       },
       "address": {
         "type": "objectAttribute",
@@ -5194,7 +5001,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "city": {
         "type": "objectAttribute",
@@ -5301,7 +5108,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "logo": {
         "type": "objectAttribute",
@@ -5309,7 +5116,7 @@
           "type": "inline",
           "name": "logo"
         },
-        "optional": false
+        "optional": true
       },
       "description": {
         "type": "objectAttribute",
@@ -5499,21 +5306,21 @@
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "width": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "aspectRatio": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -5668,35 +5475,35 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "extension": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "mimeType": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "size": {
         "type": "objectAttribute",
         "value": {
           "type": "number"
         },
-        "optional": false
+        "optional": true
       },
       "assetId": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "uploadId": {
         "type": "objectAttribute",
@@ -5710,14 +5517,14 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "url": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "source": {
         "type": "objectAttribute",
@@ -5841,35 +5648,35 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "extension": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "mimeType": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "size": {
         "type": "objectAttribute",
         "value": {
           "type": "number"
         },
-        "optional": false
+        "optional": true
       },
       "assetId": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "uploadId": {
         "type": "objectAttribute",
@@ -5883,14 +5690,14 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "url": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "metadata": {
         "type": "objectAttribute",

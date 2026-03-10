@@ -35,7 +35,7 @@ export const resolve: PresentationPluginOptions["resolve"] = {
         ],
       }),
     }),
-    designer: defineLocations({
+    person: defineLocations({
       select: {
         title: "name",
         slug: "slug.current",

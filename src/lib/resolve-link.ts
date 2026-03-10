@@ -11,7 +11,7 @@ const ROUTE_MAP: Record<string, string> = {
   project: "/projects",
   interview: "/interviews",
   journal: "/journal",
-  designer: "/designers",
+  person: "/designers",
   event: "/events",
   edition: "/editions",
   // Singleton pages
