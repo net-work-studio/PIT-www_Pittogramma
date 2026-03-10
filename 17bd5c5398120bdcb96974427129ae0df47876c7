@@ -1,0 +1,47 @@
+src/sanity/lib/queries.ts
+  c771afd1ee096d0f 131,146,603
+src/sanity/presentation/resolve.ts
+  c771afd1ee096d0f 38
+src/sanity/schemaTypes/documents/person.ts
+  c771afd1ee096d0f 1-251
+src/sanity/schemaTypes/documents/journal.ts
+  c771afd1ee096d0f 55-58
+src/lib/resolve-link.ts
+  c771afd1ee096d0f 14
+src/sanity/schemaTypes/documents/interview.ts
+  c771afd1ee096d0f 109-112
+src/sanity/schemaTypes/documents/cta.ts
+  c771afd1ee096d0f 68
+src/sanity/structure/structure.ts
+  c771afd1ee096d0f 32-75
+migrations/people-consolidation/index.ts
+  c771afd1ee096d0f 1-272
+src/sanity/schemaTypes/documents/project.ts
+  c771afd1ee096d0f 67-69,95-98
+src/sanity/schemaTypes/documents/bibliography.ts
+  c771afd1ee096d0f 108-111
+.gitignore
+  c771afd1ee096d0f 42-44
+src/sanity/schemaTypes/index.ts
+  c771afd1ee096d0f 8,51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "17bd5c5398120bdcb96974427129ae0df47876c7",
+  "prompts": {
+    "c771afd1ee096d0f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "aa88c5aa-153a-4cda-8334-ef0b764740b2",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 598,
+      "total_deletions": 24,
+      "accepted_lines": 597,
+      "overriden_lines": 0
+    }
+  }
+}
