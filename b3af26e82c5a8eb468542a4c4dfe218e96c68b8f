@@ -1,0 +1,27 @@
+src/sanity/lib/queries.ts
+  685d6b8a6a9fec14 25
+src/components/cards/cta-card.tsx
+  685d6b8a6a9fec14 17
+tsconfig.json
+  685d6b8a6a9fec14 33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "b3af26e82c5a8eb468542a4c4dfe218e96c68b8f",
+  "prompts": {
+    "685d6b8a6a9fec14": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "56fcd506-0eaa-4e81-806c-e58974aab25a",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 3,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
