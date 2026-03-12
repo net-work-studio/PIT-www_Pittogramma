@@ -22,6 +22,7 @@ const CTA_FIELDS = `
     variant,
     headline,
     image {
+      _type,
       image { ${IMAGE_FIELDS} },
       alt,
       caption

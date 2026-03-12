@@ -4,7 +4,6 @@ import { stegaClean } from "next-sanity";
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { Button } from "@/components/ui/button";
 import { resolveInternalLink } from "@/lib/resolve-link";
-import type { ImageWithMetadata } from "@/sanity/types";
 
 interface InternalLinkDoc {
   _type: string;
@@ -15,7 +14,7 @@ interface CtaCardProps {
   buttonText: string;
   externalUrl?: string | null;
   headline?: string | null;
-  image?: ImageWithMetadata | null;
+  image?: React.ComponentProps<typeof SanityImage>["source"];
   internalLink?: InternalLinkDoc | null;
   linkType?: "internal" | "external" | null;
   variant?: "simple" | "withImage" | null;
