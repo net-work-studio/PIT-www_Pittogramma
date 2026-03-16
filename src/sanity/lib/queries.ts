@@ -96,6 +96,8 @@ export const HOME_PAGE_QUERY = defineQuery(`
       _type == "interview" => {
         "people": designersAndProfessionals[]{ ...@->{ _id, name }, _key },
         interviewToType,
+        "studio": studio->name,
+        "typeFoundry": typeFoundry->name,
         introText,
       },
       tags[]->{ _id, name }
