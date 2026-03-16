@@ -66,9 +66,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className="bg-background" lang="en" suppressHydrationWarning>
+    <html className={`${aktual.variable} ${sono.variable} bg-background`} lang="en" suppressHydrationWarning>
       <body
-        className={`${aktual.variable} ${sono.variable} flex min-h-screen flex-col justify-between bg-background text-foreground antialiased`}
+        className="flex min-h-screen flex-col justify-between bg-background text-foreground antialiased"
       >
         <JsonLd
           data={{

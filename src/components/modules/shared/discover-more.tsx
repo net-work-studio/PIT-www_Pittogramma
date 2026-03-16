@@ -1,5 +1,4 @@
 import BaseCard from "@/components/cards/base-card";
-import { getBlurDataUrl, urlFor } from "@/sanity/lib/image";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 type RelatedProject =
@@ -20,13 +19,7 @@ export default function DiscoverMore({ projects }: DiscoverMoreProps) {
       <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
         {projects.map((project: RelatedProject) => {
           const slug = project.slug?.current;
-          const coverImage = project.cover?.image;
-
-          if (!(slug && coverImage)) {
-            return null;
-          }
-
-          const image = urlFor(coverImage).width(600).height(450).url();
+          if (!slug) return null;
 
           const authors = project.designers?.length
             ? project.designers.map(
@@ -39,9 +32,8 @@ export default function DiscoverMore({ projects }: DiscoverMoreProps) {
           return (
             <BaseCard
               authors={authors}
-              blurDataURL={getBlurDataUrl(project.cover)}
               href={`/projects/${slug}`}
-              image={image}
+              image={project.cover}
               key={project._id}
               title={project.title}
             />

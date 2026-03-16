@@ -26,6 +26,15 @@ export const homePage = defineType({
       validation: (Rule) => Rule.required().max(170),
     }),
     defineField({
+      name: "featuredItem",
+      title: "Featured Item",
+      type: "reference",
+      to: [{ type: "project" }, { type: "interview" }],
+      group: "content",
+      description:
+        "Select a project or interview to feature as the hero. If empty, the latest published item is used.",
+    }),
+    defineField({
       name: "endOfPageCta",
       title: "End of Page CTA",
       type: "reference",

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
+import type SanityImage from "@/components/modules/shared/sanity-image";
 import { getBlurDataUrl, urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { JOURNAL_PAGE_QUERY, JOURNAL_QUERY } from "@/sanity/lib/queries";
@@ -46,12 +47,13 @@ export default async function JournalPage() {
 
   const featuredDate = featuredArticle?.publishingDate?.date ?? null;
 
+  type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
+
   interface JournalCard {
     authors: { name: string }[] | undefined;
-    blurDataURL: string | undefined;
     href: string;
     id: string;
-    image: string;
+    image: SanityImageSource;
     title: string;
   }
 
@@ -60,22 +62,15 @@ export default async function JournalPage() {
       (article: JOURNAL_QUERY_RESULT[number]) =>
         article.slug?.current && article._id !== featuredArticle?._id
     )
-    .map((article: JOURNAL_QUERY_RESULT[number]) => {
-      const image = article.cover?.image
-        ? urlFor(article.cover.image).width(1200).height(900).url()
-        : "";
-
-      return {
-        authors: article.authors?.length
-          ? article.authors.map((a) => ({ name: a.name ?? "" }))
-          : undefined,
-        blurDataURL: getBlurDataUrl(article.cover),
-        href: `/journal/${article.slug?.current ?? ""}`,
-        id: article._id,
-        image,
-        title: article.title ?? "",
-      };
-    });
+    .map((article: JOURNAL_QUERY_RESULT[number]) => ({
+      authors: article.authors?.length
+        ? article.authors.map((a) => ({ name: a.name ?? "" }))
+        : undefined,
+      href: `/journal/${article.slug?.current ?? ""}`,
+      id: article._id,
+      image: article.cover,
+      title: article.title ?? "",
+    }));
 
   return (
     <>
@@ -124,7 +119,6 @@ export default async function JournalPage() {
             {journalCards.map((card) => (
               <BaseCard
                 authors={card.authors}
-                blurDataURL={card.blurDataURL}
                 href={card.href}
                 image={card.image}
                 key={card.id}

@@ -183,7 +183,7 @@ export const interview = defineType({
             { title: "Answer", value: "answer", component: AnswerStyle },
             { title: "Quote", value: "blockquote" },
           ],
-          lists: [],
+          lists: [{ title: "Bullet", value: "bullet" }],
           marks: {
             decorators: [
               { title: "Strong", value: "strong" },

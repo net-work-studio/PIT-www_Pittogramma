@@ -221,6 +221,18 @@ const components: PortableTextComponents = {
       </blockquote>
     ),
   },
+  list: {
+    bullet: ({ children }) => (
+      <ul className="mx-auto mb-6 max-w-[700px] list-disc pl-6 text-xl lg:text-2xl">
+        {children}
+      </ul>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }) => (
+      <li className="mb-1">{children}</li>
+    ),
+  },
   types: {
     singleMediaBlock: SingleMediaBlock,
     sideBySideMediaBlock: SideBySideMediaBlock,

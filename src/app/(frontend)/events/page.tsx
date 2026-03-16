@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { getBlurDataUrl, urlFor } from "@/sanity/lib/image";
+import type SanityImage from "@/components/modules/shared/sanity-image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { EVENTS_PAGE_QUERY, EVENTS_QUERY } from "@/sanity/lib/queries";
 import type { EVENTS_QUERY_RESULT } from "@/sanity/types";
@@ -29,28 +29,24 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
+type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
+
 interface EventCard {
   authors: { name: string }[] | undefined;
-  blurDataURL: string | undefined;
   href: string;
   id: string;
-  image: string;
+  image: SanityImageSource;
   title: string;
 }
 
 function mapEventToCard(event: EVENTS_QUERY_RESULT[number]): EventCard {
-  const image = event.cover?.image
-    ? urlFor(event.cover.image).width(800).height(600).url()
-    : "";
-
   const subtitle = event.locationName ?? event.type;
 
   return {
     authors: subtitle ? [{ name: subtitle }] : undefined,
-    blurDataURL: getBlurDataUrl(event.cover),
     href: `/events/${event.slug?.current}`,
     id: event._id,
-    image,
+    image: event.cover,
     title: event.title,
   };
 }
@@ -95,7 +91,7 @@ export default async function Page() {
             {futureEvents.map((event) => (
               <BaseCard
                 authors={event.authors}
-                blurDataURL={event.blurDataURL}
+
                 href={event.href}
                 image={event.image}
                 key={event.id}
@@ -114,7 +110,7 @@ export default async function Page() {
             {pastEvents.map((event) => (
               <BaseCard
                 authors={event.authors}
-                blurDataURL={event.blurDataURL}
+
                 href={event.href}
                 image={event.image}
                 key={event.id}

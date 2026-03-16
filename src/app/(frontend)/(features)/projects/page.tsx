@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { getBlurDataUrl, urlFor } from "@/sanity/lib/image";
+import type SanityImage from "@/components/modules/shared/sanity-image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { PROJECTS_PAGE_QUERY, PROJECTS_QUERY } from "@/sanity/lib/queries";
 import type { PROJECTS_QUERY_RESULT } from "@/sanity/types";
@@ -38,36 +38,30 @@ export default async function ProjectsPage() {
 
   const cta = pageSettings?.endOfPageCta;
 
+  type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
+
   interface ProjectCard {
     authors: { name: string }[] | undefined;
-    blurDataURL: string | undefined;
     href: string;
     id: string;
-    image: string;
+    image: SanityImageSource;
     title: string;
   }
 
   const projectCards: ProjectCard[] = projects.map(
-    (project: PROJECTS_QUERY_RESULT[number]) => {
-      const image = project.cover?.image
-        ? urlFor(project.cover.image).width(1200).height(900).url()
-        : "";
-
-      return {
-        authors: project.designers?.length
-          ? project.designers.map(
-              (d: PROJECTS_QUERY_RESULT[number]["designers"][number]) => ({
-                name: d.name ?? "",
-              })
-            )
-          : undefined,
-        blurDataURL: getBlurDataUrl(project.cover),
-        href: `/projects/${project.slug.current}`,
-        id: project._id,
-        image,
-        title: project.title,
-      };
-    }
+    (project: PROJECTS_QUERY_RESULT[number]) => ({
+      authors: project.designers?.length
+        ? project.designers.map(
+            (d: PROJECTS_QUERY_RESULT[number]["designers"][number]) => ({
+              name: d.name ?? "",
+            })
+          )
+        : undefined,
+      href: `/projects/${project.slug.current}`,
+      id: project._id,
+      image: project.cover,
+      title: project.title,
+    })
   );
 
   return (
@@ -82,7 +76,6 @@ export default async function ProjectsPage() {
           {projectCards.map((project) => (
             <BaseCard
               authors={project.authors}
-              blurDataURL={project.blurDataURL}
               href={project.href}
               image={project.image}
               key={project.id}

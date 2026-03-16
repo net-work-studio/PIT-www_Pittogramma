@@ -83,8 +83,47 @@ export const HOME_PAGE_QUERY = defineQuery(`
     _id,
     title,
     introText,
+    featuredItem->{
+      _id,
+      _type,
+      title,
+      slug,
+      publishingDate,
+      cover { image { ${IMAGE_FIELDS} }, alt },
+      _type == "project" => {
+        "people": designers[]{ ...@->{ _id, name }, _key },
+      },
+      _type == "interview" => {
+        "people": designersAndProfessionals[]{ ...@->{ _id, name }, _key },
+        introText,
+      },
+      tags[]->{ _id, name }
+    },
     ${CTA_FIELDS},
     ${SEO_FIELDS}
+  }
+`);
+
+export const HOME_FEED_QUERY = defineQuery(`
+  *[_type in ["project", "interview"] && defined(publishingDate.date)] | order(publishingDate.date desc) [0...30] {
+    _id,
+    _type,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    _type == "project" => {
+      "people": designers[]{ ...@->{ _id, name }, _key },
+    },
+    _type == "interview" => {
+      "people": designersAndProfessionals[]{ ...@->{ _id, name }, _key },
+      introText,
+      readingTime,
+    },
+    tags[]->{ _id, name }
   }
 `);
 
