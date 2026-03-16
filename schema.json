@@ -166,7 +166,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "cover": {
         "type": "objectAttribute",
@@ -261,7 +261,7 @@
           "type": "inline",
           "name": "publisher.reference"
         },
-        "optional": false
+        "optional": true
       },
       "fetchedPublisher": {
         "type": "objectAttribute",
@@ -502,14 +502,14 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "name": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "description": {
         "type": "objectAttribute",
@@ -532,7 +532,7 @@
           "type": "inline",
           "name": "category.reference"
         },
-        "optional": false
+        "optional": true
       },
       "tags": {
         "type": "objectAttribute",
@@ -626,7 +626,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       }
     }
   },
@@ -670,14 +670,14 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "description": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "image": {
         "type": "objectAttribute",
@@ -759,7 +759,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "tags": {
         "type": "objectAttribute",
@@ -789,7 +789,7 @@
           "type": "inline",
           "name": "place.reference"
         },
-        "optional": false
+        "optional": true
       },
       "socialLinks": {
         "type": "objectAttribute",
@@ -879,14 +879,14 @@
                       }
                     ]
                   },
-                  "optional": false
+                  "optional": true
                 },
                 "url": {
                   "type": "objectAttribute",
                   "value": {
                     "type": "string"
                   },
-                  "optional": false
+                  "optional": true
                 },
                 "_type": {
                   "type": "objectAttribute",
@@ -932,7 +932,7 @@
           "value": {
             "type": "string"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -1014,7 +1014,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "endOfPageCta": {
         "type": "objectAttribute",
@@ -1197,7 +1197,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "featuredArticle": {
         "type": "objectAttribute",
@@ -1301,7 +1301,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "utmMedium": {
         "type": "objectAttribute",
@@ -1426,7 +1426,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -1434,7 +1434,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       }
     }
   },
@@ -1456,7 +1456,7 @@
           "value": {
             "type": "string"
           },
-          "optional": false
+          "optional": true
         },
         "source": {
           "type": "objectAttribute",
@@ -1486,7 +1486,7 @@
           "value": {
             "type": "string"
           },
-          "optional": false
+          "optional": true
         },
         "slug": {
           "type": "objectAttribute",
@@ -1494,7 +1494,7 @@
             "type": "inline",
             "name": "slug"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -1527,7 +1527,7 @@
               }
             ]
           },
-          "optional": false
+          "optional": true
         },
         "topLeft": {
           "type": "objectAttribute",
@@ -1535,7 +1535,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         },
         "topRight": {
           "type": "objectAttribute",
@@ -1543,7 +1543,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         },
         "bottomLeft": {
           "type": "objectAttribute",
@@ -1551,7 +1551,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         },
         "bottomRight": {
           "type": "objectAttribute",
@@ -1559,7 +1559,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -1592,7 +1592,7 @@
               }
             ]
           },
-          "optional": false
+          "optional": true
         },
         "left": {
           "type": "objectAttribute",
@@ -1600,7 +1600,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         },
         "center": {
           "type": "objectAttribute",
@@ -1608,7 +1608,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         },
         "right": {
           "type": "objectAttribute",
@@ -1616,7 +1616,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -1649,7 +1649,7 @@
               }
             ]
           },
-          "optional": false
+          "optional": true
         },
         "left": {
           "type": "objectAttribute",
@@ -1657,7 +1657,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         },
         "right": {
           "type": "objectAttribute",
@@ -1665,7 +1665,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -1698,7 +1698,7 @@
               }
             ]
           },
-          "optional": false
+          "optional": true
         },
         "media": {
           "type": "objectAttribute",
@@ -1706,7 +1706,7 @@
             "type": "inline",
             "name": "mediaItem"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -1773,7 +1773,7 @@
               }
             ]
           },
-          "optional": false
+          "optional": true
         },
         "image": {
           "type": "objectAttribute",
@@ -2034,7 +2034,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -2042,7 +2042,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       }
     }
   },
@@ -2116,7 +2116,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "content": {
         "type": "objectAttribute",
@@ -2587,7 +2587,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "variant": {
         "type": "objectAttribute",
@@ -2626,7 +2626,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "linkType": {
         "type": "objectAttribute",
@@ -2750,7 +2750,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "endOfPageCta": {
         "type": "objectAttribute",
@@ -2817,7 +2817,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "endOfPageCta": {
         "type": "objectAttribute",
@@ -2884,7 +2884,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "endOfPageCta": {
         "type": "objectAttribute",
@@ -2951,23 +2951,6 @@
         "value": {
           "type": "string"
         },
-        "optional": false
-      },
-      "featuredItem": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "union",
-          "of": [
-            {
-              "type": "inline",
-              "name": "project.reference"
-            },
-            {
-              "type": "inline",
-              "name": "interview.reference"
-            }
-          ]
-        },
         "optional": true
       },
       "endOfPageCta": {
@@ -3028,7 +3011,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -3036,7 +3019,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       },
       "cover": {
         "type": "objectAttribute",
@@ -3044,7 +3027,7 @@
           "type": "inline",
           "name": "imageWithMetadata"
         },
-        "optional": false
+        "optional": true
       },
       "seo": {
         "type": "objectAttribute",
@@ -3096,7 +3079,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -3104,14 +3087,14 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       },
       "type": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "cover": {
         "type": "objectAttribute",
@@ -3119,14 +3102,14 @@
           "type": "inline",
           "name": "imageWithMetadata"
         },
-        "optional": false
+        "optional": true
       },
       "dateStart": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "dateEnd": {
         "type": "objectAttribute",
@@ -3307,14 +3290,14 @@
             "type": "string"
           }
         },
-        "optional": false
+        "optional": true
       },
       "name": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -3359,7 +3342,7 @@
                   "type": "inline",
                   "name": "institute.reference"
                 },
-                "optional": false
+                "optional": true
               },
               "degree": {
                 "type": "objectAttribute",
@@ -3388,7 +3371,7 @@
                     }
                   ]
                 },
-                "optional": false
+                "optional": true
               },
               "courseName": {
                 "type": "objectAttribute",
@@ -3523,7 +3506,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -3531,7 +3514,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       },
       "publishingDate": {
         "type": "objectAttribute",
@@ -3539,7 +3522,7 @@
           "type": "inline",
           "name": "publishingDate"
         },
-        "optional": false
+        "optional": true
       },
       "cover": {
         "type": "objectAttribute",
@@ -3547,7 +3530,7 @@
           "type": "inline",
           "name": "imageWithMetadata"
         },
-        "optional": false
+        "optional": true
       },
       "tags": {
         "type": "objectAttribute",
@@ -3924,7 +3907,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -3932,7 +3915,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       },
       "publishingDate": {
         "type": "objectAttribute",
@@ -3948,7 +3931,7 @@
           "type": "inline",
           "name": "imageWithMetadata"
         },
-        "optional": false
+        "optional": true
       },
       "interviewToType": {
         "type": "objectAttribute",
@@ -3969,7 +3952,7 @@
             }
           ]
         },
-        "optional": false
+        "optional": true
       },
       "designersAndProfessionals": {
         "type": "objectAttribute",
@@ -4051,7 +4034,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "interview": {
         "type": "objectAttribute",
@@ -4135,12 +4118,7 @@
                     "type": "objectAttribute",
                     "value": {
                       "type": "union",
-                      "of": [
-                        {
-                          "type": "string",
-                          "value": "bullet"
-                        }
-                      ]
+                      "of": []
                     },
                     "optional": true
                   },
@@ -4293,7 +4271,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "socialLinks": {
         "type": "objectAttribute",
@@ -4439,7 +4417,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "socialLinks": {
         "type": "objectAttribute",
@@ -4499,7 +4477,7 @@
           "type": "inline",
           "name": "category.reference"
         },
-        "optional": false
+        "optional": true
       },
       "tags": {
         "type": "objectAttribute",
@@ -4593,7 +4571,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -4601,7 +4579,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       }
     }
   },
@@ -4645,7 +4623,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "slug": {
         "type": "objectAttribute",
@@ -4653,7 +4631,7 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": false
+        "optional": true
       },
       "publishingDate": {
         "type": "objectAttribute",
@@ -4661,7 +4639,7 @@
           "type": "inline",
           "name": "publishingDate"
         },
-        "optional": false
+        "optional": true
       },
       "cover": {
         "type": "objectAttribute",
@@ -4669,7 +4647,7 @@
           "type": "inline",
           "name": "imageWithMetadata"
         },
-        "optional": false
+        "optional": true
       },
       "designers": {
         "type": "objectAttribute",
@@ -4691,7 +4669,7 @@
             }
           }
         },
-        "optional": false
+        "optional": true
       },
       "institute": {
         "type": "objectAttribute",
@@ -4728,7 +4706,7 @@
         "value": {
           "type": "number"
         },
-        "optional": false
+        "optional": true
       },
       "tags": {
         "type": "objectAttribute",
@@ -4859,28 +4837,28 @@
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "bottom": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "left": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "right": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -4903,28 +4881,28 @@
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "y": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "height": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "width": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -4969,14 +4947,14 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "yearFoundation": {
         "type": "objectAttribute",
         "value": {
           "type": "number"
         },
-        "optional": false
+        "optional": true
       },
       "languages": {
         "type": "objectAttribute",
@@ -5006,7 +4984,7 @@
           "type": "inline",
           "name": "place.reference"
         },
-        "optional": false
+        "optional": true
       },
       "address": {
         "type": "objectAttribute",
@@ -5065,7 +5043,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "city": {
         "type": "objectAttribute",
@@ -5172,7 +5150,7 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "logo": {
         "type": "objectAttribute",
@@ -5180,7 +5158,7 @@
           "type": "inline",
           "name": "logo"
         },
-        "optional": false
+        "optional": true
       },
       "description": {
         "type": "objectAttribute",
@@ -5370,21 +5348,21 @@
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "width": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         },
         "aspectRatio": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -5539,35 +5517,35 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "extension": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "mimeType": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "size": {
         "type": "objectAttribute",
         "value": {
           "type": "number"
         },
-        "optional": false
+        "optional": true
       },
       "assetId": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "uploadId": {
         "type": "objectAttribute",
@@ -5581,14 +5559,14 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "url": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "source": {
         "type": "objectAttribute",
@@ -5712,35 +5690,35 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "extension": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "mimeType": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "size": {
         "type": "objectAttribute",
         "value": {
           "type": "number"
         },
-        "optional": false
+        "optional": true
       },
       "assetId": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "uploadId": {
         "type": "objectAttribute",
@@ -5754,14 +5732,14 @@
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "url": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": false
+        "optional": true
       },
       "metadata": {
         "type": "objectAttribute",

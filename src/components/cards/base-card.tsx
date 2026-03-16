@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-const BASE_CARD_IMAGE_WIDTH = 4;
-const BASE_CARD_IMAGE_HEIGHT = 3;
-const BASE_CARD_IMAGE_RATIO = BASE_CARD_IMAGE_WIDTH / BASE_CARD_IMAGE_HEIGHT;
+const BASE_CARD_IMAGE_RATIO = 4 / 3;
+
+type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
 
 interface Author {
   name: string;
@@ -15,9 +16,9 @@ interface Author {
 interface BaseCardProps {
   authors?: Author[];
   big?: boolean;
-  blurDataURL?: string;
   href: string;
-  image: string;
+  /** Sanity image object (preferred) or plain URL string (design-system previews). */
+  image: SanityImageSource | string;
   title: string;
   variant?: "project" | "article" | "interview" | "feat" | "event";
 }
@@ -26,11 +27,17 @@ export default function BaseCard({
   title,
   authors,
   image,
-  blurDataURL,
   variant,
   href,
   big,
 }: BaseCardProps) {
+  const sizes = big
+    ? "(min-width: 640px) 50vw, 100vw"
+    : "(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
+
+  const imageClassName =
+    "h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105";
+
   return (
     <Link
       className={cn(
@@ -43,21 +50,29 @@ export default function BaseCard({
         className="relative overflow-hidden rounded-lg"
         ratio={BASE_CARD_IMAGE_RATIO}
       >
-        {image ? (
-          <Image
+        {typeof image === "string" ? (
+          image ? (
+            <Image
+              alt={title}
+              className={imageClassName}
+              fill
+              quality={75}
+              sizes={sizes}
+              src={image}
+            />
+          ) : (
+            <div className="h-full w-full rounded-lg bg-neutral-200" />
+          )
+        ) : image &&
+          typeof image === "object" &&
+          "image" in image &&
+          image.image ? (
+          <SanityImage
             alt={title}
-            className="h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
+            className={cn("rounded-lg", imageClassName)}
             fill
-            quality={75}
-            sizes={
-              big
-                ? "(min-width: 640px) 50vw, 100vw"
-                : "(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-            }
-            src={image}
-            {...(blurDataURL
-              ? { placeholder: "blur" as const, blurDataURL }
-              : {})}
+            sizes={sizes}
+            source={image}
           />
         ) : (
           <div className="h-full w-full rounded-lg bg-neutral-200" />

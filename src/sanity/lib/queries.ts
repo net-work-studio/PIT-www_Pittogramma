@@ -83,8 +83,53 @@ export const HOME_PAGE_QUERY = defineQuery(`
     _id,
     title,
     introText,
+    featuredItem->{
+      _id,
+      _type,
+      title,
+      slug,
+      publishingDate,
+      cover { image { ${IMAGE_FIELDS} }, alt },
+      _type == "project" => {
+        "people": designers[]{ ...@->{ _id, name }, _key },
+      },
+      _type == "interview" => {
+        "people": designersAndProfessionals[]{ ...@->{ _id, name }, _key },
+        interviewToType,
+        "studio": studio->name,
+        "typeFoundry": typeFoundry->name,
+        introText,
+      },
+      tags[]->{ _id, name }
+    },
     ${CTA_FIELDS},
     ${SEO_FIELDS}
+  }
+`);
+
+export const HOME_FEED_QUERY = defineQuery(`
+  *[_type in ["project", "interview"] && defined(publishingDate.date)] | order(publishingDate.date desc) [0...30] {
+    _id,
+    _type,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    _type == "project" => {
+      "people": designers[]{ ...@->{ _id, name }, _key },
+    },
+    _type == "interview" => {
+      "people": designersAndProfessionals[]{ ...@->{ _id, name }, _key },
+      interviewToType,
+      "studio": studio->name,
+      "typeFoundry": typeFoundry->name,
+      introText,
+      readingTime,
+    },
+    tags[]->{ _id, name }
   }
 `);
 
@@ -376,6 +421,10 @@ export const INTERVIEWS_QUERY = defineQuery(`
       _id,
       name
     },
+    typeFoundry->{
+      _id,
+      name
+    },
     place->{ _id, name, city, country, countryCode, lat, lng },
     readingTime,
     tags[]->{
@@ -402,7 +451,12 @@ export const INTERVIEW_QUERY = defineQuery(`
       alt
     },
     designersAndProfessionals[]{ ...@->{ _id, name, portrait }, _key },
+    interviewToType,
     studio->{
+      _id,
+      name
+    },
+    typeFoundry->{
       _id,
       name
     },

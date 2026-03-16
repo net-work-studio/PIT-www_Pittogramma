@@ -10,7 +10,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
-import { getBlurDataUrl, urlFor, urlForImage } from "@/sanity/lib/image";
+import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { DESIGNER_QUERY } from "@/sanity/lib/queries";
 import type { DESIGNER_QUERY_RESULT } from "@/sanity/types";
@@ -123,13 +123,7 @@ export default async function DesignerPage({
           <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
             {designer.relatedInterviews.map((interview: RelatedInterview) => {
               const interviewSlug = interview.slug?.current;
-              const coverImage = interview.cover?.image;
-
-              if (!(interviewSlug && coverImage)) {
-                return null;
-              }
-
-              const image = urlFor(coverImage).width(600).height(450).url();
+              if (!interviewSlug) return null;
 
               const authors = interview.designersAndProfessionals?.length
                 ? interview.designersAndProfessionals.map(
@@ -146,9 +140,8 @@ export default async function DesignerPage({
               return (
                 <BaseCard
                   authors={authors}
-                  blurDataURL={getBlurDataUrl(interview.cover)}
                   href={`/interviews/${interviewSlug}`}
-                  image={image}
+                  image={interview.cover}
                   key={interview._id}
                   title={interview.title}
                   variant="interview"

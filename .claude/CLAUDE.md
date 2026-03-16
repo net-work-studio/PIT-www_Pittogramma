@@ -1,0 +1,2 @@
+- use bun
+- always use sanity-image.tsx instead of Image from next/image

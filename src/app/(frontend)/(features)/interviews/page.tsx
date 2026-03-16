@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { getBlurDataUrl, urlFor } from "@/sanity/lib/image";
+import type SanityImage from "@/components/modules/shared/sanity-image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { INTERVIEWS_PAGE_QUERY, INTERVIEWS_QUERY } from "@/sanity/lib/queries";
 import type { INTERVIEWS_QUERY_RESULT } from "@/sanity/types";
@@ -37,15 +37,13 @@ export default async function InterviewsPage() {
 
   const cta = pageSettings?.endOfPageCta;
 
+  type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
+
   interface InterviewCard {
     authors: { name: string }[] | undefined;
-    blurDataURL: string | undefined;
     href: string;
     id: string;
-    image: string;
-    location: string | undefined;
-    readingTime: number | null;
-    studio: string | undefined | null;
+    image: SanityImageSource;
     title: string;
   }
 
@@ -53,30 +51,17 @@ export default async function InterviewsPage() {
     .filter(
       (interview: INTERVIEWS_QUERY_RESULT[number]) => interview.slug?.current
     )
-    .map((interview: INTERVIEWS_QUERY_RESULT[number]) => {
-      const image = interview.cover?.image
-        ? urlFor(interview.cover.image).width(1200).height(900).url()
-        : "";
-
-      return {
-        authors: interview.designersAndProfessionals?.length
-          ? interview.designersAndProfessionals.map((d) => ({
-              name: d.name ?? "",
-            }))
-          : undefined,
-        blurDataURL: getBlurDataUrl(interview.cover),
-        href: `/interviews/${interview.slug?.current ?? ""}`,
-        id: interview._id,
-        image,
-        title: interview.title ?? "",
-        readingTime: interview.readingTime,
-        studio: interview.studio?.name,
-        location:
-          [interview.place?.city, interview.place?.country]
-            .filter(Boolean)
-            .join(", ") || undefined,
-      };
-    });
+    .map((interview: INTERVIEWS_QUERY_RESULT[number]) => ({
+      authors: interview.designersAndProfessionals?.length
+        ? interview.designersAndProfessionals.map((d) => ({
+            name: d.name ?? "",
+          }))
+        : undefined,
+      href: `/interviews/${interview.slug?.current ?? ""}`,
+      id: interview._id,
+      image: interview.cover,
+      title: interview.title ?? "",
+    }));
 
   return (
     <>
@@ -92,7 +77,6 @@ export default async function InterviewsPage() {
           {interviewCards.map((card) => (
             <BaseCard
               authors={card.authors}
-              blurDataURL={card.blurDataURL}
               href={card.href}
               image={card.image}
               key={card.id}
