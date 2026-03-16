@@ -1,0 +1,27 @@
+src/sanity/lib/queries.ts
+  70881bed0ad3ff5a 98,124,452
+src/components/home-grid.tsx
+  70881bed0ad3ff5a 19-25
+src/app/(frontend)/(features)/interviews/[slug]/page.tsx
+  70881bed0ad3ff5a 98-99,165,168,171
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "f9f36bc5edbc8684aa50ec528b4270b5895aa6dd",
+  "prompts": {
+    "70881bed0ad3ff5a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1050cf8-d7b9-444a-9329-be748465a9a9",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 16,
+      "total_deletions": 8,
+      "accepted_lines": 15,
+      "overriden_lines": 0
+    }
+  }
+}
