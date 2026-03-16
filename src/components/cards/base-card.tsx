@@ -63,7 +63,10 @@ export default function BaseCard({
           ) : (
             <div className="h-full w-full rounded-lg bg-neutral-200" />
           )
-        ) : image ? (
+        ) : image &&
+          typeof image === "object" &&
+          "image" in image &&
+          image.image ? (
           <SanityImage
             alt={title}
             className={cn("rounded-lg", imageClassName)}

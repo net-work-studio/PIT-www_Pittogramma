@@ -93,13 +93,13 @@ export default async function Home() {
         {firstSection.length > 0 && <HomeGrid items={firstSection} />}
 
         {/* CTA break — placeholder */}
-        <SectionBreak label="CTA break" />
+        {secondSection.length > 0 && <SectionBreak label="CTA break" />}
 
         {/* Section 2: 3 rows of 4 */}
         {secondSection.length > 0 && <HomeGrid items={secondSection} />}
 
         {/* Archive / Resource break — placeholder */}
-        <SectionBreak label="Archive break" />
+        {thirdSection.length > 0 && <SectionBreak label="Archive break" />}
 
         {/* Section 3: 2 rows of 4 */}
         {thirdSection.length > 0 && <HomeGrid items={thirdSection} />}

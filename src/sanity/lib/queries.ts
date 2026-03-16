@@ -120,6 +120,8 @@ export const HOME_FEED_QUERY = defineQuery(`
     },
     _type == "interview" => {
       "people": designersAndProfessionals[]{ ...@->{ _id, name }, _key },
+      "studio": studio->name,
+      "typeFoundry": typeFoundry->name,
       introText,
       readingTime,
     },

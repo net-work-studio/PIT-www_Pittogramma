@@ -13,7 +13,12 @@ export default function HomeGrid({ items }: { items: HOME_FEED_QUERY_RESULT }) {
         return (
           <BaseCard
             authors={
-              item.people?.map((p) => ({ name: p.name ?? "" })) ?? undefined
+              item.people?.length
+                ? item.people.map((p) => ({ name: p.name ?? "" }))
+                : item._type === "interview" &&
+                    (item.studio || item.typeFoundry)
+                  ? [{ name: (item.studio || item.typeFoundry)! }]
+                  : undefined
             }
             href={href}
             image={item.cover}

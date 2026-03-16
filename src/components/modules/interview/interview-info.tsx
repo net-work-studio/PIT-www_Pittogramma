@@ -35,7 +35,7 @@ export default function InterviewInfo({
   publishingDate,
   tags,
 }: InterviewInfoProps) {
-  const entityName = studio ?? typeFoundry;
+  const entityName = studio || typeFoundry;
   const entityLabel = studio ? "Studio" : typeFoundry ? "Type Foundry" : null;
   const intervieweeNames = interviewTo
     ?.map((p: Person) => p.name)
