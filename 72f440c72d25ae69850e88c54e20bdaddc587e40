@@ -1,0 +1,23 @@
+src/sanity/lib/queries.ts
+  795b59735af18c19 99-100
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "72f440c72d25ae69850e88c54e20bdaddc587e40",
+  "prompts": {
+    "795b59735af18c19": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cc8096bf-2c1c-4ac9-bb2b-360a54e3930e",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 0,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
