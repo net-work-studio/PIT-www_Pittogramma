@@ -46,6 +46,7 @@ export default async function InterviewsPage() {
     location: string | undefined;
     readingTime: number | null;
     studio: string | undefined | null;
+    typeFoundry: string | undefined | null;
     title: string;
   }
 
@@ -71,6 +72,7 @@ export default async function InterviewsPage() {
         title: interview.title ?? "",
         readingTime: interview.readingTime,
         studio: interview.studio?.name,
+        typeFoundry: interview.typeFoundry?.name,
         location:
           [interview.place?.city, interview.place?.country]
             .filter(Boolean)

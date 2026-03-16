@@ -92,6 +92,7 @@ export const interview = defineType({
         list: [
           { title: "Designers", value: "designers" },
           { title: "Studio", value: "studio" },
+          { title: "Type Foundry", value: "typeFoundry" },
         ],
         layout: "radio",
       },
@@ -121,11 +122,28 @@ export const interview = defineType({
       title: "Studio",
       group: "content",
       to: [{ type: "studio" }],
+      hidden: ({ parent }) => parent?.interviewToType !== "studio",
       validation: (e) =>
         e.custom((value, context) => {
           const parent = context.parent as { interviewToType?: string };
           if (parent?.interviewToType === "studio" && !value) {
             return "Studio is required";
+          }
+          return true;
+        }),
+    }),
+    defineField({
+      type: "reference",
+      name: "typeFoundry",
+      title: "Type Foundry",
+      group: "content",
+      to: [{ type: "typeFoundry" }],
+      hidden: ({ parent }) => parent?.interviewToType !== "typeFoundry",
+      validation: (e) =>
+        e.custom((value, context) => {
+          const parent = context.parent as { interviewToType?: string };
+          if (parent?.interviewToType === "typeFoundry" && !value) {
+            return "Type Foundry is required";
           }
           return true;
         }),

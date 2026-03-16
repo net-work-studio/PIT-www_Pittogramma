@@ -20,6 +20,7 @@ interface InterviewInfoProps {
   publishingDate?: string | null;
   readingTime?: number | null;
   studio?: string | null;
+  typeFoundry?: string | null;
   tags?: Tag[] | null;
   title?: string | null;
 }
@@ -28,11 +29,14 @@ export default function InterviewInfo({
   title,
   interviewTo,
   studio,
+  typeFoundry,
   place,
   readingTime,
   publishingDate,
   tags,
 }: InterviewInfoProps) {
+  const entityName = studio ?? typeFoundry;
+  const entityLabel = studio ? "Studio" : typeFoundry ? "Type Foundry" : null;
   const intervieweeNames = interviewTo
     ?.map((p: Person) => p.name)
     .filter(Boolean)
@@ -79,12 +83,12 @@ export default function InterviewInfo({
             <dd className="text-sm">{location}</dd>
           </div>
         ) : null}
-        {studio ? (
+        {entityName ? (
           <div className="flex gap-x-8">
             <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-              Studio
+              {entityLabel}
             </dt>
-            <dd className="text-sm">{studio}</dd>
+            <dd className="text-sm">{entityName}</dd>
           </div>
         ) : null}
         {tags?.length ? (

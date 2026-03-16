@@ -376,6 +376,10 @@ export const INTERVIEWS_QUERY = defineQuery(`
       _id,
       name
     },
+    typeFoundry->{
+      _id,
+      name
+    },
     place->{ _id, name, city, country, countryCode, lat, lng },
     readingTime,
     tags[]->{
@@ -403,6 +407,10 @@ export const INTERVIEW_QUERY = defineQuery(`
     },
     designersAndProfessionals[]{ ...@->{ _id, name, portrait }, _key },
     studio->{
+      _id,
+      name
+    },
+    typeFoundry->{
       _id,
       name
     },
