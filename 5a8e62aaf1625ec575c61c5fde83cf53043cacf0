@@ -1,0 +1,25 @@
+src/components/home/section-break.tsx
+  a9864e3e7568ef30 1-11
+src/components/home/featured-hero.tsx
+  a9864e3e7568ef30 1-27,29-31,33,38-86
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "5a8e62aaf1625ec575c61c5fde83cf53043cacf0",
+  "prompts": {
+    "a9864e3e7568ef30": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "40d0d0b5-34d0-45c4-a5f8-63b2dfbe0ec0",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 91,
+      "overriden_lines": 0
+    }
+  }
+}
