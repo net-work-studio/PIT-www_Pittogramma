@@ -1,0 +1,46 @@
+src/app/(frontend)/(features)/interviews/[slug]/page.tsx
+  ca62fbebbbc98931 99,165,168,171
+src/sanity/schemaTypes/documents/interview.ts
+  ca62fbebbbc98931 95,125,135-146
+src/sanity/lib/queries.ts
+  ca62fbebbbc98931 379-382,413-416
+sanity.cli.ts
+  9494b7f2b834a180 13
+src/components/modules/interview/interview-info.tsx
+  ca62fbebbbc98931 23,32,38-39,86,89,91
+src/app/(frontend)/(features)/interviews/page.tsx
+  ca62fbebbbc98931 49,75
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "f63b8c555cea26590303637a45954f112c698c8f",
+  "prompts": {
+    "9494b7f2b834a180": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "31a94683-a3da-4269-8856-552cdbdc9cb9",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "ca62fbebbbc98931": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8d6af93e-e260-4b82-af58-e2d1d22cdef9",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 41,
+      "total_deletions": 6,
+      "accepted_lines": 39,
+      "overriden_lines": 0
+    }
+  }
+}
