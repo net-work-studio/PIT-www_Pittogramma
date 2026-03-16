@@ -16,9 +16,14 @@ export default function HomeGrid({ items }: { items: HOME_FEED_QUERY_RESULT }) {
               item.people?.length
                 ? item.people.map((p) => ({ name: p.name ?? "" }))
                 : item._type === "interview" &&
-                    (item.studio || item.typeFoundry)
-                  ? [{ name: (item.studio || item.typeFoundry)! }]
-                  : undefined
+                    item.interviewToType === "studio" &&
+                    item.studio
+                  ? [{ name: item.studio }]
+                  : item._type === "interview" &&
+                      item.interviewToType === "typeFoundry" &&
+                      item.typeFoundry
+                    ? [{ name: item.typeFoundry }]
+                    : undefined
             }
             href={href}
             image={item.cover}

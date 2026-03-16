@@ -95,6 +95,7 @@ export const HOME_PAGE_QUERY = defineQuery(`
       },
       _type == "interview" => {
         "people": designersAndProfessionals[]{ ...@->{ _id, name }, _key },
+        interviewToType,
         introText,
       },
       tags[]->{ _id, name }
@@ -120,6 +121,7 @@ export const HOME_FEED_QUERY = defineQuery(`
     },
     _type == "interview" => {
       "people": designersAndProfessionals[]{ ...@->{ _id, name }, _key },
+      interviewToType,
       "studio": studio->name,
       "typeFoundry": typeFoundry->name,
       introText,
@@ -447,6 +449,7 @@ export const INTERVIEW_QUERY = defineQuery(`
       alt
     },
     designersAndProfessionals[]{ ...@->{ _id, name, portrait }, _key },
+    interviewToType,
     studio->{
       _id,
       name

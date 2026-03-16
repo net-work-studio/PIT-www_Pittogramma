@@ -95,8 +95,8 @@ export default async function InterviewPage({
             place={interview.place}
             publishingDate={interview.publishingDate?.date}
             readingTime={interview.readingTime}
-            studio={interview.studio?.name}
-            typeFoundry={interview.typeFoundry?.name}
+            studio={interview.interviewToType === "studio" ? interview.studio?.name : undefined}
+            typeFoundry={interview.interviewToType === "typeFoundry" ? interview.typeFoundry?.name : undefined}
             tags={interview.tags}
             title={interview.title}
           />
@@ -162,13 +162,13 @@ export default async function InterviewPage({
               </dd>
             </div>
           ) : null}
-          {interview.studio?.name || interview.typeFoundry?.name ? (
+          {(interview.interviewToType === "studio" && interview.studio?.name) || (interview.interviewToType === "typeFoundry" && interview.typeFoundry?.name) ? (
             <div className="flex gap-x-12">
               <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                {interview.studio?.name ? "Studio" : "Type Foundry"}
+                {interview.interviewToType === "studio" ? "Studio" : "Type Foundry"}
               </dt>
               <dd className="text-sm">
-                {interview.studio?.name ?? interview.typeFoundry?.name}
+                {interview.interviewToType === "studio" ? interview.studio?.name : interview.typeFoundry?.name}
               </dd>
             </div>
           ) : null}
