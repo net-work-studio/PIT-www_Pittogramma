@@ -1,0 +1,31 @@
+src/app/(frontend)/page.tsx
+  9782fb58ecd04edd 96,102
+src/components/cards/base-card.tsx
+  9782fb58ecd04edd 66-69
+src/components/modules/interview/interview-info.tsx
+  9782fb58ecd04edd 38
+src/components/home-grid.tsx
+  9782fb58ecd04edd 16-21
+src/sanity/lib/queries.ts
+  9782fb58ecd04edd 123-124
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "c72a18bed5d9cf0ad2d7a79b7011be59b75a0bc2",
+  "prompts": {
+    "9782fb58ecd04edd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "42408aed-b291-4331-a112-9a489688b65a",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 24,
+      "total_deletions": 14,
+      "accepted_lines": 15,
+      "overriden_lines": 0
+    }
+  }
+}
