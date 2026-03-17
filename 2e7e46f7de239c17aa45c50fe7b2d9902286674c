@@ -1,0 +1,27 @@
+src/components/navigation/navigation-desktop.tsx
+  9a4168ddcdeb7f9a 19
+src/components/navigation/navigation-mobile.tsx
+  9a4168ddcdeb7f9a 1-159
+src/components/shared/header.tsx
+  9a4168ddcdeb7f9a 6,15,19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "2e7e46f7de239c17aa45c50fe7b2d9902286674c",
+  "prompts": {
+    "9a4168ddcdeb7f9a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4fb8e6b6-e19a-4a56-b9ad-9453b899561d",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 165,
+      "total_deletions": 4,
+      "accepted_lines": 163,
+      "overriden_lines": 0
+    }
+  }
+}
