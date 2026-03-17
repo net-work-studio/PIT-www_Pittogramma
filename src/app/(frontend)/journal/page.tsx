@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
-import FeaturedArticle from "@/components/journal/featured-article";
+import type SanityImage from "@/components/modules/shared/sanity-image";
+import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
-import type SanityImage from "@/components/modules/shared/sanity-image";
-import { getBlurDataUrl, urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { JOURNAL_PAGE_QUERY, JOURNAL_QUERY } from "@/sanity/lib/queries";
 import type { JOURNAL_QUERY_RESULT } from "@/sanity/types";
@@ -39,11 +38,6 @@ export default async function JournalPage() {
 
   const featuredArticle = pageSettings?.featuredArticle;
   const cta = pageSettings?.endOfPageCta;
-
-  // Build featured article image URL
-  const featuredImage = featuredArticle?.cover?.image
-    ? urlFor(featuredArticle.cover.image).width(1600).height(1200).url()
-    : "";
 
   const featuredDate = featuredArticle?.publishingDate?.date ?? null;
 
@@ -80,18 +74,18 @@ export default async function JournalPage() {
         title={pageSettings?.title ?? "Journal"}
       />
       <div className="space-y-10 pb-10">
-        {featuredArticle && featuredImage && (
-          <FeaturedArticle
-            authors={
+        {featuredArticle?.cover && (
+          <FeaturedHero
+            contentType="journal"
+            cover={featuredArticle.cover}
+            date={featuredDate}
+            description={featuredArticle.excerpt}
+            href={`/journal/${featuredArticle.slug?.current ?? ""}`}
+            people={
               featuredArticle.authors?.map((a: { name: string | null }) => ({
                 name: a.name ?? "",
               })) ?? []
             }
-            blurDataURL={getBlurDataUrl(featuredArticle.cover)}
-            date={featuredDate}
-            excerpt={featuredArticle.excerpt}
-            href={`/journal/${featuredArticle.slug?.current ?? ""}`}
-            image={featuredImage}
             tags={
               featuredArticle.tags?.map((t: { name: string }) => ({
                 name: t.name ?? "",
@@ -102,7 +96,7 @@ export default async function JournalPage() {
         )}
 
         {/* Section divider */}
-        {featuredArticle && featuredImage && (
+        {featuredArticle?.cover && (
           <div className="flex items-center gap-4 border-t pt-4">
             <span className="font-mono text-muted-foreground text-sm uppercase">
               Read more

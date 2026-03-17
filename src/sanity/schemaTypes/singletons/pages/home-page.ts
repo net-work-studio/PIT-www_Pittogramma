@@ -35,6 +35,15 @@ export const homePage = defineType({
         "Select a project or interview to feature as the hero. If empty, the latest published item is used.",
     }),
     defineField({
+      name: "midPageCta",
+      title: "Mid Page CTA",
+      type: "reference",
+      to: [{ type: "cta" }],
+      group: "content",
+      description:
+        "CTA displayed between the first and second content sections",
+    }),
+    defineField({
       name: "endOfPageCta",
       title: "End of Page CTA",
       type: "reference",

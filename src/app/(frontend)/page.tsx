@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import CtaCard from "@/components/cards/cta-card";
-import FeaturedHero from "@/components/home/featured-hero";
+import FeaturedHero from "@/components/shared/featured-hero";
 import SectionBreak from "@/components/home/section-break";
 import HomeGrid from "@/components/home-grid";
 import PageHeader from "@/components/shared/page-header";
@@ -39,6 +39,7 @@ export default async function Home() {
     sanityFetch({ query: HOME_FEED_QUERY }),
   ]);
 
+  const midCta = homePage?.midPageCta;
   const cta = homePage?.endOfPageCta;
 
   // Resolve featured: manual pick with fallback to latest
@@ -92,8 +93,18 @@ export default async function Home() {
         {/* Section 1: 1 row of 4 */}
         {firstSection.length > 0 && <HomeGrid items={firstSection} />}
 
-        {/* CTA break — placeholder */}
-        {secondSection.length > 0 && <SectionBreak label="CTA break" />}
+        {/* Mid-page CTA */}
+        {midCta && (
+          <CtaCard
+            buttonText={midCta.buttonText}
+            externalUrl={midCta.externalUrl}
+            headline={midCta.headline}
+            image={midCta.image}
+            internalLink={midCta.internalLink}
+            linkType={midCta.linkType}
+            variant={midCta.variant}
+          />
+        )}
 
         {/* Section 2: 3 rows of 4 */}
         {secondSection.length > 0 && <HomeGrid items={secondSection} />}
