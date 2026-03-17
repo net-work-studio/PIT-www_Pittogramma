@@ -34,7 +34,7 @@ export function NavigationDesktop() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="w-[270px]">
+            <ul className="w-67.5">
               <ListItem href="/bibliography" title="Bibliography" />
               <ListItem href="/bookshops" title="Bookshops" />
               <ListItem href="/glossary" title="Glossary" />

@@ -40,7 +40,7 @@ export default function FeaturedHero({
 }: FeaturedHeroProps) {
   return (
     <Link
-      className="group flex flex-col gap-6 overflow-hidden rounded-2xl md:flex-row"
+      className="group flex flex-col gap-6 rounded-2xl md:flex-row"
       href={href}
     >
       {/* Left column — text content */}
