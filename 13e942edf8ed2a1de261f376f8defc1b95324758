@@ -1,0 +1,43 @@
+src/components/shared/featured-hero.tsx
+  654a6b729d3a5fc2 1-101
+src/sanity/schemaTypes/singletons/pages/home-page.ts
+  d12f68c8c0763f15 38-45
+src/app/(frontend)/journal/page.tsx
+  654a6b729d3a5fc2 5,77-84,99
+src/app/(frontend)/page.tsx
+  654a6b729d3a5fc2 3
+  d12f68c8c0763f15 42,96-105,107
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "13e942edf8ed2a1de261f376f8defc1b95324758",
+  "prompts": {
+    "654a6b729d3a5fc2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c069723d-d47b-4662-9c36-ae6f9b3d5ad5",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 112,
+      "overriden_lines": 0
+    },
+    "d12f68c8c0763f15": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7128bf55-2ac3-4196-8999-a74c9302c41f",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 20,
+      "overriden_lines": 0
+    }
+  }
+}
