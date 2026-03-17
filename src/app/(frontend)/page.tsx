@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import CtaCard from "@/components/cards/cta-card";
-import FeaturedHero from "@/components/shared/featured-hero";
-import SectionBreak from "@/components/home/section-break";
+import RecentUpdates from "@/components/home/recent-updates";
 import HomeGrid from "@/components/home-grid";
+import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
 import { sanityFetch } from "@/sanity/lib/live";
-import { HOME_FEED_QUERY, HOME_PAGE_QUERY } from "@/sanity/lib/queries";
+import {
+  HOME_FEED_QUERY,
+  HOME_PAGE_QUERY,
+  RECENT_UPDATES_QUERY,
+} from "@/sanity/lib/queries";
 import type { HOME_FEED_QUERY_RESULT } from "@/sanity/types";
 
 // Section sizes: 4 + 12 + 8 = 24 items
@@ -34,10 +38,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const [{ data: homePage }, { data: feedItems }] = await Promise.all([
-    sanityFetch({ query: HOME_PAGE_QUERY }),
-    sanityFetch({ query: HOME_FEED_QUERY }),
-  ]);
+  const [{ data: homePage }, { data: feedItems }, { data: recentUpdates }] =
+    await Promise.all([
+      sanityFetch({ query: HOME_PAGE_QUERY }),
+      sanityFetch({ query: HOME_FEED_QUERY }),
+      sanityFetch({ query: RECENT_UPDATES_QUERY }),
+    ]);
 
   const midCta = homePage?.midPageCta;
   const cta = homePage?.endOfPageCta;
@@ -71,7 +77,7 @@ export default async function Home() {
 
       <div className="flex flex-col gap-4">
         {/* Featured hero */}
-        {featuredItem && featuredItem.cover && (
+        {featuredItem?.cover && (
           <FeaturedHero
             contentType={featuredItem._type as "project" | "interview"}
             cover={featuredItem.cover}
@@ -109,8 +115,10 @@ export default async function Home() {
         {/* Section 2: 3 rows of 4 */}
         {secondSection.length > 0 && <HomeGrid items={secondSection} />}
 
-        {/* Archive / Resource break — placeholder */}
-        {thirdSection.length > 0 && <SectionBreak label="Archive break" />}
+        {/* Recent updates from archive */}
+        {recentUpdates && recentUpdates.length > 0 && (
+          <RecentUpdates items={recentUpdates} />
+        )}
 
         {/* Section 3: 2 rows of 4 */}
         {thirdSection.length > 0 && <HomeGrid items={thirdSection} />}

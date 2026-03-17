@@ -587,6 +587,18 @@ export const WEB_SOURCES_QUERY = defineQuery(`
   }
 `);
 
+// ==================== RECENT UPDATES QUERY ====================
+
+export const RECENT_UPDATES_QUERY = defineQuery(`
+  *[_type in ["person", "studio", "typeFoundry", "glossary", "bibliography", "bookshop", "institute", "webSource"]]
+  | order(_createdAt desc) [0...16] {
+    _id,
+    _type,
+    _createdAt,
+    name
+  }
+`);
+
 // ==================== MAP QUERIES ====================
 
 export const MAP_PLACES_QUERY = defineQuery(`

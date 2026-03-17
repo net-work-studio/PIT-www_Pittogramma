@@ -3547,6 +3547,60 @@ export type WEB_SOURCES_QUERY_RESULT = Array<{
 }>;
 
 // Source: src/sanity/lib/queries.ts
+// Variable: RECENT_UPDATES_QUERY
+// Query: *[_type in ["person", "studio", "typeFoundry", "glossary", "bibliography", "bookshop", "institute", "webSource"]]  | order(_createdAt desc) [0...16] {    _id,    _type,    _createdAt,    name  }
+export type RECENT_UPDATES_QUERY_RESULT = Array<
+  | {
+      _id: string;
+      _type: "bibliography";
+      _createdAt: string;
+      name: string;
+    }
+  | {
+      _id: string;
+      _type: "bookshop";
+      _createdAt: string;
+      name: string;
+    }
+  | {
+      _id: string;
+      _type: "glossary";
+      _createdAt: string;
+      name: string;
+    }
+  | {
+      _id: string;
+      _type: "institute";
+      _createdAt: string;
+      name: string;
+    }
+  | {
+      _id: string;
+      _type: "person";
+      _createdAt: string;
+      name: string;
+    }
+  | {
+      _id: string;
+      _type: "studio";
+      _createdAt: string;
+      name: string;
+    }
+  | {
+      _id: string;
+      _type: "typeFoundry";
+      _createdAt: string;
+      name: string;
+    }
+  | {
+      _id: string;
+      _type: "webSource";
+      _createdAt: string;
+      name: string;
+    }
+>;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: MAP_PLACES_QUERY
 // Query: *[_type == "place" && defined(lat) && defined(lng)] {    _id,    name,    city,    country,    countryCode,    lat,    lng,    "designers": *[_type == "person" && "designer" in roles && place._ref == ^._id] { _id, name, slug },    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },    "studios": *[_type == "studio" && references(^._id)] { _id, name },    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }  }
 export type MAP_PLACES_QUERY_RESULT = Array<{
@@ -3608,6 +3662,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "studio"] | order(name asc) {\n    _id,\n    name,\n    description,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tags[]->{\n      _id,\n      name\n    },\n    places[]->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': STUDIOS_QUERY_RESULT;
     '\n  *[_type == "typeFoundry"] | order(name asc) {\n    _id,\n    name,\n    tags[]->{\n      _id,\n      name\n    },\n    places[]->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': TYPE_FOUNDRIES_QUERY_RESULT;
     '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    description,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tags[]->{ _id, name },\n    sourceUrl,\n    ogTitle,\n    ogDescription,\n    ogSiteName,\n    ogImageUrl\n  }\n': WEB_SOURCES_QUERY_RESULT;
+    '\n  *[_type in ["person", "studio", "typeFoundry", "glossary", "bibliography", "bookshop", "institute", "webSource"]]\n  | order(_createdAt desc) [0...16] {\n    _id,\n    _type,\n    _createdAt,\n    name\n  }\n': RECENT_UPDATES_QUERY_RESULT;
     '\n  *[_type == "place" && defined(lat) && defined(lng)] {\n    _id,\n    name,\n    city,\n    country,\n    countryCode,\n    lat,\n    lng,\n    "designers": *[_type == "person" && "designer" in roles && place._ref == ^._id] { _id, name, slug },\n    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },\n    "studios": *[_type == "studio" && references(^._id)] { _id, name },\n    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },\n    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }\n  }\n': MAP_PLACES_QUERY_RESULT;
   }
 }
