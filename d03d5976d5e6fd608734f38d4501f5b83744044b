@@ -1,0 +1,64 @@
+src/app/(frontend)/journal/page.tsx
+  19ec1cd5c7211038 77,99
+src/app/(frontend)/page.tsx
+  19ec1cd5c7211038 80
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "d03d5976d5e6fd608734f38d4501f5b83744044b",
+  "prompts": {
+    "19ec1cd5c7211038": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f949d6f4-f6fe-4770-b1c8-2849e58761e4",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 3,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    },
+    "6a24099ac369f286": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "75902ac6-36d5-4ea7-a9fc-a055d4ba1276",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 0,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    },
+    "6bd39458b328e520": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b9d8b6c9-1a9e-4067-a3ea-c1b3f6b19826",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 9,
+      "total_deletions": 7,
+      "accepted_lines": 7,
+      "overriden_lines": 0
+    },
+    "d0aa78568df8ea2d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ee147391-d7cb-450f-b253-6091935ff645",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 1,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
