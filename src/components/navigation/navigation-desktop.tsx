@@ -16,7 +16,7 @@ import {
 export function NavigationDesktop() {
   return (
     <NavigationMenu
-      className="absolute right-1/2 left-1/2 hidden -translate-x-1/2 md:flex"
+      className="absolute right-1/2 left-1/2 hidden -translate-x-1/2 lg:flex"
       viewport={false}
     >
       <NavigationMenuList>

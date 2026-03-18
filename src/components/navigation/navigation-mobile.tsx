@@ -73,14 +73,15 @@ export function NavigationMobile() {
       <Button
         variant="outline"
         size="sm"
-        className="md:hidden"
+        className={cn("lg:hidden", isOpen && "border-background text-background")}
         onClick={() => setIsOpen(true)}
+        aria-hidden={isOpen}
       >
         Menu
       </Button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col bg-background md:hidden">
+        <div className="fixed inset-0 z-50 flex flex-col bg-background lg:hidden">
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-2.5">
             <Link href="/" onClick={closeMenu}>

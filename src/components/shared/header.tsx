@@ -12,11 +12,13 @@ export default function Header() {
         <Mark />
       </Link>
       <NavigationDesktop />
-      <div className="hidden gap-2.5 md:flex">
+      <div className="flex items-center gap-2.5">
         <SubmitDialog />
-        <ModeToggle />
+        <div className="hidden lg:flex">
+          <ModeToggle />
+        </div>
+        <NavigationMobile />
       </div>
-      <NavigationMobile />
     </header>
   );
 }

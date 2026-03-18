@@ -1,2 +1,3 @@
 - use bun
 - always use sanity-image.tsx instead of Image from next/image
+- Sanity image guards must check `cover?.image?.asset` (not just `cover`, which is always a non-null wrapper object)
