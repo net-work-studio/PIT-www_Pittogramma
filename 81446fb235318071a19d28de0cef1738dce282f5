@@ -1,0 +1,71 @@
+.claude/CLAUDE.md
+  19ec1cd5c7211038 3
+src/components/shared/header.tsx
+  6bd39458b328e520 15,17-20
+src/components/navigation/navigation-desktop.tsx
+  6bd39458b328e520 19
+src/app/globals.css
+  6a24099ac369f286 228-231
+src/components/navigation/navigation-mobile.tsx
+  d0aa78568df8ea2d 76,78
+  6bd39458b328e520 84
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "81446fb235318071a19d28de0cef1738dce282f5",
+  "prompts": {
+    "19ec1cd5c7211038": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f949d6f4-f6fe-4770-b1c8-2849e58761e4",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 0,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "6a24099ac369f286": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "75902ac6-36d5-4ea7-a9fc-a055d4ba1276",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    },
+    "6bd39458b328e520": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b9d8b6c9-1a9e-4067-a3ea-c1b3f6b19826",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 7,
+      "overriden_lines": 0
+    },
+    "d0aa78568df8ea2d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ee147391-d7cb-450f-b253-6091935ff645",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
