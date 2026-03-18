@@ -13,7 +13,9 @@ export default function Header() {
       </Link>
       <NavigationDesktop />
       <div className="flex items-center gap-2.5">
-        <SubmitDialog />
+        <div className="hidden md:flex">
+          <SubmitDialog />
+        </div>
         <div className="hidden lg:flex">
           <ModeToggle />
         </div>
