@@ -77,7 +77,7 @@ export default async function Home() {
 
       <div className="flex flex-col gap-4">
         {/* Featured hero */}
-        {featuredItem?.cover && (
+        {featuredItem?.cover?.image?.asset && (
           <FeaturedHero
             contentType={featuredItem._type as "project" | "interview"}
             cover={featuredItem.cover}

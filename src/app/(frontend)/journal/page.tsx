@@ -74,7 +74,7 @@ export default async function JournalPage() {
         title={pageSettings?.title ?? "Journal"}
       />
       <div className="space-y-10 pb-10">
-        {featuredArticle?.cover && (
+        {featuredArticle?.cover?.image?.asset && (
           <FeaturedHero
             contentType="journal"
             cover={featuredArticle.cover}
@@ -96,7 +96,7 @@ export default async function JournalPage() {
         )}
 
         {/* Section divider */}
-        {featuredArticle?.cover && (
+        {featuredArticle?.cover?.image?.asset && (
           <div className="flex items-center gap-4 border-t pt-4">
             <span className="font-mono text-muted-foreground text-sm uppercase">
               Read more
