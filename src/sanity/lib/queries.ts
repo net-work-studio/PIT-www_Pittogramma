@@ -1,69 +1,11 @@
 import { defineQuery } from "next-sanity";
 
-// Reusable image fields fragment with LQIP for blur placeholders
-const IMAGE_FIELDS = /* groq */ `
-  asset->{
-    _id,
-    url,
-    metadata {
-      lqip,
-      dimensions { width, height }
-    }
-  },
-  hotspot,
-  crop
-`;
-
-// Reusable CTA fields fragment - dereferences the CTA and its internal link
-const CTA_FIELDS = `
-  endOfPageCta->{
-    _id,
-    title,
-    variant,
-    headline,
-    image {
-      _type,
-      image { ${IMAGE_FIELDS} },
-      alt,
-      caption
-    },
-    buttonText,
-    linkType,
-    internalLink->{
-      _type,
-      "slug": slug
-    },
-    externalUrl
-  }
-`;
-
-// Reusable SEO fields fragment
-const SEO_FIELDS = `
-  seo {
-    metaTitle,
-    metaDescription,
-    metaRobots,
-    canonicalURL,
-    openGraph {
-      title,
-      description,
-      url
-    },
-    xCard {
-      title,
-      description
-    },
-    metaImage {
-      _type,
-      image {
-        _type,
-        ${IMAGE_FIELDS}
-      },
-      alt,
-      caption
-    }
-  }
-`;
+import {
+  CTA_FIELDS,
+  CTA_PROJECTION,
+  IMAGE_FIELDS,
+  SEO_FIELDS,
+} from "./fragments";
 
 export const SITE_SETTINGS_QUERY = defineQuery(`
   *[_type == "siteSettings"][0] {
@@ -102,6 +44,7 @@ export const HOME_PAGE_QUERY = defineQuery(`
       },
       tags[]->{ _id, name }
     },
+    midPageCta->${CTA_PROJECTION},
     ${CTA_FIELDS},
     ${SEO_FIELDS}
   }
@@ -641,6 +584,18 @@ export const WEB_SOURCES_QUERY = defineQuery(`
     ogDescription,
     ogSiteName,
     ogImageUrl
+  }
+`);
+
+// ==================== RECENT UPDATES QUERY ====================
+
+export const RECENT_UPDATES_QUERY = defineQuery(`
+  *[_type in ["person", "studio", "typeFoundry", "glossary", "bibliography", "bookshop", "institute", "webSource"]]
+  | order(_createdAt desc) [0...16] {
+    _id,
+    _type,
+    _createdAt,
+    name
   }
 `);
 

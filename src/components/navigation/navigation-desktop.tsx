@@ -16,7 +16,7 @@ import {
 export function NavigationDesktop() {
   return (
     <NavigationMenu
-      className="absolute right-1/2 left-1/2 -translate-x-1/2"
+      className="absolute right-1/2 left-1/2 hidden -translate-x-1/2 lg:flex"
       viewport={false}
     >
       <NavigationMenuList>
@@ -34,7 +34,7 @@ export function NavigationDesktop() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="w-[270px]">
+            <ul className="w-67.5">
               <ListItem href="/bibliography" title="Bibliography" />
               <ListItem href="/bookshops" title="Bookshops" />
               <ListItem href="/glossary" title="Glossary" />

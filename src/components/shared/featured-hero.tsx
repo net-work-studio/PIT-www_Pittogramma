@@ -1,43 +1,61 @@
-import Image from "next/image";
 import Link from "next/link";
+import SanityImage from "@/components/modules/shared/sanity-image";
 import { Badge } from "@/components/ui/badge";
 
-interface FeaturedArticleProps {
-  authors?: { name: string }[];
-  blurDataURL?: string;
+interface FeaturedHeroProps {
+  contentType: "project" | "interview" | "journal";
+  cover: Parameters<typeof SanityImage>[0]["source"];
   date?: string | null;
-  excerpt?: string | null;
+  description?: string | null;
   href: string;
-  image: string;
+  people?: { name: string }[];
   tags?: { name: string }[];
   title: string;
 }
 
-export default function FeaturedArticle({
+const peopleLabel: Record<FeaturedHeroProps["contentType"], string> = {
+  journal: "Authors",
+  project: "Designers",
+  interview: "People",
+};
+
+const badgeVariant: Record<
+  FeaturedHeroProps["contentType"],
+  "project" | "interview" | "article"
+> = {
+  journal: "article",
+  project: "project",
+  interview: "interview",
+};
+
+export default function FeaturedHero({
+  contentType,
   title,
-  excerpt,
-  image,
-  blurDataURL,
   href,
+  cover,
+  description,
   date,
+  people,
   tags,
-  authors,
-}: FeaturedArticleProps) {
+}: FeaturedHeroProps) {
   return (
     <Link
-      className="group flex flex-col gap-6 overflow-hidden rounded-2xl bg-secondary p-4 md:flex-row md:p-6"
+      className="group flex flex-col gap-6 rounded-2xl md:flex-row"
       href={href}
     >
       {/* Left column — text content */}
-      <div className="flex flex-col justify-between gap-6 md:w-1/3">
+      <div className="flex flex-col justify-start gap-6 md:w-1/3">
         <div className="flex flex-col gap-4">
-          <Badge variant="feat">Featured now</Badge>
+          <div className="flex gap-2">
+            <Badge variant="outline">Feature Now</Badge>
+            <Badge variant={badgeVariant[contentType]} />
+          </div>
           <h2 className="font-normal font-sans text-2xl md:text-3xl">
             {title}
           </h2>
-          {excerpt && (
+          {description && (
             <p className="line-clamp-4 text-muted-foreground text-sm">
-              {excerpt}
+              {description}
             </p>
           )}
         </div>
@@ -50,12 +68,12 @@ export default function FeaturedArticle({
               <dd>{date}</dd>
             </div>
           )}
-          {authors && authors.length > 0 && (
+          {people && people.length > 0 && (
             <div className="flex gap-2">
               <dt className="text-muted-foreground">
-                {authors.length > 1 ? "Authors" : "Author"}
+                {peopleLabel[contentType]}
               </dt>
-              <dd>{authors.map((a) => a.name).join(", ")}</dd>
+              <dd>{people.map((p) => p.name).join(", ")}</dd>
             </div>
           )}
           {tags && tags.length > 0 && (
@@ -69,17 +87,13 @@ export default function FeaturedArticle({
 
       {/* Right column — cover image */}
       <div className="relative aspect-4/3 overflow-hidden rounded-lg md:w-2/3">
-        <Image
+        <SanityImage
           alt={title}
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="h-full w-full transition-transform duration-300 group-hover:scale-105"
           fill
           priority
-          quality={75}
           sizes="(max-width: 768px) 100vw, 66vw"
-          src={image}
-          {...(blurDataURL
-            ? { placeholder: "blur" as const, blurDataURL }
-            : {})}
+          source={cover}
         />
       </div>
     </Link>

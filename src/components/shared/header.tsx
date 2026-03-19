@@ -3,6 +3,7 @@ import Mark from "@/components/brand/mark";
 import SubmitDialog from "@/components/feat/submit/submit-dialog";
 import { ModeToggle } from "@/components/mode-toggle";
 import { NavigationDesktop } from "../navigation/navigation-desktop";
+import { NavigationMobile } from "../navigation/navigation-mobile";
 
 export default function Header() {
   return (
@@ -11,9 +12,14 @@ export default function Header() {
         <Mark />
       </Link>
       <NavigationDesktop />
-      <div className="flex gap-2.5">
-        <SubmitDialog />
-        <ModeToggle />
+      <div className="flex items-center gap-2.5">
+        <div className="hidden md:flex">
+          <SubmitDialog />
+        </div>
+        <div className="hidden lg:flex">
+          <ModeToggle />
+        </div>
+        <NavigationMobile />
       </div>
     </header>
   );
