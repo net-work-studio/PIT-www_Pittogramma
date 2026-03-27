@@ -66,10 +66,19 @@ export default async function Home() {
   );
   const thirdSection = gridItems.slice(FIRST_SECTION + SECOND_SECTION);
 
-  const featuredDescription =
-    featuredItem && "introText" in featuredItem
-      ? (featuredItem.introText as string | null)
-      : null;
+  const featuredSubtitle = (() => {
+    if (!featuredItem) return null;
+    if (featuredItem._type === "interview") {
+      const names =
+        featuredItem.people?.map((p) => p.name).join(", ") ||
+        (featuredItem as FeedItem & { studio?: string }).studio ||
+        (featuredItem as FeedItem & { typeFoundry?: string }).typeFoundry;
+      return names ? `Interview to ${names}` : null;
+    }
+    // project
+    const names = featuredItem.people?.map((p) => p.name).join(", ");
+    return names || null;
+  })();
 
   return (
     <>
@@ -81,17 +90,12 @@ export default async function Home() {
           <FeaturedHero
             contentType={featuredItem._type as "project" | "interview"}
             cover={featuredItem.cover}
-            date={featuredItem.publishingDate?.date ?? null}
-            description={featuredDescription}
             href={
               featuredItem._type === "project"
                 ? `/projects/${featuredItem.slug?.current ?? ""}`
                 : `/interviews/${featuredItem.slug?.current ?? ""}`
             }
-            people={
-              featuredItem.people?.map((p) => ({ name: p.name ?? "" })) ?? []
-            }
-            tags={featuredItem.tags?.map((t) => ({ name: t.name ?? "" })) ?? []}
+            subtitle={featuredSubtitle}
             title={featuredItem.title ?? ""}
           />
         )}

@@ -52,6 +52,7 @@
   --color-green-900: oklch(0.43 0.108 152.7);
   --color-green-950: oklch(0.295 0.076 152.9);
 
+  --text-3xl: 2rem; /* 32px */
   --text-xxs: 0.625rem;
 }
 

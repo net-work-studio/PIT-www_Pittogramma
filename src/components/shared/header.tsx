@@ -7,7 +7,7 @@ import { NavigationMobile } from "../navigation/navigation-mobile";
 
 export default function Header() {
   return (
-    <header className="fixed top-0 right-0 left-0 z-10 flex w-full flex-row items-center justify-between border-foreground/20 border-b-[0.5px] bg-background px-4 py-2.5">
+    <header className="fixed top-0 right-0 left-0 z-10 flex w-full flex-row items-center justify-between border-foreground/5 border-b-[0.5px] bg-background px-4 py-2.5">
       <Link href="/">
         <Mark />
       </Link>
