@@ -39,8 +39,6 @@ export default async function JournalPage() {
   const featuredArticle = pageSettings?.featuredArticle;
   const cta = pageSettings?.endOfPageCta;
 
-  const featuredDate = featuredArticle?.publishingDate?.date ?? null;
-
   type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
 
   interface JournalCard {
@@ -78,19 +76,8 @@ export default async function JournalPage() {
           <FeaturedHero
             contentType="journal"
             cover={featuredArticle.cover}
-            date={featuredDate}
-            description={featuredArticle.excerpt}
             href={`/journal/${featuredArticle.slug?.current ?? ""}`}
-            people={
-              featuredArticle.authors?.map((a: { name: string | null }) => ({
-                name: a.name ?? "",
-              })) ?? []
-            }
-            tags={
-              featuredArticle.tags?.map((t: { name: string }) => ({
-                name: t.name ?? "",
-              })) ?? []
-            }
+            subtitle={featuredArticle.excerpt}
             title={featuredArticle.title ?? ""}
           />
         )}
