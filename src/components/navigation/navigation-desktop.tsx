@@ -34,7 +34,7 @@ export function NavigationDesktop() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="w-67.5">
+            <ul className="w-100">
               <ListItem href="/bibliography" title="Bibliography" />
               <ListItem href="/bookshops" title="Bookshops" />
               <ListItem href="/glossary" title="Glossary" />
@@ -79,7 +79,9 @@ function ListItem({
     <li {...props}>
       <NavigationMenuLink asChild>
         <Link href={href}>
-          <div className="text-3xl leading-none">{title}</div>
+          <div className="whitespace-break-spaces text-3xl leading-none hover:text-red">
+            {title}
+          </div>
         </Link>
       </NavigationMenuLink>
     </li>
