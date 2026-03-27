@@ -1,0 +1,27 @@
+src/components/shared/featured-hero.tsx
+  a0920651672e62f4 9,27,30-32,41,47-48,54
+src/app/(frontend)/page.tsx
+  a0920651672e62f4 69-81,98
+src/app/(frontend)/journal/page.tsx
+  a0920651672e62f4 80
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.20",
+  "base_commit_sha": "9a3298bbc9537c3ae9cbb1faa72dc47e38613e47",
+  "prompts": {
+    "a0920651672e62f4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9d8cf017-15cb-4ebe-b7ba-375a01fde9c7",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 26,
+      "total_deletions": 73,
+      "accepted_lines": 25,
+      "overriden_lines": 0
+    }
+  }
+}
