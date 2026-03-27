@@ -86,10 +86,10 @@ export default function FeaturedHero({
       </div>
 
       {/* Right column — cover image */}
-      <div className="relative aspect-4/3 overflow-hidden rounded-lg md:w-2/3">
+      <div className="relative aspect-3/2 overflow-hidden rounded-lg transition-transform duration-300 group-hover:scale-99 md:w-2/3">
         <SanityImage
           alt={title}
-          className="h-full w-full transition-transform duration-300 group-hover:scale-105"
+          className="h-full w-full"
           fill
           priority
           sizes="(max-width: 768px) 100vw, 66vw"
