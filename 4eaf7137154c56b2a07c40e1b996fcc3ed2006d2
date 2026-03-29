@@ -1,0 +1,57 @@
+src/app/(frontend)/journal/[slug]/page.tsx
+  51cbff4b6a115415 10-11,105,131-135
+src/components/seo/json-ld.tsx
+  bdef7f153b0f0c8f 7-8
+src/components/shared/featured-hero.tsx
+  51cbff4b6a115415 6-7,15,25-26,40-42
+src/app/(frontend)/journal/page.tsx
+  51cbff4b6a115415 8,47-48,60-73,83-96,116,121
+src/sanity/schemaTypes/documents/event.ts
+  bdef7f153b0f0c8f 38-68
+src/components/ui/badge.tsx
+  51cbff4b6a115415 16-19
+  bdef7f153b0f0c8f 25-36
+src/sanity/lib/queries.ts
+  bdef7f153b0f0c8f 188-189,205-220
+  51cbff4b6a115415 322,339,360
+src/sanity/schemaTypes/documents/journal.ts
+  51cbff4b6a115415 38-52,108,111-121
+src/app/(frontend)/events/page.tsx
+  bdef7f153b0f0c8f 6,24,37-38,47,51-52,56,71,75,100,105,119,124
+src/components/cards/base-card.tsx
+  51cbff4b6a115415 27-28
+  bdef7f153b0f0c8f 18,24-26,29-37,43,96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.22",
+  "base_commit_sha": "4eaf7137154c56b2a07c40e1b996fcc3ed2006d2",
+  "prompts": {
+    "51cbff4b6a115415": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "99fd355b-1393-4f3b-85e3-c7657d410d29",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 106,
+      "total_deletions": 21,
+      "accepted_lines": 106,
+      "overriden_lines": 0
+    },
+    "bdef7f153b0f0c8f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "330f9d85-ef83-4919-9167-a1d97591596f",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 573,
+      "total_deletions": 18,
+      "accepted_lines": 566,
+      "overriden_lines": 0
+    }
+  }
+}
