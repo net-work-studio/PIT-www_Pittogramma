@@ -3,6 +3,8 @@ import SanityImage from "@/components/modules/shared/sanity-image";
 import { Badge } from "@/components/ui/badge";
 
 interface FeaturedHeroProps {
+  badgeLabel?: string;
+  badgeVariant?: "project" | "interview" | "article" | "diary" | "baseline";
   contentType: "project" | "interview" | "journal";
   cover: Parameters<typeof SanityImage>[0]["source"];
   href: string;
@@ -10,7 +12,7 @@ interface FeaturedHeroProps {
   title: string;
 }
 
-const badgeVariant: Record<
+const badgeVariantMap: Record<
   FeaturedHeroProps["contentType"],
   "project" | "interview" | "article"
 > = {
@@ -20,6 +22,8 @@ const badgeVariant: Record<
 };
 
 export default function FeaturedHero({
+  badgeLabel,
+  badgeVariant,
   contentType,
   title,
   href,
@@ -33,7 +37,9 @@ export default function FeaturedHero({
         <div className="flex flex-col gap-4">
           <div className="flex gap-2">
             <Badge variant="outline">Feature Now</Badge>
-            <Badge variant={badgeVariant[contentType]} />
+            <Badge variant={badgeVariant ?? badgeVariantMap[contentType]}>
+              {badgeLabel}
+            </Badge>
           </div>
           <h2 className="font-normal font-sans text-2xl md:text-3xl">
             {title}

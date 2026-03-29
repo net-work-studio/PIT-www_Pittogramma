@@ -35,6 +35,38 @@ export const event = defineType({
       validation: (e) => e.required(),
     }),
     defineField({
+      type: "string",
+      name: "status",
+      title: "Status",
+      group: "content",
+      initialValue: "coming-soon",
+      options: {
+        list: [
+          { title: "Coming soon", value: "coming-soon" },
+          { title: "Tickets available", value: "tickets-available" },
+          { title: "Free RSVP", value: "free-rsvp" },
+          { title: "Free entry", value: "free-entry" },
+          { title: "Sold out", value: "sold-out" },
+          { title: "Waitlist", value: "waitlist" },
+          { title: "Postponed", value: "postponed" },
+          { title: "Cancelled", value: "cancelled" },
+        ],
+        layout: "dropdown",
+      },
+      validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "url",
+      name: "ctaUrl",
+      title: "CTA Link",
+      description: "External link for tickets, registration, or waitlist",
+      group: "content",
+      hidden: ({ parent }) =>
+        !["tickets-available", "free-rsvp", "waitlist"].includes(
+          parent?.status,
+        ),
+    }),
+    defineField({
       type: "imageWithMetadata",
       name: "cover",
       title: "Cover",

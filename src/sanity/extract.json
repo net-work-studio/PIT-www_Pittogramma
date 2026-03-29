@@ -3114,6 +3114,54 @@
         },
         "optional": false
       },
+      "status": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "coming-soon"
+            },
+            {
+              "type": "string",
+              "value": "tickets-available"
+            },
+            {
+              "type": "string",
+              "value": "free-rsvp"
+            },
+            {
+              "type": "string",
+              "value": "free-entry"
+            },
+            {
+              "type": "string",
+              "value": "sold-out"
+            },
+            {
+              "type": "string",
+              "value": "waitlist"
+            },
+            {
+              "type": "string",
+              "value": "postponed"
+            },
+            {
+              "type": "string",
+              "value": "cancelled"
+            }
+          ]
+        },
+        "optional": false
+      },
+      "ctaUrl": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "cover": {
         "type": "objectAttribute",
         "value": {
@@ -3539,6 +3587,27 @@
         "value": {
           "type": "inline",
           "name": "publishingDate"
+        },
+        "optional": false
+      },
+      "label": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "articles"
+            },
+            {
+              "type": "string",
+              "value": "diary"
+            },
+            {
+              "type": "string",
+              "value": "baseline"
+            }
+          ]
         },
         "optional": false
       },

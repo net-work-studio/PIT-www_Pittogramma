@@ -15,17 +15,32 @@ interface Author {
 
 interface BaseCardProps {
   authors?: Author[];
+  badgeLabel?: string;
   big?: boolean;
   href: string;
   /** Sanity image object (preferred) or plain URL string (design-system previews). */
   image: SanityImageSource | string;
   title: string;
-  variant?: "project" | "article" | "interview" | "feat" | "event";
+  variant?:
+    | "project"
+    | "article"
+    | "diary"
+    | "baseline"
+    | "interview"
+    | "feat"
+    | "event"
+    | "event-coming-soon"
+    | "event-available"
+    | "event-sold-out"
+    | "event-waitlist"
+    | "event-postponed"
+    | "event-cancelled";
 }
 
 export default function BaseCard({
   title,
   authors,
+  badgeLabel,
   image,
   variant,
   href,
@@ -78,7 +93,7 @@ export default function BaseCard({
           <div className="h-full w-full rounded-lg bg-neutral-200" />
         )}
       </AspectRatio>
-      {variant ? <Badge variant={variant} /> : null}
+      {variant ? <Badge variant={variant}>{badgeLabel}</Badge> : null}
       <div className="inline-flex w-full flex-col items-start justify-start gap-3">
         <hgroup className="flex flex-col items-start justify-start gap-2 self-stretch">
           <h3 className="justify-start self-stretch font-normal font-sans text-base text-black">

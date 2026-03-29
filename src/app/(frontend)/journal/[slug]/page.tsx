@@ -7,6 +7,8 @@ import ShareLinks from "@/components/modules/project/share-links";
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Badge } from "@/components/ui/badge";
+import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -100,6 +102,7 @@ export default async function JournalArticlePage({
 
   const readingTime = estimateReadingTime(article.content);
   const articleUrl = `${siteDefaults.baseUrl}/journal/${slug}`;
+  const labelConfig = getJournalLabelConfig(article.label);
 
   return (
     <>
@@ -125,6 +128,11 @@ export default async function JournalArticlePage({
           {/* Title + Excerpt + Metadata */}
           <div className="flex flex-1 flex-col justify-between gap-8">
             <hgroup className="flex flex-col gap-2">
+              {labelConfig && (
+                <Badge variant={labelConfig.badgeVariant}>
+                  {labelConfig.label}
+                </Badge>
+              )}
               <h1 className="text-2xl leading-tight lg:text-[2rem]">
                 {article.title}
               </h1>

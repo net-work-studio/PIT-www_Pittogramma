@@ -4,7 +4,8 @@ type JsonLdType =
   | "CreativeWork"
   | "BreadcrumbList"
   | "WebSite"
-  | "Person";
+  | "Person"
+  | "Event";
 
 interface JsonLdProps {
   data: Record<string, unknown>;

@@ -5,6 +5,7 @@ import type SanityImage from "@/components/modules/shared/sanity-image";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
+import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -43,6 +44,8 @@ export default async function JournalPage() {
 
   interface JournalCard {
     authors: { name: string }[] | undefined;
+    badgeLabel: string | undefined;
+    badgeVariant: Parameters<typeof BaseCard>[0]["variant"];
     href: string;
     id: string;
     image: SanityImageSource;
@@ -54,15 +57,20 @@ export default async function JournalPage() {
       (article: JOURNAL_QUERY_RESULT[number]) =>
         article.slug?.current && article._id !== featuredArticle?._id
     )
-    .map((article: JOURNAL_QUERY_RESULT[number]) => ({
-      authors: article.authors?.length
-        ? article.authors.map((a) => ({ name: a.name ?? "" }))
-        : undefined,
-      href: `/journal/${article.slug?.current ?? ""}`,
-      id: article._id,
-      image: article.cover,
-      title: article.title ?? "",
-    }));
+    .map((article: JOURNAL_QUERY_RESULT[number]) => {
+      const labelConfig = getJournalLabelConfig(article.label);
+      return {
+        authors: article.authors?.length
+          ? article.authors.map((a) => ({ name: a.name ?? "" }))
+          : undefined,
+        badgeLabel: labelConfig?.label,
+        badgeVariant: labelConfig?.badgeVariant ?? "article",
+        href: `/journal/${article.slug?.current ?? ""}`,
+        id: article._id,
+        image: article.cover,
+        title: article.title ?? "",
+      };
+    });
 
   return (
     <>
@@ -72,15 +80,20 @@ export default async function JournalPage() {
         title={pageSettings?.title ?? "Journal"}
       />
       <div className="space-y-10 pb-10">
-        {featuredArticle?.cover?.image?.asset && (
-          <FeaturedHero
-            contentType="journal"
-            cover={featuredArticle.cover}
-            href={`/journal/${featuredArticle.slug?.current ?? ""}`}
-            subtitle={featuredArticle.excerpt}
-            title={featuredArticle.title ?? ""}
-          />
-        )}
+        {featuredArticle?.cover?.image?.asset && (() => {
+          const featuredLabelConfig = getJournalLabelConfig(featuredArticle.label);
+          return (
+            <FeaturedHero
+              badgeLabel={featuredLabelConfig?.label}
+              badgeVariant={featuredLabelConfig?.badgeVariant}
+              contentType="journal"
+              cover={featuredArticle.cover}
+              href={`/journal/${featuredArticle.slug?.current ?? ""}`}
+              subtitle={featuredArticle.excerpt}
+              title={featuredArticle.title ?? ""}
+            />
+          );
+        })()}
 
         {/* Section divider */}
         {featuredArticle?.cover?.image?.asset && (
@@ -100,11 +113,12 @@ export default async function JournalPage() {
             {journalCards.map((card) => (
               <BaseCard
                 authors={card.authors}
+                badgeLabel={card.badgeLabel}
                 href={card.href}
                 image={card.image}
                 key={card.id}
                 title={card.title}
-                variant="article"
+                variant={card.badgeVariant}
               />
             ))}
           </div>

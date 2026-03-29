@@ -35,6 +35,22 @@ export const journal = defineType({
       validation: (e) => e.required(),
     }),
     defineField({
+      type: "string",
+      name: "label",
+      title: "Label",
+      group: "metadata",
+      options: {
+        list: [
+          { title: "Articles", value: "articles" },
+          { title: "Diary", value: "diary" },
+          { title: "Baseline", value: "baseline" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "articles",
+      validation: (e) => e.required(),
+    }),
+    defineField({
       type: "imageWithMetadata",
       name: "cover",
       title: "Cover",
@@ -89,7 +105,20 @@ export const journal = defineType({
   preview: {
     select: {
       title: "title",
+      label: "label",
       media: "cover.image",
+    },
+    prepare({ title, label, media }) {
+      const labels: Record<string, string> = {
+        articles: "Articles",
+        diary: "Diary",
+        baseline: "Baseline",
+      };
+      return {
+        title,
+        subtitle: label ? labels[label] ?? label : undefined,
+        media,
+      };
     },
   },
 });
