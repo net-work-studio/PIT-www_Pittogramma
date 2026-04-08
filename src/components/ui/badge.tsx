@@ -34,6 +34,11 @@ const badgeVariants = cva(
           "group-hover:bg-yellow-500 group-hover:text-black group-hover:outline-yellow-500",
         "event-cancelled":
           "group-hover:bg-destructive group-hover:text-destructive-foreground group-hover:outline-destructive",
+        bronze:
+          "group-hover:bg-amber-700 group-hover:text-white group-hover:outline-amber-700",
+        silver:
+          "group-hover:bg-neutral-400 group-hover:text-black group-hover:outline-neutral-400",
+        gold: "group-hover:bg-yellow-500 group-hover:text-black group-hover:outline-yellow-500",
       },
     },
     defaultVariants: {

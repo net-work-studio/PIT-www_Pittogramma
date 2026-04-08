@@ -53,18 +53,26 @@
   --color-green-950: oklch(0.295 0.076 152.9);
 
   /* Figma Palette — Pittogramma neutrals */
-  --color-pit-white: oklch(1 0 0);           /* #FFFFFF */
-  --color-pit-light-grey: oklch(0.98 0 0);   /* #F8F8F8 */
-  --color-pit-mid-gray: oklch(0.93 0 0);     /* #E7E7E7 */
-  --color-pit-dark-grey: oklch(0.65 0 0);    /* #949494 */
-  --color-pit-black: oklch(0 0 0);           /* #000000 */
+  --color-pit-white: oklch(1 0 0); /* #FFFFFF */
+  --color-pit-light-gray: oklch(0.98 0 0); /* #F8F8F8 */
+  --color-pit-mid-gray: oklch(0.93 0 0); /* #E7E7E7 */
+  --color-pit-dark-gray: oklch(0.65 0 0); /* #949494 */
+  --color-pit-black: oklch(0 0 0); /* #000000 */
 
   /* Dark mode surface equivalents */
-  --color-pit-dark-surface: oklch(0.12 0 0);           /* ~#1C1C1C - card-level elevation */
-  --color-pit-dark-surface-muted: oklch(0.16 0 0);     /* ~#242424 - muted/popover bg */
-  --color-pit-dark-surface-secondary: oklch(0.18 0 0); /* ~#2A2A2A - secondary surfaces */
-  --color-pit-dark-surface-accent: oklch(0.22 0 0);    /* ~#333333 - hover/accent */
-  --color-pit-dark-border: oklch(0.25 0 0);            /* ~#3A3A3A - borders */
+  --color-pit-dark-surface: oklch(
+    0.12 0 0
+  ); /* ~#1C1C1C - card-level elevation */
+  --color-pit-dark-surface-muted: oklch(
+    0.16 0 0
+  ); /* ~#242424 - muted/popover bg */
+  --color-pit-dark-surface-secondary: oklch(
+    0.18 0 0
+  ); /* ~#2A2A2A - secondary surfaces */
+  --color-pit-dark-surface-accent: oklch(
+    0.22 0 0
+  ); /* ~#333333 - hover/accent */
+  --color-pit-dark-border: oklch(0.25 0 0); /* ~#3A3A3A - borders */
 
   --text-3xl: 2rem; /* 32px */
   --text-xxs: 0.625rem;
@@ -79,10 +87,10 @@
   --popover-foreground: var(--color-pit-black);
   --primary: var(--color-pit-black);
   --primary-foreground: var(--color-pit-white);
-  --secondary: var(--color-pit-light-grey);
+  --secondary: var(--color-pit-light-gray);
   --secondary-foreground: var(--color-pit-black);
-  --muted: var(--color-pit-light-grey);
-  --muted-foreground: var(--color-pit-dark-grey);
+  --muted: var(--color-pit-light-gray);
+  --muted-foreground: var(--color-pit-dark-gray);
   --accent: var(--color-pit-mid-gray);
   --accent-foreground: var(--color-pit-black);
   --destructive: oklch(0.63 0.19 23.03);
@@ -141,14 +149,14 @@
   --secondary: var(--color-pit-dark-surface-secondary);
   --secondary-foreground: var(--color-pit-white);
   --muted: var(--color-pit-dark-surface-muted);
-  --muted-foreground: var(--color-pit-dark-grey);
+  --muted-foreground: var(--color-pit-dark-gray);
   --accent: var(--color-pit-dark-surface-accent);
   --accent-foreground: var(--color-pit-white);
   --destructive: oklch(0.69 0.2 23.91);
   --destructive-foreground: var(--color-pit-black);
   --border: var(--color-pit-dark-border);
   --input: var(--color-pit-dark-border);
-  --ring: var(--color-pit-dark-grey);
+  --ring: var(--color-pit-dark-gray);
   --chart-1: oklch(0.81 0.17 75.35);
   --chart-2: oklch(0.58 0.21 260.84);
   --chart-3: oklch(0.56 0 0);
@@ -161,7 +169,7 @@
   --sidebar-accent: var(--color-pit-dark-surface-accent);
   --sidebar-accent-foreground: var(--color-pit-white);
   --sidebar-border: var(--color-pit-dark-border);
-  --sidebar-ring: var(--color-pit-dark-grey);
+  --sidebar-ring: var(--color-pit-dark-gray);
   --font-sans: var(--font-aktual), ui-sans-serif, sans-serif, system-ui;
   --font-serif: "Times New Roman", Times, serif;
   --font-mono: var(--font-sono), monospace;

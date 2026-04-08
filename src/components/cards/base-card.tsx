@@ -17,6 +17,7 @@ interface BaseCardProps {
   authors?: Author[];
   badgeLabel?: string;
   big?: boolean;
+  external?: boolean;
   href: string;
   /** Sanity image object (preferred) or plain URL string (design-system previews). */
   image: SanityImageSource | string;
@@ -34,13 +35,17 @@ interface BaseCardProps {
     | "event-sold-out"
     | "event-waitlist"
     | "event-postponed"
-    | "event-cancelled";
+    | "event-cancelled"
+    | "bronze"
+    | "silver"
+    | "gold";
 }
 
 export default function BaseCard({
   title,
   authors,
   badgeLabel,
+  external,
   image,
   variant,
   href,
@@ -60,6 +65,7 @@ export default function BaseCard({
         big ? "col-span-2" : "col-span-1"
       )}
       href={href}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
       <AspectRatio
         className="relative overflow-hidden rounded-lg"

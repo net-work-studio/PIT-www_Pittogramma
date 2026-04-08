@@ -616,6 +616,25 @@ export const WEB_SOURCES_QUERY = defineQuery(`
   }
 `);
 
+// ==================== ADV QUERIES ====================
+
+export const ADVS_QUERY = defineQuery(`
+  *[_type == "adv" && dateStart <= now() && dateEnd >= now()] | order(tier asc) {
+    _id,
+    title,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    description,
+    externalUrl,
+    tier,
+    dateStart,
+    dateEnd,
+    sponsor->{ _id, name }
+  }
+`);
+
 // ==================== RECENT UPDATES QUERY ====================
 
 export const RECENT_UPDATES_QUERY = defineQuery(`
