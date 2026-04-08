@@ -1,0 +1,25 @@
+src/app/(frontend)/(features)/interviews/[slug]/page.tsx
+  4a217c4c6374c0c4 95
+src/components/modules/interview/interview-info.tsx
+  4a217c4c6374c0c4 19,32,40-45,54-56,63,66,69-72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "fee4a65a7f7c69d56f5f7b16063665ddb6c7cef0",
+  "prompts": {
+    "4a217c4c6374c0c4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1392b0b-bff3-4383-b54d-a1492df713e5",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 19,
+      "overriden_lines": 0
+    }
+  }
+}
