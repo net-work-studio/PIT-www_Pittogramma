@@ -1,0 +1,38 @@
+src/app/(frontend)/events/[slug]/page.tsx
+  63c6a9fb24f46868 108-109
+src/sanity/schemaTypes/documents/event.ts
+  9d5a901c11c60471 68-80
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "356501cbfaf011020a600294fd85c459a2946ff1",
+  "prompts": {
+    "63c6a9fb24f46868": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c7a0daf3-4aa6-4640-ada9-cad576f28490",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 3,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "9d5a901c11c60471": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ba101d16-5681-4100-bbf3-8884e10a78ec",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 13,
+      "total_deletions": 0,
+      "accepted_lines": 13,
+      "overriden_lines": 0
+    }
+  }
+}
