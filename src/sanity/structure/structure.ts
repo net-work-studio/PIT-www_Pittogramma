@@ -7,6 +7,7 @@ import {
   Home,
   Languages,
   MapPin,
+  Megaphone,
   MessageCircle,
   MousePointerClick,
   Settings,
@@ -99,6 +100,7 @@ export const structure: StructureResolver = (S) =>
       ]),
 
       S.divider(),
+      docListItem(S, "adv", "ADVs", Megaphone),
       docListItem(S, "cta", "CTAs", MousePointerClick),
 
       group(S, "Metadata", [

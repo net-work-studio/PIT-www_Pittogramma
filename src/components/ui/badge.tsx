@@ -13,11 +13,32 @@ const badgeVariants = cva(
           "group-hover:bg-blue-700 group-hover:text-white group-hover:outline-blue-700",
         article:
           "group-hover:bg-orange-500 group-hover:text-white group-hover:outline-orange-500",
+        diary:
+          "group-hover:bg-green-500 group-hover:text-black group-hover:outline-green-500",
+        baseline:
+          "group-hover:bg-blue-700 group-hover:text-white group-hover:outline-blue-700",
         interview:
           "group-hover:bg-yellow-500 group-hover:text-black group-hover:outline-yellow-500",
         feat: "group-hover:bg-background group-hover:text-foreground group-hover:outline-background",
         outline: "",
         event: "group-hover:bg-background group-hover:text-foreground",
+        "event-coming-soon":
+          "group-hover:bg-blue-700 group-hover:text-white group-hover:outline-blue-700",
+        "event-available":
+          "group-hover:bg-green-500 group-hover:text-black group-hover:outline-green-500",
+        "event-sold-out":
+          "group-hover:bg-destructive group-hover:text-destructive-foreground group-hover:outline-destructive",
+        "event-waitlist":
+          "group-hover:bg-orange-500 group-hover:text-white group-hover:outline-orange-500",
+        "event-postponed":
+          "group-hover:bg-yellow-500 group-hover:text-black group-hover:outline-yellow-500",
+        "event-cancelled":
+          "group-hover:bg-destructive group-hover:text-destructive-foreground group-hover:outline-destructive",
+        bronze:
+          "group-hover:bg-amber-700 group-hover:text-white group-hover:outline-amber-700",
+        silver:
+          "group-hover:bg-neutral-400 group-hover:text-black group-hover:outline-neutral-400",
+        gold: "group-hover:bg-yellow-500 group-hover:text-black group-hover:outline-yellow-500",
       },
     },
     defaultVariants: {

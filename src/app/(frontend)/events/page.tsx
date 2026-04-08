@@ -3,6 +3,7 @@ import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
+import { getEventStatusConfig } from "@/lib/event-status";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -20,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return mapSanityToMetadata({
     page: {
       title: page?.title ?? "Events",
-      description: page?.introText,
+      description: page?.introText ?? undefined,
       seo: page?.seo as SeoModule | undefined,
     },
     baseUrl: siteDefaults.baseUrl,
@@ -33,6 +34,8 @@ type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
 
 interface EventCard {
   authors: { name: string }[] | undefined;
+  badgeLabel: string | undefined;
+  badgeVariant: Parameters<typeof BaseCard>[0]["variant"];
   href: string;
   id: string;
   image: SanityImageSource;
@@ -41,13 +44,16 @@ interface EventCard {
 
 function mapEventToCard(event: EVENTS_QUERY_RESULT[number]): EventCard {
   const subtitle = event.locationName ?? event.type;
+  const statusConfig = getEventStatusConfig(event.status);
 
   return {
     authors: subtitle ? [{ name: subtitle }] : undefined,
+    badgeLabel: statusConfig?.label,
+    badgeVariant: statusConfig?.badgeVariant ?? "event",
     href: `/events/${event.slug?.current}`,
     id: event._id,
     image: event.cover,
-    title: event.title,
+    title: event.title ?? "",
   };
 }
 
@@ -62,11 +68,11 @@ export default async function Page() {
   const typedEvents = events as EVENTS_QUERY_RESULT;
 
   const futureEvents = typedEvents
-    .filter((e) => e.slug?.current && e.dateStart >= now)
+    .filter((e) => e.slug?.current && e.dateStart && e.dateStart >= now)
     .map(mapEventToCard);
 
   const pastEvents = typedEvents
-    .filter((e) => e.slug?.current && e.dateStart < now)
+    .filter((e) => e.slug?.current && e.dateStart && e.dateStart < now)
     .map(mapEventToCard);
 
   return (
@@ -91,12 +97,12 @@ export default async function Page() {
             {futureEvents.map((event) => (
               <BaseCard
                 authors={event.authors}
-
+                badgeLabel={event.badgeLabel}
                 href={event.href}
                 image={event.image}
                 key={event.id}
                 title={event.title}
-                variant="event"
+                variant={event.badgeVariant}
               />
             ))}
           </div>
@@ -110,12 +116,12 @@ export default async function Page() {
             {pastEvents.map((event) => (
               <BaseCard
                 authors={event.authors}
-
+                badgeLabel={event.badgeLabel}
                 href={event.href}
                 image={event.image}
                 key={event.id}
                 title={event.title}
-                variant="event"
+                variant={event.badgeVariant}
               />
             ))}
           </div>

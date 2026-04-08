@@ -16,6 +16,7 @@ interface PlaceData {
 
 interface InterviewInfoProps {
   interviewTo?: Person[] | null;
+  interviewToType?: "designers" | "studio" | "typeFoundry" | null;
   place?: PlaceData | null;
   publishingDate?: string | null;
   readingTime?: number | null;
@@ -28,6 +29,7 @@ interface InterviewInfoProps {
 export default function InterviewInfo({
   title,
   interviewTo,
+  interviewToType,
   studio,
   typeFoundry,
   place,
@@ -35,7 +37,12 @@ export default function InterviewInfo({
   publishingDate,
   tags,
 }: InterviewInfoProps) {
-  const entityName = studio || typeFoundry;
+  const entityName =
+    interviewToType === "studio"
+      ? studio
+      : interviewToType === "typeFoundry"
+        ? typeFoundry
+        : null;
   const entityLabel = studio ? "Studio" : typeFoundry ? "Type Foundry" : null;
   const intervieweeNames = interviewTo
     ?.map((p: Person) => p.name)
@@ -44,17 +51,25 @@ export default function InterviewInfo({
 
   const location = [place?.city, place?.country].filter(Boolean).join(", ");
 
+  // The prominent subject: entity name (studio/foundry) or designer names
+  const primarySubject = entityName || intervieweeNames;
+
   return (
     <div className="flex flex-1 flex-col justify-between gap-8">
       <hgroup className="flex flex-col gap-2">
         {title ? (
           <h1 className="text-2xl leading-tight lg:text-[2rem]">{title}</h1>
         ) : null}
-        {intervieweeNames ? (
+        {primarySubject ? (
           <h2 className="text-base text-muted-foreground leading-tight lg:text-[2rem]">
             <span className="hidden lg:inline">Interview to </span>
-            {intervieweeNames}
+            {primarySubject}
           </h2>
+        ) : null}
+        {entityName && intervieweeNames ? (
+          <p className="font-mono text-xs text-muted-foreground uppercase">
+            {intervieweeNames}
+          </p>
         ) : null}
       </hgroup>
 

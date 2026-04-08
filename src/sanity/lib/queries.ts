@@ -185,6 +185,8 @@ export const EVENTS_QUERY = defineQuery(`
     title,
     slug,
     type,
+    status,
+    ctaUrl,
     cover {
       image { ${IMAGE_FIELDS} },
       alt
@@ -192,6 +194,30 @@ export const EVENTS_QUERY = defineQuery(`
     dateStart,
     dateEnd,
     locationName,
+    description,
+    sponsor->{ _id, name },
+    partner->{ _id, name },
+    tags[]->{ _id, name },
+    ${SEO_FIELDS}
+  }
+`);
+
+export const EVENT_QUERY = defineQuery(`
+  *[_type == "event" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    type,
+    status,
+    ctaUrl,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    dateStart,
+    dateEnd,
+    locationName,
+    locationAddress,
     description,
     sponsor->{ _id, name },
     partner->{ _id, name },
@@ -293,6 +319,7 @@ export const JOURNAL_PAGE_QUERY = defineQuery(`
       _id,
       title,
       slug,
+      label,
       publishingDate,
       excerpt,
       cover { image { ${IMAGE_FIELDS} }, alt },
@@ -309,6 +336,7 @@ export const JOURNAL_QUERY = defineQuery(`
     _id,
     title,
     slug,
+    label,
     publishingDate,
     cover {
       image { ${IMAGE_FIELDS} },
@@ -329,6 +357,7 @@ export const JOURNAL_ARTICLE_QUERY = defineQuery(`
     _id,
     title,
     slug,
+    label,
     publishingDate,
     cover {
       _type,
@@ -584,6 +613,25 @@ export const WEB_SOURCES_QUERY = defineQuery(`
     ogDescription,
     ogSiteName,
     ogImageUrl
+  }
+`);
+
+// ==================== ADV QUERIES ====================
+
+export const ADVS_QUERY = defineQuery(`
+  *[_type == "adv" && dateStart <= now() && dateEnd >= now()] | order(tier asc) {
+    _id,
+    title,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    description,
+    externalUrl,
+    tier,
+    dateStart,
+    dateEnd,
+    sponsor->{ _id, name }
   }
 `);
 

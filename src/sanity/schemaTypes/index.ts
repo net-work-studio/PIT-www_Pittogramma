@@ -1,4 +1,5 @@
 import type { SchemaTypeDefinition } from "sanity";
+import { adv } from "./documents/adv";
 import { bibliography } from "./documents/bibliography";
 import { bookshop } from "./documents/bookshop";
 import { category } from "./documents/category";
@@ -45,6 +46,7 @@ import { siteSettings } from "./singletons/site-settings";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
+    adv,
     contributor,
     cta,
     edition,

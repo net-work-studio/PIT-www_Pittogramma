@@ -1192,13 +1192,6 @@
         },
         "optional": true
       },
-      "introText": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
       "featuredArticle": {
         "type": "objectAttribute",
         "value": {
@@ -2953,6 +2946,31 @@
         },
         "optional": true
       },
+      "featuredItem": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "inline",
+              "name": "project.reference"
+            },
+            {
+              "type": "inline",
+              "name": "interview.reference"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "midPageCta": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "cta.reference"
+        },
+        "optional": true
+      },
       "endOfPageCta": {
         "type": "objectAttribute",
         "value": {
@@ -3090,6 +3108,54 @@
         "optional": true
       },
       "type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "status": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "coming-soon"
+            },
+            {
+              "type": "string",
+              "value": "tickets-available"
+            },
+            {
+              "type": "string",
+              "value": "free-rsvp"
+            },
+            {
+              "type": "string",
+              "value": "free-entry"
+            },
+            {
+              "type": "string",
+              "value": "sold-out"
+            },
+            {
+              "type": "string",
+              "value": "waitlist"
+            },
+            {
+              "type": "string",
+              "value": "postponed"
+            },
+            {
+              "type": "string",
+              "value": "cancelled"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "ctaUrl": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -4118,7 +4184,12 @@
                     "type": "objectAttribute",
                     "value": {
                       "type": "union",
-                      "of": []
+                      "of": [
+                        {
+                          "type": "string",
+                          "value": "bullet"
+                        }
+                      ]
                     },
                     "optional": true
                   },
