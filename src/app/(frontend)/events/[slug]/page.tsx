@@ -105,9 +105,8 @@ export default async function EventPage({
             : undefined,
           image: imageUrl,
           url: eventUrl,
-          eventStatus: isPast
-            ? "https://schema.org/EventScheduled"
-            : event.status === "cancelled"
+          eventStatus:
+            event.status === "cancelled"
               ? "https://schema.org/EventCancelled"
               : event.status === "postponed"
                 ? "https://schema.org/EventPostponed"

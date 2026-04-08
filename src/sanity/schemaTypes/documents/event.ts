@@ -65,6 +65,19 @@ export const event = defineType({
         !["tickets-available", "free-rsvp", "waitlist"].includes(
           parent?.status,
         ),
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const status = (context.parent as { status?: string })?.status;
+          if (
+            ["tickets-available", "free-rsvp", "waitlist"].includes(
+              status ?? "",
+            ) &&
+            !value
+          ) {
+            return "A CTA link is required for this status";
+          }
+          return true;
+        }),
     }),
     defineField({
       type: "imageWithMetadata",
