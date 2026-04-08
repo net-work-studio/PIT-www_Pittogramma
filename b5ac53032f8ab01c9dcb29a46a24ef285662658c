@@ -1,0 +1,36 @@
+src/app/globals.css
+  59b944fd79a2fd98 55-68,74-87,89-92,98-105,133-146,148-151,157-164
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "b5ac53032f8ab01c9dcb29a46a24ef285662658c",
+  "prompts": {
+    "569c5c8578c5463b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5dabc552-d106-4f55-bf68-25fc4712c078",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 132,
+      "total_deletions": 0,
+      "accepted_lines": 192,
+      "overriden_lines": 0
+    },
+    "59b944fd79a2fd98": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4e5956e1-bdb6-410e-b811-ec3755a92447",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 66,
+      "overriden_lines": 0
+    }
+  }
+}
