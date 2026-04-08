@@ -1,0 +1,33 @@
+src/sanity/schemaTypes/index.ts
+  569c5c8578c5463b 2,49
+src/sanity/lib/queries.ts
+  569c5c8578c5463b 619-637
+src/app/(frontend)/(features)/billboard/page.tsx
+  569c5c8578c5463b 1-29
+src/sanity/structure/structure.ts
+  569c5c8578c5463b 10,103
+src/components/ui/badge.tsx
+  569c5c8578c5463b 37-41
+src/components/cards/base-card.tsx
+  569c5c8578c5463b 20,38-41,48,68
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "27f39f90f78d7b447d33084641634d58356a965b",
+  "prompts": {
+    "569c5c8578c5463b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5dabc552-d106-4f55-bf68-25fc4712c078",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 64,
+      "overriden_lines": 0
+    }
+  }
+}
