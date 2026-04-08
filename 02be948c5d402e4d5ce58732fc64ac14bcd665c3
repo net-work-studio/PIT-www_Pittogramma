@@ -1,0 +1,36 @@
+src/sanity/schemaTypes/documents/adv.ts
+  569c5c8578c5463b 1-132
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "02be948c5d402e4d5ce58732fc64ac14bcd665c3",
+  "prompts": {
+    "569c5c8578c5463b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5dabc552-d106-4f55-bf68-25fc4712c078",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 0,
+      "accepted_lines": 196,
+      "overriden_lines": 0
+    },
+    "e33683a744f96f7f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3ec12738-07f7-41bf-9f13-0eb673a0ed8f",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 159,
+      "total_deletions": 0,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    }
+  }
+}
