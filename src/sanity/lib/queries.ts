@@ -248,7 +248,7 @@ export const PROJECTS_QUERY = defineQuery(`
 export const PROJECTS_FILTERED_QUERY = defineQuery(`
   *[_type == "project"
     && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
-  ] | order(_createdAt desc) [$start...$end] {
+  ] | order(publishingDate.date desc) [$start...$end] {
     _id,
     cover {
       image { ${IMAGE_FIELDS} },
@@ -276,6 +276,75 @@ export const PROJECTS_TAGS_QUERY = defineQuery(`
   array::unique(*[_type == "project" && defined(tags)].tags[]->{ _id, name, "slug": slug.current })
 `);
 
+// ==================== SORT UTILITIES ====================
+
+const SORT_ORDER_MAP: Record<string, string> = {
+  newest: "publishingDate.date desc",
+  oldest: "publishingDate.date asc",
+  "a-z": "title asc",
+  "z-a": "title desc",
+};
+
+function getSortOrder(sort: string): string {
+  return SORT_ORDER_MAP[sort] || SORT_ORDER_MAP.newest;
+}
+
+export function getProjectsFilteredQuery(sort: string): string {
+  return `
+  *[_type == "project"
+    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
+  ] | order(${getSortOrder(sort)}) [$start...$end] {
+    _id,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    title,
+    slug,
+    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    tags[]->{
+      _id,
+      name,
+      "slug": slug.current
+    },
+    ${SEO_FIELDS}
+  }`;
+}
+
+export function getInterviewsFilteredQuery(sort: string): string {
+  return `
+  *[_type == "interview"
+    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
+  ] | order(${getSortOrder(sort)}) [$start...$end] {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    designersAndProfessionals[]{ ...@->{ _id, name }, _key },
+    studio->{
+      _id,
+      name
+    },
+    typeFoundry->{
+      _id,
+      name
+    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
+    readingTime,
+    tags[]->{
+      _id,
+      name,
+      "slug": slug.current
+    },
+    introText,
+    ${SEO_FIELDS}
+  }`;
+}
+
 export const PROJECT_QUERY = defineQuery(`
   *[_type == "project" && slug.current == $slug][0] {
     _id,
@@ -289,7 +358,31 @@ export const PROJECT_QUERY = defineQuery(`
     },
     title,
     slug,
-    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    designers[]{
+      ...@->{
+        _id,
+        name,
+        slug,
+        portrait,
+        bio,
+        birthYear,
+        place->{ city, country },
+        socialLinks,
+        education[] {
+          _key,
+          institute->{ _id, name },
+          degree,
+          courseName,
+          year
+        },
+        "projects": *[_type == "project" && references(^._id)] | order(_createdAt desc) {
+          _id,
+          title,
+          slug
+        }
+      },
+      _key
+    },
     tags[]->{
       _id,
       name

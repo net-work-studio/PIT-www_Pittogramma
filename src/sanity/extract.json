@@ -3110,7 +3110,25 @@
       "type": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "talk"
+            },
+            {
+              "type": "string",
+              "value": "workshop"
+            },
+            {
+              "type": "string",
+              "value": "5+1"
+            },
+            {
+              "type": "string",
+              "value": "event"
+            }
+          ]
         },
         "optional": false
       },
@@ -3153,7 +3171,7 @@
             }
           ]
         },
-        "optional": false
+        "optional": true
       },
       "ctaUrl": {
         "type": "objectAttribute",
@@ -4516,6 +4534,13 @@
         "value": {
           "type": "inline",
           "name": "socialLinks"
+        },
+        "optional": true
+      },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },

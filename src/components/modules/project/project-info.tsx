@@ -1,12 +1,9 @@
+import DesignerNamesRow from "@/components/modules/project/designer-names-row";
 import ProjectDescription from "@/components/modules/project/project-description";
 import ProjectMetaItem from "@/components/modules/project/project-meta-item";
+import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
-interface Designer {
-  _id: string;
-  name: string | null;
-  portrait: unknown;
-  slug: unknown;
-}
+type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
 
 interface Teacher {
   _id: string;
@@ -17,6 +14,7 @@ interface ProjectInfoProps {
   description?: string | null;
   designers?: Designer[] | null;
   institute?: string | null;
+  projectId?: string;
   tags?: Array<{ _id: string; name: string }> | null;
   teachers?: Teacher[] | null;
   title?: string | null;
@@ -31,12 +29,8 @@ export default function ProjectInfo({
   tags,
   teachers,
   institute,
+  projectId,
 }: ProjectInfoProps) {
-  const designerNames = designers
-    ?.map((d: Designer) => d.name)
-    .filter(Boolean)
-    .join(", ");
-
   const teacherNames = teachers
     ?.map((t: Teacher) => t.name)
     .filter(Boolean)
@@ -45,16 +39,11 @@ export default function ProjectInfo({
   return (
     <div className="h-fit w-full pr-10 lg:sticky lg:top-20 lg:w-1/3">
       <div className="flex flex-col gap-12.5">
-        <header className="flex flex-col gap-1">
-          {designerNames ? (
-            <h2 className="text-3xl text-muted-foreground">
-              {designerNames}
-            </h2>
-          ) : null}
-          {title ? (
-            <h1 className="text-3xl">{title}</h1>
-          ) : null}
-        </header>
+        <DesignerNamesRow
+          currentProjectId={projectId}
+          designers={designers}
+          title={title}
+        />
 
         <div className="flex flex-col gap-20">
           <ProjectDescription description={description ?? null} />

@@ -93,6 +93,7 @@ export default async function ProjectPage({
           description={project.description}
           designers={project.designers}
           institute={project.institute?.name}
+          projectId={project._id}
           tags={project.tags}
           teachers={project.teachers}
           title={project.title}
