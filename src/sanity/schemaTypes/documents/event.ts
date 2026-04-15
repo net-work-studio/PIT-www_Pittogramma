@@ -67,8 +67,9 @@ export const event = defineType({
         rule.custom((value, context) => {
           const dateStart = (context.parent as { dateStart?: string })
             ?.dateStart;
-          const isFuture =
-            !dateStart || dateStart >= new Date().toISOString().split("T")[0];
+          const today = new Date();
+          const localToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+          const isFuture = !dateStart || dateStart >= localToday;
           if (isFuture && !value) {
             return "Status is required for upcoming events";
           }

@@ -52,7 +52,8 @@ export default async function InterviewsPage({
   const sort = isValidSort(sortParam) ? sortParam : "newest";
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
   const hasTags = tagSlugs.length > 0;
-  const page = Math.max(1, Number.parseInt(pageParam ?? "1", 10));
+  const parsedPage = Number.parseInt(pageParam ?? "1", 10);
+  const page = Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
   const start = (page - 1) * PAGE_SIZE;
   const end = start + PAGE_SIZE;
 
