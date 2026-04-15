@@ -59,7 +59,8 @@ export function getEnabledResources() {
 export function getEnabledViews(key: ResourceKey): ViewMode[] {
   const views = resourceViews[key];
   if (!views) return [];
-  return views.filter((v) => process.env[viewEnvVar(key, v)] !== "false");
+  const enabled = views.filter((v) => process.env[viewEnvVar(key, v)] !== "false");
+  return enabled.length > 0 ? enabled : [views[0]];
 }
 
 /**

@@ -44,6 +44,30 @@ function groupByFirstLetter(items: GlossaryItem[]): GroupedGlossary[] {
     .map(([letter, words]) => ({ letter, words }));
 }
 
+/** Split groups into two balanced columns by item count, reading top-to-bottom. */
+function splitIntoColumns(groups: GroupedGlossary[]): [GroupedGlossary[], GroupedGlossary[]] {
+  const totalItems = groups.reduce((sum, g) => sum + g.words.length, 0);
+  const half = totalItems / 2;
+
+  let runningCount = 0;
+  let splitIndex = 0;
+
+  for (let i = 0; i < groups.length; i++) {
+    const nextCount = runningCount + groups[i].words.length;
+    // Stop when adding the next group would cross the halfway mark —
+    // unless the left column is still empty (at least one group per side).
+    if (nextCount >= half && i > 0) {
+      // Pick whichever split (before or after this group) is closer to half
+      splitIndex = nextCount - half < half - runningCount ? i + 1 : i;
+      break;
+    }
+    runningCount = nextCount;
+    splitIndex = i + 1;
+  }
+
+  return [groups.slice(0, splitIndex), groups.slice(splitIndex)];
+}
+
 function LetterSection({ letter, words }: GroupedGlossary) {
   return (
     <div className="space-y-5">
@@ -91,6 +115,7 @@ export default async function Page() {
   const { data: glossaryItems } = await sanityFetch({ query: GLOSSARY_QUERY });
 
   const groupedGlossary = groupByFirstLetter(glossaryItems);
+  const [leftColumn, rightColumn] = splitIntoColumns(groupedGlossary);
 
   return (
     <>
@@ -103,15 +128,20 @@ export default async function Page() {
         <ResourcesNavigation resources={getEnabledResources()} />
         {isSearchEnabled("glossary") && <SearchInput />}
       </div>
-      <section className="columns-2 gap-2.5 space-y-5 pt-30">
+      <section className="grid grid-cols-1 gap-x-2.5 pt-30 md:grid-cols-2">
         {groupedGlossary.length > 0 ? (
-          groupedGlossary.map((group: GroupedGlossary) => (
-            <LetterSection
-              key={group.letter}
-              letter={group.letter}
-              words={group.words}
-            />
-          ))
+          <>
+            <div className="space-y-5">
+              {leftColumn.map((group) => (
+                <LetterSection key={group.letter} letter={group.letter} words={group.words} />
+              ))}
+            </div>
+            <div className="space-y-5">
+              {rightColumn.map((group) => (
+                <LetterSection key={group.letter} letter={group.letter} words={group.words} />
+              ))}
+            </div>
+          </>
         ) : (
           <p className="col-span-2 text-center text-muted-foreground">
             No glossary terms available yet.
