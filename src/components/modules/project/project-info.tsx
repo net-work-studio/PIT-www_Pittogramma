@@ -1,4 +1,5 @@
 import ProjectDescription from "@/components/modules/project/project-description";
+import ProjectMetaItem from "@/components/modules/project/project-meta-item";
 
 interface Designer {
   _id: string;
@@ -42,62 +43,42 @@ export default function ProjectInfo({
     .join(", ");
 
   return (
-    <div className="h-fit w-full pr-10 lg:sticky lg:top-14 lg:w-1/3">
-      <div className="flex flex-col gap-[50px]">
-        <hgroup className="flex flex-col gap-1">
+    <div className="h-fit w-full pr-10 lg:sticky lg:top-20 lg:w-1/3">
+      <div className="flex flex-col gap-12.5">
+        <header className="flex flex-col gap-1">
           {designerNames ? (
-            <h2 className="text-[2rem] text-muted-foreground leading-tight">
+            <h2 className="text-3xl text-muted-foreground">
               {designerNames}
             </h2>
           ) : null}
           {title ? (
-            <h1 className="text-[2rem] leading-tight">{title}</h1>
+            <h1 className="text-3xl">{title}</h1>
           ) : null}
-        </hgroup>
+        </header>
 
         <div className="flex flex-col gap-20">
           <ProjectDescription description={description ?? null} />
 
-          <dl className="flex flex-col gap-4">
+          <dl className="flex flex-col gap-0.5">
             {institute ? (
-              <div className="flex gap-x-8">
-                <dt className="font-mono text-muted-foreground text-sm uppercase">
-                  Institute
-                </dt>
-                <dd className="text-sm">{institute}</dd>
-              </div>
+              <ProjectMetaItem label="Institute">{institute}</ProjectMetaItem>
             ) : null}
             {teacherNames ? (
-              <div className="flex gap-x-8">
-                <dt className="font-mono text-muted-foreground text-sm uppercase">
-                  Teacher
-                </dt>
-                <dd className="text-sm">{teacherNames}</dd>
-              </div>
+              <ProjectMetaItem label="Teacher">{teacherNames}</ProjectMetaItem>
             ) : null}
             {year ? (
-              <div className="flex gap-x-8">
-                <dt className="font-mono text-muted-foreground text-sm uppercase">
-                  Year
-                </dt>
-                <dd className="text-sm">{year}</dd>
-              </div>
+              <ProjectMetaItem label="Year">{year}</ProjectMetaItem>
             ) : null}
             {tags?.length ? (
-              <div className="flex gap-x-8">
-                <dt className="font-mono text-muted-foreground text-sm uppercase">
-                  Disciplines
-                </dt>
-                <dd>
-                  <ul className="flex flex-col">
-                    {tags.map((tag: { _id: string; name: string }) => (
-                      <li className="text-sm underline" key={tag._id}>
-                        {tag.name}
-                      </li>
-                    ))}
-                  </ul>
-                </dd>
-              </div>
+              <ProjectMetaItem label="Disciplines">
+                <ul className="flex flex-col gap-0.5">
+                  {tags.map((tag) => (
+                    <li className="text-sm underline" key={tag._id}>
+                      {tag.name}
+                    </li>
+                  ))}
+                </ul>
+              </ProjectMetaItem>
             ) : null}
           </dl>
         </div>
