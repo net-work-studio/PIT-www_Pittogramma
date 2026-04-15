@@ -1,0 +1,41 @@
+src/components/feat/filter/filter.tsx
+  82640b302cc18cc3 1-6,8-43,45-77,80-141
+src/app/(frontend)/(features)/projects/page.tsx
+  82640b302cc18cc3 4-5,12-21,23,43-53,55-69,74-79,91-93,95-97,113-138
+src/sanity/extract.json
+  82640b302cc18cc3 5326
+src/sanity/types.ts
+  82640b302cc18cc3 955-956,2365,2398,2444-2478,2523-2536,3257,3307,3353-3356,3405,3449-3462,3942-3943,4066-4069,4074-4077
+src/components/feat/pagination/pagination.tsx
+  82640b302cc18cc3 1-109
+src/components/modules/event/event-info.tsx
+  82640b302cc18cc3 66
+src/app/(frontend)/(features)/designers/page.tsx
+  82640b302cc18cc3 4,50
+src/components/ui/popover.tsx
+  82640b302cc18cc3 1-56
+src/sanity/lib/queries.ts
+  82640b302cc18cc3 241-242,248-276,436-457,461-462,464-470,477-484
+src/app/(frontend)/(features)/interviews/page.tsx
+  82640b302cc18cc3 4-5,12-21,23,43-69,74-79,91-94,113-137
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "f6693326f4b744ffe029ca2eed17340843359195",
+  "prompts": {
+    "82640b302cc18cc3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2b9fcd6f-a9d1-4da9-adfd-75991bed0fbd",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 769,
+      "total_deletions": 123,
+      "accepted_lines": 761,
+      "overriden_lines": 0
+    }
+  }
+}
