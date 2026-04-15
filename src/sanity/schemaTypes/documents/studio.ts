@@ -26,6 +26,14 @@ export const studio = defineType({
     }),
     defineField({
       type: "string",
+      name: "email",
+      title: "Email",
+      group: "content",
+      description: "Point of contact (CRM only, not shown on frontend)",
+      validation: (e) => e.email(),
+    }),
+    defineField({
+      type: "string",
       name: "fetchWebsiteData",
       title: "Fetch Website Data",
       description: "Fetches OG metadata from the Website URL in Social Links",

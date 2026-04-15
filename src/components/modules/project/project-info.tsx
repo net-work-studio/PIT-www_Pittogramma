@@ -1,11 +1,9 @@
+import DesignerNamesRow from "@/components/modules/project/designer-names-row";
 import ProjectDescription from "@/components/modules/project/project-description";
+import ProjectMetaItem from "@/components/modules/project/project-meta-item";
+import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
-interface Designer {
-  _id: string;
-  name: string | null;
-  portrait: unknown;
-  slug: unknown;
-}
+type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
 
 interface Teacher {
   _id: string;
@@ -16,6 +14,7 @@ interface ProjectInfoProps {
   description?: string | null;
   designers?: Designer[] | null;
   institute?: string | null;
+  projectId?: string;
   tags?: Array<{ _id: string; name: string }> | null;
   teachers?: Teacher[] | null;
   title?: string | null;
@@ -30,74 +29,45 @@ export default function ProjectInfo({
   tags,
   teachers,
   institute,
+  projectId,
 }: ProjectInfoProps) {
-  const designerNames = designers
-    ?.map((d: Designer) => d.name)
-    .filter(Boolean)
-    .join(", ");
-
   const teacherNames = teachers
     ?.map((t: Teacher) => t.name)
     .filter(Boolean)
     .join(", ");
 
   return (
-    <div className="h-fit w-full pr-10 lg:sticky lg:top-14 lg:w-1/3">
-      <div className="flex flex-col gap-[50px]">
-        <hgroup className="flex flex-col gap-1">
-          {designerNames ? (
-            <h2 className="text-[2rem] text-muted-foreground leading-tight">
-              {designerNames}
-            </h2>
-          ) : null}
-          {title ? (
-            <h1 className="text-[2rem] leading-tight">{title}</h1>
-          ) : null}
-        </hgroup>
+    <div className="h-fit w-full pr-10 lg:sticky lg:top-20 lg:w-1/3">
+      <div className="flex flex-col gap-12.5">
+        <DesignerNamesRow
+          currentProjectId={projectId}
+          designers={designers}
+          title={title}
+        />
 
         <div className="flex flex-col gap-20">
           <ProjectDescription description={description ?? null} />
 
-          <dl className="flex flex-col gap-4">
+          <dl className="flex flex-col gap-0.5">
             {institute ? (
-              <div className="flex gap-x-8">
-                <dt className="font-mono text-muted-foreground text-sm uppercase">
-                  Institute
-                </dt>
-                <dd className="text-sm">{institute}</dd>
-              </div>
+              <ProjectMetaItem label="Institute">{institute}</ProjectMetaItem>
             ) : null}
             {teacherNames ? (
-              <div className="flex gap-x-8">
-                <dt className="font-mono text-muted-foreground text-sm uppercase">
-                  Teacher
-                </dt>
-                <dd className="text-sm">{teacherNames}</dd>
-              </div>
+              <ProjectMetaItem label="Teacher">{teacherNames}</ProjectMetaItem>
             ) : null}
             {year ? (
-              <div className="flex gap-x-8">
-                <dt className="font-mono text-muted-foreground text-sm uppercase">
-                  Year
-                </dt>
-                <dd className="text-sm">{year}</dd>
-              </div>
+              <ProjectMetaItem label="Year">{year}</ProjectMetaItem>
             ) : null}
             {tags?.length ? (
-              <div className="flex gap-x-8">
-                <dt className="font-mono text-muted-foreground text-sm uppercase">
-                  Disciplines
-                </dt>
-                <dd>
-                  <ul className="flex flex-col">
-                    {tags.map((tag: { _id: string; name: string }) => (
-                      <li className="text-sm underline" key={tag._id}>
-                        {tag.name}
-                      </li>
-                    ))}
-                  </ul>
-                </dd>
-              </div>
+              <ProjectMetaItem label="Disciplines">
+                <ul className="flex flex-col gap-0.5">
+                  {tags.map((tag) => (
+                    <li className="text-sm underline" key={tag._id}>
+                      {tag.name}
+                    </li>
+                  ))}
+                </ul>
+              </ProjectMetaItem>
             ) : null}
           </dl>
         </div>

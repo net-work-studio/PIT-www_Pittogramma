@@ -3,9 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { resources } from "./resources-navigation.data";
+import type { Resource } from "./resources-navigation.data";
 
-export default function ResourcesNavigation() {
+export default function ResourcesNavigation({
+  resources,
+}: {
+  resources: Resource[];
+}) {
   const pathname = usePathname();
 
   return (

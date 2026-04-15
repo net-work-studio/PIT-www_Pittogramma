@@ -6,6 +6,7 @@ import { ResourceListItem } from "@/components/resources/resource-list-item";
 import { TagsDisplay } from "@/components/resources/tags-display";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { ViewMode } from "@/lib/feature-flags";
 import { buildTrackedLink, type UtmSettings } from "@/lib/tracked-link";
 import type { WEB_SOURCES_QUERY_RESULT } from "@/sanity/types";
 
@@ -91,26 +92,33 @@ function WebSourceGridCard({
 
 interface WebsitesContentProps {
   sources: WEB_SOURCES_QUERY_RESULT;
+  enabledViews: ViewMode[];
+  searchEnabled: boolean;
   utmSettings: UtmSettings;
 }
 
 export function WebsitesContent({
   sources,
+  enabledViews,
+  searchEnabled,
   utmSettings,
 }: WebsitesContentProps) {
-  const [view, setView] = useState("list");
+  const defaultView = enabledViews[0] ?? "list";
+  const [view, setView] = useState<string>(defaultView);
 
   return (
-    <Tabs className="w-full gap-0" defaultValue="list" onValueChange={setView}>
+    <Tabs className="w-full gap-0" defaultValue={defaultView} onValueChange={setView}>
       <div className="sticky top-0 z-10 bg-background pt-16 pb-2.5">
         <div className="flex w-full items-center justify-between pb-2.5">
-          <Input placeholder="Search" type="search" />
-          <TabsList>
-            <TabsTrigger value="list">List</TabsTrigger>
-            <TabsTrigger value="grid">Grid</TabsTrigger>
-          </TabsList>
+          {searchEnabled && <Input placeholder="Search" type="search" />}
+          {enabledViews.length > 1 && (
+            <TabsList>
+              {enabledViews.includes("list") && <TabsTrigger value="list">List</TabsTrigger>}
+              {enabledViews.includes("grid") && <TabsTrigger value="grid">Grid</TabsTrigger>}
+            </TabsList>
+          )}
         </div>
-        {view === "list" && (
+        {view === "list" && enabledViews.includes("list") && (
           <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase">
             <li className="col-span-4">Name</li>
             <li className="col-span-2">Category</li>
@@ -120,41 +128,45 @@ export function WebsitesContent({
         )}
       </div>
 
-      <TabsContent value="list">
-        <section className="flex flex-col gap-1.5">
-          {sources.length > 0 ? (
-            sources.map((source) => (
-              <WebSourceListCard
-                key={source._id}
-                source={source}
-                utmSettings={utmSettings}
-              />
-            ))
-          ) : (
-            <p className="text-center text-muted-foreground">
-              No websites available yet.
-            </p>
-          )}
-        </section>
-      </TabsContent>
+      {enabledViews.includes("list") && (
+        <TabsContent value="list">
+          <section className="flex flex-col gap-1.5">
+            {sources.length > 0 ? (
+              sources.map((source) => (
+                <WebSourceListCard
+                  key={source._id}
+                  source={source}
+                  utmSettings={utmSettings}
+                />
+              ))
+            ) : (
+              <p className="text-center text-muted-foreground">
+                No websites available yet.
+              </p>
+            )}
+          </section>
+        </TabsContent>
+      )}
 
-      <TabsContent value="grid">
-        <div className="grid grid-cols-4 gap-1.5">
-          {sources.length > 0 ? (
-            sources.map((source) => (
-              <WebSourceGridCard
-                key={source._id}
-                source={source}
-                utmSettings={utmSettings}
-              />
-            ))
-          ) : (
-            <p className="col-span-4 text-center text-muted-foreground">
-              No websites available yet.
-            </p>
-          )}
-        </div>
-      </TabsContent>
+      {enabledViews.includes("grid") && (
+        <TabsContent value="grid">
+          <div className="grid grid-cols-4 gap-1.5">
+            {sources.length > 0 ? (
+              sources.map((source) => (
+                <WebSourceGridCard
+                  key={source._id}
+                  source={source}
+                  utmSettings={utmSettings}
+                />
+              ))
+            ) : (
+              <p className="col-span-4 text-center text-muted-foreground">
+                No websites available yet.
+              </p>
+            )}
+          </div>
+        </TabsContent>
+      )}
     </Tabs>
   );
 }

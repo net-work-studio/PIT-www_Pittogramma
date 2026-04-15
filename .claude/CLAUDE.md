@@ -1,3 +1,6 @@
 - use bun
 - always use sanity-image.tsx instead of Image from next/image
 - Sanity image guards must check `cover?.image?.asset` (not just `cover`, which is always a non-null wrapper object)
+- When comparing Sanity `date` fields against "today" in schema validation, build a local-date string from `Date` components — don't use `toISOString().split("T")[0]` (that's UTC, flips day boundaries for non-UTC servers)
+- Parse `searchParams` page/pagination values with `Number.isFinite(parsed) && parsed > 0` — `Math.max(1, NaN)` returns `NaN`, not 1
+- Feature-flag view selectors (e.g. `getEnabledViews` in `src/lib/feature-flags.ts`) must return a non-empty list when the resource itself is enabled — resource content components guard `TabsContent` with `enabledViews.includes(...)` and will silently render an empty `<Tabs>` shell otherwise

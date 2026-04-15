@@ -1,56 +1,64 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import Mark from "@/components/brand/mark";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import type { Resource } from "./resources-navigation.data";
 
-const menuItems = [
-  {
-    label: "Features",
-    children: [
-      { href: "/projects", label: "Projects" },
-      { href: "/interviews", label: "Interviews" },
-      { href: "/designers", label: "Designers" },
-      { href: "/billboard", label: "Billboard" },
-    ],
-  },
-  {
-    label: "Resources",
-    children: [
-      { href: "/studios-agencies", label: "Studio, Agencies & Type Foundries" },
-      { href: "/institutes", label: "Institutes" },
-      { href: "/bookshops", label: "Bookshops" },
-      { href: "/glossary", label: "Glossary" },
-      { href: "/bibliography", label: "Bibliography" },
-      { href: "/websites", label: "Web Sources" },
-    ],
-  },
-  { label: "Journal", href: "/journal" },
-  { label: "Events", href: "/events" },
-  {
-    label: "Info",
-    children: [
-      { href: "/about", label: "About" },
-      { href: "/editions", label: "Editions" },
-      { href: "/studio", label: "Studio" },
-    ],
-  },
-] as const;
+type MenuItemWithChildren = {
+  label: string;
+  children: { href: string; label: string }[];
+};
 
-type MenuItem = (typeof menuItems)[number];
+type MenuItemLink = {
+  label: string;
+  href: string;
+};
 
-function hasChildren(
-  item: MenuItem,
-): item is Extract<MenuItem, { children: readonly { href: string; label: string }[] }> {
+type MenuItem = MenuItemWithChildren | MenuItemLink;
+
+function hasChildren(item: MenuItem): item is MenuItemWithChildren {
   return "children" in item;
 }
 
-export function NavigationMobile() {
+export function NavigationMobile({
+  resources,
+}: {
+  resources: Resource[];
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
+
+  const menuItems: MenuItem[] = useMemo(
+    () => [
+      {
+        label: "Features",
+        children: [
+          { href: "/projects", label: "Projects" },
+          { href: "/interviews", label: "Interviews" },
+          { href: "/designers", label: "Designers" },
+        ],
+      },
+      {
+        label: "Resources",
+        children: resources.map((r) => ({ href: r.href, label: r.label })),
+      },
+      { label: "Journal", href: "/journal" },
+      { label: "Events", href: "/events" },
+      {
+        label: "Info",
+        children: [
+          { href: "/about", label: "About" },
+          { href: "/editions", label: "Editions" },
+          { href: "/studio", label: "Studio" },
+        ],
+      },
+    ],
+    [resources],
+  );
 
   const toggleSection = (label: string) => {
     setExpandedSection((prev) => (prev === label ? null : label));

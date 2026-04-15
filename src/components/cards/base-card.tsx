@@ -106,7 +106,7 @@ export default function BaseCard({
             {title}
           </h3>
           {authors && authors.length > 0 ? (
-            <ul className="flex items-start justify-start gap-1 font-normal font-sans text-neutral-400 text-xs">
+            <ul className="flex flex-wrap items-start justify-start gap-1 font-normal font-sans text-neutral-400 text-xs">
               {authors.map((author, index) => (
                 <li key={author.name}>
                   {author.name}

@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 import type { Metadata } from "next";
 import CtaCard from "@/components/cards/cta-card";
-import Filter from "@/components/feat/filter/filter";
+import { Button } from "@/components/ui/button";
 import DesignerGrid from "@/components/modules/designer/designer-grid";
 import PageHeader from "@/components/shared/page-header";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -47,7 +47,7 @@ export default async function DesignersPage() {
       </div>
       <div className="space-y-5 pt-30">
         <div className="flex justify-between">
-          <Filter />
+          <Button className="font-mono uppercase">Filters</Button>
           <Search />
         </div>
         <DesignerGrid designers={designers} />

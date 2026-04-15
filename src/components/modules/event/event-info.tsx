@@ -63,10 +63,10 @@ export default function EventInfo({
     <div className="flex flex-1 flex-col justify-between gap-8">
       <hgroup className="flex flex-col gap-2">
         {title ? (
-          <h1 className="text-2xl leading-tight lg:text-[2rem]">{title}</h1>
+          <h1 className="text-3xl leading-tight lg:text-[2rem]">{title}</h1>
         ) : null}
         {type ? (
-          <h2 className="text-base text-muted-foreground leading-tight lg:text-[2rem]">
+          <h2 className="text-base uppercase text-muted-foreground leading-tight lg:text-2xl">
             {type}
           </h2>
         ) : null}

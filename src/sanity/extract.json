@@ -3110,7 +3110,25 @@
       "type": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "talk"
+            },
+            {
+              "type": "string",
+              "value": "workshop"
+            },
+            {
+              "type": "string",
+              "value": "5+1"
+            },
+            {
+              "type": "string",
+              "value": "event"
+            }
+          ]
         },
         "optional": false
       },
@@ -3153,7 +3171,7 @@
             }
           ]
         },
-        "optional": false
+        "optional": true
       },
       "ctaUrl": {
         "type": "objectAttribute",
@@ -4519,6 +4537,13 @@
         },
         "optional": true
       },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "fetchWebsiteData": {
         "type": "objectAttribute",
         "value": {
@@ -5314,34 +5339,6 @@
                     {
                       "type": "string",
                       "value": "normal"
-                    },
-                    {
-                      "type": "string",
-                      "value": "h1"
-                    },
-                    {
-                      "type": "string",
-                      "value": "h2"
-                    },
-                    {
-                      "type": "string",
-                      "value": "h3"
-                    },
-                    {
-                      "type": "string",
-                      "value": "h4"
-                    },
-                    {
-                      "type": "string",
-                      "value": "h5"
-                    },
-                    {
-                      "type": "string",
-                      "value": "h6"
-                    },
-                    {
-                      "type": "string",
-                      "value": "blockquote"
                     }
                   ]
                 },
@@ -5351,16 +5348,7 @@
                 "type": "objectAttribute",
                 "value": {
                   "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "bullet"
-                    },
-                    {
-                      "type": "string",
-                      "value": "number"
-                    }
-                  ]
+                  "of": []
                 },
                 "optional": true
               },
