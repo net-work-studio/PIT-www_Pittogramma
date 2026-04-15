@@ -1,0 +1,108 @@
+src/components/modules/project/designer-names-row.tsx
+  76a62288fcbf24f3 1-12,14-15,20-23,27-32,34-43,45-49,54,56-72
+  db39c768abfa9370 13,16-19,24-26,33,44,50-53
+src/components/modules/designer/designer-modal.tsx
+  db39c768abfa9370 3,25-27,29-42,46,52,57-62,70,81,89-104,107-127,129,131,133-135,138-170,172-190,192-212,214
+  76a62288fcbf24f3 1-2,4-24,28,43-45,47-51,53-56,63-69,71-80,82-88,105-106,128,130,132,136-137,171,191,213,215-218
+src/app/(frontend)/(features)/projects/[slug]/page.tsx
+  db39c768abfa9370 96
+src/components/modules/project/project-meta-item.tsx
+  b89394558044144b 1-20
+src/sanity/lib/queries.ts
+  e4deb4de13ed8dd2 251,279-347
+  76a62288fcbf24f3 361-369,383-385
+  db39c768abfa9370 370-382
+src/components/modules/project/project-info.tsx
+  76a62288fcbf24f3 1,4,6
+  db39c768abfa9370 17,32,42-46
+src/sanity/types.ts
+  76a62288fcbf24f3 2572-2578
+  db39c768abfa9370 579-580,813,2180,2189-2190,2276,2285-2286,2542,2579-2593,4095
+src/sanity/extract.json
+  db39c768abfa9370 3113-3131,3174,4540-4543
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "077b671327fb800866bdd03d114fd3be238f22a9",
+  "prompts": {
+    "76a62288fcbf24f3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "809fc764-3626-4008-b8dc-85746ccaf978",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 263,
+      "total_deletions": 24,
+      "accepted_lines": 170,
+      "overriden_lines": 1
+    },
+    "b89394558044144b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5c807852-ca8d-4294-b5fd-1f4d9f172bbf",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 20,
+      "overriden_lines": 0
+    },
+    "c06a4c4cae288d9c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "13ff251b-9547-456f-9719-c131491d0755",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 8,
+      "total_deletions": 0,
+      "accepted_lines": 8,
+      "overriden_lines": 0
+    },
+    "d2ce1682c0757158": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "15150f87-857f-4b31-9371-99d7c39d8389",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 177,
+      "total_deletions": 2,
+      "accepted_lines": 22,
+      "overriden_lines": 0
+    },
+    "db39c768abfa9370": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "63069c20-d5c8-4692-8879-3522899f8ae3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 232,
+      "total_deletions": 100,
+      "accepted_lines": 232,
+      "overriden_lines": 0
+    },
+    "e4deb4de13ed8dd2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5fcb9f13-afd1-4323-b1cd-455f4f237d1f",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 203,
+      "total_deletions": 37,
+      "accepted_lines": 189,
+      "overriden_lines": 0
+    }
+  }
+}
