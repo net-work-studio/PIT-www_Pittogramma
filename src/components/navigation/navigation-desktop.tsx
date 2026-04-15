@@ -12,8 +12,14 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import type { Resource } from "./resources-navigation.data";
 
-export function NavigationDesktop() {
+export function NavigationDesktop({
+  resources,
+}: {
+  resources: Resource[];
+}) {
+
   return (
     <NavigationMenu
       className="absolute right-1/2 left-1/2 hidden -translate-x-1/2 lg:flex"
@@ -27,7 +33,6 @@ export function NavigationDesktop() {
               <ListItem href="/projects" title="Projects" />
               <ListItem href="/interviews" title="Interviews" />
               <ListItem href="/designers" title="Designers" />
-              <ListItem href="/billboard" title="Billboard" />
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -35,13 +40,9 @@ export function NavigationDesktop() {
           <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="w-100">
-              <ListItem href="/bibliography" title="Bibliography" />
-              <ListItem href="/bookshops" title="Bookshops" />
-              <ListItem href="/glossary" title="Glossary" />
-              <ListItem href="/institutes" title="Institutes" />
-              <ListItem href="/studios-agencies" title="Studios & Agencies" />
-              <ListItem href="/type-foundries" title="Type Foundries" />
-              <ListItem href="/websites" title="Websites" />
+              {resources.map((res) => (
+                <ListItem key={res.href} href={res.href} title={res.label} />
+              ))}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>

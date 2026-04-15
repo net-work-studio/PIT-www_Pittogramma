@@ -1,23 +1,20 @@
 "use client";
 
-import Image from "next/image";
+import type { ComponentProps, Ref } from "react";
+
+import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { getBlurDataUrl, urlFor } from "@/sanity/lib/image";
 import type { DESIGNERS_QUERY_RESULT } from "@/sanity/types";
 
 type Designer = DESIGNERS_QUERY_RESULT[number];
 
-interface DesignerCardProps {
+interface DesignerCardProps extends Omit<ComponentProps<"button">, "children"> {
   designer: Designer;
-  onClick: () => void;
+  ref?: Ref<HTMLButtonElement>;
 }
 
-export default function DesignerCard({ designer, onClick }: DesignerCardProps) {
-  const image = designer.portrait?.image
-    ? urlFor(designer.portrait.image).width(800).height(600).url()
-    : "";
-
-  const blurDataURL = getBlurDataUrl(designer.portrait);
+export default function DesignerCard({ designer, ref, ...props }: DesignerCardProps) {
+  const hasImage = Boolean(designer.portrait?.image?.asset);
 
   const locationParts = [designer.place?.city, designer.place?.country].filter(
     Boolean
@@ -25,24 +22,22 @@ export default function DesignerCard({ designer, onClick }: DesignerCardProps) {
 
   return (
     <button
+      {...props}
       className="span-col-1 group col-span-1 flex h-fit w-full cursor-pointer flex-col items-start justify-center gap-2.5 rounded-[1.25rem] text-left"
-      onClick={onClick}
+      ref={ref}
       type="button"
     >
       <AspectRatio
         className="relative overflow-hidden rounded-lg"
         ratio={4 / 3}
       >
-        {image ? (
-          <Image
+        {hasImage ? (
+          <SanityImage
             alt={designer.name ?? ""}
-            className="h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
+            className="h-full w-full rounded-lg transition-transform duration-300 group-hover:scale-105"
             fill
-            quality={75}
-            src={image}
-            {...(blurDataURL
-              ? { placeholder: "blur" as const, blurDataURL }
-              : {})}
+            sizes="(min-width: 768px) 25vw, 50vw"
+            source={designer.portrait}
           />
         ) : (
           <div className="h-full w-full rounded-lg bg-neutral-200" />

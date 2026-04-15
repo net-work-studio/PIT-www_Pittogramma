@@ -127,7 +127,26 @@ export const DESIGNERS_QUERY = defineQuery(`
     },
     birthYear,
     bio,
-    place->{ _id, name, city, country, countryCode, lat, lng }
+    place->{ _id, name, city, country, countryCode, lat, lng },
+    socialLinks {
+      links[] {
+        _key,
+        platform,
+        url
+      }
+    },
+    education[] {
+      _key,
+      institute->{ _id, name },
+      degree,
+      courseName,
+      year
+    },
+    "projects": *[_type == "project" && references(^._id)] | order(_createdAt desc) {
+      _id,
+      title,
+      slug
+    }
   }
 `);
 

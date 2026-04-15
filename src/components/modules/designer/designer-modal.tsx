@@ -19,14 +19,55 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
+type SocialLinkPlatform =
+  | "behance"
+  | "bluesky"
+  | "ig"
+  | "linkedin"
+  | "linktree"
+  | "mastodon"
+  | "spotify"
+  | "substack"
+  | "tiktok"
+  | "website"
+  | "x";
 
-type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
-type SocialLink = NonNullable<
-  NonNullable<Designer["socialLinks"]>["links"]
->[number];
+interface SocialLink {
+  _key: string;
+  platform: SocialLinkPlatform;
+  url: string;
+}
 
-const PLATFORM_LABELS: Record<SocialLink["platform"], string> = {
+export interface DesignerForModal {
+  _id?: string;
+  name: string | null;
+  portrait: {
+    image?: {
+      asset?: unknown;
+      hotspot?: unknown;
+      crop?: unknown;
+    } | null;
+    alt?: string | null;
+  } | null;
+  bio: string | null;
+  birthYear: number | null;
+  socialLinks: {
+    links?: SocialLink[] | null;
+  } | null;
+  education: Array<{
+    _key: string;
+    degree: string | null;
+    courseName?: string | null;
+    year: number | null;
+  }> | null;
+  projects?: Array<{
+    _id: string;
+    title: string | null;
+    slug: { current: string };
+  }> | null;
+}
+
+const PLATFORM_LABELS: Record<SocialLinkPlatform, string> = {
   behance: "Behance",
   bluesky: "Bluesky",
   ig: "Instagram",
@@ -41,7 +82,7 @@ const PLATFORM_LABELS: Record<SocialLink["platform"], string> = {
 };
 
 interface DesignerModalProps {
-  designer: Designer;
+  designer: DesignerForModal;
   children: ReactNode;
   currentProjectId?: string;
 }
@@ -90,7 +131,7 @@ function DesignerModalContent({
   designer,
   currentProjectId,
 }: {
-  designer: Designer;
+  designer: DesignerForModal;
   currentProjectId?: string;
 }) {
   const {

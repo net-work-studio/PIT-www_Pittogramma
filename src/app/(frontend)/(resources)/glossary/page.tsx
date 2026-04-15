@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import SearchInput from "@/components/feat/search-input";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import PageHeader from "@/components/shared/page-header";
+import { getEnabledResources, isResourceEnabled, isSearchEnabled } from "@/lib/feature-flags";
 import {
   Accordion,
   AccordionContent,
@@ -84,6 +86,8 @@ function GlossaryCard({ word, definition }: GlossaryCardProps) {
 }
 
 export default async function Page() {
+  if (!isResourceEnabled("glossary")) notFound();
+
   const { data: glossaryItems } = await sanityFetch({ query: GLOSSARY_QUERY });
 
   const groupedGlossary = groupByFirstLetter(glossaryItems);
@@ -96,8 +100,8 @@ export default async function Page() {
           subtitle="A list of the most common and used terms in the design industry"
           title="Glossary"
         />
-        <ResourcesNavigation />
-        <SearchInput />
+        <ResourcesNavigation resources={getEnabledResources()} />
+        {isSearchEnabled("glossary") && <SearchInput />}
       </div>
       <section className="columns-2 gap-2.5 space-y-5 pt-30">
         {groupedGlossary.length > 0 ? (
