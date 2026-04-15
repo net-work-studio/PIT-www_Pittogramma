@@ -238,10 +238,42 @@ export const PROJECTS_QUERY = defineQuery(`
     designers[]{ ...@->{ _id, name, slug, portrait }, _key },
     tags[]->{
       _id,
-      name
+      name,
+      "slug": slug.current
     },
     ${SEO_FIELDS}
   }
+`);
+
+export const PROJECTS_FILTERED_QUERY = defineQuery(`
+  *[_type == "project"
+    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
+  ] | order(_createdAt desc) [$start...$end] {
+    _id,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    title,
+    slug,
+    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    tags[]->{
+      _id,
+      name,
+      "slug": slug.current
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
+export const PROJECTS_COUNT_QUERY = defineQuery(`
+  count(*[_type == "project"
+    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
+  ])
+`);
+
+export const PROJECTS_TAGS_QUERY = defineQuery(`
+  array::unique(*[_type == "project" && defined(tags)].tags[]->{ _id, name, "slug": slug.current })
 `);
 
 export const PROJECT_QUERY = defineQuery(`
@@ -401,11 +433,55 @@ export const INTERVIEWS_QUERY = defineQuery(`
     readingTime,
     tags[]->{
       _id,
-      name
+      name,
+      "slug": slug.current
     },
     introText,
     ${SEO_FIELDS}
   }
+`);
+
+export const INTERVIEWS_FILTERED_QUERY = defineQuery(`
+  *[_type == "interview"
+    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
+  ] | order(publishingDate.date desc) [$start...$end] {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    designersAndProfessionals[]{ ...@->{ _id, name }, _key },
+    studio->{
+      _id,
+      name
+    },
+    typeFoundry->{
+      _id,
+      name
+    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
+    readingTime,
+    tags[]->{
+      _id,
+      name,
+      "slug": slug.current
+    },
+    introText,
+    ${SEO_FIELDS}
+  }
+`);
+
+export const INTERVIEWS_COUNT_QUERY = defineQuery(`
+  count(*[_type == "interview"
+    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
+  ])
+`);
+
+export const INTERVIEWS_TAGS_QUERY = defineQuery(`
+  array::unique(*[_type == "interview" && defined(tags)].tags[]->{ _id, name, "slug": slug.current })
 `);
 
 export const INTERVIEW_QUERY = defineQuery(`

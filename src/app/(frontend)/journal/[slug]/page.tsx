@@ -133,11 +133,11 @@ export default async function JournalArticlePage({
                   {labelConfig.label}
                 </Badge>
               )}
-              <h1 className="text-2xl leading-tight lg:text-[2rem]">
+              <h1 className="text-3xl text-pretty">
                 {article.title}
               </h1>
               {article.excerpt ? (
-                <p className="text-base text-muted-foreground leading-tight lg:text-[2rem]">
+                <p className="text-2xl text-pretty text-muted-foreground">
                   {article.excerpt}
                 </p>
               ) : null}

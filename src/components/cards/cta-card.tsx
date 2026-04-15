@@ -40,7 +40,7 @@ export default function CtaCard({
   const isExternal = resolvedLinkType === "external" && externalUrl;
 
   const buttonElement = href ? (
-    <Button asChild variant="outline">
+    <Button asChild>
       {isExternal ? (
         <a href={href} rel="noopener noreferrer" target="_blank">
           {buttonText}
@@ -50,7 +50,7 @@ export default function CtaCard({
       )}
     </Button>
   ) : (
-    <Button variant="outline">{buttonText}</Button>
+    <Button>{buttonText}</Button>
   );
 
   if (resolvedVariant === "withImage" && image) {
@@ -72,7 +72,7 @@ export default function CtaCard({
   }
 
   return (
-    <div className="flex flex-col items-center justify-start gap-6 rounded-lg bg-secondary p-5 text-3xl">
+    <div className="flex flex-col items-center justify-start gap-6 text-balance rounded-lg bg-secondary p-5 text-center text-3xl">
       {headline && <h2>{headline}</h2>}
       {buttonElement}
     </div>

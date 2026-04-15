@@ -74,8 +74,16 @@
   ); /* ~#333333 - hover/accent */
   --color-pit-dark-border: oklch(0.25 0 0); /* ~#3A3A3A - borders */
 
-  --text-3xl: 2rem; /* 32px */
+  /* Fluid typography */
+  --fluid-16-32: clamp(1rem, 0.6667rem + 1.4815vw, 2rem);
+  --fluid-16-24: clamp(1rem, 0.8333rem + 0.7407vw, 1.5rem);
+
+  /* Typography */
+  --text-3xl: var(--fluid-16-32);
+  --text-2xl: var(--fluid-16-24);
   --text-xxs: 0.625rem;
+
+
 }
 
 :root {
