@@ -1,0 +1,38 @@
+src/lib/feature-flags.ts
+  d829d9602144844f 62-63
+src/app/(frontend)/(resources)/glossary/page.tsx
+  fbb3108d2a01e819 47-70,118,131,133-144
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "edfb17cc094c62f5f5c05c1f8fc7e5f9dc1c4500",
+  "prompts": {
+    "d829d9602144844f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2886fe49-8040-4650-8ff6-604838f40b0c",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 1,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "fbb3108d2a01e819": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b787516b-3b0b-4349-8949-bbd9f145c9a7",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 41,
+      "total_deletions": 11,
+      "accepted_lines": 38,
+      "overriden_lines": 0
+    }
+  }
+}
