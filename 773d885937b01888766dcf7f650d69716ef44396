@@ -1,0 +1,27 @@
+src/app/(frontend)/(features)/projects/page.tsx
+  1b6435a4cd9af0ad 55-56
+src/app/(frontend)/(features)/interviews/page.tsx
+  1b6435a4cd9af0ad 55-56
+src/sanity/schemaTypes/documents/event.ts
+  1b6435a4cd9af0ad 70-72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "773d885937b01888766dcf7f650d69716ef44396",
+  "prompts": {
+    "1b6435a4cd9af0ad": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e49bb844-9b3f-4540-a5f3-dfce2f24a394",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 7,
+      "total_deletions": 4,
+      "accepted_lines": 7,
+      "overriden_lines": 0
+    }
+  }
+}
