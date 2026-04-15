@@ -1,0 +1,23 @@
+.claude/CLAUDE.md
+  1b6435a4cd9af0ad 4-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "6c9fd897183b1b40c83faa6a69a8328dfd33e408",
+  "prompts": {
+    "1b6435a4cd9af0ad": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e49bb844-9b3f-4540-a5f3-dfce2f24a394",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 0,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
