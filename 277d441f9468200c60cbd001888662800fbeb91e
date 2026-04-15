@@ -1,0 +1,97 @@
+src/components/resources/websites-content.tsx
+  0b66532f905cc175 9,95-96,102-103,106-107,110,113-119,121,131-149,151-169
+src/app/(frontend)/(resources)/glossary/page.tsx
+  0b66532f905cc175 2,7,89-90,103-104
+src/app/(frontend)/(resources)/studios-agencies/page.tsx
+  0b66532f905cc175 1-2,6,11,24,26-30
+src/app/(frontend)/(resources)/type-foundries/page.tsx
+  0b66532f905cc175 1-2,6,11,24,26-30
+src/components/resources/studios-content.tsx
+  0b66532f905cc175 10,89-90,93-95,109,112-119,121,132-146,148-162,164-168
+src/app/(frontend)/(resources)/bookshops/page.tsx
+  0b66532f905cc175 1-2,6,11,24,26-30
+src/components/navigation/resources-navigation.data.ts
+  0b66532f905cc175 3,8,13,18,23,28,33,38-39
+src/app/(frontend)/(resources)/websites/page.tsx
+  0b66532f905cc175 1-2,6,12,32,34-39
+src/app/(frontend)/(resources)/bibliography/page.tsx
+  0b66532f905cc175 2,7,18,38,40-45
+src/components/navigation/resources-navigation.tsx
+  0b66532f905cc175 6,8-12
+src/components/modules/designer/designer-modal.tsx
+  7cff3c2da9e43683 22-33,35-39,41-68,70,85,134
+src/app/(frontend)/(resources)/institutes/page.tsx
+  0b66532f905cc175 1-2,6,11,24,26-30
+src/components/modules/designer/designer-grid.tsx
+  7cff3c2da9e43683 5,13-19
+src/components/navigation/navigation-desktop.tsx
+  0b66532f905cc175 15,17-21,43-45
+src/components/shared/header.tsx
+  0b66532f905cc175 5,10-11,17,25
+src/components/resources/bookshops-content.tsx
+  0b66532f905cc175 14,46-47,50-52,64,67-74,76,85-99,101-115,117-121
+src/components/resources/institutes-content.tsx
+  0b66532f905cc175 15,55-56,59-61,73,76-83,85,96-110,112-126,128-132
+src/components/navigation/navigation-mobile.tsx
+  0b66532f905cc175 4,9,11-14,16-19,21-23,27-31,35-62
+src/components/resources/type-foundries-content.tsx
+  0b66532f905cc175 10,70-71,76-77,79-80,94,97-104,106,116-130,132-146,148-152
+src/components/resources/bibliography-content.tsx
+  0b66532f905cc175 8,14-15,21-22,25-26,29,32-38,40,52-61
+src/components/navigation/resources-header.tsx
+  0b66532f905cc175 1,14
+src/lib/feature-flags.ts
+  0b66532f905cc175 1-72
+src/components/modules/designer/designer-card.tsx
+  7cff3c2da9e43683 3-5,11,13,16-17,25,27,34-35,37,39-40
+src/sanity/lib/queries.ts
+  7cff3c2da9e43683 130-149
+src/sanity/types.ts
+  7cff3c2da9e43683 2012,2046-2078,2481,4120,4125
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "277d441f9468200c60cbd001888662800fbeb91e",
+  "prompts": {
+    "0b66532f905cc175": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "25cf59c1-6bdb-4b7b-952d-f74919550137",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 539,
+      "total_deletions": 312,
+      "accepted_lines": 504,
+      "overriden_lines": 0
+    },
+    "7cff3c2da9e43683": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a933839f-7fd9-4bb3-bbd9-111bb963b15b",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 130,
+      "total_deletions": 62,
+      "accepted_lines": 128,
+      "overriden_lines": 0
+    },
+    "e88cbc871740ac89": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8351312b-79fb-4799-91c5-013f718f1fbb",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 2,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    }
+  }
+}
