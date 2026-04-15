@@ -44,15 +44,18 @@ export default function FilterBar({
 
   const pushUrl = useCallback(
     (slugs: string[]) => {
-      const params = new URLSearchParams();
+      const params = new URLSearchParams(searchParams.toString());
       if (slugs.length > 0) {
         params.set("tags", slugs.join(","));
+      } else {
+        params.delete("tags");
       }
-      // Omit page param to reset to page 1 on filter change
+      // Reset to page 1 on filter change
+      params.delete("page");
       const qs = params.toString();
       router.push(qs ? `${pathname}?${qs}` : pathname);
     },
-    [router, pathname]
+    [router, pathname, searchParams]
   );
 
   const toggleTag = useCallback(
@@ -73,8 +76,12 @@ export default function FilterBar({
   );
 
   const clearAll = useCallback(() => {
-    router.push(pathname);
-  }, [router, pathname]);
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("tags");
+    params.delete("page");
+    const qs = params.toString();
+    router.push(qs ? `${pathname}?${qs}` : pathname);
+  }, [router, pathname, searchParams]);
 
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -135,7 +142,7 @@ export default function FilterBar({
       )}
 
       {activeSlugs.length > 0 && (
-        <span className="ml-auto font-mono text-sm text-muted-foreground">
+        <span className="font-mono text-sm text-muted-foreground">
           {totalCount} {label}
         </span>
       )}

@@ -3,6 +3,8 @@ import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import FilterBar from "@/components/feat/filter/filter";
 import Pagination from "@/components/feat/pagination/pagination";
+import SortDropdown from "@/components/feat/sort/sort-dropdown";
+import { isValidSort } from "@/components/feat/sort/sort-options";
 import PageHeader from "@/components/shared/page-header";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -10,8 +12,8 @@ import type { SeoModule } from "@/lib/types/seo";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import { sanityFetch } from "@/sanity/lib/live";
 import {
+  getProjectsFilteredQuery,
   PROJECTS_COUNT_QUERY,
-  PROJECTS_FILTERED_QUERY,
   PROJECTS_PAGE_QUERY,
   PROJECTS_TAGS_QUERY,
 } from "@/sanity/lib/queries";
@@ -43,9 +45,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ProjectsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ tags?: string; page?: string }>;
+  searchParams: Promise<{ tags?: string; page?: string; sort?: string }>;
 }) {
-  const { tags: tagsParam, page: pageParam } = await searchParams;
+  const { tags: tagsParam, page: pageParam, sort: sortParam } =
+    await searchParams;
+  const sort = isValidSort(sortParam) ? sortParam : "newest";
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
   const hasTags = tagSlugs.length > 0;
   const page = Math.max(1, Number.parseInt(pageParam ?? "1", 10));
@@ -59,7 +63,7 @@ export default async function ProjectsPage({
     { data: pageSettings },
   ] = await Promise.all([
     sanityFetch({
-      query: PROJECTS_FILTERED_QUERY,
+      query: getProjectsFilteredQuery(sort),
       params: { tags: tagSlugs, hasTags, start, end },
     }),
     sanityFetch({
@@ -110,11 +114,14 @@ export default async function ProjectsPage({
         title={pageSettings?.title ?? "Projects"}
       />
       <div className="space-y-10 pb-10">
-        <FilterBar
-          availableTags={uniqueTags}
-          totalCount={totalCount}
-          label="projects"
-        />
+        <div className="flex items-start justify-between gap-4">
+          <FilterBar
+            availableTags={uniqueTags}
+            totalCount={totalCount}
+            label="projects"
+          />
+          <SortDropdown />
+        </div>
         {projectCards.length === 0 ? (
           <p className="py-20 text-center text-muted-foreground">
             No results found

@@ -66,7 +66,7 @@ export default function EventInfo({
           <h1 className="text-3xl leading-tight lg:text-[2rem]">{title}</h1>
         ) : null}
         {type ? (
-          <h2 className="text-base text-muted-foreground leading-tight lg:text-2xl">
+          <h2 className="text-base uppercase text-muted-foreground leading-tight lg:text-2xl">
             {type}
           </h2>
         ) : null}

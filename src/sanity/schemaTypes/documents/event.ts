@@ -32,6 +32,16 @@ export const event = defineType({
       name: "type",
       title: "Type",
       group: "content",
+      options: {
+        list: [
+          { title: "Talk", value: "talk" },
+          { title: "Workshop", value: "workshop" },
+          { title: "5+1", value: "5+1" },
+          { title: "Event", value: "event" },
+        ],
+        layout: "dropdown",
+      },
+      initialValue: "event",
       validation: (e) => e.required(),
     }),
     defineField({
@@ -53,7 +63,17 @@ export const event = defineType({
         ],
         layout: "dropdown",
       },
-      validation: (e) => e.required(),
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const dateStart = (context.parent as { dateStart?: string })
+            ?.dateStart;
+          const isFuture =
+            !dateStart || dateStart >= new Date().toISOString().split("T")[0];
+          if (isFuture && !value) {
+            return "Status is required for upcoming events";
+          }
+          return true;
+        }),
     }),
     defineField({
       type: "url",
