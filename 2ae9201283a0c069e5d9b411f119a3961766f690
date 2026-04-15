@@ -1,0 +1,23 @@
+src/components/modules/project/project-info.tsx
+  b89394558044144b 2,64,67,70,73,75-81
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "2ae9201283a0c069e5d9b411f119a3961766f690",
+  "prompts": {
+    "b89394558044144b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5c807852-ca8d-4294-b5fd-1f4d9f172bbf",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 33,
+      "total_deletions": 32,
+      "accepted_lines": 29,
+      "overriden_lines": 4
+    }
+  }
+}
