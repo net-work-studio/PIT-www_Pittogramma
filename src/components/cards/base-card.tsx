@@ -56,7 +56,7 @@ export default function BaseCard({
     : "(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
 
   const imageClassName =
-    "h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-99";
+    "h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-103";
 
   return (
     <Link
@@ -100,13 +100,13 @@ export default function BaseCard({
         )}
       </AspectRatio>
       {variant ? <Badge variant={variant}>{badgeLabel}</Badge> : null}
-      <div className="inline-flex w-full flex-col items-start justify-start gap-3">
-        <hgroup className="flex flex-col items-start justify-start gap-2 self-stretch">
+      <div className="inline-flex w-full flex-col items-start justify-start gap-0">
+        <hgroup className="flex flex-col items-start justify-start gap-0   self-stretch">
           <h3 className="justify-start self-stretch font-normal font-sans text-base text-black">
             {title}
           </h3>
           {authors && authors.length > 0 ? (
-            <ul className="flex flex-wrap items-start justify-start gap-1 font-normal font-sans text-neutral-400 text-xs">
+            <ul className="flex flex-wrap items-start justify-start gap-0 font-normal font-sans text-neutral-400 text-sm">
               {authors.map((author, index) => (
                 <li key={author.name}>
                   {author.name}

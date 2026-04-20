@@ -123,11 +123,11 @@ export default async function InterviewPage({
 
         {/* Bio Section */}
         {interview.introText ? (
-          <div className="order-3 border-foreground border-t-[0.5px] px-2.5 pt-6 lg:order-2 lg:border-t-0 lg:pt-20">
+          <div className="order-3 bg-gray-200 border-foreground border-t-[0.5px] px-2.5 pt-6 lg:order-2 lg:border-t-0 lg:pt-20">
             <p className="font-mono text-muted-foreground text-xs uppercase lg:text-2xl">
               Bio
             </p>
-            <p className="text-base leading-normal lg:text-[2rem] lg:leading-tight">
+            <p className="text-2xl max-w-prose">
               {interview.introText}
             </p>
           </div>
