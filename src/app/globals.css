@@ -268,6 +268,11 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  body[data-scroll-locked] {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+  }
 }
 
 /* Webkit overlay scrollbars */
@@ -280,15 +285,15 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: oklch(0 0 0 / 0.15);
+  background: oklch(0 0 0 / 0.45);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(0 0 0 / 0.3);
+  background: oklch(0 0 0 / 0.7);
 }
 .dark ::-webkit-scrollbar-thumb {
-  background: oklch(1 0 0 / 0.15);
+  background: oklch(1 0 0 / 0.45);
 }
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: oklch(1 0 0 / 0.3);
+  background: oklch(1 0 0 / 0.7);
 }
