@@ -51,7 +51,7 @@ export default function FeaturedHero({
       </div>
 
       {/* Image column — 3 of 4 */}
-      <div className="relative aspect-4/3 max-h-165 h-full w-full overflow-hidden rounded-lg transition-transform duration-300">
+      <div className="relative aspect-4/3 max-h-150 w-full  overflow-hidden rounded-lg transition-transform duration-300">
         <SanityImage
           alt={title}
           className="h-full w-full group-hover:scale-103 transition-transform duration-300 object-cover"

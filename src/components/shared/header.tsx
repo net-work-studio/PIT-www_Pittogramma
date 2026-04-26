@@ -5,6 +5,8 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { getEnabledResources } from "@/lib/feature-flags";
 import { NavigationDesktop } from "../navigation/navigation-desktop";
 import { NavigationMobile } from "../navigation/navigation-mobile";
+import { Search } from "lucide-react";
+import { Button } from "../ui/button";
 
 export default function Header() {
   const enabledResources = getEnabledResources();
@@ -19,6 +21,11 @@ export default function Header() {
       <div className="flex items-center gap-2.5">
         <div className="hidden md:flex">
           <SubmitDialog />
+        </div>
+        <div className="hidden md:flex">
+          <Button size="icon" variant="outline">
+            <Search size={16} />
+          </Button>
         </div>
         <div className="hidden lg:flex">
           <ModeToggle />
