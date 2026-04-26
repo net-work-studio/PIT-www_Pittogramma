@@ -11,8 +11,9 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 right-0 left-0 z-20 flex w-full flex-row items-center justify-between border-foreground/5 border-b-[0.5px] bg-background px-4 py-2.5">
-      <Link href="/">
-        <Mark />
+      <Link href="/" className="flex items-center">
+        <span className="sr-only">Pittogramma — Home</span>
+        <Mark aria-hidden="true" focusable="false" />
       </Link>
       <NavigationDesktop resources={enabledResources} />
       <div className="flex items-center gap-2.5">

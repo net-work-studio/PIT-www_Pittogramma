@@ -82,7 +82,7 @@ export default function BaseCard({
               src={image}
             />
           ) : (
-            <div className="h-full w-full rounded-lg bg-neutral-200" />
+            <div className="h-full w-full rounded-lg bg-secondary" />
           )
         ) : image &&
           typeof image === "object" &&
@@ -96,17 +96,17 @@ export default function BaseCard({
             source={image}
           />
         ) : (
-          <div className="h-full w-full rounded-lg bg-neutral-200" />
+          <div className="h-full w-full rounded-lg bg-secondary" />
         )}
       </AspectRatio>
       {variant ? <Badge variant={variant}>{badgeLabel}</Badge> : null}
       <div className="inline-flex w-full flex-col items-start justify-start gap-0">
         <hgroup className="flex flex-col items-start justify-start gap-0   self-stretch">
-          <h3 className="justify-start self-stretch font-normal font-sans text-base text-black">
+          <h3 className="justify-start self-stretch font-normal font-sans text-base text-foreground">
             {title}
           </h3>
           {authors && authors.length > 0 ? (
-            <ul className="flex flex-wrap items-start justify-start gap-0 font-normal font-sans text-neutral-400 text-sm">
+            <ul className="flex flex-wrap items-start justify-start gap-0 font-normal font-sans text-muted-foreground text-sm">
               {authors.map((author, index) => (
                 <li key={author.name}>
                   {author.name}
