@@ -1,0 +1,23 @@
+src/app/globals.css
+  ebacccc458746151 271-275,288,292,295,298
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "3c3aa3fd23febc50741a19158a777ba7256a0fd0",
+  "prompts": {
+    "ebacccc458746151": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "48da52ae-bb1e-40f6-8134-4d7928afb754",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 18,
+      "total_deletions": 13,
+      "accepted_lines": 9,
+      "overriden_lines": 0
+    }
+  }
+}
