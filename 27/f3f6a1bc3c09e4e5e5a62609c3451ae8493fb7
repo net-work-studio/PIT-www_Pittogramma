@@ -1,0 +1,23 @@
+src/components/cards/base-card.tsx
+  42c7ad592461e2a3 110-112
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "27f3f6a1bc3c09e4e5e5a62609c3451ae8493fb7",
+  "prompts": {
+    "42c7ad592461e2a3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "40d2a4d3-f631-48aa-8d25-ba67dde9bc08",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 8,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
