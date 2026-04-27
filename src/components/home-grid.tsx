@@ -8,7 +8,20 @@ export default function HomeGrid({ items }: { items: HOME_FEED_QUERY_RESULT }) {
         const href =
           item._type === "project"
             ? `/projects/${item.slug?.current ?? ""}`
-            : `/interviews/${item.slug?.current ?? ""}`;
+            : item._type === "journal"
+              ? `/journal/${item.slug?.current ?? ""}`
+              : `/interviews/${item.slug?.current ?? ""}`;
+
+        const variant =
+          item._type === "journal"
+            ? item.label === "articles"
+              ? "article"
+              : item.label === "diary"
+                ? "diary"
+                : item.label === "baseline"
+                  ? "baseline"
+                  : "journal"
+            : item._type;
 
         return (
           <BaseCard
@@ -29,7 +42,7 @@ export default function HomeGrid({ items }: { items: HOME_FEED_QUERY_RESULT }) {
             image={item.cover}
             key={item._id}
             title={item.title ?? ""}
-            variant={item._type}
+            variant={variant}
           />
         );
       })}

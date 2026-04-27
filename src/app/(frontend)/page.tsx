@@ -15,9 +15,18 @@ import {
 } from "@/sanity/lib/queries";
 import type { HOME_FEED_QUERY_RESULT } from "@/sanity/types";
 
-// Section sizes: 4 + 12 + 8 = 24 items
+// 1 hero + 4 + 12 + 12 = 29 items, all rows full multiples of 4 (no orphans)
 const FIRST_SECTION = 4;
 const SECOND_SECTION = 12;
+const THIRD_SECTION = 12;
+
+const buildLocalToday = () => {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -38,10 +47,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
+  const today = buildLocalToday();
   const [{ data: homePage }, { data: feedItems }, { data: recentUpdates }] =
     await Promise.all([
       sanityFetch({ query: HOME_PAGE_QUERY }),
-      sanityFetch({ query: HOME_FEED_QUERY }),
+      sanityFetch({ query: HOME_FEED_QUERY, params: { today } }),
       sanityFetch({ query: RECENT_UPDATES_QUERY }),
     ]);
 
@@ -64,7 +74,10 @@ export default async function Home() {
     FIRST_SECTION,
     FIRST_SECTION + SECOND_SECTION
   );
-  const thirdSection = gridItems.slice(FIRST_SECTION + SECOND_SECTION);
+  const thirdSection = gridItems.slice(
+    FIRST_SECTION + SECOND_SECTION,
+    FIRST_SECTION + SECOND_SECTION + THIRD_SECTION
+  );
 
   const featuredSubtitle = (() => {
     if (!featuredItem) return null;
@@ -75,7 +88,7 @@ export default async function Home() {
         (featuredItem as FeedItem & { typeFoundry?: string }).typeFoundry;
       return names ? `Interview to ${names}` : null;
     }
-    // project
+    // project or journal: bare author names
     const names = featuredItem.people?.map((p) => p.name).join(", ");
     return names || null;
   })();
@@ -88,12 +101,16 @@ export default async function Home() {
         {/* Featured hero */}
         {featuredItem?.cover?.image?.asset && (
           <FeaturedHero
-            contentType={featuredItem._type as "project" | "interview"}
+            contentType={
+              featuredItem._type as "project" | "interview" | "journal"
+            }
             cover={featuredItem.cover}
             href={
               featuredItem._type === "project"
                 ? `/projects/${featuredItem.slug?.current ?? ""}`
-                : `/interviews/${featuredItem.slug?.current ?? ""}`
+                : featuredItem._type === "journal"
+                  ? `/journal/${featuredItem.slug?.current ?? ""}`
+                  : `/interviews/${featuredItem.slug?.current ?? ""}`
             }
             subtitle={featuredSubtitle}
             title={featuredItem.title ?? ""}

@@ -42,6 +42,11 @@ export const HOME_PAGE_QUERY = defineQuery(`
         "typeFoundry": typeFoundry->name,
         introText,
       },
+      _type == "journal" => {
+        "people": authors[]{ ...@->{ _id, name }, _key },
+        label,
+        excerpt,
+      },
       tags[]->{ _id, name }
     },
     midPageCta->${CTA_PROJECTION},
@@ -51,7 +56,11 @@ export const HOME_PAGE_QUERY = defineQuery(`
 `);
 
 export const HOME_FEED_QUERY = defineQuery(`
-  *[_type in ["project", "interview"] && defined(publishingDate.date)] | order(publishingDate.date desc) [0...30] {
+  *[
+    _type in ["project", "interview", "journal"]
+    && defined(publishingDate.date)
+    && publishingDate.date <= $today
+  ] | order(publishingDate.date desc) [0...29] {
     _id,
     _type,
     title,
@@ -71,6 +80,11 @@ export const HOME_FEED_QUERY = defineQuery(`
       "typeFoundry": typeFoundry->name,
       introText,
       readingTime,
+    },
+    _type == "journal" => {
+      "people": authors[]{ ...@->{ _id, name }, _key },
+      label,
+      excerpt,
     },
     tags[]->{ _id, name }
   }

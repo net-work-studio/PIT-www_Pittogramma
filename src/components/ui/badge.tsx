@@ -17,6 +17,8 @@ const badgeVariants = cva(
           "group-hover:bg-green-500 group-hover:text-black group-hover:outline-green-500",
         baseline:
           "group-hover:bg-blue-700 group-hover:text-white group-hover:outline-blue-700",
+        journal:
+          "group-hover:bg-foreground group-hover:text-background group-hover:outline-foreground",
         interview:
           "group-hover:bg-yellow-500 group-hover:text-black group-hover:outline-yellow-500",
         feat: "group-hover:bg-background group-hover:text-foreground group-hover:outline-background",

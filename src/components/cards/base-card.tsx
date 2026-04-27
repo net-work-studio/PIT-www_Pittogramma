@@ -27,6 +27,7 @@ interface BaseCardProps {
     | "article"
     | "diary"
     | "baseline"
+    | "journal"
     | "interview"
     | "feat"
     | "event"
