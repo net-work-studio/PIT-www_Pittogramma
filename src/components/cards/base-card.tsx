@@ -107,14 +107,9 @@ export default function BaseCard({
             {title}
           </h3>
           {authors && authors.length > 0 ? (
-            <ul className="flex flex-wrap items-start justify-start gap-0 font-normal font-sans text-muted-foreground text-sm">
-              {authors.map((author, index) => (
-                <li key={author.name}>
-                  {author.name}
-                  {index < authors.length - 1 && ", "}
-                </li>
-              ))}
-            </ul>
+            <p className="font-normal font-sans text-muted-foreground text-sm">
+              {authors.map((author) => author.name).join(", ")}
+            </p>
           ) : null}
         </hgroup>
       </div>
