@@ -27,6 +27,7 @@ interface BaseCardProps {
     | "article"
     | "diary"
     | "baseline"
+    | "journal"
     | "interview"
     | "feat"
     | "event"
@@ -56,7 +57,7 @@ export default function BaseCard({
     : "(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
 
   const imageClassName =
-    "h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-99";
+    "h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-103";
 
   return (
     <Link
@@ -82,7 +83,7 @@ export default function BaseCard({
               src={image}
             />
           ) : (
-            <div className="h-full w-full rounded-lg bg-neutral-200" />
+            <div className="h-full w-full rounded-lg bg-secondary" />
           )
         ) : image &&
           typeof image === "object" &&
@@ -96,24 +97,19 @@ export default function BaseCard({
             source={image}
           />
         ) : (
-          <div className="h-full w-full rounded-lg bg-neutral-200" />
+          <div className="h-full w-full rounded-lg bg-secondary" />
         )}
       </AspectRatio>
       {variant ? <Badge variant={variant}>{badgeLabel}</Badge> : null}
-      <div className="inline-flex w-full flex-col items-start justify-start gap-3">
-        <hgroup className="flex flex-col items-start justify-start gap-2 self-stretch">
-          <h3 className="justify-start self-stretch font-normal font-sans text-base text-black">
+      <div className="inline-flex w-full flex-col items-start justify-start gap-0">
+        <hgroup className="flex flex-col items-start justify-start gap-0   self-stretch">
+          <h3 className="justify-start self-stretch font-normal font-sans text-base text-foreground">
             {title}
           </h3>
           {authors && authors.length > 0 ? (
-            <ul className="flex flex-wrap items-start justify-start gap-1 font-normal font-sans text-neutral-400 text-xs">
-              {authors.map((author, index) => (
-                <li key={author.name}>
-                  {author.name}
-                  {index < authors.length - 1 && ", "}
-                </li>
-              ))}
-            </ul>
+            <p className="font-normal font-sans text-muted-foreground text-sm">
+              {authors.map((author) => author.name).join(", ")}
+            </p>
           ) : null}
         </hgroup>
       </div>

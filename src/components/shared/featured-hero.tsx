@@ -31,7 +31,7 @@ export default function FeaturedHero({
   subtitle,
 }: FeaturedHeroProps) {
   return (
-    <Link className="group grid grid-cols-1 gap-4 xl:grid-cols-4" href={href}>
+    <Link className="group flex" href={href}>
       {/* Text column — 1 of 4 */}
       <div className="flex flex-col justify-start gap-6 xl:col-span-1">
         <div className="flex flex-col gap-4">
@@ -41,7 +41,7 @@ export default function FeaturedHero({
               {badgeLabel}
             </Badge>
           </div>
-          <h2 className="font-normal font-sans text-2xl md:text-3xl">
+          <h2 className="font-normal font-sans text-balance text-2xl md:text-3xl">
             {title}
           </h2>
           {subtitle && (
@@ -51,10 +51,10 @@ export default function FeaturedHero({
       </div>
 
       {/* Image column — 3 of 4 */}
-      <div className="relative aspect-2/1 overflow-hidden rounded-lg transition-transform duration-300 group-hover:scale-99 xl:col-span-3">
+      <div className="relative aspect-4/3 max-h-150 w-full  overflow-hidden rounded-lg transition-transform duration-300">
         <SanityImage
           alt={title}
-          className="h-full w-full"
+          className="h-full w-full group-hover:scale-103 transition-transform duration-300 object-cover"
           fill
           priority
           sizes="(max-width: 1280px) 100vw, 75vw"

@@ -57,6 +57,11 @@ export function NavigationDesktop({
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
+          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+            <Link href="/feed">Feed</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
           <NavigationMenuTrigger>Info</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="w-content">
@@ -80,7 +85,7 @@ function ListItem({
     <li {...props}>
       <NavigationMenuLink asChild>
         <Link href={href}>
-          <div className="whitespace-break-spaces text-3xl leading-none hover:text-red">
+          <div className="whitespace-break-spaces text-3xl leading-none hover:text-muted-foreground">
             {title}
           </div>
         </Link>
