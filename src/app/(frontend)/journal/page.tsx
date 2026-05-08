@@ -21,6 +21,7 @@ import {
 import type { JOURNAL_QUERY_RESULT } from "@/sanity/types";
 
 const PAGE_SIZE = 48;
+const MAX_PAGE = 100;
 
 const JOURNAL_LABEL_OPTIONS = [
   { _id: "articles", name: "Articles", slug: "articles" },
@@ -57,7 +58,9 @@ export default async function JournalPage({
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
   const hasTags = tagSlugs.length > 0;
   const parsedPage = Number.parseInt(pageParam ?? "1", 10);
-  const page = Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+  const requestedPage =
+    Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+  const page = Math.min(requestedPage, MAX_PAGE);
   const start = 0;
   const end = page * PAGE_SIZE;
 

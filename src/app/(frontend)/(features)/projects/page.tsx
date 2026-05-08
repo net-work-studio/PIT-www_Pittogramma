@@ -23,6 +23,7 @@ import type {
 } from "@/sanity/types";
 
 const PAGE_SIZE = 48;
+const MAX_PAGE = 100;
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -53,7 +54,9 @@ export default async function ProjectsPage({
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
   const hasTags = tagSlugs.length > 0;
   const parsedPage = Number.parseInt(pageParam ?? "1", 10);
-  const page = Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+  const requestedPage =
+    Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+  const page = Math.min(requestedPage, MAX_PAGE);
   const start = 0;
   const end = page * PAGE_SIZE;
 
