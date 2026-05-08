@@ -136,7 +136,6 @@ export default async function ProjectsPage({
                 image={project.image}
                 key={project.id}
                 title={project.title}
-                variant="project"
               />
             ))}
           </section>

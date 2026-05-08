@@ -17,12 +17,14 @@ import {
   getJournalFilteredQuery,
   JOURNAL_COUNT_QUERY,
   JOURNAL_PAGE_QUERY,
-  JOURNAL_TAGS_QUERY,
 } from "@/sanity/lib/queries";
-import type {
-  JOURNAL_QUERY_RESULT,
-  JOURNAL_TAGS_QUERY_RESULT,
-} from "@/sanity/types";
+import type { JOURNAL_QUERY_RESULT } from "@/sanity/types";
+
+const JOURNAL_LABEL_OPTIONS = [
+  { _id: "articles", name: "Articles", slug: "articles" },
+  { _id: "diary", name: "Diary", slug: "diary" },
+  { _id: "baseline", name: "Baseline", slug: "baseline" },
+];
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -55,7 +57,6 @@ export default async function JournalPage({
   const [
     { data: articles },
     { data: totalCount },
-    { data: availableTags },
     { data: pageSettings },
   ] = await Promise.all([
     sanityFetch({
@@ -66,14 +67,8 @@ export default async function JournalPage({
       query: JOURNAL_COUNT_QUERY,
       params: { tags: tagSlugs, hasTags },
     }),
-    sanityFetch({ query: JOURNAL_TAGS_QUERY }),
     sanityFetch({ query: JOURNAL_PAGE_QUERY }),
   ]);
-
-  const tags = (availableTags ?? []) as JOURNAL_TAGS_QUERY_RESULT;
-  const uniqueTags = Array.from(
-    new Map(tags.map((t) => [t._id, t])).values()
-  );
 
   const featuredArticle = pageSettings?.featuredArticle;
   const cta = pageSettings?.endOfPageCta;
@@ -141,7 +136,7 @@ export default async function JournalPage({
 
         <div className="flex items-start justify-between gap-4">
           <FilterBar
-            availableTags={uniqueTags}
+            availableTags={JOURNAL_LABEL_OPTIONS}
             label="articles"
             totalCount={totalCount}
           />

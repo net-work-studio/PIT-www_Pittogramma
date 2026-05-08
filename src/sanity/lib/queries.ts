@@ -347,7 +347,7 @@ export function getProjectsFilteredQuery(sort: string): string {
 export function getJournalFilteredQuery(sort: string): string {
   return `
   *[_type == "journal"
-    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
+    && ($hasTags == false || label in $tags)
   ] | order(${getSortOrder(sort)}) {
     _id,
     title,
@@ -536,12 +536,8 @@ export const JOURNAL_QUERY = defineQuery(`
 
 export const JOURNAL_COUNT_QUERY = defineQuery(`
   count(*[_type == "journal"
-    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
+    && ($hasTags == false || label in $tags)
   ])
-`);
-
-export const JOURNAL_TAGS_QUERY = defineQuery(`
-  array::unique(*[_type == "journal" && defined(tags)].tags[]->{ _id, name, "slug": slug.current })
 `);
 
 export const JOURNAL_ARTICLE_QUERY = defineQuery(`
