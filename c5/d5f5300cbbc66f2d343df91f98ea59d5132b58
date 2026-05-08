@@ -1,0 +1,29 @@
+src/app/(frontend)/(features)/projects/page.tsx
+  s_3565c8a255b4bb::t_76a4745d81befd 57-59
+  s_3565c8a255b4bb::t_7daea803bdd42b 26
+src/app/(frontend)/(features)/interviews/page.tsx
+  s_3565c8a255b4bb::t_e968fbbf533910 26
+  s_3565c8a255b4bb::t_aded4dc95c475c 57-59
+src/app/(frontend)/events/page.tsx
+  s_3565c8a255b4bb::t_8937a4fbda2afd 25
+  s_3565c8a255b4bb::t_d76471c70ee2b3 91-93
+src/app/(frontend)/journal/page.tsx
+  s_3565c8a255b4bb::t_45cdd95675ec15 24
+  s_3565c8a255b4bb::t_c0c4bf033c6a86 61-63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "c5d5f5300cbbc66f2d343df91f98ea59d5132b58",
+  "prompts": {},
+  "sessions": {
+    "s_3565c8a255b4bb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "431e344a-0843-4e12-a182-c30c80227c5f",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
