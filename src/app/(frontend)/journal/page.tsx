@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import FilterBar from "@/components/feat/filter/filter";
+import LoadMore from "@/components/feat/load-more/load-more";
 import SortDropdown from "@/components/feat/sort/sort-dropdown";
 import { isValidSort } from "@/components/feat/sort/sort-options";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
-import { Button } from "@/components/ui/button";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -19,6 +19,8 @@ import {
   JOURNAL_PAGE_QUERY,
 } from "@/sanity/lib/queries";
 import type { JOURNAL_QUERY_RESULT } from "@/sanity/types";
+
+const PAGE_SIZE = 48;
 
 const JOURNAL_LABEL_OPTIONS = [
   { _id: "articles", name: "Articles", slug: "articles" },
@@ -47,12 +49,17 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function JournalPage({
   searchParams,
 }: {
-  searchParams: Promise<{ tags?: string; sort?: string }>;
+  searchParams: Promise<{ tags?: string; page?: string; sort?: string }>;
 }) {
-  const { tags: tagsParam, sort: sortParam } = await searchParams;
+  const { tags: tagsParam, page: pageParam, sort: sortParam } =
+    await searchParams;
   const sort = isValidSort(sortParam) ? sortParam : "newest";
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
   const hasTags = tagSlugs.length > 0;
+  const parsedPage = Number.parseInt(pageParam ?? "1", 10);
+  const page = Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+  const start = 0;
+  const end = page * PAGE_SIZE;
 
   const [
     { data: articles },
@@ -61,7 +68,7 @@ export default async function JournalPage({
   ] = await Promise.all([
     sanityFetch({
       query: getJournalFilteredQuery(sort),
-      params: { tags: tagSlugs, hasTags },
+      params: { tags: tagSlugs, hasTags, start, end },
     }),
     sanityFetch({
       query: JOURNAL_COUNT_QUERY,
@@ -72,6 +79,7 @@ export default async function JournalPage({
 
   const featuredArticle = pageSettings?.featuredArticle;
   const cta = pageSettings?.endOfPageCta;
+  const totalPages = Math.max(1, Math.ceil((totalCount ?? 0) / PAGE_SIZE));
 
   type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
 
@@ -159,11 +167,7 @@ export default async function JournalPage({
           </div>
         </section>
 
-        <div className="flex items-center justify-center gap-2">
-          <Button className="rounded-full font-mono uppercase">1</Button>
-          <Button className="rounded-full font-mono uppercase">2</Button>
-          <Button className="rounded-full font-mono uppercase">3</Button>
-        </div>
+        <LoadMore currentPage={page} totalPages={totalPages} />
       </div>
       {cta && (
         <CtaCard

@@ -212,8 +212,7 @@ export const DESIGNER_QUERY = defineQuery(`
   }
 `);
 
-export const EVENTS_QUERY = defineQuery(`
-  *[_type == "event"] | order(dateStart desc) {
+const EVENT_FIELDS = `
     _id,
     title,
     slug,
@@ -232,7 +231,22 @@ export const EVENTS_QUERY = defineQuery(`
     partner->{ _id, name },
     tags[]->{ _id, name },
     ${SEO_FIELDS}
+`;
+
+export const FUTURE_EVENTS_QUERY = defineQuery(`
+  *[_type == "event" && dateStart >= $today] | order(dateStart asc) {
+    ${EVENT_FIELDS}
   }
+`);
+
+export const PAST_EVENTS_QUERY = defineQuery(`
+  *[_type == "event" && dateStart < $today] | order(dateStart desc) [$start...$end] {
+    ${EVENT_FIELDS}
+  }
+`);
+
+export const PAST_EVENTS_COUNT_QUERY = defineQuery(`
+  count(*[_type == "event" && dateStart < $today])
 `);
 
 export const EVENT_QUERY = defineQuery(`
@@ -348,7 +362,7 @@ export function getJournalFilteredQuery(sort: string): string {
   return `
   *[_type == "journal"
     && ($hasTags == false || label in $tags)
-  ] | order(${getSortOrder(sort)}) {
+  ] | order(${getSortOrder(sort)}) [$start...$end] {
     _id,
     title,
     slug,

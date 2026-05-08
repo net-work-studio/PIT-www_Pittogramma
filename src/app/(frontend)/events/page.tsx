@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
+import LoadMore from "@/components/feat/load-more/load-more";
 import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { getEventStatusConfig } from "@/lib/event-status";
@@ -9,8 +10,18 @@ import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import { sanityFetch } from "@/sanity/lib/live";
-import { EVENTS_PAGE_QUERY, EVENTS_QUERY } from "@/sanity/lib/queries";
-import type { EVENTS_QUERY_RESULT } from "@/sanity/types";
+import {
+  EVENTS_PAGE_QUERY,
+  FUTURE_EVENTS_QUERY,
+  PAST_EVENTS_COUNT_QUERY,
+  PAST_EVENTS_QUERY,
+} from "@/sanity/lib/queries";
+import type {
+  FUTURE_EVENTS_QUERY_RESULT,
+  PAST_EVENTS_QUERY_RESULT,
+} from "@/sanity/types";
+
+const PAGE_SIZE = 48;
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -42,7 +53,11 @@ interface EventCard {
   title: string;
 }
 
-function mapEventToCard(event: EVENTS_QUERY_RESULT[number]): EventCard {
+type EventDoc =
+  | FUTURE_EVENTS_QUERY_RESULT[number]
+  | PAST_EVENTS_QUERY_RESULT[number];
+
+function mapEventToCard(event: EventDoc): EventCard {
   const subtitle = event.locationName ?? event.type;
   const statusConfig = getEventStatusConfig(event.status);
 
@@ -57,22 +72,59 @@ function mapEventToCard(event: EVENTS_QUERY_RESULT[number]): EventCard {
   };
 }
 
-export default async function Page() {
-  const [{ data: events }, { data: pageSettings }] = await Promise.all([
-    sanityFetch({ query: EVENTS_QUERY }),
+function getLocalTodayString(): string {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const { page: pageParam } = await searchParams;
+  const parsedPage = Number.parseInt(pageParam ?? "1", 10);
+  const page = Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+  const start = 0;
+  const end = page * PAGE_SIZE;
+  const today = getLocalTodayString();
+
+  const [
+    { data: futureEventsData },
+    { data: pastEventsData },
+    { data: pastTotalCount },
+    { data: pageSettings },
+  ] = await Promise.all([
+    sanityFetch({
+      query: FUTURE_EVENTS_QUERY,
+      params: { today },
+    }),
+    sanityFetch({
+      query: PAST_EVENTS_QUERY,
+      params: { today, start, end },
+    }),
+    sanityFetch({
+      query: PAST_EVENTS_COUNT_QUERY,
+      params: { today },
+    }),
     sanityFetch({ query: EVENTS_PAGE_QUERY }),
   ]);
 
   const cta = pageSettings?.endOfPageCta;
-  const now = new Date().toISOString().split("T")[0];
-  const typedEvents = events as EVENTS_QUERY_RESULT;
+  const totalPagesPast = Math.max(
+    1,
+    Math.ceil((pastTotalCount ?? 0) / PAGE_SIZE)
+  );
 
-  const futureEvents = typedEvents
-    .filter((e) => e.slug?.current && e.dateStart && e.dateStart >= now)
+  const futureEvents = ((futureEventsData ?? []) as FUTURE_EVENTS_QUERY_RESULT)
+    .filter((e) => e.slug?.current)
     .map(mapEventToCard);
 
-  const pastEvents = typedEvents
-    .filter((e) => e.slug?.current && e.dateStart && e.dateStart < now)
+  const pastEvents = ((pastEventsData ?? []) as PAST_EVENTS_QUERY_RESULT)
+    .filter((e) => e.slug?.current)
     .map(mapEventToCard);
 
   return (
@@ -89,24 +141,26 @@ export default async function Page() {
           <Button className="font-mono uppercase">Filters</Button>
         </div>
 
-        <section>
-          <h2 className="mb-6 border-b pb-2 font-mono text-sm uppercase">
-            Next
-          </h2>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {futureEvents.map((event) => (
-              <BaseCard
-                authors={event.authors}
-                badgeLabel={event.badgeLabel}
-                href={event.href}
-                image={event.image}
-                key={event.id}
-                title={event.title}
-                variant={event.badgeVariant}
-              />
-            ))}
-          </div>
-        </section>
+        {futureEvents.length > 0 && (
+          <section>
+            <h2 className="mb-6 border-b pb-2 font-mono text-sm uppercase">
+              Next
+            </h2>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {futureEvents.map((event) => (
+                <BaseCard
+                  authors={event.authors}
+                  badgeLabel={event.badgeLabel}
+                  href={event.href}
+                  image={event.image}
+                  key={event.id}
+                  title={event.title}
+                  variant={event.badgeVariant}
+                />
+              ))}
+            </div>
+          </section>
+        )}
 
         <section>
           <h2 className="mb-6 border-b pb-2 font-mono text-sm uppercase">
@@ -126,11 +180,7 @@ export default async function Page() {
             ))}
           </div>
         </section>
-        <div className="flex items-center justify-center gap-2">
-          <Button className="rounded-full font-mono uppercase">1</Button>
-          <Button className="rounded-full font-mono uppercase">2</Button>
-          <Button className="rounded-full font-mono uppercase">3</Button>
-        </div>
+        <LoadMore currentPage={page} totalPages={totalPagesPast} />
       </div>
       {cta && (
         <CtaCard
