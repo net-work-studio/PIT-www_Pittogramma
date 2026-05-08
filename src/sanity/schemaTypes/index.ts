@@ -9,7 +9,6 @@ import { edition } from "./documents/edition";
 import { person } from "./documents/person";
 import { event } from "./documents/event";
 import { glossary } from "./documents/glossary";
-import { history } from "./documents/history";
 import { institute } from "./documents/institute";
 import { interview } from "./documents/interview";
 import { journal } from "./documents/journal";
@@ -36,6 +35,7 @@ import { seoModule } from "./objects/seo-module";
 import { socialLinks } from "./objects/social-links";
 import { titleSlug } from "./objects/title-slug";
 import { xCard } from "./objects/x-card";
+import { aboutPage } from "./singletons/pages/about-page";
 import { designersPage } from "./singletons/pages/designers-page";
 import { editionsPage } from "./singletons/pages/editions-page";
 import { eventsPage } from "./singletons/pages/events-page";
@@ -53,7 +53,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     edition,
     person,
     event,
-    history,
     institute,
     interview,
     journal,
@@ -74,6 +73,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     openGraph,
     xCard,
     siteSettings,
+    aboutPage,
     homePage,
     projectsPage,
     interviewsPage,

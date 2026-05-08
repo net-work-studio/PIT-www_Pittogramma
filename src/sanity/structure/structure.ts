@@ -148,7 +148,7 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
-      singleton(S, "history", "Info", Info),
+      singleton(S, "aboutPage", "About", Info),
 
       group(
         S,
