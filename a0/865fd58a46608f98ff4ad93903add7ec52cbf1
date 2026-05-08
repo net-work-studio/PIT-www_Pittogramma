@@ -1,0 +1,23 @@
+src/app/(frontend)/journal/page.tsx
+  s_179b1cb4bc0c95::t_0991808546fc8c 140
+src/components/shared/featured-hero.tsx
+  s_179b1cb4bc0c95::t_98d05fd2aefa1c 4,14,26-30,39,42-48
+src/app/(frontend)/page.tsx
+  s_179b1cb4bc0c95::t_8646f4bdd2d35c 98-115
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "a0865fd58a46608f98ff4ad93903add7ec52cbf1",
+  "prompts": {},
+  "sessions": {
+    "s_179b1cb4bc0c95": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cacdb810-dc92-486e-acbd-6c88c65daa3e",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
