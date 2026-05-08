@@ -1,0 +1,33 @@
+src/components/modules/shared/media-blocks.tsx
+  s_beaed730b0cd60::t_490ab5d3a27353 1-36,67-72,74-83,88,93-100,106-115,117-120,122-126,128-131,133,135-137,139,141,143-144,146-149,151,153-158,183-192,194-197,200-205,208-224,226-229,232-237,240-245,248-264,266-269,271-276,278-283,285-290,292-304,306-309,311-312,314-319,321-327,329-335,337-343,345-355,357-377
+  s_beaed730b0cd60::t_6eda4a2a169151 356
+  s_beaed730b0cd60::t_0d80037b0ba94d 38-64
+  s_beaed730b0cd60::t_bf3e3b3a677f5f 305,310,313,320,328,336,344
+  s_beaed730b0cd60::t_06cc01b3bd0385 37,65-66,73,84-87,89-92,101-105,116,121,127,132,134,138,140,142,145,150,152,159-182,193,198-199,206-207,225,230-231,238-239,246-247,265,270,277,284,291
+src/lib/video-embed.ts
+  s_beaed730b0cd60::t_bb4c374416be18 1-50
+src/sanity/schemaTypes/singletons/pages/about-page.ts
+  s_beaed730b0cd60::t_6f57e9d87d6363 1-56
+src/components/modules/about/about-content.tsx
+  s_beaed730b0cd60::t_69a081686a7fac 1-104
+src/components/modules/about/about-supporters.tsx
+  s_beaed730b0cd60::t_aa248f17582d03 1-65
+src/components/modules/shared/video-player.tsx
+  s_beaed730b0cd60::t_08caaeb335ebe3 1-50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "f1770a967289fc556d03b5f06ac44b81ed97baea",
+  "prompts": {},
+  "sessions": {
+    "s_beaed730b0cd60": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "85bdaf43-4703-4323-b52b-734ba96fe739",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
