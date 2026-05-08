@@ -37,6 +37,7 @@ import { socialLinks } from "./objects/social-links";
 import { titleSlug } from "./objects/title-slug";
 import { xCard } from "./objects/x-card";
 import { designersPage } from "./singletons/pages/designers-page";
+import { editionsPage } from "./singletons/pages/editions-page";
 import { eventsPage } from "./singletons/pages/events-page";
 import { homePage } from "./singletons/pages/home-page";
 import { interviewsPage } from "./singletons/pages/interviews-page";
@@ -79,6 +80,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     journalPage,
     designersPage,
     eventsPage,
+    editionsPage,
     socialLinks,
     publishingDate,
     category,

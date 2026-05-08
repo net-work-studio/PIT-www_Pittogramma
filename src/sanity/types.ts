@@ -206,9 +206,9 @@ export type CtaReference = {
   [internalGroqTypeReferenceTo]?: "cta";
 };
 
-export type EventsPage = {
+export type EditionsPage = {
   _id: string;
-  _type: "eventsPage";
+  _type: "editionsPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -231,6 +231,18 @@ export type SeoModule = {
   canonicalURL?: string;
   openGraph?: OpenGraph;
   xCard?: XCard;
+};
+
+export type EventsPage = {
+  _id: string;
+  _type: "eventsPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  introText: string;
+  endOfPageCta?: CtaReference;
+  seo?: SeoModule;
 };
 
 export type JournalReference = {
@@ -1105,8 +1117,9 @@ export type AllSanitySchemaTypes =
   | SocialLinks
   | PublishingDate
   | CtaReference
-  | EventsPage
+  | EditionsPage
   | SeoModule
+  | EventsPage
   | JournalReference
   | JournalPage
   | SiteSettings
