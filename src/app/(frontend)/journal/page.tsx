@@ -137,6 +137,7 @@ export default async function JournalPage({
               href={`/journal/${featuredArticle.slug?.current ?? ""}`}
               subtitle={featuredArticle.excerpt}
               title={featuredArticle.title ?? ""}
+              variant="compact"
             />
           );
         })()}

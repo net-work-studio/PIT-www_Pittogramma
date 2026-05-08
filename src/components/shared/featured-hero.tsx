@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 interface FeaturedHeroProps {
   badgeLabel?: string;
@@ -10,6 +11,7 @@ interface FeaturedHeroProps {
   href: string;
   subtitle?: string | null;
   title: string;
+  variant?: "full" | "compact";
 }
 
 const badgeVariantMap: Record<
@@ -21,6 +23,11 @@ const badgeVariantMap: Record<
   interview: "interview",
 };
 
+const HEIGHT_BY_VARIANT = {
+  full: "h-[calc(100svh-3.5rem)] max-h-400",
+  compact: "h-[600px]",
+} as const;
+
 export default function FeaturedHero({
   badgeLabel,
   badgeVariant,
@@ -29,9 +36,16 @@ export default function FeaturedHero({
   href,
   cover,
   subtitle,
+  variant = "full",
 }: FeaturedHeroProps) {
   return (
-    <Link className="group h-screen  max-h-400 relative grid place-content-center" href={href}>
+    <Link
+      className={cn(
+        "group relative grid place-content-center",
+        HEIGHT_BY_VARIANT[variant]
+      )}
+      href={href}
+    >
 
 
         <div className="flex z-10 flex-col text-background items-center gap-4">
