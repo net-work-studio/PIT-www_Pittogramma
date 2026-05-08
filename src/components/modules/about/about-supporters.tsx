@@ -14,11 +14,14 @@ function SupporterLogo({ supporter }: { supporter: Supporter }) {
   const light = supporter.logo?.logoLight;
   const dark = supporter.logo?.logoDark;
   const heightClass = "h-8 lg:h-10";
+  const hasBoth = Boolean(light && dark);
 
   return (
     <div className="flex items-center" title={supporter.name ?? undefined}>
       {light ? (
-        <div className={`relative ${heightClass} w-auto dark:hidden`}>
+        <div
+          className={`relative ${heightClass} w-auto${hasBoth ? " dark:hidden" : ""}`}
+        >
           <SanityImage
             alt={alt}
             className="h-full w-auto object-contain"
@@ -30,7 +33,9 @@ function SupporterLogo({ supporter }: { supporter: Supporter }) {
         </div>
       ) : null}
       {dark ? (
-        <div className={`relative hidden ${heightClass} w-auto dark:block`}>
+        <div
+          className={`relative ${heightClass} w-auto${hasBoth ? " hidden dark:block" : ""}`}
+        >
           <SanityImage
             alt={alt}
             className="h-full w-auto object-contain"
