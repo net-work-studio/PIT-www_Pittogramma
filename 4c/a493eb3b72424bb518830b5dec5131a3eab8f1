@@ -1,0 +1,19 @@
+src/components/modules/about/about-supporters.tsx
+  s_b5d6456eb353af::t_9a1f77bc6a7a8b 17,22-24,36-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "4ca493eb3b72424bb518830b5dec5131a3eab8f1",
+  "prompts": {},
+  "sessions": {
+    "s_b5d6456eb353af": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2f19d801-4f56-4702-adc9-003615912b2c",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
