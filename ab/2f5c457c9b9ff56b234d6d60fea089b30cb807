@@ -1,0 +1,25 @@
+src/sanity/lib/queries.ts
+  s_8a1cde9b827e60::t_328c56d91a7470 350
+  s_8a1cde9b827e60::t_2c38ccfb433883 539
+src/sanity/types.ts
+  s_8a1cde9b827e60::t_58758e94534478 3247,4208
+src/app/(frontend)/journal/page.tsx
+  s_8a1cde9b827e60::t_62a5cfb224ef2c 21-27
+  s_8a1cde9b827e60::t_cfbed117516daf 139
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "ab2f5c457c9b9ff56b234d6d60fea089b30cb807",
+  "prompts": {},
+  "sessions": {
+    "s_8a1cde9b827e60": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "91a067e2-ac8d-4a46-80db-f66d8203a2a0",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
