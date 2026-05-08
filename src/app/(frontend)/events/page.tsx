@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import LoadMore from "@/components/feat/load-more/load-more";
@@ -90,7 +91,8 @@ export default async function Page({
   const parsedPage = Number.parseInt(pageParam ?? "1", 10);
   const requestedPage =
     Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
-  const page = Math.min(requestedPage, MAX_PAGE);
+  if (requestedPage > MAX_PAGE) notFound();
+  const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
   const today = getLocalTodayString();
@@ -121,14 +123,15 @@ export default async function Page({
     1,
     Math.ceil((pastTotalCount ?? 0) / PAGE_SIZE)
   );
+  if (page > totalPagesPast) notFound();
 
-  const futureEvents = ((futureEventsData ?? []) as FUTURE_EVENTS_QUERY_RESULT)
-    .filter((e) => e.slug?.current)
-    .map(mapEventToCard);
+  const futureEvents = (
+    (futureEventsData ?? []) as FUTURE_EVENTS_QUERY_RESULT
+  ).map(mapEventToCard);
 
-  const pastEvents = ((pastEventsData ?? []) as PAST_EVENTS_QUERY_RESULT)
-    .filter((e) => e.slug?.current)
-    .map(mapEventToCard);
+  const pastEvents = (
+    (pastEventsData ?? []) as PAST_EVENTS_QUERY_RESULT
+  ).map(mapEventToCard);
 
   return (
     <>

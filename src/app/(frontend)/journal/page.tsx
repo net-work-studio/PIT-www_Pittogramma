@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import FilterBar from "@/components/feat/filter/filter";
@@ -9,6 +10,7 @@ import type SanityImage from "@/components/modules/shared/sanity-image";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
 import { getJournalLabelConfig } from "@/lib/journal-label";
+import { JOURNAL_LABELS } from "@/lib/journal-labels";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -23,11 +25,11 @@ import type { JOURNAL_QUERY_RESULT } from "@/sanity/types";
 const PAGE_SIZE = 48;
 const MAX_PAGE = 100;
 
-const JOURNAL_LABEL_OPTIONS = [
-  { _id: "articles", name: "Articles", slug: "articles" },
-  { _id: "diary", name: "Diary", slug: "diary" },
-  { _id: "baseline", name: "Baseline", slug: "baseline" },
-];
+const JOURNAL_LABEL_OPTIONS = JOURNAL_LABELS.map((opt) => ({
+  _id: opt.value,
+  name: opt.title,
+  slug: opt.value,
+}));
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -60,7 +62,8 @@ export default async function JournalPage({
   const parsedPage = Number.parseInt(pageParam ?? "1", 10);
   const requestedPage =
     Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
-  const page = Math.min(requestedPage, MAX_PAGE);
+  if (requestedPage > MAX_PAGE) notFound();
+  const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
 
@@ -83,6 +86,7 @@ export default async function JournalPage({
   const featuredArticle = pageSettings?.featuredArticle;
   const cta = pageSettings?.endOfPageCta;
   const totalPages = Math.max(1, Math.ceil((totalCount ?? 0) / PAGE_SIZE));
+  if (page > totalPages) notFound();
 
   type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
 
@@ -98,10 +102,7 @@ export default async function JournalPage({
 
   const items = (articles ?? []) as JOURNAL_QUERY_RESULT;
   const journalCards: JournalCard[] = items
-    .filter(
-      (article) =>
-        article.slug?.current && article._id !== featuredArticle?._id
-    )
+    .filter((article) => article._id !== featuredArticle?._id)
     .map((article) => {
       const labelConfig = getJournalLabelConfig(article.label);
       return {
@@ -139,11 +140,6 @@ export default async function JournalPage({
             />
           );
         })()}
-
-        {/* Section divider */}
-        {featuredArticle?.cover?.image?.asset && (
-          <div className="flex items-center gap-4 border-t pt-4" />
-        )}
 
         <div className="flex items-start justify-between gap-4">
           <FilterBar

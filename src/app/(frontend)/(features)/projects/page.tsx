@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import FilterBar from "@/components/feat/filter/filter";
@@ -56,7 +57,8 @@ export default async function ProjectsPage({
   const parsedPage = Number.parseInt(pageParam ?? "1", 10);
   const requestedPage =
     Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
-  const page = Math.min(requestedPage, MAX_PAGE);
+  if (requestedPage > MAX_PAGE) notFound();
+  const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
 
@@ -80,6 +82,7 @@ export default async function ProjectsPage({
 
   const cta = pageSettings?.endOfPageCta;
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+  if (page > totalPages) notFound();
 
   const tags = (availableTags ?? []) as PROJECTS_TAGS_QUERY_RESULT;
   const uniqueTags = Array.from(

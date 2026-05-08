@@ -234,19 +234,19 @@ const EVENT_FIELDS = `
 `;
 
 export const FUTURE_EVENTS_QUERY = defineQuery(`
-  *[_type == "event" && dateStart >= $today] | order(dateStart asc) {
+  *[_type == "event" && defined(slug.current) && dateStart >= $today] | order(dateStart asc) {
     ${EVENT_FIELDS}
   }
 `);
 
 export const PAST_EVENTS_QUERY = defineQuery(`
-  *[_type == "event" && dateStart < $today] | order(dateStart desc) [$start...$end] {
+  *[_type == "event" && defined(slug.current) && dateStart < $today] | order(dateStart desc) [$start...$end] {
     ${EVENT_FIELDS}
   }
 `);
 
 export const PAST_EVENTS_COUNT_QUERY = defineQuery(`
-  count(*[_type == "event" && dateStart < $today])
+  count(*[_type == "event" && defined(slug.current) && dateStart < $today])
 `);
 
 export const EVENT_QUERY = defineQuery(`
@@ -294,6 +294,7 @@ export const PROJECTS_QUERY = defineQuery(`
 
 export const PROJECTS_FILTERED_QUERY = defineQuery(`
   *[_type == "project"
+    && defined(slug.current)
     && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
   ] | order(publishingDate.date desc) [$start...$end] {
     _id,
@@ -315,6 +316,7 @@ export const PROJECTS_FILTERED_QUERY = defineQuery(`
 
 export const PROJECTS_COUNT_QUERY = defineQuery(`
   count(*[_type == "project"
+    && defined(slug.current)
     && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
   ])
 `);
@@ -339,6 +341,7 @@ function getSortOrder(sort: string): string {
 export function getProjectsFilteredQuery(sort: string): string {
   return `
   *[_type == "project"
+    && defined(slug.current)
     && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
   ] | order(${getSortOrder(sort)}) [$start...$end] {
     _id,
@@ -361,6 +364,7 @@ export function getProjectsFilteredQuery(sort: string): string {
 export function getJournalFilteredQuery(sort: string): string {
   return `
   *[_type == "journal"
+    && defined(slug.current)
     && ($hasTags == false || label in $tags)
   ] | order(${getSortOrder(sort)}) [$start...$end] {
     _id,
@@ -385,6 +389,7 @@ export function getJournalFilteredQuery(sort: string): string {
 export function getInterviewsFilteredQuery(sort: string): string {
   return `
   *[_type == "interview"
+    && defined(slug.current)
     && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
   ] | order(${getSortOrder(sort)}) [$start...$end] {
     _id,
@@ -550,6 +555,7 @@ export const JOURNAL_QUERY = defineQuery(`
 
 export const JOURNAL_COUNT_QUERY = defineQuery(`
   count(*[_type == "journal"
+    && defined(slug.current)
     && ($hasTags == false || label in $tags)
   ])
 `);
@@ -613,6 +619,7 @@ export const INTERVIEWS_QUERY = defineQuery(`
 
 export const INTERVIEWS_FILTERED_QUERY = defineQuery(`
   *[_type == "interview"
+    && defined(slug.current)
     && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
   ] | order(publishingDate.date desc) [$start...$end] {
     _id,
@@ -646,6 +653,7 @@ export const INTERVIEWS_FILTERED_QUERY = defineQuery(`
 
 export const INTERVIEWS_COUNT_QUERY = defineQuery(`
   count(*[_type == "interview"
+    && defined(slug.current)
     && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
   ])
 `);

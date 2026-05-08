@@ -12,7 +12,14 @@ interface LoadMoreProps {
 
 function LoadMoreLabel() {
   const { pending } = useLinkStatus();
-  return <>{pending ? "Loading…" : "Load more"}</>;
+  return (
+    <span
+      aria-busy={pending || undefined}
+      className={pending ? "opacity-60" : undefined}
+    >
+      {pending ? "Loading…" : "Load more"}
+    </span>
+  );
 }
 
 export default function LoadMore({ currentPage, totalPages }: LoadMoreProps) {
