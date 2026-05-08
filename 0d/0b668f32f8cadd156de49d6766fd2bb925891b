@@ -1,0 +1,19 @@
+src/lib/journal-labels.ts
+  s_1b94a397d23186::t_f27f4445f519db 1-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "0d0b668f32f8cadd156de49d6766fd2bb925891b",
+  "prompts": {},
+  "sessions": {
+    "s_1b94a397d23186": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "54a8a045-583b-467a-90b5-060d181c58dc",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
