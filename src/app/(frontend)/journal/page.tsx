@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
+import FilterBar from "@/components/feat/filter/filter";
+import SortDropdown from "@/components/feat/sort/sort-dropdown";
+import { isValidSort } from "@/components/feat/sort/sort-options";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
@@ -10,8 +13,16 @@ import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
 import { sanityFetch } from "@/sanity/lib/live";
-import { JOURNAL_PAGE_QUERY, JOURNAL_QUERY } from "@/sanity/lib/queries";
-import type { JOURNAL_QUERY_RESULT } from "@/sanity/types";
+import {
+  getJournalFilteredQuery,
+  JOURNAL_COUNT_QUERY,
+  JOURNAL_PAGE_QUERY,
+  JOURNAL_TAGS_QUERY,
+} from "@/sanity/lib/queries";
+import type {
+  JOURNAL_QUERY_RESULT,
+  JOURNAL_TAGS_QUERY_RESULT,
+} from "@/sanity/types";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -31,11 +42,38 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default async function JournalPage() {
-  const [{ data: articles }, { data: pageSettings }] = await Promise.all([
-    sanityFetch({ query: JOURNAL_QUERY }),
+export default async function JournalPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tags?: string; sort?: string }>;
+}) {
+  const { tags: tagsParam, sort: sortParam } = await searchParams;
+  const sort = isValidSort(sortParam) ? sortParam : "newest";
+  const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
+  const hasTags = tagSlugs.length > 0;
+
+  const [
+    { data: articles },
+    { data: totalCount },
+    { data: availableTags },
+    { data: pageSettings },
+  ] = await Promise.all([
+    sanityFetch({
+      query: getJournalFilteredQuery(sort),
+      params: { tags: tagSlugs, hasTags },
+    }),
+    sanityFetch({
+      query: JOURNAL_COUNT_QUERY,
+      params: { tags: tagSlugs, hasTags },
+    }),
+    sanityFetch({ query: JOURNAL_TAGS_QUERY }),
     sanityFetch({ query: JOURNAL_PAGE_QUERY }),
   ]);
+
+  const tags = (availableTags ?? []) as JOURNAL_TAGS_QUERY_RESULT;
+  const uniqueTags = Array.from(
+    new Map(tags.map((t) => [t._id, t])).values()
+  );
 
   const featuredArticle = pageSettings?.featuredArticle;
   const cta = pageSettings?.endOfPageCta;
@@ -52,12 +90,13 @@ export default async function JournalPage() {
     title: string;
   }
 
-  const journalCards: JournalCard[] = articles
+  const items = (articles ?? []) as JOURNAL_QUERY_RESULT;
+  const journalCards: JournalCard[] = items
     .filter(
-      (article: JOURNAL_QUERY_RESULT[number]) =>
+      (article) =>
         article.slug?.current && article._id !== featuredArticle?._id
     )
-    .map((article: JOURNAL_QUERY_RESULT[number]) => {
+    .map((article) => {
       const labelConfig = getJournalLabelConfig(article.label);
       return {
         authors: article.authors?.length
@@ -97,15 +136,16 @@ export default async function JournalPage() {
 
         {/* Section divider */}
         {featuredArticle?.cover?.image?.asset && (
-          <div className="flex items-center gap-4 border-t pt-4">
-            <span className="font-mono text-muted-foreground text-sm uppercase">
-              Read more
-            </span>
-          </div>
+          <div className="flex items-center gap-4 border-t pt-4" />
         )}
 
-        <div>
-          <Button className="font-mono uppercase">Filters</Button>
+        <div className="flex items-start justify-between gap-4">
+          <FilterBar
+            availableTags={uniqueTags}
+            label="articles"
+            totalCount={totalCount}
+          />
+          <SortDropdown />
         </div>
 
         <section>
