@@ -1,0 +1,46 @@
+src/app/(frontend)/journal/page.tsx
+  s_8a1cde9b827e60::t_e6f1710887e6db 143-147
+  s_8a1cde9b827e60::t_48a657e0487a3a 5
+  s_8a1cde9b827e60::t_446c4cc46acabf 93-94,96,99
+  s_8a1cde9b827e60::t_ecdb60d95dab6e 4,16-25
+  s_8a1cde9b827e60::t_91eb49c9f7482e 45-47,49,51,54
+  s_8a1cde9b827e60::t_c6dee6901191c4 48,50,52-53,55-69,73-76
+  s_8a1cde9b827e60::t_ef55ba69c204f3 142,148
+  s_8a1cde9b827e60::t_f8070f989d6339 6
+src/lib/feature-flags.ts
+  s_b9fd70b6fcd7c4::t_98dc2eb18fe20f 74-82
+src/sanity/types.ts
+  s_8a1cde9b827e60::t_bfe404f29cf239 3246-3258,4217-4218
+src/components/shared/header.tsx
+  s_b9fd70b6fcd7c4::t_aa0cfa0ab3bdb9 13
+  s_b9fd70b6fcd7c4::t_6f01c9c0eb7195 5
+  s_b9fd70b6fcd7c4::t_7a08e74af2e8c2 26-32
+src/sanity/lib/queries.ts
+  s_8a1cde9b827e60::t_eb03ce18ff2eee 537-546
+  s_8a1cde9b827e60::t_576fc065186eb7 347-348,352-370
+  s_8a1cde9b827e60::t_9c4ebb669ab7e2 349-351
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "643cc60f5ac5023df4885b0eeb7e7331a837fb93",
+  "prompts": {},
+  "sessions": {
+    "s_8a1cde9b827e60": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "91a067e2-ac8d-4a46-80db-f66d8203a2a0",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_b9fd70b6fcd7c4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "44d56f82-5ce5-4200-9a57-deb5b736fbdc",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
