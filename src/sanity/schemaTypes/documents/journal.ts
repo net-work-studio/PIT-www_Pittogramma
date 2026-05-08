@@ -1,5 +1,6 @@
 import { DocumentTextIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { JOURNAL_LABELS } from "@/lib/journal-labels";
 import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
 
@@ -40,11 +41,7 @@ export const journal = defineType({
       title: "Label",
       group: "metadata",
       options: {
-        list: [
-          { title: "Articles", value: "articles" },
-          { title: "Diary", value: "diary" },
-          { title: "Baseline", value: "baseline" },
-        ],
+        list: JOURNAL_LABELS,
         layout: "radio",
       },
       initialValue: "articles",
@@ -109,11 +106,9 @@ export const journal = defineType({
       media: "cover.image",
     },
     prepare({ title, label, media }) {
-      const labels: Record<string, string> = {
-        articles: "Articles",
-        diary: "Diary",
-        baseline: "Baseline",
-      };
+      const labels = Object.fromEntries(
+        JOURNAL_LABELS.map((opt) => [opt.value, opt.title])
+      );
       return {
         title,
         subtitle: label ? labels[label] ?? label : undefined,

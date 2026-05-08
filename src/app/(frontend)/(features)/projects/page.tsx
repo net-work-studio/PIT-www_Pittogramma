@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import FilterBar from "@/components/feat/filter/filter";
-import Pagination from "@/components/feat/pagination/pagination";
+import LoadMore from "@/components/feat/load-more/load-more";
 import SortDropdown from "@/components/feat/sort/sort-dropdown";
 import { isValidSort } from "@/components/feat/sort/sort-options";
 import PageHeader from "@/components/shared/page-header";
@@ -23,6 +24,7 @@ import type {
 } from "@/sanity/types";
 
 const PAGE_SIZE = 48;
+const MAX_PAGE = 100;
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -53,9 +55,12 @@ export default async function ProjectsPage({
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
   const hasTags = tagSlugs.length > 0;
   const parsedPage = Number.parseInt(pageParam ?? "1", 10);
-  const page = Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
-  const start = (page - 1) * PAGE_SIZE;
-  const end = start + PAGE_SIZE;
+  const requestedPage =
+    Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+  if (requestedPage > MAX_PAGE) notFound();
+  const page = requestedPage;
+  const start = 0;
+  const end = page * PAGE_SIZE;
 
   const [
     { data: projects },
@@ -77,6 +82,7 @@ export default async function ProjectsPage({
 
   const cta = pageSettings?.endOfPageCta;
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+  if (page > totalPages) notFound();
 
   const tags = (availableTags ?? []) as PROJECTS_TAGS_QUERY_RESULT;
   const uniqueTags = Array.from(
@@ -136,14 +142,11 @@ export default async function ProjectsPage({
                 image={project.image}
                 key={project.id}
                 title={project.title}
-                variant="project"
               />
             ))}
           </section>
         )}
-        {totalPages > 1 && (
-          <Pagination currentPage={page} totalPages={totalPages} />
-        )}
+        <LoadMore currentPage={page} totalPages={totalPages} />
       </div>
       {cta && (
         <CtaCard

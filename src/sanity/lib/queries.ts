@@ -4,6 +4,7 @@ import {
   CTA_FIELDS,
   CTA_PROJECTION,
   IMAGE_FIELDS,
+  MEDIA_BLOCKS_FIELDS,
   SEO_FIELDS,
 } from "./fragments";
 
@@ -87,6 +88,29 @@ export const HOME_FEED_QUERY = defineQuery(`
       excerpt,
     },
     tags[]->{ _id, name }
+  }
+`);
+
+export const ABOUT_PAGE_QUERY = defineQuery(`
+  *[_type == "aboutPage"][0] {
+    _id,
+    title,
+    content[] {
+      _key,
+      _type,
+      _type == "block" => @,
+      ${MEDIA_BLOCKS_FIELDS}
+    },
+    supporters[]->{
+      _id,
+      name,
+      logo {
+        logoLight { ${IMAGE_FIELDS} },
+        logoDark { ${IMAGE_FIELDS} },
+        alt
+      }
+    },
+    ${SEO_FIELDS}
   }
 `);
 
@@ -212,8 +236,7 @@ export const DESIGNER_QUERY = defineQuery(`
   }
 `);
 
-export const EVENTS_QUERY = defineQuery(`
-  *[_type == "event"] | order(dateStart desc) {
+const EVENT_FIELDS = `
     _id,
     title,
     slug,
@@ -232,7 +255,22 @@ export const EVENTS_QUERY = defineQuery(`
     partner->{ _id, name },
     tags[]->{ _id, name },
     ${SEO_FIELDS}
+`;
+
+export const FUTURE_EVENTS_QUERY = defineQuery(`
+  *[_type == "event" && defined(slug.current) && dateStart >= $today] | order(dateStart asc) {
+    ${EVENT_FIELDS}
   }
+`);
+
+export const PAST_EVENTS_QUERY = defineQuery(`
+  *[_type == "event" && defined(slug.current) && dateStart < $today] | order(dateStart desc) [$start...$end] {
+    ${EVENT_FIELDS}
+  }
+`);
+
+export const PAST_EVENTS_COUNT_QUERY = defineQuery(`
+  count(*[_type == "event" && defined(slug.current) && dateStart < $today])
 `);
 
 export const EVENT_QUERY = defineQuery(`
@@ -280,6 +318,7 @@ export const PROJECTS_QUERY = defineQuery(`
 
 export const PROJECTS_FILTERED_QUERY = defineQuery(`
   *[_type == "project"
+    && defined(slug.current)
     && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
   ] | order(publishingDate.date desc) [$start...$end] {
     _id,
@@ -301,6 +340,7 @@ export const PROJECTS_FILTERED_QUERY = defineQuery(`
 
 export const PROJECTS_COUNT_QUERY = defineQuery(`
   count(*[_type == "project"
+    && defined(slug.current)
     && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
   ])
 `);
@@ -325,6 +365,7 @@ function getSortOrder(sort: string): string {
 export function getProjectsFilteredQuery(sort: string): string {
   return `
   *[_type == "project"
+    && defined(slug.current)
     && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
   ] | order(${getSortOrder(sort)}) [$start...$end] {
     _id,
@@ -344,9 +385,35 @@ export function getProjectsFilteredQuery(sort: string): string {
   }`;
 }
 
+export function getJournalFilteredQuery(sort: string): string {
+  return `
+  *[_type == "journal"
+    && defined(slug.current)
+    && ($hasTags == false || label in $tags)
+  ] | order(${getSortOrder(sort)}) [$start...$end] {
+    _id,
+    title,
+    slug,
+    label,
+    publishingDate,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    authors[]{ ...@->{ _id, name }, _key },
+    excerpt,
+    tags[]->{
+      _id,
+      name
+    },
+    ${SEO_FIELDS}
+  }`;
+}
+
 export function getInterviewsFilteredQuery(sort: string): string {
   return `
   *[_type == "interview"
+    && defined(slug.current)
     && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
   ] | order(${getSortOrder(sort)}) [$start...$end] {
     _id,
@@ -427,30 +494,7 @@ export const PROJECT_QUERY = defineQuery(`
     },
     year,
     gallery[] {
-      _key,
-      _type,
-      _type == "singleMediaBlock" => {
-        orientation,
-        media { type, image { ${IMAGE_FIELDS} }, caption, alt }
-      },
-      _type == "sideBySideMediaBlock" => {
-        orientation,
-        left { type, image { ${IMAGE_FIELDS} }, caption, alt },
-        right { type, image { ${IMAGE_FIELDS} }, caption, alt }
-      },
-      _type == "threeSideBySideMediaBlock" => {
-        orientation,
-        left { type, image { ${IMAGE_FIELDS} }, caption, alt },
-        center { type, image { ${IMAGE_FIELDS} }, caption, alt },
-        right { type, image { ${IMAGE_FIELDS} }, caption, alt }
-      },
-      _type == "gridFourMediaBlock" => {
-        orientation,
-        topLeft { type, image { ${IMAGE_FIELDS} }, caption, alt },
-        topRight { type, image { ${IMAGE_FIELDS} }, caption, alt },
-        bottomLeft { type, image { ${IMAGE_FIELDS} }, caption, alt },
-        bottomRight { type, image { ${IMAGE_FIELDS} }, caption, alt }
-      }
+      ${MEDIA_BLOCKS_FIELDS}
     },
     description,
     "relatedProjects": *[
@@ -508,6 +552,13 @@ export const JOURNAL_QUERY = defineQuery(`
     },
     ${SEO_FIELDS}
   }
+`);
+
+export const JOURNAL_COUNT_QUERY = defineQuery(`
+  count(*[_type == "journal"
+    && defined(slug.current)
+    && ($hasTags == false || label in $tags)
+  ])
 `);
 
 export const JOURNAL_ARTICLE_QUERY = defineQuery(`
@@ -569,6 +620,7 @@ export const INTERVIEWS_QUERY = defineQuery(`
 
 export const INTERVIEWS_FILTERED_QUERY = defineQuery(`
   *[_type == "interview"
+    && defined(slug.current)
     && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
   ] | order(publishingDate.date desc) [$start...$end] {
     _id,
@@ -602,6 +654,7 @@ export const INTERVIEWS_FILTERED_QUERY = defineQuery(`
 
 export const INTERVIEWS_COUNT_QUERY = defineQuery(`
   count(*[_type == "interview"
+    && defined(slug.current)
     && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
   ])
 `);

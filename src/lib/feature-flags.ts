@@ -71,3 +71,12 @@ export function getEnabledViews(key: ResourceKey): ViewMode[] {
 export function isSearchEnabled(key: ResourceKey): boolean {
   return process.env[`${envMap[key]}_SEARCH`] !== "false";
 }
+
+/**
+ * Whether the global search button in the header is enabled.
+ * Checks `NEXT_PUBLIC_FEATURE_HEADER_SEARCH`.
+ * Defaults to enabled.
+ */
+export function isHeaderSearchEnabled(): boolean {
+  return process.env.NEXT_PUBLIC_FEATURE_HEADER_SEARCH !== "false";
+}

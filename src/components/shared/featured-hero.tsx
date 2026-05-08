@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 interface FeaturedHeroProps {
   badgeLabel?: string;
@@ -10,6 +11,7 @@ interface FeaturedHeroProps {
   href: string;
   subtitle?: string | null;
   title: string;
+  variant?: "full" | "compact";
 }
 
 const badgeVariantMap: Record<
@@ -21,6 +23,11 @@ const badgeVariantMap: Record<
   interview: "interview",
 };
 
+const HEIGHT_BY_VARIANT = {
+  full: "h-[calc(100svh-3.5rem)] max-h-400",
+  compact: "h-[600px]",
+} as const;
+
 export default function FeaturedHero({
   badgeLabel,
   badgeVariant,
@@ -29,12 +36,19 @@ export default function FeaturedHero({
   href,
   cover,
   subtitle,
+  variant = "full",
 }: FeaturedHeroProps) {
   return (
-    <Link className="group flex" href={href}>
-      {/* Text column — 1 of 4 */}
-      <div className="flex flex-col justify-start gap-6 xl:col-span-1">
-        <div className="flex flex-col gap-4">
+    <Link
+      className={cn(
+        "group relative grid place-content-center",
+        HEIGHT_BY_VARIANT[variant]
+      )}
+      href={href}
+    >
+
+
+        <div className="flex z-10 flex-col text-background items-center gap-4">
           <div className="flex gap-2">
             <Badge variant="outline">Feature Now</Badge>
             <Badge variant={badgeVariant ?? badgeVariantMap[contentType]}>
@@ -48,19 +62,19 @@ export default function FeaturedHero({
             <p className="text-lg text-muted-foreground">{subtitle}</p>
           )}
         </div>
-      </div>
 
-      {/* Image column — 3 of 4 */}
-      <div className="relative aspect-4/3 max-h-150 w-full  overflow-hidden rounded-lg transition-transform duration-300">
+
+        <div className="bg-black/30 group-hover:bg-black/25 transition-opacity duration-500 rounded-md z-1 w-full h-full absolute" />
+
         <SanityImage
           alt={title}
-          className="h-full w-full group-hover:scale-103 transition-transform duration-300 object-cover"
+          className="h-full absolute rounded-md w-full transition-transform duration-300 object-cover"
           fill
           priority
           sizes="(max-width: 1280px) 100vw, 75vw"
           source={cover}
         />
-      </div>
+
     </Link>
   );
 }

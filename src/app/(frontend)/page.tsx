@@ -95,28 +95,27 @@ export default async function Home() {
 
   return (
     <>
+      {featuredItem?.cover?.image?.asset && (
+        <FeaturedHero
+          contentType={
+            featuredItem._type as "project" | "interview" | "journal"
+          }
+          cover={featuredItem.cover}
+          href={
+            featuredItem._type === "project"
+              ? `/projects/${featuredItem.slug?.current ?? ""}`
+              : featuredItem._type === "journal"
+                ? `/journal/${featuredItem.slug?.current ?? ""}`
+                : `/interviews/${featuredItem.slug?.current ?? ""}`
+          }
+          subtitle={featuredSubtitle}
+          title={featuredItem.title ?? ""}
+        />
+      )}
+
       <PageHeader subtitle={homePage?.introText} title="Pittogramma" />
 
       <div className="flex flex-col gap-4">
-        {/* Featured hero */}
-        {featuredItem?.cover?.image?.asset && (
-          <FeaturedHero
-            contentType={
-              featuredItem._type as "project" | "interview" | "journal"
-            }
-            cover={featuredItem.cover}
-            href={
-              featuredItem._type === "project"
-                ? `/projects/${featuredItem.slug?.current ?? ""}`
-                : featuredItem._type === "journal"
-                  ? `/journal/${featuredItem.slug?.current ?? ""}`
-                  : `/interviews/${featuredItem.slug?.current ?? ""}`
-            }
-            subtitle={featuredSubtitle}
-            title={featuredItem.title ?? ""}
-          />
-        )}
-
         {/* Section 1: 1 row of 4 */}
         {firstSection.length > 0 && <HomeGrid items={firstSection} />}
 

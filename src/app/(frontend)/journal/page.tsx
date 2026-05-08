@@ -1,17 +1,35 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
+import FilterBar from "@/components/feat/filter/filter";
+import LoadMore from "@/components/feat/load-more/load-more";
+import SortDropdown from "@/components/feat/sort/sort-dropdown";
+import { isValidSort } from "@/components/feat/sort/sort-options";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
-import { Button } from "@/components/ui/button";
 import { getJournalLabelConfig } from "@/lib/journal-label";
+import { JOURNAL_LABELS } from "@/lib/journal-labels";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
 import { sanityFetch } from "@/sanity/lib/live";
-import { JOURNAL_PAGE_QUERY, JOURNAL_QUERY } from "@/sanity/lib/queries";
+import {
+  getJournalFilteredQuery,
+  JOURNAL_COUNT_QUERY,
+  JOURNAL_PAGE_QUERY,
+} from "@/sanity/lib/queries";
 import type { JOURNAL_QUERY_RESULT } from "@/sanity/types";
+
+const PAGE_SIZE = 48;
+const MAX_PAGE = 100;
+
+const JOURNAL_LABEL_OPTIONS = JOURNAL_LABELS.map((opt) => ({
+  _id: opt.value,
+  name: opt.title,
+  slug: opt.value,
+}));
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -31,14 +49,44 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default async function JournalPage() {
-  const [{ data: articles }, { data: pageSettings }] = await Promise.all([
-    sanityFetch({ query: JOURNAL_QUERY }),
+export default async function JournalPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tags?: string; page?: string; sort?: string }>;
+}) {
+  const { tags: tagsParam, page: pageParam, sort: sortParam } =
+    await searchParams;
+  const sort = isValidSort(sortParam) ? sortParam : "newest";
+  const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
+  const hasTags = tagSlugs.length > 0;
+  const parsedPage = Number.parseInt(pageParam ?? "1", 10);
+  const requestedPage =
+    Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+  if (requestedPage > MAX_PAGE) notFound();
+  const page = requestedPage;
+  const start = 0;
+  const end = page * PAGE_SIZE;
+
+  const [
+    { data: articles },
+    { data: totalCount },
+    { data: pageSettings },
+  ] = await Promise.all([
+    sanityFetch({
+      query: getJournalFilteredQuery(sort),
+      params: { tags: tagSlugs, hasTags, start, end },
+    }),
+    sanityFetch({
+      query: JOURNAL_COUNT_QUERY,
+      params: { tags: tagSlugs, hasTags },
+    }),
     sanityFetch({ query: JOURNAL_PAGE_QUERY }),
   ]);
 
   const featuredArticle = pageSettings?.featuredArticle;
   const cta = pageSettings?.endOfPageCta;
+  const totalPages = Math.max(1, Math.ceil((totalCount ?? 0) / PAGE_SIZE));
+  if (page > totalPages) notFound();
 
   type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
 
@@ -52,12 +100,10 @@ export default async function JournalPage() {
     title: string;
   }
 
-  const journalCards: JournalCard[] = articles
-    .filter(
-      (article: JOURNAL_QUERY_RESULT[number]) =>
-        article.slug?.current && article._id !== featuredArticle?._id
-    )
-    .map((article: JOURNAL_QUERY_RESULT[number]) => {
+  const items = (articles ?? []) as JOURNAL_QUERY_RESULT;
+  const journalCards: JournalCard[] = items
+    .filter((article) => article._id !== featuredArticle?._id)
+    .map((article) => {
       const labelConfig = getJournalLabelConfig(article.label);
       return {
         authors: article.authors?.length
@@ -91,21 +137,18 @@ export default async function JournalPage() {
               href={`/journal/${featuredArticle.slug?.current ?? ""}`}
               subtitle={featuredArticle.excerpt}
               title={featuredArticle.title ?? ""}
+              variant="compact"
             />
           );
         })()}
 
-        {/* Section divider */}
-        {featuredArticle?.cover?.image?.asset && (
-          <div className="flex items-center gap-4 border-t pt-4">
-            <span className="font-mono text-muted-foreground text-sm uppercase">
-              Read more
-            </span>
-          </div>
-        )}
-
-        <div>
-          <Button className="font-mono uppercase">Filters</Button>
+        <div className="flex items-start justify-between gap-4">
+          <FilterBar
+            availableTags={JOURNAL_LABEL_OPTIONS}
+            label="articles"
+            totalCount={totalCount}
+          />
+          <SortDropdown />
         </div>
 
         <section>
@@ -124,11 +167,7 @@ export default async function JournalPage() {
           </div>
         </section>
 
-        <div className="flex items-center justify-center gap-2">
-          <Button className="rounded-full font-mono uppercase">1</Button>
-          <Button className="rounded-full font-mono uppercase">2</Button>
-          <Button className="rounded-full font-mono uppercase">3</Button>
-        </div>
+        <LoadMore currentPage={page} totalPages={totalPages} />
       </div>
       {cta && (
         <CtaCard
