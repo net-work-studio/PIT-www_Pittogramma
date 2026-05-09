@@ -10,6 +10,12 @@ import { FEED_QUERY } from "@/sanity/lib/queries";
 const PAGE_TITLE = "Feed";
 const PAGE_SUBTITLE = "Sponsors and partners supporting Pittogramma.";
 
+// Visible slot capacity per tier. Surplus active campaigns are sorted in by
+// dateStart asc and silently dropped past the cap, per the plan's
+// "first-booked-first-served, surplus simply doesn't render" rule.
+const TIER_CAPS = { gold: 1, silver: 2, bronze: 5 } as const;
+type AdvTier = keyof typeof TIER_CAPS;
+
 export function generateMetadata(): Metadata {
   return mapSanityToMetadata({
     page: {
@@ -29,7 +35,25 @@ export default async function FeedPage() {
     params: { today },
   });
 
-  const advs = items ?? [];
+  const allAdvs = items ?? [];
+
+  // The query already orders gold → silver → bronze, then dateStart asc;
+  // we just slice each tier to its visible cap and concatenate in tier order.
+  const byTier: Record<AdvTier, typeof allAdvs> = {
+    gold: [],
+    silver: [],
+    bronze: [],
+  };
+  for (const adv of allAdvs) {
+    if (adv.tier === "gold" || adv.tier === "silver" || adv.tier === "bronze") {
+      byTier[adv.tier].push(adv);
+    }
+  }
+  const advs = [
+    ...byTier.gold.slice(0, TIER_CAPS.gold),
+    ...byTier.silver.slice(0, TIER_CAPS.silver),
+    ...byTier.bronze.slice(0, TIER_CAPS.bronze),
+  ];
 
   return (
     <>

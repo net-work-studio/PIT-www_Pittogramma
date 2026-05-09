@@ -1,6 +1,22 @@
 import { BoltIcon, CogIcon, DocumentTextIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { buildLocalToday } from "@/lib/date-utils";
 import { DurationInput } from "@/sanity/components/duration-input";
+import { apiVersion } from "@/sanity/env";
+
+// Volume caps enforced as soft warnings only — the document still publishes
+// when over-capacity. Frontend silently drops the surplus.
+const TIER_CAPS: Record<"gold" | "silver" | "bronze", number> = {
+  gold: 1,
+  silver: 2,
+  bronze: 5,
+};
+
+// Strip the `drafts.` prefix so we can compare against both the published
+// _id and the draft _id when looking for sibling ADVs.
+function getPublishedId(id: string): string {
+  return id.startsWith("drafts.") ? id.slice("drafts.".length) : id;
+}
 
 export const adv = defineType({
   type: "document",
@@ -115,7 +131,7 @@ export const adv = defineType({
       group: "management",
       description:
         "Auto-computed from start date + duration. Override only for irregular extensions.",
-      validation: (r) =>
+      validation: (r) => [
         r.required().custom((dateEnd, context) => {
           const dateStart = (context.document as { dateStart?: string })
             ?.dateStart;
@@ -124,6 +140,17 @@ export const adv = defineType({
           }
           return true;
         }),
+        r
+          .custom<string>((dateEnd) => {
+            if (!dateEnd) {
+              return true;
+            }
+            return dateEnd <= buildLocalToday()
+              ? "Already expired — this ADV will not display anywhere."
+              : true;
+          })
+          .warning(),
+      ],
     }),
     defineField({
       type: "reference",
@@ -134,6 +161,61 @@ export const adv = defineType({
       validation: (r) => r.required(),
     }),
   ],
+  // Document-level soft warnings: tier-window overlap with another active ADV
+  // and tier capacity exceeded. Both are non-blocking — the document still
+  // publishes when over capacity; the frontend silently drops the surplus.
+  validation: (rule) =>
+    rule.custom(async (doc, context) => {
+      const typed = doc as
+        | {
+            _id?: string;
+            tier?: "gold" | "silver" | "bronze";
+            dateStart?: string;
+            dateEnd?: string;
+          }
+        | undefined;
+      if (
+        !(typed?._id && typed.tier && typed.dateStart && typed.dateEnd) ||
+        !(typed.tier in TIER_CAPS)
+      ) {
+        return true;
+      }
+      const { tier, dateStart, dateEnd } = typed;
+      const publishedId = getPublishedId(typed._id);
+      const draftId = `drafts.${publishedId}`;
+
+      const client = context.getClient({ apiVersion });
+      const conflicts = await client.fetch<
+        Array<{ _id: string; title: string | null; dateEnd: string }>
+      >(
+        `*[
+          _type == "adv"
+          && _id != $publishedId
+          && _id != $draftId
+          && tier == $tier
+          && !(dateEnd < $dateStart || dateStart > $dateEnd)
+        ] | order(dateStart asc) {
+          _id, title, dateEnd
+        }`,
+        { publishedId, draftId, tier, dateStart, dateEnd }
+      );
+
+      if (conflicts.length === 0) {
+        return true;
+      }
+
+      const cap = TIER_CAPS[tier];
+      // Including this doc, total active campaigns at the same tier in the
+      // window. Capacity warning fires when this exceeds the cap.
+      const activeCount = conflicts.length + 1;
+      if (activeCount > cap) {
+        return `This is the ${activeCount}th active ${tier} in the booked window; cap is ${cap}. Surplus campaigns won't display until others end.`;
+      }
+
+      const first = conflicts[0];
+      const conflictTitle = first.title ?? "(untitled)";
+      return `Overlaps with "${conflictTitle}" (ends ${first.dateEnd}) at the same tier. Earlier dateStart wins; this campaign won't display in that slot until the other ends.`;
+    }).warning(),
   preview: {
     select: {
       title: "title",

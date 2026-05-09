@@ -889,16 +889,24 @@ export const ADVS_QUERY = defineQuery(`
   }
 `);
 
-// /feed query — Phase 1: gold-only.
-// Active window: dateStart <= today <= dateEnd. Sorted by dateStart asc
-// (first-booked-first-served), tie-break on _createdAt asc.
+// /feed query — Phase 2: gold + silver + bronze.
+// Active window: dateStart <= today <= dateEnd. Sorted by tier priority
+// (gold → silver → bronze), then dateStart asc (first-booked-first-served),
+// tie-break on _createdAt asc. The hard cap of 16 is a safety net well above
+// the visible cap budget (1 + 2 + 5 = 8) so legitimate inventory survives any
+// short-term overflow while still bounding worst-case payload size.
+// Per-tier visible caps are enforced by the page, not the query.
 export const FEED_QUERY = defineQuery(`
   *[
     _type == "adv"
-    && tier == "gold"
+    && tier in ["gold", "silver", "bronze"]
     && dateStart <= $today
     && dateEnd >= $today
-  ] | order(dateStart asc, _createdAt asc) {
+  ] | order(
+    select(tier == "gold" => 0, tier == "silver" => 1, tier == "bronze" => 2, 99) asc,
+    dateStart asc,
+    _createdAt asc
+  ) [0...16] {
     _id,
     title,
     cover {
