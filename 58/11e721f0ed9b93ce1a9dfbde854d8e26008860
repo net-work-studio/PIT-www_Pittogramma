@@ -1,0 +1,45 @@
+src/app/(frontend)/(features)/editions/page.tsx
+  s_22909cd3b57759::t_6534984175fe9e 1-73
+src/components/modules/edition/edition-info.tsx
+  s_22909cd3b57759::t_60aeb780371ffc 1-88
+src/components/seo/json-ld.tsx
+  s_22909cd3b57759::t_30ddb7df0f448b 8-9
+src/sanity/structure/structure.ts
+  s_22909cd3b57759::t_a3fec115c2ee7a 159-168
+src/components/modules/project/project-meta-item.tsx
+  s_22909cd3b57759::t_abb7cae9143ac1 1
+src/app/sitemap.ts
+  s_22909cd3b57759::t_add228511eafd0 45-49
+src/components/modules/project/project-gallery.tsx
+  s_22909cd3b57759::t_1177d0c9160e5c 1-3,12-14
+src/components/modules/shared/meta-item.tsx
+  s_22909cd3b57759::t_b1023d2ab7ed1f 1-17
+src/sanity/lib/queries.ts
+  s_22909cd3b57759::t_86436a163a7370 904-963
+src/app/(frontend)/(features)/editions/[slug]/page.tsx
+  s_22909cd3b57759::t_86e8c98871eda2 1-112
+src/sanity/schemaTypes/singletons/pages/editions-page.ts
+  s_22909cd3b57759::t_6634511f9ad567 20
+src/sanity/extract.json
+  s_22909cd3b57759::t_3ad5908e47f4ef 3106-3113,3122-3242
+src/sanity/presentation/resolve.ts
+  s_22909cd3b57759::t_0d74e28b15c645 83-97
+src/sanity/types.ts
+  s_22909cd3b57759::t_3ad5908e47f4ef 578,580-604,2318,2414,2510,2692,2772,3386,3629,3727,4291-4598,4673-4675
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "5811e721f0ed9b93ce1a9dfbde854d8e26008860",
+  "prompts": {},
+  "sessions": {
+    "s_22909cd3b57759": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "eb19c1b3-5537-4dcb-8333-1973dd63198f",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
