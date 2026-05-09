@@ -923,6 +923,31 @@ export const FEED_QUERY = defineQuery(`
   }
 `);
 
+// /feed community query — Phase 3.
+// Active window: dateStart <= today AND (no dateEnd, OR dateEnd >= today).
+// Sorted by dateStart asc (first-booked-first-served), tie-break on
+// _createdAt asc. The [0...3] slice matches the Community visible cap.
+export const FEED_COMMUNITY_QUERY = defineQuery(`
+  *[
+    _type == "community"
+    && dateStart <= $today
+    && (!defined(dateEnd) || dateEnd >= $today)
+  ] | order(dateStart asc, _createdAt asc) [0...3] {
+    _id,
+    title,
+    type,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    description,
+    externalUrl,
+    dateStart,
+    dateEnd,
+    partner->{ _id, name }
+  }
+`);
+
 // ==================== RECENT UPDATES QUERY ====================
 
 export const RECENT_UPDATES_QUERY = defineQuery(`

@@ -7,6 +7,7 @@ import {
   CalendarX,
   FileText,
   GraduationCap,
+  Handshake,
   Home,
   Info,
   Languages,
@@ -216,6 +217,59 @@ export const structure: StructureResolver = (S) =>
         ],
         "advs",
         Megaphone
+      ),
+
+      group(
+        S,
+        "Community",
+        [
+          S.listItem()
+            .title("Active")
+            .icon(CalendarCheck)
+            .child(
+              S.documentList()
+                .id("community-active")
+                .title("Active Community")
+                // Active includes evergreen items (no dateEnd set).
+                .filter(
+                  '_type == "community" && dateStart <= $today && (!defined(dateEnd) || dateEnd >= $today)'
+                )
+                .params({ today: buildLocalToday() })
+                .defaultOrdering([{ field: "dateStart", direction: "asc" }])
+            ),
+          S.listItem()
+            .title("Upcoming")
+            .icon(CalendarClock)
+            .child(
+              S.documentList()
+                .id("community-upcoming")
+                .title("Upcoming Community")
+                .filter('_type == "community" && dateStart > $today')
+                .params({ today: buildLocalToday() })
+                .defaultOrdering([{ field: "dateStart", direction: "asc" }])
+            ),
+          S.listItem()
+            .title("Expired")
+            .icon(CalendarX)
+            .child(
+              S.documentList()
+                .id("community-expired")
+                .title("Expired Community")
+                // Evergreen items (no dateEnd) can't expire — exclude them.
+                .filter(
+                  '_type == "community" && defined(dateEnd) && dateEnd < $today'
+                )
+                .params({ today: buildLocalToday() })
+                .defaultOrdering([{ field: "dateEnd", direction: "desc" }])
+            ),
+          S.divider(),
+          S.listItem()
+            .title("All")
+            .icon(List)
+            .child(S.documentTypeList("community").title("All Community")),
+        ],
+        "community",
+        Handshake
       ),
       docListItem(S, "cta", "CTAs", MousePointerClick),
 
