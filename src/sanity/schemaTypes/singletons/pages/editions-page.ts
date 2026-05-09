@@ -17,6 +17,7 @@ export const editionsPage = defineType({
       title: "Title",
       type: "string",
       group: "content",
+      initialValue: "Editions",
       readOnly: true,
     }),
     defineField({

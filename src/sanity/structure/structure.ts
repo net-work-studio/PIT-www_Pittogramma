@@ -156,7 +156,16 @@ export const structure: StructureResolver = (S) =>
         [
           singleton(S, "editionsPage", "Editions Page", BookOpen),
           S.divider(),
-          docListItem(S, "edition", "Edition", BookOpen),
+          S.documentTypeListItem("edition")
+            .icon(BookOpen)
+            .title("Edition")
+            .child(
+              S.documentTypeList("edition")
+                .title("Edition")
+                .defaultOrdering([
+                  { field: "publishingDate.date", direction: "desc" },
+                ])
+            ),
         ],
         "editions",
         BookOpen

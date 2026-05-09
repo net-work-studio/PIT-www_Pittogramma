@@ -80,5 +80,20 @@ export const resolve: PresentationPluginOptions["resolve"] = {
         ],
       }),
     }),
+    edition: defineLocations({
+      select: {
+        title: "title",
+        slug: "slug.current",
+      },
+      resolve: (doc) => ({
+        locations: [
+          {
+            title: doc?.title || "Untitled",
+            href: `/editions/${doc?.slug}`,
+          },
+          { title: "Editions index", href: "/editions" },
+        ],
+      }),
+    }),
   },
 };
