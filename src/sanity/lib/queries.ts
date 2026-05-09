@@ -4,6 +4,7 @@ import {
   CTA_FIELDS,
   CTA_PROJECTION,
   IMAGE_FIELDS,
+  MEDIA_BLOCKS_FIELDS,
   SEO_FIELDS,
 } from "./fragments";
 
@@ -87,6 +88,29 @@ export const HOME_FEED_QUERY = defineQuery(`
       excerpt,
     },
     tags[]->{ _id, name }
+  }
+`);
+
+export const ABOUT_PAGE_QUERY = defineQuery(`
+  *[_type == "aboutPage"][0] {
+    _id,
+    title,
+    content[] {
+      _key,
+      _type,
+      _type == "block" => @,
+      ${MEDIA_BLOCKS_FIELDS}
+    },
+    supporters[]->{
+      _id,
+      name,
+      logo {
+        logoLight { ${IMAGE_FIELDS} },
+        logoDark { ${IMAGE_FIELDS} },
+        alt
+      }
+    },
+    ${SEO_FIELDS}
   }
 `);
 
@@ -470,30 +494,7 @@ export const PROJECT_QUERY = defineQuery(`
     },
     year,
     gallery[] {
-      _key,
-      _type,
-      _type == "singleMediaBlock" => {
-        orientation,
-        media { type, image { ${IMAGE_FIELDS} }, caption, alt }
-      },
-      _type == "sideBySideMediaBlock" => {
-        orientation,
-        left { type, image { ${IMAGE_FIELDS} }, caption, alt },
-        right { type, image { ${IMAGE_FIELDS} }, caption, alt }
-      },
-      _type == "threeSideBySideMediaBlock" => {
-        orientation,
-        left { type, image { ${IMAGE_FIELDS} }, caption, alt },
-        center { type, image { ${IMAGE_FIELDS} }, caption, alt },
-        right { type, image { ${IMAGE_FIELDS} }, caption, alt }
-      },
-      _type == "gridFourMediaBlock" => {
-        orientation,
-        topLeft { type, image { ${IMAGE_FIELDS} }, caption, alt },
-        topRight { type, image { ${IMAGE_FIELDS} }, caption, alt },
-        bottomLeft { type, image { ${IMAGE_FIELDS} }, caption, alt },
-        bottomRight { type, image { ${IMAGE_FIELDS} }, caption, alt }
-      }
+      ${MEDIA_BLOCKS_FIELDS}
     },
     description,
     "relatedProjects": *[
@@ -1015,6 +1016,66 @@ export const RECENT_UPDATES_QUERY = defineQuery(`
     _type,
     _createdAt,
     name
+  }
+`);
+
+// ==================== EDITION QUERIES ====================
+
+export const EDITIONS_PAGE_QUERY = defineQuery(`
+  *[_type == "editionsPage"][0] {
+    _id,
+    title,
+    ${CTA_FIELDS},
+    ${SEO_FIELDS}
+  }
+`);
+
+export const EDITIONS_LIST_QUERY = defineQuery(`
+  *[_type == "edition" && defined(slug.current)] | order(publishingDate.date desc) {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    }
+  }
+`);
+
+export const EDITION_QUERY = defineQuery(`
+  *[_type == "edition" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      _type,
+      image {
+        _type,
+        ${IMAGE_FIELDS}
+      },
+      alt
+    },
+    authors[]{ ...@->{ _id, name }, _key },
+    designers[]{ ...@->{ _id, name }, _key },
+    supporters[]{ ...@->{ _id, name }, _key },
+    description,
+    buyUrl,
+    gallery[] {
+      _key,
+      _type,
+      _type == "singleMediaBlock" => {
+        orientation,
+        media { type, image { ${IMAGE_FIELDS} }, caption, alt }
+      },
+      _type == "sideBySideMediaBlock" => {
+        orientation,
+        left { type, image { ${IMAGE_FIELDS} }, caption, alt },
+        right { type, image { ${IMAGE_FIELDS} }, caption, alt }
+      }
+    },
+    ${SEO_FIELDS}
   }
 `);
 
