@@ -896,6 +896,7 @@ export const ADVS_QUERY = defineQuery(`
 // the visible cap budget (1 + 2 + 5 = 8) so legitimate inventory survives any
 // short-term overflow while still bounding worst-case payload size.
 // Per-tier visible caps are enforced by the page, not the query.
+// Tier priority below must match `TIER_ORDER` in src/lib/adv-config.ts.
 export const FEED_QUERY = defineQuery(`
   *[
     _type == "adv"

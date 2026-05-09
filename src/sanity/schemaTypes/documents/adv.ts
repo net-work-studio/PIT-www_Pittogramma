@@ -1,16 +1,18 @@
 import { BoltIcon, CogIcon, DocumentTextIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { TIER_CAPS } from "@/lib/adv-config";
 import { buildLocalToday } from "@/lib/date-utils";
 import { DurationInput } from "@/sanity/components/duration-input";
 import { apiVersion } from "@/sanity/env";
+import type { Adv } from "@/sanity/types";
 
-// Volume caps enforced as soft warnings only — the document still publishes
-// when over-capacity. Frontend silently drops the surplus.
-const TIER_CAPS: Record<"gold" | "silver" | "bronze", number> = {
-  gold: 1,
-  silver: 2,
-  bronze: 5,
-};
+// Subset of Adv fields the document-level validator inspects. Picking from
+// the generated `Adv` keeps this in lock-step with the schema; if any of these
+// fields are renamed/removed, the cast below breaks at typecheck time. Fields
+// other than `_id` are optional because the validator runs on partially-filled
+// documents during editing.
+type AdvValidationDoc = Pick<Adv, "_id"> &
+  Partial<Pick<Adv, "tier" | "dateStart" | "dateEnd">>;
 
 // Strip the `drafts.` prefix so we can compare against both the published
 // _id and the draft _id when looking for sibling ADVs.
@@ -166,16 +168,12 @@ export const adv = defineType({
   // publishes when over capacity; the frontend silently drops the surplus.
   validation: (rule) =>
     rule.custom(async (doc, context) => {
-      const typed = doc as
-        | {
-            _id?: string;
-            tier?: "gold" | "silver" | "bronze";
-            dateStart?: string;
-            dateEnd?: string;
-          }
-        | undefined;
+      const typed = doc as AdvValidationDoc;
+      // Fields can still be undefined at validation time while the document
+      // is being filled in, so we keep these guards even though _id is always
+      // present on a real document.
       if (
-        !(typed?._id && typed.tier && typed.dateStart && typed.dateEnd) ||
+        !(typed._id && typed.tier && typed.dateStart && typed.dateEnd) ||
         !(typed.tier in TIER_CAPS)
       ) {
         return true;

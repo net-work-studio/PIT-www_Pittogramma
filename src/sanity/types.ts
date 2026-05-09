@@ -10,6 +10,13 @@
  * For more information on how to use Sanity TypeGen, visit the official documentation:
  * https://www.sanity.io/docs/sanity-typegen
  * ---------------------------------------------------------------------------------
+ *
+ * NOTE: auto-generated EXCEPT for hand-patches around the `FEED_QUERY` overload
+ * (see `FEED_QUERY_RESULT` and the matching entry in the `SanityQueries`
+ * interface below). The patch was added while `bun typegen` was broken on the
+ * base branch (postcss/vite config conflict). When typegen is fixed and
+ * regenerated, reconcile the FEED_QUERY entries manually — `git blame` on this
+ * note points to the original patch.
  */
 
 export declare const internalGroqTypeReferenceTo: unique symbol;

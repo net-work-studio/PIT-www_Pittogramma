@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AdvCard from "@/components/cards/adv-card";
 import PageHeader from "@/components/shared/page-header";
+import { type AdvTier, TIER_CAPS, TIER_ORDER } from "@/lib/adv-config";
 import { buildLocalToday } from "@/lib/date-utils";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -9,12 +10,6 @@ import { FEED_QUERY } from "@/sanity/lib/queries";
 
 const PAGE_TITLE = "Feed";
 const PAGE_SUBTITLE = "Sponsors and partners supporting Pittogramma.";
-
-// Visible slot capacity per tier. Surplus active campaigns are sorted in by
-// dateStart asc and silently dropped past the cap, per the plan's
-// "first-booked-first-served, surplus simply doesn't render" rule.
-const TIER_CAPS = { gold: 1, silver: 2, bronze: 5 } as const;
-type AdvTier = keyof typeof TIER_CAPS;
 
 export function generateMetadata(): Metadata {
   return mapSanityToMetadata({
@@ -49,11 +44,9 @@ export default async function FeedPage() {
       byTier[adv.tier].push(adv);
     }
   }
-  const advs = [
-    ...byTier.gold.slice(0, TIER_CAPS.gold),
-    ...byTier.silver.slice(0, TIER_CAPS.silver),
-    ...byTier.bronze.slice(0, TIER_CAPS.bronze),
-  ];
+  const advs = TIER_ORDER.flatMap((tier) =>
+    byTier[tier].slice(0, TIER_CAPS[tier])
+  );
 
   return (
     <>
