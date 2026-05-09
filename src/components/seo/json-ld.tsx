@@ -6,7 +6,8 @@ type JsonLdType =
   | "WebSite"
   | "Person"
   | "Event"
-  | "Book";
+  | "Book"
+  | "AboutPage";
 
 interface JsonLdProps {
   data: Record<string, unknown>;

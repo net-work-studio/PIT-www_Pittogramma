@@ -1,6 +1,6 @@
-import MediaGallery, {
-  type MediaGalleryBlock,
-} from "@/components/modules/shared/media-gallery";
+import MediaBlocks, {
+  type MediaBlockShape,
+} from "@/components/modules/shared/media-blocks";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 interface ProjectGalleryProps {
@@ -8,9 +8,16 @@ interface ProjectGalleryProps {
 }
 
 export default function ProjectGallery({ gallery }: ProjectGalleryProps) {
+  if (!gallery?.length) {
+    return null;
+  }
+
   return (
-    <MediaGallery
-      gallery={gallery as MediaGalleryBlock[] | null | undefined}
+    <MediaBlocks
+      blocks={gallery as ReadonlyArray<MediaBlockShape>}
+      className="mt-2.5"
+      rounded={{ single: "3xl", multi: "xl" }}
+      showCaptions={false}
     />
   );
 }

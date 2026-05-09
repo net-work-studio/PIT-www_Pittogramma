@@ -36,6 +36,105 @@ export const CTA_PROJECTION = `{
 // Reusable CTA fields fragment - dereferences the CTA and its internal link
 export const CTA_FIELDS = `endOfPageCta->${CTA_PROJECTION}`;
 
+// Reusable media blocks projection (single, sideBySide, threeSideBySide, gridFour).
+// `videoFileUrl` resolves the uploaded file asset URL; `videoUrl` is the embed URL on the schema.
+export const MEDIA_BLOCKS_FIELDS = /* groq */ `
+  _key,
+  _type,
+  _type == "singleMediaBlock" => {
+    orientation,
+    media {
+      type,
+      image { ${IMAGE_FIELDS} },
+      "videoFileUrl": video.asset->url,
+      videoUrl,
+      caption,
+      alt
+    }
+  },
+  _type == "sideBySideMediaBlock" => {
+    orientation,
+    left {
+      type,
+      image { ${IMAGE_FIELDS} },
+      "videoFileUrl": video.asset->url,
+      videoUrl,
+      caption,
+      alt
+    },
+    right {
+      type,
+      image { ${IMAGE_FIELDS} },
+      "videoFileUrl": video.asset->url,
+      videoUrl,
+      caption,
+      alt
+    }
+  },
+  _type == "threeSideBySideMediaBlock" => {
+    orientation,
+    left {
+      type,
+      image { ${IMAGE_FIELDS} },
+      "videoFileUrl": video.asset->url,
+      videoUrl,
+      caption,
+      alt
+    },
+    center {
+      type,
+      image { ${IMAGE_FIELDS} },
+      "videoFileUrl": video.asset->url,
+      videoUrl,
+      caption,
+      alt
+    },
+    right {
+      type,
+      image { ${IMAGE_FIELDS} },
+      "videoFileUrl": video.asset->url,
+      videoUrl,
+      caption,
+      alt
+    }
+  },
+  _type == "gridFourMediaBlock" => {
+    orientation,
+    topLeft {
+      type,
+      image { ${IMAGE_FIELDS} },
+      "videoFileUrl": video.asset->url,
+      videoUrl,
+      caption,
+      alt
+    },
+    topRight {
+      type,
+      image { ${IMAGE_FIELDS} },
+      "videoFileUrl": video.asset->url,
+      videoUrl,
+      caption,
+      alt
+    },
+    bottomLeft {
+      type,
+      image { ${IMAGE_FIELDS} },
+      "videoFileUrl": video.asset->url,
+      videoUrl,
+      caption,
+      alt
+    },
+    bottomRight {
+      type,
+      image { ${IMAGE_FIELDS} },
+      "videoFileUrl": video.asset->url,
+      videoUrl,
+      caption,
+      alt
+    }
+  }
+`;
+
 // Reusable SEO fields fragment
 export const SEO_FIELDS = `
   seo {

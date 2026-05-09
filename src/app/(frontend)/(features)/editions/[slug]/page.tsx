@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 
 import EditionInfo from "@/components/modules/edition/edition-info";
 import ShareLinks from "@/components/modules/project/share-links";
-import MediaGallery, {
-  type MediaGalleryBlock,
-} from "@/components/modules/shared/media-gallery";
+import MediaBlocks, {
+  type MediaBlockShape,
+} from "@/components/modules/shared/media-blocks";
 import { JsonLd } from "@/components/seo/json-ld";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -101,8 +101,12 @@ export default async function EditionPage({
           year={year}
         />
         <div className="w-full lg:w-2/3">
-          <MediaGallery
-            gallery={edition.gallery as MediaGalleryBlock[] | null | undefined}
+          <MediaBlocks
+            blocks={
+              (edition.gallery ?? []) as ReadonlyArray<MediaBlockShape>
+            }
+            rounded={{ single: "3xl", multi: "xl" }}
+            showCaptions={false}
           />
           <ShareLinks title={edition.title ?? ""} url={editionUrl} />
         </div>
