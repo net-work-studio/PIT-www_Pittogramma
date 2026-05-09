@@ -1,0 +1,35 @@
+src/components/cards/adv-card.tsx
+  s_5c91456f34515a::t_3f786b7a07d508 14-18
+src/sanity/components/url-input.tsx
+  s_5c91456f34515a::t_d1a4469d8e7522 21
+src/sanity/components/ensure-draft.ts
+  s_5c91456f34515a::t_abae0983f92dd7 8-43
+src/app/(frontend)/feed/page.tsx
+  s_5c91456f34515a::t_751e5bbed7c546 4
+src/sanity/structure/structure.ts
+  s_5c91456f34515a::t_efa75b700bbe11 24
+src/sanity/components/duration-input.tsx
+  s_5c91456f34515a::t_f993a266273739 13,29,50,78-84,89
+src/lib/date-utils.ts
+  s_5c91456f34515a::t_9e7e9367b57a96 1-14
+src/sanity/components/fetch-website-data-button.tsx
+  s_5c91456f34515a::t_dfc876c92e4da1 5,7
+src/app/(frontend)/page.tsx
+  s_5c91456f34515a::t_db5ebbb8924082 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "60bc24208d017bf40221dbe0abd0075cd5cf5621",
+  "prompts": {},
+  "sessions": {
+    "s_5c91456f34515a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a329172b-2b3d-45f1-99d1-0ddfc32955ef",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
