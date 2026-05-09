@@ -1,0 +1,21 @@
+src/sanity/schemaTypes/documents/community.ts
+  s_5c91456f34515a::t_128aba4d53d0c6 157-158
+src/sanity/schemaTypes/documents/adv.ts
+  s_5c91456f34515a::t_e301a81b5758d9 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "39adad95bc7023979ea8c552e506601f4015b399",
+  "prompts": {},
+  "sessions": {
+    "s_5c91456f34515a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a329172b-2b3d-45f1-99d1-0ddfc32955ef",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
