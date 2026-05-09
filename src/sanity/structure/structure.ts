@@ -2,11 +2,15 @@ import {
   BookOpen,
   Briefcase,
   Calendar,
+  CalendarCheck,
+  CalendarClock,
+  CalendarX,
   FileText,
   GraduationCap,
   Home,
   Info,
   Languages,
+  List,
   MapPin,
   Megaphone,
   MessageCircle,
@@ -18,6 +22,14 @@ import {
 } from "lucide-react";
 import type { StructureResolver } from "sanity/structure";
 import { docListItem, group, singleton } from "./helpers";
+
+const buildLocalToday = () => {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+};
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
@@ -164,7 +176,54 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
-      docListItem(S, "adv", "ADVs", Megaphone),
+      group(
+        S,
+        "ADVs",
+        [
+          S.listItem()
+            .title("Active")
+            .icon(CalendarCheck)
+            .child(
+              S.documentList()
+                .id("adv-active")
+                .title("Active ADVs")
+                .filter(
+                  '_type == "adv" && dateStart <= $today && dateEnd >= $today'
+                )
+                .params({ today: buildLocalToday() })
+                .defaultOrdering([{ field: "dateStart", direction: "asc" }])
+            ),
+          S.listItem()
+            .title("Upcoming")
+            .icon(CalendarClock)
+            .child(
+              S.documentList()
+                .id("adv-upcoming")
+                .title("Upcoming ADVs")
+                .filter('_type == "adv" && dateStart > $today')
+                .params({ today: buildLocalToday() })
+                .defaultOrdering([{ field: "dateStart", direction: "asc" }])
+            ),
+          S.listItem()
+            .title("Expired")
+            .icon(CalendarX)
+            .child(
+              S.documentList()
+                .id("adv-expired")
+                .title("Expired ADVs")
+                .filter('_type == "adv" && dateEnd < $today')
+                .params({ today: buildLocalToday() })
+                .defaultOrdering([{ field: "dateEnd", direction: "desc" }])
+            ),
+          S.divider(),
+          S.listItem()
+            .title("All")
+            .icon(List)
+            .child(S.documentTypeList("adv").title("All ADVs")),
+        ],
+        "advs",
+        Megaphone
+      ),
       docListItem(S, "cta", "CTAs", MousePointerClick),
 
       group(S, "Metadata", [

@@ -889,6 +889,31 @@ export const ADVS_QUERY = defineQuery(`
   }
 `);
 
+// /feed query — Phase 1: gold-only.
+// Active window: dateStart <= today <= dateEnd. Sorted by dateStart asc
+// (first-booked-first-served), tie-break on _createdAt asc.
+export const FEED_QUERY = defineQuery(`
+  *[
+    _type == "adv"
+    && tier == "gold"
+    && dateStart <= $today
+    && dateEnd >= $today
+  ] | order(dateStart asc, _createdAt asc) {
+    _id,
+    title,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    description,
+    externalUrl,
+    tier,
+    dateStart,
+    dateEnd,
+    sponsor->{ _id, name }
+  }
+`);
+
 // ==================== RECENT UPDATES QUERY ====================
 
 export const RECENT_UPDATES_QUERY = defineQuery(`

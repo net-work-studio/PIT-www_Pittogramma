@@ -978,6 +978,7 @@ export type Adv = {
   externalUrl: string;
   tier: "bronze" | "silver" | "gold";
   dateStart: string;
+  duration: 30 | 60 | 90;
   dateEnd: string;
   sponsor: ContributorReference;
 };
@@ -2289,7 +2290,7 @@ export type DESIGNER_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: FUTURE_EVENTS_QUERY
-// Query: *[_type == "event" && dateStart >= $today] | order(dateStart asc) {        _id,    title,    slug,    type,    status,    ctaUrl,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    dateStart,    dateEnd,    locationName,    description,    sponsor->{ _id, name },    partner->{ _id, name },    tags[]->{ _id, name },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+// Query: *[_type == "event" && defined(slug.current) && dateStart >= $today] | order(dateStart asc) {        _id,    title,    slug,    type,    status,    ctaUrl,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    dateStart,    dateEnd,    locationName,    description,    sponsor->{ _id, name },    partner->{ _id, name },    tags[]->{ _id, name },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type FUTURE_EVENTS_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -2385,7 +2386,7 @@ export type FUTURE_EVENTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PAST_EVENTS_QUERY
-// Query: *[_type == "event" && dateStart < $today] | order(dateStart desc) [$start...$end] {        _id,    title,    slug,    type,    status,    ctaUrl,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    dateStart,    dateEnd,    locationName,    description,    sponsor->{ _id, name },    partner->{ _id, name },    tags[]->{ _id, name },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+// Query: *[_type == "event" && defined(slug.current) && dateStart < $today] | order(dateStart desc) [$start...$end] {        _id,    title,    slug,    type,    status,    ctaUrl,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    dateStart,    dateEnd,    locationName,    description,    sponsor->{ _id, name },    partner->{ _id, name },    tags[]->{ _id, name },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type PAST_EVENTS_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -2481,7 +2482,7 @@ export type PAST_EVENTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PAST_EVENTS_COUNT_QUERY
-// Query: count(*[_type == "event" && dateStart < $today])
+// Query: count(*[_type == "event" && defined(slug.current) && dateStart < $today])
 export type PAST_EVENTS_COUNT_QUERY_RESULT = number;
 
 // Source: src/sanity/lib/queries.ts
@@ -2663,7 +2664,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECTS_FILTERED_QUERY
-// Query: *[_type == "project"    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ] | order(publishingDate.date desc) [$start...$end] {    _id,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    title,    slug,    designers[]{ ...@->{ _id, name, slug, portrait }, _key },    tags[]->{      _id,      name,      "slug": slug.current    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+// Query: *[_type == "project"    && defined(slug.current)    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ] | order(publishingDate.date desc) [$start...$end] {    _id,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    title,    slug,    designers[]{ ...@->{ _id, name, slug, portrait }, _key },    tags[]->{      _id,      name,      "slug": slug.current    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type PROJECTS_FILTERED_QUERY_RESULT = Array<{
   _id: string;
   cover: {
@@ -2743,7 +2744,7 @@ export type PROJECTS_FILTERED_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECTS_COUNT_QUERY
-// Query: count(*[_type == "project"    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ])
+// Query: count(*[_type == "project"    && defined(slug.current)    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ])
 export type PROJECTS_COUNT_QUERY_RESULT = number;
 
 // Source: src/sanity/lib/queries.ts
@@ -3357,7 +3358,7 @@ export type JOURNAL_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: JOURNAL_COUNT_QUERY
-// Query: count(*[_type == "journal"    && ($hasTags == false || label in $tags)  ])
+// Query: count(*[_type == "journal"    && defined(slug.current)    && ($hasTags == false || label in $tags)  ])
 export type JOURNAL_COUNT_QUERY_RESULT = number;
 
 // Source: src/sanity/lib/queries.ts
@@ -3600,7 +3601,7 @@ export type INTERVIEWS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: INTERVIEWS_FILTERED_QUERY
-// Query: *[_type == "interview"    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ] | order(publishingDate.date desc) [$start...$end] {    _id,    title,    slug,    publishingDate,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    designersAndProfessionals[]{ ...@->{ _id, name }, _key },    studio->{      _id,      name    },    typeFoundry->{      _id,      name    },    place->{ _id, name, city, country, countryCode, lat, lng },    readingTime,    tags[]->{      _id,      name,      "slug": slug.current    },    introText,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+// Query: *[_type == "interview"    && defined(slug.current)    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ] | order(publishingDate.date desc) [$start...$end] {    _id,    title,    slug,    publishingDate,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    designersAndProfessionals[]{ ...@->{ _id, name }, _key },    studio->{      _id,      name    },    typeFoundry->{      _id,      name    },    place->{ _id, name, city, country, countryCode, lat, lng },    readingTime,    tags[]->{      _id,      name,      "slug": slug.current    },    introText,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type INTERVIEWS_FILTERED_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -3698,7 +3699,7 @@ export type INTERVIEWS_FILTERED_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: INTERVIEWS_COUNT_QUERY
-// Query: count(*[_type == "interview"    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ])
+// Query: count(*[_type == "interview"    && defined(slug.current)    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ])
 export type INTERVIEWS_COUNT_QUERY_RESULT = number;
 
 // Source: src/sanity/lib/queries.ts
@@ -4209,6 +4210,58 @@ export type ADVS_QUERY_RESULT = Array<{
 }>;
 
 // Source: src/sanity/lib/queries.ts
+// Variable: FEED_QUERY
+// Query: *[    _type == "adv"    && tier == "gold"    && dateStart <= $today    && dateEnd >= $today  ] | order(dateStart asc, _createdAt asc) {    _id,    title,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    description,    externalUrl,    tier,    dateStart,    dateEnd,    sponsor->{ _id, name }  }
+export type FEED_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  cover: {
+    image: {
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+          } | null;
+        } | null;
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+    alt: string | null;
+  };
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  externalUrl: string;
+  tier: "bronze" | "gold" | "silver";
+  dateStart: string;
+  dateEnd: string;
+  sponsor: {
+    _id: string;
+    name: string;
+  };
+}>;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: RECENT_UPDATES_QUERY
 // Query: *[_type in ["person", "studio", "typeFoundry", "glossary", "bibliography", "bookshop", "institute", "webSource"]]  | order(_createdAt desc) [0...16] {    _id,    _type,    _createdAt,    name  }
 export type RECENT_UPDATES_QUERY_RESULT = Array<
@@ -4335,6 +4388,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "typeFoundry"] | order(name asc) {\n    _id,\n    name,\n    tags[]->{\n      _id,\n      name\n    },\n    places[]->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': TYPE_FOUNDRIES_QUERY_RESULT;
     '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    description,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tags[]->{ _id, name },\n    sourceUrl,\n    ogTitle,\n    ogDescription,\n    ogSiteName,\n    ogImageUrl\n  }\n': WEB_SOURCES_QUERY_RESULT;
     '\n  *[_type == "adv" && dateStart <= now() && dateEnd >= now()] | order(tier asc) {\n    _id,\n    title,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    description,\n    externalUrl,\n    tier,\n    dateStart,\n    dateEnd,\n    sponsor->{ _id, name }\n  }\n': ADVS_QUERY_RESULT;
+    '\n  *[\n    _type == "adv"\n    && tier == "gold"\n    && dateStart <= $today\n    && dateEnd >= $today\n  ] | order(dateStart asc, _createdAt asc) {\n    _id,\n    title,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    description,\n    externalUrl,\n    tier,\n    dateStart,\n    dateEnd,\n    sponsor->{ _id, name }\n  }\n': FEED_QUERY_RESULT;
     '\n  *[_type in ["person", "studio", "typeFoundry", "glossary", "bibliography", "bookshop", "institute", "webSource"]]\n  | order(_createdAt desc) [0...16] {\n    _id,\n    _type,\n    _createdAt,\n    name\n  }\n': RECENT_UPDATES_QUERY_RESULT;
     '\n  *[_type == "place" && defined(lat) && defined(lng)] {\n    _id,\n    name,\n    city,\n    country,\n    countryCode,\n    lat,\n    lng,\n    "designers": *[_type == "person" && "designer" in roles && place._ref == ^._id] { _id, name, slug },\n    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },\n    "studios": *[_type == "studio" && references(^._id)] { _id, name },\n    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },\n    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }\n  }\n': MAP_PLACES_QUERY_RESULT;
   }

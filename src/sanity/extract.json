@@ -5518,6 +5518,27 @@
         },
         "optional": false
       },
+      "duration": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "number",
+              "value": 30
+            },
+            {
+              "type": "number",
+              "value": 60
+            },
+            {
+              "type": "number",
+              "value": 90
+            }
+          ]
+        },
+        "optional": false
+      },
       "dateEnd": {
         "type": "objectAttribute",
         "value": {
