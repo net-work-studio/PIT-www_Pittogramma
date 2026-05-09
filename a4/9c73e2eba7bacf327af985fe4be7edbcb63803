@@ -1,0 +1,25 @@
+src/app/admin/[[...tool]]/StudioContent.tsx
+  s_2c790252c7d0c9::t_fc207d8c102621 1-8
+src/app/admin/[[...tool]]/Studio.tsx
+  s_2c790252c7d0c9::t_97ed0f98b6a572 1-2,4,7,9
+  s_2c790252c7d0c9::t_f71fe903b36128 3,5-6,8
+src/app/admin/[[...tool]]/page.tsx
+  s_2c790252c7d0c9::t_c26910b68ca560 1
+  s_2c790252c7d0c9::t_a7514433d3ecb0 3,6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "a49c73e2eba7bacf327af985fe4be7edbcb63803",
+  "prompts": {},
+  "sessions": {
+    "s_2c790252c7d0c9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "97a32fc1-2331-47c3-a351-25fb397b4911",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
