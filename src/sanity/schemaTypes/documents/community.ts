@@ -2,6 +2,8 @@ import { CogIcon, DocumentTextIcon, UsersIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import { buildLocalToday } from "@/lib/date-utils";
 import { apiVersion } from "@/sanity/env";
+import { getPublishedId } from "@/sanity/lib/document-id";
+import type { Community } from "@/sanity/types";
 
 // Visible cap for active community items at any moment. Keep in sync with the
 // `[0...3]` slice in FEED_COMMUNITY_QUERY in src/sanity/lib/queries.ts.
@@ -12,11 +14,12 @@ const COMMUNITY_TYPE_LABELS: Record<string, string> = {
   partnership: "Partnership",
 };
 
-// Strip the `drafts.` prefix so we can compare against both the published
-// _id and the draft _id when looking for sibling community items.
-function getPublishedId(id: string): string {
-  return id.startsWith("drafts.") ? id.slice("drafts.".length) : id;
-}
+// Subset of Community fields the document-level validator inspects. Picking
+// from the generated `Community` keeps this in lock-step with the schema.
+// `dateEnd` is optional in the schema; `dateStart` can still be undefined at
+// validation time while the document is being filled in.
+type CommunityValidationDoc = Pick<Community, "_id"> &
+  Partial<Pick<Community, "dateStart" | "dateEnd">>;
 
 export const community = defineType({
   type: "document",
@@ -151,12 +154,8 @@ export const community = defineType({
   // dimension (no tier).
   validation: (rule) =>
     rule.custom(async (doc, context) => {
-      const typed = doc as {
-        _id?: string;
-        dateStart?: string;
-        dateEnd?: string;
-      };
-      if (!(typed._id && typed.dateStart)) {
+      const typed = doc as CommunityValidationDoc;
+      if (!typed.dateStart) {
         return true;
       }
       const today = buildLocalToday();

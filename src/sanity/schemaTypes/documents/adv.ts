@@ -4,6 +4,7 @@ import { TIER_CAPS } from "@/lib/adv-config";
 import { buildLocalToday } from "@/lib/date-utils";
 import { DurationInput } from "@/sanity/components/duration-input";
 import { apiVersion } from "@/sanity/env";
+import { getPublishedId } from "@/sanity/lib/document-id";
 import type { Adv } from "@/sanity/types";
 
 // Subset of Adv fields the document-level validator inspects. Picking from
@@ -13,12 +14,6 @@ import type { Adv } from "@/sanity/types";
 // documents during editing.
 type AdvValidationDoc = Pick<Adv, "_id"> &
   Partial<Pick<Adv, "tier" | "dateStart" | "dateEnd">>;
-
-// Strip the `drafts.` prefix so we can compare against both the published
-// _id and the draft _id when looking for sibling ADVs.
-function getPublishedId(id: string): string {
-  return id.startsWith("drafts.") ? id.slice("drafts.".length) : id;
-}
 
 export const adv = defineType({
   type: "document",
