@@ -1,0 +1,24 @@
+src/sanity/schemaTypes/documents/community.ts
+  s_ad6b93d0d7c4dc::t_e4e1b4e74f2839 144
+src/app/(frontend)/feed/page.tsx
+  s_ad6b93d0d7c4dc::t_5119ab3ee3a1a4 53-57
+src/sanity/structure/structure.ts
+  s_ad6b93d0d7c4dc::t_d11b2819d3d23f 180,193,204
+  s_ad6b93d0d7c4dc::t_66bd1d82d6a272 229,243,254
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "a7cb04b27523eaadbb97427255f69de6f68ec15c",
+  "prompts": {},
+  "sessions": {
+    "s_ad6b93d0d7c4dc": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1f2187d9dffeQjZ2v30qdriplU",
+        "model": "kimi-k2.6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
