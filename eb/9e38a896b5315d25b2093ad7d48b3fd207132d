@@ -1,0 +1,29 @@
+src/sanity/types.ts
+  s_5c91456f34515a::t_fa72ad512a7fb5 4391
+  s_5c91456f34515a::t_dc5fe7a3852fcf 4214
+src/sanity/schemaTypes/documents/adv.ts
+  s_5c91456f34515a::t_a43a113861fcbc 164-218
+  s_5c91456f34515a::t_ffb02806525919 3,5-19
+  s_5c91456f34515a::t_31d9f1d4afa6e3 134,143-153
+src/app/(frontend)/feed/page.tsx
+  s_5c91456f34515a::t_a2288167ea8dd6 38-56
+  s_5c91456f34515a::t_626b0fd3dee08f 13-18
+src/sanity/lib/queries.ts
+  s_5c91456f34515a::t_a47f92fc703a17 892-898,902,905-909
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "eb9e38a896b5315d25b2093ad7d48b3fd207132d",
+  "prompts": {},
+  "sessions": {
+    "s_5c91456f34515a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a329172b-2b3d-45f1-99d1-0ddfc32955ef",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
