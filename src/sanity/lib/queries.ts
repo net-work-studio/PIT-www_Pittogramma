@@ -955,6 +955,32 @@ export const HOME_ADV_QUERY = defineQuery(`
   }
 `);
 
+// Index pages ADV query — Phase 5. Single active gold for /interviews and
+// /projects index pages. Active window: dateStart <= today <= dateEnd.
+// Sorted by dateStart asc (first-booked-first-served), tie-break on
+// _createdAt asc. Cap [0...1] matches the gold tier visible budget.
+export const INDEX_GOLD_QUERY = defineQuery(`
+  *[
+    _type == "adv"
+    && tier == "gold"
+    && dateStart <= $today
+    && dateEnd >= $today
+  ] | order(dateStart asc, _createdAt asc) [0...1] {
+    _id,
+    title,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    description,
+    externalUrl,
+    tier,
+    dateStart,
+    dateEnd,
+    sponsor->{ _id, name }
+  }
+`);
+
 // /feed community query — Phase 3.
 // Active window: dateStart <= today AND (no dateEnd, OR dateEnd >= today).
 // Sorted by dateStart asc (first-booked-first-served), tie-break on

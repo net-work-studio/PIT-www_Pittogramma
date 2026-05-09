@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import AdvCard from "@/components/cards/adv-card";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import FilterBar from "@/components/feat/filter/filter";
@@ -7,6 +8,8 @@ import LoadMore from "@/components/feat/load-more/load-more";
 import SortDropdown from "@/components/feat/sort/sort-dropdown";
 import { isValidSort } from "@/components/feat/sort/sort-options";
 import PageHeader from "@/components/shared/page-header";
+import { buildIndexSlots } from "@/lib/adv-config";
+import { buildLocalToday } from "@/lib/date-utils";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -14,6 +17,7 @@ import type SanityImage from "@/components/modules/shared/sanity-image";
 import { sanityFetch } from "@/sanity/lib/live";
 import {
   getInterviewsFilteredQuery,
+  INDEX_GOLD_QUERY,
   INTERVIEWS_COUNT_QUERY,
   INTERVIEWS_PAGE_QUERY,
   INTERVIEWS_TAGS_QUERY,
@@ -61,12 +65,14 @@ export default async function InterviewsPage({
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
+  const today = buildLocalToday();
 
   const [
     { data: interviews },
     { data: totalCount },
     { data: availableTags },
     { data: pageSettings },
+    { data: goldAdv },
   ] = await Promise.all([
     sanityFetch({
       query: getInterviewsFilteredQuery(sort),
@@ -78,6 +84,7 @@ export default async function InterviewsPage({
     }),
     sanityFetch({ query: INTERVIEWS_TAGS_QUERY }),
     sanityFetch({ query: INTERVIEWS_PAGE_QUERY }),
+    sanityFetch({ query: INDEX_GOLD_QUERY, params: { today } }),
   ]);
 
   const cta = pageSettings?.endOfPageCta;
@@ -112,6 +119,11 @@ export default async function InterviewsPage({
       title: interview.title ?? "",
     }));
 
+  // Inject gold ADV at row 1 / position 3 on every render. The query caps at
+  // a single active gold, so the ADV appears exactly once in the rendered
+  // list. Pagination math (totalCount, totalPages) uses editorial counts only.
+  const slots = buildIndexSlots(interviewCards, goldAdv?.[0]);
+
   return (
     <>
       <PageHeader
@@ -133,15 +145,32 @@ export default async function InterviewsPage({
           </p>
         ) : (
           <section className="col-span-1 grid grid-cols-1 gap-4 md:grid-cols-3 lg:col-span-3 xl:grid-cols-4">
-            {interviewCards.map((card) => (
-              <BaseCard
-                authors={card.authors}
-                href={card.href}
-                image={card.image}
-                key={card.id}
-                title={card.title}
-              />
-            ))}
+            {slots.map((slot) => {
+              if (slot.kind === "adv") {
+                const adv = slot.item;
+                if (!adv.cover?.image?.asset) return null;
+                return (
+                  <AdvCard
+                    cover={adv.cover}
+                    description={adv.description ?? undefined}
+                    externalUrl={adv.externalUrl}
+                    key={adv._id}
+                    sponsorName={adv.sponsor?.name ?? ""}
+                    title={adv.title ?? ""}
+                  />
+                );
+              }
+              const card = slot.item;
+              return (
+                <BaseCard
+                  authors={card.authors}
+                  href={card.href}
+                  image={card.image}
+                  key={card.id}
+                  title={card.title}
+                />
+              );
+            })}
           </section>
         )}
         <LoadMore currentPage={page} totalPages={totalPages} />
