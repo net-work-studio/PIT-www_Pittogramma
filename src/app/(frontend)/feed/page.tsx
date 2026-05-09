@@ -50,7 +50,11 @@ export default async function FeedPage() {
     byTier[tier].slice(0, TIER_CAPS[tier])
   );
 
-  const hasItems = advs.length > 0 || communityItems.length > 0;
+  const hasAdvs = advs.some((adv) => adv.cover?.image?.asset);
+  const hasCommunity = communityItems.some(
+    (item) => item.cover?.image?.asset
+  );
+  const hasItems = hasAdvs || hasCommunity;
 
   return (
     <>

@@ -177,7 +177,7 @@ export const structure: StructureResolver = (S) =>
           S.listItem()
             .title("Active")
             .icon(CalendarCheck)
-            .child(
+            .child(() =>
               S.documentList()
                 .id("adv-active")
                 .title("Active ADVs")
@@ -190,7 +190,7 @@ export const structure: StructureResolver = (S) =>
           S.listItem()
             .title("Upcoming")
             .icon(CalendarClock)
-            .child(
+            .child(() =>
               S.documentList()
                 .id("adv-upcoming")
                 .title("Upcoming ADVs")
@@ -201,7 +201,7 @@ export const structure: StructureResolver = (S) =>
           S.listItem()
             .title("Expired")
             .icon(CalendarX)
-            .child(
+            .child(() =>
               S.documentList()
                 .id("adv-expired")
                 .title("Expired ADVs")
@@ -226,7 +226,7 @@ export const structure: StructureResolver = (S) =>
           S.listItem()
             .title("Active")
             .icon(CalendarCheck)
-            .child(
+            .child(() =>
               S.documentList()
                 .id("community-active")
                 .title("Active Community")
@@ -240,7 +240,7 @@ export const structure: StructureResolver = (S) =>
           S.listItem()
             .title("Upcoming")
             .icon(CalendarClock)
-            .child(
+            .child(() =>
               S.documentList()
                 .id("community-upcoming")
                 .title("Upcoming Community")
@@ -251,7 +251,7 @@ export const structure: StructureResolver = (S) =>
           S.listItem()
             .title("Expired")
             .icon(CalendarX)
-            .child(
+            .child(() =>
               S.documentList()
                 .id("community-expired")
                 .title("Expired Community")

@@ -141,7 +141,7 @@ export const community = defineType({
             if (!dateEnd) {
               return true;
             }
-            return dateEnd <= buildLocalToday()
+            return dateEnd < buildLocalToday()
               ? "Already expired — this community item will not display anywhere."
               : true;
           })
