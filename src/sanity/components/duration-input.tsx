@@ -10,8 +10,8 @@ import {
   useFormValue,
 } from "sanity";
 import { apiVersion } from "@/sanity/env";
+import { ensureDraft } from "./ensure-draft";
 
-const DRAFTS_PREFIX = /^drafts\./;
 const MS_PER_DAY = 86_400_000;
 
 /**
@@ -26,9 +26,7 @@ function addDays(baseIso: string, days: number): string | null {
     return null;
   }
   const [, y, m, d] = match;
-  const base = new Date(
-    Date.UTC(Number(y), Number(m) - 1, Number(d))
-  );
+  const base = new Date(Date.UTC(Number(y), Number(m) - 1, Number(d)));
   if (Number.isNaN(base.getTime())) {
     return null;
   }
@@ -49,6 +47,7 @@ export function DurationInput(props: NumberInputProps) {
   const { onChange, value, elementProps, schemaType } = props;
   const dateStart = useFormValue(["dateStart"]) as string | undefined;
   const documentId = useFormValue(["_id"]) as string | undefined;
+  const documentType = useFormValue(["_type"]) as string | undefined;
   const client = useClient({ apiVersion });
 
   const optionsList = (
@@ -76,19 +75,18 @@ export function DurationInput(props: NumberInputProps) {
         return;
       }
 
-      const draftId = documentId.startsWith("drafts.")
-        ? documentId
-        : `drafts.${documentId.replace(DRAFTS_PREFIX, "")}`;
-
-      client
-        .patch(draftId)
-        .set({ dateEnd: nextEnd })
-        .commit()
+      // Use the shared ensureDraft helper so the patch lands on a real draft —
+      // works on brand-new documents (where neither published nor draft exist
+      // yet) as well as existing ones being edited.
+      ensureDraft(client, documentId, documentType)
+        .then((draftId) =>
+          client.patch(draftId).set({ dateEnd: nextEnd }).commit()
+        )
         .catch(() => {
           // Non-fatal: editor can still set dateEnd manually.
         });
     },
-    [client, dateStart, documentId, onChange]
+    [client, dateStart, documentId, documentType, onChange]
   );
 
   return (

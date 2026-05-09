@@ -4,6 +4,7 @@ import RecentUpdates from "@/components/home/recent-updates";
 import HomeGrid from "@/components/home-grid";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
+import { buildLocalToday } from "@/lib/date-utils";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -19,14 +20,6 @@ import type { HOME_FEED_QUERY_RESULT } from "@/sanity/types";
 const FIRST_SECTION = 4;
 const SECOND_SECTION = 12;
 const THIRD_SECTION = 12;
-
-const buildLocalToday = () => {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-};
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({

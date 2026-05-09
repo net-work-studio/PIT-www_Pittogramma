@@ -21,15 +21,8 @@ import {
   Users,
 } from "lucide-react";
 import type { StructureResolver } from "sanity/structure";
+import { buildLocalToday } from "@/lib/date-utils";
 import { docListItem, group, singleton } from "./helpers";
-
-const buildLocalToday = () => {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-};
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>

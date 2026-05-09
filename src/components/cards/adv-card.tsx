@@ -11,7 +11,11 @@ type AdvDescription = NonNullable<FEED_QUERY_RESULT[number]["description"]>;
 
 interface AdvCardProps {
   cover: SanityImageSource;
-  // description: passed through for future render treatment, intentionally unrendered.
+  /**
+   * Portable Text description, threaded through from the feed query.
+   * Intentionally unrendered in Phase 1 — reserved for future render
+   * treatment (hover, expand, line-clamp). Do not remove.
+   */
   description?: AdvDescription;
   externalUrl: string;
   sponsorName: string;
@@ -20,14 +24,10 @@ interface AdvCardProps {
 
 export default function AdvCard({
   cover,
-  // description: passed through for future render treatment.
-  description: _description,
   externalUrl,
   sponsorName,
   title,
 }: AdvCardProps) {
-  // description: passed through for future render treatment, intentionally unused.
-  void _description;
   return (
     <BaseCard
       byline={`Sponsored by ${sponsorName}`}

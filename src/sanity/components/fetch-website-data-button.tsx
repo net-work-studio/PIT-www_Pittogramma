@@ -2,15 +2,10 @@
 
 import { Button, Card, Flex, Stack, Text, useToast } from "@sanity/ui";
 import { useCallback, useState } from "react";
-import {
-  type SanityClient,
-  type StringInputProps,
-  useClient,
-  useFormValue,
-} from "sanity";
+import { type StringInputProps, useClient, useFormValue } from "sanity";
 import { apiVersion } from "@/sanity/env";
+import { ensureDraft } from "./ensure-draft";
 
-const DRAFTS_PREFIX = /^drafts\./;
 const HTTP_PREFIX = /^http:\/\//;
 
 interface OgData {
@@ -24,25 +19,6 @@ interface SocialLink {
   _key: string;
   platform: string;
   url: string;
-}
-
-/** Ensure a draft document exists — Studio doesn't auto-create one for custom button actions. */
-async function ensureDraft(
-  client: SanityClient,
-  documentId: string
-): Promise<string> {
-  const publishedId = documentId.replace(DRAFTS_PREFIX, "");
-  const draftId = `drafts.${publishedId}`;
-
-  const draft = await client.getDocument(draftId);
-  if (!draft) {
-    const published = await client.getDocument(publishedId);
-    if (published) {
-      await client.createIfNotExists({ ...published, _id: draftId });
-    }
-  }
-
-  return draftId;
 }
 
 function buildPatchData(data: OgData): Record<string, unknown> {

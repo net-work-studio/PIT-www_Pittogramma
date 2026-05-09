@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AdvCard from "@/components/cards/adv-card";
 import PageHeader from "@/components/shared/page-header";
+import { buildLocalToday } from "@/lib/date-utils";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import { sanityFetch } from "@/sanity/lib/live";
@@ -8,14 +9,6 @@ import { FEED_QUERY } from "@/sanity/lib/queries";
 
 const PAGE_TITLE = "Feed";
 const PAGE_SUBTITLE = "Sponsors and partners supporting Pittogramma.";
-
-const buildLocalToday = () => {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-};
 
 export function generateMetadata(): Metadata {
   return mapSanityToMetadata({

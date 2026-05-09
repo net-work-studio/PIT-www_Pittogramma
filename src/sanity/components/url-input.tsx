@@ -11,7 +11,6 @@ import {
 } from "@sanity/ui";
 import { useCallback, useState } from "react";
 import {
-  type SanityClient,
   type StringInputProps,
   set,
   unset,
@@ -19,8 +18,8 @@ import {
   useFormValue,
 } from "sanity";
 import { apiVersion } from "@/sanity/env";
+import { ensureDraft } from "./ensure-draft";
 
-const DRAFTS_PREFIX = /^drafts\./;
 const HTTP_PREFIX = /^http:\/\//;
 
 interface OgData {
@@ -28,26 +27,6 @@ interface OgData {
   imageUrl: string | null;
   siteName: string | null;
   title: string | null;
-}
-
-/** Ensure a draft document exists — Studio doesn't auto-create one for custom button actions. */
-async function ensureDraft(
-  client: SanityClient,
-  documentId: string
-): Promise<string> {
-  const publishedId = documentId.replace(DRAFTS_PREFIX, "");
-  const draftId = `drafts.${publishedId}`;
-
-  const draft = await client.getDocument(draftId);
-  if (!draft) {
-    const published = await client.getDocument(publishedId);
-    if (published) {
-      const { _rev, _createdAt, _updatedAt, ...docData } = published;
-      await client.createIfNotExists({ ...docData, _id: draftId });
-    }
-  }
-
-  return draftId;
 }
 
 function buildPatchData(
