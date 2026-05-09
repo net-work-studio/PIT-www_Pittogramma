@@ -923,6 +923,38 @@ export const FEED_QUERY = defineQuery(`
   }
 `);
 
+// Home page ADV query — Phase 4. Gold + silver only (bronze is not surfaced
+// on home). Active window: dateStart <= today <= dateEnd. Sorted by tier
+// priority (gold → silver), then dateStart asc (first-booked-first-served),
+// tie-break on _createdAt asc. Cap [0...3] matches the home visible budget
+// (1 gold + 2 silver). Tier priority below must match `TIER_ORDER` in
+// src/lib/adv-config.ts.
+export const HOME_ADV_QUERY = defineQuery(`
+  *[
+    _type == "adv"
+    && tier in ["gold", "silver"]
+    && dateStart <= $today
+    && dateEnd >= $today
+  ] | order(
+    select(tier == "gold" => 0, tier == "silver" => 1, 99) asc,
+    dateStart asc,
+    _createdAt asc
+  ) [0...3] {
+    _id,
+    title,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    description,
+    externalUrl,
+    tier,
+    dateStart,
+    dateEnd,
+    sponsor->{ _id, name }
+  }
+`);
+
 // /feed community query — Phase 3.
 // Active window: dateStart <= today AND (no dateEnd, OR dateEnd >= today).
 // Sorted by dateStart asc (first-booked-first-served), tie-break on

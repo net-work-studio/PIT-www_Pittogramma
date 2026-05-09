@@ -17,6 +17,8 @@
  *   - the `FEED_COMMUNITY_QUERY` overload (`FEED_COMMUNITY_QUERY_RESULT` +
  *     matching `SanityQueries` entry).
  *   - the `ContributorReference` helper (kept colocated with `Community`).
+ *   - the `HOME_ADV_QUERY` overload (`HOME_ADV_QUERY_RESULT` + matching
+ *     `SanityQueries` entry).
  *
  * Patches were added while `bun typegen` was broken on the base branch
  * (postcss/vite config conflict, plus missing NEXT_PUBLIC_SANITY_DATASET in
@@ -4310,6 +4312,59 @@ export type FEED_QUERY_RESULT = Array<{
 
 // Hand-patched: see top-of-file NOTE.
 // Source: src/sanity/lib/queries.ts
+// Variable: HOME_ADV_QUERY
+// Subset of FEED_QUERY_RESULT, restricted to gold/silver tiers.
+export type HOME_ADV_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  cover: {
+    image: {
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+          } | null;
+        } | null;
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+    alt: string | null;
+  };
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  externalUrl: string;
+  tier: "gold" | "silver";
+  dateStart: string;
+  dateEnd: string;
+  sponsor: {
+    _id: string;
+    name: string;
+  };
+}>;
+
+// Hand-patched: see top-of-file NOTE.
+// Source: src/sanity/lib/queries.ts
 // Variable: FEED_COMMUNITY_QUERY
 // Query: *[    _type == "community"    && dateStart <= $today    && (!defined(dateEnd) || dateEnd >= $today)  ] | order(dateStart asc, _createdAt asc) [0...3] {    _id,    title,    type,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    description,    externalUrl,    dateStart,    dateEnd,    partner->{ _id, name }  }
 export type FEED_COMMUNITY_QUERY_RESULT = Array<{
@@ -4489,6 +4544,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    description,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tags[]->{ _id, name },\n    sourceUrl,\n    ogTitle,\n    ogDescription,\n    ogSiteName,\n    ogImageUrl\n  }\n': WEB_SOURCES_QUERY_RESULT;
     '\n  *[_type == "adv" && dateStart <= now() && dateEnd >= now()] | order(tier asc) {\n    _id,\n    title,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    description,\n    externalUrl,\n    tier,\n    dateStart,\n    dateEnd,\n    sponsor->{ _id, name }\n  }\n': ADVS_QUERY_RESULT;
     '\n  *[\n    _type == "adv"\n    && tier in ["gold", "silver", "bronze"]\n    && dateStart <= $today\n    && dateEnd >= $today\n  ] | order(\n    select(tier == "gold" => 0, tier == "silver" => 1, tier == "bronze" => 2, 99) asc,\n    dateStart asc,\n    _createdAt asc\n  ) [0...16] {\n    _id,\n    title,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    description,\n    externalUrl,\n    tier,\n    dateStart,\n    dateEnd,\n    sponsor->{ _id, name }\n  }\n': FEED_QUERY_RESULT;
+    '\n  *[\n    _type == "adv"\n    && tier in ["gold", "silver"]\n    && dateStart <= $today\n    && dateEnd >= $today\n  ] | order(\n    select(tier == "gold" => 0, tier == "silver" => 1, 99) asc,\n    dateStart asc,\n    _createdAt asc\n  ) [0...3] {\n    _id,\n    title,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    description,\n    externalUrl,\n    tier,\n    dateStart,\n    dateEnd,\n    sponsor->{ _id, name }\n  }\n': HOME_ADV_QUERY_RESULT;
     '\n  *[\n    _type == "community"\n    && dateStart <= $today\n    && (!defined(dateEnd) || dateEnd >= $today)\n  ] | order(dateStart asc, _createdAt asc) [0...3] {\n    _id,\n    title,\n    type,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    description,\n    externalUrl,\n    dateStart,\n    dateEnd,\n    partner->{ _id, name }\n  }\n': FEED_COMMUNITY_QUERY_RESULT;
     '\n  *[_type in ["person", "studio", "typeFoundry", "glossary", "bibliography", "bookshop", "institute", "webSource"]]\n  | order(_createdAt desc) [0...16] {\n    _id,\n    _type,\n    _createdAt,\n    name\n  }\n': RECENT_UPDATES_QUERY_RESULT;
     '\n  *[_type == "place" && defined(lat) && defined(lng)] {\n    _id,\n    name,\n    city,\n    country,\n    countryCode,\n    lat,\n    lng,\n    "designers": *[_type == "person" && "designer" in roles && place._ref == ^._id] { _id, name, slug },\n    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },\n    "studios": *[_type == "studio" && references(^._id)] { _id, name },\n    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },\n    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }\n  }\n': MAP_PLACES_QUERY_RESULT;

@@ -1,10 +1,37 @@
+import AdvCard from "@/components/cards/adv-card";
 import BaseCard from "@/components/cards/base-card";
-import type { HOME_FEED_QUERY_RESULT } from "@/sanity/types";
+import type {
+  HOME_ADV_QUERY_RESULT,
+  HOME_FEED_QUERY_RESULT,
+} from "@/sanity/types";
 
-export default function HomeGrid({ items }: { items: HOME_FEED_QUERY_RESULT }) {
+type EditorialItem = HOME_FEED_QUERY_RESULT[number];
+type AdvItem = HOME_ADV_QUERY_RESULT[number];
+
+export type HomeGridSlot =
+  | { kind: "editorial"; item: EditorialItem }
+  | { kind: "adv"; item: AdvItem };
+
+export default function HomeGrid({ slots }: { slots: HomeGridSlot[] }) {
   return (
     <section className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-      {items.map((item) => {
+      {slots.map((slot) => {
+        if (slot.kind === "adv") {
+          const adv = slot.item;
+          if (!adv.cover?.image?.asset) return null;
+          return (
+            <AdvCard
+              cover={adv.cover}
+              description={adv.description ?? undefined}
+              externalUrl={adv.externalUrl}
+              key={adv._id}
+              sponsorName={adv.sponsor?.name ?? ""}
+              title={adv.title ?? ""}
+            />
+          );
+        }
+
+        const item = slot.item;
         const href =
           item._type === "project"
             ? `/projects/${item.slug?.current ?? ""}`
