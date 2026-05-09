@@ -901,6 +901,66 @@ export const RECENT_UPDATES_QUERY = defineQuery(`
   }
 `);
 
+// ==================== EDITION QUERIES ====================
+
+export const EDITIONS_PAGE_QUERY = defineQuery(`
+  *[_type == "editionsPage"][0] {
+    _id,
+    title,
+    ${CTA_FIELDS},
+    ${SEO_FIELDS}
+  }
+`);
+
+export const EDITIONS_LIST_QUERY = defineQuery(`
+  *[_type == "edition" && defined(slug.current)] | order(publishingDate.date desc) {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    }
+  }
+`);
+
+export const EDITION_QUERY = defineQuery(`
+  *[_type == "edition" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      _type,
+      image {
+        _type,
+        ${IMAGE_FIELDS}
+      },
+      alt
+    },
+    authors[]{ ...@->{ _id, name }, _key },
+    designers[]{ ...@->{ _id, name }, _key },
+    supporters[]{ ...@->{ _id, name }, _key },
+    description,
+    buyUrl,
+    gallery[] {
+      _key,
+      _type,
+      _type == "singleMediaBlock" => {
+        orientation,
+        media { type, image { ${IMAGE_FIELDS} }, caption, alt }
+      },
+      _type == "sideBySideMediaBlock" => {
+        orientation,
+        left { type, image { ${IMAGE_FIELDS} }, caption, alt },
+        right { type, image { ${IMAGE_FIELDS} }, caption, alt }
+      }
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
 // ==================== MAP QUERIES ====================
 
 export const MAP_PLACES_QUERY = defineQuery(`

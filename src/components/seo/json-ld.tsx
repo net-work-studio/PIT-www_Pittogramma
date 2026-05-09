@@ -5,7 +5,8 @@ type JsonLdType =
   | "BreadcrumbList"
   | "WebSite"
   | "Person"
-  | "Event";
+  | "Event"
+  | "Book";
 
 interface JsonLdProps {
   data: Record<string, unknown>;

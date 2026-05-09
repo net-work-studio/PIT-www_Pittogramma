@@ -575,7 +575,33 @@ export type Edition = {
   _rev: string;
   title: string;
   slug: Slug;
+  publishingDate: PublishingDate;
   cover: ImageWithMetadata;
+  authors: Array<
+    {
+      _key: string;
+    } & PersonReference
+  >;
+  designers: Array<
+    {
+      _key: string;
+    } & PersonReference
+  >;
+  supporters?: Array<
+    {
+      _key: string;
+    } & ContributorReference
+  >;
+  description: string;
+  buyUrl?: string;
+  gallery?: Array<
+    | ({
+        _key: string;
+      } & SingleMediaBlock)
+    | ({
+        _key: string;
+      } & SideBySideMediaBlock)
+  >;
   seo?: SeoModule;
 };
 
@@ -2289,7 +2315,7 @@ export type DESIGNER_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: FUTURE_EVENTS_QUERY
-// Query: *[_type == "event" && dateStart >= $today] | order(dateStart asc) {        _id,    title,    slug,    type,    status,    ctaUrl,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    dateStart,    dateEnd,    locationName,    description,    sponsor->{ _id, name },    partner->{ _id, name },    tags[]->{ _id, name },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+// Query: *[_type == "event" && defined(slug.current) && dateStart >= $today] | order(dateStart asc) {        _id,    title,    slug,    type,    status,    ctaUrl,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    dateStart,    dateEnd,    locationName,    description,    sponsor->{ _id, name },    partner->{ _id, name },    tags[]->{ _id, name },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type FUTURE_EVENTS_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -2385,7 +2411,7 @@ export type FUTURE_EVENTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PAST_EVENTS_QUERY
-// Query: *[_type == "event" && dateStart < $today] | order(dateStart desc) [$start...$end] {        _id,    title,    slug,    type,    status,    ctaUrl,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    dateStart,    dateEnd,    locationName,    description,    sponsor->{ _id, name },    partner->{ _id, name },    tags[]->{ _id, name },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+// Query: *[_type == "event" && defined(slug.current) && dateStart < $today] | order(dateStart desc) [$start...$end] {        _id,    title,    slug,    type,    status,    ctaUrl,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    dateStart,    dateEnd,    locationName,    description,    sponsor->{ _id, name },    partner->{ _id, name },    tags[]->{ _id, name },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type PAST_EVENTS_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -2481,7 +2507,7 @@ export type PAST_EVENTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PAST_EVENTS_COUNT_QUERY
-// Query: count(*[_type == "event" && dateStart < $today])
+// Query: count(*[_type == "event" && defined(slug.current) && dateStart < $today])
 export type PAST_EVENTS_COUNT_QUERY_RESULT = number;
 
 // Source: src/sanity/lib/queries.ts
@@ -2663,7 +2689,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECTS_FILTERED_QUERY
-// Query: *[_type == "project"    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ] | order(publishingDate.date desc) [$start...$end] {    _id,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    title,    slug,    designers[]{ ...@->{ _id, name, slug, portrait }, _key },    tags[]->{      _id,      name,      "slug": slug.current    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+// Query: *[_type == "project"    && defined(slug.current)    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ] | order(publishingDate.date desc) [$start...$end] {    _id,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    title,    slug,    designers[]{ ...@->{ _id, name, slug, portrait }, _key },    tags[]->{      _id,      name,      "slug": slug.current    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type PROJECTS_FILTERED_QUERY_RESULT = Array<{
   _id: string;
   cover: {
@@ -2743,7 +2769,7 @@ export type PROJECTS_FILTERED_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECTS_COUNT_QUERY
-// Query: count(*[_type == "project"    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ])
+// Query: count(*[_type == "project"    && defined(slug.current)    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ])
 export type PROJECTS_COUNT_QUERY_RESULT = number;
 
 // Source: src/sanity/lib/queries.ts
@@ -3357,7 +3383,7 @@ export type JOURNAL_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: JOURNAL_COUNT_QUERY
-// Query: count(*[_type == "journal"    && ($hasTags == false || label in $tags)  ])
+// Query: count(*[_type == "journal"    && defined(slug.current)    && ($hasTags == false || label in $tags)  ])
 export type JOURNAL_COUNT_QUERY_RESULT = number;
 
 // Source: src/sanity/lib/queries.ts
@@ -3600,7 +3626,7 @@ export type INTERVIEWS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: INTERVIEWS_FILTERED_QUERY
-// Query: *[_type == "interview"    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ] | order(publishingDate.date desc) [$start...$end] {    _id,    title,    slug,    publishingDate,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    designersAndProfessionals[]{ ...@->{ _id, name }, _key },    studio->{      _id,      name    },    typeFoundry->{      _id,      name    },    place->{ _id, name, city, country, countryCode, lat, lng },    readingTime,    tags[]->{      _id,      name,      "slug": slug.current    },    introText,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+// Query: *[_type == "interview"    && defined(slug.current)    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ] | order(publishingDate.date desc) [$start...$end] {    _id,    title,    slug,    publishingDate,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    designersAndProfessionals[]{ ...@->{ _id, name }, _key },    studio->{      _id,      name    },    typeFoundry->{      _id,      name    },    place->{ _id, name, city, country, countryCode, lat, lng },    readingTime,    tags[]->{      _id,      name,      "slug": slug.current    },    introText,      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type INTERVIEWS_FILTERED_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -3698,7 +3724,7 @@ export type INTERVIEWS_FILTERED_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: INTERVIEWS_COUNT_QUERY
-// Query: count(*[_type == "interview"    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ])
+// Query: count(*[_type == "interview"    && defined(slug.current)    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)  ])
 export type INTERVIEWS_COUNT_QUERY_RESULT = number;
 
 // Source: src/sanity/lib/queries.ts
@@ -4263,6 +4289,314 @@ export type RECENT_UPDATES_QUERY_RESULT = Array<
 >;
 
 // Source: src/sanity/lib/queries.ts
+// Variable: EDITIONS_PAGE_QUERY
+// Query: *[_type == "editionsPage"][0] {    _id,    title,    endOfPageCta->{    _id,    title,    variant,    headline,    image {      _type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt,      caption    },    buttonText,    linkType,    internalLink->{      _type,      "slug": slug    },    externalUrl  },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+export type EDITIONS_PAGE_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  endOfPageCta: {
+    _id: string;
+    title: string;
+    variant: "simple" | "withImage" | null;
+    headline: string | null;
+    image: {
+      _type: "imageWithMetadata";
+      image: {
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+    buttonText: string;
+    linkType: "external" | "internal" | null;
+    internalLink:
+      | {
+          _type: "designersPage";
+          slug: null;
+        }
+      | {
+          _type: "edition";
+          slug: Slug;
+        }
+      | {
+          _type: "event";
+          slug: Slug;
+        }
+      | {
+          _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "interview";
+          slug: Slug;
+        }
+      | {
+          _type: "interviewsPage";
+          slug: null;
+        }
+      | {
+          _type: "journal";
+          slug: Slug;
+        }
+      | {
+          _type: "person";
+          slug: Slug | null;
+        }
+      | {
+          _type: "project";
+          slug: Slug;
+        }
+      | {
+          _type: "projectsPage";
+          slug: null;
+        }
+      | null;
+    externalUrl: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: EDITIONS_LIST_QUERY
+// Query: *[_type == "edition" && defined(slug.current)] | order(publishingDate.date desc) {    _id,    title,    slug,    publishingDate,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    }  }
+export type EDITIONS_LIST_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  slug: Slug;
+  publishingDate: PublishingDate;
+  cover: {
+    image: {
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+          } | null;
+        } | null;
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+    alt: string | null;
+  };
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: EDITION_QUERY
+// Query: *[_type == "edition" && slug.current == $slug][0] {    _id,    title,    slug,    publishingDate,    cover {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt    },    authors[]{ ...@->{ _id, name }, _key },    designers[]{ ...@->{ _id, name }, _key },    supporters[]{ ...@->{ _id, name }, _key },    description,    buyUrl,    gallery[] {      _key,      _type,      _type == "singleMediaBlock" => {        orientation,        media { type, image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop }, caption, alt }      },      _type == "sideBySideMediaBlock" => {        orientation,        left { type, image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop }, caption, alt },        right { type, image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop }, caption, alt }      }    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+export type EDITION_QUERY_RESULT = {
+  _id: string;
+  title: string;
+  slug: Slug;
+  publishingDate: PublishingDate;
+  cover: {
+    _type: "imageWithMetadata";
+    image: {
+      _type: "image";
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+          } | null;
+        } | null;
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+    alt: string | null;
+  };
+  authors: Array<{
+    _id: string;
+    name: string;
+    _key: string;
+  }>;
+  designers: Array<{
+    _id: string;
+    name: string;
+    _key: string;
+  }>;
+  supporters: Array<{
+    _id: string;
+    name: string;
+    _key: string;
+  }> | null;
+  description: string;
+  buyUrl: string | null;
+  gallery: Array<
+    | {
+        _key: string;
+        _type: "sideBySideMediaBlock";
+        orientation: "landscape" | "portrait";
+        left: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          caption: string | null;
+          alt: string | null;
+        };
+        right: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          caption: string | null;
+          alt: string | null;
+        };
+      }
+    | {
+        _key: string;
+        _type: "singleMediaBlock";
+        orientation: "landscape" | "portrait";
+        media: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          caption: string | null;
+          alt: string | null;
+        };
+      }
+  > | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: MAP_PLACES_QUERY
 // Query: *[_type == "place" && defined(lat) && defined(lng)] {    _id,    name,    city,    country,    countryCode,    lat,    lng,    "designers": *[_type == "person" && "designer" in roles && place._ref == ^._id] { _id, name, slug },    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },    "studios": *[_type == "studio" && references(^._id)] { _id, name },    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }  }
 export type MAP_PLACES_QUERY_RESULT = Array<{
@@ -4336,6 +4670,9 @@ declare module "@sanity/client" {
     '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    description,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tags[]->{ _id, name },\n    sourceUrl,\n    ogTitle,\n    ogDescription,\n    ogSiteName,\n    ogImageUrl\n  }\n': WEB_SOURCES_QUERY_RESULT;
     '\n  *[_type == "adv" && dateStart <= now() && dateEnd >= now()] | order(tier asc) {\n    _id,\n    title,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    description,\n    externalUrl,\n    tier,\n    dateStart,\n    dateEnd,\n    sponsor->{ _id, name }\n  }\n': ADVS_QUERY_RESULT;
     '\n  *[_type in ["person", "studio", "typeFoundry", "glossary", "bibliography", "bookshop", "institute", "webSource"]]\n  | order(_createdAt desc) [0...16] {\n    _id,\n    _type,\n    _createdAt,\n    name\n  }\n': RECENT_UPDATES_QUERY_RESULT;
+    '\n  *[_type == "editionsPage"][0] {\n    _id,\n    title,\n    endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': EDITIONS_PAGE_QUERY_RESULT;
+    '\n  *[_type == "edition" && defined(slug.current)] | order(publishingDate.date desc) {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    }\n  }\n': EDITIONS_LIST_QUERY_RESULT;
+    '\n  *[_type == "edition" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt\n    },\n    authors[]{ ...@->{ _id, name }, _key },\n    designers[]{ ...@->{ _id, name }, _key },\n    supporters[]{ ...@->{ _id, name }, _key },\n    description,\n    buyUrl,\n    gallery[] {\n      _key,\n      _type,\n      _type == "singleMediaBlock" => {\n        orientation,\n        media { type, image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, caption, alt }\n      },\n      _type == "sideBySideMediaBlock" => {\n        orientation,\n        left { type, image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, caption, alt },\n        right { type, image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, caption, alt }\n      }\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': EDITION_QUERY_RESULT;
     '\n  *[_type == "place" && defined(lat) && defined(lng)] {\n    _id,\n    name,\n    city,\n    country,\n    countryCode,\n    lat,\n    lng,\n    "designers": *[_type == "person" && "designer" in roles && place._ref == ^._id] { _id, name, slug },\n    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },\n    "studios": *[_type == "studio" && references(^._id)] { _id, name },\n    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },\n    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }\n  }\n': MAP_PLACES_QUERY_RESULT;
   }
 }
