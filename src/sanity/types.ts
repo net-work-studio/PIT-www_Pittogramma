@@ -10,6 +10,22 @@
  * For more information on how to use Sanity TypeGen, visit the official documentation:
  * https://www.sanity.io/docs/sanity-typegen
  * ---------------------------------------------------------------------------------
+ *
+ * NOTE: auto-generated EXCEPT for hand-patches around:
+ *   - the `FEED_QUERY` overload (`FEED_QUERY_RESULT` + matching `SanityQueries` entry).
+ *   - the `community` document type (`Community`).
+ *   - the `FEED_COMMUNITY_QUERY` overload (`FEED_COMMUNITY_QUERY_RESULT` +
+ *     matching `SanityQueries` entry).
+ *   - the `ContributorReference` helper (kept colocated with `Community`).
+ *   - the `HOME_ADV_QUERY` overload (`HOME_ADV_QUERY_RESULT` + matching
+ *     `SanityQueries` entry).
+ *   - the `INDEX_GOLD_QUERY` overload (`INDEX_GOLD_QUERY_RESULT` + matching
+ *     `SanityQueries` entry).
+ *
+ * Patches were added while `bun typegen` was broken on the base branch
+ * (postcss/vite config conflict, plus missing NEXT_PUBLIC_SANITY_DATASET in
+ * this worktree). When typegen is fixed and regenerated, reconcile these
+ * entries manually — `git blame` on this note points to the original patches.
  */
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
@@ -1031,8 +1047,43 @@ export type Adv = {
   externalUrl: string;
   tier: "bronze" | "silver" | "gold";
   dateStart: string;
+  duration: 30 | 60 | 90;
   dateEnd: string;
   sponsor: ContributorReference;
+};
+
+// Hand-patched: see top-of-file NOTE.
+export type Community = {
+  _id: string;
+  _type: "community";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  type: "projectOnSupport" | "partnership";
+  cover: ImageWithMetadata;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  externalUrl: string;
+  partner?: ContributorReference;
+  dateStart: string;
+  dateEnd?: string;
 };
 
 export type Contributor = {
@@ -1220,6 +1271,7 @@ export type AllSanitySchemaTypes =
   | Institute
   | Place
   | Adv
+  | Community
   | Contributor
   | MediaTag
   | SanityImagePaletteSwatch
@@ -4636,6 +4688,217 @@ export type ADVS_QUERY_RESULT = Array<{
 }>;
 
 // Source: src/sanity/lib/queries.ts
+// Variable: FEED_QUERY
+// Query: *[    _type == "adv"    && tier in ["gold", "silver", "bronze"]    && dateStart <= $today    && dateEnd >= $today  ] | order(    select(tier == "gold" => 0, tier == "silver" => 1, tier == "bronze" => 2, 99) asc,    dateStart asc,    _createdAt asc  ) [0...16] {    _id,    title,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    description,    externalUrl,    tier,    dateStart,    dateEnd,    sponsor->{ _id, name }  }
+export type FEED_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  cover: {
+    image: {
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+          } | null;
+        } | null;
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+    alt: string | null;
+  };
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  externalUrl: string;
+  tier: "bronze" | "gold" | "silver";
+  dateStart: string;
+  dateEnd: string;
+  sponsor: {
+    _id: string;
+    name: string;
+  };
+}>;
+
+// Hand-patched: see top-of-file NOTE.
+// Source: src/sanity/lib/queries.ts
+// Variable: HOME_ADV_QUERY
+// Subset of FEED_QUERY_RESULT, restricted to gold/silver tiers.
+export type HOME_ADV_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  cover: {
+    image: {
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+          } | null;
+        } | null;
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+    alt: string | null;
+  };
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  externalUrl: string;
+  tier: "gold" | "silver";
+  dateStart: string;
+  dateEnd: string;
+  sponsor: {
+    _id: string;
+    name: string;
+  };
+}>;
+
+// Hand-patched: see top-of-file NOTE.
+// Source: src/sanity/lib/queries.ts
+// Variable: INDEX_GOLD_QUERY
+// Subset of FEED_QUERY_RESULT, restricted to gold tier and capped at one item.
+export type INDEX_GOLD_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  cover: {
+    image: {
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+          } | null;
+        } | null;
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+    alt: string | null;
+  };
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  externalUrl: string;
+  tier: "gold";
+  dateStart: string;
+  dateEnd: string;
+  sponsor: {
+    _id: string;
+    name: string;
+  };
+}>;
+
+// Hand-patched: see top-of-file NOTE.
+// Source: src/sanity/lib/queries.ts
+// Variable: FEED_COMMUNITY_QUERY
+// Query: *[    _type == "community"    && dateStart <= $today    && (!defined(dateEnd) || dateEnd >= $today)  ] | order(dateStart asc, _createdAt asc) [0...3] {    _id,    title,    type,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    description,    externalUrl,    dateStart,    dateEnd,    partner->{ _id, name }  }
+export type FEED_COMMUNITY_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  type: "partnership" | "projectOnSupport";
+  cover: {
+    image: {
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+          } | null;
+        } | null;
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+    } | null;
+    alt: string | null;
+  };
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  externalUrl: string;
+  dateStart: string;
+  dateEnd: string | null;
+  partner: {
+    _id: string;
+    name: string;
+  } | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: RECENT_UPDATES_QUERY
 // Query: *[_type in ["person", "studio", "typeFoundry", "glossary", "bibliography", "bookshop", "institute", "webSource"]]  | order(_createdAt desc) [0...16] {    _id,    _type,    _createdAt,    name  }
 export type RECENT_UPDATES_QUERY_RESULT = Array<
@@ -5071,6 +5334,10 @@ declare module "@sanity/client" {
     '\n  *[_type == "typeFoundry"] | order(name asc) {\n    _id,\n    name,\n    tags[]->{\n      _id,\n      name\n    },\n    places[]->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': TYPE_FOUNDRIES_QUERY_RESULT;
     '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    description,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    category->{\n      _id,\n      name\n    },\n    tags[]->{ _id, name },\n    sourceUrl,\n    ogTitle,\n    ogDescription,\n    ogSiteName,\n    ogImageUrl\n  }\n': WEB_SOURCES_QUERY_RESULT;
     '\n  *[_type == "adv" && dateStart <= now() && dateEnd >= now()] | order(tier asc) {\n    _id,\n    title,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    description,\n    externalUrl,\n    tier,\n    dateStart,\n    dateEnd,\n    sponsor->{ _id, name }\n  }\n': ADVS_QUERY_RESULT;
+    '\n  *[\n    _type == "adv"\n    && tier in ["gold", "silver", "bronze"]\n    && dateStart <= $today\n    && dateEnd >= $today\n  ] | order(\n    select(tier == "gold" => 0, tier == "silver" => 1, tier == "bronze" => 2, 99) asc,\n    dateStart asc,\n    _createdAt asc\n  ) [0...16] {\n    _id,\n    title,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    description,\n    externalUrl,\n    tier,\n    dateStart,\n    dateEnd,\n    sponsor->{ _id, name }\n  }\n': FEED_QUERY_RESULT;
+    '\n  *[\n    _type == "adv"\n    && tier in ["gold", "silver"]\n    && dateStart <= $today\n    && dateEnd >= $today\n  ] | order(\n    select(tier == "gold" => 0, tier == "silver" => 1, 99) asc,\n    dateStart asc,\n    _createdAt asc\n  ) [0...3] {\n    _id,\n    title,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    description,\n    externalUrl,\n    tier,\n    dateStart,\n    dateEnd,\n    sponsor->{ _id, name }\n  }\n': HOME_ADV_QUERY_RESULT;
+    '\n  *[\n    _type == "adv"\n    && tier == "gold"\n    && dateStart <= $today\n    && dateEnd >= $today\n  ] | order(dateStart asc, _createdAt asc) [0...1] {\n    _id,\n    title,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    description,\n    externalUrl,\n    tier,\n    dateStart,\n    dateEnd,\n    sponsor->{ _id, name }\n  }\n': INDEX_GOLD_QUERY_RESULT;
+    '\n  *[\n    _type == "community"\n    && dateStart <= $today\n    && (!defined(dateEnd) || dateEnd >= $today)\n  ] | order(dateStart asc, _createdAt asc) [0...3] {\n    _id,\n    title,\n    type,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    description,\n    externalUrl,\n    dateStart,\n    dateEnd,\n    partner->{ _id, name }\n  }\n': FEED_COMMUNITY_QUERY_RESULT;
     '\n  *[_type in ["person", "studio", "typeFoundry", "glossary", "bibliography", "bookshop", "institute", "webSource"]]\n  | order(_createdAt desc) [0...16] {\n    _id,\n    _type,\n    _createdAt,\n    name\n  }\n': RECENT_UPDATES_QUERY_RESULT;
     '\n  *[_type == "editionsPage"][0] {\n    _id,\n    title,\n    endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': EDITIONS_PAGE_QUERY_RESULT;
     '\n  *[_type == "edition" && defined(slug.current)] | order(publishingDate.date desc) {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    }\n  }\n': EDITIONS_LIST_QUERY_RESULT;

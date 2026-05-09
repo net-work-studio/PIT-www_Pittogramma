@@ -890,6 +890,123 @@ export const ADVS_QUERY = defineQuery(`
   }
 `);
 
+// /feed query — Phase 2: gold + silver + bronze.
+// Active window: dateStart <= today <= dateEnd. Sorted by tier priority
+// (gold → silver → bronze), then dateStart asc (first-booked-first-served),
+// tie-break on _createdAt asc. The hard cap of 16 is a safety net well above
+// the visible cap budget (1 + 2 + 5 = 8) so legitimate inventory survives any
+// short-term overflow while still bounding worst-case payload size.
+// Per-tier visible caps are enforced by the page, not the query.
+// Tier priority below must match `TIER_ORDER` in src/lib/adv-config.ts.
+export const FEED_QUERY = defineQuery(`
+  *[
+    _type == "adv"
+    && tier in ["gold", "silver", "bronze"]
+    && dateStart <= $today
+    && dateEnd >= $today
+  ] | order(
+    select(tier == "gold" => 0, tier == "silver" => 1, tier == "bronze" => 2, 99) asc,
+    dateStart asc,
+    _createdAt asc
+  ) [0...16] {
+    _id,
+    title,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    description,
+    externalUrl,
+    tier,
+    dateStart,
+    dateEnd,
+    sponsor->{ _id, name }
+  }
+`);
+
+// Home page ADV query — Phase 4. Gold + silver only (bronze is not surfaced
+// on home). Active window: dateStart <= today <= dateEnd. Sorted by tier
+// priority (gold → silver), then dateStart asc (first-booked-first-served),
+// tie-break on _createdAt asc. Cap [0...3] matches the home visible budget
+// (1 gold + 2 silver). Tier priority below must match `TIER_ORDER` in
+// src/lib/adv-config.ts.
+export const HOME_ADV_QUERY = defineQuery(`
+  *[
+    _type == "adv"
+    && tier in ["gold", "silver"]
+    && dateStart <= $today
+    && dateEnd >= $today
+  ] | order(
+    select(tier == "gold" => 0, tier == "silver" => 1, 99) asc,
+    dateStart asc,
+    _createdAt asc
+  ) [0...3] {
+    _id,
+    title,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    description,
+    externalUrl,
+    tier,
+    dateStart,
+    dateEnd,
+    sponsor->{ _id, name }
+  }
+`);
+
+// Index pages ADV query — Phase 5. Single active gold for /interviews and
+// /projects index pages. Active window: dateStart <= today <= dateEnd.
+// Sorted by dateStart asc (first-booked-first-served), tie-break on
+// _createdAt asc. Cap [0...1] matches the gold tier visible budget.
+export const INDEX_GOLD_QUERY = defineQuery(`
+  *[
+    _type == "adv"
+    && tier == "gold"
+    && dateStart <= $today
+    && dateEnd >= $today
+  ] | order(dateStart asc, _createdAt asc) [0...1] {
+    _id,
+    title,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    description,
+    externalUrl,
+    tier,
+    dateStart,
+    dateEnd,
+    sponsor->{ _id, name }
+  }
+`);
+
+// /feed community query — Phase 3.
+// Active window: dateStart <= today AND (no dateEnd, OR dateEnd >= today).
+// Sorted by dateStart asc (first-booked-first-served), tie-break on
+// _createdAt asc. The [0...3] slice matches the Community visible cap.
+export const FEED_COMMUNITY_QUERY = defineQuery(`
+  *[
+    _type == "community"
+    && dateStart <= $today
+    && (!defined(dateEnd) || dateEnd >= $today)
+  ] | order(dateStart asc, _createdAt asc) [0...3] {
+    _id,
+    title,
+    type,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    description,
+    externalUrl,
+    dateStart,
+    dateEnd,
+    partner->{ _id, name }
+  }
+`);
+
 // ==================== RECENT UPDATES QUERY ====================
 
 export const RECENT_UPDATES_QUERY = defineQuery(`

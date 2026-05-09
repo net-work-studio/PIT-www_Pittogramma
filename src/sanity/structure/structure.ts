@@ -2,11 +2,16 @@ import {
   BookOpen,
   Briefcase,
   Calendar,
+  CalendarCheck,
+  CalendarClock,
+  CalendarX,
   FileText,
   GraduationCap,
+  Handshake,
   Home,
   Info,
   Languages,
+  List,
   MapPin,
   Megaphone,
   MessageCircle,
@@ -17,6 +22,7 @@ import {
   Users,
 } from "lucide-react";
 import type { StructureResolver } from "sanity/structure";
+import { buildLocalToday } from "@/lib/date-utils";
 import { docListItem, group, singleton } from "./helpers";
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
@@ -148,7 +154,7 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
-      singleton(S, "aboutPage", "About", Info),
+      singleton(S, "history", "Info", Info),
 
       group(
         S,
@@ -156,16 +162,7 @@ export const structure: StructureResolver = (S) =>
         [
           singleton(S, "editionsPage", "Editions Page", BookOpen),
           S.divider(),
-          S.documentTypeListItem("edition")
-            .icon(BookOpen)
-            .title("Edition")
-            .child(
-              S.documentTypeList("edition")
-                .title("Edition")
-                .defaultOrdering([
-                  { field: "publishingDate.date", direction: "desc" },
-                ])
-            ),
+          docListItem(S, "edition", "Edition", BookOpen),
         ],
         "editions",
         BookOpen
@@ -173,7 +170,107 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
-      docListItem(S, "adv", "ADVs", Megaphone),
+      group(
+        S,
+        "ADVs",
+        [
+          S.listItem()
+            .title("Active")
+            .icon(CalendarCheck)
+            .child(() =>
+              S.documentList()
+                .id("adv-active")
+                .title("Active ADVs")
+                .filter(
+                  '_type == "adv" && dateStart <= $today && dateEnd >= $today'
+                )
+                .params({ today: buildLocalToday() })
+                .defaultOrdering([{ field: "dateStart", direction: "asc" }])
+            ),
+          S.listItem()
+            .title("Upcoming")
+            .icon(CalendarClock)
+            .child(() =>
+              S.documentList()
+                .id("adv-upcoming")
+                .title("Upcoming ADVs")
+                .filter('_type == "adv" && dateStart > $today')
+                .params({ today: buildLocalToday() })
+                .defaultOrdering([{ field: "dateStart", direction: "asc" }])
+            ),
+          S.listItem()
+            .title("Expired")
+            .icon(CalendarX)
+            .child(() =>
+              S.documentList()
+                .id("adv-expired")
+                .title("Expired ADVs")
+                .filter('_type == "adv" && dateEnd < $today')
+                .params({ today: buildLocalToday() })
+                .defaultOrdering([{ field: "dateEnd", direction: "desc" }])
+            ),
+          S.divider(),
+          S.listItem()
+            .title("All")
+            .icon(List)
+            .child(S.documentTypeList("adv").title("All ADVs")),
+        ],
+        "advs",
+        Megaphone
+      ),
+
+      group(
+        S,
+        "Community",
+        [
+          S.listItem()
+            .title("Active")
+            .icon(CalendarCheck)
+            .child(() =>
+              S.documentList()
+                .id("community-active")
+                .title("Active Community")
+                // Active includes evergreen items (no dateEnd set).
+                .filter(
+                  '_type == "community" && dateStart <= $today && (!defined(dateEnd) || dateEnd >= $today)'
+                )
+                .params({ today: buildLocalToday() })
+                .defaultOrdering([{ field: "dateStart", direction: "asc" }])
+            ),
+          S.listItem()
+            .title("Upcoming")
+            .icon(CalendarClock)
+            .child(() =>
+              S.documentList()
+                .id("community-upcoming")
+                .title("Upcoming Community")
+                .filter('_type == "community" && dateStart > $today')
+                .params({ today: buildLocalToday() })
+                .defaultOrdering([{ field: "dateStart", direction: "asc" }])
+            ),
+          S.listItem()
+            .title("Expired")
+            .icon(CalendarX)
+            .child(() =>
+              S.documentList()
+                .id("community-expired")
+                .title("Expired Community")
+                // Evergreen items (no dateEnd) can't expire — exclude them.
+                .filter(
+                  '_type == "community" && defined(dateEnd) && dateEnd < $today'
+                )
+                .params({ today: buildLocalToday() })
+                .defaultOrdering([{ field: "dateEnd", direction: "desc" }])
+            ),
+          S.divider(),
+          S.listItem()
+            .title("All")
+            .icon(List)
+            .child(S.documentTypeList("community").title("All Community")),
+        ],
+        "community",
+        Handshake
+      ),
       docListItem(S, "cta", "CTAs", MousePointerClick),
 
       group(S, "Metadata", [

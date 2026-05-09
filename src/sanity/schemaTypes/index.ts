@@ -3,6 +3,7 @@ import { adv } from "./documents/adv";
 import { bibliography } from "./documents/bibliography";
 import { bookshop } from "./documents/bookshop";
 import { category } from "./documents/category";
+import { community } from "./documents/community";
 import { contributor } from "./documents/contributor";
 import { cta } from "./documents/cta";
 import { edition } from "./documents/edition";
@@ -48,6 +49,7 @@ import { siteSettings } from "./singletons/site-settings";
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     adv,
+    community,
     contributor,
     cta,
     edition,

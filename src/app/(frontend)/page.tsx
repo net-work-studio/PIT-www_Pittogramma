@@ -1,32 +1,65 @@
 import type { Metadata } from "next";
 import CtaCard from "@/components/cards/cta-card";
 import RecentUpdates from "@/components/home/recent-updates";
-import HomeGrid from "@/components/home-grid";
+import HomeGrid, { type HomeGridSlot } from "@/components/home-grid";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
+import { buildLocalToday } from "@/lib/date-utils";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
 import { sanityFetch } from "@/sanity/lib/live";
 import {
+  HOME_ADV_QUERY,
   HOME_FEED_QUERY,
   HOME_PAGE_QUERY,
   RECENT_UPDATES_QUERY,
 } from "@/sanity/lib/queries";
-import type { HOME_FEED_QUERY_RESULT } from "@/sanity/types";
+import type {
+  HOME_ADV_QUERY_RESULT,
+  HOME_FEED_QUERY_RESULT,
+} from "@/sanity/types";
 
 // 1 hero + 4 + 12 + 12 = 29 items, all rows full multiples of 4 (no orphans)
 const FIRST_SECTION = 4;
 const SECOND_SECTION = 12;
 const THIRD_SECTION = 12;
 
-const buildLocalToday = () => {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-};
+// ADV injection positions (1-indexed) per the surface matrix in plans/adv-system.md.
+const GOLD_S1_POSITION = 3;
+const SILVER_S2_POSITION_A = 3;
+const SILVER_S2_POSITION_B = 11;
+
+type EditorialItem = HOME_FEED_QUERY_RESULT[number];
+type AdvItem = HOME_ADV_QUERY_RESULT[number];
+
+// Walks an editorial cursor and injects ADVs at fixed 1-indexed positions.
+// Returns the assembled slots and how many editorial items were consumed,
+// so the next section can pick up where this one left off.
+function assembleSection({
+  total,
+  injections,
+  editorial,
+}: {
+  total: number;
+  injections: Map<number, AdvItem>;
+  editorial: EditorialItem[];
+}): { slots: HomeGridSlot[]; editorialConsumed: number } {
+  const slots: HomeGridSlot[] = [];
+  let cursor = 0;
+  for (let position = 1; position <= total; position++) {
+    const adv = injections.get(position);
+    if (adv) {
+      slots.push({ kind: "adv", item: adv });
+      continue;
+    }
+    const editorialItem = editorial[cursor];
+    if (!editorialItem) break;
+    slots.push({ kind: "editorial", item: editorialItem });
+    cursor++;
+  }
+  return { slots, editorialConsumed: cursor };
+}
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -48,44 +81,75 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   const today = buildLocalToday();
-  const [{ data: homePage }, { data: feedItems }, { data: recentUpdates }] =
-    await Promise.all([
-      sanityFetch({ query: HOME_PAGE_QUERY }),
-      sanityFetch({ query: HOME_FEED_QUERY, params: { today } }),
-      sanityFetch({ query: RECENT_UPDATES_QUERY }),
-    ]);
+  const [
+    { data: homePage },
+    { data: feedItems },
+    { data: recentUpdates },
+    { data: homeAdvs },
+  ] = await Promise.all([
+    sanityFetch({ query: HOME_PAGE_QUERY }),
+    sanityFetch({ query: HOME_FEED_QUERY, params: { today } }),
+    sanityFetch({ query: RECENT_UPDATES_QUERY }),
+    sanityFetch({ query: HOME_ADV_QUERY, params: { today } }),
+  ]);
 
   const midCta = homePage?.midPageCta;
   const cta = homePage?.endOfPageCta;
 
-  // Resolve featured: manual pick with fallback to latest
+  // Resolve featured: manual pick with fallback to latest editorial.
+  // The hero is always editorial — ADVs never enter this pool.
   // Note: featuredItem type from HOME_PAGE_QUERY is `null` until schema is deployed
   // and typegen re-run. Cast to feed item type for now.
-  type FeedItem = HOME_FEED_QUERY_RESULT[number];
-  const featuredItem: FeedItem | null =
-    (homePage?.featuredItem as FeedItem | null) ?? feedItems?.[0] ?? null;
-  const gridItems = ((feedItems ?? []) as FeedItem[]).filter(
+  const featuredItem: EditorialItem | null =
+    (homePage?.featuredItem as EditorialItem | null) ?? feedItems?.[0] ?? null;
+  const editorialPool = ((feedItems ?? []) as EditorialItem[]).filter(
     (item) => item._id !== featuredItem?._id
   );
 
-  // Split feed into sections
-  const firstSection = gridItems.slice(0, FIRST_SECTION);
-  const secondSection = gridItems.slice(
-    FIRST_SECTION,
-    FIRST_SECTION + SECOND_SECTION
-  );
-  const thirdSection = gridItems.slice(
-    FIRST_SECTION + SECOND_SECTION,
-    FIRST_SECTION + SECOND_SECTION + THIRD_SECTION
-  );
+  // Bucket ADVs by tier. Query already orders within tier by dateStart asc,
+  // so silvers[0] is the oldest-booked (best slot) and silvers[1] takes p11.
+  const advs = (homeAdvs ?? []) as AdvItem[];
+  const golds = advs.filter((a) => a.tier === "gold");
+  const silvers = advs.filter((a) => a.tier === "silver");
+  const goldForS1P3 = golds[0] ?? null;
+  const silverForS2P3 = silvers[0] ?? null;
+  const silverForS2P11 = silvers[1] ?? null;
+
+  const s1Injections = new Map<number, AdvItem>();
+  if (goldForS1P3) s1Injections.set(GOLD_S1_POSITION, goldForS1P3);
+
+  const s2Injections = new Map<number, AdvItem>();
+  if (silverForS2P3) s2Injections.set(SILVER_S2_POSITION_A, silverForS2P3);
+  if (silverForS2P11) s2Injections.set(SILVER_S2_POSITION_B, silverForS2P11);
+
+  let offset = 0;
+  const s1 = assembleSection({
+    total: FIRST_SECTION,
+    injections: s1Injections,
+    editorial: editorialPool.slice(offset),
+  });
+  offset += s1.editorialConsumed;
+
+  const s2 = assembleSection({
+    total: SECOND_SECTION,
+    injections: s2Injections,
+    editorial: editorialPool.slice(offset),
+  });
+  offset += s2.editorialConsumed;
+
+  const s3 = assembleSection({
+    total: THIRD_SECTION,
+    injections: new Map(),
+    editorial: editorialPool.slice(offset),
+  });
 
   const featuredSubtitle = (() => {
     if (!featuredItem) return null;
     if (featuredItem._type === "interview") {
       const names =
         featuredItem.people?.map((p) => p.name).join(", ") ||
-        (featuredItem as FeedItem & { studio?: string }).studio ||
-        (featuredItem as FeedItem & { typeFoundry?: string }).typeFoundry;
+        (featuredItem as EditorialItem & { studio?: string }).studio ||
+        (featuredItem as EditorialItem & { typeFoundry?: string }).typeFoundry;
       return names ? `Interview to ${names}` : null;
     }
     // project or journal: bare author names
@@ -117,7 +181,7 @@ export default async function Home() {
 
       <div className="flex flex-col gap-4">
         {/* Section 1: 1 row of 4 */}
-        {firstSection.length > 0 && <HomeGrid items={firstSection} />}
+        {s1.slots.length > 0 && <HomeGrid slots={s1.slots} />}
 
         {/* Mid-page CTA */}
         {midCta && (
@@ -133,7 +197,7 @@ export default async function Home() {
         )}
 
         {/* Section 2: 3 rows of 4 */}
-        {secondSection.length > 0 && <HomeGrid items={secondSection} />}
+        {s2.slots.length > 0 && <HomeGrid slots={s2.slots} />}
 
         {/* Recent updates from archive */}
         {recentUpdates && recentUpdates.length > 0 && (
@@ -141,7 +205,7 @@ export default async function Home() {
         )}
 
         {/* Section 3: 2 rows of 4 */}
-        {thirdSection.length > 0 && <HomeGrid items={thirdSection} />}
+        {s3.slots.length > 0 && <HomeGrid slots={s3.slots} />}
 
         {/* Final CTA */}
         {cta && (
