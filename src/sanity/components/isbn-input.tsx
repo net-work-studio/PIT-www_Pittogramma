@@ -195,9 +195,11 @@ export function IsbnInput(props: StringInputProps) {
     setFetchedData(null);
 
     try {
-      const response = await fetch(
-        `/api/books/fetch-isbn?isbn=${encodeURIComponent(value)}`
-      );
+      const response = await fetch("/api/books/fetch-isbn", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isbn: value }),
+      });
       const data = await response.json();
 
       if (!response.ok) {

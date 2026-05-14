@@ -23,7 +23,7 @@ import type {
 } from "@/sanity/types";
 
 const PAGE_SIZE = 48;
-const MAX_PAGE = 100;
+const MAX_PAGE = 20;
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({

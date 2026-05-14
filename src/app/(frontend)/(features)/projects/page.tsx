@@ -21,6 +21,7 @@ import {
   PROJECTS_COUNT_QUERY,
   PROJECTS_PAGE_QUERY,
   PROJECTS_TAGS_QUERY,
+  TAG_IDS_BY_SLUGS_QUERY,
 } from "@/sanity/lib/queries";
 import type {
   PROJECTS_FILTERED_QUERY_RESULT,
@@ -28,7 +29,7 @@ import type {
 } from "@/sanity/types";
 
 const PAGE_SIZE = 48;
-const MAX_PAGE = 100;
+const MAX_PAGE = 20;
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -71,6 +72,14 @@ export default async function ProjectsPage({
   const start = 0;
   const end = page * PAGE_SIZE;
   const today = buildLocalToday();
+  const tagIds = hasTags
+    ? (
+        await sanityFetch({
+          query: TAG_IDS_BY_SLUGS_QUERY,
+          params: { slugs: tagSlugs },
+        })
+      ).data
+    : [];
 
   const [
     { data: projects },
@@ -81,11 +90,11 @@ export default async function ProjectsPage({
   ] = await Promise.all([
     sanityFetch({
       query: getProjectsFilteredQuery(sort),
-      params: { tags: tagSlugs, hasTags, start, end },
+      params: { tagIds, hasTags, start, end },
     }),
     sanityFetch({
       query: PROJECTS_COUNT_QUERY,
-      params: { tags: tagSlugs, hasTags },
+      params: { tagIds, hasTags },
     }),
     sanityFetch({ query: PROJECTS_TAGS_QUERY }),
     sanityFetch({ query: PROJECTS_PAGE_QUERY }),

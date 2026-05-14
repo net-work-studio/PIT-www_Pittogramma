@@ -1,4 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
+import {
+  assertAllowedOrigin,
+  OutboundFetchError,
+  readJsonStringField,
+} from "@/app/api/_utils/outbound-fetch";
 
 const NOMINATIM_URL = "https://nominatim.openstreetmap.org/search";
 const USER_AGENT = "Pittogramma/1.0 (https://pittogramma.com)";
@@ -10,10 +15,32 @@ export const runtime = "nodejs";
 // Simple in-memory rate limiter: 1 request per second
 let lastRequestTime = 0;
 
-export async function GET(request: NextRequest) {
-  const query = request.nextUrl.searchParams.get("q");
+export async function POST(request: NextRequest) {
+  const originError = assertAllowedOrigin(request);
+  if (originError) {
+    return originError;
+  }
 
-  if (!query || query.trim().length < 2) {
+  let query: string;
+  try {
+    query = await readJsonStringField(request, "query", {
+      maxLength: 256,
+      message: "Query must be at least 2 characters",
+    });
+  } catch (error) {
+    if (error instanceof OutboundFetchError) {
+      return NextResponse.json(
+        { error: error.message },
+        { headers: NO_STORE_HEADERS, status: error.status }
+      );
+    }
+    return NextResponse.json(
+      { error: "Query must be at least 2 characters" },
+      { headers: NO_STORE_HEADERS, status: 400 }
+    );
+  }
+
+  if (query.trim().length < 2) {
     return NextResponse.json(
       { error: "Query must be at least 2 characters" },
       { headers: NO_STORE_HEADERS, status: 400 }

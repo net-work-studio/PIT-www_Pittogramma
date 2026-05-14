@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
+import { defineQuery } from "next-sanity";
 
 import { siteDefaults } from "@/lib/seo/site-defaults";
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/live";
 
-const SITEMAP_QUERY = `{
+const SITEMAP_QUERY = defineQuery(`{
   "projects": *[_type == "project" && defined(slug.current)] {
     "slug": slug.current,
     _updatedAt
@@ -16,7 +17,7 @@ const SITEMAP_QUERY = `{
     "slug": slug.current,
     _updatedAt
   }
-}`;
+}`);
 
 interface SitemapData {
   editions: Array<{ slug: string; _updatedAt: string }>;
@@ -26,7 +27,12 @@ interface SitemapData {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteDefaults.baseUrl;
-  const data = await client.fetch<SitemapData>(SITEMAP_QUERY);
+  const { data } = await sanityFetch({
+    query: SITEMAP_QUERY,
+    perspective: "published",
+    stega: false,
+  });
+  const sitemapData = data as SitemapData;
 
   const staticPages: MetadataRoute.Sitemap = [
     {
@@ -79,14 +85,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const projectPages: MetadataRoute.Sitemap = data.projects.map((project) => ({
-    url: `${baseUrl}/projects/${project.slug}`,
-    lastModified: new Date(project._updatedAt),
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
+  const projectPages: MetadataRoute.Sitemap = sitemapData.projects.map(
+    (project) => ({
+      url: `${baseUrl}/projects/${project.slug}`,
+      lastModified: new Date(project._updatedAt),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    })
+  );
 
-  const interviewPages: MetadataRoute.Sitemap = data.interviews.map(
+  const interviewPages: MetadataRoute.Sitemap = sitemapData.interviews.map(
     (interview) => ({
       url: `${baseUrl}/interviews/${interview.slug}`,
       lastModified: new Date(interview._updatedAt),
@@ -95,12 +103,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
-  const editionPages: MetadataRoute.Sitemap = data.editions.map((edition) => ({
-    url: `${baseUrl}/editions/${edition.slug}`,
-    lastModified: new Date(edition._updatedAt),
-    changeFrequency: "monthly",
-    priority: 0.6,
-  }));
+  const editionPages: MetadataRoute.Sitemap = sitemapData.editions.map(
+    (edition) => ({
+      url: `${baseUrl}/editions/${edition.slug}`,
+      lastModified: new Date(edition._updatedAt),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    })
+  );
 
   return [...staticPages, ...projectPages, ...interviewPages, ...editionPages];
 }

@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { httpUrlValidation } from "@/sanity/utils/validation";
 
 export const siteSettings = defineType({
   name: "siteSettings",
@@ -30,18 +31,21 @@ export const siteSettings = defineType({
       title: "Substack URL",
       type: "url",
       group: "footer",
+      validation: httpUrlValidation,
     }),
     defineField({
       name: "instagramUrl",
       title: "Instagram URL",
       type: "url",
       group: "footer",
+      validation: httpUrlValidation,
     }),
     defineField({
       name: "spotifyUrl",
       title: "Spotify URL",
       type: "url",
       group: "footer",
+      validation: httpUrlValidation,
     }),
     defineField({
       name: "utmSource",

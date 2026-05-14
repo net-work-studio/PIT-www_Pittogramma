@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/live";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
 export default async function Footer() {
-  const siteSettings = await client.fetch(SITE_SETTINGS_QUERY);
+  const { data: siteSettings } = await sanityFetch({
+    query: SITE_SETTINGS_QUERY,
+  });
 
   return (
     <footer className="p-4">

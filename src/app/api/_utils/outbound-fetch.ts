@@ -3,6 +3,7 @@ import { BlockList, isIP } from "node:net";
 import { NextResponse } from "next/server";
 
 const MAX_URL_LENGTH = 2048;
+const DEFAULT_MAX_STRING_LENGTH = 2048;
 const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
 const IPV4_MAPPED_DOTTED_REGEX = /^::ffff:(\d+\.\d+\.\d+\.\d+)$/i;
 const IPV4_MAPPED_HEX_REGEX = /^::ffff:([0-9a-f]{1,4}):([0-9a-f]{1,4})$/i;
@@ -217,6 +218,43 @@ export async function readJsonUrl(request: Request): Promise<string> {
   }
 
   return url;
+}
+
+interface ReadJsonStringFieldOptions {
+  maxLength?: number;
+  message?: string;
+}
+
+export async function readJsonStringField(
+  request: Request,
+  field: string,
+  options: ReadJsonStringFieldOptions = {}
+): Promise<string> {
+  let body: unknown;
+
+  try {
+    body = await request.json();
+  } catch {
+    throw new OutboundFetchError("Invalid JSON body", 400);
+  }
+
+  const message = options.message ?? `${field} is required`;
+
+  if (!body || typeof body !== "object" || !(field in body)) {
+    throw new OutboundFetchError(message, 400);
+  }
+
+  const value = (body as Record<string, unknown>)[field];
+
+  if (typeof value !== "string" || value.trim() === "") {
+    throw new OutboundFetchError(message, 400);
+  }
+
+  if (value.length > (options.maxLength ?? DEFAULT_MAX_STRING_LENGTH)) {
+    throw new OutboundFetchError(`${field} is too long`, 400);
+  }
+
+  return value;
 }
 
 export async function validatePublicHttpUrl(

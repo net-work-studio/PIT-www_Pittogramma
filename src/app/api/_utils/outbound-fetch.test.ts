@@ -5,6 +5,7 @@ import {
   fetchWithSafeRedirects,
   isAllowedHtmlContentType,
   isAllowedImageContentType,
+  readJsonStringField,
   readLimitedText,
   validatePublicHttpUrl,
 } from "./outbound-fetch";
@@ -117,6 +118,55 @@ describe("assertAllowedOrigin", () => {
     );
 
     expect(response).toBeNull();
+  });
+});
+
+describe("readJsonStringField", () => {
+  test("reads a valid string field", async () => {
+    const request = new Request("https://pittogramma.com/api/test", {
+      body: JSON.stringify({ isbn: "9781234567890" }),
+      method: "POST",
+    });
+
+    const value = await readJsonStringField(request, "isbn");
+    expect(value).toBe("9781234567890");
+  });
+
+  test("rejects invalid JSON", async () => {
+    const request = new Request("https://pittogramma.com/api/test", {
+      body: "{",
+      method: "POST",
+    });
+
+    await expect(readJsonStringField(request, "isbn")).rejects.toMatchObject({
+      status: 400,
+    });
+  });
+
+  test.each<[string, Record<string, unknown>]>([
+    ["missing field", {}],
+    ["non-string field", { isbn: 123 }],
+    ["empty string", { isbn: " " }],
+  ])("rejects %s", async ([, body]) => {
+    const request = new Request("https://pittogramma.com/api/test", {
+      body: JSON.stringify(body),
+      method: "POST",
+    });
+
+    await expect(readJsonStringField(request, "isbn")).rejects.toMatchObject({
+      status: 400,
+    });
+  });
+
+  test("rejects overlong strings", async () => {
+    const request = new Request("https://pittogramma.com/api/test", {
+      body: JSON.stringify({ query: "abc" }),
+      method: "POST",
+    });
+
+    await expect(
+      readJsonStringField(request, "query", { maxLength: 2 })
+    ).rejects.toMatchObject({ status: 400 });
   });
 });
 

@@ -35,6 +35,8 @@
       },
       "devDependencies": {
         "@biomejs/biome": "2.4.15",
+        "@sanity/blueprints": "^0.18.0",
+        "@sanity/functions": "^1.3.1",
         "@tailwindcss/postcss": "^4.3.0",
         "@types/leaflet": "^1.9.21",
         "@types/node": "^25.7.0",
@@ -873,6 +875,8 @@
     "@sanity/eventsource": ["@sanity/eventsource@5.0.2", "", { "dependencies": { "@types/event-source-polyfill": "1.0.5", "@types/eventsource": "1.1.15", "event-source-polyfill": "1.0.31", "eventsource": "2.0.2" } }, "sha512-/B9PMkUvAlUrpRq0y+NzXgRv5lYCLxZNsBJD2WXVnqZYOfByL9oQBV7KiTaARuObp5hcQYuPfOAVjgXe3hrixA=="],
 
     "@sanity/export": ["@sanity/export@6.1.0", "", { "dependencies": { "debug": "^4.3.4", "get-it": "^8.6.10", "json-stream-stringify": "^3.1.6", "p-queue": "^9.0.1", "tar": "^7.5.2", "tar-stream": "^3.1.7" }, "bin": { "detect-corrupt": "bin/detect-corrupt.js" } }, "sha512-lbBm5DnpFMDnbxoARU8ig0wZqe/mWyTtDu08z9OXDGyDl2dZJxAZt3DWxx1ndiWzEIoNKIyLFjpaNc2CazuK0w=="],
+
+    "@sanity/functions": ["@sanity/functions@1.3.1", "", {}, "sha512-k/DOh7PTPFYrE9ryAagWETpgt0yhqc4gN5Eti3k1nwndFEpveg9z+I1s4NI7viWt8QCYpWpeW9ixSDZeTdczdA=="],
 
     "@sanity/generate-help-url": ["@sanity/generate-help-url@4.0.0", "", {}, "sha512-Ooa4xkLT3TLaX+mw/13fq3IeGdnAkx4rbpVASvRVixzBBvvcL6jPqj50fjlCd+EhgB5GRXBCNNAy/hWXwjZEUA=="],
 

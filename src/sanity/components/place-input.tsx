@@ -68,9 +68,11 @@ export function PlaceInput(props: StringInputProps) {
     setError(null);
 
     try {
-      const response = await fetch(
-        `/api/places/search?q=${encodeURIComponent(query)}`
-      );
+      const response = await fetch("/api/places/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
       const data = await response.json();
 
       if (!response.ok) {

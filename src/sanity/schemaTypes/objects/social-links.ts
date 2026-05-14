@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { httpUrlValidation } from "@/sanity/utils/validation";
 
 export const socialLinks = defineType({
   type: "object",
@@ -41,7 +42,7 @@ export const socialLinks = defineType({
               type: "url",
               name: "url",
               title: "URL",
-              validation: (e) => e.required(),
+              validation: (e) => [e.required(), httpUrlValidation(e)],
             }),
           ],
           preview: {

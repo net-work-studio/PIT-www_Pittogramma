@@ -1,4 +1,9 @@
 import { NextResponse } from "next/server";
+import {
+  assertAllowedOrigin,
+  OutboundFetchError,
+  readJsonStringField,
+} from "@/app/api/_utils/outbound-fetch";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -92,7 +97,12 @@ function parseBookData(book: GoogleBooksItem): BookData {
   };
 }
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
+  const originError = assertAllowedOrigin(request);
+  if (originError) {
+    return originError;
+  }
+
   const ip =
     request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
   if (isRateLimited(ip)) {
@@ -102,10 +112,19 @@ export async function GET(request: Request) {
     );
   }
 
-  const { searchParams } = new URL(request.url);
-  const isbn = searchParams.get("isbn");
-
-  if (!isbn) {
+  let isbn: string;
+  try {
+    isbn = await readJsonStringField(request, "isbn", {
+      maxLength: 32,
+      message: "ISBN is required",
+    });
+  } catch (error) {
+    if (error instanceof OutboundFetchError) {
+      return NextResponse.json(
+        { error: error.message },
+        { headers: NO_STORE_HEADERS, status: error.status }
+      );
+    }
     return NextResponse.json(
       { error: "ISBN is required" },
       { headers: NO_STORE_HEADERS, status: 400 }

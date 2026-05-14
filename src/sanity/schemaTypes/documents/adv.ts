@@ -6,6 +6,7 @@ import { DurationInput } from "@/sanity/components/duration-input";
 import { apiVersion } from "@/sanity/env";
 import { getPublishedId } from "@/sanity/lib/document-id";
 import type { Adv } from "@/sanity/types";
+import { httpUrlValidation } from "@/sanity/utils/validation";
 
 // Subset of Adv fields the document-level validator inspects. Picking from
 // the generated `Adv` keeps this in lock-step with the schema; if any of these
@@ -71,6 +72,7 @@ export const adv = defineType({
                     name: "href",
                     type: "url",
                     title: "URL",
+                    validation: httpUrlValidation,
                   },
                 ],
               },
@@ -84,7 +86,7 @@ export const adv = defineType({
       name: "externalUrl",
       title: "External URL",
       group: "content",
-      validation: (r) => r.required(),
+      validation: (r) => [r.required(), httpUrlValidation(r)],
     }),
     defineField({
       type: "string",

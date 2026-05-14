@@ -4,6 +4,7 @@ import { buildLocalToday } from "@/lib/date-utils";
 import { apiVersion } from "@/sanity/env";
 import { getPublishedId } from "@/sanity/lib/document-id";
 import type { Community } from "@/sanity/types";
+import { httpUrlValidation } from "@/sanity/utils/validation";
 
 // Visible cap for active community items at any moment. Keep in sync with the
 // `[0...3]` slice in FEED_COMMUNITY_QUERY in src/sanity/lib/queries.ts.
@@ -90,6 +91,7 @@ export const community = defineType({
                     name: "href",
                     type: "url",
                     title: "URL",
+                    validation: httpUrlValidation,
                   },
                 ],
               },
@@ -103,7 +105,7 @@ export const community = defineType({
       name: "externalUrl",
       title: "External URL",
       group: "content",
-      validation: (r) => r.required(),
+      validation: (r) => [r.required(), httpUrlValidation(r)],
     }),
     defineField({
       type: "reference",

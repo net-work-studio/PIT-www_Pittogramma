@@ -1,6 +1,7 @@
 import { DocumentsIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { groups } from "@/sanity/utils/groups";
+import { httpUrlValidation } from "@/sanity/utils/validation";
 
 export const edition = defineType({
   type: "document",
@@ -108,6 +109,7 @@ export const edition = defineType({
       name: "buyUrl",
       title: "Buy URL",
       group: "content",
+      validation: httpUrlValidation,
     }),
     defineField({
       type: "array",

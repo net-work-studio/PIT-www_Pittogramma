@@ -319,7 +319,7 @@ export const PROJECTS_QUERY = defineQuery(`
 export const PROJECTS_FILTERED_QUERY = defineQuery(`
   *[_type == "project"
     && defined(slug.current)
-    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
+    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(publishingDate.date desc) [$start...$end] {
     _id,
     cover {
@@ -341,7 +341,7 @@ export const PROJECTS_FILTERED_QUERY = defineQuery(`
 export const PROJECTS_COUNT_QUERY = defineQuery(`
   count(*[_type == "project"
     && defined(slug.current)
-    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
+    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ])
 `);
 
@@ -349,25 +349,24 @@ export const PROJECTS_TAGS_QUERY = defineQuery(`
   array::unique(*[_type == "project" && defined(tags)].tags[]->{ _id, name, "slug": slug.current })
 `);
 
+export const TAG_IDS_BY_SLUGS_QUERY = defineQuery(`
+  *[_type == "tag" && slug.current in $slugs]._id
+`);
+
 // ==================== SORT UTILITIES ====================
 
-const SORT_ORDER_MAP: Record<string, string> = {
-  newest: "publishingDate.date desc",
-  oldest: "publishingDate.date asc",
-  "a-z": "title asc",
-  "z-a": "title desc",
-};
+const SORT_KEYS = ["newest", "oldest", "a-z", "z-a"] as const;
+type SortKey = (typeof SORT_KEYS)[number];
 
-function getSortOrder(sort: string): string {
-  return SORT_ORDER_MAP[sort] || SORT_ORDER_MAP.newest;
+function getSortKey(sort: string): SortKey {
+  return SORT_KEYS.includes(sort as SortKey) ? (sort as SortKey) : "newest";
 }
 
-export function getProjectsFilteredQuery(sort: string): string {
-  return `
+const PROJECTS_FILTERED_OLDEST_QUERY = defineQuery(`
   *[_type == "project"
     && defined(slug.current)
-    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
-  ] | order(${getSortOrder(sort)}) [$start...$end] {
+    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
+  ] | order(publishingDate.date asc) [$start...$end] {
     _id,
     cover {
       image { ${IMAGE_FIELDS} },
@@ -382,15 +381,58 @@ export function getProjectsFilteredQuery(sort: string): string {
       "slug": slug.current
     },
     ${SEO_FIELDS}
-  }`;
-}
+  }
+`);
 
-export function getJournalFilteredQuery(sort: string): string {
-  return `
+const PROJECTS_FILTERED_AZ_QUERY = defineQuery(`
+  *[_type == "project"
+    && defined(slug.current)
+    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
+  ] | order(title asc) [$start...$end] {
+    _id,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    title,
+    slug,
+    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    tags[]->{
+      _id,
+      name,
+      "slug": slug.current
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
+const PROJECTS_FILTERED_ZA_QUERY = defineQuery(`
+  *[_type == "project"
+    && defined(slug.current)
+    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
+  ] | order(title desc) [$start...$end] {
+    _id,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    title,
+    slug,
+    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    tags[]->{
+      _id,
+      name,
+      "slug": slug.current
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
+const JOURNAL_FILTERED_NEWEST_QUERY = defineQuery(`
   *[_type == "journal"
     && defined(slug.current)
     && ($hasTags == false || label in $tags)
-  ] | order(${getSortOrder(sort)}) [$start...$end] {
+  ] | order(publishingDate.date desc) [$start...$end] {
     _id,
     title,
     slug,
@@ -407,15 +449,86 @@ export function getJournalFilteredQuery(sort: string): string {
       name
     },
     ${SEO_FIELDS}
-  }`;
-}
+  }
+`);
 
-export function getInterviewsFilteredQuery(sort: string): string {
-  return `
+const JOURNAL_FILTERED_OLDEST_QUERY = defineQuery(`
+  *[_type == "journal"
+    && defined(slug.current)
+    && ($hasTags == false || label in $tags)
+  ] | order(publishingDate.date asc) [$start...$end] {
+    _id,
+    title,
+    slug,
+    label,
+    publishingDate,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    authors[]{ ...@->{ _id, name }, _key },
+    excerpt,
+    tags[]->{
+      _id,
+      name
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
+const JOURNAL_FILTERED_AZ_QUERY = defineQuery(`
+  *[_type == "journal"
+    && defined(slug.current)
+    && ($hasTags == false || label in $tags)
+  ] | order(title asc) [$start...$end] {
+    _id,
+    title,
+    slug,
+    label,
+    publishingDate,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    authors[]{ ...@->{ _id, name }, _key },
+    excerpt,
+    tags[]->{
+      _id,
+      name
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
+const JOURNAL_FILTERED_ZA_QUERY = defineQuery(`
+  *[_type == "journal"
+    && defined(slug.current)
+    && ($hasTags == false || label in $tags)
+  ] | order(title desc) [$start...$end] {
+    _id,
+    title,
+    slug,
+    label,
+    publishingDate,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    authors[]{ ...@->{ _id, name }, _key },
+    excerpt,
+    tags[]->{
+      _id,
+      name
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
+const INTERVIEWS_FILTERED_NEWEST_QUERY = defineQuery(`
   *[_type == "interview"
     && defined(slug.current)
-    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
-  ] | order(${getSortOrder(sort)}) [$start...$end] {
+    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
+  ] | order(publishingDate.date desc) [$start...$end] {
     _id,
     title,
     slug,
@@ -442,7 +555,142 @@ export function getInterviewsFilteredQuery(sort: string): string {
     },
     introText,
     ${SEO_FIELDS}
-  }`;
+  }
+`);
+
+const INTERVIEWS_FILTERED_OLDEST_QUERY = defineQuery(`
+  *[_type == "interview"
+    && defined(slug.current)
+    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
+  ] | order(publishingDate.date asc) [$start...$end] {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    designersAndProfessionals[]{ ...@->{ _id, name }, _key },
+    studio->{
+      _id,
+      name
+    },
+    typeFoundry->{
+      _id,
+      name
+    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
+    readingTime,
+    tags[]->{
+      _id,
+      name,
+      "slug": slug.current
+    },
+    introText,
+    ${SEO_FIELDS}
+  }
+`);
+
+const INTERVIEWS_FILTERED_AZ_QUERY = defineQuery(`
+  *[_type == "interview"
+    && defined(slug.current)
+    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
+  ] | order(title asc) [$start...$end] {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    designersAndProfessionals[]{ ...@->{ _id, name }, _key },
+    studio->{
+      _id,
+      name
+    },
+    typeFoundry->{
+      _id,
+      name
+    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
+    readingTime,
+    tags[]->{
+      _id,
+      name,
+      "slug": slug.current
+    },
+    introText,
+    ${SEO_FIELDS}
+  }
+`);
+
+const INTERVIEWS_FILTERED_ZA_QUERY = defineQuery(`
+  *[_type == "interview"
+    && defined(slug.current)
+    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
+  ] | order(title desc) [$start...$end] {
+    _id,
+    title,
+    slug,
+    publishingDate,
+    cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    designersAndProfessionals[]{ ...@->{ _id, name }, _key },
+    studio->{
+      _id,
+      name
+    },
+    typeFoundry->{
+      _id,
+      name
+    },
+    place->{ _id, name, city, country, countryCode, lat, lng },
+    readingTime,
+    tags[]->{
+      _id,
+      name,
+      "slug": slug.current
+    },
+    introText,
+    ${SEO_FIELDS}
+  }
+`);
+
+const PROJECTS_SORT_QUERY_MAP = {
+  newest: PROJECTS_FILTERED_QUERY,
+  oldest: PROJECTS_FILTERED_OLDEST_QUERY,
+  "a-z": PROJECTS_FILTERED_AZ_QUERY,
+  "z-a": PROJECTS_FILTERED_ZA_QUERY,
+} as const satisfies Record<SortKey, string>;
+
+const JOURNAL_SORT_QUERY_MAP = {
+  newest: JOURNAL_FILTERED_NEWEST_QUERY,
+  oldest: JOURNAL_FILTERED_OLDEST_QUERY,
+  "a-z": JOURNAL_FILTERED_AZ_QUERY,
+  "z-a": JOURNAL_FILTERED_ZA_QUERY,
+} as const satisfies Record<SortKey, string>;
+
+const INTERVIEWS_SORT_QUERY_MAP = {
+  newest: INTERVIEWS_FILTERED_NEWEST_QUERY,
+  oldest: INTERVIEWS_FILTERED_OLDEST_QUERY,
+  "a-z": INTERVIEWS_FILTERED_AZ_QUERY,
+  "z-a": INTERVIEWS_FILTERED_ZA_QUERY,
+} as const satisfies Record<SortKey, string>;
+
+export function getProjectsFilteredQuery(sort: string): string {
+  return PROJECTS_SORT_QUERY_MAP[getSortKey(sort)];
+}
+
+export function getJournalFilteredQuery(sort: string): string {
+  return JOURNAL_SORT_QUERY_MAP[getSortKey(sort)];
+}
+
+export function getInterviewsFilteredQuery(sort: string): string {
+  return INTERVIEWS_SORT_QUERY_MAP[getSortKey(sort)];
 }
 
 export const PROJECT_QUERY = defineQuery(`
@@ -621,7 +869,7 @@ export const INTERVIEWS_QUERY = defineQuery(`
 export const INTERVIEWS_FILTERED_QUERY = defineQuery(`
   *[_type == "interview"
     && defined(slug.current)
-    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
+    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(publishingDate.date desc) [$start...$end] {
     _id,
     title,
@@ -655,7 +903,7 @@ export const INTERVIEWS_FILTERED_QUERY = defineQuery(`
 export const INTERVIEWS_COUNT_QUERY = defineQuery(`
   count(*[_type == "interview"
     && defined(slug.current)
-    && ($hasTags == false || count(tags[@->slug.current in $tags]) > 0)
+    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ])
 `);
 
@@ -1081,19 +1329,42 @@ export const EDITION_QUERY = defineQuery(`
 
 // ==================== MAP QUERIES ====================
 
-export const MAP_PLACES_QUERY = defineQuery(`
-  *[_type == "place" && defined(lat) && defined(lng)] {
-    _id,
-    name,
-    city,
-    country,
-    countryCode,
-    lat,
-    lng,
-    "designers": *[_type == "person" && "designer" in roles && place._ref == ^._id] { _id, name, slug },
-    "bookshops": *[_type == "bookshop" && place._ref == ^._id] { _id, name },
-    "studios": *[_type == "studio" && references(^._id)] { _id, name },
-    "institutes": *[_type == "institute" && place._ref == ^._id] { _id, name },
-    "typeFoundries": *[_type == "typeFoundry" && references(^._id)] { _id, name }
+export const MAP_DATA_QUERY = defineQuery(`
+  {
+    "places": *[_type == "place" && defined(lat) && defined(lng)] {
+      _id,
+      name,
+      city,
+      country,
+      countryCode,
+      lat,
+      lng
+    },
+    "designers": *[_type == "person" && "designer" in roles && defined(place._ref)] {
+      _id,
+      name,
+      slug,
+      "placeId": place._ref
+    },
+    "bookshops": *[_type == "bookshop" && defined(place._ref)] {
+      _id,
+      name,
+      "placeId": place._ref
+    },
+    "studios": *[_type == "studio" && count(places[]._ref) > 0] {
+      _id,
+      name,
+      "placeIds": places[]._ref
+    },
+    "institutes": *[_type == "institute" && defined(place._ref)] {
+      _id,
+      name,
+      "placeId": place._ref
+    },
+    "typeFoundries": *[_type == "typeFoundry" && count(places[]._ref) > 0] {
+      _id,
+      name,
+      "placeIds": places[]._ref
+    }
   }
 `);

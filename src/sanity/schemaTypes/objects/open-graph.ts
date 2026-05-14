@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { httpUrlValidation } from "@/sanity/utils/validation";
 
 export const openGraph = defineType({
   name: "openGraph",
@@ -25,6 +26,7 @@ export const openGraph = defineType({
       title: "OG URL",
       type: "url",
       description: "URL used for social sharing (usually the canonical URL).",
+      validation: httpUrlValidation,
     }),
   ],
 });

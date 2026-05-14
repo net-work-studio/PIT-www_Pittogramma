@@ -1,5 +1,6 @@
 import { ImageIcon, LinkIcon, PlayIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { videoEmbedUrlValidation } from "@/sanity/utils/validation";
 
 export const mediaItem = defineType({
   type: "object",
@@ -27,6 +28,14 @@ export const mediaItem = defineType({
       title: "Image",
       options: { hotspot: true },
       hidden: ({ parent }) => parent?.type !== "image",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const parent = context.parent as { type?: string };
+          if (parent?.type === "image" && !value) {
+            return "Image is required";
+          }
+          return true;
+        }),
     }),
     defineField({
       type: "file",
@@ -36,6 +45,14 @@ export const mediaItem = defineType({
         accept: "video/*",
       },
       hidden: ({ parent }) => parent?.type !== "videoUpload",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const parent = context.parent as { type?: string };
+          if (parent?.type === "videoUpload" && !value) {
+            return "Video file is required";
+          }
+          return true;
+        }),
     }),
     defineField({
       type: "url",
@@ -43,6 +60,16 @@ export const mediaItem = defineType({
       title: "Video URL",
       description: "YouTube or Vimeo URL",
       hidden: ({ parent }) => parent?.type !== "videoEmbed",
+      validation: (rule) => [
+        rule.custom((value, context) => {
+          const parent = context.parent as { type?: string };
+          if (parent?.type === "videoEmbed" && !value) {
+            return "Video URL is required";
+          }
+          return true;
+        }),
+        videoEmbedUrlValidation(rule),
+      ],
     }),
     defineField({
       type: "string",

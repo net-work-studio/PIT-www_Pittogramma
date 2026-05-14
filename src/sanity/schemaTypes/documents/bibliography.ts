@@ -3,6 +3,7 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 import { IsbnInput } from "@/sanity/components/isbn-input";
 import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
+import { httpUrlValidation } from "@/sanity/utils/validation";
 
 export const bibliography = defineType({
   type: "document",
@@ -159,6 +160,7 @@ export const bibliography = defineType({
       name: "affiliateLink",
       title: "Affiliate Link",
       group: "content",
+      validation: httpUrlValidation,
     }),
     // 15. Categories (autofilled, in details group)
     defineField({

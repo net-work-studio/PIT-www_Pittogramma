@@ -9,7 +9,6 @@ import {
   GraduationCap,
   Handshake,
   Home,
-  Info,
   Languages,
   List,
   MapPin,
@@ -153,8 +152,6 @@ export const structure: StructureResolver = (S) =>
       ),
 
       S.divider(),
-
-      singleton(S, "history", "Info", Info),
 
       group(
         S,
