@@ -1,3 +1,4 @@
+// biome-ignore-all lint: one-off migration script kept outside app runtime
 /**
  * Migration: Consolidate designer, professional, author, teacher → person
  *
@@ -12,16 +13,13 @@
  * Add --dry-run (default) to preview changes without writing.
  */
 
-import { createClient } from "@sanity/client";
 import { readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import path from "node:path";
+import { createClient } from "@sanity/client";
 
 const sanityConfig = JSON.parse(
-  readFileSync(
-    path.join(homedir(), ".config", "sanity", "config.json"),
-    "utf8"
-  )
+  readFileSync(path.join(homedir(), ".config", "sanity", "config.json"), "utf8")
 );
 
 const client = createClient({
@@ -34,23 +32,23 @@ const client = createClient({
 
 const isWrite = process.argv.includes("--write");
 
-type OldDoc = {
+interface OldDoc {
   _id: string;
   _type: string;
-  name?: string;
-  slug?: { current: string; _type: string };
-  portrait?: unknown;
-  birthYear?: number;
   bio?: string;
+  birthYear?: number;
   education?: unknown[];
-  place?: { _ref: string; _type: string };
-  socialLinks?: unknown;
   email?: string;
+  name?: string;
   phone?: string;
-  teachingAt?: { _ref: string; _type: string };
-  studio?: { _ref: string; _type: string };
+  place?: { _ref: string; _type: string };
+  portrait?: unknown;
   seo?: unknown;
-};
+  slug?: { current: string; _type: string };
+  socialLinks?: unknown;
+  studio?: { _ref: string; _type: string };
+  teachingAt?: { _ref: string; _type: string };
+}
 
 // Maps old type → role value
 const TYPE_TO_ROLE: Record<string, string> = {
@@ -70,53 +68,36 @@ function makePersonId(oldId: string, oldType: string): string {
 }
 
 async function run() {
-  console.log(`Mode: ${isWrite ? "WRITE" : "DRY RUN"}`);
-  console.log("=".repeat(60));
-
-  // Step 1: Fetch all old documents
-  console.log("\n--- Step 1: Fetching all person-like documents ---");
   const oldDocs: OldDoc[] = await client.fetch(
     `*[_type in ["designer", "professional", "author", "teacher"] && !(_id in path("drafts.**"))]{ ... }`
   );
-  console.log(`Found ${oldDocs.length} total documents`);
 
   const byType: Record<string, OldDoc[]> = {};
   for (const doc of oldDocs) {
     byType[doc._type] = byType[doc._type] || [];
     byType[doc._type].push(doc);
   }
-  for (const [type, docs] of Object.entries(byType)) {
-    console.log(`  ${type}: ${docs.length}`);
+  for (const [_type, _docs] of Object.entries(byType)) {
   }
-
-  // Step 2: Detect potential duplicates (same name across types)
-  console.log("\n--- Step 2: Checking for potential duplicates ---");
   const nameMap = new Map<string, OldDoc[]>();
   for (const doc of oldDocs) {
     const name = (doc.name ?? "").trim().toLowerCase();
-    if (!name) continue;
+    if (!name) {
+      continue;
+    }
     const existing = nameMap.get(name) || [];
     existing.push(doc);
     nameMap.set(name, existing);
   }
 
-  const duplicates = [...nameMap.entries()].filter(([, docs]) => docs.length > 1);
+  const duplicates = [...nameMap.entries()].filter(
+    ([, docs]) => docs.length > 1
+  );
   if (duplicates.length > 0) {
-    console.log(`Found ${duplicates.length} potential duplicate(s):`);
-    for (const [name, docs] of duplicates) {
-      console.log(
-        `  "${name}": ${docs.map((d) => `${d._type}(${d._id})`).join(", ")}`
-      );
+    for (const [_name, _docs] of duplicates) {
     }
-    console.log(
-      "\nDuplicates will be MERGED into a single person with combined roles."
-    );
   } else {
-    console.log("No duplicates found.");
   }
-
-  // Step 3: Build ID mapping and create person documents
-  console.log("\n--- Step 3: Creating person documents ---");
   // For duplicates: pick the richest doc as primary, map all old IDs to same new ID
   const idMap: Record<string, string> = {}; // oldId → newPersonId
 
@@ -131,7 +112,9 @@ async function run() {
   const processedIds = new Set<string>();
 
   for (const doc of oldDocs) {
-    if (processedIds.has(doc._id)) continue;
+    if (processedIds.has(doc._id)) {
+      continue;
+    }
 
     const name = (doc.name ?? "").trim().toLowerCase();
     const group = nameMap.get(name) || [doc];
@@ -155,8 +138,6 @@ async function run() {
     personPlans.push({ newId, roles, primaryDoc: primary, allOldIds });
   }
 
-  console.log(`Will create ${personPlans.length} person documents`);
-
   const createTx = client.transaction();
   for (const plan of personPlans) {
     const doc = plan.primaryDoc;
@@ -167,32 +148,48 @@ async function run() {
       name: doc.name,
     };
 
-    if (doc.slug) newDoc.slug = doc.slug;
-    if (doc.portrait) newDoc.portrait = doc.portrait;
-    if (doc.birthYear) newDoc.birthYear = doc.birthYear;
-    if (doc.bio) newDoc.bio = doc.bio;
-    if (doc.education) newDoc.education = doc.education;
-    if (doc.place) newDoc.place = doc.place;
-    if (doc.socialLinks) newDoc.socialLinks = doc.socialLinks;
-    if (doc.email) newDoc.email = doc.email;
-    if (doc.phone) newDoc.phone = doc.phone;
-    if (doc.teachingAt) newDoc.teachingAt = doc.teachingAt;
-    if (doc.studio) newDoc.studio = doc.studio;
-    if (doc.seo) newDoc.seo = doc.seo;
-
-    console.log(
-      `  Create: ${plan.newId} (${doc.name}) [${plan.roles.join(", ")}]`
-    );
+    if (doc.slug) {
+      newDoc.slug = doc.slug;
+    }
+    if (doc.portrait) {
+      newDoc.portrait = doc.portrait;
+    }
+    if (doc.birthYear) {
+      newDoc.birthYear = doc.birthYear;
+    }
+    if (doc.bio) {
+      newDoc.bio = doc.bio;
+    }
+    if (doc.education) {
+      newDoc.education = doc.education;
+    }
+    if (doc.place) {
+      newDoc.place = doc.place;
+    }
+    if (doc.socialLinks) {
+      newDoc.socialLinks = doc.socialLinks;
+    }
+    if (doc.email) {
+      newDoc.email = doc.email;
+    }
+    if (doc.phone) {
+      newDoc.phone = doc.phone;
+    }
+    if (doc.teachingAt) {
+      newDoc.teachingAt = doc.teachingAt;
+    }
+    if (doc.studio) {
+      newDoc.studio = doc.studio;
+    }
+    if (doc.seo) {
+      newDoc.seo = doc.seo;
+    }
     createTx.createIfNotExists(newDoc);
   }
 
   if (isWrite) {
     await createTx.commit();
-    console.log("  Created all person documents");
   }
-
-  // Step 4: Update all references
-  console.log("\n--- Step 4: Updating references ---");
   const allOldIds = Object.keys(idMap);
 
   const referencingDocs = await client.fetch(
@@ -206,7 +203,6 @@ async function run() {
     ]{ _id, _type, designers, designersAndProfessionals, authors, teachers }`,
     { oldIds: allOldIds }
   );
-  console.log(`Found ${referencingDocs.length} referencing documents`);
 
   const refTx = client.transaction();
   for (const doc of referencingDocs) {
@@ -220,14 +216,13 @@ async function run() {
       const arr = doc[field] as
         | { _ref: string; _key: string; _type?: string }[]
         | undefined;
-      if (!arr?.length) continue;
+      if (!arr?.length) {
+        continue;
+      }
 
       let changed = false;
       const updated = arr.map((ref) => {
         if (idMap[ref._ref]) {
-          console.log(
-            `  ${doc._id}.${field}: ${ref._ref} → ${idMap[ref._ref]}`
-          );
           changed = true;
           return { ...ref, _ref: idMap[ref._ref] };
         }
@@ -245,31 +240,20 @@ async function run() {
 
   if (isWrite) {
     await refTx.commit();
-    console.log("  Updated all references");
   }
-
-  // Step 5: Delete old documents
-  console.log("\n--- Step 5: Deleting old documents ---");
   const deleteTx = client.transaction();
   for (const oldId of allOldIds) {
-    console.log(`  Delete: ${oldId}`);
     deleteTx.delete(oldId);
     deleteTx.delete(`drafts.${oldId}`);
   }
 
   if (isWrite) {
     await deleteTx.commit();
-    console.log("  Deleted all old documents");
   }
-
-  console.log("\n" + "=".repeat(60));
-  console.log("Migration complete");
   if (!isWrite) {
-    console.log("This was a DRY RUN. Add --write to apply changes.");
   }
 }
 
-run().catch((err) => {
-  console.error("Migration failed:", err);
+run().catch((_err) => {
   process.exit(1);
 });

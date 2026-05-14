@@ -54,39 +54,43 @@ export default async function JournalPage({
 }: {
   searchParams: Promise<{ tags?: string; page?: string; sort?: string }>;
 }) {
-  const { tags: tagsParam, page: pageParam, sort: sortParam } =
-    await searchParams;
+  const {
+    tags: tagsParam,
+    page: pageParam,
+    sort: sortParam,
+  } = await searchParams;
   const sort = isValidSort(sortParam) ? sortParam : "newest";
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
   const hasTags = tagSlugs.length > 0;
   const parsedPage = Number.parseInt(pageParam ?? "1", 10);
   const requestedPage =
     Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
-  if (requestedPage > MAX_PAGE) notFound();
+  if (requestedPage > MAX_PAGE) {
+    notFound();
+  }
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
 
-  const [
-    { data: articles },
-    { data: totalCount },
-    { data: pageSettings },
-  ] = await Promise.all([
-    sanityFetch({
-      query: getJournalFilteredQuery(sort),
-      params: { tags: tagSlugs, hasTags, start, end },
-    }),
-    sanityFetch({
-      query: JOURNAL_COUNT_QUERY,
-      params: { tags: tagSlugs, hasTags },
-    }),
-    sanityFetch({ query: JOURNAL_PAGE_QUERY }),
-  ]);
+  const [{ data: articles }, { data: totalCount }, { data: pageSettings }] =
+    await Promise.all([
+      sanityFetch({
+        query: getJournalFilteredQuery(sort),
+        params: { tags: tagSlugs, hasTags, start, end },
+      }),
+      sanityFetch({
+        query: JOURNAL_COUNT_QUERY,
+        params: { tags: tagSlugs, hasTags },
+      }),
+      sanityFetch({ query: JOURNAL_PAGE_QUERY }),
+    ]);
 
   const featuredArticle = pageSettings?.featuredArticle;
   const cta = pageSettings?.endOfPageCta;
   const totalPages = Math.max(1, Math.ceil((totalCount ?? 0) / PAGE_SIZE));
-  if (page > totalPages) notFound();
+  if (page > totalPages) {
+    notFound();
+  }
 
   type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
 
@@ -126,21 +130,24 @@ export default async function JournalPage({
         title={pageSettings?.title ?? "Journal"}
       />
       <div className="space-y-10 pb-10">
-        {featuredArticle?.cover?.image?.asset && (() => {
-          const featuredLabelConfig = getJournalLabelConfig(featuredArticle.label);
-          return (
-            <FeaturedHero
-              badgeLabel={featuredLabelConfig?.label}
-              badgeVariant={featuredLabelConfig?.badgeVariant}
-              contentType="journal"
-              cover={featuredArticle.cover}
-              href={`/journal/${featuredArticle.slug?.current ?? ""}`}
-              subtitle={featuredArticle.excerpt}
-              title={featuredArticle.title ?? ""}
-              variant="compact"
-            />
-          );
-        })()}
+        {featuredArticle?.cover?.image?.asset &&
+          (() => {
+            const featuredLabelConfig = getJournalLabelConfig(
+              featuredArticle.label
+            );
+            return (
+              <FeaturedHero
+                badgeLabel={featuredLabelConfig?.label}
+                badgeVariant={featuredLabelConfig?.badgeVariant}
+                contentType="journal"
+                cover={featuredArticle.cover}
+                href={`/journal/${featuredArticle.slug?.current ?? ""}`}
+                subtitle={featuredArticle.excerpt}
+                title={featuredArticle.title ?? ""}
+                variant="compact"
+              />
+            );
+          })()}
 
         <div className="flex items-start justify-between gap-4">
           <FilterBar

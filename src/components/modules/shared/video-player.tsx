@@ -4,17 +4,23 @@ import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 interface VideoPlayerProps {
-  src: string;
-  poster?: string;
   className?: string;
+  poster?: string;
+  src: string;
 }
 
-export default function VideoPlayer({ src, poster, className }: VideoPlayerProps) {
+export default function VideoPlayer({
+  src,
+  poster,
+  className,
+}: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video) {
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {

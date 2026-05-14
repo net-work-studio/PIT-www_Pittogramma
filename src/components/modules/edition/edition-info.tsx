@@ -7,13 +7,13 @@ interface NamedRef {
 }
 
 interface EditionInfoProps {
-  title?: string | null;
   authors?: NamedRef[] | null;
-  description?: string | null;
   buyUrl?: string | null;
-  year?: number | null;
+  description?: string | null;
   designers?: NamedRef[] | null;
   supporters?: NamedRef[] | null;
+  title?: string | null;
+  year?: number | null;
 }
 
 function NameList({ items }: { items: NamedRef[] }) {

@@ -12,12 +12,14 @@ import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity/types";
 
 const DESCRIPTION_FALLBACK_LIMIT = 160;
 
-type AboutContent = NonNullable<ABOUT_PAGE_QUERY_RESULT>["content"];
+type AboutContentValue = NonNullable<ABOUT_PAGE_QUERY_RESULT>["content"];
 
 function deriveDescriptionFromContent(
-  content: AboutContent
+  content: AboutContentValue
 ): string | undefined {
-  if (!content) return;
+  if (!content) {
+    return;
+  }
   for (const item of content) {
     if (item._type === "block") {
       const block = item as {

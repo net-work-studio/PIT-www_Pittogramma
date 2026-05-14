@@ -66,8 +66,8 @@ function TypeFoundryGridCard({ foundry }: { foundry: TypeFoundry }) {
 }
 
 interface TypeFoundriesContentProps {
-  foundries: TYPE_FOUNDRIES_QUERY_RESULT;
   enabledViews: ViewMode[];
+  foundries: TYPE_FOUNDRIES_QUERY_RESULT;
   searchEnabled: boolean;
 }
 
@@ -80,26 +80,42 @@ export function TypeFoundriesContent({
   const [view, setView] = useState<string>(defaultView);
 
   const markers = foundries.flatMap((foundry) =>
-    (foundry.places ?? [])
-      .filter((p) => p?.lat != null && p?.lng != null)
-      .map((p) => ({
-        id: `${foundry._id}-${p._id}`,
-        name: foundry.name ?? "",
-        lat: p.lat!,
-        lng: p.lng!,
-      }))
+    (foundry.places ?? []).flatMap((p) => {
+      if (p?.lat == null || p.lng == null) {
+        return [];
+      }
+
+      return [
+        {
+          id: `${foundry._id}-${p._id}`,
+          name: foundry.name ?? "",
+          lat: p.lat,
+          lng: p.lng,
+        },
+      ];
+    })
   );
 
   return (
-    <Tabs className="w-full gap-0" defaultValue={defaultView} onValueChange={setView}>
+    <Tabs
+      className="w-full gap-0"
+      defaultValue={defaultView}
+      onValueChange={setView}
+    >
       <div className="sticky top-0 z-10 bg-background pt-16 pb-2.5">
         <div className="flex w-full items-center justify-between pb-2.5">
           {searchEnabled && <Input placeholder="Search" type="search" />}
           {enabledViews.length > 1 && (
             <TabsList>
-              {enabledViews.includes("list") && <TabsTrigger value="list">List</TabsTrigger>}
-              {enabledViews.includes("grid") && <TabsTrigger value="grid">Grid</TabsTrigger>}
-              {enabledViews.includes("map") && <TabsTrigger value="map">Map</TabsTrigger>}
+              {enabledViews.includes("list") && (
+                <TabsTrigger value="list">List</TabsTrigger>
+              )}
+              {enabledViews.includes("grid") && (
+                <TabsTrigger value="grid">Grid</TabsTrigger>
+              )}
+              {enabledViews.includes("map") && (
+                <TabsTrigger value="map">Map</TabsTrigger>
+              )}
             </TabsList>
           )}
         </div>

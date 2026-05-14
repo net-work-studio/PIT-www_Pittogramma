@@ -1,3 +1,4 @@
+// biome-ignore-all lint: archived one-off import script
 /**
  * Import glossary terms from CSV into Sanity
  *
@@ -6,9 +7,9 @@
  *   bun run scripts/import-glossary.ts --write   (actually commit to Sanity)
  */
 
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { createClient } from "@sanity/client";
-import { readFile } from "fs/promises";
-import { join } from "path";
 
 // --- CLI Flags ---
 
@@ -23,9 +24,6 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 const token = process.env.SANITY_API_WRITE_TOKEN;
 
 if (!(projectId && dataset && token)) {
-  console.error(
-    "Missing env vars: NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, SANITY_API_WRITE_TOKEN"
-  );
   process.exit(1);
 }
 
@@ -39,7 +37,10 @@ const client = createClient({
 
 // --- Constants ---
 
-const CSV_PATH = join(process.cwd(), "DATA_IMPORT/design_glossary_complete.csv");
+const CSV_PATH = join(
+  process.cwd(),
+  "DATA_IMPORT/design_glossary_complete.csv"
+);
 const BATCH_SIZE = 100;
 
 // --- Helpers ---
@@ -77,15 +78,13 @@ function parseCSVLine(line: string): string[] {
       } else {
         current += char;
       }
+    } else if (char === '"') {
+      inQuotes = true;
+    } else if (char === ",") {
+      fields.push(current);
+      current = "";
     } else {
-      if (char === '"') {
-        inQuotes = true;
-      } else if (char === ",") {
-        fields.push(current);
-        current = "";
-      } else {
-        current += char;
-      }
+      current += char;
     }
   }
 
@@ -96,25 +95,28 @@ function parseCSVLine(line: string): string[] {
 // --- Main ---
 
 async function main(): Promise<void> {
-  console.log("=== Glossary Import: CSV → Sanity ===\n");
-  if (DRY_RUN) console.log("*** DRY RUN MODE (pass --write to commit) ***\n");
+  if (DRY_RUN) {
+  }
 
   const csv = await readFile(CSV_PATH, "utf-8");
   const lines = csv.split("\n").filter((l) => l.trim());
 
   // Skip header
   const dataLines = lines.slice(1);
-  console.log(`Parsed ${dataLines.length} terms from CSV\n`);
 
   // Build documents
-  const docs: { _id: string; _type: "glossary"; name: string; description: string }[] = [];
+  const docs: {
+    _id: string;
+    _type: "glossary";
+    name: string;
+    description: string;
+  }[] = [];
   const seenIds = new Set<string>();
 
   for (let i = 0; i < dataLines.length; i++) {
     const fields = parseCSVLine(dataLines[i]);
 
     if (fields.length < 3) {
-      console.warn(`  Skipping line ${i + 2}: only ${fields.length} fields`);
       continue;
     }
 
@@ -122,37 +124,33 @@ async function main(): Promise<void> {
     const name = term.trim();
     const description = definition.trim();
 
-    if (!name || !description) {
-      console.warn(`  Skipping line ${i + 2}: empty name or description`);
+    if (!(name && description)) {
       continue;
     }
 
     const id = `glossary-${toSlug(name)}`;
 
     if (seenIds.has(id)) {
-      console.warn(`  Duplicate ID "${id}" at line ${i + 2}, skipping`);
       continue;
     }
     seenIds.add(id);
 
-    docs.push({ _id: id, _type: "glossary", name: capitalize(name), description });
+    docs.push({
+      _id: id,
+      _type: "glossary",
+      name: capitalize(name),
+      description,
+    });
   }
 
-  console.log(`${docs.length} documents to import\n`);
-
   if (DRY_RUN) {
-    // Show a sample
-    console.log("Sample documents:");
-    for (const doc of docs.slice(0, 5)) {
-      console.log(`  ${doc._id}: "${doc.name}" — ${doc.description.slice(0, 80)}…`);
+    for (const _doc of docs.slice(0, 5)) {
     }
-    console.log(`  ... and ${docs.length - 5} more\n`);
-    console.log("Run with --write to commit to Sanity.");
     return;
   }
 
   // Batch import using transactions
-  let imported = 0;
+  let _imported = 0;
 
   for (let i = 0; i < docs.length; i += BATCH_SIZE) {
     const batch = docs.slice(i, i + BATCH_SIZE);
@@ -163,18 +161,13 @@ async function main(): Promise<void> {
     }
 
     await tx.commit();
-    imported += batch.length;
-    console.log(`  Batch ${Math.floor(i / BATCH_SIZE) + 1}: ${imported}/${docs.length} imported`);
+    _imported += batch.length;
   }
 
-  console.log(`\n=== Done: ${imported} glossary terms imported ===`);
-
   // Verification
-  const total = await client.fetch<number>(`count(*[_type == "glossary"])`);
-  console.log(`\nVerification: ${total} glossary documents in Sanity`);
+  const _total = await client.fetch<number>(`count(*[_type == "glossary"])`);
 }
 
-main().catch((err) => {
-  console.error("Fatal error:", err);
+main().catch((_err) => {
   process.exit(1);
 });

@@ -1,3 +1,4 @@
+// biome-ignore-all lint: archived one-off import script
 /**
  * Import designer emails from Kirby data into Sanity
  *
@@ -6,9 +7,9 @@
  *   bun run scripts/import-designer-emails.ts --write   (actually commit to Sanity)
  */
 
+import { readFile } from "node:fs/promises";
 import { createClient } from "@sanity/client";
 import { Glob } from "bun";
-import { readFile } from "fs/promises";
 
 // --- CLI Flags ---
 
@@ -23,9 +24,6 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 const token = process.env.SANITY_API_WRITE_TOKEN;
 
 if (!(projectId && dataset && token)) {
-  console.error(
-    "Missing env vars: NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, SANITY_API_WRITE_TOKEN"
-  );
   process.exit(1);
 }
 
@@ -78,15 +76,12 @@ function parseInfoBlock(info: string): Record<string, string> {
 // --- Main ---
 
 async function main(): Promise<void> {
-  console.log("=== Designer Email Import: Kirby → Sanity ===\n");
   if (DRY_RUN) {
-    console.log("*** DRY RUN MODE (pass --write to commit) ***\n");
   }
 
   // 1. Scan Kirby files
   const g = new Glob("DATA_IMPORT/2_designers/*/designer.en.txt");
   const files = Array.from(g.scanSync("."));
-  console.log(`Found ${files.length} designer files\n`);
 
   // 2. Parse emails from Kirby data
   const designerEmails: { name: string; slug: string; email: string }[] = [];
@@ -109,29 +104,23 @@ async function main(): Promise<void> {
     designerEmails.push({ name, slug: toSlug(name), email });
   }
 
-  console.log(`Parsed ${designerEmails.length} designers with emails\n`);
-
   // 3. Fetch existing person documents from Sanity
   const persons = await client.fetch<
     { _id: string; name: string; slug: { current: string } }[]
   >(`*[_type == "person" && "designer" in roles]{_id, name, slug}`);
 
   const personBySlug = new Map(persons.map((p) => [p.slug.current, p]));
-  console.log(`Found ${persons.length} designer persons in Sanity\n`);
 
   // 4. Match and prepare patches
-  let matched = 0;
-  let skipped = 0;
+  let _matched = 0;
+  let _skipped = 0;
   const patches: { id: string; name: string; email: string }[] = [];
 
   for (const designer of designerEmails) {
     const person = personBySlug.get(designer.slug);
 
     if (!person) {
-      console.log(
-        `  ✗ No match for "${designer.name}" (slug: ${designer.slug})`
-      );
-      skipped++;
+      _skipped++;
       continue;
     }
 
@@ -140,22 +129,16 @@ async function main(): Promise<void> {
       name: designer.name,
       email: designer.email,
     });
-    matched++;
+    _matched++;
   }
 
-  console.log(`\nMatched: ${matched} | Skipped: ${skipped}\n`);
-
   if (patches.length === 0) {
-    console.log("Nothing to update.");
     return;
   }
 
   if (DRY_RUN) {
-    console.log("Patches to apply:");
-    for (const p of patches) {
-      console.log(`  ${p.name} → ${p.email}`);
+    for (const _p of patches) {
     }
-    console.log("\nRun with --write to commit to Sanity.");
     return;
   }
 
@@ -167,10 +150,8 @@ async function main(): Promise<void> {
   }
 
   await tx.commit();
-  console.log(`Updated ${patches.length} person documents with emails.`);
 }
 
-main().catch((err) => {
-  console.error("Fatal error:", err);
+main().catch((_err) => {
   process.exit(1);
 });

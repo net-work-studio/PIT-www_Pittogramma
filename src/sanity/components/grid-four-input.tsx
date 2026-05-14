@@ -184,7 +184,7 @@ export function GridFourInput(props: ObjectInputProps) {
       case "bottomRight":
         return bottomRightMember;
       default:
-        return undefined;
+        return;
     }
   }, [
     expandedPosition,

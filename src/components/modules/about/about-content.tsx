@@ -69,8 +69,7 @@ export default function AboutContent({ content }: AboutContentProps) {
   }
 
   content.forEach((item, index) => {
-    const key =
-      (item as { _key?: string })._key ?? `about-content-${index}`;
+    const key = (item as { _key?: string })._key ?? `about-content-${index}`;
     if (item._type === "block") {
       if (textStartKey === null) {
         textStartKey = key;

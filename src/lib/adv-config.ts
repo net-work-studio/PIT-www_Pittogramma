@@ -37,7 +37,7 @@ export type IndexSlot<T> =
 export function buildIndexSlots<T>(
   editorial: T[],
   gold: IndexGold | undefined,
-  goldPosition: number = INDEX_GOLD_POSITION,
+  goldPosition: number = INDEX_GOLD_POSITION
 ): IndexSlot<T>[] {
   const slots: IndexSlot<T>[] = editorial.map((item) => ({
     kind: "editorial",

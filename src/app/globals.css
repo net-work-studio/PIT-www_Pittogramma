@@ -82,8 +82,6 @@
   --text-3xl: var(--fluid-16-32);
   --text-2xl: var(--fluid-16-24);
   --text-xxs: 0.625rem;
-
-
 }
 
 :root {
@@ -261,9 +259,9 @@
   }
 
   * {
-    @apply border-border outline-ring/50;
-    scrollbar-width: thin;
     scrollbar-color: auto;
+    scrollbar-width: thin;
+    @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;

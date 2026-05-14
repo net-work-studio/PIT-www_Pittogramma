@@ -229,9 +229,7 @@ const components: PortableTextComponents = {
     ),
   },
   listItem: {
-    bullet: ({ children }) => (
-      <li className="mb-1">{children}</li>
-    ),
+    bullet: ({ children }) => <li className="mb-1">{children}</li>,
   },
   types: {
     singleMediaBlock: SingleMediaBlock,

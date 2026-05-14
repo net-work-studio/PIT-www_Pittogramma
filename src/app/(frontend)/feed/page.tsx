@@ -51,9 +51,7 @@ export default async function FeedPage() {
   );
 
   const hasAdvs = advs.some((adv) => adv.cover?.image?.asset);
-  const hasCommunity = communityItems.some(
-    (item) => item.cover?.image?.asset
-  );
+  const hasCommunity = communityItems.some((item) => item.cover?.image?.asset);
   const hasItems = hasAdvs || hasCommunity;
 
   return (

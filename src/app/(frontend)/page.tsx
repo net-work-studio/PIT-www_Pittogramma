@@ -33,6 +33,35 @@ const SILVER_S2_POSITION_B = 11;
 type EditorialItem = HOME_FEED_QUERY_RESULT[number];
 type AdvItem = HOME_ADV_QUERY_RESULT[number];
 
+function getEditorialHref(item: EditorialItem): string {
+  if (item._type === "project") {
+    return `/projects/${item.slug?.current ?? ""}`;
+  }
+  if (item._type === "journal") {
+    return `/journal/${item.slug?.current ?? ""}`;
+  }
+  return `/interviews/${item.slug?.current ?? ""}`;
+}
+
+function getFeaturedSubtitle(
+  featuredItem: EditorialItem | null
+): string | null {
+  if (!featuredItem) {
+    return null;
+  }
+
+  if (featuredItem._type === "interview") {
+    const names =
+      featuredItem.people?.map((p) => p.name).join(", ") ||
+      (featuredItem as EditorialItem & { studio?: string }).studio ||
+      (featuredItem as EditorialItem & { typeFoundry?: string }).typeFoundry;
+    return names ? `Interview to ${names}` : null;
+  }
+
+  const names = featuredItem.people?.map((p) => p.name).join(", ");
+  return names || null;
+}
+
 // Walks an editorial cursor and injects ADVs at fixed 1-indexed positions.
 // Returns the assembled slots and how many editorial items were consumed,
 // so the next section can pick up where this one left off.
@@ -54,7 +83,9 @@ function assembleSection({
       continue;
     }
     const editorialItem = editorial[cursor];
-    if (!editorialItem) break;
+    if (!editorialItem) {
+      break;
+    }
     slots.push({ kind: "editorial", item: editorialItem });
     cursor++;
   }
@@ -116,11 +147,17 @@ export default async function Home() {
   const silverForS2P11 = silvers[1] ?? null;
 
   const s1Injections = new Map<number, AdvItem>();
-  if (goldForS1P3) s1Injections.set(GOLD_S1_POSITION, goldForS1P3);
+  if (goldForS1P3) {
+    s1Injections.set(GOLD_S1_POSITION, goldForS1P3);
+  }
 
   const s2Injections = new Map<number, AdvItem>();
-  if (silverForS2P3) s2Injections.set(SILVER_S2_POSITION_A, silverForS2P3);
-  if (silverForS2P11) s2Injections.set(SILVER_S2_POSITION_B, silverForS2P11);
+  if (silverForS2P3) {
+    s2Injections.set(SILVER_S2_POSITION_A, silverForS2P3);
+  }
+  if (silverForS2P11) {
+    s2Injections.set(SILVER_S2_POSITION_B, silverForS2P11);
+  }
 
   let offset = 0;
   const s1 = assembleSection({
@@ -143,19 +180,7 @@ export default async function Home() {
     editorial: editorialPool.slice(offset),
   });
 
-  const featuredSubtitle = (() => {
-    if (!featuredItem) return null;
-    if (featuredItem._type === "interview") {
-      const names =
-        featuredItem.people?.map((p) => p.name).join(", ") ||
-        (featuredItem as EditorialItem & { studio?: string }).studio ||
-        (featuredItem as EditorialItem & { typeFoundry?: string }).typeFoundry;
-      return names ? `Interview to ${names}` : null;
-    }
-    // project or journal: bare author names
-    const names = featuredItem.people?.map((p) => p.name).join(", ");
-    return names || null;
-  })();
+  const featuredSubtitle = getFeaturedSubtitle(featuredItem);
 
   return (
     <>
@@ -165,13 +190,7 @@ export default async function Home() {
             featuredItem._type as "project" | "interview" | "journal"
           }
           cover={featuredItem.cover}
-          href={
-            featuredItem._type === "project"
-              ? `/projects/${featuredItem.slug?.current ?? ""}`
-              : featuredItem._type === "journal"
-                ? `/journal/${featuredItem.slug?.current ?? ""}`
-                : `/interviews/${featuredItem.slug?.current ?? ""}`
-          }
+          href={getEditorialHref(featuredItem)}
           subtitle={featuredSubtitle}
           title={featuredItem.title ?? ""}
         />

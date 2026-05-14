@@ -84,14 +84,14 @@ export const event = defineType({
       group: "content",
       hidden: ({ parent }) =>
         !["tickets-available", "free-rsvp", "waitlist"].includes(
-          parent?.status,
+          parent?.status
         ),
       validation: (rule) =>
         rule.custom((value, context) => {
           const status = (context.parent as { status?: string })?.status;
           if (
             ["tickets-available", "free-rsvp", "waitlist"].includes(
-              status ?? "",
+              status ?? ""
             ) &&
             !value
           ) {

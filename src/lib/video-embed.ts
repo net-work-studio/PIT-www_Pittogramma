@@ -3,8 +3,8 @@ const YOUTUBE_REGEX =
 const VIMEO_REGEX = /vimeo\.com\/(?:video\/)?(\d+)/;
 
 export interface EmbedInfo {
-  src: string;
   provider: "youtube" | "vimeo";
+  src: string;
 }
 
 export function getEmbedInfo(url: string | null | undefined): EmbedInfo | null {

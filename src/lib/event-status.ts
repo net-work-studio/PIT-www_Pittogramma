@@ -9,8 +9,6 @@ export type EventStatus =
   | "cancelled";
 
 interface EventStatusConfig {
-  label: string;
-  ctaLabel: string | null;
   badgeVariant:
     | "event-coming-soon"
     | "event-available"
@@ -18,6 +16,8 @@ interface EventStatusConfig {
     | "event-waitlist"
     | "event-postponed"
     | "event-cancelled";
+  ctaLabel: string | null;
+  label: string;
 }
 
 const STATUS_CONFIG: Record<EventStatus, EventStatusConfig> = {
@@ -64,8 +64,10 @@ const STATUS_CONFIG: Record<EventStatus, EventStatusConfig> = {
 };
 
 export function getEventStatusConfig(
-  status: string | null | undefined,
+  status: string | null | undefined
 ): EventStatusConfig | null {
-  if (!status) return null;
+  if (!status) {
+    return null;
+  }
   return STATUS_CONFIG[status as EventStatus] ?? null;
 }

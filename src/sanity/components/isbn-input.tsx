@@ -105,9 +105,12 @@ export function IsbnInput(props: StringInputProps) {
       thumbnailUrl: string,
       title: string | null
     ): Promise<Record<string, unknown> | null> => {
-      const imageResponse = await fetch(
-        `/api/books/fetch-image?url=${encodeURIComponent(thumbnailUrl)}`
-      );
+      const imageResponse = await fetch("/api/books/fetch-image", {
+        body: JSON.stringify({ url: thumbnailUrl }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        signal: AbortSignal.timeout(15_000),
+      });
 
       if (!imageResponse.ok) {
         return null;
@@ -296,7 +299,7 @@ export function IsbnInput(props: StringInputProps) {
               {fetchedData.description && (
                 <Text size={1}>
                   <strong>Description:</strong>{" "}
-                  {fetchedData.description.substring(0, 200)}...
+                  {fetchedData.description.slice(0, 200)}...
                 </Text>
               )}
             </Stack>

@@ -19,7 +19,9 @@ export default function DiscoverMore({ projects }: DiscoverMoreProps) {
       <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
         {projects.map((project: RelatedProject) => {
           const slug = project.slug?.current;
-          if (!slug) return null;
+          if (!slug) {
+            return null;
+          }
 
           const authors = project.designers?.length
             ? project.designers.map(

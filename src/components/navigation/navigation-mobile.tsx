@@ -1,22 +1,22 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { ChevronDown } from "lucide-react";
 import Mark from "@/components/brand/mark";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Resource } from "./resources-navigation.data";
 
-type MenuItemWithChildren = {
-  label: string;
+interface MenuItemWithChildren {
   children: { href: string; label: string }[];
-};
-
-type MenuItemLink = {
   label: string;
+}
+
+interface MenuItemLink {
   href: string;
-};
+  label: string;
+}
 
 type MenuItem = MenuItemWithChildren | MenuItemLink;
 
@@ -24,11 +24,7 @@ function hasChildren(item: MenuItem): item is MenuItemWithChildren {
   return "children" in item;
 }
 
-export function NavigationMobile({
-  resources,
-}: {
-  resources: Resource[];
-}) {
+export function NavigationMobile({ resources }: { resources: Resource[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
@@ -57,7 +53,7 @@ export function NavigationMobile({
         ],
       },
     ],
-    [resources],
+    [resources]
   );
 
   const toggleSection = (label: string) => {
@@ -79,11 +75,14 @@ export function NavigationMobile({
   return (
     <>
       <Button
-        variant="outline"
-        size="sm"
-        className={cn("lg:hidden", isOpen && "border-background text-background")}
-        onClick={() => setIsOpen(true)}
         aria-hidden={isOpen}
+        className={cn(
+          "lg:hidden",
+          isOpen && "border-background text-background"
+        )}
+        onClick={() => setIsOpen(true)}
+        size="sm"
+        variant="outline"
       >
         Menu
       </Button>
@@ -95,7 +94,7 @@ export function NavigationMobile({
             <Link href="/" onClick={closeMenu}>
               <Mark />
             </Link>
-            <Button variant="outline" size="sm" onClick={closeMenu}>
+            <Button onClick={closeMenu} size="sm" variant="outline">
               Close
             </Button>
           </div>
@@ -104,7 +103,12 @@ export function NavigationMobile({
           <nav className="flex-1 overflow-y-auto px-4 pt-8">
             <div className="flex flex-col gap-3">
               {/* Submit button */}
-              <Button variant="outline" asChild className="w-fit" onClick={closeMenu}>
+              <Button
+                asChild
+                className="w-fit"
+                onClick={closeMenu}
+                variant="outline"
+              >
                 <Link href="/submit">Submit your project</Link>
               </Button>
 
@@ -113,15 +117,15 @@ export function NavigationMobile({
                 hasChildren(item) ? (
                   <div key={item.label}>
                     <button
-                      type="button"
+                      className="inline-flex items-center gap-1 rounded-full border px-3 py-1.5 font-medium text-sm transition-colors hover:bg-accent"
                       onClick={() => toggleSection(item.label)}
-                      className="inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent"
+                      type="button"
                     >
                       {item.label}
                       <ChevronDown
                         className={cn(
                           "size-3.5 transition-transform duration-200",
-                          expandedSection === item.label && "rotate-180",
+                          expandedSection === item.label && "rotate-180"
                         )}
                       />
                     </button>
@@ -130,10 +134,10 @@ export function NavigationMobile({
                       <div className="mt-3 flex flex-col gap-2 pl-1">
                         {item.children.map((child) => (
                           <Link
-                            key={child.href}
+                            className="text-2xl leading-tight transition-opacity hover:opacity-70"
                             href={child.href}
+                            key={child.href}
                             onClick={closeMenu}
-                            className="text-2xl leading-tight hover:opacity-70 transition-opacity"
                           >
                             {child.label}
                           </Link>
@@ -143,21 +147,21 @@ export function NavigationMobile({
                   </div>
                 ) : (
                   <Button
-                    key={item.label}
-                    variant="outline"
                     asChild
                     className="w-fit"
+                    key={item.label}
                     onClick={closeMenu}
+                    variant="outline"
                   >
                     <Link href={item.href}>{item.label}</Link>
                   </Button>
-                ),
+                )
               )}
             </div>
           </nav>
 
           {/* Footer */}
-          <footer className="px-4 py-4 text-xs text-muted-foreground">
+          <footer className="px-4 py-4 text-muted-foreground text-xs">
             <p>&copy; 2025 Pittogramma</p>
             <p>All Rights Reserved. Privacy Policy</p>
           </footer>

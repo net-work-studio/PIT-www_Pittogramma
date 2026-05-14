@@ -3,12 +3,19 @@ import { notFound } from "next/navigation";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import { BookshopsContent } from "@/components/resources/bookshops-content";
 import PageHeader from "@/components/shared/page-header";
-import { getEnabledResources, getEnabledViews, isResourceEnabled, isSearchEnabled } from "@/lib/feature-flags";
+import {
+  getEnabledResources,
+  getEnabledViews,
+  isResourceEnabled,
+  isSearchEnabled,
+} from "@/lib/feature-flags";
 import { sanityFetch } from "@/sanity/lib/live";
 import { BOOKSHOPS_QUERY } from "@/sanity/lib/queries";
 
 export default async function Page() {
-  if (!isResourceEnabled("bookshops")) notFound();
+  if (!isResourceEnabled("bookshops")) {
+    notFound();
+  }
   const { data: bookshops } = await sanityFetch({
     query: BOOKSHOPS_QUERY,
   });

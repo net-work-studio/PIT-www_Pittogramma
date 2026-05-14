@@ -11,9 +11,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { isValidSort, SORT_OPTIONS } from "./sort-options";
 import type { SortOption } from "./sort-options";
+import { isValidSort, SORT_OPTIONS } from "./sort-options";
 
 export default function SortDropdown() {
   const router = useRouter();
@@ -49,14 +48,14 @@ export default function SortDropdown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuRadioGroup
-          value={currentSort}
           onValueChange={handleSortChange}
+          value={currentSort}
         >
           {SORT_OPTIONS.map((option) => (
             <DropdownMenuRadioItem
+              className="font-mono text-xs uppercase"
               key={option.value}
               value={option.value}
-              className="font-mono text-xs uppercase"
             >
               {option.label}
             </DropdownMenuRadioItem>

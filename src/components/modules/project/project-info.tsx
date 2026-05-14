@@ -1,6 +1,6 @@
 import DesignerNamesRow from "@/components/modules/project/designer-names-row";
 import ProjectDescription from "@/components/modules/project/project-description";
-import ProjectMetaItem from "@/components/modules/project/project-meta-item";
+import ProjectMetaItem from "@/components/modules/shared/meta-item";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];

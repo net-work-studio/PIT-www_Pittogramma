@@ -20,7 +20,7 @@ function SupporterLogo({ supporter }: { supporter: Supporter }) {
     <div className="flex items-center" title={supporter.name ?? undefined}>
       {light ? (
         <div
-          className={`relative ${heightClass} w-auto${hasBoth ? " dark:hidden" : ""}`}
+          className={`relative ${heightClass} w-auto${hasBoth ? "dark:hidden" : ""}`}
         >
           <SanityImage
             alt={alt}
@@ -34,7 +34,7 @@ function SupporterLogo({ supporter }: { supporter: Supporter }) {
       ) : null}
       {dark ? (
         <div
-          className={`relative ${heightClass} w-auto${hasBoth ? " hidden dark:block" : ""}`}
+          className={`relative ${heightClass} w-auto${hasBoth ? "hidden dark:block" : ""}`}
         >
           <SanityImage
             alt={alt}

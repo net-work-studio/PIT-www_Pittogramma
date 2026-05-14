@@ -22,9 +22,6 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 const token = process.env.SANITY_API_WRITE_TOKEN;
 
 if (!(projectId && dataset && token)) {
-  console.error(
-    "Missing environment variables: NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, SANITY_API_WRITE_TOKEN"
-  );
   process.exit(1);
 }
 
@@ -97,24 +94,19 @@ async function reverseGeocode(
 }
 
 async function main() {
-  console.log("=== Re-geocode Places to English ===\n");
-
   const docs: PlaceDoc[] = await rawClient.fetch(
     `*[_type == "place" && defined(lat) && defined(lng)]{
       _id, name, city, country, countryCode, state, formattedAddress, lat, lng
     } | order(name asc)`
   );
 
-  console.log(`Found ${docs.length} place documents with coordinates\n`);
-
   if (docs.length === 0) {
-    console.log("Nothing to migrate.");
     process.exit(0);
   }
 
-  let success = 0;
+  let _success = 0;
   let errors = 0;
-  let skipped = 0;
+  let _skipped = 0;
 
   for (const doc of docs) {
     try {
@@ -145,18 +137,9 @@ async function main() {
         doc.state === state &&
         doc.formattedAddress === formattedAddress
       ) {
-        console.log(`  SKIP: ${doc._id} "${doc.name}" (already in English)`);
-        skipped++;
+        _skipped++;
         continue;
       }
-
-      console.log(`  UPDATE: ${doc._id}`);
-      console.log(
-        `    Before: "${doc.name}" | city="${doc.city}" country="${doc.country}"`
-      );
-      console.log(
-        `    After:  "${name}" | city="${city}" country="${country}"`
-      );
 
       await client
         .patch(doc._id)
@@ -170,43 +153,23 @@ async function main() {
         })
         .commit();
 
-      success++;
-    } catch (err) {
-      console.error(
-        `  ERROR: ${doc._id} "${doc.name}": ${err instanceof Error ? err.message : err}`
-      );
+      _success++;
+    } catch {
       errors++;
     }
   }
 
-  console.log(
-    `\nMigration complete: ${success} updated, ${skipped} skipped, ${errors} errors\n`
-  );
-
-  // Verify
-  console.log("Verifying...\n");
-
-  const total = await rawClient.fetch(
+  const _total = await rawClient.fetch(
     `count(*[_type == "place" && defined(lat) && defined(lng)])`
   );
 
-  console.log(`  Total place documents with coordinates: ${total}`);
-  console.log(`  Updated: ${success}`);
-  console.log(`  Already in English: ${skipped}`);
-  console.log(`  Errors: ${errors}`);
-
   if (errors === 0) {
-    console.log("\n=== Migration successful! ===");
     process.exit(0);
   } else {
-    console.log(
-      "\n=== WARNING: Some documents had errors. Check logs above. ==="
-    );
     process.exit(1);
   }
 }
 
-main().catch((err) => {
-  console.error("Migration failed:", err);
+main().catch((_err) => {
   process.exit(1);
 });

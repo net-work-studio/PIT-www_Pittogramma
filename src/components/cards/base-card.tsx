@@ -50,6 +50,65 @@ interface BaseCardProps {
     | "gold";
 }
 
+function renderCardImage({
+  image,
+  imageClassName,
+  sizes,
+  title,
+}: {
+  image: SanityImageSource | string;
+  imageClassName: string;
+  sizes: string;
+  title: string;
+}) {
+  if (typeof image === "string") {
+    if (!image) {
+      return <div className="h-full w-full rounded-lg bg-secondary" />;
+    }
+
+    return (
+      <Image
+        alt={title}
+        className={imageClassName}
+        fill
+        quality={75}
+        sizes={sizes}
+        src={image}
+      />
+    );
+  }
+
+  if (image && typeof image === "object" && "image" in image && image.image) {
+    return (
+      <SanityImage
+        alt={title}
+        className={cn("rounded-lg", imageClassName)}
+        fill
+        sizes={sizes}
+        source={image}
+      />
+    );
+  }
+
+  return <div className="h-full w-full rounded-lg bg-secondary" />;
+}
+
+function getByline({
+  authors,
+  byline,
+}: {
+  authors?: Author[];
+  byline?: string;
+}): string | null {
+  if (byline) {
+    return byline;
+  }
+  if (authors?.length) {
+    return authors.map((author) => author.name).join(", ");
+  }
+  return null;
+}
+
 export default function BaseCard({
   title,
   authors,
@@ -70,6 +129,7 @@ export default function BaseCard({
 
   const imageClassName =
     "h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-103";
+  const cardByline = getByline({ authors, byline });
 
   return (
     <Link
@@ -84,47 +144,17 @@ export default function BaseCard({
         className="relative overflow-hidden rounded-lg"
         ratio={BASE_CARD_IMAGE_RATIO}
       >
-        {typeof image === "string" ? (
-          image ? (
-            <Image
-              alt={title}
-              className={imageClassName}
-              fill
-              quality={75}
-              sizes={sizes}
-              src={image}
-            />
-          ) : (
-            <div className="h-full w-full rounded-lg bg-secondary" />
-          )
-        ) : image &&
-          typeof image === "object" &&
-          "image" in image &&
-          image.image ? (
-          <SanityImage
-            alt={title}
-            className={cn("rounded-lg", imageClassName)}
-            fill
-            sizes={sizes}
-            source={image}
-          />
-        ) : (
-          <div className="h-full w-full rounded-lg bg-secondary" />
-        )}
+        {renderCardImage({ image, imageClassName, sizes, title })}
       </AspectRatio>
       {variant ? <Badge variant={variant}>{badgeLabel}</Badge> : null}
       <div className="inline-flex w-full flex-col items-start justify-start gap-0">
-        <hgroup className="flex flex-col items-start justify-start gap-0   self-stretch">
+        <hgroup className="flex flex-col items-start justify-start gap-0 self-stretch">
           <h3 className="justify-start self-stretch font-normal font-sans text-base text-foreground">
             {title}
           </h3>
-          {byline ? (
+          {cardByline ? (
             <p className="font-normal font-sans text-muted-foreground text-sm">
-              {byline}
-            </p>
-          ) : authors && authors.length > 0 ? (
-            <p className="font-normal font-sans text-muted-foreground text-sm">
-              {authors.map((author) => author.name).join(", ")}
+              {cardByline}
             </p>
           ) : null}
         </hgroup>
