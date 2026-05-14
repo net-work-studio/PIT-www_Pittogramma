@@ -163,9 +163,6 @@ async function main(): Promise<void> {
     await tx.commit();
     _imported += batch.length;
   }
-
-  // Verification
-  const _total = await client.fetch<number>(`count(*[_type == "glossary"])`);
 }
 
 main().catch((_err) => {

@@ -154,7 +154,12 @@ async function main() {
         .commit();
 
       _success++;
-    } catch {
+    } catch (err) {
+      process.stderr.write(
+        `  ERROR: ${doc._id} "${doc.name}": ${
+          err instanceof Error ? err.message : err
+        }\n`
+      );
       errors++;
     }
   }
