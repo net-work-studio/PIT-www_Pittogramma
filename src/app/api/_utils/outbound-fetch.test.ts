@@ -3,6 +3,7 @@ import {
   assertAllowedOrigin,
   buildBinaryResponse,
   fetchWithSafeRedirects,
+  isAllowedHtmlContentType,
   isAllowedImageContentType,
   readLimitedText,
   validatePublicHttpUrl,
@@ -190,5 +191,19 @@ describe("image content types", () => {
 
   test("rejects SVG", () => {
     expect(isAllowedImageContentType("image/svg+xml")).toBe(false);
+  });
+});
+
+describe("HTML content types", () => {
+  test.each([
+    "text/html",
+    "Text/HTML; charset=UTF-8",
+    "APPLICATION/XHTML+XML",
+  ])("allows %s", (contentType) => {
+    expect(isAllowedHtmlContentType(contentType)).toBe(true);
+  });
+
+  test("rejects non-HTML content", () => {
+    expect(isAllowedHtmlContentType("application/json")).toBe(false);
   });
 });

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import {
   assertAllowedOrigin,
   fetchWithSafeRedirects,
+  isAllowedHtmlContentType,
   OutboundFetchError,
   readJsonUrl,
   readLimitedText,
@@ -151,13 +152,7 @@ export async function POST(request: Request) {
     }
 
     const contentType = response.headers.get("content-type");
-    if (
-      contentType &&
-      !(
-        contentType.includes("text/html") ||
-        contentType.includes("application/xhtml+xml")
-      )
-    ) {
+    if (contentType && !isAllowedHtmlContentType(contentType)) {
       return NextResponse.json(
         { error: "URL does not point to an HTML document" },
         { headers: { "Cache-Control": "no-store" }, status: 400 }

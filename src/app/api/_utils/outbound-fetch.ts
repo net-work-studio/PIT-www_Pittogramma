@@ -16,6 +16,11 @@ export const IMAGE_CONTENT_TYPES = new Set([
   "image/avif",
 ]);
 
+export const HTML_CONTENT_TYPES = new Set([
+  "text/html",
+  "application/xhtml+xml",
+]);
+
 const blockedAddressRanges = new BlockList();
 
 blockedAddressRanges.addSubnet("0.0.0.0", 8, "ipv4");
@@ -394,4 +399,9 @@ export async function buildBinaryResponse(
 export function isAllowedImageContentType(contentType: string): boolean {
   const [type] = contentType.toLowerCase().split(";");
   return IMAGE_CONTENT_TYPES.has(type.trim());
+}
+
+export function isAllowedHtmlContentType(contentType: string): boolean {
+  const [type] = contentType.toLowerCase().split(";");
+  return HTML_CONTENT_TYPES.has(type.trim());
 }
