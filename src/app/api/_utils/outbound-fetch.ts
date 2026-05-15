@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { lookup } from "node:dns/promises";
 import { BlockList, isIP } from "node:net";
 import { NextResponse } from "next/server";
@@ -8,6 +9,9 @@ const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
 const IPV4_MAPPED_DOTTED_REGEX = /^::ffff:(\d+\.\d+\.\d+\.\d+)$/i;
 const IPV4_MAPPED_HEX_REGEX = /^::ffff:([0-9a-f]{1,4}):([0-9a-f]{1,4})$/i;
 const TRAILING_DOT_REGEX = /\.$/;
+const BEARER_TOKEN_REGEX = /^Bearer\s+(\S+)$/i;
+const SANITY_PROJECT_USER_API_VERSION = "v2021-06-07";
+const SANITY_AUTH_CACHE_TTL_MS = 5 * 60 * 1000;
 
 export const IMAGE_CONTENT_TYPES = new Set([
   "image/jpeg",
@@ -70,6 +74,13 @@ interface FetchWithSafeRedirectsOptions extends ValidateUrlOptions {
   maxRedirects?: number;
   timeoutMs?: number;
 }
+
+interface AssertSanityProjectUserOptions {
+  fetcher?: typeof fetch;
+  projectId?: string;
+}
+
+const verifiedSanityTokens = new Map<string, number>();
 
 function jsonError(message: string, status: number): NextResponse {
   return NextResponse.json(
@@ -191,6 +202,77 @@ export function assertAllowedOrigin(request: Request): NextResponse | null {
     return jsonError("Forbidden", 403);
   }
 
+  return null;
+}
+
+function getBearerToken(request: Request): string | null {
+  const authorization = request.headers.get("authorization");
+  const match = authorization?.match(BEARER_TOKEN_REGEX);
+  return match?.[1] ?? null;
+}
+
+function hashToken(token: string): string {
+  return createHash("sha256").update(token).digest("hex");
+}
+
+function isTokenCacheValid(tokenHash: string): boolean {
+  const expiresAt = verifiedSanityTokens.get(tokenHash);
+
+  if (!expiresAt) {
+    return false;
+  }
+
+  if (expiresAt <= Date.now()) {
+    verifiedSanityTokens.delete(tokenHash);
+    return false;
+  }
+
+  return true;
+}
+
+export async function assertSanityProjectUser(
+  request: Request,
+  options: AssertSanityProjectUserOptions = {}
+): Promise<NextResponse | null> {
+  const token = getBearerToken(request);
+
+  if (!token) {
+    return jsonError("Unauthorized", 401);
+  }
+
+  const tokenHash = hashToken(token);
+  if (isTokenCacheValid(tokenHash)) {
+    return null;
+  }
+
+  const projectId =
+    options.projectId ?? process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+  if (!projectId) {
+    return jsonError("Sanity project is not configured", 500);
+  }
+
+  const fetcher = options.fetcher ?? fetch;
+  const verificationUrl = `https://api.sanity.io/${SANITY_PROJECT_USER_API_VERSION}/projects/${encodeURIComponent(projectId)}/users/me`;
+
+  let response: Response;
+  try {
+    response = await fetcher(verificationUrl, {
+      cache: "no-store",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      signal: AbortSignal.timeout(10_000),
+    });
+  } catch {
+    return jsonError("Unable to verify Sanity user", 503);
+  }
+
+  if (!response.ok) {
+    return jsonError("Forbidden", response.status === 401 ? 401 : 403);
+  }
+
+  verifiedSanityTokens.set(tokenHash, Date.now() + SANITY_AUTH_CACHE_TTL_MS);
   return null;
 }
 

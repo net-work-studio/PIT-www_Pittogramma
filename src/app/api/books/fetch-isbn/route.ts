@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import {
-  assertAllowedOrigin,
+  assertSanityProjectUser,
   OutboundFetchError,
   readJsonStringField,
 } from "@/app/api/_utils/outbound-fetch";
@@ -8,29 +8,9 @@ import {
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-// Simple in-memory rate limiter
-const rateLimit = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT = 10; // requests per window
-const RATE_WINDOW = 60 * 1000; // 1 minute in ms
 const YEAR_REGEX = /^(\d{4})/;
 const ISBN_REGEX = /^(\d{10}|\d{13})$/;
 const NO_STORE_HEADERS = { "Cache-Control": "no-store" };
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const record = rateLimit.get(ip);
-
-  if (!record || now > record.resetTime) {
-    rateLimit.set(ip, { count: 1, resetTime: now + RATE_WINDOW });
-    return false;
-  }
-
-  if (record.count >= RATE_LIMIT) {
-    return true;
-  }
-  record.count++;
-  return false;
-}
 
 interface GoogleBooksVolumeInfo {
   authors?: string[];
@@ -98,18 +78,9 @@ function parseBookData(book: GoogleBooksItem): BookData {
 }
 
 export async function POST(request: Request) {
-  const originError = assertAllowedOrigin(request);
-  if (originError) {
-    return originError;
-  }
-
-  const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
-  if (isRateLimited(ip)) {
-    return NextResponse.json(
-      { error: "Too many requests. Please try again later." },
-      { headers: NO_STORE_HEADERS, status: 429 }
-    );
+  const authError = await assertSanityProjectUser(request);
+  if (authError) {
+    return authError;
   }
 
   let isbn: string;

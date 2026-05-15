@@ -18,6 +18,7 @@ import {
   useFormValue,
 } from "sanity";
 import { apiVersion } from "@/sanity/env";
+import { getStudioApiHeaders, useSanityAuthToken } from "./studio-auth-token";
 
 interface BookData {
   authors: string | null;
@@ -87,6 +88,7 @@ export function IsbnInput(props: StringInputProps) {
   // Get the document form context to patch other fields
   const documentId = useFormValue(["_id"]) as string | undefined;
   const client = useClient({ apiVersion });
+  const sanityAuthToken = useSanityAuthToken();
   const toast = useToast();
 
   const handleChange = useCallback(
@@ -107,7 +109,7 @@ export function IsbnInput(props: StringInputProps) {
     ): Promise<Record<string, unknown> | null> => {
       const imageResponse = await fetch("/api/books/fetch-image", {
         body: JSON.stringify({ url: thumbnailUrl }),
-        headers: { "Content-Type": "application/json" },
+        headers: getStudioApiHeaders(sanityAuthToken),
         method: "POST",
         signal: AbortSignal.timeout(15_000),
       });
@@ -133,7 +135,7 @@ export function IsbnInput(props: StringInputProps) {
         alt: title || "Book cover",
       };
     },
-    [client, value]
+    [client, value, sanityAuthToken]
   );
 
   const patchDocumentFields = useCallback(
@@ -197,7 +199,7 @@ export function IsbnInput(props: StringInputProps) {
     try {
       const response = await fetch("/api/books/fetch-isbn", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: getStudioApiHeaders(sanityAuthToken),
         body: JSON.stringify({ isbn: value }),
       });
       const data = await response.json();
@@ -215,7 +217,7 @@ export function IsbnInput(props: StringInputProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [value, patchDocumentFields]);
+  }, [value, patchDocumentFields, sanityAuthToken]);
 
   return (
     <Stack space={3}>
@@ -235,10 +237,6 @@ export function IsbnInput(props: StringInputProps) {
           tone="primary"
         />
       </Flex>
-      <Text muted size={1}>
-        Limited to 10 requests per minute
-      </Text>
-
       {error && (
         <Card padding={3} radius={2} tone="critical">
           <Text size={1}>{error}</Text>

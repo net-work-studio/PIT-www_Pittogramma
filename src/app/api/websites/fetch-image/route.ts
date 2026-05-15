@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import {
-  assertAllowedOrigin,
+  assertSanityProjectUser,
   buildBinaryResponse,
   fetchWithSafeRedirects,
   isAllowedImageContentType,
@@ -32,9 +32,9 @@ function errorResponse(error: unknown): NextResponse {
 }
 
 export async function POST(request: Request) {
-  const originError = assertAllowedOrigin(request);
-  if (originError) {
-    return originError;
+  const authError = await assertSanityProjectUser(request);
+  if (authError) {
+    return authError;
   }
 
   try {

@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, test } from "bun:test";
 import {
   assertAllowedOrigin,
+  assertSanityProjectUser,
   buildBinaryResponse,
   fetchWithSafeRedirects,
   isAllowedHtmlContentType,
@@ -19,6 +20,7 @@ const GOOGLE_BOOKS_HOSTNAMES = [
 
 const originalBaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const originalNodeEnv = process.env.NODE_ENV;
+const originalSanityProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const originalVercelUrl = process.env.VERCEL_URL;
 
 function setOptionalEnv(name: string, value: string | undefined): void {
@@ -33,6 +35,7 @@ function setOptionalEnv(name: string, value: string | undefined): void {
 afterEach(() => {
   setOptionalEnv("NEXT_PUBLIC_BASE_URL", originalBaseUrl);
   setOptionalEnv("NODE_ENV", originalNodeEnv);
+  setOptionalEnv("NEXT_PUBLIC_SANITY_PROJECT_ID", originalSanityProjectId);
   setOptionalEnv("VERCEL_URL", originalVercelUrl);
 });
 
@@ -118,6 +121,126 @@ describe("assertAllowedOrigin", () => {
     );
 
     expect(response).toBeNull();
+  });
+});
+
+describe("assertSanityProjectUser", () => {
+  test("rejects missing Authorization", async () => {
+    const response = await assertSanityProjectUser(
+      new Request("https://pittogramma.com/api/test", { method: "POST" }),
+      {
+        fetcher: (() => {
+          throw new Error("fetcher should not be called");
+        }) as typeof fetch,
+        projectId: "project-id",
+      }
+    );
+
+    expect(response?.status).toBe(401);
+  });
+
+  test("rejects malformed Authorization", async () => {
+    const response = await assertSanityProjectUser(
+      new Request("https://pittogramma.com/api/test", {
+        headers: { Authorization: "Token abc" },
+        method: "POST",
+      }),
+      {
+        fetcher: (() => {
+          throw new Error("fetcher should not be called");
+        }) as typeof fetch,
+        projectId: "project-id",
+      }
+    );
+
+    expect(response?.status).toBe(401);
+  });
+
+  test("rejects non-OK Sanity verification", async () => {
+    const response = await assertSanityProjectUser(
+      new Request("https://pittogramma.com/api/test", {
+        headers: { Authorization: "Bearer non-ok-token" },
+        method: "POST",
+      }),
+      {
+        fetcher: (() =>
+          Promise.resolve(
+            new Response("Nope", { status: 403 })
+          )) as typeof fetch,
+        projectId: "project-id",
+      }
+    );
+
+    expect(response?.status).toBe(403);
+  });
+
+  test("allows OK Sanity verification", async () => {
+    let verificationUrl: string | undefined;
+    let verificationAuthorization: string | null = null;
+
+    const response = await assertSanityProjectUser(
+      new Request("https://pittogramma.com/api/test", {
+        headers: { Authorization: "Bearer ok-token" },
+        method: "POST",
+      }),
+      {
+        fetcher: ((input, init) => {
+          verificationUrl = input.toString();
+          verificationAuthorization =
+            init?.headers instanceof Headers
+              ? init.headers.get("authorization")
+              : ((init?.headers as Record<string, string> | undefined)
+                  ?.Authorization ?? null);
+
+          return Promise.resolve(new Response("{}", { status: 200 }));
+        }) as typeof fetch,
+        projectId: "project-id",
+      }
+    );
+
+    expect(response).toBeNull();
+    expect(verificationUrl).toBe(
+      "https://api.sanity.io/v2021-06-07/projects/project-id/users/me"
+    );
+    expect(verificationAuthorization).toBe("Bearer ok-token");
+  });
+
+  test("does not log or expose the token", async () => {
+    const token = "secret-token-that-must-not-leak";
+    const logs: string[] = [];
+    const originalConsoleError = console.error;
+    const originalConsoleLog = console.log;
+
+    console.error = (...args: unknown[]) => {
+      logs.push(args.map(String).join(" "));
+    };
+    console.log = (...args: unknown[]) => {
+      logs.push(args.map(String).join(" "));
+    };
+
+    try {
+      const response = await assertSanityProjectUser(
+        new Request("https://pittogramma.com/api/test", {
+          headers: { Authorization: `Bearer ${token}` },
+          method: "POST",
+        }),
+        {
+          fetcher: (() =>
+            Promise.resolve(
+              new Response("Unauthorized", { status: 401 })
+            )) as typeof fetch,
+          projectId: "project-id",
+        }
+      );
+      const body = await response?.json();
+
+      expect(response?.status).toBe(401);
+      expect(JSON.stringify(body).includes(token)).toBe(false);
+      expect(logs.join("\n").includes(token)).toBe(false);
+    } finally {
+      console.error = originalConsoleError;
+      console.log = originalConsoleLog;
+    }
   });
 });
 

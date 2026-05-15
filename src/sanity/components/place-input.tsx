@@ -18,6 +18,7 @@ import {
   useFormValue,
 } from "sanity";
 import { apiVersion } from "@/sanity/env";
+import { getStudioApiHeaders, useSanityAuthToken } from "./studio-auth-token";
 
 interface NominatimResult {
   address: {
@@ -49,6 +50,7 @@ export function PlaceInput(props: StringInputProps) {
 
   const documentId = useFormValue(["_id"]) as string | undefined;
   const client = useClient({ apiVersion });
+  const sanityAuthToken = useSanityAuthToken();
   const toast = useToast();
 
   // Read current field values to show confirmation
@@ -57,37 +59,40 @@ export function PlaceInput(props: StringInputProps) {
   const currentLat = useFormValue(["lat"]) as number | undefined;
   const currentLng = useFormValue(["lng"]) as number | undefined;
 
-  const searchPlaces = useCallback(async (query: string) => {
-    if (query.trim().length < 2) {
-      setResults([]);
-      setShowDropdown(false);
-      return;
-    }
-
-    setIsSearching(true);
-    setError(null);
-
-    try {
-      const response = await fetch("/api/places/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
-      });
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Search failed");
+  const searchPlaces = useCallback(
+    async (query: string) => {
+      if (query.trim().length < 2) {
+        setResults([]);
+        setShowDropdown(false);
+        return;
       }
 
-      setResults(data);
-      setShowDropdown(data.length > 0);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Search failed");
-      setResults([]);
-    } finally {
-      setIsSearching(false);
-    }
-  }, []);
+      setIsSearching(true);
+      setError(null);
+
+      try {
+        const response = await fetch("/api/places/search", {
+          method: "POST",
+          headers: getStudioApiHeaders(sanityAuthToken),
+          body: JSON.stringify({ query }),
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Search failed");
+        }
+
+        setResults(data);
+        setShowDropdown(data.length > 0);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Search failed");
+        setResults([]);
+      } finally {
+        setIsSearching(false);
+      }
+    },
+    [sanityAuthToken]
+  );
 
   // Debounced search on query change
   useEffect(() => {

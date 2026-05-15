@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import {
-  assertAllowedOrigin,
+  assertSanityProjectUser,
   OutboundFetchError,
   readJsonStringField,
 } from "@/app/api/_utils/outbound-fetch";
@@ -16,9 +16,9 @@ export const runtime = "nodejs";
 let lastRequestTime = 0;
 
 export async function POST(request: NextRequest) {
-  const originError = assertAllowedOrigin(request);
-  if (originError) {
-    return originError;
+  const authError = await assertSanityProjectUser(request);
+  if (authError) {
+    return authError;
   }
 
   let query: string;

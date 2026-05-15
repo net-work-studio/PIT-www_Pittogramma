@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import { type StringInputProps, useClient, useFormValue } from "sanity";
 import { apiVersion } from "@/sanity/env";
 import { ensureDraft } from "./ensure-draft";
+import { getStudioApiHeaders, useSanityAuthToken } from "./studio-auth-token";
 
 const HTTP_PREFIX = /^http:\/\//;
 
@@ -64,6 +65,7 @@ export function FetchWebsiteDataButton(_props: StringInputProps) {
     | SocialLink[]
     | undefined;
   const client = useClient({ apiVersion });
+  const sanityAuthToken = useSanityAuthToken();
   const toast = useToast();
 
   const websiteLink = socialLinksLinks?.find(
@@ -81,7 +83,7 @@ export function FetchWebsiteDataButton(_props: StringInputProps) {
 
       const imageResponse = await fetch("/api/websites/fetch-image", {
         body: JSON.stringify({ url: secureUrl }),
-        headers: { "Content-Type": "application/json" },
+        headers: getStudioApiHeaders(sanityAuthToken),
         method: "POST",
         signal: AbortSignal.timeout(15_000),
       });
@@ -116,7 +118,7 @@ export function FetchWebsiteDataButton(_props: StringInputProps) {
         alt: siteName || "Website cover",
       };
     },
-    [client, toast]
+    [client, toast, sanityAuthToken]
   );
 
   const patchDocumentFields = useCallback(
@@ -198,7 +200,7 @@ export function FetchWebsiteDataButton(_props: StringInputProps) {
     try {
       const response = await fetch("/api/websites/fetch-og", {
         body: JSON.stringify({ url: websiteUrl }),
-        headers: { "Content-Type": "application/json" },
+        headers: getStudioApiHeaders(sanityAuthToken),
         method: "POST",
         signal: AbortSignal.timeout(15_000),
       });
@@ -219,7 +221,7 @@ export function FetchWebsiteDataButton(_props: StringInputProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [websiteUrl, patchDocumentFields]);
+  }, [websiteUrl, patchDocumentFields, sanityAuthToken]);
 
   return (
     <Stack space={3} style={{ width: "100%" }}>
@@ -243,12 +245,6 @@ export function FetchWebsiteDataButton(_props: StringInputProps) {
           </Text>
         )}
       </Flex>
-
-      {websiteUrl && (
-        <Text muted size={1}>
-          Limited to 10 requests per minute
-        </Text>
-      )}
 
       {error && (
         <Card padding={3} radius={2} tone="critical">
