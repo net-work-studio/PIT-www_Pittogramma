@@ -9,6 +9,9 @@ declare module "bun:test" {
   }
 
   interface TestFunction {
+    each<T extends readonly unknown[]>(
+      cases: readonly T[]
+    ): (name: string, fn: (...value: T) => MaybePromise<void>) => void;
     each<T>(
       cases: readonly T[]
     ): (name: string, fn: (value: T) => MaybePromise<void>) => void;

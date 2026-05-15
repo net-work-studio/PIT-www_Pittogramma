@@ -147,7 +147,7 @@ describe("readJsonStringField", () => {
     ["missing field", {}],
     ["non-string field", { isbn: 123 }],
     ["empty string", { isbn: " " }],
-  ])("rejects %s", async ([, body]) => {
+  ])("rejects %s", async (_label, body) => {
     const request = new Request("https://pittogramma.com/api/test", {
       body: JSON.stringify(body),
       method: "POST",

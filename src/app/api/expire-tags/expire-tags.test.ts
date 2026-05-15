@@ -65,9 +65,9 @@ describe("parseSyncTagsBody", () => {
     ["empty array", { syncTags: [] }],
     ["non-string tag", { syncTags: ["s1:abc", 123] }],
     ["empty tag", { syncTags: [" "] }],
-    ["oversized tag", { syncTags: ["x".repeat(513)] }],
+    ["oversized tag", { syncTags: ["x".repeat(250)] }],
     ["oversized array", { syncTags: Array.from({ length: 201 }, () => "x") }],
-  ])("rejects %s", ([, body]) => {
+  ])("rejects %s", (_label, body) => {
     let didThrow = false;
     try {
       parseSyncTagsBody(body);
@@ -86,6 +86,6 @@ describe("normalizeSyncTag", () => {
 
   test("rejects invalid tags", () => {
     expect(normalizeSyncTag(" ")).toBeNull();
-    expect(normalizeSyncTag("x".repeat(513))).toBeNull();
+    expect(normalizeSyncTag("x".repeat(250))).toBeNull();
   });
 });

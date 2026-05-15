@@ -22,7 +22,9 @@ export const imageWithMetadata = defineType({
       title: "Alt",
       validation: (rule) =>
         rule
-          .custom((value) => (value ? true : "Add alt text for accessibility"))
+          .custom((value) =>
+            value?.trim() ? true : "Add alt text for accessibility"
+          )
           .warning(),
     }),
   ],

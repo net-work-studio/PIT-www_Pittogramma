@@ -72,14 +72,24 @@ export default async function InterviewsPage({
   const start = 0;
   const end = page * PAGE_SIZE;
   const today = buildLocalToday();
-  const tagIds = hasTags
-    ? (
-        await sanityFetch({
-          query: TAG_IDS_BY_SLUGS_QUERY,
-          params: { slugs: tagSlugs },
-        })
-      ).data
-    : [];
+  const tagIdsPromise = hasTags
+    ? sanityFetch({
+        query: TAG_IDS_BY_SLUGS_QUERY,
+        params: { slugs: tagSlugs },
+      })
+    : Promise.resolve({ data: [] as string[] });
+  const interviewsPromise = tagIdsPromise.then(({ data: tagIds }) =>
+    sanityFetch({
+      query: getInterviewsFilteredQuery(sort),
+      params: { tagIds, hasTags, start, end },
+    })
+  );
+  const totalCountPromise = tagIdsPromise.then(({ data: tagIds }) =>
+    sanityFetch({
+      query: INTERVIEWS_COUNT_QUERY,
+      params: { tagIds, hasTags },
+    })
+  );
 
   const [
     { data: interviews },
@@ -88,14 +98,8 @@ export default async function InterviewsPage({
     { data: pageSettings },
     { data: goldAdv },
   ] = await Promise.all([
-    sanityFetch({
-      query: getInterviewsFilteredQuery(sort),
-      params: { tagIds, hasTags, start, end },
-    }),
-    sanityFetch({
-      query: INTERVIEWS_COUNT_QUERY,
-      params: { tagIds, hasTags },
-    }),
+    interviewsPromise,
+    totalCountPromise,
     sanityFetch({ query: INTERVIEWS_TAGS_QUERY }),
     sanityFetch({ query: INTERVIEWS_PAGE_QUERY }),
     sanityFetch({ query: INDEX_GOLD_QUERY, params: { today } }),

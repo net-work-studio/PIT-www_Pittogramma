@@ -72,14 +72,24 @@ export default async function ProjectsPage({
   const start = 0;
   const end = page * PAGE_SIZE;
   const today = buildLocalToday();
-  const tagIds = hasTags
-    ? (
-        await sanityFetch({
-          query: TAG_IDS_BY_SLUGS_QUERY,
-          params: { slugs: tagSlugs },
-        })
-      ).data
-    : [];
+  const tagIdsPromise = hasTags
+    ? sanityFetch({
+        query: TAG_IDS_BY_SLUGS_QUERY,
+        params: { slugs: tagSlugs },
+      })
+    : Promise.resolve({ data: [] as string[] });
+  const projectsPromise = tagIdsPromise.then(({ data: tagIds }) =>
+    sanityFetch({
+      query: getProjectsFilteredQuery(sort),
+      params: { tagIds, hasTags, start, end },
+    })
+  );
+  const totalCountPromise = tagIdsPromise.then(({ data: tagIds }) =>
+    sanityFetch({
+      query: PROJECTS_COUNT_QUERY,
+      params: { tagIds, hasTags },
+    })
+  );
 
   const [
     { data: projects },
@@ -88,14 +98,8 @@ export default async function ProjectsPage({
     { data: pageSettings },
     { data: goldAdv },
   ] = await Promise.all([
-    sanityFetch({
-      query: getProjectsFilteredQuery(sort),
-      params: { tagIds, hasTags, start, end },
-    }),
-    sanityFetch({
-      query: PROJECTS_COUNT_QUERY,
-      params: { tagIds, hasTags },
-    }),
+    projectsPromise,
+    totalCountPromise,
     sanityFetch({ query: PROJECTS_TAGS_QUERY }),
     sanityFetch({ query: PROJECTS_PAGE_QUERY }),
     sanityFetch({ query: INDEX_GOLD_QUERY, params: { today } }),

@@ -1,17 +1,19 @@
 const MAX_SYNC_TAGS = 200;
-const MAX_SYNC_TAG_LENGTH = 512;
+const MAX_REVALIDATE_TAG_LENGTH = 256;
 const SYNC_TAG_PREFIX = "sanity:";
 
 export function normalizeSyncTag(tag: string): string | null {
   const trimmed = tag.trim();
 
-  if (!(trimmed && trimmed.length <= MAX_SYNC_TAG_LENGTH)) {
+  if (!trimmed) {
     return null;
   }
 
-  return trimmed.startsWith(SYNC_TAG_PREFIX)
+  const normalized = trimmed.startsWith(SYNC_TAG_PREFIX)
     ? trimmed
     : `${SYNC_TAG_PREFIX}${trimmed}`;
+
+  return normalized.length <= MAX_REVALIDATE_TAG_LENGTH ? normalized : null;
 }
 
 export function parseSyncTagsBody(body: unknown): string[] {
