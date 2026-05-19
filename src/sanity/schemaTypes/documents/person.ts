@@ -37,7 +37,8 @@ export const person = defineType({
       options: {
         list: ROLE_OPTIONS,
       },
-      validation: (e) => e.required().min(1).error("At least one role is required"),
+      validation: (e) =>
+        e.required().min(1).error("At least one role is required"),
     }),
     defineField({
       type: "string",
@@ -79,18 +80,16 @@ export const person = defineType({
       hidden: ({ document }) =>
         !hasRole(document as { roles?: string[] }, "designer", "professional"),
       validation: (rule) =>
-        rule
-          .min(minBirthYear)
-          .custom((value, context) => {
-            const doc = context.document as { roles?: string[] };
-            if (hasRole(doc, "designer") && !value) {
-              return "Birth year is required for designers";
-            }
-            if (value && (value < minBirthYear || value > maxBirthYear)) {
-              return "Birth year must be exactly 4 digits";
-            }
-            return true;
-          }),
+        rule.min(minBirthYear).custom((value, context) => {
+          const doc = context.document as { roles?: string[] };
+          if (hasRole(doc, "designer") && !value) {
+            return "Birth year is required for designers";
+          }
+          if (value && (value < minBirthYear || value > maxBirthYear)) {
+            return "Birth year must be exactly 4 digits";
+          }
+          return true;
+        }),
     }),
     defineField({
       type: "text",

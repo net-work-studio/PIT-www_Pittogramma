@@ -1,25 +1,18 @@
 import { NextResponse } from "next/server";
+import {
+  assertSanityProjectUser,
+  fetchWithSafeRedirects,
+  isAllowedHtmlContentType,
+  OutboundFetchError,
+  readJsonUrl,
+  readLimitedText,
+  validatePublicHttpUrl,
+} from "../../_utils/outbound-fetch";
 
-// Simple in-memory rate limiter
-const rateLimit = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT = 10; // requests per window
-const RATE_WINDOW = 60 * 1000; // 1 minute in ms
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const record = rateLimit.get(ip);
-
-  if (!record || now > record.resetTime) {
-    rateLimit.set(ip, { count: 1, resetTime: now + RATE_WINDOW });
-    return false;
-  }
-
-  if (record.count >= RATE_LIMIT) {
-    return true;
-  }
-  record.count++;
-  return false;
-}
+const MAX_HTML_SIZE = 1024 * 1024;
 
 // Regex patterns to extract OG meta tags
 const OG_TITLE_REGEX =
@@ -71,6 +64,23 @@ export interface OgData {
   title: string | null;
 }
 
+function errorResponse(error: unknown): NextResponse {
+  if (error instanceof OutboundFetchError) {
+    return NextResponse.json(
+      { error: error.message },
+      {
+        headers: { "Cache-Control": "no-store" },
+        status: error.status,
+      }
+    );
+  }
+
+  return NextResponse.json(
+    { error: "Failed to fetch page data" },
+    { headers: { "Cache-Control": "no-store" }, status: 502 }
+  );
+}
+
 function parseOgData(html: string, baseUrl: string): OgData {
   const ogTitle = extractMeta(html, OG_TITLE_REGEX, OG_TITLE_REVERSE_REGEX);
   const ogDescription = extractMeta(
@@ -111,79 +121,58 @@ function parseOgData(html: string, baseUrl: string): OgData {
   };
 }
 
-export async function GET(request: Request) {
-  const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
-  if (isRateLimited(ip)) {
-    return NextResponse.json(
-      { error: "Too many requests. Please try again later." },
-      { status: 429 }
-    );
-  }
-
-  const { searchParams } = new URL(request.url);
-  const targetUrl = searchParams.get("url");
-
-  if (!targetUrl) {
-    return NextResponse.json({ error: "URL is required" }, { status: 400 });
-  }
-
-  // Validate URL format
-  let parsedUrl: URL;
-  try {
-    parsedUrl = new URL(targetUrl);
-    if (!["http:", "https:"].includes(parsedUrl.protocol)) {
-      throw new Error("Invalid protocol");
-    }
-  } catch {
-    return NextResponse.json(
-      { error: "Invalid URL format. Must be a valid HTTP(S) URL." },
-      { status: 400 }
-    );
+export async function POST(request: Request) {
+  const authError = await assertSanityProjectUser(request);
+  if (authError) {
+    return authError;
   }
 
   try {
-    const response = await fetch(targetUrl, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; PittogrammaBot/1.0)",
-        Accept: "text/html,application/xhtml+xml",
+    const targetUrl = await readJsonUrl(request);
+    const parsedUrl = await validatePublicHttpUrl(targetUrl);
+    const response = await fetchWithSafeRedirects(
+      parsedUrl,
+      {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (compatible; PittogrammaBot/1.0)",
+          Accept: "text/html,application/xhtml+xml",
+        },
       },
-      redirect: "follow",
-      signal: AbortSignal.timeout(10_000),
-    });
+      {
+        maxRedirects: 3,
+        timeoutMs: 10_000,
+      }
+    );
 
     if (!response.ok) {
       return NextResponse.json(
         { error: `Failed to fetch URL: ${response.status}` },
-        { status: 502 }
+        { headers: { "Cache-Control": "no-store" }, status: 502 }
       );
     }
 
-    const contentLength = response.headers.get("content-length");
-    const MAX_HTML_SIZE = 5 * 1024 * 1024; // 5MB
-    if (contentLength && Number.parseInt(contentLength, 10) > MAX_HTML_SIZE) {
+    const contentType = response.headers.get("content-type");
+    if (contentType && !isAllowedHtmlContentType(contentType)) {
       return NextResponse.json(
-        { error: "Response too large" },
-        { status: 502 }
+        { error: "URL does not point to an HTML document" },
+        { headers: { "Cache-Control": "no-store" }, status: 400 }
       );
     }
 
-    const html = await response.text();
-    const ogData = parseOgData(html, parsedUrl.origin);
+    const html = await readLimitedText(response, MAX_HTML_SIZE);
+    const ogData = parseOgData(html, response.url || parsedUrl.href);
 
     if (!(ogData.title || ogData.siteName)) {
       return NextResponse.json(
         { error: "No OG tags or title found on this page" },
-        { status: 404 }
+        { headers: { "Cache-Control": "no-store" }, status: 404 }
       );
     }
 
-    return NextResponse.json(ogData);
+    return NextResponse.json(ogData, {
+      headers: { "Cache-Control": "no-store" },
+    });
   } catch (error) {
-    console.error("Error fetching OG data:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch page data" },
-      { status: 500 }
-    );
+    return errorResponse(error);
   }
 }

@@ -1,17 +1,17 @@
 import type { ReactNode } from "react";
 
 interface MetaItemProps {
-  label: string;
   children: ReactNode;
+  label: string;
 }
 
 export default function MetaItem({ label, children }: MetaItemProps) {
   return (
     <div className="flex gap-2">
-      <dt className="font-mono w-1/2 text-muted-foreground text-sm uppercase">
+      <dt className="w-1/2 font-mono text-muted-foreground text-sm uppercase">
         {label}
       </dt>
-      <dd className="text-sm w-1/2">{children}</dd>
+      <dd className="w-1/2 text-sm">{children}</dd>
     </div>
   );
 }

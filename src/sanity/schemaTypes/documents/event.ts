@@ -2,6 +2,7 @@ import { CalendarIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
+import { requiredHttpUrlWhen } from "@/sanity/utils/validation";
 
 export const event = defineType({
   type: "document",
@@ -84,21 +85,14 @@ export const event = defineType({
       group: "content",
       hidden: ({ parent }) =>
         !["tickets-available", "free-rsvp", "waitlist"].includes(
-          parent?.status,
+          parent?.status
         ),
-      validation: (rule) =>
-        rule.custom((value, context) => {
-          const status = (context.parent as { status?: string })?.status;
-          if (
-            ["tickets-available", "free-rsvp", "waitlist"].includes(
-              status ?? "",
-            ) &&
-            !value
-          ) {
-            return "A CTA link is required for this status";
-          }
-          return true;
-        }),
+      validation: requiredHttpUrlWhen((context) => {
+        const status = (context.parent as { status?: string })?.status;
+        return ["tickets-available", "free-rsvp", "waitlist"].includes(
+          status ?? ""
+        );
+      }, "A CTA link is required for this status"),
     }),
     defineField({
       type: "imageWithMetadata",

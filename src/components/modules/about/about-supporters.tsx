@@ -1,4 +1,5 @@
 import SanityImage from "@/components/modules/shared/sanity-image";
+import { cn } from "@/lib/utils";
 import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity/types";
 
 type Supporter = NonNullable<
@@ -20,7 +21,12 @@ function SupporterLogo({ supporter }: { supporter: Supporter }) {
     <div className="flex items-center" title={supporter.name ?? undefined}>
       {light ? (
         <div
-          className={`relative ${heightClass} w-auto${hasBoth ? " dark:hidden" : ""}`}
+          className={cn(
+            "relative",
+            heightClass,
+            "w-auto",
+            hasBoth && "dark:hidden"
+          )}
         >
           <SanityImage
             alt={alt}
@@ -34,7 +40,12 @@ function SupporterLogo({ supporter }: { supporter: Supporter }) {
       ) : null}
       {dark ? (
         <div
-          className={`relative ${heightClass} w-auto${hasBoth ? " hidden dark:block" : ""}`}
+          className={cn(
+            "relative",
+            heightClass,
+            "w-auto",
+            hasBoth && "hidden dark:block"
+          )}
         >
           <SanityImage
             alt={alt}

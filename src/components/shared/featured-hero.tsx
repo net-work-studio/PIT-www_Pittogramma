@@ -46,35 +46,31 @@ export default function FeaturedHero({
       )}
       href={href}
     >
-
-
-        <div className="flex z-10 flex-col text-background items-center gap-4">
-          <div className="flex gap-2">
-            <Badge variant="outline">Feature Now</Badge>
-            <Badge variant={badgeVariant ?? badgeVariantMap[contentType]}>
-              {badgeLabel}
-            </Badge>
-          </div>
-          <h2 className="font-normal font-sans text-balance text-2xl md:text-3xl">
-            {title}
-          </h2>
-          {subtitle && (
-            <p className="text-lg text-muted-foreground">{subtitle}</p>
-          )}
+      <div className="z-10 flex flex-col items-center gap-4 text-background">
+        <div className="flex gap-2">
+          <Badge variant="outline">Feature Now</Badge>
+          <Badge variant={badgeVariant ?? badgeVariantMap[contentType]}>
+            {badgeLabel}
+          </Badge>
         </div>
+        <h2 className="text-balance font-normal font-sans text-2xl md:text-3xl">
+          {title}
+        </h2>
+        {subtitle && (
+          <p className="text-lg text-muted-foreground">{subtitle}</p>
+        )}
+      </div>
 
+      <div className="absolute z-1 h-full w-full rounded-md bg-black/30 transition-opacity duration-500 group-hover:bg-black/25" />
 
-        <div className="bg-black/30 group-hover:bg-black/25 transition-opacity duration-500 rounded-md z-1 w-full h-full absolute" />
-
-        <SanityImage
-          alt={title}
-          className="h-full absolute rounded-md w-full transition-transform duration-300 object-cover"
-          fill
-          priority
-          sizes="(max-width: 1280px) 100vw, 75vw"
-          source={cover}
-        />
-
+      <SanityImage
+        alt={title}
+        className="absolute h-full w-full rounded-md object-cover transition-transform duration-300"
+        fill
+        priority
+        sizes="(max-width: 1280px) 100vw, 75vw"
+        source={cover}
+      />
     </Link>
   );
 }

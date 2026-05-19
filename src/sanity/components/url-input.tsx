@@ -19,6 +19,7 @@ import {
 } from "sanity";
 import { apiVersion } from "@/sanity/env";
 import { ensureDraft } from "./ensure-draft";
+import { getStudioApiHeaders, useSanityAuthToken } from "./studio-auth-token";
 
 const HTTP_PREFIX = /^http:\/\//;
 
@@ -89,6 +90,7 @@ export function UrlInput(props: StringInputProps) {
   // Get the document form context to patch other fields
   const documentId = useFormValue(["_id"]) as string | undefined;
   const client = useClient({ apiVersion });
+  const sanityAuthToken = useSanityAuthToken();
   const toast = useToast();
 
   const handleChange = useCallback(
@@ -110,10 +112,12 @@ export function UrlInput(props: StringInputProps) {
       // Upgrade HTTP to HTTPS for the proxy (which requires HTTPS)
       const secureUrl = imageUrl.replace(HTTP_PREFIX, "https://");
 
-      const imageResponse = await fetch(
-        `/api/websites/fetch-image?url=${encodeURIComponent(secureUrl)}`,
-        { signal: AbortSignal.timeout(15_000) }
-      );
+      const imageResponse = await fetch("/api/websites/fetch-image", {
+        body: JSON.stringify({ url: secureUrl }),
+        headers: getStudioApiHeaders(sanityAuthToken),
+        method: "POST",
+        signal: AbortSignal.timeout(15_000),
+      });
 
       if (!imageResponse.ok) {
         const body = await imageResponse.json().catch(() => null);
@@ -145,7 +149,7 @@ export function UrlInput(props: StringInputProps) {
         alt: siteName || "Website cover",
       };
     },
-    [client, toast]
+    [client, toast, sanityAuthToken]
   );
 
   const patchDocumentFields = useCallback(
@@ -226,10 +230,12 @@ export function UrlInput(props: StringInputProps) {
     setFetchedData(null);
 
     try {
-      const response = await fetch(
-        `/api/websites/fetch-og?url=${encodeURIComponent(value)}`,
-        { signal: AbortSignal.timeout(15_000) }
-      );
+      const response = await fetch("/api/websites/fetch-og", {
+        body: JSON.stringify({ url: value }),
+        headers: getStudioApiHeaders(sanityAuthToken),
+        method: "POST",
+        signal: AbortSignal.timeout(15_000),
+      });
       const data = await response.json();
 
       if (!response.ok) {
@@ -249,7 +255,7 @@ export function UrlInput(props: StringInputProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [value, patchDocumentFields]);
+  }, [value, patchDocumentFields, sanityAuthToken]);
 
   return (
     <Stack space={3} style={{ width: "100%" }}>
@@ -269,10 +275,6 @@ export function UrlInput(props: StringInputProps) {
           tone="primary"
         />
       </Flex>
-      <Text muted size={1}>
-        Limited to 10 requests per minute
-      </Text>
-
       {error && (
         <Card padding={3} radius={2} tone="critical">
           <Text size={1}>{error}</Text>
@@ -309,7 +311,7 @@ export function UrlInput(props: StringInputProps) {
               {fetchedData.description && (
                 <Text size={1}>
                   <strong>Description:</strong>{" "}
-                  {fetchedData.description.substring(0, 200)}
+                  {fetchedData.description.slice(0, 200)}
                   {fetchedData.description.length > 200 ? "..." : ""}
                 </Text>
               )}

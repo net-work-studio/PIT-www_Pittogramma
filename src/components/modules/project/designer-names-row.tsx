@@ -8,9 +8,9 @@ import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
 
 interface DesignerNamesRowProps {
+  currentProjectId?: string;
   designers?: Designer[] | null;
   title?: string | null;
-  currentProjectId?: string;
 }
 
 function hasModalData(d: Designer, currentProjectId?: string): boolean {
@@ -52,7 +52,7 @@ export default function DesignerNamesRow({
                     designer={designer}
                   >
                     <button
-                      className="cursor-pointer underline-offset-4 decoration-1 hover:underline"
+                      className="cursor-pointer decoration-1 underline-offset-4 hover:underline"
                       type="button"
                     >
                       {designer.name}

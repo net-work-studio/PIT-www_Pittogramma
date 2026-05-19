@@ -1,8 +1,8 @@
 export type JournalLabel = "articles" | "diary" | "baseline";
 
 export interface JournalLabelOption {
-  value: JournalLabel;
   title: string;
+  value: JournalLabel;
 }
 
 export const JOURNAL_LABELS: JournalLabelOption[] = [

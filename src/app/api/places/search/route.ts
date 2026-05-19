@@ -1,18 +1,49 @@
 import { type NextRequest, NextResponse } from "next/server";
+import {
+  assertSanityProjectUser,
+  OutboundFetchError,
+  readJsonStringField,
+} from "@/app/api/_utils/outbound-fetch";
 
 const NOMINATIM_URL = "https://nominatim.openstreetmap.org/search";
 const USER_AGENT = "Pittogramma/1.0 (https://pittogramma.com)";
+const NO_STORE_HEADERS = { "Cache-Control": "no-store" };
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 // Simple in-memory rate limiter: 1 request per second
 let lastRequestTime = 0;
 
-export async function GET(request: NextRequest) {
-  const query = request.nextUrl.searchParams.get("q");
+export async function POST(request: NextRequest) {
+  const authError = await assertSanityProjectUser(request);
+  if (authError) {
+    return authError;
+  }
 
-  if (!query || query.trim().length < 2) {
+  let query: string;
+  try {
+    query = await readJsonStringField(request, "query", {
+      maxLength: 256,
+      message: "Query must be at least 2 characters",
+    });
+  } catch (error) {
+    if (error instanceof OutboundFetchError) {
+      return NextResponse.json(
+        { error: error.message },
+        { headers: NO_STORE_HEADERS, status: error.status }
+      );
+    }
     return NextResponse.json(
       { error: "Query must be at least 2 characters" },
-      { status: 400 }
+      { headers: NO_STORE_HEADERS, status: 400 }
+    );
+  }
+
+  if (query.trim().length < 2) {
+    return NextResponse.json(
+      { error: "Query must be at least 2 characters" },
+      { headers: NO_STORE_HEADERS, status: 400 }
     );
   }
 
@@ -34,25 +65,36 @@ export async function GET(request: NextRequest) {
 
   try {
     const response = await fetch(url.toString(), {
+      cache: "no-store",
       headers: {
         "User-Agent": USER_AGENT,
         Accept: "application/json",
       },
+      signal: AbortSignal.timeout(10_000),
     });
 
     if (!response.ok) {
       return NextResponse.json(
         { error: "Failed to fetch from Nominatim" },
-        { status: response.status }
+        { headers: NO_STORE_HEADERS, status: response.status }
       );
     }
 
     const data = await response.json();
-    return NextResponse.json(data);
-  } catch {
+    return NextResponse.json(data, {
+      headers: NO_STORE_HEADERS,
+    });
+  } catch (error) {
+    if (error instanceof Error && error.name === "TimeoutError") {
+      return NextResponse.json(
+        { error: "Geocoding request timed out" },
+        { headers: NO_STORE_HEADERS, status: 504 }
+      );
+    }
+
     return NextResponse.json(
       { error: "Failed to connect to geocoding service" },
-      { status: 502 }
+      { headers: NO_STORE_HEADERS, status: 502 }
     );
   }
 }

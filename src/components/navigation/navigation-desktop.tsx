@@ -14,12 +14,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import type { Resource } from "./resources-navigation.data";
 
-export function NavigationDesktop({
-  resources,
-}: {
-  resources: Resource[];
-}) {
-
+export function NavigationDesktop({ resources }: { resources: Resource[] }) {
   return (
     <NavigationMenu
       className="absolute right-1/2 left-1/2 hidden -translate-x-1/2 lg:flex"
@@ -41,7 +36,7 @@ export function NavigationDesktop({
           <NavigationMenuContent>
             <ul className="w-100">
               {resources.map((res) => (
-                <ListItem key={res.href} href={res.href} title={res.label} />
+                <ListItem href={res.href} key={res.href} title={res.label} />
               ))}
             </ul>
           </NavigationMenuContent>

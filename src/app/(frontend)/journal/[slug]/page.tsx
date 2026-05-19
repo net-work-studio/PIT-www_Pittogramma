@@ -34,9 +34,8 @@ function estimateReadingTime(
         return (
           count +
           block.children.reduce(
-            (acc: number, child: (typeof block.children)[number]) => {
-              return acc + (child.text?.split(WHITESPACE_RE).length ?? 0);
-            },
+            (acc: number, child: (typeof block.children)[number]) =>
+              acc + (child.text?.split(WHITESPACE_RE).length ?? 0),
             0
           )
         );
@@ -133,11 +132,9 @@ export default async function JournalArticlePage({
                   {labelConfig.label}
                 </Badge>
               )}
-              <h1 className="text-3xl text-pretty">
-                {article.title}
-              </h1>
+              <h1 className="text-pretty text-3xl">{article.title}</h1>
               {article.excerpt ? (
-                <p className="text-2xl text-pretty text-muted-foreground">
+                <p className="text-pretty text-2xl text-muted-foreground">
                   {article.excerpt}
                 </p>
               ) : null}
@@ -244,13 +241,11 @@ export default async function JournalArticlePage({
               </dt>
               <dd>
                 <ul className="flex flex-col">
-                  {article.tags.map(
-                    (tag: { _id: string; name: string }) => (
-                      <li className="text-sm underline" key={tag._id}>
-                        {tag.name}
-                      </li>
-                    )
-                  )}
+                  {article.tags.map((tag: { _id: string; name: string }) => (
+                    <li className="text-sm underline" key={tag._id}>
+                      {tag.name}
+                    </li>
+                  ))}
                 </ul>
               </dd>
             </div>

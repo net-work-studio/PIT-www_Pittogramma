@@ -18,6 +18,7 @@ import {
   useFormValue,
 } from "sanity";
 import { apiVersion } from "@/sanity/env";
+import { getStudioApiHeaders, useSanityAuthToken } from "./studio-auth-token";
 
 interface BookData {
   authors: string | null;
@@ -87,6 +88,7 @@ export function IsbnInput(props: StringInputProps) {
   // Get the document form context to patch other fields
   const documentId = useFormValue(["_id"]) as string | undefined;
   const client = useClient({ apiVersion });
+  const sanityAuthToken = useSanityAuthToken();
   const toast = useToast();
 
   const handleChange = useCallback(
@@ -105,9 +107,12 @@ export function IsbnInput(props: StringInputProps) {
       thumbnailUrl: string,
       title: string | null
     ): Promise<Record<string, unknown> | null> => {
-      const imageResponse = await fetch(
-        `/api/books/fetch-image?url=${encodeURIComponent(thumbnailUrl)}`
-      );
+      const imageResponse = await fetch("/api/books/fetch-image", {
+        body: JSON.stringify({ url: thumbnailUrl }),
+        headers: getStudioApiHeaders(sanityAuthToken),
+        method: "POST",
+        signal: AbortSignal.timeout(15_000),
+      });
 
       if (!imageResponse.ok) {
         return null;
@@ -130,7 +135,7 @@ export function IsbnInput(props: StringInputProps) {
         alt: title || "Book cover",
       };
     },
-    [client, value]
+    [client, value, sanityAuthToken]
   );
 
   const patchDocumentFields = useCallback(
@@ -192,9 +197,11 @@ export function IsbnInput(props: StringInputProps) {
     setFetchedData(null);
 
     try {
-      const response = await fetch(
-        `/api/books/fetch-isbn?isbn=${encodeURIComponent(value)}`
-      );
+      const response = await fetch("/api/books/fetch-isbn", {
+        method: "POST",
+        headers: getStudioApiHeaders(sanityAuthToken),
+        body: JSON.stringify({ isbn: value }),
+      });
       const data = await response.json();
 
       if (!response.ok) {
@@ -210,7 +217,7 @@ export function IsbnInput(props: StringInputProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [value, patchDocumentFields]);
+  }, [value, patchDocumentFields, sanityAuthToken]);
 
   return (
     <Stack space={3}>
@@ -230,10 +237,6 @@ export function IsbnInput(props: StringInputProps) {
           tone="primary"
         />
       </Flex>
-      <Text muted size={1}>
-        Limited to 10 requests per minute
-      </Text>
-
       {error && (
         <Card padding={3} radius={2} tone="critical">
           <Text size={1}>{error}</Text>
@@ -296,7 +299,7 @@ export function IsbnInput(props: StringInputProps) {
               {fetchedData.description && (
                 <Text size={1}>
                   <strong>Description:</strong>{" "}
-                  {fetchedData.description.substring(0, 200)}...
+                  {fetchedData.description.slice(0, 200)}...
                 </Text>
               )}
             </Stack>

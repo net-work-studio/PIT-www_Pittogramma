@@ -19,6 +19,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useMediaQuery } from "@/hooks/use-media-query";
+
 type SocialLinkPlatform =
   | "behance"
   | "bluesky"
@@ -40,6 +41,14 @@ interface SocialLink {
 
 export interface DesignerForModal {
   _id?: string;
+  bio: string | null;
+  birthYear: number | null;
+  education: Array<{
+    _key: string;
+    degree: string | null;
+    courseName?: string | null;
+    year: number | null;
+  }> | null;
   name: string | null;
   portrait: {
     image?: {
@@ -49,22 +58,14 @@ export interface DesignerForModal {
     } | null;
     alt?: string | null;
   } | null;
-  bio: string | null;
-  birthYear: number | null;
-  socialLinks: {
-    links?: SocialLink[] | null;
-  } | null;
-  education: Array<{
-    _key: string;
-    degree: string | null;
-    courseName?: string | null;
-    year: number | null;
-  }> | null;
   projects?: Array<{
     _id: string;
     title: string | null;
     slug: { current: string };
   }> | null;
+  socialLinks: {
+    links?: SocialLink[] | null;
+  } | null;
 }
 
 const PLATFORM_LABELS: Record<SocialLinkPlatform, string> = {
@@ -82,9 +83,9 @@ const PLATFORM_LABELS: Record<SocialLinkPlatform, string> = {
 };
 
 interface DesignerModalProps {
-  designer: DesignerForModal;
   children: ReactNode;
   currentProjectId?: string;
+  designer: DesignerForModal;
 }
 
 export default function DesignerModal({
@@ -134,15 +135,8 @@ function DesignerModalContent({
   designer: DesignerForModal;
   currentProjectId?: string;
 }) {
-  const {
-    name,
-    portrait,
-    bio,
-    birthYear,
-    socialLinks,
-    education,
-    projects,
-  } = designer;
+  const { name, portrait, bio, birthYear, socialLinks, education, projects } =
+    designer;
   const hasPortrait = Boolean(portrait?.image?.asset);
   const links = socialLinks?.links ?? [];
   const filteredProjects = (projects ?? []).filter(

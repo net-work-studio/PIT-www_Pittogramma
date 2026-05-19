@@ -20,7 +20,7 @@ const defaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = defaultIcon;
 
-interface MapPlace {
+export interface MapPlace {
   _id: string;
   bookshops?: Array<{ _id: string; name: string | null }>;
   city: string | null;

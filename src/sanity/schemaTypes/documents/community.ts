@@ -4,6 +4,7 @@ import { buildLocalToday } from "@/lib/date-utils";
 import { apiVersion } from "@/sanity/env";
 import { getPublishedId } from "@/sanity/lib/document-id";
 import type { Community } from "@/sanity/types";
+import { httpUrlValidation } from "@/sanity/utils/validation";
 
 // Visible cap for active community items at any moment. Keep in sync with the
 // `[0...3]` slice in FEED_COMMUNITY_QUERY in src/sanity/lib/queries.ts.
@@ -27,7 +28,12 @@ export const community = defineType({
   title: "Community",
   icon: UsersIcon,
   groups: [
-    { name: "content", title: "Content", icon: DocumentTextIcon, default: true },
+    {
+      name: "content",
+      title: "Content",
+      icon: DocumentTextIcon,
+      default: true,
+    },
     { name: "management", title: "Management", icon: CogIcon },
   ],
   fields: [
@@ -85,6 +91,7 @@ export const community = defineType({
                     name: "href",
                     type: "url",
                     title: "URL",
+                    validation: httpUrlValidation,
                   },
                 ],
               },
@@ -98,7 +105,7 @@ export const community = defineType({
       name: "externalUrl",
       title: "External URL",
       group: "content",
-      validation: (r) => r.required(),
+      validation: (r) => [r.required(), httpUrlValidation(r)],
     }),
     defineField({
       type: "reference",
@@ -153,41 +160,42 @@ export const community = defineType({
   // simultaneously. Mirrors the ADV capacity warning but with a single
   // dimension (no tier).
   validation: (rule) =>
-    rule.custom(async (doc, context) => {
-      const typed = doc as CommunityValidationDoc;
-      if (!typed.dateStart) {
-        return true;
-      }
-      const today = buildLocalToday();
-      const { dateStart, dateEnd } = typed;
-      // Only warn when this doc would itself be active right now — there's no
-      // value warning about future overlaps the editor hasn't configured yet.
-      const isActive =
-        dateStart <= today && (!dateEnd || dateEnd >= today);
-      if (!isActive) {
-        return true;
-      }
+    rule
+      .custom(async (doc, context) => {
+        const typed = doc as CommunityValidationDoc;
+        if (!typed.dateStart) {
+          return true;
+        }
+        const today = buildLocalToday();
+        const { dateStart, dateEnd } = typed;
+        // Only warn when this doc would itself be active right now — there's no
+        // value warning about future overlaps the editor hasn't configured yet.
+        const isActive = dateStart <= today && (!dateEnd || dateEnd >= today);
+        if (!isActive) {
+          return true;
+        }
 
-      const publishedId = getPublishedId(typed._id);
-      const draftId = `drafts.${publishedId}`;
-      const client = context.getClient({ apiVersion });
-      const activeCount = await client.fetch<number>(
-        `count(*[
+        const publishedId = getPublishedId(typed._id);
+        const draftId = `drafts.${publishedId}`;
+        const client = context.getClient({ apiVersion });
+        const activeCount = await client.fetch<number>(
+          `count(*[
           _type == "community"
           && _id != $publishedId
           && _id != $draftId
           && dateStart <= $today
           && (!defined(dateEnd) || dateEnd >= $today)
         ])`,
-        { publishedId, draftId, today }
-      );
+          { publishedId, draftId, today }
+        );
 
-      const total = activeCount + 1;
-      if (total > COMMUNITY_ACTIVE_CAP) {
-        return `This is the ${total}th active community item; cap is ${COMMUNITY_ACTIVE_CAP}. Surplus items won't display until others end.`;
-      }
-      return true;
-    }).warning(),
+        const total = activeCount + 1;
+        if (total > COMMUNITY_ACTIVE_CAP) {
+          return `This is the ${total}th active community item; cap is ${COMMUNITY_ACTIVE_CAP}. Surplus items won't display until others end.`;
+        }
+        return true;
+      })
+      .warning(),
   preview: {
     select: {
       title: "title",
@@ -197,7 +205,7 @@ export const community = defineType({
       dateEnd: "dateEnd",
     },
     prepare({ title, type, media, dateStart, dateEnd }) {
-      const typeLabel = type ? COMMUNITY_TYPE_LABELS[type] ?? type : "—";
+      const typeLabel = type ? (COMMUNITY_TYPE_LABELS[type] ?? type) : "—";
       return {
         title,
         subtitle: typeLabel,

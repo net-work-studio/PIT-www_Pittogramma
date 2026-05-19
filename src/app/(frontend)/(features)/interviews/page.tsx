@@ -7,13 +7,13 @@ import FilterBar from "@/components/feat/filter/filter";
 import LoadMore from "@/components/feat/load-more/load-more";
 import SortDropdown from "@/components/feat/sort/sort-dropdown";
 import { isValidSort } from "@/components/feat/sort/sort-options";
+import type SanityImage from "@/components/modules/shared/sanity-image";
 import PageHeader from "@/components/shared/page-header";
 import { buildIndexSlots } from "@/lib/adv-config";
 import { buildLocalToday } from "@/lib/date-utils";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
-import type SanityImage from "@/components/modules/shared/sanity-image";
 import { sanityFetch } from "@/sanity/lib/live";
 import {
   getInterviewsFilteredQuery,
@@ -21,6 +21,7 @@ import {
   INTERVIEWS_COUNT_QUERY,
   INTERVIEWS_PAGE_QUERY,
   INTERVIEWS_TAGS_QUERY,
+  TAG_IDS_BY_SLUGS_QUERY,
 } from "@/sanity/lib/queries";
 import type {
   INTERVIEWS_FILTERED_QUERY_RESULT,
@@ -28,7 +29,7 @@ import type {
 } from "@/sanity/types";
 
 const PAGE_SIZE = 48;
-const MAX_PAGE = 100;
+const MAX_PAGE = 20;
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -53,19 +54,42 @@ export default async function InterviewsPage({
 }: {
   searchParams: Promise<{ tags?: string; page?: string; sort?: string }>;
 }) {
-  const { tags: tagsParam, page: pageParam, sort: sortParam } =
-    await searchParams;
+  const {
+    tags: tagsParam,
+    page: pageParam,
+    sort: sortParam,
+  } = await searchParams;
   const sort = isValidSort(sortParam) ? sortParam : "newest";
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
   const hasTags = tagSlugs.length > 0;
   const parsedPage = Number.parseInt(pageParam ?? "1", 10);
   const requestedPage =
     Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
-  if (requestedPage > MAX_PAGE) notFound();
+  if (requestedPage > MAX_PAGE) {
+    notFound();
+  }
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
   const today = buildLocalToday();
+  const tagIdsPromise = hasTags
+    ? sanityFetch({
+        query: TAG_IDS_BY_SLUGS_QUERY,
+        params: { slugs: tagSlugs },
+      })
+    : Promise.resolve({ data: [] as string[] });
+  const interviewsPromise = tagIdsPromise.then(({ data: tagIds }) =>
+    sanityFetch({
+      query: getInterviewsFilteredQuery(sort),
+      params: { tagIds, hasTags, start, end },
+    })
+  );
+  const totalCountPromise = tagIdsPromise.then(({ data: tagIds }) =>
+    sanityFetch({
+      query: INTERVIEWS_COUNT_QUERY,
+      params: { tagIds, hasTags },
+    })
+  );
 
   const [
     { data: interviews },
@@ -74,14 +98,8 @@ export default async function InterviewsPage({
     { data: pageSettings },
     { data: goldAdv },
   ] = await Promise.all([
-    sanityFetch({
-      query: getInterviewsFilteredQuery(sort),
-      params: { tags: tagSlugs, hasTags, start, end },
-    }),
-    sanityFetch({
-      query: INTERVIEWS_COUNT_QUERY,
-      params: { tags: tagSlugs, hasTags },
-    }),
+    interviewsPromise,
+    totalCountPromise,
     sanityFetch({ query: INTERVIEWS_TAGS_QUERY }),
     sanityFetch({ query: INTERVIEWS_PAGE_QUERY }),
     sanityFetch({ query: INDEX_GOLD_QUERY, params: { today } }),
@@ -89,12 +107,12 @@ export default async function InterviewsPage({
 
   const cta = pageSettings?.endOfPageCta;
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
-  if (page > totalPages) notFound();
+  if (page > totalPages) {
+    notFound();
+  }
 
   const tags = (availableTags ?? []) as INTERVIEWS_TAGS_QUERY_RESULT;
-  const uniqueTags = Array.from(
-    new Map(tags.map((t) => [t._id, t])).values()
-  );
+  const uniqueTags = Array.from(new Map(tags.map((t) => [t._id, t])).values());
 
   type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
 
@@ -108,16 +126,16 @@ export default async function InterviewsPage({
 
   const items = (interviews ?? []) as INTERVIEWS_FILTERED_QUERY_RESULT;
   const interviewCards: InterviewCard[] = items.map((interview) => ({
-      authors: interview.designersAndProfessionals?.length
-        ? interview.designersAndProfessionals.map((d) => ({
-            name: d.name ?? "",
-          }))
-        : undefined,
-      href: `/interviews/${interview.slug?.current ?? ""}`,
-      id: interview._id,
-      image: interview.cover,
-      title: interview.title ?? "",
-    }));
+    authors: interview.designersAndProfessionals?.length
+      ? interview.designersAndProfessionals.map((d) => ({
+          name: d.name ?? "",
+        }))
+      : undefined,
+    href: `/interviews/${interview.slug?.current ?? ""}`,
+    id: interview._id,
+    image: interview.cover,
+    title: interview.title ?? "",
+  }));
 
   // Inject gold ADV at row 1 / position 3 on every render. The query caps at
   // a single active gold, so the ADV appears exactly once in the rendered
@@ -134,8 +152,8 @@ export default async function InterviewsPage({
         <div className="flex items-start justify-between gap-4">
           <FilterBar
             availableTags={uniqueTags}
-            totalCount={totalCount}
             label="interviews"
+            totalCount={totalCount}
           />
           <SortDropdown />
         </div>
@@ -148,7 +166,9 @@ export default async function InterviewsPage({
             {slots.map((slot) => {
               if (slot.kind === "adv") {
                 const adv = slot.item;
-                if (!adv.cover?.image?.asset) return null;
+                if (!adv.cover?.image?.asset) {
+                  return null;
+                }
                 return (
                   <AdvCard
                     cover={adv.cover}

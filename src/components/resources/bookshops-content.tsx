@@ -47,29 +47,49 @@ interface BookshopsContentProps {
   searchEnabled: boolean;
 }
 
-export function BookshopsContent({ bookshops, enabledViews, searchEnabled }: BookshopsContentProps) {
+export function BookshopsContent({
+  bookshops,
+  enabledViews,
+  searchEnabled,
+}: BookshopsContentProps) {
   const defaultView = enabledViews[0] ?? "list";
   const [view, setView] = useState<string>(defaultView);
 
-  const markers = bookshops
-    .filter((b) => b.place?.lat != null && b.place?.lng != null)
-    .map((b) => ({
-      id: b._id,
-      name: b.name ?? "",
-      lat: b.place.lat!,
-      lng: b.place.lng!,
-    }));
+  const markers = bookshops.flatMap((b) => {
+    if (b.place?.lat == null || b.place.lng == null) {
+      return [];
+    }
+
+    return [
+      {
+        id: b._id,
+        name: b.name ?? "",
+        lat: b.place.lat,
+        lng: b.place.lng,
+      },
+    ];
+  });
 
   return (
-    <Tabs className="w-full gap-0" defaultValue={defaultView} onValueChange={setView}>
+    <Tabs
+      className="w-full gap-0"
+      defaultValue={defaultView}
+      onValueChange={setView}
+    >
       <div className="sticky top-0 z-10 bg-background pt-16 pb-2.5">
         <div className="flex w-full items-center justify-between pb-2.5">
           {searchEnabled && <Input placeholder="Search" type="search" />}
           {enabledViews.length > 1 && (
             <TabsList>
-              {enabledViews.includes("list") && <TabsTrigger value="list">List</TabsTrigger>}
-              {enabledViews.includes("grid") && <TabsTrigger value="grid">Grid</TabsTrigger>}
-              {enabledViews.includes("map") && <TabsTrigger value="map">Map</TabsTrigger>}
+              {enabledViews.includes("list") && (
+                <TabsTrigger value="list">List</TabsTrigger>
+              )}
+              {enabledViews.includes("grid") && (
+                <TabsTrigger value="grid">Grid</TabsTrigger>
+              )}
+              {enabledViews.includes("map") && (
+                <TabsTrigger value="map">Map</TabsTrigger>
+              )}
             </TabsList>
           )}
         </div>

@@ -91,9 +91,9 @@ function WebSourceGridCard({
 }
 
 interface WebsitesContentProps {
-  sources: WEB_SOURCES_QUERY_RESULT;
   enabledViews: ViewMode[];
   searchEnabled: boolean;
+  sources: WEB_SOURCES_QUERY_RESULT;
   utmSettings: UtmSettings;
 }
 
@@ -107,14 +107,22 @@ export function WebsitesContent({
   const [view, setView] = useState<string>(defaultView);
 
   return (
-    <Tabs className="w-full gap-0" defaultValue={defaultView} onValueChange={setView}>
+    <Tabs
+      className="w-full gap-0"
+      defaultValue={defaultView}
+      onValueChange={setView}
+    >
       <div className="sticky top-0 z-10 bg-background pt-16 pb-2.5">
         <div className="flex w-full items-center justify-between pb-2.5">
           {searchEnabled && <Input placeholder="Search" type="search" />}
           {enabledViews.length > 1 && (
             <TabsList>
-              {enabledViews.includes("list") && <TabsTrigger value="list">List</TabsTrigger>}
-              {enabledViews.includes("grid") && <TabsTrigger value="grid">Grid</TabsTrigger>}
+              {enabledViews.includes("list") && (
+                <TabsTrigger value="list">List</TabsTrigger>
+              )}
+              {enabledViews.includes("grid") && (
+                <TabsTrigger value="grid">Grid</TabsTrigger>
+              )}
             </TabsList>
           )}
         </div>

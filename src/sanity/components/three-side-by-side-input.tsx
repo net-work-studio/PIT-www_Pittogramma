@@ -171,7 +171,7 @@ export function ThreeSideBySideInput(props: ObjectInputProps) {
       case "right":
         return rightMember;
       default:
-        return undefined;
+        return;
     }
   }, [expandedPosition, leftMember, centerMember, rightMember]);
 

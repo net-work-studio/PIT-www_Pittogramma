@@ -4,13 +4,17 @@ import { notFound } from "next/navigation";
 import SearchInput from "@/components/feat/search-input";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import PageHeader from "@/components/shared/page-header";
-import { getEnabledResources, isResourceEnabled, isSearchEnabled } from "@/lib/feature-flags";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  getEnabledResources,
+  isResourceEnabled,
+  isSearchEnabled,
+} from "@/lib/feature-flags";
 import { sanityFetch } from "@/sanity/lib/live";
 import { GLOSSARY_QUERY } from "@/sanity/lib/queries";
 import type { GLOSSARY_QUERY_RESULT } from "@/sanity/types";
@@ -45,7 +49,9 @@ function groupByFirstLetter(items: GlossaryItem[]): GroupedGlossary[] {
 }
 
 /** Split groups into two balanced columns by item count, reading top-to-bottom. */
-function splitIntoColumns(groups: GroupedGlossary[]): [GroupedGlossary[], GroupedGlossary[]] {
+function splitIntoColumns(
+  groups: GroupedGlossary[]
+): [GroupedGlossary[], GroupedGlossary[]] {
   const totalItems = groups.reduce((sum, g) => sum + g.words.length, 0);
   const half = totalItems / 2;
 
@@ -110,7 +116,9 @@ function GlossaryCard({ word, definition }: GlossaryCardProps) {
 }
 
 export default async function Page() {
-  if (!isResourceEnabled("glossary")) notFound();
+  if (!isResourceEnabled("glossary")) {
+    notFound();
+  }
 
   const { data: glossaryItems } = await sanityFetch({ query: GLOSSARY_QUERY });
 
@@ -133,12 +141,20 @@ export default async function Page() {
           <>
             <div className="space-y-5">
               {leftColumn.map((group) => (
-                <LetterSection key={group.letter} letter={group.letter} words={group.words} />
+                <LetterSection
+                  key={group.letter}
+                  letter={group.letter}
+                  words={group.words}
+                />
               ))}
             </div>
             <div className="space-y-5">
               {rightColumn.map((group) => (
-                <LetterSection key={group.letter} letter={group.letter} words={group.words} />
+                <LetterSection
+                  key={group.letter}
+                  letter={group.letter}
+                  words={group.words}
+                />
               ))}
             </div>
           </>

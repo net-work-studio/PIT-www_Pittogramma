@@ -15,6 +15,24 @@ import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { INTERVIEW_QUERY } from "@/sanity/lib/queries";
 
+function getInterviewEntity({
+  interviewToType,
+  studioName,
+  typeFoundryName,
+}: {
+  interviewToType?: "designers" | "studio" | "typeFoundry" | null;
+  studioName?: string | null;
+  typeFoundryName?: string | null;
+}): { label: string; name: string } | null {
+  if (interviewToType === "studio" && studioName) {
+    return { label: "Studio", name: studioName };
+  }
+  if (interviewToType === "typeFoundry" && typeFoundryName) {
+    return { label: "Type Foundry", name: typeFoundryName };
+  }
+  return null;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -68,6 +86,11 @@ export default async function InterviewPage({
     .filter(Boolean);
 
   const interviewUrl = `${siteDefaults.baseUrl}/interviews/${slug}`;
+  const interviewEntity = getInterviewEntity({
+    interviewToType: interview.interviewToType,
+    studioName: interview.studio?.name,
+    typeFoundryName: interview.typeFoundry?.name,
+  });
 
   return (
     <>
@@ -96,10 +119,18 @@ export default async function InterviewPage({
             place={interview.place}
             publishingDate={interview.publishingDate?.date}
             readingTime={interview.readingTime}
-            studio={interview.interviewToType === "studio" ? interview.studio?.name : undefined}
-            typeFoundry={interview.interviewToType === "typeFoundry" ? interview.typeFoundry?.name : undefined}
+            studio={
+              interview.interviewToType === "studio"
+                ? interview.studio?.name
+                : undefined
+            }
             tags={interview.tags}
             title={interview.title}
+            typeFoundry={
+              interview.interviewToType === "typeFoundry"
+                ? interview.typeFoundry?.name
+                : undefined
+            }
           />
           <div className="w-full lg:w-[49%] lg:shrink-0">
             <AspectRatio
@@ -123,13 +154,11 @@ export default async function InterviewPage({
 
         {/* Bio Section */}
         {interview.introText ? (
-          <div className="order-3 bg-gray-200 border-foreground border-t-[0.5px] px-2.5 pt-6 lg:order-2 lg:border-t-0 lg:pt-20">
+          <div className="order-3 border-foreground border-t-[0.5px] bg-gray-200 px-2.5 pt-6 lg:order-2 lg:border-t-0 lg:pt-20">
             <p className="font-mono text-muted-foreground text-xs uppercase lg:text-2xl">
               Bio
             </p>
-            <p className="text-2xl max-w-prose">
-              {interview.introText}
-            </p>
+            <p className="max-w-prose text-2xl">{interview.introText}</p>
           </div>
         ) : null}
 
@@ -163,14 +192,12 @@ export default async function InterviewPage({
               </dd>
             </div>
           ) : null}
-          {(interview.interviewToType === "studio" && interview.studio?.name) || (interview.interviewToType === "typeFoundry" && interview.typeFoundry?.name) ? (
+          {interviewEntity ? (
             <div className="flex gap-x-12">
               <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                {interview.interviewToType === "studio" ? "Studio" : "Type Foundry"}
+                {interviewEntity.label}
               </dt>
-              <dd className="text-sm">
-                {interview.interviewToType === "studio" ? interview.studio?.name : interview.typeFoundry?.name}
-              </dd>
+              <dd className="text-sm">{interviewEntity.name}</dd>
             </div>
           ) : null}
           {interview.tags?.length ? (

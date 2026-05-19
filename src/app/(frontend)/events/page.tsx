@@ -3,13 +3,13 @@ import { notFound } from "next/navigation";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import LoadMore from "@/components/feat/load-more/load-more";
+import type SanityImage from "@/components/modules/shared/sanity-image";
 import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { getEventStatusConfig } from "@/lib/event-status";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
-import type SanityImage from "@/components/modules/shared/sanity-image";
 import { sanityFetch } from "@/sanity/lib/live";
 import {
   EVENTS_PAGE_QUERY,
@@ -23,7 +23,7 @@ import type {
 } from "@/sanity/types";
 
 const PAGE_SIZE = 48;
-const MAX_PAGE = 100;
+const MAX_PAGE = 20;
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -91,7 +91,9 @@ export default async function Page({
   const parsedPage = Number.parseInt(pageParam ?? "1", 10);
   const requestedPage =
     Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
-  if (requestedPage > MAX_PAGE) notFound();
+  if (requestedPage > MAX_PAGE) {
+    notFound();
+  }
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
@@ -123,15 +125,17 @@ export default async function Page({
     1,
     Math.ceil((pastTotalCount ?? 0) / PAGE_SIZE)
   );
-  if (page > totalPagesPast) notFound();
+  if (page > totalPagesPast) {
+    notFound();
+  }
 
   const futureEvents = (
     (futureEventsData ?? []) as FUTURE_EVENTS_QUERY_RESULT
   ).map(mapEventToCard);
 
-  const pastEvents = (
-    (pastEventsData ?? []) as PAST_EVENTS_QUERY_RESULT
-  ).map(mapEventToCard);
+  const pastEvents = ((pastEventsData ?? []) as PAST_EVENTS_QUERY_RESULT).map(
+    mapEventToCard
+  );
 
   return (
     <>

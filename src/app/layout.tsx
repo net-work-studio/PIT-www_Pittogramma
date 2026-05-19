@@ -66,10 +66,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className={`${aktual.variable} ${sono.variable} bg-background`} lang="en" suppressHydrationWarning>
-      <body
-        className="flex min-h-screen flex-col justify-between bg-background text-foreground antialiased"
-      >
+    <html
+      className={`${aktual.variable} ${sono.variable} bg-background`}
+      lang="en"
+      suppressHydrationWarning
+    >
+      <body className="flex min-h-screen flex-col justify-between bg-background text-foreground antialiased">
         <JsonLd
           data={{
             name: siteDefaults.title,

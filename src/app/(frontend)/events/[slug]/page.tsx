@@ -16,6 +16,39 @@ import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { EVENT_QUERY } from "@/sanity/lib/queries";
 
+function formatEventDate(date: string): string {
+  return new Date(`${date}T00:00:00`).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function formatDateRange(
+  dateStart: string | null | undefined,
+  dateEnd: string | null | undefined
+): string | null {
+  if (!dateStart) {
+    return null;
+  }
+
+  if (dateEnd && dateEnd !== dateStart) {
+    return `${formatEventDate(dateStart)} — ${formatEventDate(dateEnd)}`;
+  }
+
+  return formatEventDate(dateStart);
+}
+
+function getSchemaEventStatus(status: string | null | undefined): string {
+  if (status === "cancelled") {
+    return "https://schema.org/EventCancelled";
+  }
+  if (status === "postponed") {
+    return "https://schema.org/EventPostponed";
+  }
+  return "https://schema.org/EventScheduled";
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -67,26 +100,15 @@ export default async function EventPage({
   const now = new Date().toISOString().split("T")[0];
   const isPast = !event.dateStart || event.dateStart < now;
   const statusConfig = getEventStatusConfig(event.status);
-  const showCta = !isPast && statusConfig?.ctaLabel && event.ctaUrl;
+  const ctaUrl = !isPast && statusConfig?.ctaLabel ? event.ctaUrl : null;
 
   const eventUrl = `${siteDefaults.baseUrl}/events/${slug}`;
-
-  const formatDate = (date: string) =>
-    new Date(`${date}T00:00:00`).toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
 
   const location = [event.locationName, event.locationAddress]
     .filter(Boolean)
     .join(" — ");
 
-  const dateDisplay = event.dateStart
-    ? event.dateEnd && event.dateEnd !== event.dateStart
-      ? `${formatDate(event.dateStart)} — ${formatDate(event.dateEnd)}`
-      : formatDate(event.dateStart)
-    : null;
+  const dateDisplay = formatDateRange(event.dateStart, event.dateEnd);
 
   return (
     <>
@@ -105,14 +127,8 @@ export default async function EventPage({
             : undefined,
           image: imageUrl,
           url: eventUrl,
-          eventStatus:
-            event.status === "cancelled"
-              ? "https://schema.org/EventCancelled"
-              : event.status === "postponed"
-                ? "https://schema.org/EventPostponed"
-                : "https://schema.org/EventScheduled",
-          eventAttendanceMode:
-            "https://schema.org/OfflineEventAttendanceMode",
+          eventStatus: getSchemaEventStatus(event.status),
+          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
         }}
         type="Event"
       />
@@ -178,8 +194,8 @@ export default async function EventPage({
             </Badge>
           ) : null}
 
-          {showCta ? (
-            <a href={event.ctaUrl!} rel="noopener noreferrer" target="_blank">
+          {ctaUrl ? (
+            <a href={ctaUrl} rel="noopener noreferrer" target="_blank">
               <Button className="font-mono uppercase">
                 {statusConfig?.ctaLabel}
               </Button>
@@ -231,7 +247,7 @@ export default async function EventPage({
                         <li className="text-sm underline" key={tag._id}>
                           {tag.name}
                         </li>
-                      ),
+                      )
                     )}
                   </ul>
                 </dd>

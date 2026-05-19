@@ -1,27 +1,16 @@
 import { NextResponse } from "next/server";
+import {
+  assertSanityProjectUser,
+  OutboundFetchError,
+  readJsonStringField,
+} from "@/app/api/_utils/outbound-fetch";
 
-// Simple in-memory rate limiter
-const rateLimit = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT = 10; // requests per window
-const RATE_WINDOW = 60 * 1000; // 1 minute in ms
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 const YEAR_REGEX = /^(\d{4})/;
 const ISBN_REGEX = /^(\d{10}|\d{13})$/;
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const record = rateLimit.get(ip);
-
-  if (!record || now > record.resetTime) {
-    rateLimit.set(ip, { count: 1, resetTime: now + RATE_WINDOW });
-    return false;
-  }
-
-  if (record.count >= RATE_LIMIT) {
-    return true;
-  }
-  record.count++;
-  return false;
-}
+const NO_STORE_HEADERS = { "Cache-Control": "no-store" };
 
 interface GoogleBooksVolumeInfo {
   authors?: string[];
@@ -88,21 +77,29 @@ function parseBookData(book: GoogleBooksItem): BookData {
   };
 }
 
-export async function GET(request: Request) {
-  const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
-  if (isRateLimited(ip)) {
-    return NextResponse.json(
-      { error: "Too many requests. Please try again later." },
-      { status: 429 }
-    );
+export async function POST(request: Request) {
+  const authError = await assertSanityProjectUser(request);
+  if (authError) {
+    return authError;
   }
 
-  const { searchParams } = new URL(request.url);
-  const isbn = searchParams.get("isbn");
-
-  if (!isbn) {
-    return NextResponse.json({ error: "ISBN is required" }, { status: 400 });
+  let isbn: string;
+  try {
+    isbn = await readJsonStringField(request, "isbn", {
+      maxLength: 32,
+      message: "ISBN is required",
+    });
+  } catch (error) {
+    if (error instanceof OutboundFetchError) {
+      return NextResponse.json(
+        { error: error.message },
+        { headers: NO_STORE_HEADERS, status: error.status }
+      );
+    }
+    return NextResponse.json(
+      { error: "ISBN is required" },
+      { headers: NO_STORE_HEADERS, status: 400 }
+    );
   }
 
   // Clean the ISBN (remove hyphens and spaces)
@@ -112,7 +109,7 @@ export async function GET(request: Request) {
   if (!ISBN_REGEX.test(cleanIsbn)) {
     return NextResponse.json(
       { error: "Invalid ISBN format. Must be 10 or 13 digits." },
-      { status: 400 }
+      { headers: NO_STORE_HEADERS, status: 400 }
     );
   }
 
@@ -121,13 +118,21 @@ export async function GET(request: Request) {
   if (!apiKey) {
     return NextResponse.json(
       { error: "Google Books API key not configured" },
-      { status: 500 }
+      { headers: NO_STORE_HEADERS, status: 500 }
     );
   }
 
   try {
     const response = await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=isbn:${cleanIsbn}&key=${apiKey}`
+      `https://www.googleapis.com/books/v1/volumes?q=isbn:${cleanIsbn}&key=${apiKey}`,
+      {
+        cache: "no-store",
+        headers: {
+          Accept: "application/json",
+          "User-Agent": "Mozilla/5.0 (compatible; PittogrammaBot/1.0)",
+        },
+        signal: AbortSignal.timeout(10_000),
+      }
     );
 
     if (!response.ok) {
@@ -139,16 +144,23 @@ export async function GET(request: Request) {
     if (!data.items || data.items.length === 0) {
       return NextResponse.json(
         { error: "No book found for this ISBN" },
-        { status: 404 }
+        { headers: NO_STORE_HEADERS, status: 404 }
       );
     }
 
-    return NextResponse.json(parseBookData(data.items[0]));
+    return NextResponse.json(parseBookData(data.items[0]), {
+      headers: NO_STORE_HEADERS,
+    });
   } catch (error) {
-    console.error("Error fetching from Google Books:", error);
+    if (error instanceof Error && error.name === "TimeoutError") {
+      return NextResponse.json(
+        { error: "Google Books request timed out" },
+        { headers: NO_STORE_HEADERS, status: 504 }
+      );
+    }
     return NextResponse.json(
       { error: "Failed to fetch book data" },
-      { status: 500 }
+      { headers: NO_STORE_HEADERS, status: 502 }
     );
   }
 }

@@ -1,101 +1,85 @@
 import { NextResponse } from "next/server";
+import {
+  assertSanityProjectUser,
+  buildBinaryResponse,
+  fetchWithSafeRedirects,
+  isAllowedImageContentType,
+  OutboundFetchError,
+  readJsonUrl,
+  validatePublicHttpUrl,
+} from "../../_utils/outbound-fetch";
 
-// In-memory rate limiter - resets on restart, doesn't share state across serverless instances.
-// Acceptable here since this API is only used for backend updates, not high-frequency calls.
-const rateLimit = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT = 30; // requests per window
-const RATE_WINDOW = 60 * 1000; // 1 minute in ms
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const record = rateLimit.get(ip);
+const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
 
-  if (!record || now > record.resetTime) {
-    rateLimit.set(ip, { count: 1, resetTime: now + RATE_WINDOW });
-    return false;
+function errorResponse(error: unknown): NextResponse {
+  if (error instanceof OutboundFetchError) {
+    return NextResponse.json(
+      { error: error.message },
+      {
+        headers: { "Cache-Control": "no-store" },
+        status: error.status,
+      }
+    );
   }
 
-  if (record.count >= RATE_LIMIT) {
-    return true;
-  }
-  record.count++;
-  return false;
+  return NextResponse.json(
+    { error: "Failed to fetch image" },
+    { headers: { "Cache-Control": "no-store" }, status: 502 }
+  );
 }
 
-export async function GET(request: Request) {
-  const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
-  if (isRateLimited(ip)) {
-    return NextResponse.json(
-      { error: "Too many requests. Please try again later." },
-      { status: 429 }
-    );
-  }
-
-  const { searchParams } = new URL(request.url);
-  const imageUrl = searchParams.get("url");
-
-  if (!imageUrl) {
-    return NextResponse.json(
-      { error: "Image URL is required" },
-      { status: 400 }
-    );
+export async function POST(request: Request) {
+  const authError = await assertSanityProjectUser(request);
+  if (authError) {
+    return authError;
   }
 
   try {
-    // Validate URL is HTTPS (security requirement)
-    const url = new URL(imageUrl);
-    if (url.protocol !== "https:") {
-      return NextResponse.json(
-        { error: "Only HTTPS image URLs are allowed" },
-        { status: 400 }
-      );
-    }
-
-    const response = await fetch(imageUrl, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; PittogrammaBot/1.0)",
+    const imageUrl = await readJsonUrl(request);
+    const url = await validatePublicHttpUrl(imageUrl, { httpsOnly: true });
+    const response = await fetchWithSafeRedirects(
+      url,
+      {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (compatible; PittogrammaBot/1.0)",
+          Accept: Array.from(
+            new Set([
+              "image/jpeg",
+              "image/png",
+              "image/webp",
+              "image/gif",
+              "image/avif",
+            ])
+          ).join(","),
+        },
       },
-      signal: AbortSignal.timeout(10_000),
-    });
+      {
+        httpsOnly: true,
+        maxRedirects: 3,
+        timeoutMs: 10_000,
+      }
+    );
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch image: ${response.status}`);
-    }
-
-    const contentType = response.headers.get("content-type") || "";
-
-    // Validate content type is an image
-    if (!contentType.startsWith("image/")) {
-      return NextResponse.json(
-        { error: "URL does not point to a valid image" },
-        { status: 400 }
+      throw new OutboundFetchError(
+        `Failed to fetch image: ${response.status}`,
+        502
       );
     }
 
-    // Validate size before loading into memory
-    const contentLength = response.headers.get("content-length");
-    const MAX_SIZE = 10 * 1024 * 1024; // 10MB
-    if (contentLength && Number.parseInt(contentLength, 10) > MAX_SIZE) {
+    const contentType = response.headers.get("content-type") ?? "";
+    if (!isAllowedImageContentType(contentType)) {
       return NextResponse.json(
-        { error: "Image too large (max 10MB)" },
-        { status: 400 }
+        { error: "URL does not point to a supported image" },
+        { headers: { "Cache-Control": "no-store" }, status: 400 }
       );
     }
 
-    const imageBuffer = await response.arrayBuffer();
-
-    return new NextResponse(imageBuffer, {
-      headers: {
-        "Content-Type": contentType,
-        "Cache-Control": "public, max-age=86400",
-      },
-    });
+    return await buildBinaryResponse(response, MAX_IMAGE_SIZE);
   } catch (error) {
-    console.error("Error fetching image:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch image" },
-      { status: 500 }
-    );
+    return errorResponse(error);
   }
 }

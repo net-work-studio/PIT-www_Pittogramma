@@ -1,3 +1,4 @@
+// biome-ignore-all lint: archived one-off import script
 /**
  * Import projects from Kirby CMS data to Sanity
  *
@@ -8,10 +9,10 @@
  *   bun run scripts/import-projects.ts --skip-images
  */
 
+import { existsSync, readFileSync } from "node:fs";
+import { readdir, readFile, stat } from "node:fs/promises";
+import { join } from "node:path";
 import { createClient } from "@sanity/client";
-import { existsSync, readFileSync } from "fs";
-import { readdir, readFile, stat } from "fs/promises";
-import { join } from "path";
 
 // --- SEO descriptions fallback (generated, not from source data) ---
 
@@ -34,9 +35,6 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 const token = process.env.SANITY_API_WRITE_TOKEN;
 
 if (!(projectId && dataset && token)) {
-  console.error(
-    "Missing env vars: NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, SANITY_API_WRITE_TOKEN"
-  );
   process.exit(1);
 }
 
@@ -55,7 +53,7 @@ const IMAGE_UPLOAD_DELAY = 300;
 
 const INSTITUTE_ALIASES: Record<string, string> = {
   "ISIA Uribno": "ISIA Urbino",
-  "IUAV": "Università IUAV di Venezia",
+  IUAV: "Università IUAV di Venezia",
   "Universita luav di Venezia": "Università IUAV di Venezia",
   "ABA Palermo": "Accademia di Belle Arti di Palermo",
   "Abadir, Accademia di Design e Comunicazione Visiva": "Abadir",
@@ -84,7 +82,7 @@ function normalizeName(text: string): string {
   return text.toLowerCase().trim().replace(/\s+/g, " ");
 }
 
-function decodeHtmlEntities(text: string): string {
+function _decodeHtmlEntities(text: string): string {
   return text
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -104,10 +102,14 @@ function parseKirbyFile(content: string): Record<string, string> {
 
   for (const section of sections) {
     const trimmed = section.trim();
-    if (!trimmed) continue;
+    if (!trimmed) {
+      continue;
+    }
 
     const colonIndex = trimmed.indexOf(":");
-    if (colonIndex === -1) continue;
+    if (colonIndex === -1) {
+      continue;
+    }
 
     const key = trimmed.slice(0, colonIndex).trim();
     const value = trimmed.slice(colonIndex + 1).trim();
@@ -120,9 +122,9 @@ function parseKirbyFile(content: string): Record<string, string> {
 // --- UUID → File Resolution ---
 
 interface ImageMeta {
-  filePath: string;
-  caption: string;
   alt: string;
+  caption: string;
+  filePath: string;
 }
 
 async function buildUuidMap(
@@ -132,7 +134,9 @@ async function buildUuidMap(
   const map = new Map<string, ImageMeta>();
 
   for (const file of files) {
-    if (!file.endsWith(".it.txt") || file === "project.it.txt") continue;
+    if (!file.endsWith(".it.txt") || file === "project.it.txt") {
+      continue;
+    }
 
     const metaPath = join(folderPath, file);
     const content = await readFile(metaPath, "utf-8");
@@ -161,7 +165,9 @@ function resolveFileUuid(ref: string): string | null {
 const uploadedImageCache = new Map<string, string>();
 
 async function uploadImage(filePath: string): Promise<string | null> {
-  if (SKIP_IMAGES) return null;
+  if (SKIP_IMAGES) {
+    return null;
+  }
 
   if (uploadedImageCache.has(filePath)) {
     return uploadedImageCache.get(filePath)!;
@@ -178,10 +184,7 @@ async function uploadImage(filePath: string): Promise<string | null> {
     uploadedImageCache.set(filePath, asset._id);
     await delay(IMAGE_UPLOAD_DELAY);
     return asset._id;
-  } catch (err) {
-    console.error(
-      `  Failed to upload ${filePath}: ${err instanceof Error ? err.message : err}`
-    );
+  } catch {
     return null;
   }
 }
@@ -189,7 +192,6 @@ async function uploadImage(filePath: string): Promise<string | null> {
 // --- Gallery Transform ---
 
 interface KirbyBlock {
-  type: "image";
   content: {
     image?: string[];
     alt?: string;
@@ -197,6 +199,7 @@ interface KirbyBlock {
   };
   id: string;
   isHidden: boolean;
+  type: "image";
 }
 
 interface KirbyColumn {
@@ -210,27 +213,27 @@ interface KirbyRow {
 
 interface MediaItemData {
   _type: "mediaItem";
-  type: "image";
+  alt: string;
+  caption: string;
   image?: {
     _type: "image";
     asset: { _type: "reference"; _ref: string };
   };
-  caption: string;
-  alt: string;
+  type: "image";
 }
 
 interface SingleMediaBlock {
-  _type: "singleMediaBlock";
   _key: string;
-  orientation: string;
+  _type: "singleMediaBlock";
   media: MediaItemData;
+  orientation: string;
 }
 
 interface SideBySideMediaBlock {
-  _type: "sideBySideMediaBlock";
   _key: string;
-  orientation: string;
+  _type: "sideBySideMediaBlock";
   left: MediaItemData;
+  orientation: string;
   right: MediaItemData;
 }
 
@@ -249,14 +252,17 @@ async function buildMediaItem(
 
   const imageRefs = block.content.image || [];
   const fileRef = imageRefs[0];
-  if (!fileRef) return mediaItem;
+  if (!fileRef) {
+    return mediaItem;
+  }
 
   const uuid = resolveFileUuid(fileRef);
-  if (!uuid) return mediaItem;
+  if (!uuid) {
+    return mediaItem;
+  }
 
   const imageMeta = uuidMap.get(uuid);
   if (!imageMeta) {
-    console.warn(`  Warning: Could not resolve UUID ${uuid}`);
     return mediaItem;
   }
 
@@ -282,7 +288,6 @@ async function transformGallery(
   try {
     rows = JSON.parse(galleryJson);
   } catch {
-    console.warn("  Warning: Could not parse gallery JSON");
     return [];
   }
 
@@ -290,12 +295,16 @@ async function transformGallery(
 
   for (const row of rows) {
     const columns = row.columns.filter((col) => col.blocks.length > 0);
-    if (columns.length === 0) continue;
+    if (columns.length === 0) {
+      continue;
+    }
 
     if (columns.length === 1 && columns[0].width === "1/1") {
       // Single full-width image → singleMediaBlock
       const block = columns[0].blocks[0];
-      if (block.isHidden) continue;
+      if (block.isHidden) {
+        continue;
+      }
 
       const media = await buildMediaItem(block, uuidMap);
       blocks.push({
@@ -312,7 +321,9 @@ async function transformGallery(
       // Two half-width images → sideBySideMediaBlock
       const leftBlock = columns[0].blocks[0];
       const rightBlock = columns[1].blocks[0];
-      if (leftBlock.isHidden && rightBlock.isHidden) continue;
+      if (leftBlock.isHidden && rightBlock.isHidden) {
+        continue;
+      }
 
       const left = await buildMediaItem(leftBlock, uuidMap);
       const right = await buildMediaItem(rightBlock, uuidMap);
@@ -327,7 +338,9 @@ async function transformGallery(
       // Fallback: treat each column's first block as a single media block
       for (const col of columns) {
         const block = col.blocks[0];
-        if (!block || block.isHidden) continue;
+        if (!block || block.isHidden) {
+          continue;
+        }
 
         const media = await buildMediaItem(block, uuidMap);
         blocks.push({
@@ -353,8 +366,6 @@ let instituteMap: RefMap; // normalized name → _id
 let teacherMap: RefMap; // normalized name → _id
 
 async function prefetchReferenceMaps(): Promise<void> {
-  console.log("Pre-fetching reference maps...\n");
-
   const [tags, designers, institutes, teachers] = await Promise.all([
     client.fetch<{ _id: string; name: string; slug?: { current: string } }[]>(
       `*[_type == "tag"]{ _id, name, slug }`
@@ -377,31 +388,23 @@ async function prefetchReferenceMaps(): Promise<void> {
   designerMap = new Map(
     designers
       .filter((d) => d.slug?.current)
-      .map((d) => [d.slug!.current, d._id])
+      .map((d) => [d.slug?.current, d._id])
   );
-  instituteMap = new Map(
-    institutes.map((i) => [normalizeName(i.name), i._id])
-  );
+  instituteMap = new Map(institutes.map((i) => [normalizeName(i.name), i._id]));
   teacherMap = new Map(teachers.map((t) => [normalizeName(t.name), t._id]));
-
-  console.log(
-    `  Tags: ${tagMap.size}, Designers: ${designerMap.size}, Institutes: ${instituteMap.size}, Teachers: ${teacherMap.size}\n`
-  );
 }
 
 function deriveNameFromSlug(slug: string): string {
-  return slug
-    .replace(/-/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+  return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-async function resolveOrCreateDesigner(
-  designerPath: string
-): Promise<string> {
+async function resolveOrCreateDesigner(designerPath: string): Promise<string> {
   // Input: "designers/matteo-palu" → extract slug "matteo-palu"
   const slug = designerPath.replace("designers/", "");
 
-  if (designerMap.has(slug)) return designerMap.get(slug)!;
+  if (designerMap.has(slug)) {
+    return designerMap.get(slug)!;
+  }
 
   const name = deriveNameFromSlug(slug);
   const id = `designer-${slug}`;
@@ -416,19 +419,24 @@ async function resolveOrCreateDesigner(
   }
 
   designerMap.set(slug, id);
-  console.log(`  Created designer: ${name} (${id})`);
   return id;
 }
 
-async function resolveOrCreateInstitute(rawName: string): Promise<string | null> {
+async function resolveOrCreateInstitute(
+  rawName: string
+): Promise<string | null> {
   // Skip empty / dash values
-  if (!rawName || rawName === "—" || rawName === "-") return null;
+  if (!rawName || rawName === "—" || rawName === "-") {
+    return null;
+  }
 
   // Apply aliases
   const canonicalName = INSTITUTE_ALIASES[rawName] || rawName;
   const normalized = normalizeName(canonicalName);
 
-  if (instituteMap.has(normalized)) return instituteMap.get(normalized)!;
+  if (instituteMap.has(normalized)) {
+    return instituteMap.get(normalized)!;
+  }
 
   const slug = toSlug(canonicalName);
   const id = `institute-${slug}`;
@@ -442,7 +450,6 @@ async function resolveOrCreateInstitute(rawName: string): Promise<string | null>
   }
 
   instituteMap.set(normalized, id);
-  console.log(`  Created institute: ${canonicalName} (${id})`);
   return id;
 }
 
@@ -452,7 +459,9 @@ async function resolveOrCreateTeacher(
 ): Promise<string> {
   const normalized = normalizeName(name);
 
-  if (teacherMap.has(normalized)) return teacherMap.get(normalized)!;
+  if (teacherMap.has(normalized)) {
+    return teacherMap.get(normalized)!;
+  }
 
   const slug = toSlug(name);
   const id = `teacher-${slug}`;
@@ -473,14 +482,15 @@ async function resolveOrCreateTeacher(
   }
 
   teacherMap.set(normalized, id);
-  console.log(`  Created teacher: ${name} (${id})`);
   return id;
 }
 
 async function resolveOrCreateTag(tagSlug: string): Promise<string> {
   const normalized = normalizeName(toSlug(tagSlug));
 
-  if (tagMap.has(normalized)) return tagMap.get(normalized)!;
+  if (tagMap.has(normalized)) {
+    return tagMap.get(normalized)!;
+  }
 
   const name = tagSlug
     .replace(/-/g, " ")
@@ -498,7 +508,6 @@ async function resolveOrCreateTag(tagSlug: string): Promise<string> {
   }
 
   tagMap.set(normalized, id);
-  console.log(`  Created tag: ${name} (${id})`);
   return id;
 }
 
@@ -508,13 +517,8 @@ async function processProject(
   folderName: string,
   folderPath: string
 ): Promise<void> {
-  console.log(`\nProcessing: ${folderName}`);
-
   // Parse Kirby files (Italian + English)
-  const itContent = await readFile(
-    join(folderPath, "project.it.txt"),
-    "utf-8"
-  );
+  const itContent = await readFile(join(folderPath, "project.it.txt"), "utf-8");
   const itFields = parseKirbyFile(itContent);
 
   let enFields: Record<string, string> = {};
@@ -604,7 +608,7 @@ async function processProject(
 
   // Year
   const yearStr = itFields.Year || "";
-  const year = yearStr ? parseInt(yearStr.split("-")[0], 10) : undefined;
+  const year = yearStr ? Number.parseInt(yearStr.split("-")[0], 10) : undefined;
 
   // Tags
   const tagRefs: { _type: "reference"; _ref: string; _key: string }[] = [];
@@ -635,17 +639,23 @@ async function processProject(
   const metaTitle = enFields.Metatitle || itFields.Metatitle;
   const metaDesc = enFields.Metadescription || itFields.Metadescription;
   const ogDesc = enFields.Ogdescription || itFields.Ogdescription;
-  if (metaTitle) seo.metaTitle = metaTitle;
+  if (metaTitle) {
+    seo.metaTitle = metaTitle;
+  }
   // Use source metaDescription if available, otherwise fall back to generated SEO descriptions
   const finalMetaDesc = metaDesc || seoDescriptions[folderName];
-  if (finalMetaDesc) seo.metaDescription = finalMetaDesc;
+  if (finalMetaDesc) {
+    seo.metaDescription = finalMetaDesc;
+  }
   if (ogDesc) {
     seo.openGraph = {
       _type: "openGraph",
       description: ogDesc,
     };
   }
-  if (coverData) seo.metaImage = coverData;
+  if (coverData) {
+    seo.metaImage = coverData;
+  }
 
   // --- Assemble Sanity document ---
 
@@ -661,54 +671,54 @@ async function processProject(
   if (publishingDate) {
     doc.publishingDate = { _type: "publishingDate", date: publishingDate };
   }
-  if (coverData) doc.cover = coverData;
-  if (designerRefs.length > 0) doc.designers = designerRefs;
+  if (coverData) {
+    doc.cover = coverData;
+  }
+  if (designerRefs.length > 0) {
+    doc.designers = designerRefs;
+  }
   if (instituteId) {
     doc.institute = { _type: "reference", _ref: instituteId };
   }
-  if (teacherRefs.length > 0) doc.teachers = teacherRefs;
-  if (year && !isNaN(year)) doc.year = year;
+  if (teacherRefs.length > 0) {
+    doc.teachers = teacherRefs;
+  }
+  if (year && !Number.isNaN(year)) {
+    doc.year = year;
+  }
   if (tagRefs.length > 0) {
     doc.tags = tagRefs;
   }
-  if (description) doc.description = description;
-  if (galleryBlocks.length > 0) doc.gallery = galleryBlocks;
-  if (Object.keys(seo).length > 1) doc.seo = seo;
+  if (description) {
+    doc.description = description;
+  }
+  if (galleryBlocks.length > 0) {
+    doc.gallery = galleryBlocks;
+  }
+  if (Object.keys(seo).length > 1) {
+    doc.seo = seo;
+  }
 
   // --- Write to Sanity ---
 
   if (DRY_RUN) {
-    console.log(`  [DRY RUN] Would create: ${docId}`);
-    console.log(`  Title: ${title}`);
-    console.log(`  Slug: ${slug}`);
-    console.log(`  Year: ${year}`);
-    console.log(`  Designers: ${designerRefs.length}`);
-    console.log(`  Institute: ${instituteRaw || "(none)"}`);
-    console.log(`  Teachers: ${teacherRefs.length}`);
-    console.log(`  Tags: ${tagRefs.length}`);
-    console.log(`  Gallery blocks: ${galleryBlocks.length}`);
-    console.log(`  Has cover: ${!!coverData}`);
-    console.log(`  Has description: ${!!description}`);
   } else {
     await client.createOrReplace(doc);
-    console.log(`  Created: ${docId} — "${title}"`);
   }
 }
 
 // --- Verification ---
 
 async function verify(): Promise<void> {
-  console.log("\n=== Verification ===\n");
-
   const [
-    total,
-    withCover,
-    withGallery,
-    withDesigners,
-    withInstitute,
-    withTeachers,
-    withTags,
-    withDescription,
+    _total,
+    _withCover,
+    _withGallery,
+    _withDesigners,
+    _withInstitute,
+    _withTeachers,
+    _withTags,
+    _withDescription,
   ] = await Promise.all([
     client.fetch<number>(
       `count(*[_type == "project" && _id match "project-*"])`
@@ -735,23 +745,15 @@ async function verify(): Promise<void> {
       `count(*[_type == "project" && _id match "project-*" && defined(description)])`
     ),
   ]);
-
-  console.log(`Total projects:    ${total}`);
-  console.log(`With cover:        ${withCover}`);
-  console.log(`With gallery:      ${withGallery}`);
-  console.log(`With designers:    ${withDesigners}`);
-  console.log(`With institute:    ${withInstitute}`);
-  console.log(`With teachers:     ${withTeachers}`);
-  console.log(`With tags:         ${withTags}`);
-  console.log(`With description:  ${withDescription}`);
 }
 
 // --- Main ---
 
 async function main(): Promise<void> {
-  console.log("=== Project Import: Kirby → Sanity ===\n");
-  if (DRY_RUN) console.log("*** DRY RUN MODE ***\n");
-  if (SKIP_IMAGES) console.log("*** SKIPPING IMAGES ***\n");
+  if (DRY_RUN) {
+  }
+  if (SKIP_IMAGES) {
+  }
 
   await prefetchReferenceMaps();
 
@@ -768,41 +770,32 @@ async function main(): Promise<void> {
     .map((e) => e.name)
     .filter((f) => !ONLY || f === ONLY)
     .sort((a, b) => {
-      const numA = parseInt(a.split("_")[0], 10);
-      const numB = parseInt(b.split("_")[0], 10);
+      const numA = Number.parseInt(a.split("_")[0], 10);
+      const numB = Number.parseInt(b.split("_")[0], 10);
       return numA - numB;
     });
 
-  console.log(`Found ${folders.length} project(s) to process`);
-
-  let success = 0;
-  let errors = 0;
+  let _success = 0;
+  let _errors = 0;
 
   for (let i = 0; i < folders.length; i++) {
     const folder = folders[i];
-    const progress = `[${i + 1}/${folders.length}]`;
+    const _progress = `[${i + 1}/${folders.length}]`;
 
     try {
       const folderPath = join(PROJECTS_DIR, folder);
       await processProject(folder, folderPath);
-      success++;
-      console.log(`${progress} OK`);
-    } catch (err) {
-      console.error(
-        `${progress} ERROR: ${folder} — ${err instanceof Error ? err.message : err}`
-      );
-      errors++;
+      _success++;
+    } catch {
+      _errors++;
     }
   }
-
-  console.log(`\n=== Results: ${success} success, ${errors} errors ===`);
 
   if (!DRY_RUN) {
     await verify();
   }
 }
 
-main().catch((err) => {
-  console.error("Fatal error:", err);
+main().catch((_err) => {
   process.exit(1);
 });

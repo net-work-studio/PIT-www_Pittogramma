@@ -3,12 +3,19 @@ import { notFound } from "next/navigation";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import { TypeFoundriesContent } from "@/components/resources/type-foundries-content";
 import PageHeader from "@/components/shared/page-header";
-import { getEnabledResources, getEnabledViews, isResourceEnabled, isSearchEnabled } from "@/lib/feature-flags";
+import {
+  getEnabledResources,
+  getEnabledViews,
+  isResourceEnabled,
+  isSearchEnabled,
+} from "@/lib/feature-flags";
 import { sanityFetch } from "@/sanity/lib/live";
 import { TYPE_FOUNDRIES_QUERY } from "@/sanity/lib/queries";
 
 export default async function Page() {
-  if (!isResourceEnabled("type-foundries")) notFound();
+  if (!isResourceEnabled("type-foundries")) {
+    notFound();
+  }
   const { data: foundries } = await sanityFetch({
     query: TYPE_FOUNDRIES_QUERY,
   });
@@ -24,8 +31,8 @@ export default async function Page() {
         <ResourcesNavigation resources={getEnabledResources()} />
       </div>
       <TypeFoundriesContent
-        foundries={foundries}
         enabledViews={getEnabledViews("type-foundries")}
+        foundries={foundries}
         searchEnabled={isSearchEnabled("type-foundries")}
       />
     </>

@@ -1,3 +1,4 @@
+// biome-ignore-all lint: archived one-off data enrichment script
 /**
  * Bulk script: Fetch OG data for all typeFoundry documents
  *
@@ -19,9 +20,6 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 const token = process.env.SANITY_API_WRITE_TOKEN;
 
 if (!(projectId && dataset && token)) {
-  console.error(
-    "Missing environment variables: NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, SANITY_API_WRITE_TOKEN"
-  );
   process.exit(1);
 }
 
@@ -189,8 +187,6 @@ async function uploadImage(
 // --- Main ---
 
 async function main() {
-  console.log("=== Fetch OG Data for Type Foundries ===\n");
-
   const docs: TypeFoundryDoc[] = await client.fetch(
     `*[_type == "typeFoundry"] | order(name asc) {
       _id,
@@ -204,30 +200,24 @@ async function main() {
     (d): d is TypeFoundryDoc & { websiteUrl: string } => !!d.websiteUrl
   );
 
-  console.log(
-    `Found ${docs.length} type foundries total, ${withUrl.length} with website URLs\n`
-  );
-
   if (withUrl.length === 0) {
-    console.log("Nothing to process.");
     process.exit(0);
   }
 
-  let success = 0;
-  let skipped = 0;
-  let errors = 0;
-  let imageUploads = 0;
+  let _success = 0;
+  let _skipped = 0;
+  let _errors = 0;
+  let _imageUploads = 0;
 
   for (let i = 0; i < withUrl.length; i++) {
     const doc = withUrl[i];
-    const progress = `[${i + 1}/${withUrl.length}]`;
+    const _progress = `[${i + 1}/${withUrl.length}]`;
 
     try {
       const ogData = await fetchOgData(doc.websiteUrl);
 
       if (!(ogData && (ogData.title || ogData.siteName))) {
-        console.log(`${progress} SKIP: ${doc.name} — no OG data found`);
-        skipped++;
+        _skipped++;
         await delay(500);
         continue;
       }
@@ -252,34 +242,23 @@ async function main() {
         const coverData = await uploadImage(ogData.imageUrl, ogData.siteName);
         if (coverData) {
           patchData.cover = coverData;
-          imageUploads++;
+          _imageUploads++;
         }
       }
 
       await client.patch(doc._id).set(patchData).commit();
 
-      const hasImage = ogData.imageUrl ? " + image" : "";
-      console.log(
-        `${progress} OK: ${doc.name} — ${ogData.siteName || ogData.title}${hasImage}`
-      );
-      success++;
-    } catch (err) {
-      console.error(
-        `${progress} ERROR: ${doc.name} — ${err instanceof Error ? err.message : err}`
-      );
-      errors++;
+      const _hasImage = ogData.imageUrl ? " + image" : "";
+      _success++;
+    } catch {
+      _errors++;
     }
 
     // Rate limit: ~2 req/sec
     await delay(500);
   }
-
-  console.log(
-    `\nDone: ${success} updated, ${imageUploads} images uploaded, ${skipped} skipped, ${errors} errors\n`
-  );
 }
 
-main().catch((err) => {
-  console.error("Fatal error:", err);
+main().catch((_err) => {
   process.exit(1);
 });

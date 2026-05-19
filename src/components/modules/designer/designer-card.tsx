@@ -13,7 +13,11 @@ interface DesignerCardProps extends Omit<ComponentProps<"button">, "children"> {
   ref?: Ref<HTMLButtonElement>;
 }
 
-export default function DesignerCard({ designer, ref, ...props }: DesignerCardProps) {
+export default function DesignerCard({
+  designer,
+  ref,
+  ...props
+}: DesignerCardProps) {
   const hasImage = Boolean(designer.portrait?.image?.asset);
 
   const locationParts = [designer.place?.city, designer.place?.country].filter(

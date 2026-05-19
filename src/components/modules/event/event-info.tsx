@@ -13,18 +13,41 @@ interface Contributor {
 }
 
 interface EventInfoProps {
+  ctaUrl?: string | null;
+  dateEnd?: string | null;
+  dateStart?: string | null;
+  isPast?: boolean;
+  locationAddress?: string | null;
+  locationName?: string | null;
+  partner?: Contributor | null;
+  sponsor?: Contributor | null;
+  status?: string | null;
+  tags?: Tag[] | null;
   title?: string | null;
   type?: string | null;
-  status?: string | null;
-  ctaUrl?: string | null;
-  dateStart?: string | null;
-  dateEnd?: string | null;
-  locationName?: string | null;
-  locationAddress?: string | null;
-  sponsor?: Contributor | null;
-  partner?: Contributor | null;
-  tags?: Tag[] | null;
-  isPast?: boolean;
+}
+
+function formatEventDate(date: string): string {
+  return new Date(`${date}T00:00:00`).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function formatDateRange(
+  dateStart: string | null | undefined,
+  dateEnd: string | null | undefined
+): string | null {
+  if (!dateStart) {
+    return null;
+  }
+
+  if (dateEnd && dateEnd !== dateStart) {
+    return `${formatEventDate(dateStart)} — ${formatEventDate(dateEnd)}`;
+  }
+
+  return formatEventDate(dateStart);
 }
 
 export default function EventInfo({
@@ -46,18 +69,7 @@ export default function EventInfo({
 
   const location = [locationName, locationAddress].filter(Boolean).join(" — ");
 
-  const formatDate = (date: string) =>
-    new Date(`${date}T00:00:00`).toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-
-  const dateDisplay = dateStart
-    ? dateEnd && dateEnd !== dateStart
-      ? `${formatDate(dateStart)} — ${formatDate(dateEnd)}`
-      : formatDate(dateStart)
-    : null;
+  const dateDisplay = formatDateRange(dateStart, dateEnd);
 
   return (
     <div className="flex flex-1 flex-col justify-between gap-8">
@@ -66,7 +78,7 @@ export default function EventInfo({
           <h1 className="text-3xl leading-tight lg:text-[2rem]">{title}</h1>
         ) : null}
         {type ? (
-          <h2 className="text-base uppercase text-muted-foreground leading-tight lg:text-2xl">
+          <h2 className="text-base text-muted-foreground uppercase leading-tight lg:text-2xl">
             {type}
           </h2>
         ) : null}

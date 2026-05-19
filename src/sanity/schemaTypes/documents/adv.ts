@@ -6,6 +6,7 @@ import { DurationInput } from "@/sanity/components/duration-input";
 import { apiVersion } from "@/sanity/env";
 import { getPublishedId } from "@/sanity/lib/document-id";
 import type { Adv } from "@/sanity/types";
+import { httpUrlValidation } from "@/sanity/utils/validation";
 
 // Subset of Adv fields the document-level validator inspects. Picking from
 // the generated `Adv` keeps this in lock-step with the schema; if any of these
@@ -21,7 +22,12 @@ export const adv = defineType({
   title: "ADV",
   icon: BoltIcon,
   groups: [
-    { name: "content", title: "Content", icon: DocumentTextIcon, default: true },
+    {
+      name: "content",
+      title: "Content",
+      icon: DocumentTextIcon,
+      default: true,
+    },
     { name: "management", title: "Management", icon: CogIcon },
   ],
   fields: [
@@ -66,6 +72,7 @@ export const adv = defineType({
                     name: "href",
                     type: "url",
                     title: "URL",
+                    validation: httpUrlValidation,
                   },
                 ],
               },
@@ -79,7 +86,7 @@ export const adv = defineType({
       name: "externalUrl",
       title: "External URL",
       group: "content",
-      validation: (r) => r.required(),
+      validation: (r) => [r.required(), httpUrlValidation(r)],
     }),
     defineField({
       type: "string",
@@ -162,26 +169,32 @@ export const adv = defineType({
   // and tier capacity exceeded. Both are non-blocking — the document still
   // publishes when over capacity; the frontend silently drops the surplus.
   validation: (rule) =>
-    rule.custom(async (doc, context) => {
-      const typed = doc as AdvValidationDoc;
-      // Fields can still be undefined at validation time while the document
-      // is being filled in, so we keep these guards even though _id is always
-      // present on a real document.
-      if (
-        !(typed._id && typed.tier && typed.dateStart && typed.dateEnd) ||
-        !(typed.tier in TIER_CAPS)
-      ) {
-        return true;
-      }
-      const { tier, dateStart, dateEnd } = typed;
-      const publishedId = getPublishedId(typed._id);
-      const draftId = `drafts.${publishedId}`;
+    rule
+      .custom(async (doc, context) => {
+        const typed = doc as AdvValidationDoc;
+        // Fields can still be undefined at validation time while the document
+        // is being filled in, so we keep these guards even though _id is always
+        // present on a real document.
+        if (
+          !(
+            typed._id &&
+            typed.tier &&
+            typed.dateStart &&
+            typed.dateEnd &&
+            typed.tier in TIER_CAPS
+          )
+        ) {
+          return true;
+        }
+        const { tier, dateStart, dateEnd } = typed;
+        const publishedId = getPublishedId(typed._id);
+        const draftId = `drafts.${publishedId}`;
 
-      const client = context.getClient({ apiVersion });
-      const conflicts = await client.fetch<
-        Array<{ _id: string; title: string | null; dateEnd: string }>
-      >(
-        `*[
+        const client = context.getClient({ apiVersion });
+        const conflicts = await client.fetch<
+          Array<{ _id: string; title: string | null; dateEnd: string }>
+        >(
+          `*[
           _type == "adv"
           && _id != $publishedId
           && _id != $draftId
@@ -190,25 +203,26 @@ export const adv = defineType({
         ] | order(dateStart asc) {
           _id, title, dateEnd
         }`,
-        { publishedId, draftId, tier, dateStart, dateEnd }
-      );
+          { publishedId, draftId, tier, dateStart, dateEnd }
+        );
 
-      if (conflicts.length === 0) {
-        return true;
-      }
+        if (conflicts.length === 0) {
+          return true;
+        }
 
-      const cap = TIER_CAPS[tier];
-      // Including this doc, total active campaigns at the same tier in the
-      // window. Capacity warning fires when this exceeds the cap.
-      const activeCount = conflicts.length + 1;
-      if (activeCount > cap) {
-        return `This is the ${activeCount}th active ${tier} in the booked window; cap is ${cap}. Surplus campaigns won't display until others end.`;
-      }
+        const cap = TIER_CAPS[tier];
+        // Including this doc, total active campaigns at the same tier in the
+        // window. Capacity warning fires when this exceeds the cap.
+        const activeCount = conflicts.length + 1;
+        if (activeCount > cap) {
+          return `This is the ${activeCount}th active ${tier} in the booked window; cap is ${cap}. Surplus campaigns won't display until others end.`;
+        }
 
-      const first = conflicts[0];
-      const conflictTitle = first.title ?? "(untitled)";
-      return `Overlaps with "${conflictTitle}" (ends ${first.dateEnd}) at the same tier. Earlier dateStart wins; this campaign won't display in that slot until the other ends.`;
-    }).warning(),
+        const first = conflicts[0];
+        const conflictTitle = first.title ?? "(untitled)";
+        return `Overlaps with "${conflictTitle}" (ends ${first.dateEnd}) at the same tier. Earlier dateStart wins; this campaign won't display in that slot until the other ends.`;
+      })
+      .warning(),
   preview: {
     select: {
       title: "title",

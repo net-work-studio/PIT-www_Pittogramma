@@ -26,7 +26,9 @@ export default function LoadMore({ currentPage, totalPages }: LoadMoreProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  if (currentPage >= totalPages) return null;
+  if (currentPage >= totalPages) {
+    return null;
+  }
 
   const params = new URLSearchParams(searchParams.toString());
   params.set("page", String(currentPage + 1));

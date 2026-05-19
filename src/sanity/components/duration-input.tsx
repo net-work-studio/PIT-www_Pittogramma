@@ -13,6 +13,7 @@ import { apiVersion } from "@/sanity/env";
 import { ensureDraft } from "./ensure-draft";
 
 const MS_PER_DAY = 86_400_000;
+const ISO_DATE_REGEX = /^(\d{4})-(\d{2})-(\d{2})$/;
 
 /**
  * Compute YYYY-MM-DD from a base YYYY-MM-DD plus N days, in UTC.
@@ -21,7 +22,7 @@ const MS_PER_DAY = 86_400_000;
  */
 function addDays(baseIso: string, days: number): string | null {
   // Parse YYYY-MM-DD as UTC midnight to avoid TZ rollover.
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(baseIso);
+  const match = ISO_DATE_REGEX.exec(baseIso);
   if (!match) {
     return null;
   }

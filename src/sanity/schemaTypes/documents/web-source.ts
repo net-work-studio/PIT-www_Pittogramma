@@ -1,7 +1,8 @@
 import { LinkIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { UrlInput } from "@/sanity/components/url-input";
+import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
+import { httpUrlValidation } from "@/sanity/utils/validation";
 
 export const webSource = defineType({
   type: "document",
@@ -13,7 +14,7 @@ export const webSource = defineType({
       type: "url",
       name: "sourceUrl",
       title: "Source URL",
-      validation: (e) => e.required(),
+      validation: (e) => [e.required(), httpUrlValidation(e)],
       description: "The URL of the source website",
       components: {
         input: UrlInput,

@@ -1,3 +1,4 @@
+// biome-ignore-all lint: archived one-off import script
 /**
  * Import interviews from Kirby CMS data to Sanity
  *
@@ -8,9 +9,9 @@
  *   bun run scripts/import-interviews.ts --skip-images
  */
 
+import { readdir, readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { createClient } from "@sanity/client";
-import { readdir, readFile } from "fs/promises";
-import { join } from "path";
 
 // --- CLI Flags ---
 
@@ -26,9 +27,6 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 const token = process.env.SANITY_API_WRITE_TOKEN;
 
 if (!(projectId && dataset && token)) {
-  console.error(
-    "Missing env vars: NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, SANITY_API_WRITE_TOKEN"
-  );
   process.exit(1);
 }
 
@@ -113,10 +111,14 @@ function parseKirbyFile(content: string): Record<string, string> {
 
   for (const section of sections) {
     const trimmed = section.trim();
-    if (!trimmed) continue;
+    if (!trimmed) {
+      continue;
+    }
 
     const colonIndex = trimmed.indexOf(":");
-    if (colonIndex === -1) continue;
+    if (colonIndex === -1) {
+      continue;
+    }
 
     const key = trimmed.slice(0, colonIndex).trim();
     const value = trimmed.slice(colonIndex + 1).trim();
@@ -129,9 +131,9 @@ function parseKirbyFile(content: string): Record<string, string> {
 // --- UUID → File Resolution ---
 
 interface ImageMeta {
-  filePath: string;
-  caption: string;
   alt: string;
+  caption: string;
+  filePath: string;
 }
 
 async function buildUuidMap(
@@ -142,7 +144,9 @@ async function buildUuidMap(
 
   for (const file of files) {
     // Match any image metadata file: *.jpg.it.txt, *.png.it.txt, etc.
-    if (!file.endsWith(".it.txt") || file === "interview.it.txt") continue;
+    if (!file.endsWith(".it.txt") || file === "interview.it.txt") {
+      continue;
+    }
 
     const metaPath = join(folderPath, file);
     const content = await readFile(metaPath, "utf-8");
@@ -171,7 +175,9 @@ function resolveFileUuid(ref: string): string | null {
 const uploadedImageCache = new Map<string, string>();
 
 async function uploadImage(filePath: string): Promise<string | null> {
-  if (SKIP_IMAGES) return null;
+  if (SKIP_IMAGES) {
+    return null;
+  }
 
   if (uploadedImageCache.has(filePath)) {
     return uploadedImageCache.get(filePath)!;
@@ -188,10 +194,7 @@ async function uploadImage(filePath: string): Promise<string | null> {
     uploadedImageCache.set(filePath, asset._id);
     await delay(IMAGE_UPLOAD_DELAY);
     return asset._id;
-  } catch (err) {
-    console.error(
-      `  Failed to upload ${filePath}: ${err instanceof Error ? err.message : err}`
-    );
+  } catch {
     return null;
   }
 }
@@ -199,18 +202,18 @@ async function uploadImage(filePath: string): Promise<string | null> {
 // --- HTML → Portable Text ---
 
 interface PTSpan {
-  _type: "span";
   _key: string;
-  text: string;
+  _type: "span";
   marks: string[];
+  text: string;
 }
 
 interface PTBlock {
-  _type: "block";
   _key: string;
-  style: string;
-  markDefs: never[];
+  _type: "block";
   children: PTSpan[];
+  markDefs: never[];
+  style: string;
 }
 
 function parseInlineHtml(html: string): PTSpan[] {
@@ -221,7 +224,9 @@ function parseInlineHtml(html: string): PTSpan[] {
   const parts = html.split(/(<\/?(?:strong|em|b|i|a)[^>]*>)/);
 
   for (const part of parts) {
-    if (!part) continue;
+    if (!part) {
+      continue;
+    }
 
     // Opening tags
     if (part === "<strong>" || part === "<b>") {
@@ -236,20 +241,28 @@ function parseInlineHtml(html: string): PTSpan[] {
     // Closing tags
     if (part === "</strong>" || part === "</b>") {
       const idx = activeMarks.lastIndexOf("strong");
-      if (idx !== -1) activeMarks.splice(idx, 1);
+      if (idx !== -1) {
+        activeMarks.splice(idx, 1);
+      }
       continue;
     }
     if (part === "</em>" || part === "</i>") {
       const idx = activeMarks.lastIndexOf("em");
-      if (idx !== -1) activeMarks.splice(idx, 1);
+      if (idx !== -1) {
+        activeMarks.splice(idx, 1);
+      }
       continue;
     }
 
     // Skip <a> tags (strip them, keep text content)
-    if (part.startsWith("<a") || part === "</a>") continue;
+    if (part.startsWith("<a") || part === "</a>") {
+      continue;
+    }
 
     // Skip any other stray HTML tags
-    if (part.startsWith("<") && part.endsWith(">")) continue;
+    if (part.startsWith("<") && part.endsWith(">")) {
+      continue;
+    }
 
     // Text content — strip any remaining inline tags and decode entities
     const text = decodeHtmlEntities(part.replace(/<[^>]+>/g, ""));
@@ -302,9 +315,14 @@ function htmlToBlocks(html: string, style: string): PTBlock[] {
 
   for (const p of paragraphs) {
     // Remove outer <p> tags
-    const inner = p.replace(/^<p[^>]*>/, "").replace(/<\/p>$/, "").trim();
+    const inner = p
+      .replace(/^<p[^>]*>/, "")
+      .replace(/<\/p>$/, "")
+      .trim();
     const cleaned = inner.replace(/<br\s*\/?>/gi, " ");
-    if (!cleaned) continue;
+    if (!cleaned) {
+      continue;
+    }
 
     blocks.push({
       _type: "block",
@@ -321,7 +339,6 @@ function htmlToBlocks(html: string, style: string): PTBlock[] {
 // --- Interview Content Transform ---
 
 interface KirbyBlock {
-  type: "heading" | "text" | "image";
   content: {
     text?: string;
     level?: string;
@@ -331,6 +348,7 @@ interface KirbyBlock {
   };
   id: string;
   isHidden: boolean;
+  type: "heading" | "text" | "image";
 }
 
 interface KirbyColumn {
@@ -343,9 +361,8 @@ interface KirbyRow {
 }
 
 interface SingleMediaBlock {
-  _type: "singleMediaBlock";
   _key: string;
-  orientation: string;
+  _type: "singleMediaBlock";
   media: {
     _type: "mediaItem";
     type: "image";
@@ -356,6 +373,7 @@ interface SingleMediaBlock {
     caption: string;
     alt: string;
   };
+  orientation: string;
 }
 
 type SanityBlock = PTBlock | SingleMediaBlock;
@@ -368,7 +386,6 @@ async function transformInterviewContent(
   try {
     rows = JSON.parse(interviewJson);
   } catch {
-    console.warn("  Warning: Could not parse interview JSON");
     return [];
   }
 
@@ -377,10 +394,14 @@ async function transformInterviewContent(
   for (const row of rows) {
     // Find the column with content (the one with blocks)
     const contentColumn = row.columns.find((col) => col.blocks.length > 0);
-    if (!contentColumn) continue;
+    if (!contentColumn) {
+      continue;
+    }
 
     for (const block of contentColumn.blocks) {
-      if (block.isHidden) continue;
+      if (block.isHidden) {
+        continue;
+      }
 
       switch (block.type) {
         case "heading": {
@@ -416,14 +437,17 @@ async function transformInterviewContent(
         case "image": {
           const imageRefs = block.content.image || [];
           const fileRef = imageRefs[0];
-          if (!fileRef) break;
+          if (!fileRef) {
+            break;
+          }
 
           const uuid = resolveFileUuid(fileRef);
-          if (!uuid) break;
+          if (!uuid) {
+            break;
+          }
 
           const imageMeta = uuidMap.get(uuid);
           if (!imageMeta) {
-            console.warn(`  Warning: Could not resolve UUID ${uuid}`);
             break;
           }
 
@@ -469,8 +493,6 @@ let placeMap: RefMap;
 let professionalMap: RefMap;
 
 async function prefetchReferenceMaps(): Promise<void> {
-  console.log("Pre-fetching reference maps...\n");
-
   const [tags, designers, studios, places, professionals] = await Promise.all([
     client.fetch<{ _id: string; name: string; slug?: { current: string } }[]>(
       `*[_type == "tag"]{ _id, name, slug }`
@@ -499,18 +521,18 @@ async function prefetchReferenceMaps(): Promise<void> {
   professionalMap = new Map(
     professionals.map((p) => [normalizeName(p.name), p._id])
   );
-
-  console.log(
-    `  Tags: ${tagMap.size}, Designers: ${designerMap.size}, Studios: ${studioMap.size}, Places: ${placeMap.size}, Professionals: ${professionalMap.size}\n`
-  );
 }
 
 async function resolveOrCreateDesigner(name: string): Promise<string> {
   const normalized = normalizeName(name);
 
   // Check designers first, then professionals
-  if (designerMap.has(normalized)) return designerMap.get(normalized)!;
-  if (professionalMap.has(normalized)) return professionalMap.get(normalized)!;
+  if (designerMap.has(normalized)) {
+    return designerMap.get(normalized)!;
+  }
+  if (professionalMap.has(normalized)) {
+    return professionalMap.get(normalized)!;
+  }
 
   // Create new designer
   const slug = toSlug(name);
@@ -526,14 +548,15 @@ async function resolveOrCreateDesigner(name: string): Promise<string> {
   }
 
   designerMap.set(normalized, id);
-  console.log(`  Created designer: ${name} (${id})`);
   return id;
 }
 
 async function resolveOrCreateStudio(name: string): Promise<string> {
   const normalized = normalizeName(name);
 
-  if (studioMap.has(normalized)) return studioMap.get(normalized)!;
+  if (studioMap.has(normalized)) {
+    return studioMap.get(normalized)!;
+  }
 
   const slug = toSlug(name);
   const id = `studio-${slug}`;
@@ -547,14 +570,15 @@ async function resolveOrCreateStudio(name: string): Promise<string> {
   }
 
   studioMap.set(normalized, id);
-  console.log(`  Created studio: ${name} (${id})`);
   return id;
 }
 
 async function resolveOrCreatePlace(name: string): Promise<string> {
   const normalized = normalizeName(name);
 
-  if (placeMap.has(normalized)) return placeMap.get(normalized)!;
+  if (placeMap.has(normalized)) {
+    return placeMap.get(normalized)!;
+  }
 
   const slug = toSlug(name);
   const id = `place-${slug}`;
@@ -568,14 +592,15 @@ async function resolveOrCreatePlace(name: string): Promise<string> {
   }
 
   placeMap.set(normalized, id);
-  console.log(`  Created place: ${name} (${id})`);
   return id;
 }
 
 async function resolveOrCreateTag(tagSlug: string): Promise<string> {
   const normalized = normalizeName(tagSlug);
 
-  if (tagMap.has(normalized)) return tagMap.get(normalized)!;
+  if (tagMap.has(normalized)) {
+    return tagMap.get(normalized)!;
+  }
 
   // Derive display name from slug: "small-studios" → "Small Studios"
   const name = tagSlug
@@ -594,7 +619,6 @@ async function resolveOrCreateTag(tagSlug: string): Promise<string> {
   }
 
   tagMap.set(normalized, id);
-  console.log(`  Created tag: ${name} (${id})`);
   return id;
 }
 
@@ -604,8 +628,6 @@ async function processInterview(
   folderName: string,
   folderPath: string
 ): Promise<void> {
-  console.log(`\nProcessing: ${folderName}`);
-
   // Parse Kirby files
   const itContent = await readFile(
     join(folderPath, "interview.it.txt"),
@@ -692,7 +714,9 @@ async function processInterview(
 
   // Reading time
   const readingTimeStr = itFields.Readingtime || "";
-  const readingTime = readingTimeStr ? parseInt(readingTimeStr, 10) : undefined;
+  const readingTime = readingTimeStr
+    ? Number.parseInt(readingTimeStr, 10)
+    : undefined;
 
   // Tags
   const tagRefs: { _type: "reference"; _ref: string; _key: string }[] = [];
@@ -702,7 +726,7 @@ async function processInterview(
     ...new Set(
       [tagPrimary, ...tagSecondary.split(",")]
         .map((t) => t.trim())
-        .filter(Boolean),
+        .filter(Boolean)
     ),
   ];
   for (const tagSlug of tagSlugs) {
@@ -719,12 +743,19 @@ async function processInterview(
 
   // Interview content (EN) → Portable Text
   const interviewJson = enFields.Interview || "[]";
-  const interviewBlocks = await transformInterviewContent(interviewJson, uuidMap);
+  const interviewBlocks = await transformInterviewContent(
+    interviewJson,
+    uuidMap
+  );
 
   // SEO fields
   const seo: Record<string, unknown> = { _type: "seoModule" };
-  if (enFields.Metatitle) seo.metaTitle = enFields.Metatitle;
-  if (enFields.Metadescription) seo.metaDescription = enFields.Metadescription;
+  if (enFields.Metatitle) {
+    seo.metaTitle = enFields.Metatitle;
+  }
+  if (enFields.Metadescription) {
+    seo.metaDescription = enFields.Metadescription;
+  }
   if (enFields.Ogdescription) {
     seo.openGraph = {
       _type: "openGraph",
@@ -748,40 +779,43 @@ async function processInterview(
   if (publishingDate) {
     doc.publishingDate = { _type: "publishingDate", date: publishingDate };
   }
-  if (coverData) doc.cover = coverData;
-  if (designerRefs.length > 0) doc.designersAndProfessionals = designerRefs;
-  if (studioRef) doc.studio = studioRef;
-  if (placeRef) doc.place = placeRef;
-  if (readingTime && !isNaN(readingTime)) doc.readingTime = readingTime;
+  if (coverData) {
+    doc.cover = coverData;
+  }
+  if (designerRefs.length > 0) {
+    doc.designersAndProfessionals = designerRefs;
+  }
+  if (studioRef) {
+    doc.studio = studioRef;
+  }
+  if (placeRef) {
+    doc.place = placeRef;
+  }
+  if (readingTime && !Number.isNaN(readingTime)) {
+    doc.readingTime = readingTime;
+  }
   if (tagRefs.length > 0) {
     doc.tags = tagRefs;
   }
-  if (interviewBlocks.length > 0) doc.interview = interviewBlocks;
-  if (Object.keys(seo).length > 1) doc.seo = seo;
+  if (interviewBlocks.length > 0) {
+    doc.interview = interviewBlocks;
+  }
+  if (Object.keys(seo).length > 1) {
+    doc.seo = seo;
+  }
 
   // --- Write to Sanity ---
 
   if (DRY_RUN) {
-    console.log(`  [DRY RUN] Would create: ${docId}`);
-    console.log(`  Title: ${title}`);
-    console.log(`  Slug: ${slug}`);
-    console.log(`  Type: ${interviewToType}`);
-    console.log(`  Designers: ${designerRefs.length}`);
-    console.log(`  Tags: ${tagRefs.length}`);
-    console.log(`  Content blocks: ${interviewBlocks.length}`);
-    console.log(`  Has cover: ${!!coverData}`);
   } else {
     await client.createOrReplace(doc);
-    console.log(`  Created: ${docId} — "${title}"`);
   }
 }
 
 // --- Verification ---
 
 async function verify(): Promise<void> {
-  console.log("\n=== Verification ===\n");
-
-  const [total, withCover, withContent, withDesigners, withTags] =
+  const [_total, _withCover, _withContent, _withDesigners, _withTags] =
     await Promise.all([
       client.fetch<number>(
         `count(*[_type == "interview" && _id match "interview-*"])`
@@ -799,20 +833,15 @@ async function verify(): Promise<void> {
         `count(*[_type == "interview" && _id match "interview-*" && defined(tags)])`
       ),
     ]);
-
-  console.log(`Total interviews: ${total}`);
-  console.log(`With cover: ${withCover}`);
-  console.log(`With content: ${withContent}`);
-  console.log(`With designers: ${withDesigners}`);
-  console.log(`With tags: ${withTags}`);
 }
 
 // --- Main ---
 
 async function main(): Promise<void> {
-  console.log("=== Interview Import: Kirby → Sanity ===\n");
-  if (DRY_RUN) console.log("*** DRY RUN MODE ***\n");
-  if (SKIP_IMAGES) console.log("*** SKIPPING IMAGES ***\n");
+  if (DRY_RUN) {
+  }
+  if (SKIP_IMAGES) {
+  }
 
   await prefetchReferenceMaps();
 
@@ -822,41 +851,32 @@ async function main(): Promise<void> {
     .filter((f) => !f.startsWith("."))
     .filter((f) => !ONLY || f === ONLY)
     .sort((a, b) => {
-      const numA = parseInt(a.split("_")[0], 10);
-      const numB = parseInt(b.split("_")[0], 10);
+      const numA = Number.parseInt(a.split("_")[0], 10);
+      const numB = Number.parseInt(b.split("_")[0], 10);
       return numA - numB;
     });
 
-  console.log(`Found ${folders.length} interview(s) to process`);
-
-  let success = 0;
-  let errors = 0;
+  let _success = 0;
+  let _errors = 0;
 
   for (let i = 0; i < folders.length; i++) {
     const folder = folders[i];
-    const progress = `[${i + 1}/${folders.length}]`;
+    const _progress = `[${i + 1}/${folders.length}]`;
 
     try {
       const folderPath = join(INTERVIEWS_DIR, folder);
       await processInterview(folder, folderPath);
-      success++;
-      console.log(`${progress} OK`);
-    } catch (err) {
-      console.error(
-        `${progress} ERROR: ${folder} — ${err instanceof Error ? err.message : err}`
-      );
-      errors++;
+      _success++;
+    } catch {
+      _errors++;
     }
   }
-
-  console.log(`\n=== Results: ${success} success, ${errors} errors ===`);
 
   if (!DRY_RUN) {
     await verify();
   }
 }
 
-main().catch((err) => {
-  console.error("Fatal error:", err);
+main().catch((_err) => {
   process.exit(1);
 });

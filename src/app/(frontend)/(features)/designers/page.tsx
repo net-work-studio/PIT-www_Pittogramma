@@ -1,9 +1,9 @@
 import { Search } from "lucide-react";
 import type { Metadata } from "next";
 import CtaCard from "@/components/cards/cta-card";
-import { Button } from "@/components/ui/button";
 import DesignerGrid from "@/components/modules/designer/designer-grid";
 import PageHeader from "@/components/shared/page-header";
+import { Button } from "@/components/ui/button";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";

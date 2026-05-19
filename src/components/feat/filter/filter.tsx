@@ -1,8 +1,8 @@
 "use client";
 
+import { XIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo } from "react";
-import { XIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,8 +19,8 @@ interface Tag {
 
 interface FilterBarProps {
   availableTags: Tag[];
-  totalCount: number;
   label: string;
+  totalCount: number;
 }
 
 export default function FilterBar({
@@ -98,14 +98,14 @@ export default function FilterBar({
               const isActive = activeSlugs.includes(tag.slug);
               return (
                 <button
-                  key={tag._id}
-                  type="button"
-                  onClick={() => toggleTag(tag.slug)}
                   className={`cursor-pointer rounded-full px-3 py-1 font-mono text-xs uppercase transition-colors ${
                     isActive
                       ? "bg-foreground text-background"
                       : "border border-foreground/20 bg-transparent hover:border-foreground/40"
                   }`}
+                  key={tag._id}
+                  onClick={() => toggleTag(tag.slug)}
+                  type="button"
                 >
                   {tag.name}
                 </button>
@@ -117,14 +117,14 @@ export default function FilterBar({
 
       {activeTagObjects.map((tag) => (
         <span
-          key={tag._id}
           className="inline-flex items-center gap-1 rounded-full border border-foreground/20 px-3 py-1 font-mono text-xs uppercase"
+          key={tag._id}
         >
           {tag.name}
           <button
-            type="button"
-            onClick={() => removeTag(tag.slug)}
             className="cursor-pointer rounded-full p-0.5 hover:bg-foreground/10"
+            onClick={() => removeTag(tag.slug)}
+            type="button"
           >
             <XIcon className="size-3" />
           </button>
@@ -133,16 +133,16 @@ export default function FilterBar({
 
       {activeSlugs.length > 1 && (
         <button
-          type="button"
+          className="cursor-pointer font-mono text-muted-foreground text-xs underline underline-offset-2 hover:text-foreground"
           onClick={clearAll}
-          className="cursor-pointer font-mono text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground"
+          type="button"
         >
           Clear all
         </button>
       )}
 
       {activeSlugs.length > 0 && (
-        <span className="font-mono text-sm text-muted-foreground">
+        <span className="font-mono text-muted-foreground text-sm">
           {totalCount} {label}
         </span>
       )}

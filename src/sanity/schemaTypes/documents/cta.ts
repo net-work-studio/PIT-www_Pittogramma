@@ -1,5 +1,6 @@
 import { BlockElementIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { requiredHttpUrlWhen } from "@/sanity/utils/validation";
 
 export const cta = defineType({
   name: "cta",
@@ -37,6 +38,14 @@ export const cta = defineType({
       title: "Image",
       type: "imageWithMetadata",
       hidden: ({ document }) => document?.variant !== "withImage",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const document = context.document as { variant?: string };
+          if (document?.variant === "withImage" && !value) {
+            return "Image is required for CTAs with images";
+          }
+          return true;
+        }),
     }),
     defineField({
       name: "buttonText",
@@ -74,12 +83,24 @@ export const cta = defineType({
         { type: "designersPage" },
       ],
       hidden: ({ document }) => document?.linkType !== "internal",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const document = context.document as { linkType?: string };
+          if (document?.linkType === "internal" && !value) {
+            return "Internal page is required for internal CTAs";
+          }
+          return true;
+        }),
     }),
     defineField({
       name: "externalUrl",
       title: "External URL",
       type: "url",
       hidden: ({ document }) => document?.linkType !== "external",
+      validation: requiredHttpUrlWhen((context) => {
+        const document = context.document as { linkType?: string };
+        return document?.linkType === "external";
+      }, "External URL is required for external CTAs"),
     }),
   ],
   preview: {

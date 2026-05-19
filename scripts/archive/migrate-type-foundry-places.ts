@@ -19,9 +19,6 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 const token = process.env.SANITY_API_WRITE_TOKEN;
 
 if (!(projectId && dataset && token)) {
-  console.error(
-    "Missing environment variables: NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, SANITY_API_WRITE_TOKEN"
-  );
   process.exit(1);
 }
 
@@ -41,22 +38,15 @@ interface TypeFoundryDoc {
 }
 
 async function main() {
-  console.log("=== TypeFoundry place → places[] Migration ===\n");
-
   const docs: TypeFoundryDoc[] = await rawClient.fetch(
     `*[_type == "typeFoundry" && defined(place)]{ _id, place }`
   );
 
-  console.log(
-    `Found ${docs.length} typeFoundry documents with old "place" field\n`
-  );
-
   if (docs.length === 0) {
-    console.log("Nothing to migrate.");
     process.exit(0);
   }
 
-  let success = 0;
+  let _success = 0;
   let errors = 0;
 
   for (const doc of docs) {
@@ -74,44 +64,26 @@ async function main() {
         })
         .unset(["place"])
         .commit();
-
-      console.log(`  OK: Migrated ${doc._id} (place ref: ${doc.place._ref})`);
-      success++;
-    } catch (err) {
-      console.error(
-        `  ERROR: ${doc._id}: ${err instanceof Error ? err.message : err}`
-      );
+      _success++;
+    } catch {
       errors++;
     }
   }
 
-  console.log(`\nMigration complete: ${success} succeeded, ${errors} errors\n`);
-
-  // Verify
-  console.log("Verifying...\n");
-
   const remaining = await rawClient.fetch(
     `count(*[_type == "typeFoundry" && defined(place)])`
   );
-  const migrated = await rawClient.fetch(
+  const _migrated = await rawClient.fetch(
     `count(*[_type == "typeFoundry" && defined(places)])`
   );
 
-  console.log(`  Documents still with old "place" field: ${remaining}`);
-  console.log(`  Documents with new "places[]" array: ${migrated}`);
-
   if (remaining === 0 && errors === 0) {
-    console.log("\n=== Migration successful! ===");
     process.exit(0);
   } else {
-    console.log(
-      "\n=== WARNING: Some documents were not migrated. Check errors above. ==="
-    );
     process.exit(1);
   }
 }
 
-main().catch((err) => {
-  console.error("Migration failed:", err);
+main().catch((_err) => {
   process.exit(1);
 });

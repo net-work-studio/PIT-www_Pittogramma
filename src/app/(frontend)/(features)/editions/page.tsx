@@ -6,10 +6,7 @@ import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
 import { sanityFetch } from "@/sanity/lib/live";
-import {
-  EDITIONS_LIST_QUERY,
-  EDITIONS_PAGE_QUERY,
-} from "@/sanity/lib/queries";
+import { EDITIONS_LIST_QUERY, EDITIONS_PAGE_QUERY } from "@/sanity/lib/queries";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: page } = await sanityFetch({
@@ -39,7 +36,7 @@ export default async function EditionsPage() {
 
   return (
     <>
-      <div className="space-y-10 pb-10 pt-6">
+      <div className="space-y-10 pt-6 pb-10">
         {items.length === 0 ? (
           <p className="py-20 text-center text-muted-foreground">
             No editions yet

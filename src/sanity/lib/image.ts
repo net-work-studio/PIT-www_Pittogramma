@@ -48,7 +48,7 @@ export const getLqip = (
     const meta = (asset as { metadata?: AssetMetadata }).metadata;
     return meta?.lqip ?? undefined;
   }
-  return undefined;
+  return;
 };
 
 /** Extract image dimensions from resolved asset metadata */
@@ -60,7 +60,7 @@ export const getImageDimensions = (
     const meta = (asset as { metadata?: AssetMetadata }).metadata;
     return meta?.dimensions ?? undefined;
   }
-  return undefined;
+  return;
 };
 
 /** Generate blur data URL for Next.js Image placeholder.

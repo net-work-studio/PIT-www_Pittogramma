@@ -14,7 +14,7 @@ export default function ProjectGallery({ gallery }: ProjectGalleryProps) {
 
   return (
     <MediaBlocks
-      blocks={gallery as ReadonlyArray<MediaBlockShape>}
+      blocks={gallery as readonly MediaBlockShape[]}
       className="mt-2.5"
       rounded={{ single: "3xl", multi: "xl" }}
       showCaptions={false}

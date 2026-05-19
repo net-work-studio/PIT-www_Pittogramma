@@ -21,9 +21,36 @@ interface InterviewInfoProps {
   publishingDate?: string | null;
   readingTime?: number | null;
   studio?: string | null;
-  typeFoundry?: string | null;
   tags?: Tag[] | null;
   title?: string | null;
+  typeFoundry?: string | null;
+}
+
+function getEntityName({
+  interviewToType,
+  studio,
+  typeFoundry,
+}: Pick<InterviewInfoProps, "interviewToType" | "studio" | "typeFoundry">):
+  | string
+  | null
+  | undefined {
+  if (interviewToType === "studio") {
+    return studio;
+  }
+  if (interviewToType === "typeFoundry") {
+    return typeFoundry;
+  }
+  return null;
+}
+
+function getEntityLabel({ studio, typeFoundry }: InterviewInfoProps) {
+  if (studio) {
+    return "Studio";
+  }
+  if (typeFoundry) {
+    return "Type Foundry";
+  }
+  return null;
 }
 
 export default function InterviewInfo({
@@ -37,13 +64,8 @@ export default function InterviewInfo({
   publishingDate,
   tags,
 }: InterviewInfoProps) {
-  const entityName =
-    interviewToType === "studio"
-      ? studio
-      : interviewToType === "typeFoundry"
-        ? typeFoundry
-        : null;
-  const entityLabel = studio ? "Studio" : typeFoundry ? "Type Foundry" : null;
+  const entityName = getEntityName({ interviewToType, studio, typeFoundry });
+  const entityLabel = getEntityLabel({ studio, typeFoundry });
   const intervieweeNames = interviewTo
     ?.map((p: Person) => p.name)
     .filter(Boolean)
@@ -67,7 +89,7 @@ export default function InterviewInfo({
           </h2>
         ) : null}
         {entityName && intervieweeNames ? (
-          <p className="font-mono text-xs text-muted-foreground uppercase">
+          <p className="font-mono text-muted-foreground text-xs uppercase">
             {intervieweeNames}
           </p>
         ) : null}

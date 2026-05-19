@@ -111,7 +111,7 @@ export const journal = defineType({
       );
       return {
         title,
-        subtitle: label ? labels[label] ?? label : undefined,
+        subtitle: label ? (labels[label] ?? label) : undefined,
         media,
       };
     },

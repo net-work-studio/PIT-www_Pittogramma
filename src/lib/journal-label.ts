@@ -1,31 +1,35 @@
-import {
-  JOURNAL_LABELS,
-  type JournalLabel,
-} from "@/lib/journal-labels";
+import type { JournalLabel as JournalLabelValue } from "@/lib/journal-labels";
+import { JOURNAL_LABELS } from "@/lib/journal-labels";
 
-export type { JournalLabel };
+export type { JournalLabel } from "@/lib/journal-labels";
 
 interface JournalLabelConfig {
-  label: string;
   badgeVariant: "article" | "diary" | "baseline";
+  label: string;
 }
 
-const BADGE_VARIANT: Record<JournalLabel, JournalLabelConfig["badgeVariant"]> = {
+const BADGE_VARIANT: Record<
+  JournalLabelValue,
+  JournalLabelConfig["badgeVariant"]
+> = {
   articles: "article",
   diary: "diary",
   baseline: "baseline",
 };
 
-const LABEL_CONFIG: Record<JournalLabel, JournalLabelConfig> = Object.fromEntries(
-  JOURNAL_LABELS.map((opt) => [
-    opt.value,
-    { label: opt.title, badgeVariant: BADGE_VARIANT[opt.value] },
-  ])
-) as Record<JournalLabel, JournalLabelConfig>;
+const LABEL_CONFIG: Record<JournalLabelValue, JournalLabelConfig> =
+  Object.fromEntries(
+    JOURNAL_LABELS.map((opt) => [
+      opt.value,
+      { label: opt.title, badgeVariant: BADGE_VARIANT[opt.value] },
+    ])
+  ) as Record<JournalLabelValue, JournalLabelConfig>;
 
 export function getJournalLabelConfig(
-  label: string | null | undefined,
+  label: string | null | undefined
 ): JournalLabelConfig | null {
-  if (!label) return null;
-  return LABEL_CONFIG[label as JournalLabel] ?? null;
+  if (!label) {
+    return null;
+  }
+  return LABEL_CONFIG[label as JournalLabelValue] ?? null;
 }

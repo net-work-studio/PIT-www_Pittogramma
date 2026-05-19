@@ -16,6 +16,16 @@ export const imageWithMetadata = defineType({
       name: "caption",
       title: "Caption / Copyright",
     }),
-    defineField({ type: "string", name: "alt", title: "Alt" }),
+    defineField({
+      type: "string",
+      name: "alt",
+      title: "Alt",
+      validation: (rule) =>
+        rule
+          .custom((value) =>
+            value?.trim() ? true : "Add alt text for accessibility"
+          )
+          .warning(),
+    }),
   ],
 });

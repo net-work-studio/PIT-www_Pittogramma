@@ -6,26 +6,26 @@ import { cn } from "@/lib/utils";
 import { getEmbedInfo } from "@/lib/video-embed";
 
 export interface MediaItemShape {
-  type?: "image" | "videoUpload" | "videoEmbed" | string | null;
+  alt?: string | null;
+  caption?: string | null;
   image?: { asset?: unknown; hotspot?: unknown; crop?: unknown } | null;
+  type?: "image" | "videoUpload" | "videoEmbed" | string | null;
   videoFileUrl?: string | null;
   videoUrl?: string | null;
-  caption?: string | null;
-  alt?: string | null;
 }
 
 export interface MediaBlockShape {
   _key?: string | null;
   _type?: string | null;
-  orientation?: string | null;
-  media?: MediaItemShape | null;
-  left?: MediaItemShape | null;
-  right?: MediaItemShape | null;
-  center?: MediaItemShape | null;
-  topLeft?: MediaItemShape | null;
-  topRight?: MediaItemShape | null;
   bottomLeft?: MediaItemShape | null;
   bottomRight?: MediaItemShape | null;
+  center?: MediaItemShape | null;
+  left?: MediaItemShape | null;
+  media?: MediaItemShape | null;
+  orientation?: string | null;
+  right?: MediaItemShape | null;
+  topLeft?: MediaItemShape | null;
+  topRight?: MediaItemShape | null;
 }
 
 const ROUNDED_CLASS = {
@@ -37,18 +37,18 @@ const ROUNDED_CLASS = {
 type RoundedKey = keyof typeof ROUNDED_CLASS;
 
 export interface RoundedConfig {
-  single: RoundedKey;
   multi: RoundedKey;
+  single: RoundedKey;
 }
 
 const DEFAULT_ROUNDED: RoundedConfig = { single: "xl", multi: "xl" };
 
 interface MediaBlocksProps {
-  blocks: ReadonlyArray<MediaBlockShape> | null | undefined;
-  showCaptions?: boolean;
-  rounded?: RoundedKey | RoundedConfig;
-  priorityFirst?: boolean;
+  blocks: readonly MediaBlockShape[] | null | undefined;
   className?: string;
+  priorityFirst?: boolean;
+  rounded?: RoundedKey | RoundedConfig;
+  showCaptions?: boolean;
 }
 
 function resolveRounded(

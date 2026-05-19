@@ -77,44 +77,63 @@ function StudioGridCard({ studio }: { studio: Studio }) {
         </span>
       </p>
       <span className="text-muted-foreground text-sm">
-        {studio.category?.name || "-"},{" "}
-        <TagsDisplay tags={studio.tags} />
+        {studio.category?.name || "-"}, <TagsDisplay tags={studio.tags} />
       </span>
     </div>
   );
 }
 
 interface StudiosContentProps {
-  studios: STUDIOS_QUERY_RESULT;
   enabledViews: ViewMode[];
   searchEnabled: boolean;
+  studios: STUDIOS_QUERY_RESULT;
 }
 
-export function StudiosContent({ studios, enabledViews, searchEnabled }: StudiosContentProps) {
+export function StudiosContent({
+  studios,
+  enabledViews,
+  searchEnabled,
+}: StudiosContentProps) {
   const defaultView = enabledViews[0] ?? "list";
   const [view, setView] = useState<string>(defaultView);
 
   const markers = studios.flatMap((studio) =>
-    (studio.places ?? [])
-      .filter((p) => p?.lat != null && p?.lng != null)
-      .map((p) => ({
-        id: `${studio._id}-${p._id}`,
-        name: studio.name ?? "",
-        lat: p.lat!,
-        lng: p.lng!,
-      }))
+    (studio.places ?? []).flatMap((p) => {
+      if (p?.lat == null || p.lng == null) {
+        return [];
+      }
+
+      return [
+        {
+          id: `${studio._id}-${p._id}`,
+          name: studio.name ?? "",
+          lat: p.lat,
+          lng: p.lng,
+        },
+      ];
+    })
   );
 
   return (
-    <Tabs className="w-full gap-0" defaultValue={defaultView} onValueChange={setView}>
+    <Tabs
+      className="w-full gap-0"
+      defaultValue={defaultView}
+      onValueChange={setView}
+    >
       <div className="sticky top-0 z-10 bg-background pt-16 pb-2.5">
         <div className="flex w-full items-center justify-between pb-2.5">
           {searchEnabled && <Input placeholder="Search" type="search" />}
           {enabledViews.length > 1 && (
             <TabsList>
-              {enabledViews.includes("list") && <TabsTrigger value="list">List</TabsTrigger>}
-              {enabledViews.includes("grid") && <TabsTrigger value="grid">Grid</TabsTrigger>}
-              {enabledViews.includes("map") && <TabsTrigger value="map">Map</TabsTrigger>}
+              {enabledViews.includes("list") && (
+                <TabsTrigger value="list">List</TabsTrigger>
+              )}
+              {enabledViews.includes("grid") && (
+                <TabsTrigger value="grid">Grid</TabsTrigger>
+              )}
+              {enabledViews.includes("map") && (
+                <TabsTrigger value="map">Map</TabsTrigger>
+              )}
             </TabsList>
           )}
         </div>
