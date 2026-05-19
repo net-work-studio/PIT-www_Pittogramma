@@ -48,7 +48,6 @@ export default function SanityImage({
     ? builder.width(1920).quality(Number(quality)).auto("format").url()
     : builder
         .width(Number(width))
-        .height(Number(height))
         .quality(Number(quality))
         .auto("format")
         .url();

@@ -46,19 +46,24 @@ export default function FeaturedHero({
       )}
       href={href}
     >
-      <div className="z-10 flex flex-col items-center gap-4 text-background">
+      <div className="z-10 flex flex-col items-center gap-2 text-background">
         <div className="flex gap-2">
-          <Badge variant="outline">Feature Now</Badge>
-          <Badge variant={badgeVariant ?? badgeVariantMap[contentType]}>
+          <Badge className="outline-background" variant="outline">
+            Feature Now
+          </Badge>
+          <Badge
+            className="outline-background"
+            variant={badgeVariant ?? badgeVariantMap[contentType]}
+          >
             {badgeLabel}
           </Badge>
         </div>
-        <h2 className="text-balance font-normal font-sans text-2xl md:text-3xl">
-          {title}
-        </h2>
-        {subtitle && (
-          <p className="text-lg text-muted-foreground">{subtitle}</p>
-        )}
+        <hgroup className="flex flex-col items-center gap-1">
+          <h2 className="text-balance font-normal font-sans text-2xl md:text-3xl">
+            {title}
+          </h2>
+          {subtitle && <p className="text-background text-lg">{subtitle}</p>}
+        </hgroup>
       </div>
 
       <div className="absolute z-1 h-full w-full rounded-md bg-black/30 transition-opacity duration-500 group-hover:bg-black/25" />
