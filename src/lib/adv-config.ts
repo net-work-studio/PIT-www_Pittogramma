@@ -1,5 +1,5 @@
 // Single source of truth for ADV tier configuration. Used by both the
-// schema-level validators and the /feed page to keep caps and ordering in lock-step.
+// schema-level validators and the feed dialog to keep caps and ordering in lock-step.
 
 import type { INDEX_GOLD_QUERY_RESULT } from "@/sanity/types";
 
@@ -14,7 +14,7 @@ export const TIER_CAPS: Record<AdvTier, number> = {
   bronze: 5,
 };
 
-// Tier priority used for both /feed concatenation order and the FEED_QUERY
+// Tier priority used for both feed dialog concatenation order and the FEED_QUERY
 // GROQ sort priority. If you change this, also update the `select(...)` clause
 // in FEED_QUERY in src/sanity/lib/queries.ts.
 export const TIER_ORDER: readonly AdvTier[] = ["gold", "silver", "bronze"];
