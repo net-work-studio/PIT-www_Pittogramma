@@ -1,0 +1,24 @@
+src/sanity/lib/queries.ts
+  s_1e15f007dd4deb::t_18baf8463b5c57 1233
+src/sanity/schemaTypes/documents/community.ts
+  s_1e15f007dd4deb::t_814056e7d4ff6b 145-147
+src/components/modules/journal/journal-content.tsx
+  s_1e15f007dd4deb::t_49f87a42937782 101,110
+  s_1e15f007dd4deb::t_8059a68c846280 68-69,76
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "a0862826e93a7f9e1ebe7afc9d779784166f2a2f",
+  "prompts": {},
+  "sessions": {
+    "s_1e15f007dd4deb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6f053d77-2f69-414f-839b-f3a7c561b987",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
