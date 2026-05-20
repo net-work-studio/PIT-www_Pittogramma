@@ -1138,7 +1138,7 @@ export const ADVS_QUERY = defineQuery(`
   }
 `);
 
-// /feed query — Phase 2: gold + silver + bronze.
+// Feed query — gold + silver + bronze.
 // Active window: dateStart <= today <= dateEnd. Sorted by tier priority
 // (gold → silver → bronze), then dateStart asc (first-booked-first-served),
 // tie-break on _createdAt asc. The hard cap of 16 is a safety net well above
@@ -1230,16 +1230,16 @@ export const INDEX_GOLD_QUERY = defineQuery(`
   }
 `);
 
-// /feed community query — Phase 3.
+// Feed community query — all active community items, deliberately uncapped.
 // Active window: dateStart <= today AND (no dateEnd, OR dateEnd >= today).
 // Sorted by dateStart asc (first-booked-first-served), tie-break on
-// _createdAt asc. The [0...3] slice matches the Community visible cap.
+// _createdAt asc.
 export const FEED_COMMUNITY_QUERY = defineQuery(`
   *[
     _type == "community"
     && dateStart <= $today
     && (!defined(dateEnd) || dateEnd >= $today)
-  ] | order(dateStart asc, _createdAt asc) [0...3] {
+  ] | order(dateStart asc, _createdAt asc) {
     _id,
     title,
     type,

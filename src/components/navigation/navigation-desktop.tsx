@@ -52,11 +52,6 @@ export function NavigationDesktop({ resources }: { resources: Resource[] }) {
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/feed">Feed</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
           <NavigationMenuTrigger>Info</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="w-content">

@@ -1,26 +1,12 @@
 import { CogIcon, DocumentTextIcon, UsersIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import { buildLocalToday } from "@/lib/date-utils";
-import { apiVersion } from "@/sanity/env";
-import { getPublishedId } from "@/sanity/lib/document-id";
-import type { Community } from "@/sanity/types";
 import { httpUrlValidation } from "@/sanity/utils/validation";
-
-// Visible cap for active community items at any moment. Keep in sync with the
-// `[0...3]` slice in FEED_COMMUNITY_QUERY in src/sanity/lib/queries.ts.
-const COMMUNITY_ACTIVE_CAP = 3;
 
 const COMMUNITY_TYPE_LABELS: Record<string, string> = {
   projectOnSupport: "Project on Support",
   partnership: "Partnership",
 };
-
-// Subset of Community fields the document-level validator inspects. Picking
-// from the generated `Community` keeps this in lock-step with the schema.
-// `dateEnd` is optional in the schema; `dateStart` can still be undefined at
-// validation time while the document is being filled in.
-type CommunityValidationDoc = Pick<Community, "_id"> &
-  Partial<Pick<Community, "dateStart" | "dateEnd">>;
 
 export const community = defineType({
   type: "document",
@@ -156,46 +142,9 @@ export const community = defineType({
       ],
     }),
   ],
-  // Document-level soft warning: more than COMMUNITY_ACTIVE_CAP active items
-  // simultaneously. Mirrors the ADV capacity warning but with a single
-  // dimension (no tier).
-  validation: (rule) =>
-    rule
-      .custom(async (doc, context) => {
-        const typed = doc as CommunityValidationDoc;
-        if (!typed.dateStart) {
-          return true;
-        }
-        const today = buildLocalToday();
-        const { dateStart, dateEnd } = typed;
-        // Only warn when this doc would itself be active right now — there's no
-        // value warning about future overlaps the editor hasn't configured yet.
-        const isActive = dateStart <= today && (!dateEnd || dateEnd >= today);
-        if (!isActive) {
-          return true;
-        }
-
-        const publishedId = getPublishedId(typed._id);
-        const draftId = `drafts.${publishedId}`;
-        const client = context.getClient({ apiVersion });
-        const activeCount = await client.fetch<number>(
-          `count(*[
-          _type == "community"
-          && _id != $publishedId
-          && _id != $draftId
-          && dateStart <= $today
-          && (!defined(dateEnd) || dateEnd >= $today)
-        ])`,
-          { publishedId, draftId, today }
-        );
-
-        const total = activeCount + 1;
-        if (total > COMMUNITY_ACTIVE_CAP) {
-          return `This is the ${total}th active community item; cap is ${COMMUNITY_ACTIVE_CAP}. Surplus items won't display until others end.`;
-        }
-        return true;
-      })
-      .warning(),
+  // Community items are deliberately uncapped — all active items display in
+  // the feed (unlike advs which are tier-capped). Date filtering in
+  // FEED_COMMUNITY_QUERY handles visibility.
   preview: {
     select: {
       title: "title",

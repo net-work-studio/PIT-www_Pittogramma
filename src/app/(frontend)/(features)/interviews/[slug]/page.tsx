@@ -110,7 +110,7 @@ export default async function InterviewPage({
         type="Article"
       />
 
-      <div className="flex flex-col">
+      <div className="flex flex-col space-y-16">
         {/* Hero Section */}
         <div className="order-1 flex flex-col gap-6 px-2.5 pt-6 lg:flex-row lg:gap-10 lg:pt-16">
           <InterviewInfo
@@ -154,11 +154,11 @@ export default async function InterviewPage({
 
         {/* Bio Section */}
         {interview.introText ? (
-          <div className="order-3 border-foreground border-t-[0.5px] bg-gray-200 px-2.5 pt-6 lg:order-2 lg:border-t-0 lg:pt-20">
-            <p className="font-mono text-muted-foreground text-xs uppercase lg:text-2xl">
-              Bio
+          <div className="order-3 mx-auto w-fit space-y-2 rounded-lg border-foreground bg-muted p-4 lg:order-2 lg:p-8">
+            <p className="font-mono text-base text-muted-foreground uppercase">
+              Biography
             </p>
-            <p className="max-w-prose text-2xl">{interview.introText}</p>
+            <p className="max-w-prose text-xl">{interview.introText}</p>
           </div>
         ) : null}
 
@@ -166,7 +166,7 @@ export default async function InterviewPage({
         <dl className="order-4 mt-6 flex flex-col gap-1 px-2.5 lg:hidden">
           {interview.publishingDate?.date ? (
             <div className="flex gap-x-12">
-              <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
+              <dt className="w-34.5 shrink-0 font-mono text-muted-foreground text-sm uppercase">
                 Date
               </dt>
               <dd className="text-sm">{interview.publishingDate.date}</dd>
@@ -174,7 +174,7 @@ export default async function InterviewPage({
           ) : null}
           {interview.readingTime ? (
             <div className="flex gap-x-12">
-              <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
+              <dt className="w-34.5 shrink-0 font-mono text-muted-foreground text-sm uppercase">
                 Reading Time
               </dt>
               <dd className="text-sm">{interview.readingTime} min</dd>
@@ -182,7 +182,7 @@ export default async function InterviewPage({
           ) : null}
           {interview.place?.city || interview.place?.country ? (
             <div className="flex gap-x-12">
-              <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
+              <dt className="w-34.5 shrink-0 font-mono text-muted-foreground text-sm uppercase">
                 Place
               </dt>
               <dd className="text-sm">

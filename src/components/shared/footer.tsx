@@ -9,7 +9,7 @@ export default async function Footer() {
 
   return (
     <footer className="p-4">
-      <div className="grid grid-cols-4 rounded-lg bg-secondary p-4">
+      <div className="grid grid-cols-1 gap-4 rounded-lg bg-secondary p-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-0">
         {/* Col 1 */}
         <ul>
           <li>© {new Date().getFullYear()} Pittogramma</li>
