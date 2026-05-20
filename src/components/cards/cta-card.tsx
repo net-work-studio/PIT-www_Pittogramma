@@ -55,15 +55,15 @@ export default function CtaCard({
 
   if (resolvedVariant === "withImage" && image) {
     return (
-      <div className="flex w-full gap-4 overflow-hidden rounded-[10px] bg-secondary p-8">
-        <div className="w-1/3">
+      <div className="flex w-full flex-col gap-4 overflow-hidden rounded-[10px] bg-secondary p-4 md:flex-row md:p-8">
+        <div className="md:w-1/3">
           <SanityImage
-            className="h-auto w-full object-contain"
+            className="h-auto max-h-80 w-full object-contain"
             sizes="(max-width: 768px) 100vw, 400px"
             source={image}
           />
         </div>
-        <div className="flex w-2/3 flex-col items-center justify-center">
+        <div className="flex w-full flex-col items-center justify-center md:w-2/3">
           {headline && (
             <h3 className="mb-2 text-balance text-center text-3xl text-foreground">
               {headline}
