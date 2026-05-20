@@ -65,13 +65,15 @@ function MediaRenderer({
       );
     }
     if (type === "videoEmbed" && videoUrl) {
+      const embedSrc = getEmbedUrl(videoUrl);
+      if (!embedSrc) return null;
       return (
         <AspectRatio className="relative w-full" ratio={16 / 9}>
           <iframe
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             className="absolute inset-0 h-full w-full rounded-lg"
-            src={getEmbedUrl(videoUrl)}
+            src={embedSrc}
             title="Video embed"
           />
         </AspectRatio>
@@ -96,7 +98,7 @@ const YOUTUBE_REGEX =
   /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/;
 const VIMEO_REGEX = /vimeo\.com\/(\d+)/;
 
-function getEmbedUrl(url: string): string {
+function getEmbedUrl(url: string): string | null {
   const youtubeMatch = url.match(YOUTUBE_REGEX);
   if (youtubeMatch) {
     return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
@@ -105,7 +107,7 @@ function getEmbedUrl(url: string): string {
   if (vimeoMatch) {
     return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
   }
-  return url;
+  return null;
 }
 
 interface SingleMediaBlockProps {

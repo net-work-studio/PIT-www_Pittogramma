@@ -1230,7 +1230,7 @@ export const INDEX_GOLD_QUERY = defineQuery(`
   }
 `);
 
-// Feed community query — all active community items, uncapped.
+// Feed community query — all active community items, deliberately uncapped.
 // Active window: dateStart <= today AND (no dateEnd, OR dateEnd >= today).
 // Sorted by dateStart asc (first-booked-first-served), tie-break on
 // _createdAt asc.
