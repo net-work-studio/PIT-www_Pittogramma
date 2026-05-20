@@ -1,0 +1,44 @@
+src/sanity/types.ts
+  s_1979bcc84c4780::t_31e809f9e2f5af 5806,6316
+src/components/feat/feed/feed-dialog.tsx
+  s_1979bcc84c4780::t_5bc31927b2fc60 1-9,18-59,62-64,74,76-78,80-116,119-134
+  s_1979bcc84c4780::t_e25aa69d7944ff 10-17
+  s_1979bcc84c4780::t_602ad8b9079923 60-61,65-67,72,75,79,117-118
+  s_1979bcc84c4780::t_392caba2119586 68-71
+src/sanity/lib/queries.ts
+  s_1979bcc84c4780::t_6bc5bbaed5668b 1141
+  s_1979bcc84c4780::t_2d70227dfcffaf 1242
+  s_1979bcc84c4780::t_6eba90ab71c771 1233,1236
+src/components/shared/header.tsx
+  s_1979bcc84c4780::t_79bd8e02d17660 4,7-8,13-14,19,22-44,57
+src/components/modules/journal/journal-content.tsx
+  s_8d60b5714fd147::t_219cb6ac97d33c 236-241
+  s_8d60b5714fd147::t_10d70502c3b277 1-5,7-9,12-196
+src/lib/adv-config.ts
+  s_1979bcc84c4780::t_38adeb2408cae2 17
+  s_1979bcc84c4780::t_342d1768016007 2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "b239aa949c4b15c872d1c50ea8dcc1f58098e871",
+  "prompts": {},
+  "sessions": {
+    "s_1979bcc84c4780": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1127fd41-5543-49af-97f9-2fbb4515c3e5",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_8d60b5714fd147": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "73714dc1-115b-43c9-952d-030911d551ef",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
