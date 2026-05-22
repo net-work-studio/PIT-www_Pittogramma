@@ -250,6 +250,7 @@ export const structure: StructureResolver = (S) =>
               S.documentList()
                 .id("community-upcoming")
                 .title("Upcoming Community")
+                .apiVersion(apiVersion)
                 .filter('_type == "community" && dateStart > $today')
                 .params({ today: buildLocalToday() })
                 .defaultOrdering([{ field: "dateStart", direction: "asc" }])
@@ -261,6 +262,7 @@ export const structure: StructureResolver = (S) =>
               S.documentList()
                 .id("community-expired")
                 .title("Expired Community")
+                .apiVersion(apiVersion)
                 // Evergreen items (no dateEnd) can't expire — exclude them.
                 .filter(
                   '_type == "community" && defined(dateEnd) && dateEnd < $today'
