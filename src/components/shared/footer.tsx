@@ -12,12 +12,9 @@ export default async function Footer() {
       <div className="grid grid-cols-1 gap-4 rounded-lg bg-secondary p-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-0">
         {/* Col 1 */}
         <ul>
-          <li>© {new Date().getFullYear()} Pittogramma</li>
+          <li>Pittogramma</li>
           <li>
-            <p>All Rights Reserved</p>
-          </li>
-          <li>
-            <Link href="/terms-of-service">Privacy Policy</Link>
+            <p>© {new Date().getFullYear()}. All Rights Reserved</p>
           </li>
         </ul>
         {/* Col 2 */}
@@ -67,6 +64,16 @@ export default async function Footer() {
           </li>
           <li>
             <Link href="/donate">Donate to the project</Link>
+          </li>
+        </ul>
+
+        {/* Col 4 */}
+        <ul>
+          <li>
+            <Link href="/terms-of-service">Privacy Policy</Link>
+          </li>
+          <li>
+            <Link href="/terms-of-service">Impressum</Link>
           </li>
         </ul>
       </div>
