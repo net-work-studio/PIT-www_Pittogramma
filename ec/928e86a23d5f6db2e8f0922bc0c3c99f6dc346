@@ -1,0 +1,27 @@
+src/sanity/structure/structure.ts
+  s_1a0011cbfa0fa9::t_98d3727d5b9006 200
+  s_1a0011cbfa0fa9::t_22b365318e5f6c 72
+  s_1a0011cbfa0fa9::t_0cbf14ecbe9f34 25
+  s_1a0011cbfa0fa9::t_03bcc6aa8774ef 238
+  s_1a0011cbfa0fa9::t_2cfef86656b1b2 105
+  s_1a0011cbfa0fa9::t_3c33a828fc5bf8 94
+  s_1a0011cbfa0fa9::t_35ab410dd5fbfa 186
+  s_1a0011cbfa0fa9::t_8c724c5f3108a5 212
+  s_1a0011cbfa0fa9::t_917e700df7bb17 83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.0",
+  "base_commit_sha": "ec928e86a23d5f6db2e8f0922bc0c3c99f6dc346",
+  "prompts": {},
+  "sessions": {
+    "s_1a0011cbfa0fa9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0fcb0751-2795-45c1-af21-23459d3f2d01",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
