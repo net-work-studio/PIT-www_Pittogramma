@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import type { StructureResolver } from "sanity/structure";
 import { buildLocalToday } from "@/lib/date-utils";
+import { apiVersion } from "@/sanity/env";
 import { docListItem, group, singleton } from "./helpers";
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
@@ -68,6 +69,7 @@ export const structure: StructureResolver = (S) =>
             .child(
               S.documentList()
                 .title("Journal Authors")
+                .apiVersion(apiVersion)
                 .filter(
                   '_type == "person" && _id in *[_type == "journal"].authors[]._ref'
                 )
@@ -78,6 +80,7 @@ export const structure: StructureResolver = (S) =>
             .child(
               S.documentList()
                 .title("Project Designers")
+                .apiVersion(apiVersion)
                 .filter(
                   '_type == "person" && _id in *[_type == "project"].designers[]._ref'
                 )
@@ -88,6 +91,7 @@ export const structure: StructureResolver = (S) =>
             .child(
               S.documentList()
                 .title("Interview People")
+                .apiVersion(apiVersion)
                 .filter(
                   '_type == "person" && _id in *[_type == "interview"].designersAndProfessionals[]._ref'
                 )
@@ -98,6 +102,7 @@ export const structure: StructureResolver = (S) =>
             .child(
               S.documentList()
                 .title("Bibliography Authors")
+                .apiVersion(apiVersion)
                 .filter(
                   '_type == "person" && _id in *[_type == "bibliography"].authors[]._ref'
                 )
@@ -178,6 +183,7 @@ export const structure: StructureResolver = (S) =>
               S.documentList()
                 .id("adv-active")
                 .title("Active ADVs")
+                .apiVersion(apiVersion)
                 .filter(
                   '_type == "adv" && dateStart <= $today && dateEnd >= $today'
                 )
@@ -191,6 +197,7 @@ export const structure: StructureResolver = (S) =>
               S.documentList()
                 .id("adv-upcoming")
                 .title("Upcoming ADVs")
+                .apiVersion(apiVersion)
                 .filter('_type == "adv" && dateStart > $today')
                 .params({ today: buildLocalToday() })
                 .defaultOrdering([{ field: "dateStart", direction: "asc" }])
@@ -202,6 +209,7 @@ export const structure: StructureResolver = (S) =>
               S.documentList()
                 .id("adv-expired")
                 .title("Expired ADVs")
+                .apiVersion(apiVersion)
                 .filter('_type == "adv" && dateEnd < $today')
                 .params({ today: buildLocalToday() })
                 .defaultOrdering([{ field: "dateEnd", direction: "desc" }])
@@ -227,6 +235,7 @@ export const structure: StructureResolver = (S) =>
               S.documentList()
                 .id("community-active")
                 .title("Active Community")
+                .apiVersion(apiVersion)
                 // Active includes evergreen items (no dateEnd set).
                 .filter(
                   '_type == "community" && dateStart <= $today && (!defined(dateEnd) || dateEnd >= $today)'
