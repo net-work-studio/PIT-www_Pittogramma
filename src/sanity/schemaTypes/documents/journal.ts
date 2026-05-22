@@ -54,6 +54,14 @@ export const journal = defineType({
       group: "content",
       validation: (e) => e.required(),
     }),
+    defineField({
+      type: "imageWithMetadata",
+      name: "featuredCover",
+      title: "Featured Cover",
+      group: "content",
+      description:
+        "Optional cover used when this article appears as a featured hero. Falls back to the regular cover if empty.",
+    }),
     tagsField("content"),
     defineField({
       type: "array",

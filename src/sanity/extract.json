@@ -3918,6 +3918,14 @@
         },
         "optional": false
       },
+      "featuredCover": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "imageWithMetadata"
+        },
+        "optional": true
+      },
       "tags": {
         "type": "objectAttribute",
         "value": {

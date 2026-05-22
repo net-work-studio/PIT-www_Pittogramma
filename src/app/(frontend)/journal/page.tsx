@@ -85,7 +85,10 @@ export default async function JournalPage({
       sanityFetch({ query: JOURNAL_PAGE_QUERY }),
     ]);
 
-  const featuredArticle = pageSettings?.featuredArticle;
+  const featuredArticle =
+    pageSettings?.featuredArticle ??
+    (articles as JOURNAL_QUERY_RESULT)?.[0] ??
+    null;
   const cta = pageSettings?.endOfPageCta;
   const totalPages = Math.max(1, Math.ceil((totalCount ?? 0) / PAGE_SIZE));
   if (page > totalPages) {
@@ -135,12 +138,17 @@ export default async function JournalPage({
             const featuredLabelConfig = getJournalLabelConfig(
               featuredArticle.label
             );
+            const heroCover =
+              "featuredCover" in featuredArticle &&
+              featuredArticle.featuredCover?.image?.asset
+                ? featuredArticle.featuredCover
+                : featuredArticle.cover;
             return (
               <FeaturedHero
                 badgeLabel={featuredLabelConfig?.label}
                 badgeVariant={featuredLabelConfig?.badgeVariant}
                 contentType="journal"
-                cover={featuredArticle.cover}
+                cover={heroCover}
                 href={`/journal/${featuredArticle.slug?.current ?? ""}`}
                 subtitle={featuredArticle.excerpt}
                 title={featuredArticle.title ?? ""}

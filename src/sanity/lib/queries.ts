@@ -47,6 +47,7 @@ export const HOME_PAGE_QUERY = defineQuery(`
         "people": authors[]{ ...@->{ _id, name }, _key },
         label,
         excerpt,
+        featuredCover { image { ${IMAGE_FIELDS} }, alt },
       },
       tags[]->{ _id, name }
     },
@@ -86,6 +87,7 @@ export const HOME_FEED_QUERY = defineQuery(`
       "people": authors[]{ ...@->{ _id, name }, _key },
       label,
       excerpt,
+      featuredCover { image { ${IMAGE_FIELDS} }, alt },
     },
     tags[]->{ _id, name }
   }
@@ -442,6 +444,10 @@ const JOURNAL_FILTERED_NEWEST_QUERY = defineQuery(`
       image { ${IMAGE_FIELDS} },
       alt
     },
+    featuredCover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
     authors[]{ ...@->{ _id, name }, _key },
     excerpt,
     tags[]->{
@@ -463,6 +469,10 @@ const JOURNAL_FILTERED_OLDEST_QUERY = defineQuery(`
     label,
     publishingDate,
     cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    featuredCover {
       image { ${IMAGE_FIELDS} },
       alt
     },
@@ -490,6 +500,10 @@ const JOURNAL_FILTERED_AZ_QUERY = defineQuery(`
       image { ${IMAGE_FIELDS} },
       alt
     },
+    featuredCover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
     authors[]{ ...@->{ _id, name }, _key },
     excerpt,
     tags[]->{
@@ -511,6 +525,10 @@ const JOURNAL_FILTERED_ZA_QUERY = defineQuery(`
     label,
     publishingDate,
     cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    featuredCover {
       image { ${IMAGE_FIELDS} },
       alt
     },
@@ -773,6 +791,7 @@ export const JOURNAL_PAGE_QUERY = defineQuery(`
       publishingDate,
       excerpt,
       cover { image { ${IMAGE_FIELDS} }, alt },
+      featuredCover { image { ${IMAGE_FIELDS} }, alt },
       authors[]{ ...@->{ _id, name }, _key },
       tags[]->{ _id, name }
     },
@@ -789,6 +808,10 @@ export const JOURNAL_QUERY = defineQuery(`
     label,
     publishingDate,
     cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    featuredCover {
       image { ${IMAGE_FIELDS} },
       alt
     },

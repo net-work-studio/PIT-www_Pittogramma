@@ -47,17 +47,14 @@ export default function FeaturedHero({
       href={href}
     >
       <div className="z-10 flex flex-col items-center gap-2 text-background">
-        <div className="flex gap-2">
-          <Badge className="outline-background" variant="outline">
-            Feature Now
-          </Badge>
+        {badgeLabel && (
           <Badge
             className="outline-background"
             variant={badgeVariant ?? badgeVariantMap[contentType]}
           >
             {badgeLabel}
           </Badge>
-        </div>
+        )}
         <hgroup className="flex flex-col items-center gap-1">
           <h2 className="text-balance font-normal font-sans text-2xl md:text-3xl">
             {title}

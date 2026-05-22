@@ -5,6 +5,7 @@ import HomeGrid, { type HomeGridSlot } from "@/components/home-grid";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
 import { buildLocalToday } from "@/lib/date-utils";
+import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -60,6 +61,30 @@ function getFeaturedSubtitle(
 
   const names = featuredItem.people?.map((p) => p.name).join(", ");
   return names || null;
+}
+
+function getFeaturedBadge(item: EditorialItem | null) {
+  if (!item) {
+    return { label: undefined, variant: undefined };
+  }
+  if (item._type === "project") {
+    return { label: "Project", variant: undefined };
+  }
+  if (item._type === "interview") {
+    return { label: "Interview", variant: undefined };
+  }
+  const config = getJournalLabelConfig(item.label);
+  return { label: config?.label, variant: config?.badgeVariant };
+}
+
+function getFeaturedCover(item: EditorialItem | null) {
+  if (!item) {
+    return null;
+  }
+  if (item._type === "journal" && item.featuredCover?.image?.asset) {
+    return item.featuredCover;
+  }
+  return item.cover;
 }
 
 // Walks an editorial cursor and injects ADVs at fixed 1-indexed positions.
@@ -181,15 +206,19 @@ export default async function Home() {
   });
 
   const featuredSubtitle = getFeaturedSubtitle(featuredItem);
+  const featuredBadge = getFeaturedBadge(featuredItem);
+  const featuredCover = getFeaturedCover(featuredItem);
 
   return (
     <>
-      {featuredItem?.cover?.image?.asset && (
+      {featuredItem?.cover?.image?.asset && featuredCover && (
         <FeaturedHero
+          badgeLabel={featuredBadge.label}
+          badgeVariant={featuredBadge.variant}
           contentType={
             featuredItem._type as "project" | "interview" | "journal"
           }
-          cover={featuredItem.cover}
+          cover={featuredCover}
           href={getEditorialHref(featuredItem)}
           subtitle={featuredSubtitle}
           title={featuredItem.title ?? ""}
