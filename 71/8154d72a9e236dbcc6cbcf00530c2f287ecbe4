@@ -1,0 +1,21 @@
+src/sanity/schemaTypes/documents/event.ts
+  s_cb13b719d274b6::t_59ded73a0107d5 157-182
+src/sanity/schemaTypes/documents/journal.ts
+  s_cb13b719d274b6::t_3b419eba94e09a 102-113,118,121,125-126,129
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.0",
+  "base_commit_sha": "718154d72a9e236dbcc6cbcf00530c2f287ecbe4",
+  "prompts": {},
+  "sessions": {
+    "s_cb13b719d274b6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f5955be7-df5d-4f8d-8fcb-b585738d51e3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
