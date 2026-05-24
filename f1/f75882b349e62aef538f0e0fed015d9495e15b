@@ -1,0 +1,19 @@
+src/app/(frontend)/journal/page.tsx
+  s_985ce2ec5f1b3d::t_61e1b5ce8de6dd 136-139
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.0",
+  "base_commit_sha": "f1f75882b349e62aef538f0e0fed015d9495e15b",
+  "prompts": {},
+  "sessions": {
+    "s_985ce2ec5f1b3d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7d291351-0d0b-49ad-a55b-4317c919411d",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
