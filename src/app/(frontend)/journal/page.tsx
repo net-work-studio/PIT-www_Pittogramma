@@ -150,7 +150,7 @@ export default async function JournalPage({
                 contentType="journal"
                 cover={heroCover}
                 href={`/journal/${featuredArticle.slug?.current ?? ""}`}
-                subtitle={featuredArticle.excerpt}
+                subtitle={featuredArticle.authors?.map((a) => a.name).join(", ") ?? undefined}
                 title={featuredArticle.title ?? ""}
                 variant="compact"
               />

@@ -24,7 +24,7 @@ const badgeVariantMap: Record<
 };
 
 const HEIGHT_BY_VARIANT = {
-  full: "h-[calc(100svh-3.5rem)] max-h-400",
+  full: "h-[calc(100svh-3.5rem-2.5rem)]",
   compact: "h-[600px]",
 } as const;
 
@@ -41,7 +41,7 @@ export default function FeaturedHero({
   return (
     <Link
       className={cn(
-        "group relative grid place-content-center",
+        "group relative my-5 grid place-content-center",
         HEIGHT_BY_VARIANT[variant]
       )}
       href={href}
@@ -63,7 +63,7 @@ export default function FeaturedHero({
         </hgroup>
       </div>
 
-      <div className="absolute z-1 h-full w-full rounded-md bg-black/30 transition-opacity duration-500 group-hover:bg-black/25" />
+      <div className="absolute z-1 h-full w-full rounded-md bg-black/20 transition-opacity duration-500 group-hover:bg-black/15" />
 
       <SanityImage
         alt={title}

@@ -13,17 +13,18 @@ export default function PageHeader({
   className,
   onlySeoTitle = false,
 }: PageHeaderProps) {
+  if (onlySeoTitle) {
+    return <h1 className="sr-only">{title}</h1>;
+  }
+
   return (
     <hgroup
       className={cn(
-        onlySeoTitle ? "pt-0" : "pt-16",
-        "flex flex-col items-center justify-center pb-24 text-center",
+        "flex flex-col items-center justify-center pt-16 pb-24 text-center",
         className
       )}
     >
-      <h1 className={cn(onlySeoTitle ? "sr-only" : "text-2xl uppercase")}>
-        {title}
-      </h1>
+      <h1 className="text-2xl uppercase">{title}</h1>
       <p className="max-w-prose text-balance text-2xl">{subtitle}</p>
     </hgroup>
   );
