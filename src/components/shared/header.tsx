@@ -44,7 +44,7 @@ export default async function Header() {
   );
 
   return (
-    <header className="fixed top-0 right-0 left-0 z-20 flex w-full flex-row items-center justify-between border-foreground/5 border-b-[0.5px] bg-background px-4 py-2.5">
+    <header className="fixed top-0 right-0 left-0 z-20 flex w-full flex-row items-center justify-between border-foreground/10 border-b bg-background px-4 py-2.5">
       <Link className="flex items-center" href="/">
         <span className="sr-only">Pittogramma — Home</span>
         <Mark aria-hidden="true" focusable="false" />
