@@ -88,7 +88,7 @@ export default async function ProjectPage({
         }}
         type="CreativeWork"
       />
-      <div className="flex flex-col pt-6 lg:flex-row">
+      <div className="flex flex-col py-6 lg:flex-row">
         <ProjectInfo
           description={project.description}
           designers={project.designers}
