@@ -62,7 +62,7 @@ export const HOME_FEED_QUERY = defineQuery(`
     _type in ["project", "interview", "journal"]
     && defined(publishingDate.date)
     && publishingDate.date <= $today
-  ] | order(publishingDate.date desc) [0...29] {
+  ] | order(publishingDate.date desc) [0...32] {
     _id,
     _type,
     title,
@@ -185,7 +185,8 @@ export const DESIGNERS_QUERY = defineQuery(`
     "projects": *[_type == "project" && references(^._id)] | order(_createdAt desc) {
       _id,
       title,
-      slug
+      slug,
+      cover { image { ${IMAGE_FIELDS} }, alt }
     }
   }
 `);

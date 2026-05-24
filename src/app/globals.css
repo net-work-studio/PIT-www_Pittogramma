@@ -4,6 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+    --breakpoint-3xl: 120rem;
+
     --color-blue-50: oklch(0.969 0.015 260.73);
     --color-blue-100: oklch(0.928 0.033 261.033);
     --color-blue-200: oklch(0.876 0.061 258.365);
