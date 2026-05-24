@@ -154,4 +154,30 @@ export const event = defineType({
       group: "seo",
     }),
   ],
+  orderings: [
+    {
+      title: "Event Date, Newest",
+      name: "dateStartDesc",
+      by: [{ field: "dateStart", direction: "desc" }],
+    },
+    {
+      title: "Event Date, Oldest",
+      name: "dateStartAsc",
+      by: [{ field: "dateStart", direction: "asc" }],
+    },
+  ],
+  preview: {
+    select: {
+      title: "title",
+      media: "cover.image",
+      dateStart: "dateStart",
+    },
+    prepare({ title, media, dateStart }) {
+      return {
+        title,
+        subtitle: dateStart,
+        media,
+      };
+    },
+  },
 });

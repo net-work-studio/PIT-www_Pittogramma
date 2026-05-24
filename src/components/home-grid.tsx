@@ -96,10 +96,72 @@ function renderSlot(slot: HomeGridSlot) {
   );
 }
 
-export default function HomeGrid({ slots }: { slots: HomeGridSlot[] }) {
+// Section assignment by breakpoint:
+// base/sm (1-2 col, s1=4): S1=[0,3] S2=[4,15] S3=[16,27] hidden=[28,29]
+// md (3 col, s1=6):         S1=[0,5] S2=[6,17] S3=[18,29]
+// lg (4 col, s1=4):         S1=[0,3] S2=[4,15] S3=[16,27] hidden=[28,29]
+// 2xl (6 col, s1=6):        S1=[0,5] S2=[6,17] S3=[18,29]
+function getSlotClasses(index: number): string {
+  if (index < 4) {
+    return "order-1";
+  }
+  if (index < 6) {
+    return "order-3 md:order-1 xl:order-3 3xl:order-1";
+  }
+  if (index < 16) {
+    return "order-3";
+  }
+  if (index < 18) {
+    return "order-5 md:order-3 xl:order-5 3xl:order-3";
+  }
+  if (index < 28) {
+    return "order-5";
+  }
+  return "hidden md:block md:order-5 xl:hidden 3xl:block";
+}
+
+function getSlotKey(slot: HomeGridSlot): string {
+  return slot.item._id;
+}
+
+interface HomeGridProps {
+  afterSection1?: React.ReactNode;
+  afterSection2?: React.ReactNode;
+  afterSection3?: React.ReactNode;
+  slots: HomeGridSlot[];
+}
+
+export default function HomeGrid({
+  slots,
+  afterSection1,
+  afterSection2,
+  afterSection3,
+}: HomeGridProps) {
   return (
-    <section className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-      {slots.map(renderSlot)}
+    <section className="grid 3xl:grid-cols-6 grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+      {slots.map((slot, i) => (
+        <div className={getSlotClasses(i)} key={getSlotKey(slot)}>
+          {renderSlot(slot)}
+        </div>
+      ))}
+
+      {afterSection1 && (
+        <div className="order-2 3xl:col-span-6 col-span-1 sm:col-span-2 md:col-span-3 xl:col-span-4">
+          {afterSection1}
+        </div>
+      )}
+
+      {afterSection2 && (
+        <div className="order-4 3xl:col-span-6 col-span-1 sm:col-span-2 md:col-span-3 xl:col-span-4">
+          {afterSection2}
+        </div>
+      )}
+
+      {afterSection3 && (
+        <div className="order-6 3xl:col-span-6 col-span-1 sm:col-span-2 md:col-span-3 xl:col-span-4">
+          {afterSection3}
+        </div>
+      )}
     </section>
   );
 }

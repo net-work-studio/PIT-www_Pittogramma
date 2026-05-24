@@ -118,7 +118,7 @@ function MediaContent({
 
 function Caption({ text }: { text: string }) {
   return (
-    <p className="mt-1.5 font-mono text-[0.5rem] text-muted-foreground uppercase">
+    <p className="mt-1.5 font-mono text-muted-foreground text-xs uppercase">
       {text}
     </p>
   );

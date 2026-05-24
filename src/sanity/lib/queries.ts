@@ -47,6 +47,7 @@ export const HOME_PAGE_QUERY = defineQuery(`
         "people": authors[]{ ...@->{ _id, name }, _key },
         label,
         excerpt,
+        featuredCover { image { ${IMAGE_FIELDS} }, alt },
       },
       tags[]->{ _id, name }
     },
@@ -61,7 +62,7 @@ export const HOME_FEED_QUERY = defineQuery(`
     _type in ["project", "interview", "journal"]
     && defined(publishingDate.date)
     && publishingDate.date <= $today
-  ] | order(publishingDate.date desc) [0...29] {
+  ] | order(publishingDate.date desc) [0...32] {
     _id,
     _type,
     title,
@@ -86,6 +87,7 @@ export const HOME_FEED_QUERY = defineQuery(`
       "people": authors[]{ ...@->{ _id, name }, _key },
       label,
       excerpt,
+      featuredCover { image { ${IMAGE_FIELDS} }, alt },
     },
     tags[]->{ _id, name }
   }
@@ -183,7 +185,8 @@ export const DESIGNERS_QUERY = defineQuery(`
     "projects": *[_type == "project" && references(^._id)] | order(_createdAt desc) {
       _id,
       title,
-      slug
+      slug,
+      cover { image { ${IMAGE_FIELDS} }, alt }
     }
   }
 `);
@@ -442,6 +445,10 @@ const JOURNAL_FILTERED_NEWEST_QUERY = defineQuery(`
       image { ${IMAGE_FIELDS} },
       alt
     },
+    featuredCover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
     authors[]{ ...@->{ _id, name }, _key },
     excerpt,
     tags[]->{
@@ -463,6 +470,10 @@ const JOURNAL_FILTERED_OLDEST_QUERY = defineQuery(`
     label,
     publishingDate,
     cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    featuredCover {
       image { ${IMAGE_FIELDS} },
       alt
     },
@@ -490,6 +501,10 @@ const JOURNAL_FILTERED_AZ_QUERY = defineQuery(`
       image { ${IMAGE_FIELDS} },
       alt
     },
+    featuredCover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
     authors[]{ ...@->{ _id, name }, _key },
     excerpt,
     tags[]->{
@@ -511,6 +526,10 @@ const JOURNAL_FILTERED_ZA_QUERY = defineQuery(`
     label,
     publishingDate,
     cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    featuredCover {
       image { ${IMAGE_FIELDS} },
       alt
     },
@@ -773,6 +792,7 @@ export const JOURNAL_PAGE_QUERY = defineQuery(`
       publishingDate,
       excerpt,
       cover { image { ${IMAGE_FIELDS} }, alt },
+      featuredCover { image { ${IMAGE_FIELDS} }, alt },
       authors[]{ ...@->{ _id, name }, _key },
       tags[]->{ _id, name }
     },
@@ -789,6 +809,10 @@ export const JOURNAL_QUERY = defineQuery(`
     label,
     publishingDate,
     cover {
+      image { ${IMAGE_FIELDS} },
+      alt
+    },
+    featuredCover {
       image { ${IMAGE_FIELDS} },
       alt
     },

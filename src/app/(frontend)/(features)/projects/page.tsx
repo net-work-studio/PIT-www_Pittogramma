@@ -162,7 +162,7 @@ export default async function ProjectsPage({
             No results found
           </p>
         ) : (
-          <section className="col-span-1 grid grid-cols-1 gap-4 md:grid-cols-3 lg:col-span-3 xl:grid-cols-4">
+          <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-6">
             {slots.map((slot) => {
               if (slot.kind === "adv") {
                 const adv = slot.item;

@@ -24,7 +24,7 @@ const badgeVariantMap: Record<
 };
 
 const HEIGHT_BY_VARIANT = {
-  full: "h-[calc(100svh-3.5rem)] max-h-400",
+  full: "h-[calc(100svh-3.5rem-2.5rem)]",
   compact: "h-[600px]",
 } as const;
 
@@ -41,32 +41,29 @@ export default function FeaturedHero({
   return (
     <Link
       className={cn(
-        "group relative grid place-content-center",
+        "group relative my-5 grid place-content-center",
         HEIGHT_BY_VARIANT[variant]
       )}
       href={href}
     >
-      <div className="z-10 flex flex-col items-center gap-2 text-background">
-        <div className="flex gap-2">
-          <Badge className="outline-background" variant="outline">
-            Feature Now
-          </Badge>
+      <div className="z-10 flex flex-col items-center gap-4 text-background">
+        {badgeLabel && (
           <Badge
             className="outline-background"
             variant={badgeVariant ?? badgeVariantMap[contentType]}
           >
             {badgeLabel}
           </Badge>
-        </div>
-        <hgroup className="flex flex-col items-center gap-1">
-          <h2 className="text-balance font-normal font-sans text-2xl md:text-3xl">
+        )}
+        <hgroup className="flex flex-col items-center gap-2">
+          <h2 className="text-balance font-normal font-sans text-4xl md:text-5xl">
             {title}
           </h2>
-          {subtitle && <p className="text-background text-lg">{subtitle}</p>}
+          {subtitle && <p className="text-2xl text-background">{subtitle}</p>}
         </hgroup>
       </div>
 
-      <div className="absolute z-1 h-full w-full rounded-md bg-black/30 transition-opacity duration-500 group-hover:bg-black/25" />
+      <div className="absolute z-1 h-full w-full rounded-md bg-black/20 transition-opacity duration-500 group-hover:bg-black/15" />
 
       <SanityImage
         alt={title}

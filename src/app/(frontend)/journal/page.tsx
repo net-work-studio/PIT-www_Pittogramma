@@ -85,7 +85,10 @@ export default async function JournalPage({
       sanityFetch({ query: JOURNAL_PAGE_QUERY }),
     ]);
 
-  const featuredArticle = pageSettings?.featuredArticle;
+  const featuredArticle =
+    pageSettings?.featuredArticle ??
+    (articles as JOURNAL_QUERY_RESULT)?.[0] ??
+    null;
   const cta = pageSettings?.endOfPageCta;
   const totalPages = Math.max(1, Math.ceil((totalCount ?? 0) / PAGE_SIZE));
   if (page > totalPages) {
@@ -130,19 +133,27 @@ export default async function JournalPage({
         title={pageSettings?.title ?? "Journal"}
       />
       <div className="space-y-10 pb-10">
-        {featuredArticle?.cover?.image?.asset &&
+        {featuredArticle &&
+          (("featuredCover" in featuredArticle &&
+            featuredArticle.featuredCover?.image?.asset) ||
+            featuredArticle.cover?.image?.asset) &&
           (() => {
             const featuredLabelConfig = getJournalLabelConfig(
               featuredArticle.label
             );
+            const heroCover =
+              "featuredCover" in featuredArticle &&
+              featuredArticle.featuredCover?.image?.asset
+                ? featuredArticle.featuredCover
+                : featuredArticle.cover;
             return (
               <FeaturedHero
                 badgeLabel={featuredLabelConfig?.label}
                 badgeVariant={featuredLabelConfig?.badgeVariant}
                 contentType="journal"
-                cover={featuredArticle.cover}
+                cover={heroCover}
                 href={`/journal/${featuredArticle.slug?.current ?? ""}`}
-                subtitle={featuredArticle.excerpt}
+                subtitle={featuredArticle.authors?.map((a) => a.name).join(", ") ?? undefined}
                 title={featuredArticle.title ?? ""}
                 variant="compact"
               />

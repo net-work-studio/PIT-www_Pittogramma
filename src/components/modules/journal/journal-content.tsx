@@ -66,7 +66,9 @@ function MediaRenderer({
     }
     if (type === "videoEmbed" && videoUrl) {
       const embedSrc = getEmbedUrl(videoUrl);
-      if (!embedSrc) return null;
+      if (!embedSrc) {
+        return null;
+      }
       return (
         <AspectRatio className="relative w-full" ratio={16 / 9}>
           <iframe
@@ -86,7 +88,7 @@ function MediaRenderer({
     <figure>
       {renderMedia()}
       {caption ? (
-        <figcaption className="mt-1.5 font-mono text-[0.5rem] text-muted-foreground uppercase">
+        <figcaption className="mt-1.5 font-mono text-muted-foreground text-xs uppercase">
           {caption}
         </figcaption>
       ) : null}

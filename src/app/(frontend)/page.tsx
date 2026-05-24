@@ -5,6 +5,7 @@ import HomeGrid, { type HomeGridSlot } from "@/components/home-grid";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
 import { buildLocalToday } from "@/lib/date-utils";
+import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -20,15 +21,14 @@ import type {
   HOME_FEED_QUERY_RESULT,
 } from "@/sanity/types";
 
-// 1 hero + 4 + 12 + 12 = 29 items, all rows full multiples of 4 (no orphans)
-const FIRST_SECTION = 4;
-const SECOND_SECTION = 12;
-const THIRD_SECTION = 12;
+// Total stream slots = 30 (max needed at 3/6-col breakpoints).
+// At base-2 breakpoints (2/4-col), items 28-29 are hidden via CSS.
+const TOTAL_STREAM_SLOTS = 30;
 
-// ADV injection positions (1-indexed) per the surface matrix in plans/adv-system.md.
-const GOLD_S1_POSITION = 3;
-const SILVER_S2_POSITION_A = 3;
-const SILVER_S2_POSITION_B = 11;
+// ADV injection positions (1-indexed, absolute in the stream).
+const ADV_GOLD_POS = 3;
+const ADV_SILVER_A_POS = 7;
+const ADV_SILVER_B_POS = 15;
 
 type EditorialItem = HOME_FEED_QUERY_RESULT[number];
 type AdvItem = HOME_ADV_QUERY_RESULT[number];
@@ -62,34 +62,52 @@ function getFeaturedSubtitle(
   return names || null;
 }
 
-// Walks an editorial cursor and injects ADVs at fixed 1-indexed positions.
-// Returns the assembled slots and how many editorial items were consumed,
-// so the next section can pick up where this one left off.
-function assembleSection({
-  total,
-  injections,
-  editorial,
-}: {
-  total: number;
-  injections: Map<number, AdvItem>;
-  editorial: EditorialItem[];
-}): { slots: HomeGridSlot[]; editorialConsumed: number } {
+function getFeaturedBadge(item: EditorialItem | null) {
+  if (!item) {
+    return { label: undefined, variant: undefined };
+  }
+  if (item._type === "project") {
+    return { label: "Project", variant: undefined };
+  }
+  if (item._type === "interview") {
+    return { label: "Interview", variant: undefined };
+  }
+  const config = getJournalLabelConfig(item.label);
+  return { label: config?.label, variant: config?.badgeVariant };
+}
+
+function getFeaturedCover(item: EditorialItem | null) {
+  if (!item) {
+    return null;
+  }
+  if (item._type === "journal" && item.featuredCover?.image?.asset) {
+    return item.featuredCover;
+  }
+  return item.cover;
+}
+
+// Builds a flat stream of slots by interleaving editorial items and ADVs
+// at fixed absolute positions. Always produces exactly `totalSlots` entries
+// (or fewer if editorial pool is exhausted).
+function buildHomeStream(
+  editorial: EditorialItem[],
+  injections: Map<number, AdvItem>,
+  totalSlots: number
+): HomeGridSlot[] {
   const slots: HomeGridSlot[] = [];
   let cursor = 0;
-  for (let position = 1; position <= total; position++) {
+  for (let position = 1; position <= totalSlots; position++) {
     const adv = injections.get(position);
     if (adv) {
       slots.push({ kind: "adv", item: adv });
       continue;
     }
-    const editorialItem = editorial[cursor];
-    if (!editorialItem) {
-      break;
-    }
-    slots.push({ kind: "editorial", item: editorialItem });
+    const item = editorial[cursor];
+    if (!item) break;
+    slots.push({ kind: "editorial", item: item });
     cursor++;
   }
-  return { slots, editorialConsumed: cursor };
+  return slots;
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -128,68 +146,44 @@ export default async function Home() {
   const cta = homePage?.endOfPageCta;
 
   // Resolve featured: manual pick with fallback to latest editorial.
-  // The hero is always editorial — ADVs never enter this pool.
-  // Note: featuredItem type from HOME_PAGE_QUERY is `null` until schema is deployed
-  // and typegen re-run. Cast to feed item type for now.
   const featuredItem: EditorialItem | null =
     (homePage?.featuredItem as EditorialItem | null) ?? feedItems?.[0] ?? null;
   const editorialPool = ((feedItems ?? []) as EditorialItem[]).filter(
     (item) => item._id !== featuredItem?._id
   );
 
-  // Bucket ADVs by tier. Query already orders within tier by dateStart asc,
-  // so silvers[0] is the oldest-booked (best slot) and silvers[1] takes p11.
+  // Bucket ADVs by tier; only inject those with a valid cover image.
   const advs = (homeAdvs ?? []) as AdvItem[];
   const golds = advs.filter((a) => a.tier === "gold");
   const silvers = advs.filter((a) => a.tier === "silver");
-  const goldForS1P3 = golds[0] ?? null;
-  const silverForS2P3 = silvers[0] ?? null;
-  const silverForS2P11 = silvers[1] ?? null;
 
-  const s1Injections = new Map<number, AdvItem>();
-  if (goldForS1P3) {
-    s1Injections.set(GOLD_S1_POSITION, goldForS1P3);
+  const injections = new Map<number, AdvItem>();
+  if (golds[0]?.cover?.image?.asset) {
+    injections.set(ADV_GOLD_POS, golds[0]);
+  }
+  if (silvers[0]?.cover?.image?.asset) {
+    injections.set(ADV_SILVER_A_POS, silvers[0]);
+  }
+  if (silvers[1]?.cover?.image?.asset) {
+    injections.set(ADV_SILVER_B_POS, silvers[1]);
   }
 
-  const s2Injections = new Map<number, AdvItem>();
-  if (silverForS2P3) {
-    s2Injections.set(SILVER_S2_POSITION_A, silverForS2P3);
-  }
-  if (silverForS2P11) {
-    s2Injections.set(SILVER_S2_POSITION_B, silverForS2P11);
-  }
-
-  let offset = 0;
-  const s1 = assembleSection({
-    total: FIRST_SECTION,
-    injections: s1Injections,
-    editorial: editorialPool.slice(offset),
-  });
-  offset += s1.editorialConsumed;
-
-  const s2 = assembleSection({
-    total: SECOND_SECTION,
-    injections: s2Injections,
-    editorial: editorialPool.slice(offset),
-  });
-  offset += s2.editorialConsumed;
-
-  const s3 = assembleSection({
-    total: THIRD_SECTION,
-    injections: new Map(),
-    editorial: editorialPool.slice(offset),
-  });
+  const stream = buildHomeStream(editorialPool, injections, TOTAL_STREAM_SLOTS);
 
   const featuredSubtitle = getFeaturedSubtitle(featuredItem);
+  const featuredBadge = getFeaturedBadge(featuredItem);
+  const featuredCover = getFeaturedCover(featuredItem);
 
   return (
     <>
-      {featuredItem?.cover?.image?.asset && (
+      {featuredItem?.cover?.image?.asset && featuredCover && (
         <FeaturedHero
+          badgeLabel={featuredBadge.label}
+          badgeVariant={featuredBadge.variant}
           contentType={
             featuredItem._type as "project" | "interview" | "journal"
           }
-          cover={featuredItem.cover}
+          cover={featuredCover}
           href={getEditorialHref(featuredItem)}
           subtitle={featuredSubtitle}
           title={featuredItem.title ?? ""}
@@ -198,47 +192,40 @@ export default async function Home() {
 
       <PageHeader subtitle={homePage?.introText} title="Pittogramma" />
 
-      <div className="flex flex-col gap-4">
-        {/* Section 1: 1 row of 4 */}
-        {s1.slots.length > 0 && <HomeGrid slots={s1.slots} />}
-
-        {/* Mid-page CTA */}
-        {midCta && (
-          <CtaCard
-            buttonText={midCta.buttonText}
-            externalUrl={midCta.externalUrl}
-            headline={midCta.headline}
-            image={midCta.image}
-            internalLink={midCta.internalLink}
-            linkType={midCta.linkType}
-            variant={midCta.variant}
-          />
-        )}
-
-        {/* Section 2: 3 rows of 4 */}
-        {s2.slots.length > 0 && <HomeGrid slots={s2.slots} />}
-
-        {/* Recent updates from archive */}
-        {recentUpdates && recentUpdates.length > 0 && (
-          <RecentUpdates items={recentUpdates} />
-        )}
-
-        {/* Section 3: 2 rows of 4 */}
-        {s3.slots.length > 0 && <HomeGrid slots={s3.slots} />}
-
-        {/* Final CTA */}
-        {cta && (
-          <CtaCard
-            buttonText={cta.buttonText}
-            externalUrl={cta.externalUrl}
-            headline={cta.headline}
-            image={cta.image}
-            internalLink={cta.internalLink}
-            linkType={cta.linkType}
-            variant={cta.variant}
-          />
-        )}
-      </div>
+      <HomeGrid
+        afterSection1={
+          midCta ? (
+            <CtaCard
+              buttonText={midCta.buttonText}
+              externalUrl={midCta.externalUrl}
+              headline={midCta.headline}
+              image={midCta.image}
+              internalLink={midCta.internalLink}
+              linkType={midCta.linkType}
+              variant={midCta.variant}
+            />
+          ) : undefined
+        }
+        afterSection2={
+          recentUpdates && recentUpdates.length > 0 ? (
+            <RecentUpdates items={recentUpdates} />
+          ) : undefined
+        }
+        afterSection3={
+          cta ? (
+            <CtaCard
+              buttonText={cta.buttonText}
+              externalUrl={cta.externalUrl}
+              headline={cta.headline}
+              image={cta.image}
+              internalLink={cta.internalLink}
+              linkType={cta.linkType}
+              variant={cta.variant}
+            />
+          ) : undefined
+        }
+        slots={stream}
+      />
     </>
   );
 }

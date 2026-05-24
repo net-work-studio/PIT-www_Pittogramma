@@ -54,6 +54,14 @@ export const journal = defineType({
       group: "content",
       validation: (e) => e.required(),
     }),
+    defineField({
+      type: "imageWithMetadata",
+      name: "featuredCover",
+      title: "Featured Cover",
+      group: "content",
+      description:
+        "Optional cover used when this article appears as a featured hero. Falls back to the regular cover if empty.",
+    }),
     tagsField("content"),
     defineField({
       type: "array",
@@ -99,19 +107,34 @@ export const journal = defineType({
       group: "seo",
     }),
   ],
+  orderings: [
+    {
+      title: "Publishing Date, Newest",
+      name: "publishingDateDesc",
+      by: [{ field: "publishingDate.date", direction: "desc" }],
+    },
+    {
+      title: "Publishing Date, Oldest",
+      name: "publishingDateAsc",
+      by: [{ field: "publishingDate.date", direction: "asc" }],
+    },
+  ],
   preview: {
     select: {
       title: "title",
       label: "label",
+      date: "publishingDate.date",
       media: "cover.image",
     },
-    prepare({ title, label, media }) {
+    prepare({ title, label, date, media }) {
       const labels = Object.fromEntries(
         JOURNAL_LABELS.map((opt) => [opt.value, opt.title])
       );
+      const labelText = label ? (labels[label] ?? label) : undefined;
+      const parts = [date, labelText].filter(Boolean);
       return {
         title,
-        subtitle: label ? (labels[label] ?? label) : undefined,
+        subtitle: parts.length ? parts.join(" – ") : undefined,
         media,
       };
     },

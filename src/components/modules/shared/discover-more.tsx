@@ -14,7 +14,7 @@ export default function DiscoverMore({ projects }: DiscoverMoreProps) {
   }
 
   return (
-    <div className="flex flex-col border-foreground border-t-[0.5px] pt-2.5">
+    <div className="flex flex-col border-border border-t pt-2.5">
       <h2 className="mb-4 text-base">Discover More</h2>
       <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
         {projects.map((project: RelatedProject) => {

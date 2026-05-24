@@ -128,7 +128,7 @@ export default function BaseCard({
     : "(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
 
   const imageClassName =
-    "h-full w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-103";
+    "h-full w-full rounded-lg ease-out object-cover transition-transform duration-200 group-hover:scale-103";
   const cardByline = getByline({ authors, byline });
 
   return (
@@ -147,13 +147,13 @@ export default function BaseCard({
         {renderCardImage({ image, imageClassName, sizes, title })}
       </AspectRatio>
       {variant ? <Badge variant={variant}>{badgeLabel}</Badge> : null}
-      <div className="inline-flex w-full flex-col items-start justify-start gap-0">
-        <hgroup className="flex flex-col items-start justify-start gap-0 self-stretch">
-          <h3 className="justify-start self-stretch font-normal font-sans text-base text-foreground">
+      <div className="inline-flex w-full flex-col items-start justify-start">
+        <hgroup className="flex flex-col items-start justify-start gap-2">
+          <h3 className="text-pretty text-foreground text-lg leading-tight">
             {title}
           </h3>
           {cardByline ? (
-            <p className="font-normal font-sans text-muted-foreground text-sm">
+            <p className="font-normal text-base text-muted-foreground">
               {cardByline}
             </p>
           ) : null}
