@@ -133,7 +133,10 @@ export default async function JournalPage({
         title={pageSettings?.title ?? "Journal"}
       />
       <div className="space-y-10 pb-10">
-        {featuredArticle?.cover?.image?.asset &&
+        {featuredArticle &&
+          (("featuredCover" in featuredArticle &&
+            featuredArticle.featuredCover?.image?.asset) ||
+            featuredArticle.cover?.image?.asset) &&
           (() => {
             const featuredLabelConfig = getJournalLabelConfig(
               featuredArticle.label
