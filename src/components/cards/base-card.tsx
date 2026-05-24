@@ -147,13 +147,13 @@ export default function BaseCard({
         {renderCardImage({ image, imageClassName, sizes, title })}
       </AspectRatio>
       {variant ? <Badge variant={variant}>{badgeLabel}</Badge> : null}
-      <div className="inline-flex w-full flex-col items-start justify-start gap-0">
-        <hgroup className="flex flex-col items-start justify-start gap-0 self-stretch">
-          <h3 className="justify-start self-stretch font-normal font-sans text-base text-foreground">
+      <div className="inline-flex w-full flex-col items-start justify-start">
+        <hgroup className="flex flex-col items-start justify-start gap-2">
+          <h3 className="text-pretty text-foreground text-lg leading-tight">
             {title}
           </h3>
           {cardByline ? (
-            <p className="font-normal font-sans text-muted-foreground text-sm">
+            <p className="font-normal text-base text-muted-foreground">
               {cardByline}
             </p>
           ) : null}
