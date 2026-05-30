@@ -13,7 +13,7 @@ function DesignerListItem({ designer }: { designer: Designer }) {
 
   return (
     <div className="grid w-full grid-cols-12 items-start gap-2.5 border-b px-2.5 py-3 text-left transition-colors duration-75 ease-in-out hover:bg-muted max-md:grid-cols-1 max-md:gap-1">
-      <div className="col-span-4 max-md:col-span-1">
+      <div className="col-span-3 max-md:col-span-1">
         <DesignerModal designer={designer}>
           <button
             className="inline-flex items-center gap-2 transition-colors hover:text-muted-foreground"
@@ -74,6 +74,9 @@ function DesignerListItem({ designer }: { designer: Designer }) {
       <span className="col-span-2 max-md:hidden">
         {designer.place?.country || "-"}
       </span>
+      <span className="col-span-1 max-md:hidden">
+        {designer.birthYear || "-"}
+      </span>
     </div>
   );
 }
@@ -86,10 +89,11 @@ export default function DesignerList({ designers }: DesignerListProps) {
   return (
     <section>
       <div className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase max-md:hidden">
-        <span className="col-span-4">Designer</span>
+        <span className="col-span-3">Designer</span>
         <span className="col-span-4">Projects</span>
         <span className="col-span-2">City</span>
         <span className="col-span-2">Country</span>
+        <span className="col-span-1">Birth Year</span>
       </div>
       <div>
         {designers.map((designer) => (
