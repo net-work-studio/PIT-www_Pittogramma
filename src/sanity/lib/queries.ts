@@ -157,7 +157,7 @@ export const EVENTS_PAGE_QUERY = defineQuery(`
 `);
 
 export const DESIGNERS_QUERY = defineQuery(`
-  *[_type == "person" && "designer" in roles] | order(name asc) {
+  *[_type == "person" && "designer" in roles && count(*[_type == "project" && references(^._id)]) > 0] | order(name asc) {
     _id,
     name,
     slug,
