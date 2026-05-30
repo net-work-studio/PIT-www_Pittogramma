@@ -1,0 +1,21 @@
+src/components/modules/designer/designer-list.tsx
+  s_e7ee838e0ed58d::t_6c356805ef738d 77-79
+  s_e7ee838e0ed58d::t_fb536cb69c3071 92,96
+  s_e7ee838e0ed58d::t_7d0be8e128bd00 16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "84d78df9aadd08658e810108a3f81ac3157aa6b6",
+  "prompts": {},
+  "sessions": {
+    "s_e7ee838e0ed58d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f89f8454-afd5-4bbe-a60b-fbfe6f34ad13",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
