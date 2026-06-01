@@ -1,0 +1,19 @@
+src/components/cards/feed-card.tsx
+  s_fe52f78231767c::t_8961c061eae657 1-73
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "6560a141553016ca8ce668ad642a507347b6bf40",
+  "prompts": {},
+  "sessions": {
+    "s_fe52f78231767c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4120c00a-0314-42ca-b74d-ceb38e77b93f",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
