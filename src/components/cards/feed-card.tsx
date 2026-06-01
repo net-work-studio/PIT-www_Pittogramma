@@ -2,9 +2,8 @@ import Link from "next/link";
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 
-const FEED_CARD_IMAGE_RATIO = 3 / 4;
+const FEED_CARD_ASPECT_RATIO = 3 / 4;
 
 type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
 
@@ -26,6 +25,11 @@ export default function FeedCard({
   variant,
 }: FeedCardProps) {
   const linkRel = sponsored ? "noopener sponsored" : "noopener noreferrer";
+  const hasImage =
+    image &&
+    typeof image === "object" &&
+    "image" in image &&
+    image.image?.asset;
 
   return (
     <Link
@@ -36,15 +40,12 @@ export default function FeedCard({
     >
       <AspectRatio
         className="relative overflow-hidden rounded-lg"
-        ratio={FEED_CARD_IMAGE_RATIO}
+        ratio={FEED_CARD_ASPECT_RATIO}
       >
-        {image && typeof image === "object" && "image" in image && image.image ? (
+        {hasImage ? (
           <SanityImage
             alt={title}
-            className={cn(
-              "rounded-lg",
-              "h-full w-full object-cover transition-transform duration-200 ease-out group-hover:scale-103"
-            )}
+            className="rounded-lg h-full w-full object-cover transition-transform duration-200 ease-out group-hover:scale-103"
             fill
             sizes="(min-width: 480px) 480px, 100vw"
             source={image}
@@ -56,18 +57,16 @@ export default function FeedCard({
       {variant ? (
         <Badge variant={variant}>Sponsored</Badge>
       ) : null}
-      <div className="inline-flex w-full flex-col items-start justify-start">
-        <hgroup className="flex flex-col items-start justify-start gap-2">
-          <h3 className="text-pretty text-foreground text-lg leading-tight">
-            {title}
-          </h3>
-          {byline ? (
-            <p className="font-normal text-base text-muted-foreground">
-              {byline}
-            </p>
-          ) : null}
-        </hgroup>
-      </div>
+      <hgroup className="flex w-full flex-col items-start gap-2">
+        <h3 className="text-pretty text-foreground text-lg leading-tight">
+          {title}
+        </h3>
+        {byline ? (
+          <p className="font-normal text-base text-muted-foreground">
+            {byline}
+          </p>
+        ) : null}
+      </hgroup>
     </Link>
   );
 }

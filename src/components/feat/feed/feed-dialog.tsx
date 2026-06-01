@@ -17,26 +17,9 @@ import {
 import type {
   FEED_COMMUNITY_QUERY_RESULT,
   FEED_QUERY_RESULT,
-  SanityImageCrop,
-  SanityImageHotspot,
 } from "@/sanity/types";
 
-interface ResolvedImage {
-  _id: string;
-  url: string;
-  metadata: {
-    lqip: string | null;
-    dimensions: { width: number; height: number } | null;
-  } | null;
-}
-
-type FeedAdv = Omit<FEED_QUERY_RESULT[number], "coverPortrait"> & {
-  coverPortrait: {
-    asset: ResolvedImage | null;
-    hotspot: SanityImageHotspot | null;
-    crop: SanityImageCrop | null;
-  } | null;
-};
+type FeedAdv = FEED_QUERY_RESULT[number];
 type FeedCommunityItem = FEED_COMMUNITY_QUERY_RESULT[number];
 
 interface FeedDialogProps {
@@ -100,7 +83,11 @@ function FeedDialogInner({ advs, communityItems }: FeedDialogProps) {
                   {advs.map((adv) =>
                     adv.cover?.image?.asset ? (
                       <FeedCard
-                        byline={`Sponsored by ${adv.sponsor?.name ?? ""}`}
+                        byline={
+                          adv.sponsor?.name
+                            ? `Sponsored by ${adv.sponsor.name}`
+                            : "Sponsored"
+                        }
                         href={adv.externalUrl}
                         image={
                           adv.coverPortrait?.asset
@@ -110,7 +97,7 @@ function FeedDialogInner({ advs, communityItems }: FeedDialogProps) {
                         key={adv._id}
                         sponsored
                         title={adv.title ?? ""}
-                        variant={adv.tier as "bronze" | "silver" | "gold" | undefined}
+                        variant={adv.tier}
                       />
                     ) : null
                   )}
