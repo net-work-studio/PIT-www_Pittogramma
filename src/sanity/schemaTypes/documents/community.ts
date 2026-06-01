@@ -48,6 +48,7 @@ export const community = defineType({
       type: "imageWithMetadata",
       name: "cover",
       title: "Cover",
+      description: "Portrait image (3:4 ratio recommended).",
       group: "content",
       validation: (r) => r.required(),
     }),

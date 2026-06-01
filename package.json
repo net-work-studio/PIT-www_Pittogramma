@@ -46,6 +46,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
+    "predev": "bun run typegen",
     "check": "ultracite check",
     "fix": "ultracite fix",
     "typegen": "bunx sanity schema extract --enforce-required-fields --path ./src/sanity/extract.json && bunx sanity typegen generate",

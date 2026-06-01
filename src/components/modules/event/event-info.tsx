@@ -19,8 +19,8 @@ interface EventInfoProps {
   isPast?: boolean;
   locationAddress?: string | null;
   locationName?: string | null;
-  partner?: Contributor | null;
-  sponsor?: Contributor | null;
+  partners?: Contributor[] | null;
+  sponsors?: Contributor[] | null;
   status?: string | null;
   tags?: Tag[] | null;
   title?: string | null;
@@ -59,8 +59,8 @@ export default function EventInfo({
   dateEnd,
   locationName,
   locationAddress,
-  sponsor,
-  partner,
+  sponsors,
+  partners,
   tags,
   isPast,
 }: EventInfoProps) {
@@ -117,20 +117,24 @@ export default function EventInfo({
             <dd className="text-sm">{location}</dd>
           </div>
         ) : null}
-        {sponsor ? (
+        {sponsors?.length ? (
           <div className="flex gap-x-8">
             <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-              Sponsor
+              {sponsors.length === 1 ? "Sponsor" : "Sponsors"}
             </dt>
-            <dd className="text-sm">{sponsor.name}</dd>
+            <dd className="text-sm">
+              {sponsors.map((s) => s.name).join(", ")}
+            </dd>
           </div>
         ) : null}
-        {partner ? (
+        {partners?.length ? (
           <div className="flex gap-x-8">
             <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-              Partner
+              {partners.length === 1 ? "Partner" : "Partners"}
             </dt>
-            <dd className="text-sm">{partner.name}</dd>
+            <dd className="text-sm">
+              {partners.map((p) => p.name).join(", ")}
+            </dd>
           </div>
         ) : null}
         {tags?.length ? (

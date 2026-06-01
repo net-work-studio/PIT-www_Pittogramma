@@ -4,8 +4,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Rows3, XIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback } from "react";
-import AdvCard from "@/components/cards/adv-card";
-import CommunityCard from "@/components/cards/community-card";
+import FeedCard from "@/components/cards/feed-card";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,9 +17,26 @@ import {
 import type {
   FEED_COMMUNITY_QUERY_RESULT,
   FEED_QUERY_RESULT,
+  SanityImageCrop,
+  SanityImageHotspot,
 } from "@/sanity/types";
 
-type FeedAdv = FEED_QUERY_RESULT[number];
+interface ResolvedImage {
+  _id: string;
+  url: string;
+  metadata: {
+    lqip: string | null;
+    dimensions: { width: number; height: number } | null;
+  } | null;
+}
+
+type FeedAdv = Omit<FEED_QUERY_RESULT[number], "coverPortrait"> & {
+  coverPortrait: {
+    asset: ResolvedImage | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+  } | null;
+};
 type FeedCommunityItem = FEED_COMMUNITY_QUERY_RESULT[number];
 
 interface FeedDialogProps {
@@ -83,24 +99,33 @@ function FeedDialogInner({ advs, communityItems }: FeedDialogProps) {
                 <>
                   {advs.map((adv) =>
                     adv.cover?.image?.asset ? (
-                      <AdvCard
-                        cover={adv.cover}
-                        description={adv.description ?? undefined}
-                        externalUrl={adv.externalUrl}
+                      <FeedCard
+                        byline={`Sponsored by ${adv.sponsor?.name ?? ""}`}
+                        href={adv.externalUrl}
+                        image={
+                          adv.coverPortrait?.asset
+                            ? { image: adv.coverPortrait, alt: adv.cover.alt }
+                            : adv.cover
+                        }
                         key={adv._id}
-                        sponsorName={adv.sponsor?.name ?? ""}
+                        sponsored
                         title={adv.title ?? ""}
+                        variant={adv.tier as "bronze" | "silver" | "gold" | undefined}
                       />
                     ) : null
                   )}
                   {communityItems.map((item) =>
                     item.cover?.image?.asset ? (
-                      <CommunityCard
-                        cover={item.cover}
-                        description={item.description ?? undefined}
-                        externalUrl={item.externalUrl}
+                      <FeedCard
+                        byline={
+                          item.partner?.name
+                            ? `In partnership with ${item.partner.name}`
+                            : "Community"
+                        }
+                        href={item.externalUrl}
+                        image={item.cover}
                         key={item._id}
-                        partnerName={item.partner?.name ?? null}
+                        sponsored
                         title={item.title ?? ""}
                       />
                     ) : null

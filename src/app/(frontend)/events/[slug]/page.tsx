@@ -143,8 +143,8 @@ export default async function EventPage({
             isPast={isPast}
             locationAddress={event.locationAddress}
             locationName={event.locationName}
-            partner={event.partner}
-            sponsor={event.sponsor}
+            partners={event.partners}
+            sponsors={event.sponsors}
             status={event.status}
             tags={event.tags}
             title={event.title}
@@ -219,20 +219,24 @@ export default async function EventPage({
                 <dd className="text-sm">{location}</dd>
               </div>
             ) : null}
-            {event.sponsor ? (
+            {event.sponsors?.length ? (
               <div className="flex gap-x-12">
                 <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                  Sponsor
+                  {event.sponsors.length === 1 ? "Sponsor" : "Sponsors"}
                 </dt>
-                <dd className="text-sm">{event.sponsor.name}</dd>
+                <dd className="text-sm">
+                  {event.sponsors.map((s) => s.name).join(", ")}
+                </dd>
               </div>
             ) : null}
-            {event.partner ? (
+            {event.partners?.length ? (
               <div className="flex gap-x-12">
                 <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                  Partner
+                  {event.partners.length === 1 ? "Partner" : "Partners"}
                 </dt>
-                <dd className="text-sm">{event.partner.name}</dd>
+                <dd className="text-sm">
+                  {event.partners.map((p) => p.name).join(", ")}
+                </dd>
               </div>
             ) : null}
             {event.tags?.length ? (
