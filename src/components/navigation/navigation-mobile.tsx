@@ -44,14 +44,7 @@ export function NavigationMobile({ resources }: { resources: Resource[] }) {
       },
       { label: "Journal", href: "/journal" },
       { label: "Events", href: "/events" },
-      {
-        label: "Info",
-        children: [
-          { href: "/about", label: "About" },
-          { href: "/editions", label: "Editions" },
-          { href: "/studio", label: "Studio" },
-        ],
-      },
+      { label: "About", href: "/about" },
     ],
     [resources]
   );

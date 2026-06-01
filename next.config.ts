@@ -8,6 +8,20 @@ const sanityImagePath =
     : "/images/**";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/editions",
+        destination: "/",
+        permanent: false,
+      },
+      {
+        source: "/editions/:slug",
+        destination: "/",
+        permanent: false,
+      },
+    ];
+  },
   experimental: {
     prefetchInlining: true,
   },
