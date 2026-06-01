@@ -12,15 +12,10 @@ const SITEMAP_QUERY = defineQuery(`{
   "interviews": *[_type == "interview" && defined(slug.current)] {
     "slug": slug.current,
     _updatedAt
-  },
-  "editions": *[_type == "edition" && defined(slug.current)] {
-    "slug": slug.current,
-    _updatedAt
   }
 }`);
 
 interface SitemapData {
-  editions: Array<{ slug: string; _updatedAt: string }>;
   interviews: Array<{ slug: string; _updatedAt: string }>;
   projects: Array<{ slug: string; _updatedAt: string }>;
 }
@@ -43,12 +38,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/projects`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/editions`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
@@ -103,14 +92,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
-  const editionPages: MetadataRoute.Sitemap = sitemapData.editions.map(
-    (edition) => ({
-      url: `${baseUrl}/editions/${edition.slug}`,
-      lastModified: new Date(edition._updatedAt),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    })
-  );
-
-  return [...staticPages, ...projectPages, ...interviewPages, ...editionPages];
+  return [...staticPages, ...projectPages, ...interviewPages];
 }

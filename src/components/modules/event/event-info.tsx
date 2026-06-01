@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { formatDateRange } from "@/lib/date-utils";
 import { getEventStatusConfig } from "@/lib/event-status";
 
 interface Tag {
@@ -19,35 +20,12 @@ interface EventInfoProps {
   isPast?: boolean;
   locationAddress?: string | null;
   locationName?: string | null;
-  partner?: Contributor | null;
-  sponsor?: Contributor | null;
+  partners?: Contributor[] | null;
+  sponsors?: Contributor[] | null;
   status?: string | null;
   tags?: Tag[] | null;
   title?: string | null;
   type?: string | null;
-}
-
-function formatEventDate(date: string): string {
-  return new Date(`${date}T00:00:00`).toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
-
-function formatDateRange(
-  dateStart: string | null | undefined,
-  dateEnd: string | null | undefined
-): string | null {
-  if (!dateStart) {
-    return null;
-  }
-
-  if (dateEnd && dateEnd !== dateStart) {
-    return `${formatEventDate(dateStart)} — ${formatEventDate(dateEnd)}`;
-  }
-
-  return formatEventDate(dateStart);
 }
 
 export default function EventInfo({
@@ -59,8 +37,8 @@ export default function EventInfo({
   dateEnd,
   locationName,
   locationAddress,
-  sponsor,
-  partner,
+  sponsors,
+  partners,
   tags,
   isPast,
 }: EventInfoProps) {
@@ -117,30 +95,34 @@ export default function EventInfo({
             <dd className="text-sm">{location}</dd>
           </div>
         ) : null}
-        {sponsor ? (
+        {sponsors?.filter(Boolean).some((s) => s.name) ? (
           <div className="flex gap-x-8">
             <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-              Sponsor
+              {sponsors.filter(Boolean).filter((s) => s.name).length === 1 ? "Sponsor" : "Sponsors"}
             </dt>
-            <dd className="text-sm">{sponsor.name}</dd>
+            <dd className="text-sm">
+              {sponsors.filter(Boolean).map((s) => s.name).filter(Boolean).join(", ")}
+            </dd>
           </div>
         ) : null}
-        {partner ? (
+        {partners?.filter(Boolean).some((p) => p.name) ? (
           <div className="flex gap-x-8">
             <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-              Partner
+              {partners.filter(Boolean).filter((p) => p.name).length === 1 ? "Partner" : "Partners"}
             </dt>
-            <dd className="text-sm">{partner.name}</dd>
+            <dd className="text-sm">
+              {partners.filter(Boolean).map((p) => p.name).filter(Boolean).join(", ")}
+            </dd>
           </div>
         ) : null}
-        {tags?.length ? (
+        {tags?.filter(Boolean).some((t) => t.name) ? (
           <div className="flex gap-x-8">
             <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
               Disciplines
             </dt>
             <dd>
               <ul className="flex flex-col">
-                {tags.map((tag: Tag) => (
+                {tags.filter(Boolean).filter((tag) => tag.name).map((tag) => (
                   <li className="text-sm underline" key={tag._id}>
                     {tag.name}
                   </li>

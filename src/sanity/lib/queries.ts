@@ -254,8 +254,8 @@ const EVENT_FIELDS = `
     dateEnd,
     locationName,
     description,
-    sponsor->{ _id, name },
-    partner->{ _id, name },
+    sponsors[]->{ _id, name },
+    partners[]->{ _id, name },
     tags[]->{ _id, name },
     ${SEO_FIELDS}
 `;
@@ -293,8 +293,8 @@ export const EVENT_QUERY = defineQuery(`
     locationName,
     locationAddress,
     description,
-    sponsor->{ _id, name },
-    partner->{ _id, name },
+    sponsors[]->{ _id, name },
+    partners[]->{ _id, name },
     tags[]->{ _id, name },
     ${SEO_FIELDS}
   }
@@ -1187,6 +1187,7 @@ export const FEED_QUERY = defineQuery(`
       image { ${IMAGE_FIELDS} },
       alt
     },
+    coverPortrait { ${IMAGE_FIELDS} },
     description,
     externalUrl,
     tier,

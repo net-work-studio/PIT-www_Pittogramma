@@ -8,6 +8,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { buildLocalToday, formatDateRange } from "@/lib/date-utils";
 import { getEventStatusConfig } from "@/lib/event-status";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -15,29 +16,6 @@ import type { SeoImageSource, SeoModule } from "@/lib/types/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { EVENT_QUERY } from "@/sanity/lib/queries";
-
-function formatEventDate(date: string): string {
-  return new Date(`${date}T00:00:00`).toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
-
-function formatDateRange(
-  dateStart: string | null | undefined,
-  dateEnd: string | null | undefined
-): string | null {
-  if (!dateStart) {
-    return null;
-  }
-
-  if (dateEnd && dateEnd !== dateStart) {
-    return `${formatEventDate(dateStart)} — ${formatEventDate(dateEnd)}`;
-  }
-
-  return formatEventDate(dateStart);
-}
 
 function getSchemaEventStatus(status: string | null | undefined): string {
   if (status === "cancelled") {
@@ -94,10 +72,10 @@ export default async function EventPage({
   }
 
   const imageUrl = event.cover?.image?.asset
-    ? urlForImage(event.cover.image as Parameters<typeof urlForImage>[0])?.url()
+    ? urlForImage(event.cover)?.url()
     : undefined;
 
-  const now = new Date().toISOString().split("T")[0];
+  const now = buildLocalToday();
   const isPast = !event.dateStart || event.dateStart < now;
   const statusConfig = getEventStatusConfig(event.status);
   const ctaUrl = !isPast && statusConfig?.ctaLabel ? event.ctaUrl : null;
@@ -143,8 +121,8 @@ export default async function EventPage({
             isPast={isPast}
             locationAddress={event.locationAddress}
             locationName={event.locationName}
-            partner={event.partner}
-            sponsor={event.sponsor}
+            partners={event.partners}
+            sponsors={event.sponsors}
             status={event.status}
             tags={event.tags}
             title={event.title}
@@ -219,31 +197,35 @@ export default async function EventPage({
                 <dd className="text-sm">{location}</dd>
               </div>
             ) : null}
-            {event.sponsor ? (
+            {event.sponsors?.filter(Boolean).some((s) => s.name) ? (
               <div className="flex gap-x-12">
                 <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                  Sponsor
+                  {event.sponsors.filter(Boolean).filter((s) => s.name).length === 1 ? "Sponsor" : "Sponsors"}
                 </dt>
-                <dd className="text-sm">{event.sponsor.name}</dd>
+                <dd className="text-sm">
+                  {event.sponsors.filter(Boolean).map((s) => s.name).filter(Boolean).join(", ")}
+                </dd>
               </div>
             ) : null}
-            {event.partner ? (
+            {event.partners?.filter(Boolean).some((p) => p.name) ? (
               <div className="flex gap-x-12">
                 <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                  Partner
+                  {event.partners.filter(Boolean).filter((p) => p.name).length === 1 ? "Partner" : "Partners"}
                 </dt>
-                <dd className="text-sm">{event.partner.name}</dd>
+                <dd className="text-sm">
+                  {event.partners.filter(Boolean).map((p) => p.name).filter(Boolean).join(", ")}
+                </dd>
               </div>
             ) : null}
-            {event.tags?.length ? (
+            {event.tags?.filter(Boolean).some((t) => t.name) ? (
               <div className="flex gap-x-12">
                 <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
                   Disciplines
                 </dt>
                 <dd>
                   <ul className="flex flex-col">
-                    {event.tags.map(
-                      (tag: { _id: string; name: string | null }) => (
+                    {event.tags.filter(Boolean).filter((tag) => tag.name).map(
+                      (tag) => (
                         <li className="text-sm underline" key={tag._id}>
                           {tag.name}
                         </li>

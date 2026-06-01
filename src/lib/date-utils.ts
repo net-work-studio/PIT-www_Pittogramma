@@ -12,3 +12,26 @@ export function buildLocalToday(): string {
   const day = String(d.getDate()).padStart(2, "0");
   return `${y}-${m}-${day}`;
 }
+
+export function formatEventDate(date: string): string {
+  return new Date(`${date}T00:00:00`).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+export function formatDateRange(
+  dateStart: string | null | undefined,
+  dateEnd: string | null | undefined
+): string | null {
+  if (!dateStart) {
+    return null;
+  }
+
+  if (dateEnd && dateEnd !== dateStart) {
+    return `${formatEventDate(dateStart)} — ${formatEventDate(dateEnd)}`;
+  }
+
+  return formatEventDate(dateStart);
+}

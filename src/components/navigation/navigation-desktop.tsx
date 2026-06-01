@@ -52,13 +52,9 @@ export function NavigationDesktop({ resources }: { resources: Resource[] }) {
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Info</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="w-content">
-              <ListItem href="/about" title="About" />
-              <ListItem href="/editions" title="Editions" />
-            </ul>
-          </NavigationMenuContent>
+          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+            <Link href="/about">About</Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

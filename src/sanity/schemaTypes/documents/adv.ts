@@ -43,8 +43,18 @@ export const adv = defineType({
       type: "imageWithMetadata",
       name: "cover",
       title: "Cover",
+      description: "Landscape image (4:3) — used in the home grid.",
       group: "content",
       validation: (r) => r.required(),
+    }),
+    defineField({
+      type: "image",
+      name: "coverPortrait",
+      title: "Cover Portrait",
+      description:
+        "Optional portrait image (3:4) for the feed. Falls back to the landscape cover when empty.",
+      group: "content",
+      options: { hotspot: true },
     }),
     defineField({
       type: "array",

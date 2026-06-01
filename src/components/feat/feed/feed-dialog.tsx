@@ -4,8 +4,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Rows3, XIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback } from "react";
-import AdvCard from "@/components/cards/adv-card";
-import CommunityCard from "@/components/cards/community-card";
+import FeedCard from "@/components/cards/feed-card";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -83,24 +82,37 @@ function FeedDialogInner({ advs, communityItems }: FeedDialogProps) {
                 <>
                   {advs.map((adv) =>
                     adv.cover?.image?.asset ? (
-                      <AdvCard
-                        cover={adv.cover}
-                        description={adv.description ?? undefined}
-                        externalUrl={adv.externalUrl}
+                      <FeedCard
+                        byline={
+                          adv.sponsor?.name
+                            ? `Sponsored by ${adv.sponsor.name}`
+                            : "Sponsored"
+                        }
+                        href={adv.externalUrl}
+                        image={
+                          adv.coverPortrait?.asset
+                            ? { image: adv.coverPortrait, alt: adv.cover.alt }
+                            : adv.cover
+                        }
                         key={adv._id}
-                        sponsorName={adv.sponsor?.name ?? ""}
+                        sponsored
                         title={adv.title ?? ""}
+                        variant={adv.tier}
                       />
                     ) : null
                   )}
                   {communityItems.map((item) =>
                     item.cover?.image?.asset ? (
-                      <CommunityCard
-                        cover={item.cover}
-                        description={item.description ?? undefined}
-                        externalUrl={item.externalUrl}
+                      <FeedCard
+                        byline={
+                          item.partner?.name
+                            ? `In partnership with ${item.partner.name}`
+                            : "Community"
+                        }
+                        href={item.externalUrl}
+                        image={item.cover}
                         key={item._id}
-                        partnerName={item.partner?.name ?? null}
+                        sponsored
                         title={item.title ?? ""}
                       />
                     ) : null
