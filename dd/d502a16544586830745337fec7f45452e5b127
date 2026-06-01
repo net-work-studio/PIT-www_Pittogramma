@@ -1,0 +1,31 @@
+src/components/modules/event/event-info.tsx
+  s_1c8774c0387b0e::t_aea09ba784eebc 3
+  s_1c8774c0387b0e::t_d5cb393e25b8fa 98,101,104,108,111,114,118,125
+src/components/cards/feed-card.tsx
+  s_1c8774c0387b0e::t_be4795d76ab2c1 6,28-32,43,45,48,60-69
+src/app/(frontend)/events/[slug]/page.tsx
+  s_1c8774c0387b0e::t_1da968d211b700 11
+  s_1c8774c0387b0e::t_59be885aa285bd 75,78
+  s_1c8774c0387b0e::t_598343efc11a59 200,203,206,210,213,216,220,227-228
+src/lib/date-utils.ts
+  s_1c8774c0387b0e::t_ece16fe9353f84 15-37
+src/components/feat/feed/feed-dialog.tsx
+  s_1c8774c0387b0e::t_2c973f684804e0 22
+  s_1c8774c0387b0e::t_100f6750c37d81 86-90,100
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "ddd502a16544586830745337fec7f45452e5b127",
+  "prompts": {},
+  "sessions": {
+    "s_1c8774c0387b0e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4fcd9b41-e384-46ca-861f-9c7e54df1f3a",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
