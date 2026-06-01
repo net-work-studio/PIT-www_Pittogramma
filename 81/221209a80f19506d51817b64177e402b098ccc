@@ -1,0 +1,25 @@
+src/app/sitemap.ts
+  s_ca44c2e1a4820c::t_47455016b7191c 95
+next.config.ts
+  s_ca44c2e1a4820c::t_52cb509822ef09 11-24
+src/components/navigation/navigation-desktop.tsx
+  s_ca44c2e1a4820c::t_e1274ae7cd8c4e 55-57
+src/components/navigation/navigation-mobile.tsx
+  s_ca44c2e1a4820c::t_a3fad9b682c9ac 47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "81221209a80f19506d51817b64177e402b098ccc",
+  "prompts": {},
+  "sessions": {
+    "s_ca44c2e1a4820c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "46623a56-3ebe-480f-a155-4cf9067c99bb",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
