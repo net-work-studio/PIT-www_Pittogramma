@@ -1,0 +1,19 @@
+src/app/sitemap.ts
+  s_fdffd849e5d845::t_f2a5d843299422 5,25-26,28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "6aa987606d508b08879b565aa12e3f5cb1b60fbc",
+  "prompts": {},
+  "sessions": {
+    "s_fdffd849e5d845": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "35e70ad1-a35e-4f15-891e-d1d677f5bc10",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
