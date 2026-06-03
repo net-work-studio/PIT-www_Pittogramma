@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { defineQuery } from "next-sanity";
 
 import { siteDefaults } from "@/lib/seo/site-defaults";
-import { sanityFetch } from "@/sanity/lib/live";
+import { getDynamicFetchOptions, sanityFetchMetadata } from "@/sanity/lib/live";
 
 const SITEMAP_QUERY = defineQuery(`{
   "projects": *[_type == "project" && defined(slug.current)] {
@@ -22,10 +22,10 @@ interface SitemapData {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteDefaults.baseUrl;
-  const { data } = await sanityFetch({
+  const { perspective } = await getDynamicFetchOptions();
+  const { data } = await sanityFetchMetadata({
     query: SITEMAP_QUERY,
-    perspective: "published",
-    stega: false,
+    perspective,
   });
   const sitemapData = data as SitemapData;
 
