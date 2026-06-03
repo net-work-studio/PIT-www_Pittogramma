@@ -1,0 +1,37 @@
+src/sanity/schemaTypes/objects/info-item.ts
+  s_f15a9a3a162a7b::t_bdb746a114a341 1-31
+src/sanity/schemaTypes/index.ts
+  s_f15a9a3a162a7b::t_c4ff03790cbf07 67
+  s_f15a9a3a162a7b::t_c525449ef48af5 31
+src/components/modules/event/event-info-grid.tsx
+  s_f15a9a3a162a7b::t_7c6cf471061f54 1-50
+src/sanity/schemaTypes/documents/event.ts
+  s_f15a9a3a162a7b::t_06559879f89cb4 150-156
+src/sanity/types.ts
+  s_f15a9a3a162a7b::t_0308f8f249b722 436-441,676-680,1252,3034,3150-3154,6559
+src/app/(frontend)/events/[slug]/page.tsx
+  s_f15a9a3a162a7b::t_79ade465058a87 224
+  s_f15a9a3a162a7b::t_02a7d4853beb9a 208-214,216
+  s_f15a9a3a162a7b::t_7395c63cb73c8a 279
+  s_f15a9a3a162a7b::t_4c35f9858b08d8 8
+src/sanity/lib/queries.ts
+  s_f15a9a3a162a7b::t_6e851e0ebe060c 316
+src/sanity/extract.json
+  s_f15a9a3a162a7b::t_0308f8f249b722 2282-2310,3581-3597
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "83b5c495e8284fa84f7750052806a756fc75e26c",
+  "prompts": {},
+  "sessions": {
+    "s_f15a9a3a162a7b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cd8f5819-9a84-4698-a726-6fe4a084c63f",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
