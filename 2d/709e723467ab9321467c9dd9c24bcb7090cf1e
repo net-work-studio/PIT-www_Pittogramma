@@ -1,0 +1,97 @@
+src/app/(frontend)/(features)/projects/[slug]/page.tsx
+  s_fdffd849e5d845::t_af1cfb7851ce26 16,18-22,26-30,32-33,39-43,46,71-74,78-85,89-90
+  ai_agent 3,17,75-77
+  s_fdffd849e5d845::t_be79363f9e799a 31
+src/app/(frontend)/(resources)/institutes/page.tsx
+  s_fdffd849e5d845::t_79fee019a5aa8e 1,3,14-18,25-42,45-46
+next.config.ts
+  s_fdffd849e5d845::t_c55b6f04f927db 2,12-13
+src/app/(frontend)/map/page.tsx
+  s_fdffd849e5d845::t_0fe35bd098701f 1-3,7,9-11,77-94,97-98
+  ai_agent 8
+src/app/(frontend)/events/[slug]/page.tsx
+  s_fdffd849e5d845::t_49694e5b10719c 42
+  s_fdffd849e5d845::t_7857240efc13f2 18,20-24,37-41,43-44,50-54,57,82-85,89-96,100-101
+  ai_agent 3,19,86-88,237-240,243-247,254-257,260-264,275-278,282
+src/app/(frontend)/journal/page.tsx
+  s_fdffd849e5d845::t_561de657f56398 20-23,41-42,44,59-60,65-85,87,89-106,125-126,131-132,134
+  ai_agent 3,18-19,86,88,205-208
+src/app/(frontend)/(resources)/bookshops/page.tsx
+  s_fdffd849e5d845::t_fe1f284a971037 1,3,14,16-18,25-40,45,48-49
+  ai_agent 15,41-44
+src/app/(frontend)/(features)/editions/[slug]/page.tsx
+  s_fdffd849e5d845::t_c6c9742d6676aa 29
+  s_fdffd849e5d845::t_2a46b6509eaaa4 15-21,24-28,30-31,37-41,44,69-83,87-88
+src/app/(frontend)/page.tsx
+  s_fdffd849e5d845::t_4d69ed37651c0a 2-3,14-19,121-122,124,140-157,165-168
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_fdffd849e5d845::t_0bb99a441a3b3e 300
+  ai_agent 3,18
+  s_fdffd849e5d845::t_38c263da1271a0 62
+  s_fdffd849e5d845::t_9d93f52e967455 17,19-23,57-61,63-64,70-74,77,102-120,124-125
+src/app/(frontend)/(features)/designers/page.tsx
+  s_fdffd849e5d845::t_68735fa4f72275 2-3,10-15,19-20,22,38-55,57-58,60-61
+src/app/(frontend)/(features)/editions/page.tsx
+  s_e44f4cce28aff4::t_cd944312ca6851 11
+  s_fdffd849e5d845::t_bf92eea1bccca4 2-3,10,12-15,19-20,22,37-54,56-57
+src/app/(frontend)/(resources)/websites/page.tsx
+  s_fdffd849e5d845::t_99ae1b6bcf73fc 1,3,15,17-19,26-43,45-46
+  ai_agent 16
+src/app/(frontend)/(features)/projects/page.tsx
+  ai_agent 3,18-19,86,88,221
+  s_fdffd849e5d845::t_8f24a20d77856f 20-23,41-42,44,59-73,78-85,87,89-106,124-125,132-133,140-141,154-161
+src/app/(frontend)/(resources)/bibliography/page.tsx
+  s_fdffd849e5d845::t_342b4f73c22e25 2,4,16,18-20,32-47,52,54-55
+  ai_agent 17,48-51
+src/app/(frontend)/(resources)/glossary/page.tsx
+  ai_agent 21,146-150
+  s_fdffd849e5d845::t_562b2516ebd5de 2,4,20,22-24,128-142,144-145
+src/app/(frontend)/(resources)/studios-agencies/page.tsx
+  ai_agent 15
+  s_fdffd849e5d845::t_6ca2de495b1c77 1,3,14,16-18,25-42,45-46
+src/app/(frontend)/(features)/interviews/[slug]/page.tsx
+  ai_agent 3,17
+  s_fdffd849e5d845::t_10c1219e094ee8 16,18-22,43-47,49-50,56-60,63,88-102,106-107
+  s_fdffd849e5d845::t_609b240f2f3e2f 48
+src/app/(frontend)/(resources)/type-foundries/page.tsx
+  s_fdffd849e5d845::t_0692bccbd307b4 1,3,14-18,25-42,45-46
+src/app/(frontend)/layout.tsx
+  s_fdffd849e5d845::t_54865b3f564537 3-4,9,16,26-34,39-46,50-65
+src/app/(frontend)/(info)/about/page.tsx
+  s_fdffd849e5d845::t_57fe063d7263a2 2-3,11,13-16,44-45,47,68-85
+  ai_agent 12,86-90
+src/app/(frontend)/(features)/designers/[slug]/page.tsx
+  s_fdffd849e5d845::t_6cc86c8ac00d7a 33
+  ai_agent 3,16
+  s_fdffd849e5d845::t_29a48099b320e9 15,17-21,28-32,34-35,41-45,48,72-86,90-91
+src/app/(frontend)/(features)/interviews/page.tsx
+  s_fdffd849e5d845::t_386ffa1b6a0e89 20-23,41-42,44,59-73,78-85,87,89-106,124-125,132-133,140-141,154-161
+  ai_agent 3,18-19,86,88,221
+src/app/(frontend)/events/page.tsx
+  ai_agent 3,14-15
+  s_fdffd849e5d845::t_7f06f6d3761322 16-19,35-36,38,92-106,111-133,154-155,160-161,166-167,169
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "2d709e723467ab9321467c9dd9c24bcb7090cf1e",
+  "prompts": {},
+  "sessions": {
+    "s_e44f4cce28aff4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "65f1b91d-3bc3-4ab5-95c1-ac82cf1e7b4d",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_fdffd849e5d845": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "35e70ad1-a35e-4f15-891e-d1d677f5bc10",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
