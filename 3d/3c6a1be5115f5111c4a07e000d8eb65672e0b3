@@ -1,0 +1,19 @@
+src/components/feat/submit/submit-dialog.tsx
+  s_30f8b5941b9d23::t_30bd3c9aa92404 1-2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "3d3c6a1be5115f5111c4a07e000d8eb65672e0b3",
+  "prompts": {},
+  "sessions": {
+    "s_30f8b5941b9d23": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "679aea8d-023d-4e87-a704-345ffda5446b",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
