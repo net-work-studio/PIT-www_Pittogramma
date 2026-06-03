@@ -28,6 +28,7 @@ import {
   threeSideBySideMediaBlock,
 } from "./objects/gallery-blocks";
 import { imageWithMetadata } from "./objects/image-with-metadata";
+import { infoItem } from "./objects/info-item";
 import { logo } from "./objects/logo";
 import { mediaItem } from "./objects/media-item";
 import { openGraph } from "./objects/open-graph";
@@ -63,6 +64,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     studio,
     logo,
     imageWithMetadata,
+    infoItem,
     mediaItem,
     singleMediaBlock,
     sideBySideMediaBlock,

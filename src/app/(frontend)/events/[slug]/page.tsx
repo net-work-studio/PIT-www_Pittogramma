@@ -5,6 +5,7 @@ import { defineQuery } from "next-sanity";
 
 import ContributorsSection from "@/components/modules/event/contributors-section";
 import EventInfo from "@/components/modules/event/event-info";
+import EventInfoGrid from "@/components/modules/event/event-info-grid";
 import ShareLinks from "@/components/modules/project/share-links";
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -204,8 +205,15 @@ async function CachedEventPage({
           </div>
         ) : null}
 
+        {/* Info Grid */}
+        {event.info?.length ? (
+          <div className="order-4 lg:order-3 lg:pt-10">
+            <EventInfoGrid info={event.info} />
+          </div>
+        ) : null}
+
         {/* Sponsors & Partners */}
-        <div className="order-4 px-2.5 pt-6 lg:order-3">
+        <div className="order-5 px-2.5 pt-6 lg:order-4">
           <ContributorsSection
             partners={event.partners}
             sponsors={event.sponsors}
@@ -213,7 +221,7 @@ async function CachedEventPage({
         </div>
 
         {/* Mobile-only metadata */}
-        <div className="order-5 mt-6 flex flex-col gap-4 px-2.5 lg:hidden">
+        <div className="order-6 mt-6 flex flex-col gap-4 px-2.5 lg:hidden">
           {statusConfig ? (
             <Badge variant={statusConfig.badgeVariant}>
               {statusConfig.label}
@@ -268,7 +276,7 @@ async function CachedEventPage({
         </div>
 
         {/* Share Links */}
-        <div className="order-6 px-2.5 pt-10">
+        <div className="order-7 px-2.5 pt-10">
           <ShareLinks title={event.title ?? ""} url={eventUrl} />
         </div>
       </div>

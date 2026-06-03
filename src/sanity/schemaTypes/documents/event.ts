@@ -147,6 +147,13 @@ export const event = defineType({
       group: "content",
       of: [{ type: "reference", to: [{ type: "contributor" }] }],
     }),
+    defineField({
+      type: "array",
+      name: "info",
+      title: "Info",
+      group: "content",
+      of: [{ type: "infoItem" }],
+    }),
     tagsField("content"),
     defineField({
       type: "seoModule",

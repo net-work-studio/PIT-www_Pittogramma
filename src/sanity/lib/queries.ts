@@ -313,6 +313,7 @@ export const EVENT_QUERY = defineQuery(`
         alt
       }
     },
+    info[] { _key, title, content },
     tags[]->{ _id, name },
     ${SEO_FIELDS}
   }
