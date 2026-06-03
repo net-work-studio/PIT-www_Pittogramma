@@ -1,0 +1,20 @@
+bunfig.toml
+  s_480d7e58327d48::t_18669275e29012 1
+  s_480d7e58327d48::t_322ccdfbe614d3 2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "3ff1b7ca35f7cc6a54e4286a116890ff191dc10b",
+  "prompts": {},
+  "sessions": {
+    "s_480d7e58327d48": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "225a1f07-2d4e-4e5e-ac2c-02694cb59d43",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
