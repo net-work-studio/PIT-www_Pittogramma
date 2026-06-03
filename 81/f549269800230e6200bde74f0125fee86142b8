@@ -1,0 +1,32 @@
+src/sanity/types.ts
+  s_176155eed2292a::t_47e09c9dc248e5 3022,3065-3098,3103-3136,6542
+src/app/(frontend)/events/[slug]/page.tsx
+  s_176155eed2292a::t_9be238669174d4 271
+  s_cbd8b7cc0dcbfb::t_3a74759ab95cd7 90-95
+src/sanity/lib/queries.ts
+  s_176155eed2292a::t_fb3771cf411970 296-315
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "81f549269800230e6200bde74f0125fee86142b8",
+  "prompts": {},
+  "sessions": {
+    "s_176155eed2292a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c353fd41-1f78-49a8-b20f-6e1d24e01fb6",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_cbd8b7cc0dcbfb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "be7af0a6-b81e-4c5e-b15e-053c3f6ef2df",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
