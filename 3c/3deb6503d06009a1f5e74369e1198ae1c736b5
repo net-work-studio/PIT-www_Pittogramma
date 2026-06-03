@@ -1,0 +1,29 @@
+src/app/(frontend)/(features)/projects/[slug]/loading.tsx
+  s_92d516cc4ed974::t_b85add5f6f55e0 1-7
+src/app/(frontend)/events/[slug]/loading.tsx
+  s_92d516cc4ed974::t_2666b66710a2f7 1-7
+src/app/(frontend)/(features)/interviews/[slug]/loading.tsx
+  s_92d516cc4ed974::t_777e5d88c99cd8 1-7
+src/app/(frontend)/(features)/designers/[slug]/loading.tsx
+  s_92d516cc4ed974::t_9ded9b76f78500 1-7
+src/app/(frontend)/journal/[slug]/loading.tsx
+  s_92d516cc4ed974::t_6b256f1c8dd7c5 1-7
+src/app/(frontend)/(features)/editions/[slug]/loading.tsx
+  s_92d516cc4ed974::t_af5f6a0f727907 1-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "3c3deb6503d06009a1f5e74369e1198ae1c736b5",
+  "prompts": {},
+  "sessions": {
+    "s_92d516cc4ed974": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "71992523-32fb-4040-b5fa-d24cce083e09",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
