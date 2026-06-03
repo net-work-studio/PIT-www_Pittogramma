@@ -1,10 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { sanityFetch } from "@/sanity/lib/live";
+import { type DynamicFetchOptions, sanityFetch } from "@/sanity/lib/live";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
-export default async function JournalArticleCta() {
+export default async function JournalArticleCta({
+  perspective,
+  stega,
+}: DynamicFetchOptions) {
+  "use cache";
   const { data: settings } = await sanityFetch({
     query: SITE_SETTINGS_QUERY,
+    perspective,
+    stega,
   });
 
   const substackUrl = settings?.substackUrl;

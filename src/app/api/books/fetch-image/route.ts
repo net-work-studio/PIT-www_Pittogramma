@@ -10,9 +10,6 @@ import {
   validatePublicHttpUrl,
 } from "../../_utils/outbound-fetch";
 
-export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
-
 const ALLOWED_HOSTNAMES = [
   "books.google.com",
   "books.google.it",

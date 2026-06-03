@@ -9,9 +9,6 @@ import {
   validatePublicHttpUrl,
 } from "../../_utils/outbound-fetch";
 
-export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
-
 const MAX_HTML_SIZE = 1024 * 1024;
 
 // Regex patterns to extract OG meta tags
