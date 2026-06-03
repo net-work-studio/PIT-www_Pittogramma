@@ -87,7 +87,12 @@ export default async function EventPage({
     getDynamicFetchOptions(),
   ]);
   return (
-    <CachedEventPage perspective={perspective} slug={slug} stega={stega} today={buildLocalToday()} />
+    <CachedEventPage
+      perspective={perspective}
+      slug={slug}
+      stega={stega}
+      today={buildLocalToday()}
+    />
   );
 }
 
@@ -263,7 +268,7 @@ async function CachedEventPage({
         </div>
 
         {/* Share Links */}
-        <div className="order-5 px-2.5 pt-10">
+        <div className="order-6 px-2.5 pt-10">
           <ShareLinks title={event.title ?? ""} url={eventUrl} />
         </div>
       </div>

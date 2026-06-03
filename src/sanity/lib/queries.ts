@@ -293,8 +293,26 @@ export const EVENT_QUERY = defineQuery(`
     locationName,
     locationAddress,
     description,
-    sponsors[]->{ _id, name },
-    partners[]->{ _id, name },
+    sponsors[]->{
+      _id,
+      name,
+      description,
+      logo {
+        logoLight { ${IMAGE_FIELDS} },
+        logoDark { ${IMAGE_FIELDS} },
+        alt
+      }
+    },
+    partners[]->{
+      _id,
+      name,
+      description,
+      logo {
+        logoLight { ${IMAGE_FIELDS} },
+        logoDark { ${IMAGE_FIELDS} },
+        alt
+      }
+    },
     tags[]->{ _id, name },
     ${SEO_FIELDS}
   }
