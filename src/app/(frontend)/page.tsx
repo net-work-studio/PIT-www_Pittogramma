@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import CtaCard from "@/components/cards/cta-card";
 import RecentUpdates from "@/components/home/recent-updates";
@@ -137,6 +138,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
+  await connection();
   const { isEnabled: isDraftMode } = await draftMode();
   if (isDraftMode) {
     return (
@@ -145,17 +147,16 @@ export default async function Home() {
       </Suspense>
     );
   }
-  return <CachedHome perspective="published" stega={false} />;
+  return <CachedHome perspective="published" stega={false} today={buildLocalToday()} />;
 }
 
 async function DynamicHome() {
   const { perspective, stega } = await getDynamicFetchOptions();
-  return <CachedHome perspective={perspective} stega={stega} />;
+  return <CachedHome perspective={perspective} stega={stega} today={buildLocalToday()} />;
 }
 
-async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
+async function CachedHome({ perspective, stega, today }: DynamicFetchOptions & { today: string }) {
   "use cache";
-  const today = buildLocalToday();
   const [
     { data: homePage },
     { data: feedItems },

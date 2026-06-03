@@ -86,6 +86,7 @@ async function DynamicProjectsPage({
       sortParam={sp.sort}
       stega={stega}
       tagsParam={sp.tags}
+      today={buildLocalToday()}
     />
   );
 }
@@ -97,10 +98,12 @@ async function CachedProjectsPage({
   sortParam,
   perspective,
   stega,
+  today,
 }: {
   tagsParam?: string;
   pageParam?: string;
   sortParam?: string;
+  today: string;
 } & DynamicFetchOptions) {
   "use cache";
 
@@ -116,7 +119,6 @@ async function CachedProjectsPage({
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
-  const today = buildLocalToday();
   const tagIdsPromise = hasTags
     ? sanityFetch({
         query: TAG_IDS_BY_SLUGS_QUERY,

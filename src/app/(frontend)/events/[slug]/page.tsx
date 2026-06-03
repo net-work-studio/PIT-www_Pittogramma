@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { defineQuery } from "next-sanity";
 
+import ContributorsSection from "@/components/modules/event/contributors-section";
 import EventInfo from "@/components/modules/event/event-info";
 import ShareLinks from "@/components/modules/project/share-links";
 import SanityImage from "@/components/modules/shared/sanity-image";
@@ -79,12 +81,13 @@ export default async function EventPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  await connection();
   const [{ slug }, { perspective, stega }] = await Promise.all([
     params,
     getDynamicFetchOptions(),
   ]);
   return (
-    <CachedEventPage perspective={perspective} slug={slug} stega={stega} />
+    <CachedEventPage perspective={perspective} slug={slug} stega={stega} today={buildLocalToday()} />
   );
 }
 
@@ -92,7 +95,8 @@ async function CachedEventPage({
   slug,
   perspective,
   stega,
-}: { slug: string } & DynamicFetchOptions) {
+  today,
+}: { slug: string; today: string } & DynamicFetchOptions) {
   "use cache";
   const { data: event } = await sanityFetch({
     query: EVENT_QUERY,
@@ -109,8 +113,7 @@ async function CachedEventPage({
     ? urlForImage(event.cover)?.url()
     : undefined;
 
-  const now = buildLocalToday();
-  const isPast = !event.dateStart || event.dateStart < now;
+  const isPast = !event.dateStart || event.dateStart < today;
   const statusConfig = getEventStatusConfig(event.status);
   const ctaUrl = !isPast && statusConfig?.ctaLabel ? event.ctaUrl : null;
 
@@ -155,8 +158,6 @@ async function CachedEventPage({
             isPast={isPast}
             locationAddress={event.locationAddress}
             locationName={event.locationName}
-            partners={event.partners}
-            sponsors={event.sponsors}
             status={event.status}
             tags={event.tags}
             title={event.title}
@@ -198,8 +199,16 @@ async function CachedEventPage({
           </div>
         ) : null}
 
+        {/* Sponsors & Partners */}
+        <div className="order-4 px-2.5 pt-6 lg:order-3">
+          <ContributorsSection
+            partners={event.partners}
+            sponsors={event.sponsors}
+          />
+        </div>
+
         {/* Mobile-only metadata */}
-        <div className="order-4 mt-6 flex flex-col gap-4 px-2.5 lg:hidden">
+        <div className="order-5 mt-6 flex flex-col gap-4 px-2.5 lg:hidden">
           {statusConfig ? (
             <Badge variant={statusConfig.badgeVariant}>
               {statusConfig.label}
@@ -229,40 +238,6 @@ async function CachedEventPage({
                   Location
                 </dt>
                 <dd className="text-sm">{location}</dd>
-              </div>
-            ) : null}
-            {event.sponsors?.filter(Boolean).some((s) => s.name) ? (
-              <div className="flex gap-x-12">
-                <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                  {event.sponsors.filter(Boolean).filter((s) => s.name)
-                    .length === 1
-                    ? "Sponsor"
-                    : "Sponsors"}
-                </dt>
-                <dd className="text-sm">
-                  {event.sponsors
-                    .filter(Boolean)
-                    .map((s) => s.name)
-                    .filter(Boolean)
-                    .join(", ")}
-                </dd>
-              </div>
-            ) : null}
-            {event.partners?.filter(Boolean).some((p) => p.name) ? (
-              <div className="flex gap-x-12">
-                <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                  {event.partners.filter(Boolean).filter((p) => p.name)
-                    .length === 1
-                    ? "Partner"
-                    : "Partners"}
-                </dt>
-                <dd className="text-sm">
-                  {event.partners
-                    .filter(Boolean)
-                    .map((p) => p.name)
-                    .filter(Boolean)
-                    .join(", ")}
-                </dd>
               </div>
             ) : null}
             {event.tags?.filter(Boolean).some((t) => t.name) ? (

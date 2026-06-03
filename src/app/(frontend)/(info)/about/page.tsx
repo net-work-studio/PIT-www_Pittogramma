@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 import AboutContent from "@/components/modules/about/about-content";
@@ -90,7 +91,7 @@ async function CachedAboutPage({ perspective, stega }: DynamicFetchOptions) {
   });
 
   if (!about) {
-    return null;
+    notFound();
   }
 
   const aboutUrl = `${siteDefaults.baseUrl}/about`;

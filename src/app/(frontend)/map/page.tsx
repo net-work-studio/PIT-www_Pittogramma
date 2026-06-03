@@ -97,6 +97,19 @@ async function CachedMapPage({ perspective, stega }: DynamicFetchOptions) {
     perspective,
     stega,
   });
+  if (!data) {
+    return (
+      <>
+        <PageHeader
+          subtitle="Explore designers, studios, bookshops, institutes, and type foundries around the world"
+          title="Map"
+        />
+        <p className="py-20 text-center text-muted-foreground">
+          Map data is currently unavailable
+        </p>
+      </>
+    );
+  }
   const places = composeMapPlaces(data as MapData);
 
   return (

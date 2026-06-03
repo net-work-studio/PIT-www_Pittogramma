@@ -7,6 +7,7 @@ import LoadMore from "@/components/feat/load-more/load-more";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
+import { buildLocalToday } from "@/lib/date-utils";
 import { getEventStatusConfig } from "@/lib/event-status";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -81,14 +82,6 @@ function mapEventToCard(event: EventDoc): EventCard {
   };
 }
 
-function getLocalTodayString(): string {
-  const d = new Date();
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
-  return `${yyyy}-${mm}-${dd}`;
-}
-
 // Layer 1: Page is SYNC, always uses Suspense
 export default function Page({
   searchParams,
@@ -117,6 +110,7 @@ async function DynamicEventsPage({
       pageParam={sp.page}
       perspective={perspective}
       stega={stega}
+      today={buildLocalToday()}
     />
   );
 }
@@ -126,8 +120,10 @@ async function CachedEventsPage({
   pageParam,
   perspective,
   stega,
+  today,
 }: {
   pageParam?: string;
+  today: string;
 } & DynamicFetchOptions) {
   "use cache";
 
@@ -140,7 +136,6 @@ async function CachedEventsPage({
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
-  const today = getLocalTodayString();
 
   const [
     { data: futureEventsData },

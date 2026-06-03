@@ -6,7 +6,6 @@ import FeedDialog from "@/components/feat/feed/feed-dialog";
 import SubmitDialog from "@/components/feat/submit/submit-dialog";
 import { ModeToggle } from "@/components/mode-toggle";
 import { type AdvTier, TIER_CAPS, TIER_ORDER } from "@/lib/adv-config";
-import { buildLocalToday } from "@/lib/date-utils";
 import {
   getEnabledResources,
   isHeaderSearchEnabled,
@@ -21,11 +20,11 @@ import { Button } from "../ui/button";
 export default async function Header({
   perspective,
   stega,
-}: DynamicFetchOptions) {
+  today,
+}: DynamicFetchOptions & { today: string }) {
   "use cache";
   const enabledResources = getEnabledResources();
   const headerSearchEnabled = isHeaderSearchEnabled();
-  const today = buildLocalToday();
 
   const [advsRes, communityRes] = await Promise.all([
     sanityFetch({ query: FEED_QUERY, params: { today }, perspective, stega }),
