@@ -1,7 +1,14 @@
+import { draftMode } from "next/headers";
+import { Suspense } from "react";
+
 import type { MapPlace } from "@/components/shared/location-map";
 import LocationMap from "@/components/shared/location-map-wrapper";
 import PageHeader from "@/components/shared/page-header";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+} from "@/sanity/lib/live";
 import { MAP_DATA_QUERY } from "@/sanity/lib/queries";
 
 interface MapReferenceItem {
@@ -67,8 +74,28 @@ function composeMapPlaces(data: MapData): MapPlace[] {
 }
 
 export default async function MapPage() {
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (isDraftMode) {
+    return (
+      <Suspense>
+        <DynamicMapPage />
+      </Suspense>
+    );
+  }
+  return <CachedMapPage perspective="published" stega={false} />;
+}
+
+async function DynamicMapPage() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedMapPage perspective={perspective} stega={stega} />;
+}
+
+async function CachedMapPage({ perspective, stega }: DynamicFetchOptions) {
+  "use cache";
   const { data } = await sanityFetch({
     query: MAP_DATA_QUERY,
+    perspective,
+    stega,
   });
   const places = composeMapPlaces(data as MapData);
 

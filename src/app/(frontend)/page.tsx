@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
+import { Suspense } from "react";
 import CtaCard from "@/components/cards/cta-card";
 import RecentUpdates from "@/components/home/recent-updates";
 import HomeGrid, { type HomeGridSlot } from "@/components/home-grid";
@@ -9,7 +11,12 @@ import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+  type DynamicFetchOptions,
+} from "@/sanity/lib/live";
 import {
   HOME_ADV_QUERY,
   HOME_FEED_QUERY,
@@ -111,9 +118,10 @@ function buildHomeStream(
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data: page } = await sanityFetch({
+  const { perspective } = await getDynamicFetchOptions();
+  const { data: page } = await sanityFetchMetadata({
     query: HOME_PAGE_QUERY,
-    stega: false,
+    perspective,
   });
 
   return mapSanityToMetadata({
@@ -129,6 +137,24 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (isDraftMode) {
+    return (
+      <Suspense>
+        <DynamicHome />
+      </Suspense>
+    );
+  }
+  return <CachedHome perspective="published" stega={false} />;
+}
+
+async function DynamicHome() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedHome perspective={perspective} stega={stega} />;
+}
+
+async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
+  "use cache";
   const today = buildLocalToday();
   const [
     { data: homePage },
@@ -136,10 +162,10 @@ export default async function Home() {
     { data: recentUpdates },
     { data: homeAdvs },
   ] = await Promise.all([
-    sanityFetch({ query: HOME_PAGE_QUERY }),
-    sanityFetch({ query: HOME_FEED_QUERY, params: { today } }),
-    sanityFetch({ query: RECENT_UPDATES_QUERY }),
-    sanityFetch({ query: HOME_ADV_QUERY, params: { today } }),
+    sanityFetch({ query: HOME_PAGE_QUERY, perspective, stega }),
+    sanityFetch({ query: HOME_FEED_QUERY, params: { today }, perspective, stega }),
+    sanityFetch({ query: RECENT_UPDATES_QUERY, perspective, stega }),
+    sanityFetch({ query: HOME_ADV_QUERY, params: { today }, perspective, stega }),
   ]);
 
   const midCta = homePage?.midPageCta;

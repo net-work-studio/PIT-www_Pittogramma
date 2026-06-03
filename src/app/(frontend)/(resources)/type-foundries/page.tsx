@@ -1,4 +1,6 @@
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import { TypeFoundriesContent } from "@/components/resources/type-foundries-content";
@@ -9,15 +11,39 @@ import {
   isResourceEnabled,
   isSearchEnabled,
 } from "@/lib/feature-flags";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  getDynamicFetchOptions,
+  sanityFetch,
+  type DynamicFetchOptions,
+} from "@/sanity/lib/live";
 import { TYPE_FOUNDRIES_QUERY } from "@/sanity/lib/queries";
 
 export default async function Page() {
   if (!isResourceEnabled("type-foundries")) {
     notFound();
   }
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (isDraftMode) {
+    return (
+      <Suspense>
+        <DynamicTypeFoundriesPage />
+      </Suspense>
+    );
+  }
+  return <CachedTypeFoundriesPage perspective="published" stega={false} />;
+}
+
+async function DynamicTypeFoundriesPage() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedTypeFoundriesPage perspective={perspective} stega={stega} />;
+}
+
+async function CachedTypeFoundriesPage({ perspective, stega }: DynamicFetchOptions) {
+  "use cache";
   const { data: foundries } = await sanityFetch({
     query: TYPE_FOUNDRIES_QUERY,
+    perspective,
+    stega,
   });
 
   return (

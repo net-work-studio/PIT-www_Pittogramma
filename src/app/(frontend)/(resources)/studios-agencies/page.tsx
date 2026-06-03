@@ -1,4 +1,6 @@
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import { StudiosContent } from "@/components/resources/studios-content";
@@ -9,15 +11,39 @@ import {
   isResourceEnabled,
   isSearchEnabled,
 } from "@/lib/feature-flags";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+} from "@/sanity/lib/live";
 import { STUDIOS_QUERY } from "@/sanity/lib/queries";
 
 export default async function Page() {
   if (!isResourceEnabled("studios-agencies")) {
     notFound();
   }
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (isDraftMode) {
+    return (
+      <Suspense>
+        <DynamicStudiosPage />
+      </Suspense>
+    );
+  }
+  return <CachedStudiosPage perspective="published" stega={false} />;
+}
+
+async function DynamicStudiosPage() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedStudiosPage perspective={perspective} stega={stega} />;
+}
+
+async function CachedStudiosPage({ perspective, stega }: DynamicFetchOptions) {
+  "use cache";
   const { data: studios } = await sanityFetch({
     query: STUDIOS_QUERY,
+    perspective,
+    stega,
   });
 
   return (

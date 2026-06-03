@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
+import { Suspense } from "react";
 
 import AboutContent from "@/components/modules/about/about-content";
 import AboutSupporters from "@/components/modules/about/about-supporters";
@@ -6,7 +8,12 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+} from "@/sanity/lib/live";
 import { ABOUT_PAGE_QUERY } from "@/sanity/lib/queries";
 import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity/types";
 
@@ -34,9 +41,10 @@ function deriveDescriptionFromContent(
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data: about } = await sanityFetch({
+  const { perspective } = await getDynamicFetchOptions();
+  const { data: about } = await sanityFetchMetadata({
     query: ABOUT_PAGE_QUERY,
-    stega: false,
+    perspective,
   });
 
   if (!about) {
@@ -57,7 +65,29 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
-  const { data: about } = await sanityFetch({ query: ABOUT_PAGE_QUERY });
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (isDraftMode) {
+    return (
+      <Suspense>
+        <DynamicAboutPage />
+      </Suspense>
+    );
+  }
+  return <CachedAboutPage perspective="published" stega={false} />;
+}
+
+async function DynamicAboutPage() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedAboutPage perspective={perspective} stega={stega} />;
+}
+
+async function CachedAboutPage({ perspective, stega }: DynamicFetchOptions) {
+  "use cache";
+  const { data: about } = await sanityFetch({
+    query: ABOUT_PAGE_QUERY,
+    perspective,
+    stega,
+  });
 
   if (!about) {
     return null;

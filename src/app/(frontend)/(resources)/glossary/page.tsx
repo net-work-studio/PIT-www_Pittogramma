@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 import SearchInput from "@/components/feat/search-input";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
@@ -15,7 +17,11 @@ import {
   isResourceEnabled,
   isSearchEnabled,
 } from "@/lib/feature-flags";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+} from "@/sanity/lib/live";
 import { GLOSSARY_QUERY } from "@/sanity/lib/queries";
 import type { GLOSSARY_QUERY_RESULT } from "@/sanity/types";
 
@@ -119,8 +125,29 @@ export default async function Page() {
   if (!isResourceEnabled("glossary")) {
     notFound();
   }
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (isDraftMode) {
+    return (
+      <Suspense>
+        <DynamicGlossaryPage />
+      </Suspense>
+    );
+  }
+  return <CachedGlossaryPage perspective="published" stega={false} />;
+}
 
-  const { data: glossaryItems } = await sanityFetch({ query: GLOSSARY_QUERY });
+async function DynamicGlossaryPage() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedGlossaryPage perspective={perspective} stega={stega} />;
+}
+
+async function CachedGlossaryPage({ perspective, stega }: DynamicFetchOptions) {
+  "use cache";
+  const { data: glossaryItems } = await sanityFetch({
+    query: GLOSSARY_QUERY,
+    perspective,
+    stega,
+  });
 
   const groupedGlossary = groupByFirstLetter(glossaryItems);
   const [leftColumn, rightColumn] = splitIntoColumns(groupedGlossary);

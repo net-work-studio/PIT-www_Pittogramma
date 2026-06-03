@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { defineQuery } from "next-sanity";
 
 import InterviewContent from "@/components/modules/interview/interview-content";
 import InterviewInfo from "@/components/modules/interview/interview-info";
@@ -12,7 +13,13 @@ import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
 import { urlForImage } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+  sanityFetchStaticParams,
+} from "@/sanity/lib/live";
 import { INTERVIEW_QUERY } from "@/sanity/lib/queries";
 
 function getInterviewEntity({
@@ -33,16 +40,27 @@ function getInterviewEntity({
   return null;
 }
 
+export async function generateStaticParams() {
+  const slugsQuery = defineQuery(
+    `*[_type == "interview" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
+  );
+  const { data } = await sanityFetchStaticParams({ query: slugsQuery });
+  return data as { slug: string }[];
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const { data: interview } = await sanityFetch({
+  const [{ slug }, { perspective }] = await Promise.all([
+    params,
+    getDynamicFetchOptions(),
+  ]);
+  const { data: interview } = await sanityFetchMetadata({
     query: INTERVIEW_QUERY,
     params: { slug },
-    stega: false,
+    perspective,
   });
 
   if (!interview) {
@@ -67,10 +85,26 @@ export default async function InterviewPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params;
+  const [{ slug }, { perspective, stega }] = await Promise.all([
+    params,
+    getDynamicFetchOptions(),
+  ]);
+  return (
+    <CachedInterviewPage perspective={perspective} slug={slug} stega={stega} />
+  );
+}
+
+async function CachedInterviewPage({
+  slug,
+  perspective,
+  stega,
+}: { slug: string } & DynamicFetchOptions) {
+  "use cache";
   const { data: interview } = await sanityFetch({
     query: INTERVIEW_QUERY,
     params: { slug },
+    perspective,
+    stega,
   });
 
   if (!interview) {

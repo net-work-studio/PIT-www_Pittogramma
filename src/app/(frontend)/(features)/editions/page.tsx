@@ -1,17 +1,25 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
+import { Suspense } from "react";
 
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+} from "@/sanity/lib/live";
 import { EDITIONS_LIST_QUERY, EDITIONS_PAGE_QUERY } from "@/sanity/lib/queries";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data: page } = await sanityFetch({
+  const { perspective } = await getDynamicFetchOptions();
+  const { data: page } = await sanityFetchMetadata({
     query: EDITIONS_PAGE_QUERY,
-    stega: false,
+    perspective,
   });
 
   return mapSanityToMetadata({
@@ -26,9 +34,27 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function EditionsPage() {
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (isDraftMode) {
+    return (
+      <Suspense>
+        <DynamicEditionsPage />
+      </Suspense>
+    );
+  }
+  return <CachedEditionsPage perspective="published" stega={false} />;
+}
+
+async function DynamicEditionsPage() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedEditionsPage perspective={perspective} stega={stega} />;
+}
+
+async function CachedEditionsPage({ perspective, stega }: DynamicFetchOptions) {
+  "use cache";
   const [{ data: editions }, { data: pageSettings }] = await Promise.all([
-    sanityFetch({ query: EDITIONS_LIST_QUERY }),
-    sanityFetch({ query: EDITIONS_PAGE_QUERY }),
+    sanityFetch({ query: EDITIONS_LIST_QUERY, perspective, stega }),
+    sanityFetch({ query: EDITIONS_PAGE_QUERY, perspective, stega }),
   ]);
 
   const items = editions ?? [];

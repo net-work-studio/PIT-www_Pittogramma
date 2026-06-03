@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import FilterBar from "@/components/feat/filter/filter";
@@ -14,7 +15,12 @@ import { JOURNAL_LABELS } from "@/lib/journal-labels";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+} from "@/sanity/lib/live";
 import {
   getJournalFilteredQuery,
   JOURNAL_COUNT_QUERY,
@@ -32,9 +38,10 @@ const JOURNAL_LABEL_OPTIONS = JOURNAL_LABELS.map((opt) => ({
 }));
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data: page } = await sanityFetch({
+  const { perspective } = await getDynamicFetchOptions();
+  const { data: page } = await sanityFetchMetadata({
     query: JOURNAL_PAGE_QUERY,
-    stega: false,
+    perspective,
   });
 
   return mapSanityToMetadata({
@@ -49,16 +56,54 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default async function JournalPage({
+// Layer 1: Page is SYNC, always uses Suspense
+export default function JournalPage({
   searchParams,
 }: {
   searchParams: Promise<{ tags?: string; page?: string; sort?: string }>;
 }) {
-  const {
-    tags: tagsParam,
-    page: pageParam,
-    sort: sortParam,
-  } = await searchParams;
+  return (
+    <Suspense>
+      <DynamicJournalPage searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+// Layer 2: Dynamic — awaits searchParams + getDynamicFetchOptions
+async function DynamicJournalPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tags?: string; page?: string; sort?: string }>;
+}) {
+  const [sp, { perspective, stega }] = await Promise.all([
+    searchParams,
+    getDynamicFetchOptions(),
+  ]);
+  return (
+    <CachedJournalPage
+      pageParam={sp.page}
+      perspective={perspective}
+      sortParam={sp.sort}
+      stega={stega}
+      tagsParam={sp.tags}
+    />
+  );
+}
+
+// Layer 3: Cached — has 'use cache', ALL fetching + rendering logic
+async function CachedJournalPage({
+  tagsParam,
+  pageParam,
+  sortParam,
+  perspective,
+  stega,
+}: {
+  tagsParam?: string;
+  pageParam?: string;
+  sortParam?: string;
+} & DynamicFetchOptions) {
+  "use cache";
+
   const sort = isValidSort(sortParam) ? sortParam : "newest";
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
   const hasTags = tagSlugs.length > 0;
@@ -77,12 +122,16 @@ export default async function JournalPage({
       sanityFetch({
         query: getJournalFilteredQuery(sort),
         params: { tags: tagSlugs, hasTags, start, end },
+        perspective,
+        stega,
       }),
       sanityFetch({
         query: JOURNAL_COUNT_QUERY,
         params: { tags: tagSlugs, hasTags },
+        perspective,
+        stega,
       }),
-      sanityFetch({ query: JOURNAL_PAGE_QUERY }),
+      sanityFetch({ query: JOURNAL_PAGE_QUERY, perspective, stega }),
     ]);
 
   const featuredArticle =
@@ -153,7 +202,10 @@ export default async function JournalPage({
                 contentType="journal"
                 cover={heroCover}
                 href={`/journal/${featuredArticle.slug?.current ?? ""}`}
-                subtitle={featuredArticle.authors?.map((a) => a.name).join(", ") ?? undefined}
+                subtitle={
+                  featuredArticle.authors?.map((a) => a.name).join(", ") ??
+                  undefined
+                }
                 title={featuredArticle.title ?? ""}
                 variant="compact"
               />

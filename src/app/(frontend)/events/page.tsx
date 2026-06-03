@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import LoadMore from "@/components/feat/load-more/load-more";
@@ -10,7 +11,12 @@ import { getEventStatusConfig } from "@/lib/event-status";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+} from "@/sanity/lib/live";
 import {
   EVENTS_PAGE_QUERY,
   FUTURE_EVENTS_QUERY,
@@ -26,9 +32,10 @@ const PAGE_SIZE = 48;
 const MAX_PAGE = 20;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data: page } = await sanityFetch({
+  const { perspective } = await getDynamicFetchOptions();
+  const { data: page } = await sanityFetchMetadata({
     query: EVENTS_PAGE_QUERY,
-    stega: false,
+    perspective,
   });
 
   return mapSanityToMetadata({
@@ -82,12 +89,48 @@ function getLocalTodayString(): string {
   return `${yyyy}-${mm}-${dd}`;
 }
 
-export default async function Page({
+// Layer 1: Page is SYNC, always uses Suspense
+export default function Page({
   searchParams,
 }: {
   searchParams: Promise<{ page?: string }>;
 }) {
-  const { page: pageParam } = await searchParams;
+  return (
+    <Suspense>
+      <DynamicEventsPage searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+// Layer 2: Dynamic — awaits searchParams + getDynamicFetchOptions
+async function DynamicEventsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const [sp, { perspective, stega }] = await Promise.all([
+    searchParams,
+    getDynamicFetchOptions(),
+  ]);
+  return (
+    <CachedEventsPage
+      pageParam={sp.page}
+      perspective={perspective}
+      stega={stega}
+    />
+  );
+}
+
+// Layer 3: Cached — has 'use cache', ALL fetching + rendering logic
+async function CachedEventsPage({
+  pageParam,
+  perspective,
+  stega,
+}: {
+  pageParam?: string;
+} & DynamicFetchOptions) {
+  "use cache";
+
   const parsedPage = Number.parseInt(pageParam ?? "1", 10);
   const requestedPage =
     Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
@@ -108,16 +151,22 @@ export default async function Page({
     sanityFetch({
       query: FUTURE_EVENTS_QUERY,
       params: { today },
+      perspective,
+      stega,
     }),
     sanityFetch({
       query: PAST_EVENTS_QUERY,
       params: { today, start, end },
+      perspective,
+      stega,
     }),
     sanityFetch({
       query: PAST_EVENTS_COUNT_QUERY,
       params: { today },
+      perspective,
+      stega,
     }),
-    sanityFetch({ query: EVENTS_PAGE_QUERY }),
+    sanityFetch({ query: EVENTS_PAGE_QUERY, perspective, stega }),
   ]);
 
   const cta = pageSettings?.endOfPageCta;

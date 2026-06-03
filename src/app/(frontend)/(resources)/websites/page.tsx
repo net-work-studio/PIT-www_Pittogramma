@@ -1,4 +1,6 @@
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import { WebsitesContent } from "@/components/resources/websites-content";
@@ -10,16 +12,38 @@ import {
   isSearchEnabled,
 } from "@/lib/feature-flags";
 import type { UtmSettings } from "@/lib/tracked-link";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+} from "@/sanity/lib/live";
 import { SITE_SETTINGS_QUERY, WEB_SOURCES_QUERY } from "@/sanity/lib/queries";
 
 export default async function Page() {
   if (!isResourceEnabled("websites")) {
     notFound();
   }
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (isDraftMode) {
+    return (
+      <Suspense>
+        <DynamicWebsitesPage />
+      </Suspense>
+    );
+  }
+  return <CachedWebsitesPage perspective="published" stega={false} />;
+}
+
+async function DynamicWebsitesPage() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedWebsitesPage perspective={perspective} stega={stega} />;
+}
+
+async function CachedWebsitesPage({ perspective, stega }: DynamicFetchOptions) {
+  "use cache";
   const [{ data: sources }, { data: settings }] = await Promise.all([
-    sanityFetch({ query: WEB_SOURCES_QUERY }),
-    sanityFetch({ query: SITE_SETTINGS_QUERY }),
+    sanityFetch({ query: WEB_SOURCES_QUERY, perspective, stega }),
+    sanityFetch({ query: SITE_SETTINGS_QUERY, perspective, stega }),
   ]);
 
   const utmSettings: UtmSettings = {

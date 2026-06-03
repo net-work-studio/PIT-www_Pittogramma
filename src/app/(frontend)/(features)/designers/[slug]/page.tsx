@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { defineQuery } from "next-sanity";
 
 import BaseCard from "@/components/cards/base-card";
 import DesignerInfo from "@/components/modules/designer/designer-info";
@@ -11,23 +12,40 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import { urlForImage } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+  sanityFetchStaticParams,
+} from "@/sanity/lib/live";
 import { DESIGNER_QUERY } from "@/sanity/lib/queries";
 import type { DESIGNER_QUERY_RESULT } from "@/sanity/types";
 
 type RelatedInterview =
   NonNullable<DESIGNER_QUERY_RESULT>["relatedInterviews"][number];
 
+export async function generateStaticParams() {
+  const slugsQuery = defineQuery(
+    `*[_type == "person" && "designer" in roles && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
+  );
+  const { data } = await sanityFetchStaticParams({ query: slugsQuery });
+  return data as { slug: string }[];
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const { data: designer } = await sanityFetch({
+  const [{ slug }, { perspective }] = await Promise.all([
+    params,
+    getDynamicFetchOptions(),
+  ]);
+  const { data: designer } = await sanityFetchMetadata({
     query: DESIGNER_QUERY,
     params: { slug },
-    stega: false,
+    perspective,
   });
 
   if (!designer) {
@@ -51,10 +69,26 @@ export default async function DesignerPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params;
+  const [{ slug }, { perspective, stega }] = await Promise.all([
+    params,
+    getDynamicFetchOptions(),
+  ]);
+  return (
+    <CachedDesignerPage perspective={perspective} slug={slug} stega={stega} />
+  );
+}
+
+async function CachedDesignerPage({
+  slug,
+  perspective,
+  stega,
+}: { slug: string } & DynamicFetchOptions) {
+  "use cache";
   const { data: designer } = await sanityFetch({
     query: DESIGNER_QUERY,
     params: { slug },
+    perspective,
+    stega,
   });
 
   if (!designer) {
