@@ -1,5 +1,7 @@
-import { Search } from "lucide-react";
+import { Rows3, Search } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
+
 import Mark from "@/components/brand/mark";
 import FeedDialog from "@/components/feat/feed/feed-dialog";
 import SubmitDialog from "@/components/feat/submit/submit-dialog";
@@ -10,20 +12,30 @@ import {
   getEnabledResources,
   isHeaderSearchEnabled,
 } from "@/lib/feature-flags";
-import { sanityFetch } from "@/sanity/lib/live";
+import { type DynamicFetchOptions, sanityFetch } from "@/sanity/lib/live";
 import { FEED_COMMUNITY_QUERY, FEED_QUERY } from "@/sanity/lib/queries";
+
 import { NavigationDesktop } from "../navigation/navigation-desktop";
 import { NavigationMobile } from "../navigation/navigation-mobile";
 import { Button } from "../ui/button";
 
-export default async function Header() {
+export default async function Header({
+  perspective,
+  stega,
+}: DynamicFetchOptions) {
+  "use cache";
+  const today = buildLocalToday();
   const enabledResources = getEnabledResources();
   const headerSearchEnabled = isHeaderSearchEnabled();
-  const today = buildLocalToday();
 
   const [advsRes, communityRes] = await Promise.all([
-    sanityFetch({ query: FEED_QUERY, params: { today } }),
-    sanityFetch({ query: FEED_COMMUNITY_QUERY, params: { today } }),
+    sanityFetch({ query: FEED_QUERY, params: { today }, perspective, stega }),
+    sanityFetch({
+      query: FEED_COMMUNITY_QUERY,
+      params: { today },
+      perspective,
+      stega,
+    }),
   ]);
 
   const allAdvs = advsRes.data ?? [];
@@ -54,7 +66,15 @@ export default async function Header() {
         <div className="hidden md:flex">
           <SubmitDialog />
         </div>
-        <FeedDialog advs={advs} communityItems={communityItems} />
+        <Suspense
+          fallback={
+            <Button aria-label="Feed" disabled size="icon" variant="outline">
+              <Rows3 size={16} />
+            </Button>
+          }
+        >
+          <FeedDialog advs={advs} communityItems={communityItems} />
+        </Suspense>
         {headerSearchEnabled && (
           <div className="hidden md:flex">
             <Button size="icon" variant="outline">

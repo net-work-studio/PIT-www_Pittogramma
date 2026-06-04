@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { sanity } from "next-sanity/live/cache-life";
 
 const sanityProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const sanityDataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -8,6 +9,8 @@ const sanityImagePath =
     : "/images/**";
 
 const nextConfig: NextConfig = {
+  cacheComponents: true,
+  cacheLife: { default: sanity },
   async redirects() {
     return [
       {

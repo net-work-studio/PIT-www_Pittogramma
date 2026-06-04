@@ -8,11 +8,6 @@ interface Tag {
   name: string | null;
 }
 
-interface Contributor {
-  _id: string;
-  name: string | null;
-}
-
 interface EventInfoProps {
   ctaUrl?: string | null;
   dateEnd?: string | null;
@@ -20,8 +15,6 @@ interface EventInfoProps {
   isPast?: boolean;
   locationAddress?: string | null;
   locationName?: string | null;
-  partners?: Contributor[] | null;
-  sponsors?: Contributor[] | null;
   status?: string | null;
   tags?: Tag[] | null;
   title?: string | null;
@@ -37,8 +30,6 @@ export default function EventInfo({
   dateEnd,
   locationName,
   locationAddress,
-  sponsors,
-  partners,
   tags,
   isPast,
 }: EventInfoProps) {
@@ -93,26 +84,6 @@ export default function EventInfo({
               Location
             </dt>
             <dd className="text-sm">{location}</dd>
-          </div>
-        ) : null}
-        {sponsors?.filter(Boolean).some((s) => s.name) ? (
-          <div className="flex gap-x-8">
-            <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-              {sponsors.filter(Boolean).filter((s) => s.name).length === 1 ? "Sponsor" : "Sponsors"}
-            </dt>
-            <dd className="text-sm">
-              {sponsors.filter(Boolean).map((s) => s.name).filter(Boolean).join(", ")}
-            </dd>
-          </div>
-        ) : null}
-        {partners?.filter(Boolean).some((p) => p.name) ? (
-          <div className="flex gap-x-8">
-            <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-              {partners.filter(Boolean).filter((p) => p.name).length === 1 ? "Partner" : "Partners"}
-            </dt>
-            <dd className="text-sm">
-              {partners.filter(Boolean).map((p) => p.name).filter(Boolean).join(", ")}
-            </dd>
           </div>
         ) : null}
         {tags?.filter(Boolean).some((t) => t.name) ? (

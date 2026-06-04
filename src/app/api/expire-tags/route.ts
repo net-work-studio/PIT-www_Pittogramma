@@ -5,9 +5,6 @@ import { isValidRevalidateSecret, parseSyncTagsBody } from "./expire-tags";
 const NO_STORE_HEADERS = { "Cache-Control": "no-store" };
 const FETCH_SYNC_TAGS_TAG = "sanity:fetch-sync-tags";
 
-export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
-
 export async function POST(request: Request) {
   if (!isValidRevalidateSecret(request)) {
     return NextResponse.json(

@@ -9,9 +9,6 @@ const NOMINATIM_URL = "https://nominatim.openstreetmap.org/search";
 const USER_AGENT = "Pittogramma/1.0 (https://pittogramma.com)";
 const NO_STORE_HEADERS = { "Cache-Control": "no-store" };
 
-export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
-
 // Simple in-memory rate limiter: 1 request per second
 let lastRequestTime = 0;
 

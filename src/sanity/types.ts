@@ -433,6 +433,12 @@ export type MediaItem = {
   alt?: string;
 };
 
+export type InfoItem = {
+  _type: "infoItem";
+  title: string;
+  content: string;
+};
+
 export type Logo = {
   _type: "logo";
   logoLight?: {
@@ -666,6 +672,11 @@ export type Event = {
     {
       _key: string;
     } & ContributorReference
+  >;
+  info?: Array<
+    {
+      _key: string;
+    } & InfoItem
   >;
   tags?: Array<
     {
@@ -1238,6 +1249,7 @@ export type AllSanitySchemaTypes =
   | SingleMediaBlock
   | SanityFileAssetReference
   | MediaItem
+  | InfoItem
   | Logo
   | Language
   | ProjectReference
@@ -1282,19 +1294,22 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
+// Source: src/app/(frontend)/(features)/designers/[slug]/page.tsx
+// Variable: slugsQuery
+// Query: *[_type == "person" && "designer" in roles && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}
+export type SlugsQueryResult = Array<{
+  slug: string | null;
+}>;
+
 // Source: src/app/sitemap.ts
 // Variable: SITEMAP_QUERY
-// Query: {  "projects": *[_type == "project" && defined(slug.current)] {    "slug": slug.current,    _updatedAt  },  "interviews": *[_type == "interview" && defined(slug.current)] {    "slug": slug.current,    _updatedAt  },  "editions": *[_type == "edition" && defined(slug.current)] {    "slug": slug.current,    _updatedAt  }}
+// Query: {  "projects": *[_type == "project" && defined(slug.current)] {    "slug": slug.current,    _updatedAt  },  "interviews": *[_type == "interview" && defined(slug.current)] {    "slug": slug.current,    _updatedAt  }}
 export type SITEMAP_QUERY_RESULT = {
   projects: Array<{
     slug: string;
     _updatedAt: string;
   }>;
   interviews: Array<{
-    slug: string;
-    _updatedAt: string;
-  }>;
-  editions: Array<{
     slug: string;
     _updatedAt: string;
   }>;
@@ -3016,7 +3031,7 @@ export type PAST_EVENTS_COUNT_QUERY_RESULT = number;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: EVENT_QUERY
-// Query: *[_type == "event" && slug.current == $slug][0] {    _id,    title,    slug,    type,    status,    ctaUrl,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    dateStart,    dateEnd,    locationName,    locationAddress,    description,    sponsors[]->{ _id, name },    partners[]->{ _id, name },    tags[]->{ _id, name },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+// Query: *[_type == "event" && slug.current == $slug][0] {    _id,    title,    slug,    type,    status,    ctaUrl,    cover {      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt    },    dateStart,    dateEnd,    locationName,    locationAddress,    description,    sponsors[]->{      _id,      name,      description,      logo {        logoLight {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },        logoDark {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },        alt      }    },    partners[]->{      _id,      name,      description,      logo {        logoLight {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },        logoDark {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },        alt      }    },    info[] { _key, title, content },    tags[]->{ _id, name },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type EVENT_QUERY_RESULT = {
   _id: string;
   title: string;
@@ -3059,10 +3074,83 @@ export type EVENT_QUERY_RESULT = {
   sponsors: Array<{
     _id: string;
     name: string;
+    description: string | null;
+    logo: {
+      logoLight: {
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      logoDark: {
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+    };
   }> | null;
   partners: Array<{
     _id: string;
     name: string;
+    description: string | null;
+    logo: {
+      logoLight: {
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      logoDark: {
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+    };
+  }> | null;
+  info: Array<{
+    _key: string;
+    title: string;
+    content: string;
   }> | null;
   tags: Array<{
     _id: string;
@@ -6453,7 +6541,8 @@ export type MAP_DATA_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '{\n  "projects": *[_type == "project" && defined(slug.current)] {\n    "slug": slug.current,\n    _updatedAt\n  },\n  "interviews": *[_type == "interview" && defined(slug.current)] {\n    "slug": slug.current,\n    _updatedAt\n  },\n  "editions": *[_type == "edition" && defined(slug.current)] {\n    "slug": slug.current,\n    _updatedAt\n  }\n}': SITEMAP_QUERY_RESULT;
+    '*[_type == "person" && "designer" in roles && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}': SlugsQueryResult;
+    '{\n  "projects": *[_type == "project" && defined(slug.current)] {\n    "slug": slug.current,\n    _updatedAt\n  },\n  "interviews": *[_type == "interview" && defined(slug.current)] {\n    "slug": slug.current,\n    _updatedAt\n  }\n}': SITEMAP_QUERY_RESULT;
     '\n  *[_type == "siteSettings"][0] {\n    utmSource,\n    utmMedium,\n    utmCampaign,\n    substackUrl,\n    instagramUrl,\n    spotifyUrl\n  }\n': SITE_SETTINGS_QUERY_RESULT;
     '\n  *[_type == "homePage"][0] {\n    _id,\n    title,\n    introText,\n    featuredItem->{\n      _id,\n      _type,\n      title,\n      slug,\n      publishingDate,\n      cover { image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, alt },\n      _type == "project" => {\n        "people": designers[]{ ...@->{ _id, name }, _key },\n      },\n      _type == "interview" => {\n        "people": designersAndProfessionals[]{ ...@->{ _id, name }, _key },\n        interviewToType,\n        "studio": studio->name,\n        "typeFoundry": typeFoundry->name,\n        introText,\n      },\n      _type == "journal" => {\n        "people": authors[]{ ...@->{ _id, name }, _key },\n        label,\n        excerpt,\n        featuredCover { image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, alt },\n      },\n      tags[]->{ _id, name }\n    },\n    midPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n    endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': HOME_PAGE_QUERY_RESULT;
     '\n  *[\n    _type in ["project", "interview", "journal"]\n    && defined(publishingDate.date)\n    && publishingDate.date <= $today\n  ] | order(publishingDate.date desc) [0...32] {\n    _id,\n    _type,\n    title,\n    slug,\n    publishingDate,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    _type == "project" => {\n      "people": designers[]{ ...@->{ _id, name }, _key },\n    },\n    _type == "interview" => {\n      "people": designersAndProfessionals[]{ ...@->{ _id, name }, _key },\n      interviewToType,\n      "studio": studio->name,\n      "typeFoundry": typeFoundry->name,\n      introText,\n      readingTime,\n    },\n    _type == "journal" => {\n      "people": authors[]{ ...@->{ _id, name }, _key },\n      label,\n      excerpt,\n      featuredCover { image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n }, alt },\n    },\n    tags[]->{ _id, name }\n  }\n': HOME_FEED_QUERY_RESULT;
@@ -6467,7 +6556,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "event" && defined(slug.current) && dateStart >= $today] | order(dateStart asc) {\n    \n    _id,\n    title,\n    slug,\n    type,\n    status,\n    ctaUrl,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    dateStart,\n    dateEnd,\n    locationName,\n    description,\n    sponsors[]->{ _id, name },\n    partners[]->{ _id, name },\n    tags[]->{ _id, name },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n\n  }\n': FUTURE_EVENTS_QUERY_RESULT;
     '\n  *[_type == "event" && defined(slug.current) && dateStart < $today] | order(dateStart desc) [$start...$end] {\n    \n    _id,\n    title,\n    slug,\n    type,\n    status,\n    ctaUrl,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    dateStart,\n    dateEnd,\n    locationName,\n    description,\n    sponsors[]->{ _id, name },\n    partners[]->{ _id, name },\n    tags[]->{ _id, name },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n\n  }\n': PAST_EVENTS_QUERY_RESULT;
     '\n  count(*[_type == "event" && defined(slug.current) && dateStart < $today])\n': PAST_EVENTS_COUNT_QUERY_RESULT;
-    '\n  *[_type == "event" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    type,\n    status,\n    ctaUrl,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    dateStart,\n    dateEnd,\n    locationName,\n    locationAddress,\n    description,\n    sponsors[]->{ _id, name },\n    partners[]->{ _id, name },\n    tags[]->{ _id, name },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': EVENT_QUERY_RESULT;
+    '\n  *[_type == "event" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    type,\n    status,\n    ctaUrl,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    dateStart,\n    dateEnd,\n    locationName,\n    locationAddress,\n    description,\n    sponsors[]->{\n      _id,\n      name,\n      description,\n      logo {\n        logoLight { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n        logoDark { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n        alt\n      }\n    },\n    partners[]->{\n      _id,\n      name,\n      description,\n      logo {\n        logoLight { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n        logoDark { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n        alt\n      }\n    },\n    info[] { _key, title, content },\n    tags[]->{ _id, name },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': EVENT_QUERY_RESULT;
     '\n  *[_type == "project"] | order(_createdAt desc) {\n    _id,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    title,\n    slug,\n    designers[]{ ...@->{ _id, name, slug, portrait }, _key },\n    tags[]->{\n      _id,\n      name,\n      "slug": slug.current\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': PROJECTS_QUERY_RESULT;
     '\n  *[_type == "project"\n    && defined(slug.current)\n    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)\n  ] | order(publishingDate.date desc) [$start...$end] {\n    _id,\n    cover {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    },\n    title,\n    slug,\n    designers[]{ ...@->{ _id, name, slug, portrait }, _key },\n    tags[]->{\n      _id,\n      name,\n      "slug": slug.current\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': PROJECTS_FILTERED_QUERY_RESULT;
     '\n  count(*[_type == "project"\n    && defined(slug.current)\n    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)\n  ])\n': PROJECTS_COUNT_QUERY_RESULT;

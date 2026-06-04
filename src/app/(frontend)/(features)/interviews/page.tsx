@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import AdvCard from "@/components/cards/adv-card";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
@@ -14,7 +15,12 @@ import { buildLocalToday } from "@/lib/date-utils";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+} from "@/sanity/lib/live";
 import {
   getInterviewsFilteredQuery,
   INDEX_GOLD_QUERY,
@@ -32,9 +38,10 @@ const PAGE_SIZE = 48;
 const MAX_PAGE = 20;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data: page } = await sanityFetch({
+  const { perspective } = await getDynamicFetchOptions();
+  const { data: page } = await sanityFetchMetadata({
     query: INTERVIEWS_PAGE_QUERY,
-    stega: false,
+    perspective,
   });
 
   return mapSanityToMetadata({
@@ -49,16 +56,57 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default async function InterviewsPage({
+// Layer 1: Page is SYNC, always uses Suspense
+export default function InterviewsPage({
   searchParams,
 }: {
   searchParams: Promise<{ tags?: string; page?: string; sort?: string }>;
 }) {
-  const {
-    tags: tagsParam,
-    page: pageParam,
-    sort: sortParam,
-  } = await searchParams;
+  return (
+    <Suspense>
+      <DynamicInterviewsPage searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+// Layer 2: Dynamic — awaits searchParams + getDynamicFetchOptions
+async function DynamicInterviewsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tags?: string; page?: string; sort?: string }>;
+}) {
+  const [sp, { perspective, stega }] = await Promise.all([
+    searchParams,
+    getDynamicFetchOptions(),
+  ]);
+  return (
+    <CachedInterviewsPage
+      pageParam={sp.page}
+      perspective={perspective}
+      sortParam={sp.sort}
+      stega={stega}
+      tagsParam={sp.tags}
+      today={buildLocalToday()}
+    />
+  );
+}
+
+// Layer 3: Cached — has 'use cache', ALL fetching + rendering logic
+async function CachedInterviewsPage({
+  tagsParam,
+  pageParam,
+  sortParam,
+  perspective,
+  stega,
+  today,
+}: {
+  tagsParam?: string;
+  pageParam?: string;
+  sortParam?: string;
+  today: string;
+} & DynamicFetchOptions) {
+  "use cache";
+
   const sort = isValidSort(sortParam) ? sortParam : "newest";
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
   const hasTags = tagSlugs.length > 0;
@@ -71,23 +119,28 @@ export default async function InterviewsPage({
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
-  const today = buildLocalToday();
   const tagIdsPromise = hasTags
     ? sanityFetch({
         query: TAG_IDS_BY_SLUGS_QUERY,
         params: { slugs: tagSlugs },
+        perspective,
+        stega,
       })
     : Promise.resolve({ data: [] as string[] });
   const interviewsPromise = tagIdsPromise.then(({ data: tagIds }) =>
     sanityFetch({
       query: getInterviewsFilteredQuery(sort),
       params: { tagIds, hasTags, start, end },
+      perspective,
+      stega,
     })
   );
   const totalCountPromise = tagIdsPromise.then(({ data: tagIds }) =>
     sanityFetch({
       query: INTERVIEWS_COUNT_QUERY,
       params: { tagIds, hasTags },
+      perspective,
+      stega,
     })
   );
 
@@ -100,9 +153,14 @@ export default async function InterviewsPage({
   ] = await Promise.all([
     interviewsPromise,
     totalCountPromise,
-    sanityFetch({ query: INTERVIEWS_TAGS_QUERY }),
-    sanityFetch({ query: INTERVIEWS_PAGE_QUERY }),
-    sanityFetch({ query: INDEX_GOLD_QUERY, params: { today } }),
+    sanityFetch({ query: INTERVIEWS_TAGS_QUERY, perspective, stega }),
+    sanityFetch({ query: INTERVIEWS_PAGE_QUERY, perspective, stega }),
+    sanityFetch({
+      query: INDEX_GOLD_QUERY,
+      params: { today },
+      perspective,
+      stega,
+    }),
   ]);
 
   const cta = pageSettings?.endOfPageCta;
@@ -162,7 +220,7 @@ export default async function InterviewsPage({
             No results found
           </p>
         ) : (
-          <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-6">
+          <section className="grid 3xl:grid-cols-6 grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
             {slots.map((slot) => {
               if (slot.kind === "adv") {
                 const adv = slot.item;

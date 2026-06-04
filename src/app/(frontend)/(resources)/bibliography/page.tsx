@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { draftMode } from "next/headers";
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import { BibliographyContent } from "@/components/resources/bibliography-content";
@@ -11,7 +13,11 @@ import {
   isSearchEnabled,
 } from "@/lib/feature-flags";
 import type { UtmSettings } from "@/lib/tracked-link";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+} from "@/sanity/lib/live";
 import { BIBLIOGRAPHY_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
@@ -21,11 +27,32 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   if (!isResourceEnabled("bibliography")) {
-    notFound();
+    redirect("/");
   }
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (isDraftMode) {
+    return (
+      <Suspense>
+        <DynamicBibliographyPage />
+      </Suspense>
+    );
+  }
+  return <CachedBibliographyPage perspective="published" stega={false} />;
+}
+
+async function DynamicBibliographyPage() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedBibliographyPage perspective={perspective} stega={stega} />;
+}
+
+async function CachedBibliographyPage({
+  perspective,
+  stega,
+}: DynamicFetchOptions) {
+  "use cache";
   const [{ data: books }, { data: settings }] = await Promise.all([
-    sanityFetch({ query: BIBLIOGRAPHY_QUERY }),
-    sanityFetch({ query: SITE_SETTINGS_QUERY }),
+    sanityFetch({ query: BIBLIOGRAPHY_QUERY, perspective, stega }),
+    sanityFetch({ query: SITE_SETTINGS_QUERY, perspective, stega }),
   ]);
 
   const utmSettings: UtmSettings = {

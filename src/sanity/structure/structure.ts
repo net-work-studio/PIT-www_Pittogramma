@@ -31,6 +31,7 @@ export const structure: StructureResolver = (S) =>
     .title("Content")
     .items([
       singleton(S, "homePage", "Home", Home),
+      singleton(S, "aboutPage", "About", User),
 
       group(
         S,

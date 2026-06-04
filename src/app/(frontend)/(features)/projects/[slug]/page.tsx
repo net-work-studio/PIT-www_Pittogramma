@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { defineQuery } from "next-sanity";
 
 import ProjectGallery from "@/components/modules/project/project-gallery";
 import ProjectInfo from "@/components/modules/project/project-info";
@@ -12,20 +13,37 @@ import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
 import { urlForImage } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+  sanityFetchStaticParams,
+} from "@/sanity/lib/live";
 import { PROJECT_QUERY } from "@/sanity/lib/queries";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
+
+export async function generateStaticParams() {
+  const slugsQuery = defineQuery(
+    `*[_type == "project" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
+  );
+  const { data } = await sanityFetchStaticParams({ query: slugsQuery });
+  return data as { slug: string }[];
+}
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const { data: project } = await sanityFetch({
+  const [{ slug }, { perspective }] = await Promise.all([
+    params,
+    getDynamicFetchOptions(),
+  ]);
+  const { data: project } = await sanityFetchMetadata({
     query: PROJECT_QUERY,
     params: { slug },
-    stega: false,
+    perspective,
   });
 
   if (!project) {
@@ -50,10 +68,26 @@ export default async function ProjectPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params;
+  const [{ slug }, { perspective, stega }] = await Promise.all([
+    params,
+    getDynamicFetchOptions(),
+  ]);
+  return (
+    <CachedProjectPage perspective={perspective} slug={slug} stega={stega} />
+  );
+}
+
+async function CachedProjectPage({
+  slug,
+  perspective,
+  stega,
+}: { slug: string } & DynamicFetchOptions) {
+  "use cache";
   const { data: project } = await sanityFetch({
     query: PROJECT_QUERY,
     params: { slug },
+    perspective,
+    stega,
   });
 
   if (!project) {

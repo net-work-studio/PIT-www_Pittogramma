@@ -1,4 +1,6 @@
-import { notFound } from "next/navigation";
+import { draftMode } from "next/headers";
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import { InstitutesContent } from "@/components/resources/institutes-content";
@@ -9,15 +11,39 @@ import {
   isResourceEnabled,
   isSearchEnabled,
 } from "@/lib/feature-flags";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  getDynamicFetchOptions,
+  sanityFetch,
+  type DynamicFetchOptions,
+} from "@/sanity/lib/live";
 import { INSTITUTES_QUERY } from "@/sanity/lib/queries";
 
 export default async function Page() {
   if (!isResourceEnabled("institutes")) {
-    notFound();
+    redirect("/");
   }
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (isDraftMode) {
+    return (
+      <Suspense>
+        <DynamicInstitutesPage />
+      </Suspense>
+    );
+  }
+  return <CachedInstitutesPage perspective="published" stega={false} />;
+}
+
+async function DynamicInstitutesPage() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedInstitutesPage perspective={perspective} stega={stega} />;
+}
+
+async function CachedInstitutesPage({ perspective, stega }: DynamicFetchOptions) {
+  "use cache";
   const { data: institutes } = await sanityFetch({
     query: INSTITUTES_QUERY,
+    perspective,
+    stega,
   });
 
   return (

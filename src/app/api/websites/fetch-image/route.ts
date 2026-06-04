@@ -9,9 +9,6 @@ import {
   validatePublicHttpUrl,
 } from "../../_utils/outbound-fetch";
 
-export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
-
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
 
 function errorResponse(error: unknown): NextResponse {

@@ -1,17 +1,25 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
+import { Suspense } from "react";
 import CtaCard from "@/components/cards/cta-card";
 import DesignerList from "@/components/modules/designer/designer-list";
 import PageHeader from "@/components/shared/page-header";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+} from "@/sanity/lib/live";
 import { DESIGNERS_PAGE_QUERY, DESIGNERS_QUERY } from "@/sanity/lib/queries";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data: page } = await sanityFetch({
+  const { perspective } = await getDynamicFetchOptions();
+  const { data: page } = await sanityFetchMetadata({
     query: DESIGNERS_PAGE_QUERY,
-    stega: false,
+    perspective,
   });
 
   return mapSanityToMetadata({
@@ -27,9 +35,30 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function DesignersPage() {
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (isDraftMode) {
+    return (
+      <Suspense>
+        <DynamicDesignersPage />
+      </Suspense>
+    );
+  }
+  return <CachedDesignersPage perspective="published" stega={false} />;
+}
+
+async function DynamicDesignersPage() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedDesignersPage perspective={perspective} stega={stega} />;
+}
+
+async function CachedDesignersPage({
+  perspective,
+  stega,
+}: DynamicFetchOptions) {
+  "use cache";
   const [{ data: designers }, { data: pageSettings }] = await Promise.all([
-    sanityFetch({ query: DESIGNERS_QUERY }),
-    sanityFetch({ query: DESIGNERS_PAGE_QUERY }),
+    sanityFetch({ query: DESIGNERS_QUERY, perspective, stega }),
+    sanityFetch({ query: DESIGNERS_PAGE_QUERY, perspective, stega }),
   ]);
 
   const cta = pageSettings?.endOfPageCta;

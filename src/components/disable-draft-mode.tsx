@@ -1,12 +1,11 @@
 "use client";
 
-import { useDraftModeEnvironment } from "next-sanity/hooks";
+import { useIsPresentationTool } from "next-sanity/hooks";
 
 export function DisableDraftMode() {
-  const environment = useDraftModeEnvironment();
+  const isPresentationTool = useIsPresentationTool();
 
-  // Only show the disable draft mode button when outside of Presentation Tool
-  if (environment !== "live" && environment !== "unknown") {
+  if (isPresentationTool) {
     return null;
   }
 

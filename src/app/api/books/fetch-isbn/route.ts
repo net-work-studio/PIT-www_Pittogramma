@@ -5,9 +5,6 @@ import {
   readJsonStringField,
 } from "@/app/api/_utils/outbound-fetch";
 
-export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
-
 const YEAR_REGEX = /^(\d{4})/;
 const ISBN_REGEX = /^(\d{10}|\d{13})$/;
 const NO_STORE_HEADERS = { "Cache-Control": "no-store" };

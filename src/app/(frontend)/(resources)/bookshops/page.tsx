@@ -1,4 +1,6 @@
-import { notFound } from "next/navigation";
+import { draftMode } from "next/headers";
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import { BookshopsContent } from "@/components/resources/bookshops-content";
@@ -9,15 +11,42 @@ import {
   isResourceEnabled,
   isSearchEnabled,
 } from "@/lib/feature-flags";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+} from "@/sanity/lib/live";
 import { BOOKSHOPS_QUERY } from "@/sanity/lib/queries";
 
 export default async function Page() {
   if (!isResourceEnabled("bookshops")) {
-    notFound();
+    redirect("/");
   }
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (isDraftMode) {
+    return (
+      <Suspense>
+        <DynamicBookshopsPage />
+      </Suspense>
+    );
+  }
+  return <CachedBookshopsPage perspective="published" stega={false} />;
+}
+
+async function DynamicBookshopsPage() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedBookshopsPage perspective={perspective} stega={stega} />;
+}
+
+async function CachedBookshopsPage({
+  perspective,
+  stega,
+}: DynamicFetchOptions) {
+  "use cache";
   const { data: bookshops } = await sanityFetch({
     query: BOOKSHOPS_QUERY,
+    perspective,
+    stega,
   });
 
   return (
