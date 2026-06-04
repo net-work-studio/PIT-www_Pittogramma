@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import ColorsSection from "./_components/colors-section";
 import ModulesSection from "./_components/modules-section";
@@ -14,7 +14,7 @@ const NAV_ITEMS = [
 
 export default function DesignSystemPage() {
   if (process.env.NODE_ENV !== "development") {
-    notFound();
+    redirect("/");
   }
 
   return (

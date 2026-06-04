@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
-import { connection } from "next/server";
 import { Suspense } from "react";
 import CtaCard from "@/components/cards/cta-card";
 import RecentUpdates from "@/components/home/recent-updates";
@@ -13,10 +12,10 @@ import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
 import {
+  type DynamicFetchOptions,
   getDynamicFetchOptions,
   sanityFetch,
   sanityFetchMetadata,
-  type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import {
   HOME_ADV_QUERY,
@@ -111,8 +110,10 @@ function buildHomeStream(
       continue;
     }
     const item = editorial[cursor];
-    if (!item) break;
-    slots.push({ kind: "editorial", item: item });
+    if (!item) {
+      break;
+    }
+    slots.push({ kind: "editorial", item });
     cursor++;
   }
   return slots;
@@ -138,7 +139,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  await connection();
   const { isEnabled: isDraftMode } = await draftMode();
   if (isDraftMode) {
     return (
@@ -147,16 +147,17 @@ export default async function Home() {
       </Suspense>
     );
   }
-  return <CachedHome perspective="published" stega={false} today={buildLocalToday()} />;
+  return <CachedHome perspective="published" stega={false} />;
 }
 
 async function DynamicHome() {
   const { perspective, stega } = await getDynamicFetchOptions();
-  return <CachedHome perspective={perspective} stega={stega} today={buildLocalToday()} />;
+  return <CachedHome perspective={perspective} stega={stega} />;
 }
 
-async function CachedHome({ perspective, stega, today }: DynamicFetchOptions & { today: string }) {
+async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
   "use cache";
+  const today = buildLocalToday();
   const [
     { data: homePage },
     { data: feedItems },
@@ -164,9 +165,19 @@ async function CachedHome({ perspective, stega, today }: DynamicFetchOptions & {
     { data: homeAdvs },
   ] = await Promise.all([
     sanityFetch({ query: HOME_PAGE_QUERY, perspective, stega }),
-    sanityFetch({ query: HOME_FEED_QUERY, params: { today }, perspective, stega }),
+    sanityFetch({
+      query: HOME_FEED_QUERY,
+      params: { today },
+      perspective,
+      stega,
+    }),
     sanityFetch({ query: RECENT_UPDATES_QUERY, perspective, stega }),
-    sanityFetch({ query: HOME_ADV_QUERY, params: { today }, perspective, stega }),
+    sanityFetch({
+      query: HOME_ADV_QUERY,
+      params: { today },
+      perspective,
+      stega,
+    }),
   ]);
 
   const midCta = homePage?.midPageCta;

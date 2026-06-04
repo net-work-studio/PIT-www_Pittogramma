@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   if (!isResourceEnabled("bibliography")) {
-    notFound();
+    redirect("/");
   }
   const { isEnabled: isDraftMode } = await draftMode();
   if (isDraftMode) {

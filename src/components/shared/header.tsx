@@ -1,11 +1,13 @@
-import { Search } from "lucide-react";
+import { Rows3, Search } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 import Mark from "@/components/brand/mark";
 import FeedDialog from "@/components/feat/feed/feed-dialog";
 import SubmitDialog from "@/components/feat/submit/submit-dialog";
 import { ModeToggle } from "@/components/mode-toggle";
 import { type AdvTier, TIER_CAPS, TIER_ORDER } from "@/lib/adv-config";
+import { buildLocalToday } from "@/lib/date-utils";
 import {
   getEnabledResources,
   isHeaderSearchEnabled,
@@ -20,9 +22,9 @@ import { Button } from "../ui/button";
 export default async function Header({
   perspective,
   stega,
-  today,
-}: DynamicFetchOptions & { today: string }) {
+}: DynamicFetchOptions) {
   "use cache";
+  const today = buildLocalToday();
   const enabledResources = getEnabledResources();
   const headerSearchEnabled = isHeaderSearchEnabled();
 
@@ -64,7 +66,15 @@ export default async function Header({
         <div className="hidden md:flex">
           <SubmitDialog />
         </div>
-        <FeedDialog advs={advs} communityItems={communityItems} />
+        <Suspense
+          fallback={
+            <Button aria-label="Feed" disabled size="icon" variant="outline">
+              <Rows3 size={16} />
+            </Button>
+          }
+        >
+          <FeedDialog advs={advs} communityItems={communityItems} />
+        </Suspense>
         {headerSearchEnabled && (
           <div className="hidden md:flex">
             <Button size="icon" variant="outline">

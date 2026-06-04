@@ -1,5 +1,5 @@
 import { draftMode } from "next/headers";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
@@ -21,7 +21,7 @@ import { SITE_SETTINGS_QUERY, WEB_SOURCES_QUERY } from "@/sanity/lib/queries";
 
 export default async function Page() {
   if (!isResourceEnabled("websites")) {
-    notFound();
+    redirect("/");
   }
   const { isEnabled: isDraftMode } = await draftMode();
   if (isDraftMode) {

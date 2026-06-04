@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
-import { connection } from "next/server";
 import { defineQuery } from "next-sanity";
+import { Suspense } from "react";
 
 import ContributorsSection from "@/components/modules/event/contributors-section";
 import EventInfo from "@/components/modules/event/event-info";
@@ -82,18 +83,29 @@ export default async function EventPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  await connection();
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (isDraftMode) {
+    return (
+      <Suspense>
+        <DynamicEventPage params={params} />
+      </Suspense>
+    );
+  }
+  const { slug } = await params;
+  return <CachedEventPage perspective="published" slug={slug} stega={false} />;
+}
+
+async function DynamicEventPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const [{ slug }, { perspective, stega }] = await Promise.all([
     params,
     getDynamicFetchOptions(),
   ]);
   return (
-    <CachedEventPage
-      perspective={perspective}
-      slug={slug}
-      stega={stega}
-      today={buildLocalToday()}
-    />
+    <CachedEventPage perspective={perspective} slug={slug} stega={stega} />
   );
 }
 
@@ -101,9 +113,9 @@ async function CachedEventPage({
   slug,
   perspective,
   stega,
-  today,
-}: { slug: string; today: string } & DynamicFetchOptions) {
+}: { slug: string } & DynamicFetchOptions) {
   "use cache";
+  const today = buildLocalToday();
   const { data: event } = await sanityFetch({
     query: EVENT_QUERY,
     params: { slug },

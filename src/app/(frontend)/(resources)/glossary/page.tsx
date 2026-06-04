@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 import SearchInput from "@/components/feat/search-input";
@@ -123,7 +123,7 @@ function GlossaryCard({ word, definition }: GlossaryCardProps) {
 
 export default async function Page() {
   if (!isResourceEnabled("glossary")) {
-    notFound();
+    redirect("/");
   }
   const { isEnabled: isDraftMode } = await draftMode();
   if (isDraftMode) {

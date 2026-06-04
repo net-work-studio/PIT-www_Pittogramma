@@ -1,5 +1,4 @@
 import { draftMode } from "next/headers";
-import { connection } from "next/server";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { Suspense } from "react";
 
@@ -7,7 +6,6 @@ import { DisableDraftMode } from "@/components/disable-draft-mode";
 import Footer from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import { ThemeProvider } from "@/components/theme-provider";
-import { buildLocalToday } from "@/lib/date-utils";
 import { getDynamicFetchOptions, SanityLive } from "@/sanity/lib/live";
 
 export default async function FrontendLayout({
@@ -24,9 +22,13 @@ export default async function FrontendLayout({
       disableTransitionOnChange
       enableSystem
     >
-      <Suspense fallback={<HeaderFallback />}>
-        {isDraftMode ? <DynamicHeader /> : <PublishedHeader />}
-      </Suspense>
+      {isDraftMode ? (
+        <Suspense fallback={<HeaderFallback />}>
+          <DynamicHeader />
+        </Suspense>
+      ) : (
+        <Header perspective="published" stega={false} />
+      )}
       <main className="mt-14 mb-auto px-5">{children}</main>
       <SanityLive includeDrafts={isDraftMode} />
       {isDraftMode && (
@@ -46,16 +48,9 @@ export default async function FrontendLayout({
   );
 }
 
-async function PublishedHeader() {
-  await connection();
-  return (
-    <Header perspective="published" stega={false} today={buildLocalToday()} />
-  );
-}
-
 async function DynamicHeader() {
   const { perspective, stega } = await getDynamicFetchOptions();
-  return <Header perspective={perspective} stega={stega} today={buildLocalToday()} />;
+  return <Header perspective={perspective} stega={stega} />;
 }
 
 async function DynamicFooter() {
