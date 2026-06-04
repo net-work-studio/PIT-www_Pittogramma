@@ -5,20 +5,20 @@ import VideoPlayer from "@/components/modules/shared/video-player";
 import { urlForImage } from "@/sanity/lib/image";
 
 export interface CoverMediaData {
-  type?: string | null;
+  alt?: string | null;
+  caption?: string | null;
   image?: {
     asset?: unknown;
     hotspot?: unknown;
     crop?: unknown;
   } | null;
+  type?: string | null;
   videoUrl?: string | null;
-  caption?: string | null;
-  alt?: string | null;
 }
 
 interface CoverMediaProps {
-  cover: CoverMediaData | null | undefined;
   className?: string;
+  cover: CoverMediaData | null | undefined;
   fill?: boolean;
   priority?: boolean;
   sizes?: string;
@@ -31,12 +31,14 @@ export default function CoverMedia({
   priority,
   sizes,
 }: CoverMediaProps) {
-  if (!cover) return null;
+  if (!cover) {
+    return null;
+  }
 
   if (cover.type === "video" && cover.videoUrl) {
     const posterUrl = cover.image?.asset
-      ? urlForImage(cover)?.width(1920).quality(75).auto("format").url() ??
-        undefined
+      ? (urlForImage(cover)?.width(1920).quality(75).auto("format").url() ??
+        undefined)
       : undefined;
 
     return (
@@ -48,7 +50,9 @@ export default function CoverMedia({
     );
   }
 
-  if (!cover.image?.asset) return null;
+  if (!cover.image?.asset) {
+    return null;
+  }
 
   return (
     <SanityImage

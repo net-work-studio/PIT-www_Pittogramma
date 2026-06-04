@@ -1,4 +1,4 @@
-import { ImageIcon, PlayIcon } from "@sanity/icons";
+import { PlayIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const coverMedia = defineType({
