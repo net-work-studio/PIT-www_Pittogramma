@@ -1,0 +1,21 @@
+src/components/modules/shared/cover-media.tsx
+  s_32102c0a3b4c18::t_474103ec5706f5 9,15,21,34-36,40-41,53-54
+src/sanity/schemaTypes/objects/cover-media.ts
+  s_32102c0a3b4c18::t_c6fb35b1a5eacc 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "f5c5545581ff9cc74eff525df27850f1176191bf",
+  "prompts": {},
+  "sessions": {
+    "s_32102c0a3b4c18": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7a6dd16a-5a62-4abd-8bc2-e064644c39bc",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
