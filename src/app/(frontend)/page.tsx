@@ -87,8 +87,11 @@ function getFeaturedCover(item: EditorialItem | null) {
   if (!item) {
     return null;
   }
-  if (item._type === "journal" && item.featuredCover?.image?.asset) {
-    return item.featuredCover;
+  if (item._type === "journal") {
+    const fc = item.featuredCover;
+    if (fc?.image?.asset || (fc?.type === "video" && fc?.videoUrl)) {
+      return fc;
+    }
   }
   return item.cover;
 }
@@ -214,7 +217,10 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
 
   return (
     <>
-      {featuredItem?.cover?.image?.asset && featuredCover && (
+      {(featuredItem?.cover?.image?.asset ||
+        (featuredItem?.cover?.type === "video" &&
+          featuredItem?.cover?.videoUrl)) &&
+        featuredCover && (
         <FeaturedHero
           badgeLabel={featuredBadge.label}
           badgeVariant={featuredBadge.variant}

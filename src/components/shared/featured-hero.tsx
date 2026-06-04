@@ -1,5 +1,7 @@
 import Link from "next/link";
-import SanityImage from "@/components/modules/shared/sanity-image";
+import CoverMedia, {
+  type CoverMediaData,
+} from "@/components/modules/shared/cover-media";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -7,7 +9,7 @@ interface FeaturedHeroProps {
   badgeLabel?: string;
   badgeVariant?: "project" | "interview" | "article" | "diary" | "baseline";
   contentType: "project" | "interview" | "journal";
-  cover: Parameters<typeof SanityImage>[0]["source"];
+  cover: CoverMediaData | null | undefined;
   href: string;
   subtitle?: string | null;
   title: string;
@@ -65,13 +67,12 @@ export default function FeaturedHero({
 
       <div className="absolute z-1 h-full w-full rounded-md bg-black/20 transition-opacity duration-500 group-hover:bg-black/15" />
 
-      <SanityImage
-        alt={title}
+      <CoverMedia
         className="absolute h-full w-full rounded-md object-cover transition-transform duration-300"
+        cover={cover}
         fill
         priority
         sizes="(max-width: 1280px) 100vw, 75vw"
-        source={cover}
       />
     </Link>
   );

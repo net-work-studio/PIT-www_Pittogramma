@@ -50,7 +50,7 @@ export const project = defineType({
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "imageWithMetadata",
+      type: "coverMedia",
       name: "cover",
       group: "content",
       title: "Cover",

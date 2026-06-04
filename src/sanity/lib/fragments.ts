@@ -12,6 +12,15 @@ export const IMAGE_FIELDS = /* groq */ `
   crop
 `;
 
+// Reusable cover media fields fragment (image + optional video)
+export const COVER_MEDIA_FIELDS = /* groq */ `
+  type,
+  image { ${IMAGE_FIELDS} },
+  "videoUrl": video.asset->url,
+  caption,
+  alt
+`;
+
 // Reusable CTA projection (inner fields only, no field name)
 export const CTA_PROJECTION = `{
     _id,

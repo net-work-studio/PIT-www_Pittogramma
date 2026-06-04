@@ -1,6 +1,7 @@
 import { defineQuery } from "next-sanity";
 
 import {
+  COVER_MEDIA_FIELDS,
   CTA_FIELDS,
   CTA_PROJECTION,
   IMAGE_FIELDS,
@@ -32,7 +33,7 @@ export const HOME_PAGE_QUERY = defineQuery(`
       title,
       slug,
       publishingDate,
-      cover { image { ${IMAGE_FIELDS} }, alt },
+      cover { ${COVER_MEDIA_FIELDS} },
       _type == "project" => {
         "people": designers[]{ ...@->{ _id, name }, _key },
       },
@@ -47,7 +48,7 @@ export const HOME_PAGE_QUERY = defineQuery(`
         "people": authors[]{ ...@->{ _id, name }, _key },
         label,
         excerpt,
-        featuredCover { image { ${IMAGE_FIELDS} }, alt },
+        featuredCover { ${COVER_MEDIA_FIELDS} },
       },
       tags[]->{ _id, name }
     },
@@ -68,10 +69,7 @@ export const HOME_FEED_QUERY = defineQuery(`
     title,
     slug,
     publishingDate,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     _type == "project" => {
       "people": designers[]{ ...@->{ _id, name }, _key },
     },
@@ -87,7 +85,7 @@ export const HOME_FEED_QUERY = defineQuery(`
       "people": authors[]{ ...@->{ _id, name }, _key },
       label,
       excerpt,
-      featuredCover { image { ${IMAGE_FIELDS} }, alt },
+      featuredCover { ${COVER_MEDIA_FIELDS} },
     },
     tags[]->{ _id, name }
   }
@@ -186,7 +184,7 @@ export const DESIGNERS_QUERY = defineQuery(`
       _id,
       title,
       slug,
-      cover { image { ${IMAGE_FIELDS} }, alt }
+      cover { ${COVER_MEDIA_FIELDS} }
     }
   }
 `);
@@ -224,7 +222,7 @@ export const DESIGNER_QUERY = defineQuery(`
     },
     "relatedProjects": *[_type == "project" && references(^._id)] | order(_createdAt desc) [0...4] {
       _id,
-      cover { image { ${IMAGE_FIELDS} }, alt },
+      cover { ${COVER_MEDIA_FIELDS} },
       title,
       slug,
       designers[]{ ...@->{ _id, name }, _key }
@@ -233,7 +231,7 @@ export const DESIGNER_QUERY = defineQuery(`
       _id,
       title,
       slug,
-      cover { image { ${IMAGE_FIELDS} }, alt },
+      cover { ${COVER_MEDIA_FIELDS} },
       designersAndProfessionals[]{ ...@->{ _id, name }, _key }
     }
   }
@@ -246,10 +244,7 @@ const EVENT_FIELDS = `
     type,
     status,
     ctaUrl,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     dateStart,
     dateEnd,
     locationName,
@@ -284,10 +279,7 @@ export const EVENT_QUERY = defineQuery(`
     type,
     status,
     ctaUrl,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     dateStart,
     dateEnd,
     locationName,
@@ -322,10 +314,7 @@ export const EVENT_QUERY = defineQuery(`
 export const PROJECTS_QUERY = defineQuery(`
   *[_type == "project"] | order(_createdAt desc) {
     _id,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
     designers[]{ ...@->{ _id, name, slug, portrait }, _key },
@@ -344,10 +333,7 @@ export const PROJECTS_FILTERED_QUERY = defineQuery(`
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(publishingDate.date desc) [$start...$end] {
     _id,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
     designers[]{ ...@->{ _id, name, slug, portrait }, _key },
@@ -390,10 +376,7 @@ const PROJECTS_FILTERED_OLDEST_QUERY = defineQuery(`
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(publishingDate.date asc) [$start...$end] {
     _id,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
     designers[]{ ...@->{ _id, name, slug, portrait }, _key },
@@ -412,10 +395,7 @@ const PROJECTS_FILTERED_AZ_QUERY = defineQuery(`
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(title asc) [$start...$end] {
     _id,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
     designers[]{ ...@->{ _id, name, slug, portrait }, _key },
@@ -434,10 +414,7 @@ const PROJECTS_FILTERED_ZA_QUERY = defineQuery(`
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(title desc) [$start...$end] {
     _id,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
     designers[]{ ...@->{ _id, name, slug, portrait }, _key },
@@ -460,14 +437,8 @@ const JOURNAL_FILTERED_NEWEST_QUERY = defineQuery(`
     slug,
     label,
     publishingDate,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
-    featuredCover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
+    featuredCover { ${COVER_MEDIA_FIELDS} },
     authors[]{ ...@->{ _id, name }, _key },
     excerpt,
     tags[]->{
@@ -488,14 +459,8 @@ const JOURNAL_FILTERED_OLDEST_QUERY = defineQuery(`
     slug,
     label,
     publishingDate,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
-    featuredCover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
+    featuredCover { ${COVER_MEDIA_FIELDS} },
     authors[]{ ...@->{ _id, name }, _key },
     excerpt,
     tags[]->{
@@ -516,14 +481,8 @@ const JOURNAL_FILTERED_AZ_QUERY = defineQuery(`
     slug,
     label,
     publishingDate,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
-    featuredCover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
+    featuredCover { ${COVER_MEDIA_FIELDS} },
     authors[]{ ...@->{ _id, name }, _key },
     excerpt,
     tags[]->{
@@ -544,14 +503,8 @@ const JOURNAL_FILTERED_ZA_QUERY = defineQuery(`
     slug,
     label,
     publishingDate,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
-    featuredCover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
+    featuredCover { ${COVER_MEDIA_FIELDS} },
     authors[]{ ...@->{ _id, name }, _key },
     excerpt,
     tags[]->{
@@ -571,10 +524,7 @@ const INTERVIEWS_FILTERED_NEWEST_QUERY = defineQuery(`
     title,
     slug,
     publishingDate,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     designersAndProfessionals[]{ ...@->{ _id, name }, _key },
     studio->{
       _id,
@@ -605,10 +555,7 @@ const INTERVIEWS_FILTERED_OLDEST_QUERY = defineQuery(`
     title,
     slug,
     publishingDate,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     designersAndProfessionals[]{ ...@->{ _id, name }, _key },
     studio->{
       _id,
@@ -639,10 +586,7 @@ const INTERVIEWS_FILTERED_AZ_QUERY = defineQuery(`
     title,
     slug,
     publishingDate,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     designersAndProfessionals[]{ ...@->{ _id, name }, _key },
     studio->{
       _id,
@@ -673,10 +617,7 @@ const INTERVIEWS_FILTERED_ZA_QUERY = defineQuery(`
     title,
     slug,
     publishingDate,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     designersAndProfessionals[]{ ...@->{ _id, name }, _key },
     studio->{
       _id,
@@ -734,14 +675,7 @@ export function getInterviewsFilteredQuery(sort: string): string {
 export const PROJECT_QUERY = defineQuery(`
   *[_type == "project" && slug.current == $slug][0] {
     _id,
-    cover {
-      _type,
-      image {
-        _type,
-        ${IMAGE_FIELDS}
-      },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
     designers[]{
@@ -789,7 +723,7 @@ export const PROJECT_QUERY = defineQuery(`
       count(tags[@._ref in ^.tags[]._ref]) > 0
     ] | order(_createdAt desc) [0...4] {
       _id,
-      cover { image { ${IMAGE_FIELDS} }, alt },
+      cover { ${COVER_MEDIA_FIELDS} },
       title,
       slug,
       designers[]{ ...@->{ _id, name }, _key }
@@ -810,8 +744,8 @@ export const JOURNAL_PAGE_QUERY = defineQuery(`
       label,
       publishingDate,
       excerpt,
-      cover { image { ${IMAGE_FIELDS} }, alt },
-      featuredCover { image { ${IMAGE_FIELDS} }, alt },
+      cover { ${COVER_MEDIA_FIELDS} },
+      featuredCover { ${COVER_MEDIA_FIELDS} },
       authors[]{ ...@->{ _id, name }, _key },
       tags[]->{ _id, name }
     },
@@ -827,14 +761,8 @@ export const JOURNAL_QUERY = defineQuery(`
     slug,
     label,
     publishingDate,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
-    featuredCover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
+    featuredCover { ${COVER_MEDIA_FIELDS} },
     authors[]{ ...@->{ _id, name }, _key },
     excerpt,
     tags[]->{
@@ -859,14 +787,7 @@ export const JOURNAL_ARTICLE_QUERY = defineQuery(`
     slug,
     label,
     publishingDate,
-    cover {
-      _type,
-      image {
-        _type,
-        ${IMAGE_FIELDS}
-      },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     authors[]{ ...@->{ _id, name }, _key },
     excerpt,
     tags[]->{
@@ -884,10 +805,7 @@ export const INTERVIEWS_QUERY = defineQuery(`
     title,
     slug,
     publishingDate,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     designersAndProfessionals[]{ ...@->{ _id, name }, _key },
     studio->{
       _id,
@@ -918,10 +836,7 @@ export const INTERVIEWS_FILTERED_QUERY = defineQuery(`
     title,
     slug,
     publishingDate,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     designersAndProfessionals[]{ ...@->{ _id, name }, _key },
     studio->{
       _id,
@@ -960,14 +875,7 @@ export const INTERVIEW_QUERY = defineQuery(`
     title,
     slug,
     publishingDate,
-    cover {
-      _type,
-      image {
-        _type,
-        ${IMAGE_FIELDS}
-      },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     designersAndProfessionals[]{ ...@->{ _id, name, portrait }, _key },
     interviewToType,
     studio->{
@@ -1018,10 +926,7 @@ export const BIBLIOGRAPHY_QUERY = defineQuery(`
     _id,
     name,
     year,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     languages[]{ ...@->{ _id, name }, _key },
     authors[]{ ...@->{ _id, name }, _key },
     publisher->{
@@ -1098,10 +1003,7 @@ export const STUDIOS_QUERY = defineQuery(`
     _id,
     name,
     description,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     category->{
       _id,
       name
@@ -1145,10 +1047,7 @@ export const WEB_SOURCES_QUERY = defineQuery(`
     _id,
     name,
     description,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     category->{
       _id,
       name
@@ -1168,10 +1067,7 @@ export const ADVS_QUERY = defineQuery(`
   *[_type == "adv" && dateStart <= now() && dateEnd >= now()] | order(tier asc) {
     _id,
     title,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     description,
     externalUrl,
     tier,
@@ -1202,10 +1098,7 @@ export const FEED_QUERY = defineQuery(`
   ) [0...16] {
     _id,
     title,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     coverPortrait { ${IMAGE_FIELDS} },
     description,
     externalUrl,
@@ -1235,10 +1128,7 @@ export const HOME_ADV_QUERY = defineQuery(`
   ) [0...3] {
     _id,
     title,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     description,
     externalUrl,
     tier,
@@ -1261,10 +1151,7 @@ export const INDEX_GOLD_QUERY = defineQuery(`
   ] | order(dateStart asc, _createdAt asc) [0...1] {
     _id,
     title,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     description,
     externalUrl,
     tier,
@@ -1287,10 +1174,7 @@ export const FEED_COMMUNITY_QUERY = defineQuery(`
     _id,
     title,
     type,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     description,
     externalUrl,
     dateStart,
@@ -1328,10 +1212,7 @@ export const EDITIONS_LIST_QUERY = defineQuery(`
     title,
     slug,
     publishingDate,
-    cover {
-      image { ${IMAGE_FIELDS} },
-      alt
-    }
+    cover { ${COVER_MEDIA_FIELDS} }
   }
 `);
 
@@ -1341,14 +1222,7 @@ export const EDITION_QUERY = defineQuery(`
     title,
     slug,
     publishingDate,
-    cover {
-      _type,
-      image {
-        _type,
-        ${IMAGE_FIELDS}
-      },
-      alt
-    },
+    cover { ${COVER_MEDIA_FIELDS} },
     authors[]{ ...@->{ _id, name }, _key },
     designers[]{ ...@->{ _id, name }, _key },
     supporters[]{ ...@->{ _id, name }, _key },

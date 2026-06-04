@@ -51,7 +51,7 @@ export const studio = defineType({
       description: "Auto-filled from OG description",
     }),
     defineField({
-      type: "imageWithMetadata",
+      type: "coverMedia",
       name: "cover",
       title: "Cover",
       description: "Auto-filled from OG image",

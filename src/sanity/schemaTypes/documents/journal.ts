@@ -48,14 +48,14 @@ export const journal = defineType({
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "imageWithMetadata",
+      type: "coverMedia",
       name: "cover",
       title: "Cover",
       group: "content",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "imageWithMetadata",
+      type: "coverMedia",
       name: "featuredCover",
       title: "Featured Cover",
       group: "content",

@@ -184,16 +184,24 @@ async function CachedJournalPage({
       <div className="space-y-10 pb-10">
         {featuredArticle &&
           (("featuredCover" in featuredArticle &&
-            featuredArticle.featuredCover?.image?.asset) ||
-            featuredArticle.cover?.image?.asset) &&
+            (featuredArticle.featuredCover?.image?.asset ||
+              (featuredArticle.featuredCover?.type === "video" &&
+                featuredArticle.featuredCover?.videoUrl))) ||
+            featuredArticle.cover?.image?.asset ||
+            (featuredArticle.cover?.type === "video" &&
+              featuredArticle.cover?.videoUrl)) &&
           (() => {
             const featuredLabelConfig = getJournalLabelConfig(
               featuredArticle.label
             );
-            const heroCover =
-              "featuredCover" in featuredArticle &&
-              featuredArticle.featuredCover?.image?.asset
+            const fc =
+              "featuredCover" in featuredArticle
                 ? featuredArticle.featuredCover
+                : null;
+            const heroCover =
+              fc?.image?.asset ||
+              (fc?.type === "video" && fc?.videoUrl)
+                ? fc
                 : featuredArticle.cover;
             return (
               <FeaturedHero

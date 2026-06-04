@@ -35,7 +35,7 @@ export const edition = defineType({
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "imageWithMetadata",
+      type: "coverMedia",
       name: "cover",
       title: "Cover",
       group: "content",

@@ -40,7 +40,7 @@ export const adv = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
-      type: "imageWithMetadata",
+      type: "coverMedia",
       name: "cover",
       title: "Cover",
       description: "Landscape image (4:3) — used in the home grid.",

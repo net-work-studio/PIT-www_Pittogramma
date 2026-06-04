@@ -6,7 +6,7 @@ import InterviewContent from "@/components/modules/interview/interview-content";
 import InterviewInfo from "@/components/modules/interview/interview-info";
 import ShareLinks from "@/components/modules/project/share-links";
 import DiscoverMore from "@/components/modules/shared/discover-more";
-import SanityImage from "@/components/modules/shared/sanity-image";
+import CoverMedia from "@/components/modules/shared/cover-media";
 import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -111,8 +111,8 @@ async function CachedInterviewPage({
     notFound();
   }
 
-  const imageUrl = interview.cover?.image
-    ? urlForImage(interview.cover.image)?.url()
+  const imageUrl = interview.cover?.image?.asset
+    ? urlForImage(interview.cover)?.url()
     : undefined;
 
   const interviewees = interview.designersAndProfessionals
@@ -171,11 +171,11 @@ async function CachedInterviewPage({
               className="relative w-full overflow-hidden rounded-lg"
               ratio={4 / 3}
             >
-              <SanityImage
+              <CoverMedia
                 className="rounded-lg object-cover"
+                cover={interview.cover}
                 fill
                 priority
-                source={interview.cover}
               />
             </AspectRatio>
             {interview.cover?.alt ? (
