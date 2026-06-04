@@ -1,0 +1,54 @@
+src/app/(frontend)/(resources)/bibliography/page.tsx
+  s_3bf9a062d38224::t_ce80675e15cbf9 3
+  s_3bf9a062d38224::t_b517480f4d3966 30
+src/app/(frontend)/(resources)/websites/page.tsx
+  s_3bf9a062d38224::t_09e414b1218ba0 24
+  s_3bf9a062d38224::t_48be10c5320c0b 2
+src/app/(frontend)/page.tsx
+  s_3bf9a062d38224::t_85b6951e263cbc 150
+  s_3bf9a062d38224::t_32ce8f5bf42881 155,158,160
+src/app/(frontend)/(resources)/studios-agencies/page.tsx
+  s_3bf9a062d38224::t_f982a44b4cf75c 23
+  s_3bf9a062d38224::t_753b37ee458bba 2
+src/app/(frontend)/layout.tsx
+  s_3bf9a062d38224::t_8715cbc3b74779 25-31
+  s_3bf9a062d38224::t_e05200720640d5 53
+src/app/(frontend)/events/[slug]/page.tsx
+  s_3bf9a062d38224::t_e1956d0b79f15a 86-94
+  s_3bf9a062d38224::t_c4cb2f363af4fd 2
+  s_3bf9a062d38224::t_60bd6f4a4725ab 96-102,108,116,118
+src/app/(frontend)/(resources)/glossary/page.tsx
+  s_3bf9a062d38224::t_1d3b6e46c7e3af 126
+  s_3bf9a062d38224::t_944b658151f4b3 3
+src/app/(frontend)/(resources)/bookshops/page.tsx
+  s_3bf9a062d38224::t_c73deb1aadf91e 23
+  s_3bf9a062d38224::t_229baf4beb17ce 2
+src/app/(frontend)/(resources)/institutes/page.tsx
+  s_3bf9a062d38224::t_a78b1f1ae5a009 23
+  s_3bf9a062d38224::t_af8503c1d43e24 2
+src/app/(frontend)/(resources)/type-foundries/page.tsx
+  s_3bf9a062d38224::t_927b3551f1641b 2
+  s_3bf9a062d38224::t_9408be7f08ebeb 23
+src/components/shared/header.tsx
+  s_3bf9a062d38224::t_dd846daec8a1eb 69-77
+  s_3bf9a062d38224::t_0e953e935b2b9d 1,3
+  s_3bf9a062d38224::t_11ad500fd8e971 10,25,27
+src/app/(frontend)/design-system/page.tsx
+  s_3bf9a062d38224::t_92606b8f029e09 1,17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "0da19242f32e728961a335eb0e197e84083fb31d",
+  "prompts": {},
+  "sessions": {
+    "s_3bf9a062d38224": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2f0e4bc5-ce60-4623-aa88-0d534e0465e7",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
