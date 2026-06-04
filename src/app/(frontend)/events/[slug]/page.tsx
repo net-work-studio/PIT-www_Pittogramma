@@ -8,7 +8,7 @@ import ContributorsSection from "@/components/modules/event/contributors-section
 import EventInfo from "@/components/modules/event/event-info";
 import EventInfoGrid from "@/components/modules/event/event-info-grid";
 import ShareLinks from "@/components/modules/project/share-links";
-import SanityImage from "@/components/modules/shared/sanity-image";
+import CoverMedia from "@/components/modules/shared/cover-media";
 import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
@@ -186,12 +186,13 @@ async function CachedEventPage({
               className="relative w-full overflow-hidden rounded-lg"
               ratio={4 / 3}
             >
-              {event.cover?.image?.asset ? (
-                <SanityImage
+              {event.cover?.image?.asset ||
+              (event.cover?.type === "video" && event.cover?.videoUrl) ? (
+                <CoverMedia
                   className="rounded-lg object-cover"
+                  cover={event.cover}
                   fill
                   priority
-                  source={event.cover}
                 />
               ) : (
                 <div className="h-full w-full rounded-lg bg-neutral-200" />

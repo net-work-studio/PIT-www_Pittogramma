@@ -34,7 +34,7 @@ export const bibliography = defineType({
     }),
     // 3. Cover (autofilled)
     defineField({
-      type: "imageWithMetadata",
+      type: "coverMedia",
       name: "cover",
       title: "Cover",
       group: "content",

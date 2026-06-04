@@ -5,7 +5,7 @@ import { defineQuery } from "next-sanity";
 import JournalArticleCta from "@/components/modules/journal/journal-article-cta";
 import JournalContent from "@/components/modules/journal/journal-content";
 import ShareLinks from "@/components/modules/project/share-links";
-import SanityImage from "@/components/modules/shared/sanity-image";
+import CoverMedia from "@/components/modules/shared/cover-media";
 import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
@@ -129,8 +129,8 @@ async function CachedJournalArticlePage({
     notFound();
   }
 
-  const imageUrl = article.cover?.image
-    ? urlForImage(article.cover.image)?.url()
+  const imageUrl = article.cover?.image?.asset
+    ? urlForImage(article.cover)?.url()
     : undefined;
 
   const authors = article.authors
@@ -231,11 +231,11 @@ async function CachedJournalArticlePage({
               className="relative w-full overflow-hidden rounded-lg"
               ratio={4 / 3}
             >
-              <SanityImage
+              <CoverMedia
                 className="rounded-lg object-cover"
+                cover={article.cover}
                 fill
                 priority
-                source={article.cover}
               />
             </AspectRatio>
             {article.cover?.alt ? (

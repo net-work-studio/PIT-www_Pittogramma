@@ -27,6 +27,7 @@ import {
   singleMediaBlock,
   threeSideBySideMediaBlock,
 } from "./objects/gallery-blocks";
+import { coverMedia } from "./objects/cover-media";
 import { imageWithMetadata } from "./objects/image-with-metadata";
 import { infoItem } from "./objects/info-item";
 import { logo } from "./objects/logo";
@@ -63,6 +64,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     project,
     studio,
     logo,
+    coverMedia,
     imageWithMetadata,
     infoItem,
     mediaItem,

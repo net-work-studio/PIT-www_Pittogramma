@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { getBlurDataUrl, urlForImage } from "@/sanity/lib/image";
-import type { ImageWithMetadata } from "@/sanity/types";
+import type { CoverMedia, ImageWithMetadata } from "@/sanity/types";
 
 interface ImageLike {
   _type?: string;
@@ -24,7 +24,7 @@ interface ImageLike {
 }
 
 type Props = {
-  source: ImageWithMetadata | ImageLike | null | undefined;
+  source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined;
 } & Partial<React.ComponentProps<typeof Image>>;
 
 export default function SanityImage({

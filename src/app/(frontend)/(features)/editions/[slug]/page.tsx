@@ -92,8 +92,8 @@ async function CachedEditionPage({
     notFound();
   }
 
-  const imageUrl = edition.cover?.image
-    ? urlForImage(edition.cover.image)?.url()
+  const imageUrl = edition.cover?.image?.asset
+    ? urlForImage(edition.cover)?.url()
     : undefined;
 
   const editionUrl = `${siteDefaults.baseUrl}/editions/${slug}`;

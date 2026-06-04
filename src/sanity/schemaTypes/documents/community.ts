@@ -45,7 +45,7 @@ export const community = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
-      type: "imageWithMetadata",
+      type: "coverMedia",
       name: "cover",
       title: "Cover",
       description: "Portrait image (3:4 ratio recommended).",

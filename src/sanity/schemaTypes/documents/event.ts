@@ -95,7 +95,7 @@ export const event = defineType({
       }, "A CTA link is required for this status"),
     }),
     defineField({
-      type: "imageWithMetadata",
+      type: "coverMedia",
       name: "cover",
       title: "Cover",
       description: "Portrait image (3:4 ratio recommended).",

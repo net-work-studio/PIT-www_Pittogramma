@@ -3,7 +3,7 @@ import {
   type SanityImageSource,
 } from "@sanity/image-url";
 import { dataset, projectId } from "../env";
-import type { ImageWithMetadata } from "../types";
+import type { CoverMedia, ImageWithMetadata } from "../types";
 
 interface AssetMetadata {
   dimensions?: { width: number; height: number };
@@ -28,12 +28,12 @@ export const urlFor = (source: SanityImageSource) => builder.image(source);
 
 /** Extract the raw Sanity image from imageWithMetadata wrapper */
 export const getImageSource = (
-  source: ImageWithMetadata | ImageLike | null | undefined
+  source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined
 ): SanityImageSource | null => source?.image ?? null;
 
 /** Build URL directly from imageWithMetadata */
 export const urlForImage = (
-  source: ImageWithMetadata | ImageLike | null | undefined
+  source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined
 ) => {
   const img = getImageSource(source);
   return img ? builder.image(img) : null;
@@ -41,7 +41,7 @@ export const urlForImage = (
 
 /** Extract native LQIP from resolved asset metadata */
 export const getLqip = (
-  source: ImageWithMetadata | ImageLike | null | undefined
+  source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined
 ): string | undefined => {
   const asset = source?.image?.asset;
   if (asset && typeof asset === "object" && "metadata" in asset) {
@@ -53,7 +53,7 @@ export const getLqip = (
 
 /** Extract image dimensions from resolved asset metadata */
 export const getImageDimensions = (
-  source: ImageWithMetadata | ImageLike | null | undefined
+  source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined
 ): { width: number; height: number } | undefined => {
   const asset = source?.image?.asset;
   if (asset && typeof asset === "object" && "metadata" in asset) {
@@ -66,7 +66,7 @@ export const getImageDimensions = (
 /** Generate blur data URL for Next.js Image placeholder.
  *  Prefers native LQIP from metadata, falls back to tiny CDN image. */
 export const getBlurDataUrl = (
-  source: ImageWithMetadata | ImageLike | null | undefined
+  source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined
 ): string | undefined => {
   const lqip = getLqip(source);
   if (lqip) {

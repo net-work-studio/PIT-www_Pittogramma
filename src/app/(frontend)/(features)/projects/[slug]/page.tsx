@@ -5,8 +5,8 @@ import { defineQuery } from "next-sanity";
 import ProjectGallery from "@/components/modules/project/project-gallery";
 import ProjectInfo from "@/components/modules/project/project-info";
 import ShareLinks from "@/components/modules/project/share-links";
+import CoverMedia from "@/components/modules/shared/cover-media";
 import DiscoverMore from "@/components/modules/shared/discover-more";
-import SanityImage from "@/components/modules/shared/sanity-image";
 import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -94,8 +94,8 @@ async function CachedProjectPage({
     notFound();
   }
 
-  const imageUrl = project.cover?.image
-    ? urlForImage(project.cover.image)?.url()
+  const imageUrl = project.cover?.image?.asset
+    ? urlForImage(project.cover)?.url()
     : undefined;
 
   const projectUrl = `${siteDefaults.baseUrl}/projects/${slug}`;
@@ -138,11 +138,11 @@ async function CachedProjectPage({
             className="relative overflow-hidden rounded-3xl"
             ratio={4 / 3}
           >
-            <SanityImage
+            <CoverMedia
               className="rounded-3xl"
+              cover={project.cover}
               fill
               priority
-              source={project.cover}
             />
           </AspectRatio>
           <ProjectGallery gallery={project.gallery} />

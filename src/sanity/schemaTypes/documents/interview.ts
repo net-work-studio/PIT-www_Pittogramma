@@ -77,7 +77,7 @@ export const interview = defineType({
       group: "metadata",
     }),
     defineField({
-      type: "imageWithMetadata",
+      type: "coverMedia",
       name: "cover",
       title: "Cover",
       validation: (e) => e.required(),
