@@ -1,0 +1,19 @@
+src/app/(frontend)/(features)/interviews/[slug]/page.tsx
+  s_40a852b981366e::t_678997b315c473 47-49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "32c15d9bffadf14f23a0b90301e643c24e637a72",
+  "prompts": {},
+  "sessions": {
+    "s_40a852b981366e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2f16f49c-105a-48b8-96d6-286013b2c3ef",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
