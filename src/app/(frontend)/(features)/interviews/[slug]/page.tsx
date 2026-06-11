@@ -44,7 +44,9 @@ export async function generateStaticParams() {
   const interviewSlugsQuery = defineQuery(
     `*[_type == "interview" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
   );
-  const { data } = await sanityFetchStaticParams({ query: interviewSlugsQuery });
+  const { data } = await sanityFetchStaticParams({
+    query: interviewSlugsQuery,
+  });
   return data as { slug: string }[];
 }
 
