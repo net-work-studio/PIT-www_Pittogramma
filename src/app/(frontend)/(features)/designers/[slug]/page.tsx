@@ -95,7 +95,7 @@ async function CachedDesignerPage({
     notFound();
   }
 
-  const imageUrl = designer.portrait?.image
+  const imageUrl = designer.portrait?.image?.asset
     ? urlForImage(designer.portrait)?.url()
     : undefined;
 

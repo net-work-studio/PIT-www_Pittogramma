@@ -29,7 +29,8 @@ export const urlFor = (source: SanityImageSource) => builder.image(source);
 /** Extract the raw Sanity image from imageWithMetadata wrapper */
 export const getImageSource = (
   source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined
-): SanityImageSource | null => source?.image ?? null;
+): SanityImageSource | null =>
+  source?.image?.asset ? (source.image as SanityImageSource) : null;
 
 /** Build URL directly from imageWithMetadata */
 export const urlForImage = (
