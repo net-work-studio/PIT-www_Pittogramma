@@ -115,10 +115,7 @@ export default function DesignerList({ designers }: DesignerListProps) {
   }, [urlSlug]);
 
   useEffect(() => {
-    if (
-      urlSlug &&
-      !designers.some((d) => d.slug?.current === urlSlug)
-    ) {
+    if (urlSlug && !designers.some((d) => d.slug?.current === urlSlug)) {
       const params = new URLSearchParams(searchParams.toString());
       params.delete("designer");
       const qs = params.toString();
