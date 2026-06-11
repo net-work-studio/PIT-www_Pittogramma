@@ -1,6 +1,6 @@
 "use client";
 
-import { Rows3 } from "lucide-react";
+import { Newspaper } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback } from "react";
 import FeedCard from "@/components/cards/feed-card";
@@ -61,7 +61,7 @@ function FeedDialogInner({ advs, communityItems }: FeedDialogProps) {
     <Sheet onOpenChange={handleOpenChange} open={isOpen}>
       <SheetTrigger asChild>
         <Button aria-label="Feed" size="icon" variant="outline">
-          <Rows3 size={16} />
+          <Newspaper size={16} />
         </Button>
       </SheetTrigger>
       <SheetContent
@@ -133,7 +133,7 @@ export default function FeedDialog(props: FeedDialogProps) {
     <Suspense
       fallback={
         <Button aria-label="Feed" disabled size="icon" variant="outline">
-          <Rows3 size={16} />
+          <Newspaper size={16} />
         </Button>
       }
     >

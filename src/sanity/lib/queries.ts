@@ -1186,12 +1186,13 @@ export const FEED_COMMUNITY_QUERY = defineQuery(`
 // ==================== RECENT UPDATES QUERY ====================
 
 export const RECENT_UPDATES_QUERY = defineQuery(`
-  *[_type in ["person", "studio", "typeFoundry", "glossary", "bibliography", "bookshop", "institute", "webSource"]]
+  *[(_type == "person" && "designer" in roles) || _type in ["studio", "typeFoundry", "glossary", "bibliography", "bookshop", "institute", "webSource"]]
   | order(_createdAt desc) [0...16] {
     _id,
     _type,
     _createdAt,
-    name
+    name,
+    _type == "person" => { "slug": slug.current }
   }
 `);
 

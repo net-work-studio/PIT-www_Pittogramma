@@ -36,8 +36,8 @@ export default function RecentUpdates({ items }: RecentUpdatesProps) {
           };
 
           const href =
-            item._type === "person" && "slug" in item && item.slug
-              ? `/designers?designer=${item.slug}`
+            item._type === "person" && "slug" in item && item.slug?.trim()
+              ? `/designers?designer=${encodeURIComponent(item.slug)}`
               : meta.route;
 
           return (

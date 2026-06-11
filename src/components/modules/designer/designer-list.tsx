@@ -111,10 +111,21 @@ export default function DesignerList({ designers }: DesignerListProps) {
   const activeRowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (urlSlug) {
-      setOpenSlug(urlSlug);
-    }
+    setOpenSlug(urlSlug);
   }, [urlSlug]);
+
+  useEffect(() => {
+    if (
+      urlSlug &&
+      !designers.some((d) => d.slug?.current === urlSlug)
+    ) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("designer");
+      const qs = params.toString();
+      window.history.replaceState(null, "", `/designers${qs ? `?${qs}` : ""}`);
+      setOpenSlug(null);
+    }
+  }, [urlSlug, designers, searchParams]);
 
   useEffect(() => {
     if (openSlug) {

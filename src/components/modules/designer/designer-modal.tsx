@@ -98,11 +98,11 @@ export default function DesignerModal({
   onOpenChange,
 }: DesignerModalProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const [open, setOpen] = useState(defaultOpen ?? false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (defaultOpen) {
-      setOpen(true);
+    if (defaultOpen !== undefined) {
+      setOpen(defaultOpen);
     }
   }, [defaultOpen]);
 

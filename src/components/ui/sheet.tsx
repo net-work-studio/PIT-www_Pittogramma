@@ -69,13 +69,14 @@ const sheetVariants = cva(
 function SheetContent({
   side = "right",
   className,
+  overlayClassName,
   children,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> &
-  VariantProps<typeof sheetVariants>) {
+  VariantProps<typeof sheetVariants> & { overlayClassName?: string }) {
   return (
     <SheetPortal>
-      <SheetOverlay />
+      <SheetOverlay className={overlayClassName} />
       <DialogPrimitive.Content
         className={cn(sheetVariants({ side }), className)}
         data-slot="sheet-content"
