@@ -1,6 +1,11 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { getBlurDataUrl, urlForImage } from "@/sanity/lib/image";
+import {
+  getBlurDataUrl,
+  getImageAssetUrl,
+  isAnimatedImageAsset,
+  urlForImage,
+} from "@/sanity/lib/image";
 import type { CoverMedia, ImageWithMetadata } from "@/sanity/types";
 
 interface ImageLike {
@@ -27,6 +32,20 @@ type Props = {
   source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined;
 } & Partial<React.ComponentProps<typeof Image>>;
 
+function getHotspotObjectPosition(
+  source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined
+): string | undefined {
+  const hotspot = source?.image?.hotspot;
+  if (!(hotspot && typeof hotspot === "object")) {
+    return;
+  }
+
+  const { x, y } = hotspot as { x?: unknown; y?: unknown };
+  return typeof x === "number" && typeof y === "number"
+    ? `${x * 100}% ${y * 100}%`
+    : undefined;
+}
+
 export default function SanityImage({
   source,
   alt,
@@ -37,11 +56,53 @@ export default function SanityImage({
   className,
   priority,
   quality = 75,
+  style,
   ...props
 }: Props) {
   const builder = urlForImage(source);
   if (!builder) {
     return null;
+  }
+
+  const imageAlt = source?.alt ?? alt ?? "";
+
+  if (isAnimatedImageAsset(source)) {
+    const assetUrl = getImageAssetUrl(source);
+    if (!assetUrl) {
+      return null;
+    }
+
+    const animatedStyle = {
+      objectPosition: getHotspotObjectPosition(source),
+      ...style,
+    };
+
+    return fill ? (
+      <Image
+        alt={imageAlt}
+        className={cn("object-cover", className)}
+        fill
+        priority={priority}
+        sizes={sizes ?? "100vw"}
+        src={assetUrl}
+        style={animatedStyle}
+        unoptimized
+        {...props}
+      />
+    ) : (
+      <Image
+        alt={imageAlt}
+        className={cn("object-cover", className)}
+        height={height}
+        priority={priority}
+        sizes={sizes}
+        src={assetUrl}
+        style={animatedStyle}
+        unoptimized
+        width={width}
+        {...props}
+      />
+    );
   }
 
   const url = fill
@@ -57,7 +118,6 @@ export default function SanityImage({
   }
 
   const blurDataUrl = getBlurDataUrl(source);
-  const imageAlt = source?.alt ?? alt ?? "";
   const blurProps = blurDataUrl
     ? { blurDataURL: blurDataUrl, placeholder: "blur" as const }
     : {};
