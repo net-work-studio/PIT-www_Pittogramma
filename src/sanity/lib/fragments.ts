@@ -144,6 +144,28 @@ export const MEDIA_BLOCKS_FIELDS = /* groq */ `
   }
 `;
 
+export const JOURNAL_REFERENCE_BLOCK_FIELDS = /* groq */ `
+  _type in ["referencesBlock", "referenceBlock", "references"] => {
+    title,
+    references[]{
+      ...@->{
+        _id,
+        _type,
+        name,
+        title,
+        slug,
+        sourceUrl,
+        year,
+        description,
+        authors[]{ ...@->{ _id, name }, _key },
+        publisher->{ _id, name },
+        category->{ _id, name }
+      },
+      _key
+    }
+  }
+`;
+
 // Reusable SEO fields fragment
 export const SEO_FIELDS = `
   seo {

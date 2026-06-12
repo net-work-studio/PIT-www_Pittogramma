@@ -5,6 +5,7 @@ import {
   CTA_FIELDS,
   CTA_PROJECTION,
   IMAGE_FIELDS,
+  JOURNAL_REFERENCE_BLOCK_FIELDS,
   MEDIA_BLOCKS_FIELDS,
   SEO_FIELDS,
 } from "./fragments";
@@ -794,7 +795,11 @@ export const JOURNAL_ARTICLE_QUERY = defineQuery(`
       _id,
       name
     },
-    content[] { ... },
+    content[] {
+      ...,
+      ${MEDIA_BLOCKS_FIELDS},
+      ${JOURNAL_REFERENCE_BLOCK_FIELDS}
+    },
     ${SEO_FIELDS}
   }
 `);

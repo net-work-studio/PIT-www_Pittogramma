@@ -7,6 +7,7 @@ import {
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { getGalleryRatio } from "@/lib/gallery";
+import { resolveInternalLink } from "@/lib/resolve-link";
 import type { JOURNAL_ARTICLE_QUERY_RESULT } from "@/sanity/types";
 
 interface MediaItemValue {
@@ -23,7 +24,32 @@ interface MediaItemValue {
       url?: string;
     };
   };
+  videoFileUrl?: string | null;
   videoUrl?: string;
+}
+
+interface JournalReference {
+  _id?: string;
+  _key?: string;
+  _type?: string;
+  authors?: Array<{ name?: string | null } | null> | null;
+  category?: { name?: string | null } | null;
+  description?: string | null;
+  name?: string | null;
+  publisher?: { name?: string | null } | null;
+  slug?: { current?: string | null } | null;
+  sourceUrl?: string | null;
+  title?: string | null;
+  year?: number | null;
+}
+
+interface ReferencesBlockProps {
+  value: {
+    _key: string;
+    _type: "referencesBlock" | "referenceBlock" | "references";
+    title?: string | null;
+    references?: JournalReference[] | null;
+  };
 }
 
 function MediaRenderer({
@@ -37,7 +63,15 @@ function MediaRenderer({
     return null;
   }
 
-  const { type: rawType, image, video, videoUrl, caption, alt } = media;
+  const {
+    type: rawType,
+    image,
+    video,
+    videoFileUrl,
+    videoUrl,
+    caption,
+    alt,
+  } = media;
   const type = stegaClean(rawType);
 
   function renderMedia() {
@@ -52,14 +86,15 @@ function MediaRenderer({
         </AspectRatio>
       );
     }
-    if (type === "videoUpload" && video?.asset?.url) {
+    const uploadedVideoUrl = video?.asset?.url ?? videoFileUrl;
+    if (type === "videoUpload" && uploadedVideoUrl) {
       return (
         <AspectRatio className="relative w-full" ratio={16 / 9}>
           {/* biome-ignore lint/a11y/useMediaCaption: captions not available for uploaded videos */}
           <video
             className="absolute inset-0 h-full w-full rounded-lg object-cover"
             controls
-            src={video.asset.url}
+            src={uploadedVideoUrl}
           />
         </AspectRatio>
       );
@@ -110,6 +145,85 @@ function getEmbedUrl(url: string): string | null {
     return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
   }
   return null;
+}
+
+function getReferenceTitle(reference: JournalReference): string {
+  return reference.name ?? reference.title ?? "Untitled reference";
+}
+
+function getReferenceMeta(reference: JournalReference): string | null {
+  if (reference._type === "bibliography") {
+    const authors = reference.authors
+      ?.map((author) => author?.name)
+      .filter(Boolean)
+      .join(", ");
+    return [authors, reference.publisher?.name, reference.year]
+      .filter(Boolean)
+      .join(" - ");
+  }
+
+  return reference.category?.name ?? null;
+}
+
+function getReferenceHref(reference: JournalReference): string | null {
+  if (reference.sourceUrl) {
+    return reference.sourceUrl;
+  }
+  if (!reference._type) {
+    return null;
+  }
+  return resolveInternalLink({
+    _type: reference._type,
+    slug: reference.slug?.current
+      ? { current: reference.slug.current }
+      : undefined,
+  });
+}
+
+function ReferencesBlock({ value }: ReferencesBlockProps) {
+  const references = value.references?.filter(Boolean) ?? [];
+  if (references.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="mx-auto my-10 max-w-[700px] border-t pt-4">
+      <h2 className="mb-4 font-mono text-muted-foreground text-xs uppercase">
+        {value.title || "References"}
+      </h2>
+      <ol className="flex list-decimal flex-col gap-3 pl-5">
+        {references.map((reference, index) => {
+          const title = getReferenceTitle(reference);
+          const meta = getReferenceMeta(reference);
+          const href = getReferenceHref(reference);
+          return (
+            <li
+              className="pl-1 text-sm leading-relaxed"
+              key={reference._key ?? reference._id ?? index}
+            >
+              {href ? (
+                <a
+                  className="underline hover:no-underline"
+                  href={href}
+                  rel={
+                    href.startsWith("http") ? "noopener noreferrer" : undefined
+                  }
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                >
+                  {title}
+                </a>
+              ) : (
+                <span>{title}</span>
+              )}
+              {meta ? (
+                <span className="text-muted-foreground">, {meta}</span>
+              ) : null}
+            </li>
+          );
+        })}
+      </ol>
+    </section>
+  );
 }
 
 interface SingleMediaBlockProps {
@@ -242,6 +356,9 @@ const components: PortableTextComponents = {
     sideBySideMediaBlock: SideBySideMediaBlock,
     threeSideBySideMediaBlock: ThreeSideBySideMediaBlock,
     gridFourMediaBlock: GridFourMediaBlock,
+    referencesBlock: ReferencesBlock,
+    referenceBlock: ReferencesBlock,
+    references: ReferencesBlock,
   },
 };
 
