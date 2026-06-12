@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -85,16 +85,31 @@ const PLATFORM_LABELS: Record<SocialLinkPlatform, string> = {
 interface DesignerModalProps {
   children: ReactNode;
   currentProjectId?: string;
+  defaultOpen?: boolean;
   designer: DesignerForModal;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export default function DesignerModal({
   designer,
   children,
   currentProjectId,
+  defaultOpen,
+  onOpenChange,
 }: DesignerModalProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (defaultOpen !== undefined) {
+      setOpen(defaultOpen);
+    }
+  }, [defaultOpen]);
+
+  const handleOpenChange = (next: boolean) => {
+    setOpen(next);
+    onOpenChange?.(next);
+  };
 
   const content = (
     <DesignerModalContent
@@ -107,9 +122,12 @@ export default function DesignerModal({
 
   if (isDesktop) {
     return (
-      <Dialog onOpenChange={setOpen} open={open}>
+      <Dialog onOpenChange={handleOpenChange} open={open}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="max-h-[85vh] overflow-y-auto p-10 sm:max-w-4xl">
+        <DialogContent
+          className="max-h-[85vh] overflow-y-auto p-10 sm:max-w-4xl"
+          onCloseAutoFocus={(e) => e.preventDefault()}
+        >
           <DialogTitle className="sr-only">{titleText}</DialogTitle>
           {content}
         </DialogContent>
@@ -118,9 +136,13 @@ export default function DesignerModal({
   }
 
   return (
-    <Sheet onOpenChange={setOpen} open={open}>
+    <Sheet onOpenChange={handleOpenChange} open={open}>
       <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent className="max-h-[85vh] overflow-y-auto p-6" side="bottom">
+      <SheetContent
+        className="max-h-[85vh] overflow-y-auto p-6"
+        onCloseAutoFocus={(e) => e.preventDefault()}
+        side="bottom"
+      >
         <SheetTitle className="sr-only">{titleText}</SheetTitle>
         {content}
       </SheetContent>

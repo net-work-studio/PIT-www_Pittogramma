@@ -22,10 +22,10 @@ import {
 import { EDITION_QUERY } from "@/sanity/lib/queries";
 
 export async function generateStaticParams() {
-  const slugsQuery = defineQuery(
+  const editionSlugsQuery = defineQuery(
     `*[_type == "edition" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
   );
-  const { data } = await sanityFetchStaticParams({ query: slugsQuery });
+  const { data } = await sanityFetchStaticParams({ query: editionSlugsQuery });
   return data as { slug: string }[];
 }
 

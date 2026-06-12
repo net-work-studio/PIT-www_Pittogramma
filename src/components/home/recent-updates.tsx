@@ -35,6 +35,11 @@ export default function RecentUpdates({ items }: RecentUpdatesProps) {
             route: "/",
           };
 
+          const href =
+            item._type === "person" && "slug" in item && item.slug?.trim()
+              ? `/designers?designer=${encodeURIComponent(item.slug)}`
+              : meta.route;
+
           return (
             <li
               className={index < 8 ? "" : "hidden lg:list-item"}
@@ -42,7 +47,7 @@ export default function RecentUpdates({ items }: RecentUpdatesProps) {
             >
               <Link
                 className="group flex flex-col gap-1 border-background border-t pt-2 pb-4"
-                href={meta.route}
+                href={href}
               >
                 <span className="font-sans text-background text-base group-hover:text-background/80">
                   {item.name}

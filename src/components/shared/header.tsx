@@ -1,4 +1,4 @@
-import { Rows3, Search } from "lucide-react";
+import { Newspaper, Search } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -69,7 +69,7 @@ export default async function Header({
         <Suspense
           fallback={
             <Button aria-label="Feed" disabled size="icon" variant="outline">
-              <Rows3 size={16} />
+              <Newspaper size={16} />
             </Button>
           }
         >

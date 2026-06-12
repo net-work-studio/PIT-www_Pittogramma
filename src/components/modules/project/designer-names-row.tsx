@@ -1,8 +1,7 @@
 "use client";
 
-import { Fragment } from "react";
-
 import DesignerModal from "@/components/modules/designer/designer-modal";
+import SanityImage from "@/components/modules/shared/sanity-image";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
@@ -27,6 +26,25 @@ function hasModalData(d: Designer, currentProjectId?: string): boolean {
   );
 }
 
+function DesignerAvatar({ designer }: { designer: Designer }) {
+  const hasPortrait = Boolean(designer.portrait?.image?.asset);
+
+  return hasPortrait ? (
+    <SanityImage
+      className="size-7 shrink-0 rounded-full object-cover"
+      height={96}
+      source={designer.portrait}
+      width={96}
+    />
+  ) : (
+    <div className="grid size-7 shrink-0 place-items-center rounded-full bg-primary/5">
+      <span className="text-muted-foreground text-xs">
+        {designer.name?.slice(0, 1)}
+      </span>
+    </div>
+  );
+}
+
 export default function DesignerNamesRow({
   designers,
   title,
@@ -36,37 +54,39 @@ export default function DesignerNamesRow({
   const hasAnyName = namedDesigners.length > 0;
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-3">
+      {title ? <h1 className="text-3xl">{title}</h1> : null}
       {hasAnyName ? (
-        <div className="text-3xl text-muted-foreground">
-          {namedDesigners.map((designer, index) => {
-            const separator = index > 0 ? ", " : null;
+        <div className="flex flex-wrap items-start gap-x-6 gap-y-3 text-muted-foreground text-xl">
+          {namedDesigners.map((designer) => {
             const interactive = hasModalData(designer, currentProjectId);
 
-            return (
-              <Fragment key={designer._id}>
-                {separator}
-                {interactive ? (
-                  <DesignerModal
-                    currentProjectId={currentProjectId}
-                    designer={designer}
-                  >
-                    <button
-                      className="cursor-pointer decoration-1 underline-offset-4 hover:underline"
-                      type="button"
-                    >
-                      {designer.name}
-                    </button>
-                  </DesignerModal>
-                ) : (
-                  <span>{designer.name}</span>
-                )}
-              </Fragment>
+            return interactive ? (
+              <DesignerModal
+                currentProjectId={currentProjectId}
+                designer={designer}
+                key={designer._id}
+              >
+                <button
+                  className="inline-flex cursor-pointer items-center gap-1.5 decoration-1 underline-offset-4 hover:underline"
+                  type="button"
+                >
+                  <DesignerAvatar designer={designer} />
+                  {designer.name}
+                </button>
+              </DesignerModal>
+            ) : (
+              <span
+                className="inline-flex items-center gap-2.5"
+                key={designer._id}
+              >
+                <DesignerAvatar designer={designer} />
+                {designer.name}
+              </span>
             );
           })}
         </div>
       ) : null}
-      {title ? <h1 className="text-3xl">{title}</h1> : null}
     </div>
   );
 }

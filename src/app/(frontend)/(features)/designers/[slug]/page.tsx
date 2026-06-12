@@ -26,10 +26,10 @@ type RelatedInterview =
   NonNullable<DESIGNER_QUERY_RESULT>["relatedInterviews"][number];
 
 export async function generateStaticParams() {
-  const slugsQuery = defineQuery(
+  const designerSlugsQuery = defineQuery(
     `*[_type == "person" && "designer" in roles && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
   );
-  const { data } = await sanityFetchStaticParams({ query: slugsQuery });
+  const { data } = await sanityFetchStaticParams({ query: designerSlugsQuery });
   return data as { slug: string }[];
 }
 
@@ -95,7 +95,7 @@ async function CachedDesignerPage({
     notFound();
   }
 
-  const imageUrl = designer.portrait?.image
+  const imageUrl = designer.portrait?.image?.asset
     ? urlForImage(designer.portrait)?.url()
     : undefined;
 

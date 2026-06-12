@@ -55,10 +55,10 @@ function estimateReadingTime(
 }
 
 export async function generateStaticParams() {
-  const slugsQuery = defineQuery(
+  const journalSlugsQuery = defineQuery(
     `*[_type == "journal" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
   );
-  const { data } = await sanityFetchStaticParams({ query: slugsQuery });
+  const { data } = await sanityFetchStaticParams({ query: journalSlugsQuery });
   return data as { slug: string }[];
 }
 

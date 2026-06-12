@@ -39,10 +39,10 @@ function getSchemaEventStatus(status: string | null | undefined): string {
 }
 
 export async function generateStaticParams() {
-  const slugsQuery = defineQuery(
+  const eventSlugsQuery = defineQuery(
     `*[_type == "event" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
   );
-  const { data } = await sanityFetchStaticParams({ query: slugsQuery });
+  const { data } = await sanityFetchStaticParams({ query: eventSlugsQuery });
   return data as { slug: string }[];
 }
 

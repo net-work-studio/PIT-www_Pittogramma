@@ -24,10 +24,10 @@ import { PROJECT_QUERY } from "@/sanity/lib/queries";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 export async function generateStaticParams() {
-  const slugsQuery = defineQuery(
+  const projectSlugsQuery = defineQuery(
     `*[_type == "project" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
   );
-  const { data } = await sanityFetchStaticParams({ query: slugsQuery });
+  const { data } = await sanityFetchStaticParams({ query: projectSlugsQuery });
   return data as { slug: string }[];
 }
 

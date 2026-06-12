@@ -146,9 +146,13 @@ export default function BaseCard({
       >
         {renderCardImage({ image, imageClassName, sizes, title })}
       </AspectRatio>
-      {variant ? <Badge variant={variant}>{badgeLabel}</Badge> : null}
+      {variant ? (
+        <Badge className="mt-1" variant={variant}>
+          {badgeLabel}
+        </Badge>
+      ) : null}
       <div className="inline-flex w-full flex-col items-start justify-start">
-        <hgroup className="flex flex-col items-start justify-start gap-2">
+        <hgroup className="flex flex-col items-start justify-start gap-1">
           <h3 className="text-pretty text-foreground text-lg leading-tight">
             {title}
           </h3>

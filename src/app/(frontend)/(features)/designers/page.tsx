@@ -73,7 +73,9 @@ async function CachedDesignersPage({
         />
       </div>
       <div className="space-y-5 pt-30">
-        <DesignerList designers={designers} />
+        <Suspense fallback={<div className="h-96" />}>
+          <DesignerList designers={designers} />
+        </Suspense>
         {cta && (
           <CtaCard
             buttonText={cta.buttonText}
