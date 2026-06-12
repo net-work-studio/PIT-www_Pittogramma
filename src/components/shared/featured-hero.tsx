@@ -48,7 +48,7 @@ export default function FeaturedHero({
       )}
       href={href}
     >
-      <div className="z-10 flex flex-col items-center gap-4 text-background">
+      <div className="z-10 flex w-full flex-col items-center gap-4 px-4 text-center text-background sm:px-6">
         {badgeLabel && (
           <Badge
             className="outline-background"
@@ -57,7 +57,7 @@ export default function FeaturedHero({
             {badgeLabel}
           </Badge>
         )}
-        <hgroup className="flex flex-col items-center gap-2">
+        <hgroup className="flex w-full flex-col items-center gap-2">
           <h2 className="text-balance font-normal font-sans text-4xl md:text-5xl">
             {title}
           </h2>
