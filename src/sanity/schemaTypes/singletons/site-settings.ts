@@ -31,6 +31,8 @@ export const siteSettings = defineType({
       title: "Substack URL",
       type: "url",
       group: "footer",
+      description:
+        "Legacy newsletter link. Deprecated — website signup now uses Brevo.",
       validation: httpUrlValidation,
     }),
     defineField({

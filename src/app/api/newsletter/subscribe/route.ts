@@ -1,0 +1,120 @@
+import { NextResponse } from "next/server";
+
+import {
+  assertAllowedOrigin,
+  OutboundFetchError,
+} from "@/app/api/_utils/outbound-fetch";
+import { BrevoApiError, createDoiContact } from "@/lib/brevo/client";
+import { getBrevoNewsletterConfig } from "@/lib/env/newsletter";
+import {
+  isHoneypotTriggered,
+  parseSubscribeBody,
+  SubscribeParseError,
+} from "@/lib/newsletter/parse-subscribe-body";
+import type { NewsletterSubscribeRequest } from "@/lib/newsletter/types";
+
+const NO_STORE_HEADERS = { "Cache-Control": "no-store" };
+
+export async function POST(request: Request) {
+  const originError = assertAllowedOrigin(request);
+  if (originError) {
+    return originError;
+  }
+
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json(
+      { ok: false, error: "Invalid JSON body" },
+      { headers: NO_STORE_HEADERS, status: 400 }
+    );
+  }
+
+  if (
+    body &&
+    typeof body === "object" &&
+    isHoneypotTriggered((body as Record<string, unknown>).website)
+  ) {
+    return NextResponse.json(
+      {
+        ok: true,
+        message:
+          "Thanks for subscribing. Please check your email to confirm your subscription.",
+      },
+      { headers: NO_STORE_HEADERS, status: 200 }
+    );
+  }
+
+  let parsed: NewsletterSubscribeRequest;
+  try {
+    parsed = parseSubscribeBody(body);
+  } catch (error) {
+    if (error instanceof SubscribeParseError) {
+      return NextResponse.json(
+        { ok: false, error: error.message },
+        { headers: NO_STORE_HEADERS, status: error.status }
+      );
+    }
+    if (error instanceof OutboundFetchError) {
+      return NextResponse.json(
+        { ok: false, error: error.message },
+        { headers: NO_STORE_HEADERS, status: error.status }
+      );
+    }
+    return NextResponse.json(
+      { ok: false, error: "Invalid subscription request" },
+      { headers: NO_STORE_HEADERS, status: 400 }
+    );
+  }
+
+  const brevoConfig = getBrevoNewsletterConfig();
+  if (!brevoConfig.configured) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "Newsletter signup is not configured yet",
+      },
+      { headers: NO_STORE_HEADERS, status: 503 }
+    );
+  }
+
+  try {
+    await createDoiContact({
+      apiKey: brevoConfig.config.apiKey,
+      email: parsed.email,
+      listId: brevoConfig.config.websiteListId,
+      templateId: brevoConfig.config.doiTemplateId,
+      redirectUrl: brevoConfig.config.doiRedirectUrl,
+      source: parsed.source,
+    });
+  } catch (error) {
+    if (error instanceof BrevoApiError) {
+      return NextResponse.json(
+        { ok: false, error: error.message },
+        { headers: NO_STORE_HEADERS, status: error.status }
+      );
+    }
+
+    if (error instanceof Error && error.name === "TimeoutError") {
+      return NextResponse.json(
+        { ok: false, error: "Subscription request timed out" },
+        { headers: NO_STORE_HEADERS, status: 504 }
+      );
+    }
+
+    return NextResponse.json(
+      { ok: false, error: "Unable to process subscription" },
+      { headers: NO_STORE_HEADERS, status: 502 }
+    );
+  }
+
+  return NextResponse.json(
+    {
+      ok: true,
+      message:
+        "Thanks for subscribing. Please check your email to confirm your subscription.",
+    },
+    { headers: NO_STORE_HEADERS, status: 200 }
+  );
+}

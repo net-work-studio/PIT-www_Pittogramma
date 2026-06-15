@@ -1,7 +1,7 @@
 import Link from "next/link";
-
 import { type DynamicFetchOptions, sanityFetch } from "@/sanity/lib/live";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
+import NewsletterSignupForm from "../newsletter/newsletter-signup-form";
 
 export default async function Footer({
   perspective,
@@ -23,21 +23,17 @@ export default async function Footer({
           <li>
             <p>© {new Date().getFullYear()}. All Rights Reserved</p>
           </li>
+          <br />
+          <li className="w-fit text-muted-foreground decoration-1 underline-offset-4 hover:underline">
+            <Link href="/terms-of-service">Privacy Policy</Link>
+          </li>
+          <li className="w-fit text-muted-foreground decoration-1 underline-offset-4 hover:underline">
+            <Link href="/terms-of-service">Impressum</Link>
+          </li>
         </ul>
         {/* Col 2 */}
-        <ul>
-          {siteSettings?.substackUrl && (
-            <li>
-              <a
-                href={siteSettings.substackUrl}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Subscribe to our Substack
-              </a>
-            </li>
-          )}
-          {siteSettings?.instagramUrl && (
+        <ul className="">
+          {siteSettings?.instagramUrl ? (
             <li>
               <a
                 href={siteSettings.instagramUrl}
@@ -47,8 +43,8 @@ export default async function Footer({
                 Follow us on Instagram
               </a>
             </li>
-          )}
-          {siteSettings?.spotifyUrl && (
+          ) : null}
+          {siteSettings?.spotifyUrl ? (
             <li>
               <a
                 href={siteSettings.spotifyUrl}
@@ -58,7 +54,7 @@ export default async function Footer({
                 Listen our music on Spotify
               </a>
             </li>
-          )}
+          ) : null}
         </ul>
 
         {/* Col 3 */}
@@ -75,14 +71,14 @@ export default async function Footer({
         </ul>
 
         {/* Col 4 */}
-        <ul>
-          <li>
-            <Link href="/terms-of-service">Privacy Policy</Link>
-          </li>
-          <li>
-            <Link href="/terms-of-service">Impressum</Link>
-          </li>
-        </ul>
+        <div>
+          <p className="">Newsletter</p>
+          <NewsletterSignupForm
+            buttonText="Subscribe"
+            compact
+            source="footer"
+          />
+        </div>
       </div>
     </footer>
   );

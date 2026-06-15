@@ -91,6 +91,31 @@ export const HOME_FEED_QUERY = defineQuery(`
   }
 `);
 
+export const NEWSLETTER_PREVIEW_QUERY = defineQuery(`
+  *[
+    _type in ["project", "journal"]
+    && defined(publishingDate.date)
+    && publishingDate.date <= $today
+  ] | order(publishingDate.date desc) [0...$limit] {
+    _id,
+    _type,
+    title,
+    slug,
+    publishingDate,
+    cover { ${COVER_MEDIA_FIELDS} },
+    _type == "project" => {
+      description,
+      "people": designers[]{ ...@->{ _id, name }, _key },
+    },
+    _type == "journal" => {
+      excerpt,
+      featuredCover { ${COVER_MEDIA_FIELDS} },
+      "people": authors[]{ ...@->{ _id, name }, _key },
+      label,
+    },
+  }
+`);
+
 export const ABOUT_PAGE_QUERY = defineQuery(`
   *[_type == "aboutPage"][0] {
     _id,

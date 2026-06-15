@@ -1,11 +1,22 @@
 declare module "bun:test" {
   type MaybePromise<T> = T | Promise<T>;
 
+  interface MockFunction {
+    mock: {
+      calls: unknown[][];
+    };
+    (...args: unknown[]): unknown;
+  }
+
   interface Matchers {
     rejects: Matchers;
     toBe(expected: unknown): void;
     toBeNull(): void;
+    toContain(expected: unknown): void;
+    toEqual(expected: unknown): void;
+    toHaveBeenCalledTimes(expected: number): void;
     toMatchObject(expected: Record<string, unknown>): void;
+    toThrow(expected?: string | RegExp): void;
   }
 
   interface TestFunction {
@@ -17,6 +28,10 @@ declare module "bun:test" {
     ): (name: string, fn: (value: T) => MaybePromise<void>) => void;
     (name: string, fn: () => MaybePromise<void>): void;
   }
+
+  export function mock<T extends (...args: never[]) => unknown>(
+    fn: T
+  ): T & MockFunction;
 
   export const afterEach: (fn: () => MaybePromise<void>) => void;
   export const describe: (name: string, fn: () => void) => void;

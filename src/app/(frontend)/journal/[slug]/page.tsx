@@ -297,7 +297,7 @@ async function CachedJournalArticlePage({
 
         {/* Newsletter CTA */}
         <div className="order-4 px-2.5">
-          <JournalArticleCta perspective={perspective} stega={stega} />
+          <JournalArticleCta />
         </div>
 
         {/* Share Links */}

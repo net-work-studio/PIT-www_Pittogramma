@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import NewsletterSignupForm from "@/components/newsletter/newsletter-signup-form";
 
 export default function NewsletterCard() {
   return (
@@ -8,7 +8,12 @@ export default function NewsletterCard() {
         Do you want to be updated on projects, interviews, events and other
         contents about graphic design?
       </p>
-      <Button variant="outline">Subscribe</Button>
+      <NewsletterSignupForm
+        buttonText="Subscribe"
+        className="mt-3"
+        compact
+        source="newsletter_card"
+      />
     </div>
   );
 }
