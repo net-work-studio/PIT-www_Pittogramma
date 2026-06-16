@@ -135,11 +135,11 @@ async function CachedProjectPage({
         />
         <div className="w-full lg:w-2/3">
           <AspectRatio
-            className="relative overflow-hidden rounded-3xl"
+            className="relative overflow-hidden rounded-xl"
             ratio={4 / 3}
           >
             <CoverMedia
-              className="rounded-3xl"
+              className="rounded-xl"
               cover={project.cover}
               fill
               priority

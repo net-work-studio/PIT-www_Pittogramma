@@ -136,11 +136,11 @@ async function CachedDesignerPage({
         />
         <div className="w-full lg:w-2/3">
           <AspectRatio
-            className="relative overflow-hidden rounded-3xl"
+            className="relative overflow-hidden rounded-xl"
             ratio={3 / 4}
           >
             <SanityImage
-              className="rounded-3xl"
+              className="rounded-xl"
               fill
               priority
               sizes="(min-width: 1024px) 66vw, 100vw"

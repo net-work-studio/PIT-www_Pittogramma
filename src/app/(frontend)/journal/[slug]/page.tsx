@@ -228,11 +228,11 @@ async function CachedJournalArticlePage({
           {/* Cover image */}
           <div className="w-full lg:w-[49%] lg:shrink-0">
             <AspectRatio
-              className="relative w-full overflow-hidden rounded-lg"
+              className="relative w-full overflow-hidden rounded-xl"
               ratio={4 / 3}
             >
               <CoverMedia
-                className="rounded-lg object-cover"
+                className="rounded-xl object-cover"
                 cover={article.cover}
                 fill
                 priority

@@ -47,7 +47,7 @@ function MediaRenderer({
       return (
         <AspectRatio className="relative w-full" ratio={ratio}>
           <SanityImage
-            className="rounded-lg object-cover"
+            className="rounded-xl object-cover"
             fill
             source={{ image, alt }}
           />
@@ -59,7 +59,7 @@ function MediaRenderer({
         <AspectRatio className="relative w-full" ratio={16 / 9}>
           {/* biome-ignore lint/a11y/useMediaCaption: captions not available for uploaded videos */}
           <video
-            className="absolute inset-0 h-full w-full rounded-lg object-cover"
+            className="absolute inset-0 h-full w-full rounded-xl object-cover"
             controls
             src={video.asset.url}
           />
@@ -72,7 +72,7 @@ function MediaRenderer({
           <iframe
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            className="absolute inset-0 h-full w-full rounded-lg"
+            className="absolute inset-0 h-full w-full rounded-xl"
             src={getEmbedUrl(videoUrl)}
             title="Video embed"
           />

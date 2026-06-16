@@ -53,7 +53,7 @@ export function BookDetailsDrawer({
 
         <div className="flex flex-col gap-6 p-6">
           {coverUrl && (
-            <div className="relative aspect-2/3 w-full max-w-[200px] overflow-hidden rounded-md bg-muted">
+            <div className="relative aspect-2/3 w-full max-w-[200px] overflow-hidden rounded-xl bg-muted">
               <Image
                 alt={book.cover?.alt || book.name || "Book cover"}
                 className="object-cover"

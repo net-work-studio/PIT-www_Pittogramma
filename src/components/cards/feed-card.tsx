@@ -33,25 +33,25 @@ export default function FeedCard({
 
   return (
     <Link
-      className="group flex w-full flex-col items-start gap-2.5 rounded-[1.25rem]"
+      className="group flex w-full flex-col items-start gap-2.5 rounded-card"
       href={href}
       target="_blank"
       rel={linkRel}
     >
       <AspectRatio
-        className="relative overflow-hidden rounded-lg"
+        className="relative overflow-hidden rounded-xl"
         ratio={FEED_CARD_ASPECT_RATIO}
       >
         {hasImage ? (
           <SanityImage
             alt={title}
-            className="rounded-lg h-full w-full object-cover transition-transform duration-200 ease-out group-hover:scale-103"
+            className="h-full w-full rounded-xl object-cover transition-transform duration-200 ease-out group-hover:scale-103"
             fill
             sizes="(min-width: 480px) 480px, 100vw"
             source={image}
           />
         ) : (
-          <div className="h-full w-full rounded-lg bg-secondary" />
+          <div className="h-full w-full rounded-xl bg-secondary" />
         )}
       </AspectRatio>
       {variant ? (

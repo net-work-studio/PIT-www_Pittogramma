@@ -34,7 +34,7 @@ export default function ContributorCard({ contributor }: ContributorCardProps) {
   return (
     <div className="flex w-48 flex-col gap-3 sm:w-56">
       <AspectRatio
-        className="relative w-full overflow-hidden rounded-lg bg-neutral-100 dark:bg-neutral-900"
+        className="relative w-full overflow-hidden rounded-xl bg-neutral-100 dark:bg-neutral-900"
         ratio={4 / 3}
       >
         <div className="flex h-full w-full items-center justify-center p-6">
