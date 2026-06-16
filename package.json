@@ -10,6 +10,8 @@
     "@sanity/image-url": "^2.1.1",
     "@sanity/orderable-document-list": "^1.5.1",
     "@sanity/vision": "^5.30.0",
+    "baseline-browser-mapping": "^2.10.37",
+    "caniuse-lite": "^1.0.30001799",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "leaflet": "^1.9.4",
