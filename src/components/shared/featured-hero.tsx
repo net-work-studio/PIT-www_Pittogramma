@@ -48,10 +48,10 @@ export default function FeaturedHero({
       )}
       href={href}
     >
-      <div className="z-10 flex w-full flex-col items-center gap-4 px-4 text-center text-background sm:px-6">
+      <div className="z-10 flex w-full flex-col items-center gap-4 px-4 text-center text-white sm:px-6">
         {badgeLabel && (
           <Badge
-            className="outline-background"
+            className="outline-white"
             variant={badgeVariant ?? badgeVariantMap[contentType]}
           >
             {badgeLabel}
@@ -61,7 +61,7 @@ export default function FeaturedHero({
           <h2 className="text-balance font-normal font-sans text-4xl md:text-5xl">
             {title}
           </h2>
-          {subtitle && <p className="text-2xl text-background">{subtitle}</p>}
+          {subtitle && <p className="text-2xl text-white">{subtitle}</p>}
         </hgroup>
       </div>
 
