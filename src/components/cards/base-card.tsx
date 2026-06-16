@@ -63,7 +63,7 @@ function renderCardImage({
 }) {
   if (typeof image === "string") {
     if (!image) {
-      return <div className="h-full w-full rounded-lg bg-secondary" />;
+      return <div className="h-full w-full rounded-xl bg-secondary" />;
     }
 
     return (
@@ -82,7 +82,7 @@ function renderCardImage({
     return (
       <SanityImage
         alt={title}
-        className={cn("rounded-lg", imageClassName)}
+        className={cn("rounded-xl", imageClassName)}
         fill
         sizes={sizes}
         source={image}
@@ -90,7 +90,7 @@ function renderCardImage({
     );
   }
 
-  return <div className="h-full w-full rounded-lg bg-secondary" />;
+  return <div className="h-full w-full rounded-xl bg-secondary" />;
 }
 
 function getByline({
@@ -128,20 +128,20 @@ export default function BaseCard({
     : "(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
 
   const imageClassName =
-    "h-full w-full rounded-lg ease-out object-cover transition-transform duration-200 group-hover:scale-103";
+    "h-full w-full rounded-xl ease-out object-cover transition-transform duration-200 group-hover:scale-103";
   const cardByline = getByline({ authors, byline });
 
   return (
     <Link
       className={cn(
-        "span-col-1 group flex h-fit w-full flex-col items-start justify-center gap-2.5 rounded-[1.25rem]",
+        "span-col-1 group flex h-fit w-full flex-col items-start justify-center gap-2.5 rounded-card",
         big ? "col-span-2" : "col-span-1"
       )}
       href={href}
       {...(isExternal ? { target: "_blank", rel: linkRel } : {})}
     >
       <AspectRatio
-        className="relative overflow-hidden rounded-lg"
+        className="relative overflow-hidden rounded-xl"
         ratio={BASE_CARD_IMAGE_RATIO}
       >
         {renderCardImage({ image, imageClassName, sizes, title })}

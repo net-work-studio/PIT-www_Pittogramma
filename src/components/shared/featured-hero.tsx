@@ -65,10 +65,10 @@ export default function FeaturedHero({
         </hgroup>
       </div>
 
-      <div className="absolute z-1 h-full w-full rounded-md bg-black/20 transition-opacity duration-500 group-hover:bg-black/15" />
+      <div className="absolute z-1 h-full w-full rounded-xl bg-black/20 transition-opacity duration-500 group-hover:bg-black/15" />
 
       <CoverMedia
-        className="absolute h-full w-full rounded-md object-cover transition-transform duration-300"
+        className="absolute h-full w-full rounded-xl object-cover transition-transform duration-300"
         cover={cover}
         fill
         priority

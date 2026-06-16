@@ -54,10 +54,10 @@ export default function Loading() {
 
         <div className="w-full lg:w-2/3">
           <AspectRatio
-            className="relative overflow-hidden rounded-3xl"
+            className="relative overflow-hidden rounded-xl"
             ratio={4 / 3}
           >
-            <SkeletonBlock className="h-full w-full rounded-3xl" />
+            <SkeletonBlock className="h-full w-full rounded-xl" />
           </AspectRatio>
 
           <div className="mt-2.5 flex flex-col gap-2.5 sm:flex-row">
@@ -76,10 +76,10 @@ export default function Loading() {
           </div>
 
           <AspectRatio
-            className="relative mt-2.5 overflow-hidden rounded-3xl"
+            className="relative mt-2.5 overflow-hidden rounded-xl"
             ratio={4 / 3}
           >
-            <SkeletonBlock className="h-full w-full rounded-3xl" />
+            <SkeletonBlock className="h-full w-full rounded-xl" />
           </AspectRatio>
 
           <div className="mt-10 flex flex-wrap items-center gap-2.5">
@@ -100,10 +100,10 @@ export default function Loading() {
           {relatedCardSkeletons.map((key) => (
             <div className="flex h-fit w-full flex-col gap-2.5" key={key}>
               <AspectRatio
-                className="relative overflow-hidden rounded-lg"
+                className="relative overflow-hidden rounded-xl"
                 ratio={4 / 3}
               >
-                <SkeletonBlock className="h-full w-full rounded-lg" />
+                <SkeletonBlock className="h-full w-full rounded-xl" />
               </AspectRatio>
               <div className="space-y-1">
                 <SkeletonBlock className="h-5 w-10/12 rounded" />

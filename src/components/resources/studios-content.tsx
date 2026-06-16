@@ -58,9 +58,9 @@ function StudioGridCard({ studio }: { studio: Studio }) {
   return (
     <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
       {studio.cover && (
-        <div className="relative aspect-4/3 w-full overflow-hidden rounded-md">
+        <div className="relative aspect-4/3 w-full overflow-hidden rounded-xl">
           <SanityImage
-            className="rounded-md"
+            className="rounded-xl"
             fill
             sizes="(max-width: 768px) 50vw, 25vw"
             source={studio.cover}
@@ -68,7 +68,7 @@ function StudioGridCard({ studio }: { studio: Studio }) {
         </div>
       )}
       {!studio.cover && (
-        <div className="relative aspect-4/3 w-full overflow-hidden rounded-md bg-muted" />
+        <div className="relative aspect-4/3 w-full overflow-hidden rounded-xl bg-muted" />
       )}
       <p className="flex justify-between">
         <span className="font-medium">{studio.name}</span>

@@ -29,9 +29,7 @@ export interface MediaBlockShape {
 }
 
 const ROUNDED_CLASS = {
-  lg: "rounded-lg",
   xl: "rounded-xl",
-  "3xl": "rounded-3xl",
 } as const;
 
 type RoundedKey = keyof typeof ROUNDED_CLASS;

@@ -183,19 +183,19 @@ async function CachedEventPage({
           />
           <div className="w-full lg:w-[49%] lg:shrink-0">
             <AspectRatio
-              className="relative w-full overflow-hidden rounded-lg"
+              className="relative w-full overflow-hidden rounded-xl"
               ratio={4 / 3}
             >
               {event.cover?.image?.asset ||
               (event.cover?.type === "video" && event.cover?.videoUrl) ? (
                 <CoverMedia
-                  className="rounded-lg object-cover"
+                  className="rounded-xl object-cover"
                   cover={event.cover}
                   fill
                   priority
                 />
               ) : (
-                <div className="h-full w-full rounded-lg bg-neutral-200" />
+                <div className="h-full w-full rounded-xl bg-neutral-200" />
               )}
             </AspectRatio>
             {event.cover?.alt ? (

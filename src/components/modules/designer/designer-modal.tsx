@@ -170,11 +170,11 @@ function DesignerModalContent({
       {hasPortrait ? (
         <div className="w-full max-w-sm">
           <AspectRatio
-            className="relative overflow-hidden rounded-3xl"
+            className="relative overflow-hidden rounded-xl"
             ratio={3 / 4}
           >
             <SanityImage
-              className="rounded-3xl"
+              className="rounded-xl"
               fill
               sizes="(min-width: 768px) 40vw, 100vw"
               source={portrait}
