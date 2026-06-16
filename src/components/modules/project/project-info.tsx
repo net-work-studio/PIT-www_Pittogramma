@@ -37,7 +37,7 @@ export default function ProjectInfo({
     .join(", ");
 
   return (
-    <div className="h-fit w-full pr-10 lg:sticky lg:top-20 lg:w-1/3">
+    <div className="h-fit w-full pr-0 pb-10 lg:sticky lg:top-20 lg:w-1/3 lg:pr-10 lg:pb-0">
       <div className="flex flex-col gap-12.5">
         <DesignerNamesRow
           currentProjectId={projectId}
