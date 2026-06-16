@@ -1,6 +1,5 @@
 "use client";
 
-import { Copy } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface ShareLinksProps {
@@ -69,23 +68,22 @@ export default function ShareLinks({ url, title }: ShareLinksProps) {
   }, [url]);
 
   return (
-    <div className="mt-10 flex flex-wrap items-center gap-2.5">
+    <div className="mt-10 flex flex-wrap items-baseline gap-2.5">
       <span className="font-mono text-muted-foreground text-sm uppercase">
         Share
       </span>
       <div className="relative">
         <button
           aria-label="Copy link"
-          className="inline-flex items-center gap-1 text-sm underline"
+          className="inline-flex items-center gap-1 text-sm underline decoration-1 underline-offset-2 hover:cursor-pointer hover:text-muted-foreground"
           onClick={handleCopyLink}
           type="button"
         >
-          <Copy aria-hidden="true" className="size-3.5" />
           Copy Link
         </button>
         {isCopied ? (
           <span
-            className="-translate-x-1/2 absolute bottom-full left-1/2 mb-2 rounded-full bg-foreground px-2 py-1 text-background text-xs"
+            className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 rounded-full bg-foreground px-2 py-1 text-background text-xs"
             role="status"
           >
             Copied!
@@ -94,7 +92,7 @@ export default function ShareLinks({ url, title }: ShareLinksProps) {
       </div>
       {platforms.map((platform) => (
         <a
-          className="text-sm underline"
+          className="text-sm underline decoration-1 underline-offset-2 hover:text-muted-foreground"
           href={platform.getUrl(url, title)}
           key={platform.name}
           rel="noopener noreferrer"
