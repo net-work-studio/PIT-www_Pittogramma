@@ -1,7 +1,7 @@
 interface InfoItem {
   _key: string;
-  title: string | null;
   content: string | null;
+  title: string | null;
 }
 
 interface EventInfoGridProps {
@@ -10,7 +10,9 @@ interface EventInfoGridProps {
 
 export default function EventInfoGrid({ info }: EventInfoGridProps) {
   const items = info?.filter((i) => i.title && i.content);
-  if (!items?.length) return null;
+  if (!items?.length) {
+    return null;
+  }
 
   const mid = Math.ceil(items.length / 2);
   const left = items.slice(0, mid);
@@ -40,7 +42,7 @@ function Column({ items }: { items: InfoItem[] }) {
           <dt className="w-[138px] shrink-0 font-mono text-sm uppercase lg:w-[200px]">
             {item.title}
           </dt>
-          <dd className="whitespace-pre-line text-sm text-muted-foreground">
+          <dd className="whitespace-pre-line text-muted-foreground text-sm">
             {item.content}
           </dd>
         </div>

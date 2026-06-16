@@ -35,8 +35,8 @@ export default function FeedCard({
     <Link
       className="group flex w-full flex-col items-start gap-2.5 rounded-[1.25rem]"
       href={href}
-      target="_blank"
       rel={linkRel}
+      target="_blank"
     >
       <AspectRatio
         className="relative overflow-hidden rounded-lg"
@@ -45,7 +45,7 @@ export default function FeedCard({
         {hasImage ? (
           <SanityImage
             alt={title}
-            className="rounded-lg h-full w-full object-cover transition-transform duration-200 ease-out group-hover:scale-103"
+            className="h-full w-full rounded-lg object-cover transition-transform duration-200 ease-out group-hover:scale-103"
             fill
             sizes="(min-width: 480px) 480px, 100vw"
             source={image}
@@ -54,9 +54,7 @@ export default function FeedCard({
           <div className="h-full w-full rounded-lg bg-secondary" />
         )}
       </AspectRatio>
-      {variant ? (
-        <Badge variant={variant}>Sponsored</Badge>
-      ) : null}
+      {variant ? <Badge variant={variant}>Sponsored</Badge> : null}
       <hgroup className="flex w-full flex-col items-start gap-2">
         <h3 className="text-pretty text-foreground text-lg leading-tight">
           {title}

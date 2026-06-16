@@ -221,18 +221,18 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
         (featuredItem?.cover?.type === "video" &&
           featuredItem?.cover?.videoUrl)) &&
         featuredCover && (
-        <FeaturedHero
-          badgeLabel={featuredBadge.label}
-          badgeVariant={featuredBadge.variant}
-          contentType={
-            featuredItem._type as "project" | "interview" | "journal"
-          }
-          cover={featuredCover}
-          href={getEditorialHref(featuredItem)}
-          subtitle={featuredSubtitle}
-          title={featuredItem.title ?? ""}
-        />
-      )}
+          <FeaturedHero
+            badgeLabel={featuredBadge.label}
+            badgeVariant={featuredBadge.variant}
+            contentType={
+              featuredItem._type as "project" | "interview" | "journal"
+            }
+            cover={featuredCover}
+            href={getEditorialHref(featuredItem)}
+            subtitle={featuredSubtitle}
+            title={featuredItem.title ?? ""}
+          />
+        )}
 
       <PageHeader subtitle={homePage?.introText} title="Pittogramma" />
 

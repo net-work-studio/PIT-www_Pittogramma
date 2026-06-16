@@ -10,7 +10,7 @@ export default function Error({
 }) {
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center px-5 text-center">
-      <p className="font-mono text-sm tracking-widest text-muted-foreground">
+      <p className="font-mono text-muted-foreground text-sm tracking-widest">
         500
       </p>
       <h1 className="mt-4 text-2xl uppercase">Something went wrong</h1>

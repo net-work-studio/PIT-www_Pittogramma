@@ -12,9 +12,9 @@ import {
   isSearchEnabled,
 } from "@/lib/feature-flags";
 import {
+  type DynamicFetchOptions,
   getDynamicFetchOptions,
   sanityFetch,
-  type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { TYPE_FOUNDRIES_QUERY } from "@/sanity/lib/queries";
 
@@ -38,7 +38,10 @@ async function DynamicTypeFoundriesPage() {
   return <CachedTypeFoundriesPage perspective={perspective} stega={stega} />;
 }
 
-async function CachedTypeFoundriesPage({ perspective, stega }: DynamicFetchOptions) {
+async function CachedTypeFoundriesPage({
+  perspective,
+  stega,
+}: DynamicFetchOptions) {
   "use cache";
   const { data: foundries } = await sanityFetch({
     query: TYPE_FOUNDRIES_QUERY,

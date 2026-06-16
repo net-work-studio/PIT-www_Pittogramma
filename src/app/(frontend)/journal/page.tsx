@@ -199,8 +199,7 @@ async function CachedJournalPage({
                 ? featuredArticle.featuredCover
                 : null;
             const heroCover =
-              fc?.image?.asset ||
-              (fc?.type === "video" && fc?.videoUrl)
+              fc?.image?.asset || (fc?.type === "video" && fc?.videoUrl)
                 ? fc
                 : featuredArticle.cover;
             return (

@@ -12,9 +12,9 @@ import {
   isSearchEnabled,
 } from "@/lib/feature-flags";
 import {
+  type DynamicFetchOptions,
   getDynamicFetchOptions,
   sanityFetch,
-  type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { INSTITUTES_QUERY } from "@/sanity/lib/queries";
 
@@ -38,7 +38,10 @@ async function DynamicInstitutesPage() {
   return <CachedInstitutesPage perspective={perspective} stega={stega} />;
 }
 
-async function CachedInstitutesPage({ perspective, stega }: DynamicFetchOptions) {
+async function CachedInstitutesPage({
+  perspective,
+  stega,
+}: DynamicFetchOptions) {
   "use cache";
   const { data: institutes } = await sanityFetch({
     query: INSTITUTES_QUERY,

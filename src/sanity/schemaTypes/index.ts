@@ -21,13 +21,13 @@ import { studio } from "./documents/studio";
 import { tag } from "./documents/tag";
 import { typeFoundry } from "./documents/type-foundry";
 import { webSource } from "./documents/web-source";
+import { coverMedia } from "./objects/cover-media";
 import {
   gridFourMediaBlock,
   sideBySideMediaBlock,
   singleMediaBlock,
   threeSideBySideMediaBlock,
 } from "./objects/gallery-blocks";
-import { coverMedia } from "./objects/cover-media";
 import { imageWithMetadata } from "./objects/image-with-metadata";
 import { infoItem } from "./objects/info-item";
 import { logo } from "./objects/logo";

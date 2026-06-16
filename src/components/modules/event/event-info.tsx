@@ -93,11 +93,14 @@ export default function EventInfo({
             </dt>
             <dd>
               <ul className="flex flex-col">
-                {tags.filter(Boolean).filter((tag) => tag.name).map((tag) => (
-                  <li className="text-sm underline" key={tag._id}>
-                    {tag.name}
-                  </li>
-                ))}
+                {tags
+                  .filter(Boolean)
+                  .filter((tag) => tag.name)
+                  .map((tag) => (
+                    <li className="text-sm underline" key={tag._id}>
+                      {tag.name}
+                    </li>
+                  ))}
               </ul>
             </dd>
           </div>

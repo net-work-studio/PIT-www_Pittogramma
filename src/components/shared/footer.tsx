@@ -2,6 +2,7 @@ import Link from "next/link";
 import { type DynamicFetchOptions, sanityFetch } from "@/sanity/lib/live";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 import NewsletterSignupForm from "../newsletter/newsletter-signup-form";
+import Logotype from "../brand/logotype";
 
 export default async function Footer({
   perspective,
@@ -18,8 +19,10 @@ export default async function Footer({
     <footer className="p-4">
       <div className="grid grid-cols-1 gap-4 rounded-lg bg-secondary p-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-0">
         {/* Col 1 */}
-        <ul>
-          <li>Pittogramma</li>
+        <ul className="flex flex-col items-start gap-1">
+          <li className="h-5">
+            <Logotype/>
+          </li>
           <li>
             <p>© {new Date().getFullYear()}. All Rights Reserved</p>
           </li>
