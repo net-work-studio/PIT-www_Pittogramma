@@ -14,6 +14,12 @@
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
+type ArrayOf<T> = Array<
+  T & {
+    _key: string;
+  }
+>;
+
 // Source: src/sanity/extract.json
 export type LanguageReference = {
   _ref: string;
@@ -748,6 +754,41 @@ export type Person = {
   seo?: SeoModule;
 };
 
+export type BibliographyReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "bibliography";
+};
+
+export type WebSourceReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "webSource";
+};
+
+export type GlossaryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "glossary";
+};
+
+export type TypeFoundryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "typeFoundry";
+};
+
+export type BookshopReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "bookshop";
+};
+
 export type Journal = {
   _id: string;
   _type: "journal";
@@ -810,15 +851,26 @@ export type Journal = {
     | ({
         _key: string;
       } & GridFourMediaBlock)
+    | {
+        title?: string;
+        references: ArrayOf<
+          | BibliographyReference
+          | WebSourceReference
+          | GlossaryReference
+          | PersonReference
+          | StudioReference
+          | TypeFoundryReference
+          | InstituteReference
+          | BookshopReference
+          | ProjectReference
+          | InterviewReference
+          | JournalReference
+        >;
+        _type: "referencesBlock";
+        _key: string;
+      }
   >;
   seo?: SeoModule;
-};
-
-export type TypeFoundryReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "typeFoundry";
 };
 
 export type Interview = {
@@ -1290,8 +1342,12 @@ export type AllSanitySchemaTypes =
   | InstituteReference
   | StudioReference
   | Person
-  | Journal
+  | BibliographyReference
+  | WebSourceReference
+  | GlossaryReference
   | TypeFoundryReference
+  | BookshopReference
+  | Journal
   | Interview
   | TypeFoundry
   | Studio
@@ -5229,7 +5285,7 @@ export type JOURNAL_COUNT_QUERY_RESULT = number;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: JOURNAL_ARTICLE_QUERY
-// Query: *[_type == "journal" && slug.current == $slug][0] {    _id,    title,    slug,    label,    publishingDate,    cover {   type,  image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },  "videoUrl": video.asset->url,  caption,  alt },    authors[]{ ...@->{ _id, name }, _key },    excerpt,    tags[]->{      _id,      name    },    content[] { ... },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+// Query: *[_type == "journal" && slug.current == $slug][0] {    _id,    title,    slug,    label,    publishingDate,    cover {   type,  image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },  "videoUrl": video.asset->url,  caption,  alt },    authors[]{ ...@->{ _id, name }, _key },    excerpt,    tags[]->{      _id,      name    },    content[] {      ...,        _key,  _type,  _type == "singleMediaBlock" => {    orientation,    media {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    }  },  _type == "sideBySideMediaBlock" => {    orientation,    left {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    },    right {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    }  },  _type == "threeSideBySideMediaBlock" => {    orientation,    left {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    },    center {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    },    right {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    }  },  _type == "gridFourMediaBlock" => {    orientation,    topLeft {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    },    topRight {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    },    bottomLeft {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    },    bottomRight {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    }  },        _type in ["referencesBlock", "referenceBlock", "references"] => {    title,    references[]{      ...@->{        _id,        _type,        name,        title,        slug,        sourceUrl,        year,        description,        authors[]{ ...@->{ _id, name }, _key },        publisher->{ _id, name },        category->{ _id, name }      },      _key    }  }    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type JOURNAL_ARTICLE_QUERY_RESULT = {
   _id: string;
   title: string;
@@ -5298,31 +5354,437 @@ export type JOURNAL_ARTICLE_QUERY_RESULT = {
         _key: string;
         _type: "gridFourMediaBlock";
         orientation: "landscape" | "portrait";
-        topLeft: MediaItem;
-        topRight: MediaItem;
-        bottomLeft: MediaItem;
-        bottomRight: MediaItem;
+        topLeft: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          videoFileUrl: string | null;
+          videoUrl: string | null;
+          caption: string | null;
+          alt: string | null;
+        };
+        topRight: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          videoFileUrl: string | null;
+          videoUrl: string | null;
+          caption: string | null;
+          alt: string | null;
+        };
+        bottomLeft: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          videoFileUrl: string | null;
+          videoUrl: string | null;
+          caption: string | null;
+          alt: string | null;
+        };
+        bottomRight: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          videoFileUrl: string | null;
+          videoUrl: string | null;
+          caption: string | null;
+          alt: string | null;
+        };
+      }
+    | {
+        title?: string;
+        references: ArrayOf<
+          | BibliographyReference
+          | BookshopReference
+          | GlossaryReference
+          | InstituteReference
+          | InterviewReference
+          | JournalReference
+          | PersonReference
+          | ProjectReference
+          | StudioReference
+          | TypeFoundryReference
+          | WebSourceReference
+        >;
+        _type: "referencesBlock";
+        _key: string;
+      }
+    | {
+        title: string | null;
+        references: Array<
+          | {
+              _id: string;
+              _type: "bibliography";
+              name: string;
+              title: null;
+              slug: null;
+              sourceUrl: null;
+              year: number | null;
+              description: string | null;
+              authors: Array<{
+                _id: string;
+                name: string;
+                _key: string;
+              }> | null;
+              publisher: {
+                _id: string;
+                name: string;
+              };
+              category: null;
+              _key: null;
+            }
+          | {
+              _id: string;
+              _type: "bookshop";
+              name: string;
+              title: null;
+              slug: null;
+              sourceUrl: null;
+              year: null;
+              description: null;
+              authors: null;
+              publisher: null;
+              category: null;
+              _key: null;
+            }
+          | {
+              _id: string;
+              _type: "glossary";
+              name: string;
+              title: null;
+              slug: null;
+              sourceUrl: null;
+              year: null;
+              description: string;
+              authors: null;
+              publisher: null;
+              category: null;
+              _key: null;
+            }
+          | {
+              _id: string;
+              _type: "institute";
+              name: string;
+              title: null;
+              slug: null;
+              sourceUrl: null;
+              year: null;
+              description: null;
+              authors: null;
+              publisher: null;
+              category: null;
+              _key: null;
+            }
+          | {
+              _id: string;
+              _type: "interview";
+              name: null;
+              title: string;
+              slug: Slug;
+              sourceUrl: null;
+              year: null;
+              description: null;
+              authors: null;
+              publisher: null;
+              category: null;
+              _key: null;
+            }
+          | {
+              _id: string;
+              _type: "journal";
+              name: null;
+              title: string;
+              slug: Slug;
+              sourceUrl: null;
+              year: null;
+              description: null;
+              authors: Array<{
+                _id: string;
+                name: string;
+                _key: string;
+              }> | null;
+              publisher: null;
+              category: null;
+              _key: null;
+            }
+          | {
+              _id: string;
+              _type: "person";
+              name: string;
+              title: null;
+              slug: Slug | null;
+              sourceUrl: null;
+              year: null;
+              description: null;
+              authors: null;
+              publisher: null;
+              category: null;
+              _key: null;
+            }
+          | {
+              _id: string;
+              _type: "project";
+              name: null;
+              title: string;
+              slug: Slug;
+              sourceUrl: null;
+              year: number;
+              description: string | null;
+              authors: null;
+              publisher: null;
+              category: null;
+              _key: null;
+            }
+          | {
+              _id: string;
+              _type: "studio";
+              name: string;
+              title: null;
+              slug: null;
+              sourceUrl: null;
+              year: null;
+              description: string | null;
+              authors: null;
+              publisher: null;
+              category: {
+                _id: string;
+                name: string;
+              };
+              _key: null;
+            }
+          | {
+              _id: string;
+              _type: "typeFoundry";
+              name: string;
+              title: null;
+              slug: null;
+              sourceUrl: null;
+              year: null;
+              description: string | null;
+              authors: null;
+              publisher: null;
+              category: null;
+              _key: null;
+            }
+          | {
+              _id: string;
+              _type: "webSource";
+              name: string;
+              title: null;
+              slug: null;
+              sourceUrl: string;
+              year: null;
+              description: string | null;
+              authors: null;
+              publisher: null;
+              category: {
+                _id: string;
+                name: string;
+              };
+              _key: null;
+            }
+        >;
+        _type: "referencesBlock";
+        _key: string;
       }
     | {
         _key: string;
         _type: "sideBySideMediaBlock";
         orientation: "landscape" | "portrait";
-        left: MediaItem;
-        right: MediaItem;
+        left: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          videoFileUrl: string | null;
+          videoUrl: string | null;
+          caption: string | null;
+          alt: string | null;
+        };
+        right: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          videoFileUrl: string | null;
+          videoUrl: string | null;
+          caption: string | null;
+          alt: string | null;
+        };
       }
     | {
         _key: string;
         _type: "singleMediaBlock";
         orientation: "landscape" | "portrait";
-        media: MediaItem;
+        media: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          videoFileUrl: string | null;
+          videoUrl: string | null;
+          caption: string | null;
+          alt: string | null;
+        };
       }
     | {
         _key: string;
         _type: "threeSideBySideMediaBlock";
         orientation: "landscape" | "portrait";
-        left: MediaItem;
-        center: MediaItem;
-        right: MediaItem;
+        left: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          videoFileUrl: string | null;
+          videoUrl: string | null;
+          caption: string | null;
+          alt: string | null;
+        };
+        center: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          videoFileUrl: string | null;
+          videoUrl: string | null;
+          caption: string | null;
+          alt: string | null;
+        };
+        right: {
+          type: "image" | "videoEmbed" | "videoUpload";
+          image: {
+            asset: {
+              _id: string;
+              url: string;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number;
+                  height: number;
+                } | null;
+              } | null;
+            } | null;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+          } | null;
+          videoFileUrl: string | null;
+          videoUrl: string | null;
+          caption: string | null;
+          alt: string | null;
+        };
       }
   > | null;
   seo: {
@@ -6785,7 +7247,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "journalPage"][0] {\n    _id,\n    title,\n    introText,\n    featuredArticle->{\n      _id,\n      title,\n      slug,\n      label,\n      publishingDate,\n      excerpt,\n      cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n      featuredCover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n      authors[]{ ...@->{ _id, name }, _key },\n      tags[]->{ _id, name }\n    },\n    endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': JOURNAL_PAGE_QUERY_RESULT;
     '\n  *[_type == "journal"] | order(publishingDate.date desc) {\n    _id,\n    title,\n    slug,\n    label,\n    publishingDate,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    featuredCover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    authors[]{ ...@->{ _id, name }, _key },\n    excerpt,\n    tags[]->{\n      _id,\n      name\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': JOURNAL_QUERY_RESULT;
     '\n  count(*[_type == "journal"\n    && defined(slug.current)\n    && ($hasTags == false || label in $tags)\n  ])\n': JOURNAL_COUNT_QUERY_RESULT;
-    '\n  *[_type == "journal" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    label,\n    publishingDate,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    authors[]{ ...@->{ _id, name }, _key },\n    excerpt,\n    tags[]->{\n      _id,\n      name\n    },\n    content[] { ... },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': JOURNAL_ARTICLE_QUERY_RESULT;
+    '\n  *[_type == "journal" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    label,\n    publishingDate,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    authors[]{ ...@->{ _id, name }, _key },\n    excerpt,\n    tags[]->{\n      _id,\n      name\n    },\n    content[] {\n      ...,\n      \n  _key,\n  _type,\n  _type == "singleMediaBlock" => {\n    orientation,\n    media {\n      type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      "videoFileUrl": video.asset->url,\n      videoUrl,\n      caption,\n      alt\n    }\n  },\n  _type == "sideBySideMediaBlock" => {\n    orientation,\n    left {\n      type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      "videoFileUrl": video.asset->url,\n      videoUrl,\n      caption,\n      alt\n    },\n    right {\n      type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      "videoFileUrl": video.asset->url,\n      videoUrl,\n      caption,\n      alt\n    }\n  },\n  _type == "threeSideBySideMediaBlock" => {\n    orientation,\n    left {\n      type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      "videoFileUrl": video.asset->url,\n      videoUrl,\n      caption,\n      alt\n    },\n    center {\n      type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      "videoFileUrl": video.asset->url,\n      videoUrl,\n      caption,\n      alt\n    },\n    right {\n      type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      "videoFileUrl": video.asset->url,\n      videoUrl,\n      caption,\n      alt\n    }\n  },\n  _type == "gridFourMediaBlock" => {\n    orientation,\n    topLeft {\n      type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      "videoFileUrl": video.asset->url,\n      videoUrl,\n      caption,\n      alt\n    },\n    topRight {\n      type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      "videoFileUrl": video.asset->url,\n      videoUrl,\n      caption,\n      alt\n    },\n    bottomLeft {\n      type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      "videoFileUrl": video.asset->url,\n      videoUrl,\n      caption,\n      alt\n    },\n    bottomRight {\n      type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      "videoFileUrl": video.asset->url,\n      videoUrl,\n      caption,\n      alt\n    }\n  }\n,\n      \n  _type in ["referencesBlock", "referenceBlock", "references"] => {\n    title,\n    references[]{\n      ...@->{\n        _id,\n        _type,\n        name,\n        title,\n        slug,\n        sourceUrl,\n        year,\n        description,\n        authors[]{ ...@->{ _id, name }, _key },\n        publisher->{ _id, name },\n        category->{ _id, name }\n      },\n      _key\n    }\n  }\n\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': JOURNAL_ARTICLE_QUERY_RESULT;
     '\n  *[_type == "interview"] | order(publishingDate.date desc) {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    designersAndProfessionals[]{ ...@->{ _id, name }, _key },\n    studio->{\n      _id,\n      name\n    },\n    typeFoundry->{\n      _id,\n      name\n    },\n    place->{ _id, name, city, country, countryCode, lat, lng },\n    readingTime,\n    tags[]->{\n      _id,\n      name,\n      "slug": slug.current\n    },\n    introText,\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': INTERVIEWS_QUERY_RESULT;
     '\n  count(*[_type == "interview"\n    && defined(slug.current)\n    && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)\n  ])\n': INTERVIEWS_COUNT_QUERY_RESULT;
     '\n  array::unique(*[_type == "interview" && defined(tags)].tags[]->{ _id, name, "slug": slug.current })\n': INTERVIEWS_TAGS_QUERY_RESULT;

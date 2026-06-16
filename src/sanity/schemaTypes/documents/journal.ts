@@ -1,8 +1,22 @@
-import { DocumentTextIcon } from "@sanity/icons";
+import { DocumentTextIcon, LinkIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { JOURNAL_LABELS } from "@/lib/journal-labels";
 import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
+
+const journalReferenceTargets = [
+  { type: "bibliography" },
+  { type: "webSource" },
+  { type: "glossary" },
+  { type: "person" },
+  { type: "studio" },
+  { type: "typeFoundry" },
+  { type: "institute" },
+  { type: "bookshop" },
+  { type: "project" },
+  { type: "interview" },
+  { type: "journal" },
+];
 
 export const journal = defineType({
   type: "document",
@@ -98,6 +112,47 @@ export const journal = defineType({
         defineArrayMember({ type: "sideBySideMediaBlock" }),
         defineArrayMember({ type: "threeSideBySideMediaBlock" }),
         defineArrayMember({ type: "gridFourMediaBlock" }),
+        defineArrayMember({
+          type: "object",
+          name: "referencesBlock",
+          title: "References",
+          icon: LinkIcon,
+          fields: [
+            defineField({
+              type: "string",
+              name: "title",
+              title: "Title",
+              initialValue: "References",
+            }),
+            defineField({
+              type: "array",
+              name: "references",
+              title: "References",
+              of: [
+                defineArrayMember({
+                  type: "reference",
+                  name: "reference",
+                  title: "Reference",
+                  to: journalReferenceTargets,
+                }),
+              ],
+              validation: (rule) => rule.required().min(1).unique(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: "title",
+              references: "references",
+            },
+            prepare({ title, references }) {
+              const count = Array.isArray(references) ? references.length : 0;
+              return {
+                title: title || "References",
+                subtitle: count === 1 ? "1 reference" : `${count} references`,
+              };
+            },
+          },
+        }),
       ],
     }),
     defineField({
