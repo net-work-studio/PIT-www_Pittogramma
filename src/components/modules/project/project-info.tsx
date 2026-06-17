@@ -5,7 +5,9 @@ import ProjectMetaItem from "@/components/modules/shared/meta-item";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
-type ProjectTag = NonNullable<PROJECT_QUERY_RESULT>["tags"][number];
+type ProjectTag = NonNullable<
+  NonNullable<PROJECT_QUERY_RESULT>["tags"]
+>[number];
 
 interface Teacher {
   _id: string;
