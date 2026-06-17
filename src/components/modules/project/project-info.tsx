@@ -1,9 +1,11 @@
+import Link from "next/link";
 import DesignerNamesRow from "@/components/modules/project/designer-names-row";
 import ProjectDescription from "@/components/modules/project/project-description";
 import ProjectMetaItem from "@/components/modules/shared/meta-item";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
+type ProjectTag = NonNullable<PROJECT_QUERY_RESULT>["tags"][number];
 
 interface Teacher {
   _id: string;
@@ -15,7 +17,7 @@ interface ProjectInfoProps {
   designers?: Designer[] | null;
   institute?: string | null;
   projectId?: string;
-  tags?: Array<{ _id: string; name: string }> | null;
+  tags?: ProjectTag[] | null;
   teachers?: Teacher[] | null;
   title?: string | null;
   year?: number | null;
@@ -62,8 +64,17 @@ export default function ProjectInfo({
               <ProjectMetaItem label="Disciplines">
                 <ul className="flex flex-col gap-0.5">
                   {tags.map((tag) => (
-                    <li className="text-sm underline" key={tag._id}>
-                      {tag.name}
+                    <li className="text-sm" key={tag._id}>
+                      {tag.slug ? (
+                        <Link
+                          className="underline"
+                          href={`/projects?tags=${encodeURIComponent(tag.slug)}`}
+                        >
+                          {tag.name}
+                        </Link>
+                      ) : (
+                        tag.name
+                      )}
                     </li>
                   ))}
                 </ul>

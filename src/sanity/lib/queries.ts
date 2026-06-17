@@ -706,7 +706,8 @@ export const PROJECT_QUERY = defineQuery(`
     },
     tags[]->{
       _id,
-      name
+      name,
+      "slug": slug.current
     },
     teachers[]{ ...@->{ _id, name }, _key },
     institute->{
