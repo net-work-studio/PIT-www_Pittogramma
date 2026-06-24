@@ -43,10 +43,7 @@ function getCountries(places: TypeFoundry["places"]) {
 function TypeFoundryListCard({ foundry }: { foundry: TypeFoundry }) {
   return (
     <ResourceListItem>
-      <li className="col-span-4">{foundry.name}</li>
-      <li className="col-span-4">
-        <TagsDisplay tags={foundry.tags} />
-      </li>
+      <li className="col-span-8">{foundry.name}</li>
       <li className="col-span-2">{getCities(foundry.places)}</li>
       <li className="col-span-2">{getCountries(foundry.places)}</li>
     </ResourceListItem>
@@ -121,8 +118,7 @@ export function TypeFoundriesContent({
         </div>
         {view === "list" && enabledViews.includes("list") && (
           <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase">
-            <li className="col-span-4">Name</li>
-            <li className="col-span-4">Tag</li>
+            <li className="col-span-8">Name</li>
             <li className="col-span-2">City</li>
             <li className="col-span-2">Country</li>
           </ul>
