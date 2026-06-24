@@ -30,9 +30,7 @@ function InstituteListCard({ institute }: { institute: Institute }) {
       <li className="col-span-2">
         <CountryDisplay place={institute.place} />
       </li>
-      <li className="col-span-2 text-right">
-        {institute.yearFoundation || "-"}
-      </li>
+      <li className="col-span-2">{institute.yearFoundation || "-"}</li>
     </ResourceListItem>
   );
 }
@@ -110,7 +108,7 @@ export function InstitutesContent({
             <li className="col-span-2">Language</li>
             <li className="col-span-2">City</li>
             <li className="col-span-2">Country</li>
-            <li className="col-span-2 text-right">Since</li>
+            <li className="col-span-2">Since</li>
           </ul>
         )}
       </div>
