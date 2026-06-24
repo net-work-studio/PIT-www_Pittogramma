@@ -8,6 +8,11 @@ import { TagsDisplay } from "@/components/resources/tags-display";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
+import {
+  buildResourceHref,
+  getWebsiteUrlFromSocialLinks,
+} from "@/lib/resource-website-url";
+import type { UtmSettings } from "@/lib/tracked-link";
 import type { STUDIOS_QUERY_RESULT } from "@/sanity/types";
 
 type Studio = STUDIOS_QUERY_RESULT[number];
@@ -40,22 +45,46 @@ function getCountries(places: Studio["places"]) {
     : "-";
 }
 
-function StudioListCard({ studio }: { studio: Studio }) {
+function StudioListCard({
+  studio,
+  utmSettings,
+}: {
+  studio: Studio;
+  utmSettings: UtmSettings;
+}) {
+  const href = buildResourceHref(
+    getWebsiteUrlFromSocialLinks(studio.socialLinks),
+    "studio",
+    utmSettings
+  );
+
   return (
-    <ResourceListItem>
-      <li className="col-span-4">{studio.name}</li>
-      <li className="col-span-2">{studio.category?.name || "-"}</li>
-      <li className="col-span-2">
+    <ResourceListItem href={href}>
+      <span className="col-span-4">{studio.name}</span>
+      <span className="col-span-2">{studio.category?.name || "-"}</span>
+      <span className="col-span-2">
         <TagsDisplay tags={studio.tags} />
-      </li>
-      <li className="col-span-2">{getCities(studio.places)}</li>
-      <li className="col-span-2">{getCountries(studio.places)}</li>
+      </span>
+      <span className="col-span-2">{getCities(studio.places)}</span>
+      <span className="col-span-2">{getCountries(studio.places)}</span>
     </ResourceListItem>
   );
 }
 
-function StudioGridCard({ studio }: { studio: Studio }) {
-  return (
+function StudioGridCard({
+  studio,
+  utmSettings,
+}: {
+  studio: Studio;
+  utmSettings: UtmSettings;
+}) {
+  const href = buildResourceHref(
+    getWebsiteUrlFromSocialLinks(studio.socialLinks),
+    "studio",
+    utmSettings
+  );
+
+  const card = (
     <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
       {studio.cover && (
         <div className="relative aspect-4/3 w-full overflow-hidden rounded-xl">
@@ -81,18 +110,35 @@ function StudioGridCard({ studio }: { studio: Studio }) {
       </span>
     </div>
   );
+
+  if (href) {
+    return (
+      <a
+        className="no-underline"
+        href={href}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        {card}
+      </a>
+    );
+  }
+
+  return card;
 }
 
 interface StudiosContentProps {
   enabledViews: ViewMode[];
   searchEnabled: boolean;
   studios: STUDIOS_QUERY_RESULT;
+  utmSettings: UtmSettings;
 }
 
 export function StudiosContent({
   studios,
   enabledViews,
   searchEnabled,
+  utmSettings,
 }: StudiosContentProps) {
   const defaultView = enabledViews[0] ?? "list";
   const [view, setView] = useState<string>(defaultView);
@@ -153,7 +199,11 @@ export function StudiosContent({
           <section className="flex flex-col gap-1.5">
             {studios.length > 0 ? (
               studios.map((studio) => (
-                <StudioListCard key={studio._id} studio={studio} />
+                <StudioListCard
+                  key={studio._id}
+                  studio={studio}
+                  utmSettings={utmSettings}
+                />
               ))
             ) : (
               <p className="text-center text-muted-foreground">
@@ -169,7 +219,11 @@ export function StudiosContent({
           <div className="grid grid-cols-4 gap-1.5">
             {studios.length > 0 ? (
               studios.map((studio) => (
-                <StudioGridCard key={studio._id} studio={studio} />
+                <StudioGridCard
+                  key={studio._id}
+                  studio={studio}
+                  utmSettings={utmSettings}
+                />
               ))
             ) : (
               <p className="col-span-4 text-center text-muted-foreground">

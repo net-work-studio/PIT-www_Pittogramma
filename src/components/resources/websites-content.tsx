@@ -7,7 +7,8 @@ import { TagsDisplay } from "@/components/resources/tags-display";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
-import { buildTrackedLink, type UtmSettings } from "@/lib/tracked-link";
+import { buildResourceHref } from "@/lib/resource-website-url";
+import type { UtmSettings } from "@/lib/tracked-link";
 import type { WEB_SOURCES_QUERY_RESULT } from "@/sanity/types";
 
 type WebSource = WEB_SOURCES_QUERY_RESULT[number];
@@ -33,27 +34,18 @@ function WebSourceListCard({
   source: WebSource;
   utmSettings: UtmSettings;
 }) {
+  const href = buildResourceHref(source.sourceUrl, "website", utmSettings);
+
   return (
-    <ResourceListItem>
-      <li className="col-span-4">{source.name}</li>
-      <li className="col-span-2">{source.category?.name || "-"}</li>
-      <li className="col-span-2">
+    <ResourceListItem href={href}>
+      <span className="col-span-4">{source.name}</span>
+      <span className="col-span-2">{source.category?.name || "-"}</span>
+      <span className="col-span-2">
         <TagsDisplay tags={source.tags} />
-      </li>
-      <li className="col-span-4">
-        {source.sourceUrl ? (
-          <a
-            className="underline hover:no-underline"
-            href={buildTrackedLink(source.sourceUrl, "website", utmSettings)}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            {formatUrl(source.sourceUrl)}
-          </a>
-        ) : (
-          "-"
-        )}
-      </li>
+      </span>
+      <span className="col-span-4">
+        {source.sourceUrl ? formatUrl(source.sourceUrl) : "-"}
+      </span>
     </ResourceListItem>
   );
 }
@@ -65,7 +57,9 @@ function WebSourceGridCard({
   source: WebSource;
   utmSettings: UtmSettings;
 }) {
-  return (
+  const href = buildResourceHref(source.sourceUrl, "website", utmSettings);
+
+  const card = (
     <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
       <span className="font-medium">{source.name}</span>
       <span className="text-muted-foreground text-sm">
@@ -74,20 +68,26 @@ function WebSourceGridCard({
       <span className="text-muted-foreground text-sm">
         <TagsDisplay tags={source.tags} />
       </span>
-      {source.sourceUrl ? (
-        <a
-          className="text-sm underline hover:no-underline"
-          href={buildTrackedLink(source.sourceUrl, "website", utmSettings)}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          {formatUrl(source.sourceUrl)}
-        </a>
-      ) : (
-        <span className="text-sm">-</span>
-      )}
+      <span className="text-sm">
+        {source.sourceUrl ? formatUrl(source.sourceUrl) : "-"}
+      </span>
     </div>
   );
+
+  if (href) {
+    return (
+      <a
+        className="no-underline"
+        href={href}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        {card}
+      </a>
+    );
+  }
+
+  return card;
 }
 
 interface WebsitesContentProps {

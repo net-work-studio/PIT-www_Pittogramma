@@ -8,6 +8,11 @@ import { TagsDisplay } from "@/components/resources/tags-display";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
+import {
+  buildResourceHref,
+  getWebsiteUrlFromSocialLinks,
+} from "@/lib/resource-website-url";
+import type { UtmSettings } from "@/lib/tracked-link";
 import type { TYPE_FOUNDRIES_QUERY_RESULT } from "@/sanity/types";
 
 type TypeFoundry = TYPE_FOUNDRIES_QUERY_RESULT[number];
@@ -40,18 +45,42 @@ function getCountries(places: TypeFoundry["places"]) {
     : "-";
 }
 
-function TypeFoundryListCard({ foundry }: { foundry: TypeFoundry }) {
+function TypeFoundryListCard({
+  foundry,
+  utmSettings,
+}: {
+  foundry: TypeFoundry;
+  utmSettings: UtmSettings;
+}) {
+  const href = buildResourceHref(
+    getWebsiteUrlFromSocialLinks(foundry.socialLinks),
+    "type-foundry",
+    utmSettings
+  );
+
   return (
-    <ResourceListItem>
-      <li className="col-span-8">{foundry.name}</li>
-      <li className="col-span-2">{getCities(foundry.places)}</li>
-      <li className="col-span-2">{getCountries(foundry.places)}</li>
+    <ResourceListItem href={href}>
+      <span className="col-span-8">{foundry.name}</span>
+      <span className="col-span-2">{getCities(foundry.places)}</span>
+      <span className="col-span-2">{getCountries(foundry.places)}</span>
     </ResourceListItem>
   );
 }
 
-function TypeFoundryGridCard({ foundry }: { foundry: TypeFoundry }) {
-  return (
+function TypeFoundryGridCard({
+  foundry,
+  utmSettings,
+}: {
+  foundry: TypeFoundry;
+  utmSettings: UtmSettings;
+}) {
+  const href = buildResourceHref(
+    getWebsiteUrlFromSocialLinks(foundry.socialLinks),
+    "type-foundry",
+    utmSettings
+  );
+
+  const card = (
     <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
       <span className="font-medium">{foundry.name}</span>
       <span className="text-muted-foreground text-sm">
@@ -60,18 +89,35 @@ function TypeFoundryGridCard({ foundry }: { foundry: TypeFoundry }) {
       <span className="text-sm">{getCities(foundry.places)}</span>
     </div>
   );
+
+  if (href) {
+    return (
+      <a
+        className="no-underline"
+        href={href}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        {card}
+      </a>
+    );
+  }
+
+  return card;
 }
 
 interface TypeFoundriesContentProps {
   enabledViews: ViewMode[];
   foundries: TYPE_FOUNDRIES_QUERY_RESULT;
   searchEnabled: boolean;
+  utmSettings: UtmSettings;
 }
 
 export function TypeFoundriesContent({
   foundries,
   enabledViews,
   searchEnabled,
+  utmSettings,
 }: TypeFoundriesContentProps) {
   const defaultView = enabledViews[0] ?? "list";
   const [view, setView] = useState<string>(defaultView);
@@ -130,7 +176,11 @@ export function TypeFoundriesContent({
           <section className="flex flex-col gap-1.5">
             {foundries.length > 0 ? (
               foundries.map((foundry) => (
-                <TypeFoundryListCard foundry={foundry} key={foundry._id} />
+                <TypeFoundryListCard
+                  foundry={foundry}
+                  key={foundry._id}
+                  utmSettings={utmSettings}
+                />
               ))
             ) : (
               <p className="text-center text-muted-foreground">
@@ -146,7 +196,11 @@ export function TypeFoundriesContent({
           <div className="grid grid-cols-4 gap-1.5">
             {foundries.length > 0 ? (
               foundries.map((foundry) => (
-                <TypeFoundryGridCard foundry={foundry} key={foundry._id} />
+                <TypeFoundryGridCard
+                  foundry={foundry}
+                  key={foundry._id}
+                  utmSettings={utmSettings}
+                />
               ))
             ) : (
               <p className="col-span-4 text-center text-muted-foreground">
