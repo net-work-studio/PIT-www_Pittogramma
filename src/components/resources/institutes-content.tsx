@@ -108,7 +108,7 @@ export function InstitutesContent({
             <li className="col-span-2">Language</li>
             <li className="col-span-2">City</li>
             <li className="col-span-2">Country</li>
-            <li className="col-span-2">Foundation</li>
+            <li className="col-span-2">Since</li>
           </ul>
         )}
       </div>
