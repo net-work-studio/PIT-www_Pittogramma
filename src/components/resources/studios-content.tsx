@@ -3,11 +3,13 @@
 import { useState } from "react";
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
+import { ResourceNameLink } from "@/components/resources/resource-name-link";
 import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
 import { TagsDisplay } from "@/components/resources/tags-display";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
+import type { UtmSettings } from "@/lib/tracked-link";
 import type { STUDIOS_QUERY_RESULT } from "@/sanity/types";
 
 type Studio = STUDIOS_QUERY_RESULT[number];
@@ -40,10 +42,23 @@ function getCountries(places: Studio["places"]) {
     : "-";
 }
 
-function StudioListCard({ studio }: { studio: Studio }) {
+function StudioListCard({
+  studio,
+  utmSettings,
+}: {
+  studio: Studio;
+  utmSettings: UtmSettings;
+}) {
   return (
     <ResourceListItem>
-      <li className="col-span-4">{studio.name}</li>
+      <li className="col-span-4">
+        <ResourceNameLink
+          name={studio.name}
+          resourceType="studio"
+          url={studio.websiteUrl}
+          utmSettings={utmSettings}
+        />
+      </li>
       <li className="col-span-2">{studio.category?.name || "-"}</li>
       <li className="col-span-2">
         <TagsDisplay tags={studio.tags} />
@@ -54,7 +69,13 @@ function StudioListCard({ studio }: { studio: Studio }) {
   );
 }
 
-function StudioGridCard({ studio }: { studio: Studio }) {
+function StudioGridCard({
+  studio,
+  utmSettings,
+}: {
+  studio: Studio;
+  utmSettings: UtmSettings;
+}) {
   return (
     <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
       {studio.cover && (
@@ -71,7 +92,13 @@ function StudioGridCard({ studio }: { studio: Studio }) {
         <div className="relative aspect-4/3 w-full overflow-hidden rounded-xl bg-muted" />
       )}
       <p className="flex justify-between">
-        <span className="font-medium">{studio.name}</span>
+        <ResourceNameLink
+          className="font-medium"
+          name={studio.name}
+          resourceType="studio"
+          url={studio.websiteUrl}
+          utmSettings={utmSettings}
+        />
         <span className="text-sm">
           {getCities(studio.places)}, {getCountries(studio.places)}
         </span>
@@ -87,12 +114,14 @@ interface StudiosContentProps {
   enabledViews: ViewMode[];
   searchEnabled: boolean;
   studios: STUDIOS_QUERY_RESULT;
+  utmSettings: UtmSettings;
 }
 
 export function StudiosContent({
   studios,
   enabledViews,
   searchEnabled,
+  utmSettings,
 }: StudiosContentProps) {
   const defaultView = enabledViews[0] ?? "list";
   const [view, setView] = useState<string>(defaultView);
@@ -153,7 +182,11 @@ export function StudiosContent({
           <section className="flex flex-col gap-1.5">
             {studios.length > 0 ? (
               studios.map((studio) => (
-                <StudioListCard key={studio._id} studio={studio} />
+                <StudioListCard
+                  key={studio._id}
+                  studio={studio}
+                  utmSettings={utmSettings}
+                />
               ))
             ) : (
               <p className="text-center text-muted-foreground">
@@ -169,7 +202,11 @@ export function StudiosContent({
           <div className="grid grid-cols-4 gap-1.5">
             {studios.length > 0 ? (
               studios.map((studio) => (
-                <StudioGridCard key={studio._id} studio={studio} />
+                <StudioGridCard
+                  key={studio._id}
+                  studio={studio}
+                  utmSettings={utmSettings}
+                />
               ))
             ) : (
               <p className="col-span-4 text-center text-muted-foreground">

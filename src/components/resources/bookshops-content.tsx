@@ -9,17 +9,32 @@ import {
 } from "@/components/resources/location-display";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
+import { ResourceNameLink } from "@/components/resources/resource-name-link";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
+import type { UtmSettings } from "@/lib/tracked-link";
 import type { BOOKSHOPS_QUERY_RESULT } from "@/sanity/types";
 
 type Bookshop = BOOKSHOPS_QUERY_RESULT[number];
 
-function BookshopListCard({ bookshop }: { bookshop: Bookshop }) {
+function BookshopListCard({
+  bookshop,
+  utmSettings,
+}: {
+  bookshop: Bookshop;
+  utmSettings: UtmSettings;
+}) {
   return (
     <ResourceListItem>
-      <li className="col-span-6">{bookshop.name}</li>
+      <li className="col-span-6">
+        <ResourceNameLink
+          name={bookshop.name}
+          resourceType="bookshop"
+          url={bookshop.websiteUrl}
+          utmSettings={utmSettings}
+        />
+      </li>
       <li className="col-span-3">
         <CityDisplay place={bookshop.place} />
       </li>
@@ -30,10 +45,22 @@ function BookshopListCard({ bookshop }: { bookshop: Bookshop }) {
   );
 }
 
-function BookshopGridCard({ bookshop }: { bookshop: Bookshop }) {
+function BookshopGridCard({
+  bookshop,
+  utmSettings,
+}: {
+  bookshop: Bookshop;
+  utmSettings: UtmSettings;
+}) {
   return (
     <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
-      <span className="font-medium">{bookshop.name}</span>
+      <ResourceNameLink
+        className="font-medium"
+        name={bookshop.name}
+        resourceType="bookshop"
+        url={bookshop.websiteUrl}
+        utmSettings={utmSettings}
+      />
       <span className="text-muted-foreground text-sm">
         <LocationDisplay place={bookshop.place} />
       </span>
@@ -45,12 +72,14 @@ interface BookshopsContentProps {
   bookshops: BOOKSHOPS_QUERY_RESULT;
   enabledViews: ViewMode[];
   searchEnabled: boolean;
+  utmSettings: UtmSettings;
 }
 
 export function BookshopsContent({
   bookshops,
   enabledViews,
   searchEnabled,
+  utmSettings,
 }: BookshopsContentProps) {
   const defaultView = enabledViews[0] ?? "list";
   const [view, setView] = useState<string>(defaultView);
@@ -107,7 +136,11 @@ export function BookshopsContent({
           <section className="flex flex-col gap-1.5">
             {bookshops.length > 0 ? (
               bookshops.map((bookshop) => (
-                <BookshopListCard bookshop={bookshop} key={bookshop._id} />
+                <BookshopListCard
+                  bookshop={bookshop}
+                  key={bookshop._id}
+                  utmSettings={utmSettings}
+                />
               ))
             ) : (
               <p className="text-center text-muted-foreground">
@@ -123,7 +156,11 @@ export function BookshopsContent({
           <div className="grid grid-cols-4 gap-1.5">
             {bookshops.length > 0 ? (
               bookshops.map((bookshop) => (
-                <BookshopGridCard bookshop={bookshop} key={bookshop._id} />
+                <BookshopGridCard
+                  bookshop={bookshop}
+                  key={bookshop._id}
+                  utmSettings={utmSettings}
+                />
               ))
             ) : (
               <p className="col-span-4 text-center text-muted-foreground">

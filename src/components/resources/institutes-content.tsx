@@ -9,18 +9,33 @@ import {
   LocationDisplay,
 } from "@/components/resources/location-display";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
+import { ResourceNameLink } from "@/components/resources/resource-name-link";
 import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
+import type { UtmSettings } from "@/lib/tracked-link";
 import type { INSTITUTES_QUERY_RESULT } from "@/sanity/types";
 
 type Institute = INSTITUTES_QUERY_RESULT[number];
 
-function InstituteListCard({ institute }: { institute: Institute }) {
+function InstituteListCard({
+  institute,
+  utmSettings,
+}: {
+  institute: Institute;
+  utmSettings: UtmSettings;
+}) {
   return (
     <ResourceListItem>
-      <li className="col-span-4">{institute.name}</li>
+      <li className="col-span-4">
+        <ResourceNameLink
+          name={institute.name}
+          resourceType="institute"
+          url={institute.websiteUrl}
+          utmSettings={utmSettings}
+        />
+      </li>
       <li className="col-span-2">
         <LanguagesDisplay languages={institute.languages} />
       </li>
@@ -35,10 +50,22 @@ function InstituteListCard({ institute }: { institute: Institute }) {
   );
 }
 
-function InstituteGridCard({ institute }: { institute: Institute }) {
+function InstituteGridCard({
+  institute,
+  utmSettings,
+}: {
+  institute: Institute;
+  utmSettings: UtmSettings;
+}) {
   return (
     <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
-      <span className="font-medium">{institute.name}</span>
+      <ResourceNameLink
+        className="font-medium"
+        name={institute.name}
+        resourceType="institute"
+        url={institute.websiteUrl}
+        utmSettings={utmSettings}
+      />
       <span className="text-muted-foreground text-sm">
         <LanguagesDisplay languages={institute.languages} />
       </span>
@@ -54,12 +81,14 @@ interface InstitutesContentProps {
   enabledViews: ViewMode[];
   institutes: INSTITUTES_QUERY_RESULT;
   searchEnabled: boolean;
+  utmSettings: UtmSettings;
 }
 
 export function InstitutesContent({
   institutes,
   enabledViews,
   searchEnabled,
+  utmSettings,
 }: InstitutesContentProps) {
   const defaultView = enabledViews[0] ?? "list";
   const [view, setView] = useState<string>(defaultView);
@@ -118,7 +147,11 @@ export function InstitutesContent({
           <section className="flex flex-col gap-1.5">
             {institutes.length > 0 ? (
               institutes.map((institute) => (
-                <InstituteListCard institute={institute} key={institute._id} />
+                <InstituteListCard
+                  institute={institute}
+                  key={institute._id}
+                  utmSettings={utmSettings}
+                />
               ))
             ) : (
               <p className="text-center text-muted-foreground">
@@ -134,7 +167,11 @@ export function InstitutesContent({
           <div className="grid grid-cols-4 gap-1.5">
             {institutes.length > 0 ? (
               institutes.map((institute) => (
-                <InstituteGridCard institute={institute} key={institute._id} />
+                <InstituteGridCard
+                  institute={institute}
+                  key={institute._id}
+                  utmSettings={utmSettings}
+                />
               ))
             ) : (
               <p className="col-span-4 text-center text-muted-foreground">

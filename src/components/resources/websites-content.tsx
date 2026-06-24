@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { ResourceListItem } from "@/components/resources/resource-list-item";
+import { ResourceNameLink } from "@/components/resources/resource-name-link";
 import { TagsDisplay } from "@/components/resources/tags-display";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -35,7 +36,14 @@ function WebSourceListCard({
 }) {
   return (
     <ResourceListItem>
-      <li className="col-span-4">{source.name}</li>
+      <li className="col-span-4">
+        <ResourceNameLink
+          name={source.name}
+          resourceType="website"
+          url={source.sourceUrl}
+          utmSettings={utmSettings}
+        />
+      </li>
       <li className="col-span-2">{source.category?.name || "-"}</li>
       <li className="col-span-2">
         <TagsDisplay tags={source.tags} />
@@ -67,7 +75,13 @@ function WebSourceGridCard({
 }) {
   return (
     <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
-      <span className="font-medium">{source.name}</span>
+      <ResourceNameLink
+        className="font-medium"
+        name={source.name}
+        resourceType="website"
+        url={source.sourceUrl}
+        utmSettings={utmSettings}
+      />
       <span className="text-muted-foreground text-sm">
         {source.category?.name || "-"}
       </span>
