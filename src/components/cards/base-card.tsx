@@ -39,12 +39,7 @@ interface BaseCardProps {
     | "interview"
     | "feat"
     | "event"
-    | "event-coming-soon"
-    | "event-available"
-    | "event-sold-out"
-    | "event-waitlist"
-    | "event-postponed"
-    | "event-cancelled"
+    | "event-type"
     | "bronze"
     | "silver"
     | "gold";

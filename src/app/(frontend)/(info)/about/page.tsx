@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import AboutContent from "@/components/modules/about/about-content";
 import AboutSupporters from "@/components/modules/about/about-supporters";
 import { JsonLd } from "@/components/seo/json-ld";
+import PageHeader from "@/components/shared/page-header";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -108,7 +109,8 @@ async function CachedAboutPage({ perspective, stega }: DynamicFetchOptions) {
         }}
         type="AboutPage"
       />
-      <div className="mx-auto w-full max-w-[1100px] pt-6 lg:pt-16">
+      <PageHeader title={about.title ?? "About"} />
+      <div className="mx-auto w-full max-w-[1100px]">
         <AboutContent content={about.content} />
         <AboutSupporters supporters={about.supporters} />
       </div>

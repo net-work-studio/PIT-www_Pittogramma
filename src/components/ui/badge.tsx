@@ -24,18 +24,8 @@ const badgeVariants = cva(
         feat: "group-hover:bg-background group-hover:text-foreground group-hover:outline-background",
         outline: "",
         event: "group-hover:bg-background group-hover:text-foreground",
-        "event-coming-soon":
-          "group-hover:bg-blue-700 group-hover:text-white group-hover:outline-blue-700",
-        "event-available":
-          "group-hover:bg-green-500 group-hover:text-black group-hover:outline-green-500",
-        "event-sold-out":
-          "group-hover:bg-destructive group-hover:text-destructive-foreground group-hover:outline-destructive",
-        "event-waitlist":
-          "group-hover:bg-orange-500 group-hover:text-white group-hover:outline-orange-500",
-        "event-postponed":
-          "group-hover:bg-yellow-500 group-hover:text-black group-hover:outline-yellow-500",
-        "event-cancelled":
-          "group-hover:bg-destructive group-hover:text-destructive-foreground group-hover:outline-destructive",
+        "event-type":
+          "hover:bg-foreground hover:text-background hover:outline-foreground group-hover:bg-foreground group-hover:text-background group-hover:outline-foreground",
         bronze:
           "group-hover:bg-amber-700 group-hover:text-white group-hover:outline-amber-700",
         silver:

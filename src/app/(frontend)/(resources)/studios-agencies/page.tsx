@@ -11,12 +11,13 @@ import {
   isResourceEnabled,
   isSearchEnabled,
 } from "@/lib/feature-flags";
+import { utmSettingsFromSiteSettings } from "@/lib/tracked-link";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
   sanityFetch,
 } from "@/sanity/lib/live";
-import { STUDIOS_QUERY } from "@/sanity/lib/queries";
+import { SITE_SETTINGS_QUERY, STUDIOS_QUERY } from "@/sanity/lib/queries";
 
 export default async function Page() {
   if (!isResourceEnabled("studios-agencies")) {
@@ -40,11 +41,12 @@ async function DynamicStudiosPage() {
 
 async function CachedStudiosPage({ perspective, stega }: DynamicFetchOptions) {
   "use cache";
-  const { data: studios } = await sanityFetch({
-    query: STUDIOS_QUERY,
-    perspective,
-    stega,
-  });
+  const [{ data: studios }, { data: settings }] = await Promise.all([
+    sanityFetch({ query: STUDIOS_QUERY, perspective, stega }),
+    sanityFetch({ query: SITE_SETTINGS_QUERY, perspective, stega }),
+  ]);
+
+  const utmSettings = utmSettingsFromSiteSettings(settings);
 
   return (
     <>
@@ -60,6 +62,7 @@ async function CachedStudiosPage({ perspective, stega }: DynamicFetchOptions) {
         enabledViews={getEnabledViews("studios-agencies")}
         searchEnabled={isSearchEnabled("studios-agencies")}
         studios={studios}
+        utmSettings={utmSettings}
       />
     </>
   );
