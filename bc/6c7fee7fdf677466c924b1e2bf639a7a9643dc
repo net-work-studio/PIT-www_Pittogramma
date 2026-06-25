@@ -1,0 +1,23 @@
+src/components/resources/institutes-content.tsx
+  s_eca19012646767::t_59fd03b8471dbb 109
+  s_eca19012646767::t_1de7cc89c42673 27
+src/components/resources/bookshops-content.tsx
+  s_eca19012646767::t_a127f44f60ad95 98-100
+  s_eca19012646767::t_3d1cdf3323e872 22-23,26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "bc6c7fee7fdf677466c924b1e2bf639a7a9643dc",
+  "prompts": {},
+  "sessions": {
+    "s_eca19012646767": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "3fbcacbd-1a1b-4452-8713-b7fcea7cbfa0",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
