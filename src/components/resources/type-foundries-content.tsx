@@ -10,7 +10,7 @@ import { TagsDisplay } from "@/components/resources/tags-display";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
-import { buildHrefFromSocialLinks } from "@/lib/resource-website-url";
+import { buildHrefFromUrl } from "@/lib/resource-website-url";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { TYPE_FOUNDRIES_QUERY_RESULT } from "@/sanity/types";
 
@@ -25,11 +25,7 @@ function TypeFoundryCard({
   utmSettings: UtmSettings;
   variant: "grid" | "list";
 }) {
-  const href = buildHrefFromSocialLinks(
-    foundry.socialLinks,
-    "type-foundry",
-    utmSettings
-  );
+  const href = buildHrefFromUrl(foundry.websiteUrl, "type-foundry", utmSettings);
 
   if (variant === "list") {
     return (

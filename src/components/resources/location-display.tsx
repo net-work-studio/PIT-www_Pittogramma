@@ -66,22 +66,6 @@ export function LocationDisplay({
   return null;
 }
 
-export function CityDisplay({
-  place,
-}: {
-  place: PlaceData | null | undefined;
-}) {
-  return <LocationDisplay place={place} showCity showCountry={false} />;
-}
-
-export function CountryDisplay({
-  place,
-}: {
-  place: PlaceData | null | undefined;
-}) {
-  return <LocationDisplay place={place} showCity={false} showCountry />;
-}
-
 export function PlacesDisplay({
   places,
   showCity = true,

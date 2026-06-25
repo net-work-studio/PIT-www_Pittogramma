@@ -10,7 +10,7 @@ import { TagsDisplay } from "@/components/resources/tags-display";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
-import { buildHrefFromSocialLinks } from "@/lib/resource-website-url";
+import { buildHrefFromUrl } from "@/lib/resource-website-url";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { STUDIOS_QUERY_RESULT } from "@/sanity/types";
 
@@ -25,11 +25,7 @@ function StudioCard({
   utmSettings: UtmSettings;
   variant: "grid" | "list";
 }) {
-  const href = buildHrefFromSocialLinks(
-    studio.socialLinks,
-    "studio",
-    utmSettings
-  );
+  const href = buildHrefFromUrl(studio.websiteUrl, "studio", utmSettings);
 
   if (variant === "list") {
     return (

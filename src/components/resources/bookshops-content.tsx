@@ -3,9 +3,8 @@
 import { useState } from "react";
 
 import {
-  CityDisplay,
-  CountryDisplay,
   LocationDisplay,
+  PlacesDisplay,
 } from "@/components/resources/location-display";
 import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
@@ -13,7 +12,7 @@ import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
-import { buildHrefFromSocialLinks } from "@/lib/resource-website-url";
+import { buildHrefFromUrl } from "@/lib/resource-website-url";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { BOOKSHOPS_QUERY_RESULT } from "@/sanity/types";
 
@@ -28,21 +27,18 @@ function BookshopCard({
   utmSettings: UtmSettings;
   variant: "grid" | "list";
 }) {
-  const href = buildHrefFromSocialLinks(
-    bookshop.socialLinks,
-    "bookshop",
-    utmSettings
-  );
+  const href = buildHrefFromUrl(bookshop.websiteUrl, "bookshop", utmSettings);
+  const places = bookshop.place ? [bookshop.place] : undefined;
 
   if (variant === "list") {
     return (
       <ResourceListItem href={href}>
-        <span className="col-span-6">{bookshop.name}</span>
-        <span className="col-span-3">
-          <CityDisplay place={bookshop.place} />
+        <span className="col-span-8">{bookshop.name}</span>
+        <span className="col-span-2">
+          <PlacesDisplay places={places} showCountry={false} />
         </span>
-        <span className="col-span-3">
-          <CountryDisplay place={bookshop.place} />
+        <span className="col-span-2">
+          <PlacesDisplay places={places} showCity={false} />
         </span>
       </ResourceListItem>
     );
