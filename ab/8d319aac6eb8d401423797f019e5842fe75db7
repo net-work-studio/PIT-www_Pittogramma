@@ -1,0 +1,26 @@
+src/components/shared/page-header.tsx
+  s_ce499de0adb7b6::t_114653824e4ab0 28-30
+src/app/(frontend)/(info)/about/page.tsx
+  s_ce499de0adb7b6::t_3aea90a3e0306f 9
+  s_ce499de0adb7b6::t_62dcc5d2690ae2 112-113
+src/sanity/schemaTypes/singletons/pages/about-page.ts
+  s_ce499de0adb7b6::t_c72f7e3920c3dc 20
+CONTEXT.md
+  s_ce499de0adb7b6::t_02bca503371c2d 25-36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "ab8d319aac6eb8d401423797f019e5842fe75db7",
+  "prompts": {},
+  "sessions": {
+    "s_ce499de0adb7b6": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "1b25c949-5fc7-4ecf-bda9-82c912a6a90e",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
