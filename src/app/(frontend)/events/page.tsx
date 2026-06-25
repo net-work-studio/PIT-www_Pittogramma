@@ -6,7 +6,6 @@ import CtaCard from "@/components/cards/cta-card";
 import LoadMore from "@/components/feat/load-more/load-more";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import PageHeader from "@/components/shared/page-header";
-import { Button } from "@/components/ui/button";
 import { buildLocalToday } from "@/lib/date-utils";
 import { getEventStatusConfig } from "@/lib/event-status";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -191,10 +190,6 @@ async function CachedEventsPage({
         title={pageSettings?.title ?? "Events"}
       />
       <div className="space-y-10 pb-10">
-        <div>
-          <Button className="font-mono uppercase">Filters</Button>
-        </div>
-
         {futureEvents.length > 0 && (
           <section>
             <h2 className="mb-6 border-b pb-2 font-mono text-sm uppercase">
