@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface ProjectDescriptionProps {
   description: string | null;
@@ -9,39 +9,57 @@ interface ProjectDescriptionProps {
 export default function ProjectDescription({
   description,
 }: ProjectDescriptionProps) {
-  const [expanded, setExpanded] = useState(false);
-  const [isClamped, setIsClamped] = useState(false);
-  const textRef = useRef<HTMLParagraphElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [showFade, setShowFade] = useState(false);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: description triggers re-measurement of clamped state when text content changes
-  useEffect(() => {
-    if (expanded) {
+  const updateFade = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) {
       return;
     }
-    const el = textRef.current;
-    if (el) {
-      setIsClamped(el.scrollHeight > el.clientHeight);
+
+    const hasOverflow = el.scrollHeight > el.clientHeight;
+    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+    setShowFade(hasOverflow && !atBottom);
+  }, []);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: description triggers re-measurement when text content changes
+  useEffect(() => {
+    updateFade();
+
+    const el = scrollRef.current;
+    if (!el) {
+      return;
     }
-  }, [description, expanded]);
+
+    el.addEventListener("scroll", updateFade, { passive: true });
+    const observer = new ResizeObserver(updateFade);
+    observer.observe(el);
+
+    return () => {
+      el.removeEventListener("scroll", updateFade);
+      observer.disconnect();
+    };
+  }, [description, updateFade]);
 
   if (!description) {
     return null;
   }
 
   return (
-    <div>
-      <p className={expanded ? "" : "line-clamp-3"} ref={textRef}>
-        {description}
-      </p>
-      {(isClamped || expanded) && (
-        <button
-          className="cursor-pointer text-base underline"
-          onClick={() => setExpanded(!expanded)}
-          type="button"
-        >
-          {expanded ? "Read Less" : "Read More"}
-        </button>
-      )}
+    <div className="relative min-h-0 flex-1">
+      <div
+        className="scrollbar-none h-full min-h-0 overflow-y-auto [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        ref={scrollRef}
+      >
+        <p>{description}</p>
+      </div>
+      {showFade ? (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-background to-transparent"
+        />
+      ) : null}
     </div>
   );
 }
