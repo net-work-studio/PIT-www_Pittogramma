@@ -66,12 +66,17 @@ export const event = defineType({
       },
       validation: (rule) =>
         rule.custom((value, context) => {
-          const dateStart = (context.parent as { dateStart?: string })
-            ?.dateStart;
+          const { dateStart, dateEnd } = context.parent as {
+            dateEnd?: string;
+            dateStart?: string;
+          };
           const today = new Date();
           const localToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
-          const isFuture = !dateStart || dateStart >= localToday;
-          if (isFuture && !value) {
+          const effectiveEnd = dateEnd ?? dateStart;
+          const isUpcoming = Boolean(
+            effectiveEnd && effectiveEnd >= localToday
+          );
+          if (isUpcoming && !value) {
             return "Status is required for upcoming events";
           }
           return true;

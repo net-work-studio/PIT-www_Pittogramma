@@ -13,7 +13,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { buildLocalToday, formatDateRange } from "@/lib/date-utils";
+import { buildLocalToday, formatDateRange, isEventPast } from "@/lib/date-utils";
 import { getEventStatusConfig } from "@/lib/event-status";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -131,7 +131,7 @@ async function CachedEventPage({
     ? urlForImage(event.cover)?.url()
     : undefined;
 
-  const isPast = !event.dateStart || event.dateStart < today;
+  const isPast = isEventPast(event.dateStart, event.dateEnd, today);
   const statusConfig = getEventStatusConfig(event.status);
   const ctaUrl = !isPast && statusConfig?.ctaLabel ? event.ctaUrl : null;
 

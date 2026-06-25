@@ -257,19 +257,19 @@ const EVENT_FIELDS = `
 `;
 
 export const FUTURE_EVENTS_QUERY = defineQuery(`
-  *[_type == "event" && defined(slug.current) && dateStart >= $today] | order(dateStart asc) {
+  *[_type == "event" && defined(slug.current) && coalesce(dateEnd, dateStart) >= $today] | order(dateStart asc) {
     ${EVENT_FIELDS}
   }
 `);
 
 export const PAST_EVENTS_QUERY = defineQuery(`
-  *[_type == "event" && defined(slug.current) && dateStart < $today] | order(dateStart desc) [$start...$end] {
+  *[_type == "event" && defined(slug.current) && coalesce(dateEnd, dateStart) < $today] | order(dateStart desc) [$start...$end] {
     ${EVENT_FIELDS}
   }
 `);
 
 export const PAST_EVENTS_COUNT_QUERY = defineQuery(`
-  count(*[_type == "event" && defined(slug.current) && dateStart < $today])
+  count(*[_type == "event" && defined(slug.current) && coalesce(dateEnd, dateStart) < $today])
 `);
 
 export const EVENT_QUERY = defineQuery(`
