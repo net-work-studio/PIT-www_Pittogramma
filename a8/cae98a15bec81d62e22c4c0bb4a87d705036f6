@@ -1,0 +1,58 @@
+src/components/resources/type-foundries-content.tsx
+  s_4d5847211d1649::t_5cb3f66aa55dc4 5
+  s_4d5847211d1649::t_3bfa963d0c7796 21,24
+  s_4d5847211d1649::t_b333a7bc985769 38
+src/lib/event-type.ts
+  s_4d5847211d1649::t_fcfc817f23149e 3,12,14,23
+  s_4d5847211d1649::t_0acd64a6e5a819 19
+  s_4d5847211d1649::t_b79907cd159e1a 20
+  s_4d5847211d1649::t_5e4b524b6ec2ab 22
+src/lib/cover-media-utils.ts
+  s_4d5847211d1649::t_42b450dc08739e 1-26
+src/app/(frontend)/events/[slug]/page.tsx
+  s_4d5847211d1649::t_5664903a3da552 19
+  s_4d5847211d1649::t_048b9817f015a3 147-152
+  s_4d5847211d1649::t_d8c457dc0ae714 231-232
+  s_4d5847211d1649::t_03056bc210ac70 127
+  s_4d5847211d1649::t_e7c3968ac1bf9c 21
+src/lib/event-location.ts
+  s_4d5847211d1649::t_664c9a523c1cc9 80
+  s_4d5847211d1649::t_8861591f89522c 3-7,9,20,36,49
+  s_4d5847211d1649::t_af4cea80f030b7 58-67,69-73,75-79,81-82
+  s_4d5847211d1649::t_3eb3c445f530c6 68,74
+src/components/resources/location-display.tsx
+  s_4d5847211d1649::t_f4c54d7e1da4a9 85,87-88,91-92,97-103
+src/components/resources/studios-content.tsx
+  s_4d5847211d1649::t_8b4aa295ccf903 5
+  s_4d5847211d1649::t_37394ef2aa994a 53
+  s_4d5847211d1649::t_19ec73aef2ea35 25,28
+src/app/(frontend)/events/page.tsx
+  s_4d5847211d1649::t_51f83d57c62860 75,79-80
+  s_4d5847211d1649::t_0a5f92a71ebaa8 11
+src/components/modules/event/event-info.tsx
+  s_4d5847211d1649::t_c22c356da8a03a 3-7,15,35,54-55
+src/app/(frontend)/page.tsx
+  s_4d5847211d1649::t_f9a6ac8e20d58c 221,233
+  s_4d5847211d1649::t_e652f0ba22f1c9 95
+src/app/(frontend)/journal/page.tsx
+  s_4d5847211d1649::t_303cb6dab80c35 13-16
+  s_4d5847211d1649::t_9d2855365a83f0 181-207
+src/sanity/lib/queries.ts
+  s_4d5847211d1649::t_e12908b419aa30 258
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "a8cae98a15bec81d62e22c4c0bb4a87d705036f6",
+  "prompts": {},
+  "sessions": {
+    "s_4d5847211d1649": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "b5604680-7cf0-4edd-af17-c74458b071a6",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
