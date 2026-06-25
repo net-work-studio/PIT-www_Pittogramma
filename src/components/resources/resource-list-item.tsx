@@ -27,5 +27,5 @@ export function ResourceListItem({
     );
   }
 
-  return <div className={cn(rowClassName, className)}>{children}</div>;
+  return <ul className={cn(rowClassName, className)}>{children}</ul>;
 }
