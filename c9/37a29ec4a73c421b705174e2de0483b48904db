@@ -1,0 +1,37 @@
+src/components/resources/institutes-content.tsx
+  s_0ede23cb873d8f::t_716438e09b5928 8
+  s_0ede23cb873d8f::t_bebc814dd3e707 16
+  s_0ede23cb873d8f::t_52ee2f7aacfe3d 41
+  s_0ede23cb873d8f::t_59e21c78b71f32 31-32,43,46
+src/components/resources/studios-content.tsx
+  s_0ede23cb873d8f::t_3eef8e3851b5af 13
+  s_0ede23cb873d8f::t_5bb23f51e9a870 28
+src/components/resources/type-foundries-content.tsx
+  s_0ede23cb873d8f::t_02b7f18cbde55d 13
+  s_0ede23cb873d8f::t_4bc09c3a6c5071 28
+src/components/resources/bookshops-content.tsx
+  s_0ede23cb873d8f::t_86722b1ebb650d 15
+  s_0ede23cb873d8f::t_cfdb2b3467716b 7
+  s_0ede23cb873d8f::t_b7c845f8c9029e 30-31,38,41
+  s_0ede23cb873d8f::t_07cd14a8526973 36-37,40
+src/components/resources/resource-list-item.tsx
+  s_0ede23cb873d8f::t_d5f78ab66f156f 30
+src/components/resources/bibliography-list.tsx
+  s_0ede23cb873d8f::t_c67fa9e6faedd6 28,36-37,39-42,44-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "c937a29ec4a73c421b705174e2de0483b48904db",
+  "prompts": {},
+  "sessions": {
+    "s_0ede23cb873d8f": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "0d198594-f2bb-4109-a0b5-51e5e9aaeaa8",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
