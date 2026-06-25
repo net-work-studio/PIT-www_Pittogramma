@@ -1,0 +1,38 @@
+src/components/resources/type-foundries-content.tsx
+  s_e352bc27161a41::t_5c2854d571b6e4 41-43
+  s_e352bc27161a41::t_5fe68bbaf77bac 24-29
+  s_e352bc27161a41::t_a1e9e27aa21b69 5-9
+src/components/resources/studios-content.tsx
+  s_e352bc27161a41::t_6877d177127901 5-9
+  s_e352bc27161a41::t_7d5de84a8fb5a4 28-33
+  s_e352bc27161a41::t_d0949e45e4fde9 57
+src/components/shared/location-map.tsx
+  s_e352bc27161a41::t_0e25bd0de6eef9 73-76,85,87,92-95,101-104,110-113,119-122
+src/components/resources/location-display.tsx
+  s_e352bc27161a41::t_7212406b0d78e4 31,84-122
+  s_e352bc27161a41::t_b0845fe178eff7 1-2
+  s_e352bc27161a41::t_a7e95743e682c6 4,9-13,15-30
+  s_e352bc27161a41::t_534e0bd7777230 14
+  s_e352bc27161a41::t_af5cd7af4f3a8d 32
+CONTEXT.md
+  s_e352bc27161a41::t_a0b1bad913a7f2 41-49,58
+  s_e352bc27161a41::t_1e2ee9e3ff579b 59-60
+  s_e352bc27161a41::t_04a08b1a7cb054 50-53
+  s_e352bc27161a41::t_1067796555849e 54-57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "9f3bf2ca5c70e92fc0717f836f9ad3debea3907d",
+  "prompts": {},
+  "sessions": {
+    "s_e352bc27161a41": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "b98bddf8-9286-456e-9679-a90467aad789",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
