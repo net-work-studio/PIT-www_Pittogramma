@@ -290,6 +290,7 @@ export type JournalPage = {
   _updatedAt: string;
   _rev: string;
   title?: string;
+  introText: string;
   featuredArticle?: JournalReference;
   endOfPageCta?: CtaReference;
   seo?: SeoModule;
@@ -308,7 +309,7 @@ export type AboutPage = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
+  title: string;
   content?: Array<
     | {
         children?: Array<{
@@ -1911,7 +1912,7 @@ export type HOME_FEED_QUERY_RESULT = Array<
 // Query: *[_type == "aboutPage"][0] {    _id,    title,    content[] {      _key,      _type,      _type == "block" => @,        _key,  _type,  _type == "singleMediaBlock" => {    orientation,    media {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    }  },  _type == "sideBySideMediaBlock" => {    orientation,    left {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    },    right {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    }  },  _type == "threeSideBySideMediaBlock" => {    orientation,    left {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    },    center {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    },    right {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    }  },  _type == "gridFourMediaBlock" => {    orientation,    topLeft {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    },    topRight {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    },    bottomLeft {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    },    bottomRight {      type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      "videoFileUrl": video.asset->url,      videoUrl,      caption,      alt    }  }    },    supporters[]->{      _id,      name,      logo {        logoLight {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },        logoDark {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },        alt      }    },      seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
 export type ABOUT_PAGE_QUERY_RESULT = {
   _id: string;
-  title: string | null;
+  title: string;
   content: Array<
     | {
         _key: string;
@@ -4962,7 +4963,7 @@ export type PROJECT_QUERY_RESULT = {
 export type JOURNAL_PAGE_QUERY_RESULT = {
   _id: string;
   title: string | null;
-  introText: null;
+  introText: string;
   featuredArticle: {
     _id: string;
     title: string;

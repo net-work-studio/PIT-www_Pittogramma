@@ -1407,6 +1407,13 @@
         },
         "optional": true
       },
+      "introText": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "featuredArticle": {
         "type": "objectAttribute",
         "value": {
@@ -1503,7 +1510,7 @@
         "value": {
           "type": "string"
         },
-        "optional": true
+        "optional": false
       },
       "content": {
         "type": "objectAttribute",

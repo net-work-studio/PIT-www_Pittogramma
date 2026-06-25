@@ -23,6 +23,10 @@ _Avoid_: "At" (capitalised), "Online" (capitalised), showing address on cards
 Whether an event is held in person (`offline`) or remotely (`online`). Drives card byline, detail location display, and structured data. When online, location name and address are hidden in Studio.
 _Avoid_: format, venue type, isOnline
 
+**Page intro (`introText`)**:
+Short description shown under a section page title (e.g. Journal, Projects, Events). Edited on each page singleton in Studio; required, max 170 characters. On pages with a featured hero, the intro appears below the hero.
+_Avoid_: description, subtitle (in CMS field names — use `introText`)
+
 **Page title**:
 The fixed heading shown at the top of a section index page (Projects, Events, About, etc.). Set once per page in Sanity; not editable by editors.
 _Avoid_: Hero headline, SEO title (those can differ via the SEO module)

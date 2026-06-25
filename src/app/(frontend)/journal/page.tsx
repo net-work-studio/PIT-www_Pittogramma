@@ -174,52 +174,53 @@ async function CachedJournalPage({
       };
     });
 
+  const featuredHero =
+    featuredArticle &&
+    (("featuredCover" in featuredArticle &&
+      (featuredArticle.featuredCover?.image?.asset ||
+        (featuredArticle.featuredCover?.type === "video" &&
+          featuredArticle.featuredCover?.videoUrl))) ||
+      featuredArticle.cover?.image?.asset ||
+      (featuredArticle.cover?.type === "video" &&
+        featuredArticle.cover?.videoUrl))
+      ? (() => {
+          const featuredLabelConfig = getJournalLabelConfig(
+            featuredArticle.label
+          );
+          const fc =
+            "featuredCover" in featuredArticle
+              ? featuredArticle.featuredCover
+              : null;
+          const heroCover =
+            fc?.image?.asset || (fc?.type === "video" && fc?.videoUrl)
+              ? fc
+              : featuredArticle.cover;
+          return (
+            <FeaturedHero
+              badgeLabel={featuredLabelConfig?.label}
+              badgeVariant={featuredLabelConfig?.badgeVariant}
+              contentType="journal"
+              cover={heroCover}
+              href={`/journal/${featuredArticle.slug?.current ?? ""}`}
+              subtitle={
+                featuredArticle.authors?.map((a) => a.name).join(", ") ??
+                undefined
+              }
+              title={featuredArticle.title ?? ""}
+              variant="compact"
+            />
+          );
+        })()
+      : null;
+
   return (
     <>
+      {featuredHero}
       <PageHeader
-        onlySeoTitle
-        subtitle={pageSettings?.introText ?? undefined}
+        subtitle={pageSettings?.introText}
         title={pageSettings?.title ?? "Journal"}
       />
       <div className="space-y-10 pb-10">
-        {featuredArticle &&
-          (("featuredCover" in featuredArticle &&
-            (featuredArticle.featuredCover?.image?.asset ||
-              (featuredArticle.featuredCover?.type === "video" &&
-                featuredArticle.featuredCover?.videoUrl))) ||
-            featuredArticle.cover?.image?.asset ||
-            (featuredArticle.cover?.type === "video" &&
-              featuredArticle.cover?.videoUrl)) &&
-          (() => {
-            const featuredLabelConfig = getJournalLabelConfig(
-              featuredArticle.label
-            );
-            const fc =
-              "featuredCover" in featuredArticle
-                ? featuredArticle.featuredCover
-                : null;
-            const heroCover =
-              fc?.image?.asset ||
-              (fc?.type === "video" && fc?.videoUrl)
-                ? fc
-                : featuredArticle.cover;
-            return (
-              <FeaturedHero
-                badgeLabel={featuredLabelConfig?.label}
-                badgeVariant={featuredLabelConfig?.badgeVariant}
-                contentType="journal"
-                cover={heroCover}
-                href={`/journal/${featuredArticle.slug?.current ?? ""}`}
-                subtitle={
-                  featuredArticle.authors?.map((a) => a.name).join(", ") ??
-                  undefined
-                }
-                title={featuredArticle.title ?? ""}
-                variant="compact"
-              />
-            );
-          })()}
-
         <div className="flex items-start justify-between gap-4">
           <FilterBar
             availableTags={JOURNAL_LABEL_OPTIONS}
