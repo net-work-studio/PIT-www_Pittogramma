@@ -8,11 +8,9 @@ type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
 type ProjectTag = NonNullable<
   NonNullable<PROJECT_QUERY_RESULT>["tags"]
 >[number];
-
-interface Teacher {
-  _id: string;
-  name: string | null;
-}
+type Teacher = NonNullable<
+  NonNullable<PROJECT_QUERY_RESULT>["teachers"]
+>[number];
 
 interface ProjectInfoProps {
   description?: string | null;
@@ -36,12 +34,12 @@ export default function ProjectInfo({
   projectId,
 }: ProjectInfoProps) {
   const teacherNames = teachers
-    ?.map((t: Teacher) => t.name)
+    ?.map((t) => t.name)
     .filter(Boolean)
     .join(", ");
 
   return (
-    <div className="flex h-screen w-full flex-col gap-12.5 pr-10 pb-6 lg:sticky lg:top-20 lg:h-[calc(100dvh-5rem)] lg:w-1/3">
+    <div className="flex w-full flex-col gap-12.5 pr-10 pb-6 lg:sticky lg:top-20 lg:h-[calc(100dvh-5rem)] lg:w-1/3">
       <DesignerNamesRow
         currentProjectId={projectId}
         designers={designers}
