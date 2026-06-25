@@ -24,13 +24,13 @@ function InstituteListCard({ institute }: { institute: Institute }) {
       <li className="col-span-2">
         <LanguagesDisplay languages={institute.languages} />
       </li>
+      <li className="col-span-2">{institute.yearFoundation || "-"}</li>
       <li className="col-span-2">
         <CityDisplay place={institute.place} />
       </li>
       <li className="col-span-2">
         <CountryDisplay place={institute.place} />
       </li>
-      <li className="col-span-2">{institute.yearFoundation || "-"}</li>
     </ResourceListItem>
   );
 }
@@ -106,9 +106,9 @@ export function InstitutesContent({
           <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase">
             <li className="col-span-4">Name</li>
             <li className="col-span-2">Language</li>
+            <li className="col-span-2">Since</li>
             <li className="col-span-2">City</li>
             <li className="col-span-2">Country</li>
-            <li className="col-span-2">Since</li>
           </ul>
         )}
       </div>
