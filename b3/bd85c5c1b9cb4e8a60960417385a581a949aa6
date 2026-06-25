@@ -1,0 +1,81 @@
+src/components/resources/websites-content.tsx
+  s_98587497a11c2a::t_76df1fb07b2832 5
+  s_98587497a11c2a::t_65df254338ba75 11,19,28,31,35,37-38,40,42-49,63,120,124,141,145
+  s_98587497a11c2a::t_7b84c678204a25 53-62,64-65
+  s_98587497a11c2a::t_32c3340024f17e 66
+src/lib/resource-website-url.ts
+  s_98587497a11c2a::t_28eb91d1723619 6,8,10,13,16,19-25
+  s_98587497a11c2a::t_d3c12e4321eb81 28,31,33-34
+  s_98587497a11c2a::t_a90949b26aca92 29
+  s_98587497a11c2a::t_918ae5e3bc5b2a 7
+  s_98587497a11c2a::t_ef05d68d10f19d 2,4
+  s_98587497a11c2a::t_173c1da16b8fbc 26-27
+  s_98587497a11c2a::t_dff7e359fa0e28 30
+src/components/resources/studios-content.tsx
+  s_98587497a11c2a::t_979633a954039e 5,12
+  s_98587497a11c2a::t_0d45ba20a46c61 75-101
+  s_98587497a11c2a::t_90e5c579c4a359 46,49,53,61,63-71
+  s_98587497a11c2a::t_ab1d7c85298085 177,181
+  s_98587497a11c2a::t_733fdf41d0f089 198,202
+  s_98587497a11c2a::t_f5ed5e09bcbb70 55-56
+  s_98587497a11c2a::t_127641cd4ed6ad 102
+src/app/(frontend)/(resources)/bookshops/page.tsx
+  s_98587497a11c2a::t_64e8a9270e5210 14
+  s_98587497a11c2a::t_95efab79ac0248 52
+src/components/resources/bookshops-content.tsx
+  s_98587497a11c2a::t_e483270c258796 10,16
+  s_98587497a11c2a::t_b1a2b985ac3e55 22,25,29,37,39-47,131,135,152,156
+  s_98587497a11c2a::t_4f5d06a1f815d0 51-59
+  s_98587497a11c2a::t_3cfd7751e5cbf4 31-32
+  s_98587497a11c2a::t_dbba2da79f664c 60
+src/components/resources/institutes-content.tsx
+  s_98587497a11c2a::t_e10c8a7b6a814b 142,146
+  s_98587497a11c2a::t_8311ea2c38e49d 23,26,30,38,40-52
+  s_98587497a11c2a::t_f51a1b744cd29b 163,167
+  s_98587497a11c2a::t_33647952b32e73 32-33
+  s_98587497a11c2a::t_b3b4ab71ec9ec8 11,17
+  s_98587497a11c2a::t_95f8638691b1e1 56-68
+  s_98587497a11c2a::t_25b372259a5e4a 69
+src/components/resources/type-foundries-content.tsx
+  s_98587497a11c2a::t_878adb51d367e3 71-80
+  s_98587497a11c2a::t_38e6deeea441cf 55-56
+  s_98587497a11c2a::t_5490421587d38c 5,12
+  s_98587497a11c2a::t_2755ae9a563564 46,49,53,61,63-67
+  s_98587497a11c2a::t_ba31d11d9b8e56 154,158
+  s_98587497a11c2a::t_48ae1606b4901b 175,179
+  s_98587497a11c2a::t_c9e33d267395b2 81
+src/app/(frontend)/(resources)/type-foundries/page.tsx
+  s_98587497a11c2a::t_8a193e3df83ce9 14
+  s_98587497a11c2a::t_9cd6cb27bccef9 49
+src/app/(frontend)/(resources)/bibliography/page.tsx
+  s_98587497a11c2a::t_a6a279ab977db0 15
+  s_98587497a11c2a::t_a85580d39dfa1a 58
+src/app/(frontend)/(resources)/studios-agencies/page.tsx
+  s_98587497a11c2a::t_fcdd928d099a20 49
+  s_98587497a11c2a::t_ab88fdf8cd9e65 14
+src/app/(frontend)/(resources)/websites/page.tsx
+  s_98587497a11c2a::t_8bd196652b3dee 49
+  s_98587497a11c2a::t_531a1f38c4460f 14
+src/app/(frontend)/(resources)/institutes/page.tsx
+  s_98587497a11c2a::t_0ae5501004b675 49
+  s_98587497a11c2a::t_b65c74d378c19f 14
+src/lib/tracked-link.ts
+  s_98587497a11c2a::t_f87b6ab43fd481 1-2,9-16
+  s_98587497a11c2a::t_ec7219d9c927bd 17-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "b3bd85c5c1b9cb4e8a60960417385a581a949aa6",
+  "prompts": {},
+  "sessions": {
+    "s_98587497a11c2a": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "91d9d425-e378-45a0-a3f4-0f24fd46dd52",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
