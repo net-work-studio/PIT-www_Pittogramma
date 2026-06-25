@@ -2,11 +2,7 @@
 
 import { useState } from "react";
 import SanityImage from "@/components/modules/shared/sanity-image";
-import {
-  PlacesCityDisplay,
-  PlacesCountryDisplay,
-  PlacesLocationDisplay,
-} from "@/components/resources/location-display";
+import { PlacesDisplay } from "@/components/resources/location-display";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
 import { TagsDisplay } from "@/components/resources/tags-display";
@@ -26,10 +22,10 @@ function StudioListCard({ studio }: { studio: Studio }) {
         <TagsDisplay tags={studio.tags} />
       </li>
       <li className="col-span-2">
-        <PlacesCityDisplay places={studio.places} />
+        <PlacesDisplay places={studio.places} showCountry={false} />
       </li>
       <li className="col-span-2">
-        <PlacesCountryDisplay places={studio.places} />
+        <PlacesDisplay places={studio.places} showCity={false} />
       </li>
     </ResourceListItem>
   );
@@ -54,7 +50,7 @@ function StudioGridCard({ studio }: { studio: Studio }) {
       <p className="flex justify-between">
         <span className="font-medium">{studio.name}</span>
         <span className="text-sm">
-          <PlacesLocationDisplay places={studio.places} />
+          <PlacesDisplay places={studio.places} />
         </span>
       </p>
       <span className="text-muted-foreground text-sm">

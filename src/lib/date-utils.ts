@@ -35,25 +35,3 @@ export function formatDateRange(
 
   return formatEventDate(dateStart);
 }
-
-/** Last calendar day an event is considered active. Single-day events end on dateStart. */
-export function getEventEffectiveEndDate(
-  dateStart: string | null | undefined,
-  dateEnd: string | null | undefined
-): string | null {
-  if (!dateStart) {
-    return null;
-  }
-
-  return dateEnd ?? dateStart;
-}
-
-/** True once the event's effective end date is before today. */
-export function isEventPast(
-  dateStart: string | null | undefined,
-  dateEnd: string | null | undefined,
-  today: string
-): boolean {
-  const effectiveEnd = getEventEffectiveEndDate(dateStart, dateEnd);
-  return !effectiveEnd || effectiveEnd < today;
-}

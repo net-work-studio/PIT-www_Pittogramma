@@ -8,7 +8,7 @@ import type SanityImage from "@/components/modules/shared/sanity-image";
 import PageHeader from "@/components/shared/page-header";
 import { buildLocalToday } from "@/lib/date-utils";
 import { formatEventCardLocation } from "@/lib/event-location";
-import { getEventTypeBadge } from "@/lib/event-type";
+import { EVENT_TYPE_BADGE_VARIANT, getEventTypeLabel } from "@/lib/event-type";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -72,12 +72,12 @@ function mapEventToCard(event: EventDoc): EventCard {
     event.attendanceMode,
     event.locationName
   );
-  const typeBadge = getEventTypeBadge(event.type);
+  const typeLabel = getEventTypeLabel(event.type);
 
   return {
     authors: subtitle ? [{ name: subtitle }] : undefined,
-    badgeLabel: typeBadge?.label,
-    badgeVariant: typeBadge?.variant,
+    badgeLabel: typeLabel ?? undefined,
+    badgeVariant: typeLabel ? EVENT_TYPE_BADGE_VARIANT : undefined,
     href: `/events/${event.slug?.current}`,
     id: event._id,
     image: event.cover,

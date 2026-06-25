@@ -255,6 +255,7 @@ const EVENT_FIELDS = `
     ${SEO_FIELDS}
 `;
 
+// Upcoming/past split uses effective end date: coalesce(dateEnd, dateStart).
 export const FUTURE_EVENTS_QUERY = defineQuery(`
   *[_type == "event" && defined(slug.current) && coalesce(dateEnd, dateStart) >= $today] | order(dateStart asc) {
     ${EVENT_FIELDS}

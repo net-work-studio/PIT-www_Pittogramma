@@ -1,9 +1,6 @@
 export type EventType = "talk" | "workshop" | "5+1" | "event";
 
-interface EventTypeBadge {
-  label: string;
-  variant: "event-type";
-}
+export const EVENT_TYPE_BADGE_VARIANT = "event-type" as const;
 
 const TYPE_LABELS: Record<EventType, string> = {
   talk: "TALK",
@@ -12,25 +9,16 @@ const TYPE_LABELS: Record<EventType, string> = {
   event: "EVENT",
 };
 
-export function getEventTypeBadge(
+export function getEventTypeLabel(
   type: string | null | undefined
-): EventTypeBadge | null {
+): string | null {
   if (!type) {
     return null;
   }
 
-  switch (type as EventType) {
-    case "talk":
-      return { label: TYPE_LABELS.talk, variant: "event-type" };
-    case "workshop":
-      return { label: TYPE_LABELS.workshop, variant: "event-type" };
-    case "5+1":
-      return { label: TYPE_LABELS["5+1"], variant: "event-type" };
-    case "event":
-      return { label: TYPE_LABELS.event, variant: "event-type" };
-    default: {
-      const _exhaustive: never = type as never;
-      return null;
-    }
+  if (!(type in TYPE_LABELS)) {
+    return null;
   }
+
+  return TYPE_LABELS[type as EventType];
 }

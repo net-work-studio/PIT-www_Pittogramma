@@ -82,41 +82,25 @@ export function CountryDisplay({
   return <LocationDisplay place={place} showCity={false} showCountry />;
 }
 
-export function PlacesCityDisplay({
+export function PlacesDisplay({
   places,
+  showCity = true,
+  showCountry = true,
 }: {
   places: PlaceData[] | null | undefined;
+  showCity?: boolean;
+  showCountry?: boolean;
 }) {
   return (
     <PlacesStack
       places={places}
-      renderPlace={(place) => <CityDisplay place={place} />}
-    />
-  );
-}
-
-export function PlacesCountryDisplay({
-  places,
-}: {
-  places: PlaceData[] | null | undefined;
-}) {
-  return (
-    <PlacesStack
-      places={places}
-      renderPlace={(place) => <CountryDisplay place={place} />}
-    />
-  );
-}
-
-export function PlacesLocationDisplay({
-  places,
-}: {
-  places: PlaceData[] | null | undefined;
-}) {
-  return (
-    <PlacesStack
-      places={places}
-      renderPlace={(place) => <LocationDisplay place={place} />}
+      renderPlace={(place) => (
+        <LocationDisplay
+          place={place}
+          showCity={showCity}
+          showCountry={showCountry}
+        />
+      )}
     />
   );
 }

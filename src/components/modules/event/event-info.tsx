@@ -1,7 +1,10 @@
 import { Badge } from "@/components/ui/badge";
 import { formatDateRange } from "@/lib/date-utils";
-import { formatEventLocationDisplay } from "@/lib/event-location";
-import { getEventTypeBadge } from "@/lib/event-type";
+import {
+  type EventAttendanceMode,
+  formatEventLocationDisplay,
+} from "@/lib/event-location";
+import { getEventTypeLabel } from "@/lib/event-type";
 
 interface Tag {
   _id: string;
@@ -9,7 +12,7 @@ interface Tag {
 }
 
 interface EventInfoProps {
-  attendanceMode?: string | null;
+  attendanceMode?: EventAttendanceMode | null;
   dateEnd?: string | null;
   dateStart?: string | null;
   locationAddress?: string | null;
@@ -29,7 +32,7 @@ export default function EventInfo({
   locationAddress,
   tags,
 }: EventInfoProps) {
-  const typeBadge = getEventTypeBadge(type);
+  const typeLabel = getEventTypeLabel(type);
 
   const location = formatEventLocationDisplay(
     attendanceMode,
@@ -48,8 +51,8 @@ export default function EventInfo({
       </hgroup>
 
       <div className="flex flex-col gap-4">
-        {typeBadge ? (
-          <Badge variant={typeBadge.variant}>{typeBadge.label}</Badge>
+        {typeLabel ? (
+          <Badge variant="event-type">{typeLabel}</Badge>
         ) : null}
       </div>
 

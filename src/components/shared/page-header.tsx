@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 
 interface PageHeaderProps {
   className?: string;
-  onlySeoTitle?: boolean;
   subtitle?: string;
   title: string;
 }
@@ -11,12 +10,7 @@ export default function PageHeader({
   title,
   subtitle,
   className,
-  onlySeoTitle = false,
 }: PageHeaderProps) {
-  if (onlySeoTitle) {
-    return <h1 className="sr-only">{title}</h1>;
-  }
-
   return (
     <hgroup
       className={cn(

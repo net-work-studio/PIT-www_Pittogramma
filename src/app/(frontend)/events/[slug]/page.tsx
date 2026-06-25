@@ -16,9 +16,9 @@ import { formatDateRange } from "@/lib/date-utils";
 import {
   formatEventLocationDisplay,
   getSchemaEventAttendanceMode,
-  isOnlineEvent,
+  getSchemaEventLocation,
 } from "@/lib/event-location";
-import { getEventTypeBadge } from "@/lib/event-type";
+import { getEventTypeLabel } from "@/lib/event-type";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoImageSource, SeoModule } from "@/lib/types/seo";
@@ -124,7 +124,7 @@ async function CachedEventPage({
     ? urlForImage(event.cover)?.url()
     : undefined;
 
-  const typeBadge = getEventTypeBadge(event.type);
+  const typeLabel = getEventTypeLabel(event.type);
 
   const eventUrl = `${siteDefaults.baseUrl}/events/${slug}`;
 
@@ -144,19 +144,12 @@ async function CachedEventPage({
           description: event.description,
           startDate: event.dateStart,
           endDate: event.dateEnd ?? event.dateStart,
-          location:
-            isOnlineEvent(event.attendanceMode, event.locationName)
-              ? {
-                  "@type": "VirtualLocation",
-                  url: eventUrl,
-                }
-              : event.locationName
-                ? {
-                    "@type": "Place",
-                    name: event.locationName,
-                    address: event.locationAddress ?? undefined,
-                  }
-                : undefined,
+          location: getSchemaEventLocation(
+            event.attendanceMode,
+            event.locationName,
+            event.locationAddress,
+            eventUrl
+          ),
           image: imageUrl,
           url: eventUrl,
           eventStatus: "https://schema.org/EventScheduled",
@@ -235,8 +228,8 @@ async function CachedEventPage({
 
         {/* Mobile-only metadata */}
         <div className="order-6 mt-6 flex flex-col gap-4 px-2.5 lg:hidden">
-          {typeBadge ? (
-            <Badge variant={typeBadge.variant}>{typeBadge.label}</Badge>
+          {typeLabel ? (
+            <Badge variant="event-type">{typeLabel}</Badge>
           ) : null}
 
           <dl className="flex flex-col gap-1">

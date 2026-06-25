@@ -10,6 +10,10 @@ import { isValidSort } from "@/components/feat/sort/sort-options";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
+import {
+  hasCoverMedia,
+  resolveJournalHeroCover,
+} from "@/lib/cover-media-utils";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { JOURNAL_LABELS } from "@/lib/journal-labels";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -174,44 +178,33 @@ async function CachedJournalPage({
       };
     });
 
-  const featuredHero =
-    featuredArticle &&
-    (("featuredCover" in featuredArticle &&
-      (featuredArticle.featuredCover?.image?.asset ||
-        (featuredArticle.featuredCover?.type === "video" &&
-          featuredArticle.featuredCover?.videoUrl))) ||
-      featuredArticle.cover?.image?.asset ||
-      (featuredArticle.cover?.type === "video" &&
-        featuredArticle.cover?.videoUrl))
-      ? (() => {
-          const featuredLabelConfig = getJournalLabelConfig(
-            featuredArticle.label
-          );
-          const fc =
-            "featuredCover" in featuredArticle
-              ? featuredArticle.featuredCover
-              : null;
-          const heroCover =
-            fc?.image?.asset || (fc?.type === "video" && fc?.videoUrl)
-              ? fc
-              : featuredArticle.cover;
-          return (
-            <FeaturedHero
-              badgeLabel={featuredLabelConfig?.label}
-              badgeVariant={featuredLabelConfig?.badgeVariant}
-              contentType="journal"
-              cover={heroCover}
-              href={`/journal/${featuredArticle.slug?.current ?? ""}`}
-              subtitle={
-                featuredArticle.authors?.map((a) => a.name).join(", ") ??
-                undefined
-              }
-              title={featuredArticle.title ?? ""}
-              variant="compact"
-            />
-          );
-        })()
-      : null;
+  const featuredHero = (() => {
+    if (!featuredArticle) {
+      return null;
+    }
+
+    const heroCover = resolveJournalHeroCover(featuredArticle);
+    if (!hasCoverMedia(heroCover)) {
+      return null;
+    }
+
+    const featuredLabelConfig = getJournalLabelConfig(featuredArticle.label);
+
+    return (
+      <FeaturedHero
+        badgeLabel={featuredLabelConfig?.label}
+        badgeVariant={featuredLabelConfig?.badgeVariant}
+        contentType="journal"
+        cover={heroCover}
+        href={`/journal/${featuredArticle.slug?.current ?? ""}`}
+        subtitle={
+          featuredArticle.authors?.map((a) => a.name).join(", ") ?? undefined
+        }
+        title={featuredArticle.title ?? ""}
+        variant="compact"
+      />
+    );
+  })();
 
   return (
     <>

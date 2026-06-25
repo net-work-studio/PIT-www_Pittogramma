@@ -2,11 +2,7 @@
 
 import { useState } from "react";
 
-import {
-  PlacesCityDisplay,
-  PlacesCountryDisplay,
-  PlacesLocationDisplay,
-} from "@/components/resources/location-display";
+import { PlacesDisplay } from "@/components/resources/location-display";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
 import { TagsDisplay } from "@/components/resources/tags-display";
@@ -22,10 +18,10 @@ function TypeFoundryListCard({ foundry }: { foundry: TypeFoundry }) {
     <ResourceListItem>
       <li className="col-span-8">{foundry.name}</li>
       <li className="col-span-2">
-        <PlacesCityDisplay places={foundry.places} />
+        <PlacesDisplay places={foundry.places} showCountry={false} />
       </li>
       <li className="col-span-2">
-        <PlacesCountryDisplay places={foundry.places} />
+        <PlacesDisplay places={foundry.places} showCity={false} />
       </li>
     </ResourceListItem>
   );
@@ -39,7 +35,7 @@ function TypeFoundryGridCard({ foundry }: { foundry: TypeFoundry }) {
         <TagsDisplay tags={foundry.tags} />
       </span>
       <span className="text-sm">
-        <PlacesLocationDisplay places={foundry.places} />
+        <PlacesDisplay places={foundry.places} />
       </span>
     </div>
   );
