@@ -1,0 +1,28 @@
+src/sanity/extract.json
+  s_5eb4d1ada74796::t_b4ed9de0b30aa5 1410-1416,1513
+CONTEXT.md
+  s_5eb4d1ada74796::t_a40aac4cbb5208 26-29
+src/app/(frontend)/journal/page.tsx
+  s_5eb4d1ada74796::t_9274ab5b1e6bae 177-215,218,220
+src/sanity/schemaTypes/singletons/pages/journal-page.ts
+  s_5eb4d1ada74796::t_44767b15c0cef7 23-29
+  s_5eb4d1ada74796::t_7a5414398e37cc 22
+src/sanity/types.ts
+  s_5eb4d1ada74796::t_b4ed9de0b30aa5 293,312,1915,4966
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "48c1903fb64a87ea321e01afc5a2656f455ee65a",
+  "prompts": {},
+  "sessions": {
+    "s_5eb4d1ada74796": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "cf44806c-4348-4ef4-a181-c696543bd687",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
