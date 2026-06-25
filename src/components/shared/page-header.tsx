@@ -25,7 +25,9 @@ export default function PageHeader({
       )}
     >
       <h1 className="text-2xl uppercase">{title}</h1>
-      <p className="max-w-prose text-balance text-2xl">{subtitle}</p>
+      {subtitle ? (
+        <p className="max-w-prose text-balance text-2xl">{subtitle}</p>
+      ) : null}
     </hgroup>
   );
 }

@@ -22,3 +22,15 @@ _Avoid_: "At" (capitalised), "Online" (capitalised), showing address on cards
 **Attendance mode**:
 Whether an event is held in person (`offline`) or remotely (`online`). Drives card byline, detail location display, and structured data. When online, location name and address are hidden in Studio.
 _Avoid_: format, venue type, isOnline
+
+**Page title**:
+The fixed heading shown at the top of a section index page (Projects, Events, About, etc.). Set once per page in Sanity; not editable by editors.
+_Avoid_: Hero headline, SEO title (those can differ via the SEO module)
+
+**Intro text**:
+Optional subtitle under a page title on listing pages. A short editorial line that frames the section before its content grid.
+_Avoid_: Description, excerpt, lead paragraph
+
+**About page**:
+The editorial page describing Pittogramma. Shows a page title only — no intro text. The opening copy lives in the main content body, not as a separate subtitle field.
+_Avoid_: Info page (routing label only, not a content type)
