@@ -29,7 +29,7 @@ export default function ProjectInfo({
   const teacherNames = teachers?.map((t) => t.name).join(", ");
 
   return (
-    <div className="flex w-full flex-col gap-12.5 pr-10 pb-6 lg:sticky lg:top-20 lg:h-[calc(100dvh-5rem)] lg:w-1/3">
+    <div className="flex h-fit w-full flex-col gap-12.5 pr-0 pb-10 lg:sticky lg:top-20 lg:h-[calc(100dvh-5rem)] lg:w-1/3 lg:pr-10 lg:pb-0">
       <DesignerNamesRow
         currentProjectId={projectId}
         designers={designers}
