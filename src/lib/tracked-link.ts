@@ -1,7 +1,19 @@
+import type { SITE_SETTINGS_QUERY_RESULT } from "@/sanity/types";
+
 export interface UtmSettings {
   utmCampaign?: string | null;
   utmMedium?: string | null;
   utmSource?: string | null;
+}
+
+export function utmSettingsFromSiteSettings(
+  settings: SITE_SETTINGS_QUERY_RESULT | null
+): UtmSettings {
+  return {
+    utmSource: settings?.utmSource,
+    utmMedium: settings?.utmMedium,
+    utmCampaign: settings?.utmCampaign,
+  };
 }
 
 // Default values used when settings are not provided
@@ -31,12 +43,10 @@ export function buildTrackedLink(
   try {
     const parsedUrl = new URL(url);
 
-    // Use provided settings or fall back to defaults
     const source = settings?.utmSource ?? DEFAULT_UTM.utmSource;
     const medium = settings?.utmMedium ?? DEFAULT_UTM.utmMedium;
     const campaign = settings?.utmCampaign ?? DEFAULT_UTM.utmCampaign;
 
-    // Add UTM parameters
     if (source) {
       parsedUrl.searchParams.set("utm_source", source);
     }
@@ -53,7 +63,6 @@ export function buildTrackedLink(
 
     return parsedUrl.toString();
   } catch {
-    // If URL parsing fails, return original URL
     return url;
   }
 }

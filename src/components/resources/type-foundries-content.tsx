@@ -2,16 +2,14 @@
 
 import { useState } from "react";
 
+import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
 import { TagsDisplay } from "@/components/resources/tags-display";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
-import {
-  buildResourceHref,
-  getWebsiteUrlFromSocialLinks,
-} from "@/lib/resource-website-url";
+import { buildHrefFromSocialLinks } from "@/lib/resource-website-url";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { TYPE_FOUNDRIES_QUERY_RESULT } from "@/sanity/types";
 
@@ -45,65 +43,42 @@ function getCountries(places: TypeFoundry["places"]) {
     : "-";
 }
 
-function TypeFoundryListCard({
+function TypeFoundryCard({
   foundry,
   utmSettings,
+  variant,
 }: {
   foundry: TypeFoundry;
   utmSettings: UtmSettings;
+  variant: "grid" | "list";
 }) {
-  const href = buildResourceHref(
-    getWebsiteUrlFromSocialLinks(foundry.socialLinks),
+  const href = buildHrefFromSocialLinks(
+    foundry.socialLinks,
     "type-foundry",
     utmSettings
   );
 
-  return (
-    <ResourceListItem href={href}>
-      <span className="col-span-8">{foundry.name}</span>
-      <span className="col-span-2">{getCities(foundry.places)}</span>
-      <span className="col-span-2">{getCountries(foundry.places)}</span>
-    </ResourceListItem>
-  );
-}
-
-function TypeFoundryGridCard({
-  foundry,
-  utmSettings,
-}: {
-  foundry: TypeFoundry;
-  utmSettings: UtmSettings;
-}) {
-  const href = buildResourceHref(
-    getWebsiteUrlFromSocialLinks(foundry.socialLinks),
-    "type-foundry",
-    utmSettings
-  );
-
-  const card = (
-    <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
-      <span className="font-medium">{foundry.name}</span>
-      <span className="text-muted-foreground text-sm">
-        <TagsDisplay tags={foundry.tags} />
-      </span>
-      <span className="text-sm">{getCities(foundry.places)}</span>
-    </div>
-  );
-
-  if (href) {
+  if (variant === "list") {
     return (
-      <a
-        className="no-underline"
-        href={href}
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        {card}
-      </a>
+      <ResourceListItem href={href}>
+        <span className="col-span-8">{foundry.name}</span>
+        <span className="col-span-2">{getCities(foundry.places)}</span>
+        <span className="col-span-2">{getCountries(foundry.places)}</span>
+      </ResourceListItem>
     );
   }
 
-  return card;
+  return (
+    <ResourceGridCard href={href}>
+      <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
+        <span className="font-medium">{foundry.name}</span>
+        <span className="text-muted-foreground text-sm">
+          <TagsDisplay tags={foundry.tags} />
+        </span>
+        <span className="text-sm">{getCities(foundry.places)}</span>
+      </div>
+    </ResourceGridCard>
+  );
 }
 
 interface TypeFoundriesContentProps {
@@ -176,10 +151,11 @@ export function TypeFoundriesContent({
           <section className="flex flex-col gap-1.5">
             {foundries.length > 0 ? (
               foundries.map((foundry) => (
-                <TypeFoundryListCard
+                <TypeFoundryCard
                   foundry={foundry}
                   key={foundry._id}
                   utmSettings={utmSettings}
+                  variant="list"
                 />
               ))
             ) : (
@@ -196,10 +172,11 @@ export function TypeFoundriesContent({
           <div className="grid grid-cols-4 gap-1.5">
             {foundries.length > 0 ? (
               foundries.map((foundry) => (
-                <TypeFoundryGridCard
+                <TypeFoundryCard
                   foundry={foundry}
                   key={foundry._id}
                   utmSettings={utmSettings}
+                  variant="grid"
                 />
               ))
             ) : (

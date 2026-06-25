@@ -8,90 +8,65 @@ import {
   CountryDisplay,
   LocationDisplay,
 } from "@/components/resources/location-display";
+import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
-import {
-  buildResourceHref,
-  getWebsiteUrlFromSocialLinks,
-} from "@/lib/resource-website-url";
+import { buildHrefFromSocialLinks } from "@/lib/resource-website-url";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { INSTITUTES_QUERY_RESULT } from "@/sanity/types";
 
 type Institute = INSTITUTES_QUERY_RESULT[number];
 
-function InstituteListCard({
+function InstituteCard({
   institute,
   utmSettings,
+  variant,
 }: {
   institute: Institute;
   utmSettings: UtmSettings;
+  variant: "grid" | "list";
 }) {
-  const href = buildResourceHref(
-    getWebsiteUrlFromSocialLinks(institute.socialLinks),
+  const href = buildHrefFromSocialLinks(
+    institute.socialLinks,
     "institute",
     utmSettings
   );
 
-  return (
-    <ResourceListItem href={href}>
-      <span className="col-span-4">{institute.name}</span>
-      <span className="col-span-2">
-        <LanguagesDisplay languages={institute.languages} />
-      </span>
-      <span className="col-span-2">
-        <CityDisplay place={institute.place} />
-      </span>
-      <span className="col-span-2">
-        <CountryDisplay place={institute.place} />
-      </span>
-      <span className="col-span-2">{institute.yearFoundation || "-"}</span>
-    </ResourceListItem>
-  );
-}
-
-function InstituteGridCard({
-  institute,
-  utmSettings,
-}: {
-  institute: Institute;
-  utmSettings: UtmSettings;
-}) {
-  const href = buildResourceHref(
-    getWebsiteUrlFromSocialLinks(institute.socialLinks),
-    "institute",
-    utmSettings
-  );
-
-  const card = (
-    <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
-      <span className="font-medium">{institute.name}</span>
-      <span className="text-muted-foreground text-sm">
-        <LanguagesDisplay languages={institute.languages} />
-      </span>
-      <span className="text-muted-foreground text-sm">
-        <LocationDisplay place={institute.place} />
-      </span>
-      <span className="text-sm">{institute.yearFoundation || "-"}</span>
-    </div>
-  );
-
-  if (href) {
+  if (variant === "list") {
     return (
-      <a
-        className="no-underline"
-        href={href}
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        {card}
-      </a>
+      <ResourceListItem href={href}>
+        <span className="col-span-4">{institute.name}</span>
+        <span className="col-span-2">
+          <LanguagesDisplay languages={institute.languages} />
+        </span>
+        <span className="col-span-2">
+          <CityDisplay place={institute.place} />
+        </span>
+        <span className="col-span-2">
+          <CountryDisplay place={institute.place} />
+        </span>
+        <span className="col-span-2">{institute.yearFoundation || "-"}</span>
+      </ResourceListItem>
     );
   }
 
-  return card;
+  return (
+    <ResourceGridCard href={href}>
+      <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
+        <span className="font-medium">{institute.name}</span>
+        <span className="text-muted-foreground text-sm">
+          <LanguagesDisplay languages={institute.languages} />
+        </span>
+        <span className="text-muted-foreground text-sm">
+          <LocationDisplay place={institute.place} />
+        </span>
+        <span className="text-sm">{institute.yearFoundation || "-"}</span>
+      </div>
+    </ResourceGridCard>
+  );
 }
 
 interface InstitutesContentProps {
@@ -164,10 +139,11 @@ export function InstitutesContent({
           <section className="flex flex-col gap-1.5">
             {institutes.length > 0 ? (
               institutes.map((institute) => (
-                <InstituteListCard
+                <InstituteCard
                   institute={institute}
                   key={institute._id}
                   utmSettings={utmSettings}
+                  variant="list"
                 />
               ))
             ) : (
@@ -184,10 +160,11 @@ export function InstitutesContent({
           <div className="grid grid-cols-4 gap-1.5">
             {institutes.length > 0 ? (
               institutes.map((institute) => (
-                <InstituteGridCard
+                <InstituteCard
                   institute={institute}
                   key={institute._id}
                   utmSettings={utmSettings}
+                  variant="grid"
                 />
               ))
             ) : (

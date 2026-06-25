@@ -2,16 +2,14 @@
 
 import { useState } from "react";
 import SanityImage from "@/components/modules/shared/sanity-image";
+import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
 import { TagsDisplay } from "@/components/resources/tags-display";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
-import {
-  buildResourceHref,
-  getWebsiteUrlFromSocialLinks,
-} from "@/lib/resource-website-url";
+import { buildHrefFromSocialLinks } from "@/lib/resource-website-url";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { STUDIOS_QUERY_RESULT } from "@/sanity/types";
 
@@ -45,86 +43,63 @@ function getCountries(places: Studio["places"]) {
     : "-";
 }
 
-function StudioListCard({
+function StudioCard({
   studio,
   utmSettings,
+  variant,
 }: {
   studio: Studio;
   utmSettings: UtmSettings;
+  variant: "grid" | "list";
 }) {
-  const href = buildResourceHref(
-    getWebsiteUrlFromSocialLinks(studio.socialLinks),
+  const href = buildHrefFromSocialLinks(
+    studio.socialLinks,
     "studio",
     utmSettings
   );
 
-  return (
-    <ResourceListItem href={href}>
-      <span className="col-span-4">{studio.name}</span>
-      <span className="col-span-2">{studio.category?.name || "-"}</span>
-      <span className="col-span-2">
-        <TagsDisplay tags={studio.tags} />
-      </span>
-      <span className="col-span-2">{getCities(studio.places)}</span>
-      <span className="col-span-2">{getCountries(studio.places)}</span>
-    </ResourceListItem>
-  );
-}
-
-function StudioGridCard({
-  studio,
-  utmSettings,
-}: {
-  studio: Studio;
-  utmSettings: UtmSettings;
-}) {
-  const href = buildResourceHref(
-    getWebsiteUrlFromSocialLinks(studio.socialLinks),
-    "studio",
-    utmSettings
-  );
-
-  const card = (
-    <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
-      {studio.cover && (
-        <div className="relative aspect-4/3 w-full overflow-hidden rounded-xl">
-          <SanityImage
-            className="rounded-xl"
-            fill
-            sizes="(max-width: 768px) 50vw, 25vw"
-            source={studio.cover}
-          />
-        </div>
-      )}
-      {!studio.cover && (
-        <div className="relative aspect-4/3 w-full overflow-hidden rounded-xl bg-muted" />
-      )}
-      <p className="flex justify-between">
-        <span className="font-medium">{studio.name}</span>
-        <span className="text-sm">
-          {getCities(studio.places)}, {getCountries(studio.places)}
-        </span>
-      </p>
-      <span className="text-muted-foreground text-sm">
-        {studio.category?.name || "-"}, <TagsDisplay tags={studio.tags} />
-      </span>
-    </div>
-  );
-
-  if (href) {
+  if (variant === "list") {
     return (
-      <a
-        className="no-underline"
-        href={href}
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        {card}
-      </a>
+      <ResourceListItem href={href}>
+        <span className="col-span-4">{studio.name}</span>
+        <span className="col-span-2">{studio.category?.name || "-"}</span>
+        <span className="col-span-2">
+          <TagsDisplay tags={studio.tags} />
+        </span>
+        <span className="col-span-2">{getCities(studio.places)}</span>
+        <span className="col-span-2">{getCountries(studio.places)}</span>
+      </ResourceListItem>
     );
   }
 
-  return card;
+  return (
+    <ResourceGridCard href={href}>
+      <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
+        {studio.cover && (
+          <div className="relative aspect-4/3 w-full overflow-hidden rounded-xl">
+            <SanityImage
+              className="rounded-xl"
+              fill
+              sizes="(max-width: 768px) 50vw, 25vw"
+              source={studio.cover}
+            />
+          </div>
+        )}
+        {!studio.cover && (
+          <div className="relative aspect-4/3 w-full overflow-hidden rounded-xl bg-muted" />
+        )}
+        <p className="flex justify-between">
+          <span className="font-medium">{studio.name}</span>
+          <span className="text-sm">
+            {getCities(studio.places)}, {getCountries(studio.places)}
+          </span>
+        </p>
+        <span className="text-muted-foreground text-sm">
+          {studio.category?.name || "-"}, <TagsDisplay tags={studio.tags} />
+        </span>
+      </div>
+    </ResourceGridCard>
+  );
 }
 
 interface StudiosContentProps {
@@ -199,10 +174,11 @@ export function StudiosContent({
           <section className="flex flex-col gap-1.5">
             {studios.length > 0 ? (
               studios.map((studio) => (
-                <StudioListCard
+                <StudioCard
                   key={studio._id}
                   studio={studio}
                   utmSettings={utmSettings}
+                  variant="list"
                 />
               ))
             ) : (
@@ -219,10 +195,11 @@ export function StudiosContent({
           <div className="grid grid-cols-4 gap-1.5">
             {studios.length > 0 ? (
               studios.map((studio) => (
-                <StudioGridCard
+                <StudioCard
                   key={studio._id}
                   studio={studio}
                   utmSettings={utmSettings}
+                  variant="grid"
                 />
               ))
             ) : (

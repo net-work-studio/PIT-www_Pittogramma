@@ -1,27 +1,37 @@
 import { buildTrackedLink, type UtmSettings } from "@/lib/tracked-link";
+import type { BOOKSHOPS_QUERY_RESULT } from "@/sanity/types";
 
-export interface SocialLinksData {
-  links?: Array<{
-    platform?: string | null;
-    url?: string | null;
-  } | null> | null;
-}
+type SocialLinksInput = BOOKSHOPS_QUERY_RESULT[number]["socialLinks"];
 
-export function getWebsiteUrlFromSocialLinks(
-  socialLinks?: SocialLinksData | null
-): string | null {
+function getWebsiteUrlFromSocialLinks(
+  socialLinks?: SocialLinksInput
+): string | undefined {
   const websiteLink = socialLinks?.links?.find(
-    (link) => link?.platform === "website" && link?.url
+    (link) => link.platform === "website" && link.url
   );
 
-  return websiteLink?.url ?? null;
+  return websiteLink?.url;
 }
 
-export function buildResourceHref(
+export function buildHrefFromUrl(
   url: string | null | undefined,
   resourceType: string,
-  utmSettings?: UtmSettings
+  utmSettings: UtmSettings
 ): string | undefined {
+  if (!url) {
+    return undefined;
+  }
+
+  return buildTrackedLink(url, resourceType, utmSettings);
+}
+
+export function buildHrefFromSocialLinks(
+  socialLinks: SocialLinksInput,
+  resourceType: string,
+  utmSettings: UtmSettings
+): string | undefined {
+  const url = getWebsiteUrlFromSocialLinks(socialLinks);
+
   if (!url) {
     return undefined;
   }

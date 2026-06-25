@@ -11,7 +11,7 @@ import {
   isResourceEnabled,
   isSearchEnabled,
 } from "@/lib/feature-flags";
-import type { UtmSettings } from "@/lib/tracked-link";
+import { utmSettingsFromSiteSettings } from "@/lib/tracked-link";
 import {
   getDynamicFetchOptions,
   sanityFetch,
@@ -46,11 +46,7 @@ async function CachedInstitutesPage({ perspective, stega }: DynamicFetchOptions)
     sanityFetch({ query: SITE_SETTINGS_QUERY, perspective, stega }),
   ]);
 
-  const utmSettings: UtmSettings = {
-    utmSource: settings?.utmSource,
-    utmMedium: settings?.utmMedium,
-    utmCampaign: settings?.utmCampaign,
-  };
+  const utmSettings = utmSettingsFromSiteSettings(settings);
 
   return (
     <>
