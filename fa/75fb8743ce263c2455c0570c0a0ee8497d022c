@@ -1,0 +1,20 @@
+src/components/resources/resource-grid-card.tsx
+  s_98587497a11c2a::t_7af204ba889842 1-2,4
+  s_98587497a11c2a::t_3d5580187999b1 3,5-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "fa75fb8743ce263c2455c0570c0a0ee8497d022c",
+  "prompts": {},
+  "sessions": {
+    "s_98587497a11c2a": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "91d9d425-e378-45a0-a3f4-0f24fd46dd52",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
