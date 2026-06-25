@@ -9,6 +9,10 @@ const TYPE_LABELS: Record<EventType, string> = {
   event: "EVENT",
 };
 
+export function isEventType(type: string): type is EventType {
+  return Object.hasOwn(TYPE_LABELS, type);
+}
+
 export function getEventTypeLabel(
   type: string | null | undefined
 ): string | null {
@@ -16,9 +20,9 @@ export function getEventTypeLabel(
     return null;
   }
 
-  if (!(type in TYPE_LABELS)) {
+  if (!isEventType(type)) {
     return null;
   }
 
-  return TYPE_LABELS[type as EventType];
+  return TYPE_LABELS[type];
 }

@@ -56,7 +56,6 @@ type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
 interface EventCard {
   authors: { name: string }[] | undefined;
   badgeLabel: string | undefined;
-  badgeVariant: Parameters<typeof BaseCard>[0]["variant"];
   href: string;
   id: string;
   image: SanityImageSource;
@@ -77,7 +76,6 @@ function mapEventToCard(event: EventDoc): EventCard {
   return {
     authors: subtitle ? [{ name: subtitle }] : undefined,
     badgeLabel: typeLabel ?? undefined,
-    badgeVariant: typeLabel ? EVENT_TYPE_BADGE_VARIANT : undefined,
     href: `/events/${event.slug?.current}`,
     id: event._id,
     image: event.cover,
@@ -208,7 +206,9 @@ async function CachedEventsPage({
                   image={event.image}
                   key={event.id}
                   title={event.title}
-                  variant={event.badgeVariant}
+                  variant={
+                    event.badgeLabel ? EVENT_TYPE_BADGE_VARIANT : undefined
+                  }
                 />
               ))}
             </div>
@@ -228,7 +228,9 @@ async function CachedEventsPage({
                 image={event.image}
                 key={event.id}
                 title={event.title}
-                variant={event.badgeVariant}
+                variant={
+                  event.badgeLabel ? EVENT_TYPE_BADGE_VARIANT : undefined
+                }
               />
             ))}
           </div>

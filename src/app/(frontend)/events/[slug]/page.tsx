@@ -12,13 +12,14 @@ import CoverMedia from "@/components/modules/shared/cover-media";
 import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
+import { hasCoverMedia } from "@/lib/cover-media-utils";
 import { formatDateRange } from "@/lib/date-utils";
 import {
   formatEventLocationDisplay,
   getSchemaEventAttendanceMode,
   getSchemaEventLocation,
 } from "@/lib/event-location";
-import { getEventTypeLabel } from "@/lib/event-type";
+import { EVENT_TYPE_BADGE_VARIANT, getEventTypeLabel } from "@/lib/event-type";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoImageSource, SeoModule } from "@/lib/types/seo";
@@ -179,8 +180,7 @@ async function CachedEventPage({
               className="relative w-full overflow-hidden rounded-xl"
               ratio={4 / 3}
             >
-              {event.cover?.image?.asset ||
-              (event.cover?.type === "video" && event.cover?.videoUrl) ? (
+              {hasCoverMedia(event.cover) ? (
                 <CoverMedia
                   className="rounded-xl object-cover"
                   cover={event.cover}
@@ -229,7 +229,7 @@ async function CachedEventPage({
         {/* Mobile-only metadata */}
         <div className="order-6 mt-6 flex flex-col gap-4 px-2.5 lg:hidden">
           {typeLabel ? (
-            <Badge variant="event-type">{typeLabel}</Badge>
+            <Badge variant={EVENT_TYPE_BADGE_VARIANT}>{typeLabel}</Badge>
           ) : null}
 
           <dl className="flex flex-col gap-1">

@@ -7,8 +7,8 @@ import HomeGrid, { type HomeGridSlot } from "@/components/home-grid";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
 import {
+  getJournalHeroCover,
   hasCoverMedia,
-  resolveJournalHeroCover,
 } from "@/lib/cover-media-utils";
 import { buildLocalToday } from "@/lib/date-utils";
 import { getJournalLabelConfig } from "@/lib/journal-label";
@@ -92,9 +92,9 @@ function getFeaturedCover(item: EditorialItem | null) {
     return null;
   }
   if (item._type === "journal") {
-    return resolveJournalHeroCover(item);
+    return getJournalHeroCover(item);
   }
-  return item.cover;
+  return hasCoverMedia(item.cover) ? item.cover : null;
 }
 
 // Builds a flat stream of slots by interleaving editorial items and ADVs
@@ -218,7 +218,7 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
 
   return (
     <>
-      {featuredItem && hasCoverMedia(featuredCover) ? (
+      {featuredCover ? (
         <FeaturedHero
           badgeLabel={featuredBadge.label}
           badgeVariant={featuredBadge.variant}

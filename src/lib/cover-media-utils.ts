@@ -24,3 +24,12 @@ export function resolveJournalHeroCover(article: {
 
   return article.cover;
 }
+
+/** Resolve journal hero cover only when it has renderable media. */
+export function getJournalHeroCover(article: {
+  cover?: CoverMediaData | null;
+  featuredCover?: CoverMediaData | null;
+}): CoverMediaData | null {
+  const cover = resolveJournalHeroCover(article);
+  return hasCoverMedia(cover) ? (cover ?? null) : null;
+}

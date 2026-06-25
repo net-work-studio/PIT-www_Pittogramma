@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import { type ReactNode, Suspense } from "react";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import FilterBar from "@/components/feat/filter/filter";
@@ -11,7 +11,7 @@ import type SanityImage from "@/components/modules/shared/sanity-image";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
 import {
-  hasCoverMedia,
+  getJournalHeroCover,
   resolveJournalHeroCover,
 } from "@/lib/cover-media-utils";
 import { getJournalLabelConfig } from "@/lib/journal-label";
@@ -173,38 +173,33 @@ async function CachedJournalPage({
         badgeVariant: labelConfig?.badgeVariant ?? "article",
         href: `/journal/${article.slug?.current ?? ""}`,
         id: article._id,
-        image: article.cover,
+        image: resolveJournalHeroCover(article),
         title: article.title ?? "",
       };
     });
 
-  const featuredHero = (() => {
-    if (!featuredArticle) {
-      return null;
+  let featuredHero: ReactNode = null;
+  if (featuredArticle) {
+    const heroCover = getJournalHeroCover(featuredArticle);
+    if (heroCover) {
+      const featuredLabelConfig = getJournalLabelConfig(featuredArticle.label);
+
+      featuredHero = (
+        <FeaturedHero
+          badgeLabel={featuredLabelConfig?.label}
+          badgeVariant={featuredLabelConfig?.badgeVariant}
+          contentType="journal"
+          cover={heroCover}
+          href={`/journal/${featuredArticle.slug?.current ?? ""}`}
+          subtitle={
+            featuredArticle.authors?.map((a) => a.name).join(", ") ?? undefined
+          }
+          title={featuredArticle.title ?? ""}
+          variant="compact"
+        />
+      );
     }
-
-    const heroCover = resolveJournalHeroCover(featuredArticle);
-    if (!hasCoverMedia(heroCover)) {
-      return null;
-    }
-
-    const featuredLabelConfig = getJournalLabelConfig(featuredArticle.label);
-
-    return (
-      <FeaturedHero
-        badgeLabel={featuredLabelConfig?.label}
-        badgeVariant={featuredLabelConfig?.badgeVariant}
-        contentType="journal"
-        cover={heroCover}
-        href={`/journal/${featuredArticle.slug?.current ?? ""}`}
-        subtitle={
-          featuredArticle.authors?.map((a) => a.name).join(", ") ?? undefined
-        }
-        title={featuredArticle.title ?? ""}
-        variant="compact"
-      />
-    );
-  })();
+  }
 
   return (
     <>

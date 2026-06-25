@@ -4,7 +4,7 @@ import {
   type EventAttendanceMode,
   formatEventLocationDisplay,
 } from "@/lib/event-location";
-import { getEventTypeLabel } from "@/lib/event-type";
+import { EVENT_TYPE_BADGE_VARIANT, getEventTypeLabel } from "@/lib/event-type";
 
 interface Tag {
   _id: string;
@@ -52,7 +52,7 @@ export default function EventInfo({
 
       <div className="flex flex-col gap-4">
         {typeLabel ? (
-          <Badge variant="event-type">{typeLabel}</Badge>
+          <Badge variant={EVENT_TYPE_BADGE_VARIANT}>{typeLabel}</Badge>
         ) : null}
       </div>
 
