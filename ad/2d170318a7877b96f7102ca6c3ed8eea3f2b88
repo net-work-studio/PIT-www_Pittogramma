@@ -1,0 +1,25 @@
+src/components/modules/project/project-description.tsx
+  s_45f4edbbc4faa7::t_c123fb70b2af72 3,12-13,15-17,20-32,34-43,50-62
+src/components/modules/project/project-info.tsx
+  s_45f4edbbc4faa7::t_3c1ac860933072 51,54
+  s_45f4edbbc4faa7::t_fe498038e3f28e 82
+  s_45f4edbbc4faa7::t_97952a6a1dd0ae 55-81
+  s_45f4edbbc4faa7::t_d82d4f19da9212 45-49,52
+  s_45f4edbbc4faa7::t_1c63786acc6e06 44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "ad2d170318a7877b96f7102ca6c3ed8eea3f2b88",
+  "prompts": {},
+  "sessions": {
+    "s_45f4edbbc4faa7": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "db16da96-40a1-45c8-8770-6bea8f7bdf2c",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
