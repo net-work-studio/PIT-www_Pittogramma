@@ -3568,54 +3568,6 @@
         },
         "optional": false
       },
-      "status": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "union",
-          "of": [
-            {
-              "type": "string",
-              "value": "coming-soon"
-            },
-            {
-              "type": "string",
-              "value": "tickets-available"
-            },
-            {
-              "type": "string",
-              "value": "free-rsvp"
-            },
-            {
-              "type": "string",
-              "value": "free-entry"
-            },
-            {
-              "type": "string",
-              "value": "sold-out"
-            },
-            {
-              "type": "string",
-              "value": "waitlist"
-            },
-            {
-              "type": "string",
-              "value": "postponed"
-            },
-            {
-              "type": "string",
-              "value": "cancelled"
-            }
-          ]
-        },
-        "optional": true
-      },
-      "ctaUrl": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
       "cover": {
         "type": "objectAttribute",
         "value": {
@@ -3637,6 +3589,23 @@
           "type": "string"
         },
         "optional": true
+      },
+      "attendanceMode": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "offline"
+            },
+            {
+              "type": "string",
+              "value": "online"
+            }
+          ]
+        },
+        "optional": false
       },
       "locationName": {
         "type": "objectAttribute",
