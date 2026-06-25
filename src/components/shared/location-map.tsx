@@ -70,6 +70,10 @@ function FitBounds({ places }: { places: MapPlace[] }) {
   return null;
 }
 
+function buildNamedList(label: string, items: string[]): string {
+  return `<strong>${label}:</strong><br/>${items.join("<br/>")}`;
+}
+
 function buildPopupContent(place: MapPlace): string {
   const sections: string[] = [];
 
@@ -78,32 +82,44 @@ function buildPopupContent(place: MapPlace): string {
       const slug = d.slug?.current;
       return slug
         ? `<a href="/designers/${slug}" style="color:#2563eb;text-decoration:underline">${d.name}</a>`
-        : d.name;
+        : (d.name ?? "-");
     });
-    sections.push(`<strong>Designers:</strong> ${links.join(", ")}`);
+    sections.push(buildNamedList("Designers", links));
   }
 
   if (place.studios?.length) {
     sections.push(
-      `<strong>Studios:</strong> ${place.studios.map((s) => s.name).join(", ")}`
+      buildNamedList(
+        "Studios",
+        place.studios.map((s) => s.name ?? "-")
+      )
     );
   }
 
   if (place.institutes?.length) {
     sections.push(
-      `<strong>Institutes:</strong> ${place.institutes.map((i) => i.name).join(", ")}`
+      buildNamedList(
+        "Institutes",
+        place.institutes.map((i) => i.name ?? "-")
+      )
     );
   }
 
   if (place.bookshops?.length) {
     sections.push(
-      `<strong>Bookshops:</strong> ${place.bookshops.map((b) => b.name).join(", ")}`
+      buildNamedList(
+        "Bookshops",
+        place.bookshops.map((b) => b.name ?? "-")
+      )
     );
   }
 
   if (place.typeFoundries?.length) {
     sections.push(
-      `<strong>Type Foundries:</strong> ${place.typeFoundries.map((t) => t.name).join(", ")}`
+      buildNamedList(
+        "Type Foundries",
+        place.typeFoundries.map((t) => t.name ?? "-")
+      )
     );
   }
 

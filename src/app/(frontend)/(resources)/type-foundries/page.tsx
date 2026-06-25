@@ -11,16 +11,13 @@ import {
   isResourceEnabled,
   isSearchEnabled,
 } from "@/lib/feature-flags";
-import type { UtmSettings } from "@/lib/tracked-link";
+import { utmSettingsFromSiteSettings } from "@/lib/tracked-link";
 import {
-  type DynamicFetchOptions,
   getDynamicFetchOptions,
   sanityFetch,
+  type DynamicFetchOptions,
 } from "@/sanity/lib/live";
-import {
-  SITE_SETTINGS_QUERY,
-  TYPE_FOUNDRIES_QUERY,
-} from "@/sanity/lib/queries";
+import { SITE_SETTINGS_QUERY, TYPE_FOUNDRIES_QUERY } from "@/sanity/lib/queries";
 
 export default async function Page() {
   if (!isResourceEnabled("type-foundries")) {
@@ -42,21 +39,14 @@ async function DynamicTypeFoundriesPage() {
   return <CachedTypeFoundriesPage perspective={perspective} stega={stega} />;
 }
 
-async function CachedTypeFoundriesPage({
-  perspective,
-  stega,
-}: DynamicFetchOptions) {
+async function CachedTypeFoundriesPage({ perspective, stega }: DynamicFetchOptions) {
   "use cache";
   const [{ data: foundries }, { data: settings }] = await Promise.all([
     sanityFetch({ query: TYPE_FOUNDRIES_QUERY, perspective, stega }),
     sanityFetch({ query: SITE_SETTINGS_QUERY, perspective, stega }),
   ]);
 
-  const utmSettings: UtmSettings = {
-    utmSource: settings?.utmSource,
-    utmMedium: settings?.utmMedium,
-    utmCampaign: settings?.utmCampaign,
-  };
+  const utmSettings = utmSettingsFromSiteSettings(settings);
 
   return (
     <>
