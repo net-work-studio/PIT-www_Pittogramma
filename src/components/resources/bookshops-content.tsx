@@ -116,9 +116,9 @@ export function BookshopsContent({
         </div>
         {view === "list" && enabledViews.includes("list") && (
           <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase">
-            <li className="col-span-6">Name</li>
-            <li className="col-span-3">City</li>
-            <li className="col-span-3">Country</li>
+            <li className="col-span-8">Name</li>
+            <li className="col-span-2">City</li>
+            <li className="col-span-2">Country</li>
           </ul>
         )}
       </div>

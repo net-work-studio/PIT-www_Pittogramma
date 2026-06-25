@@ -6,9 +6,9 @@ import CtaCard from "@/components/cards/cta-card";
 import LoadMore from "@/components/feat/load-more/load-more";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import PageHeader from "@/components/shared/page-header";
-import { Button } from "@/components/ui/button";
 import { buildLocalToday } from "@/lib/date-utils";
-import { getEventStatusConfig } from "@/lib/event-status";
+import { formatEventCardLocation } from "@/lib/event-location";
+import { EVENT_TYPE_BADGE_VARIANT, getEventTypeLabel } from "@/lib/event-type";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -56,7 +56,6 @@ type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
 interface EventCard {
   authors: { name: string }[] | undefined;
   badgeLabel: string | undefined;
-  badgeVariant: Parameters<typeof BaseCard>[0]["variant"];
   href: string;
   id: string;
   image: SanityImageSource;
@@ -68,13 +67,15 @@ type EventDoc =
   | PAST_EVENTS_QUERY_RESULT[number];
 
 function mapEventToCard(event: EventDoc): EventCard {
-  const subtitle = event.locationName ?? event.type;
-  const statusConfig = getEventStatusConfig(event.status);
+  const subtitle = formatEventCardLocation(
+    event.attendanceMode,
+    event.locationName
+  );
+  const typeLabel = getEventTypeLabel(event.type);
 
   return {
     authors: subtitle ? [{ name: subtitle }] : undefined,
-    badgeLabel: statusConfig?.label,
-    badgeVariant: statusConfig?.badgeVariant ?? "event",
+    badgeLabel: typeLabel ?? undefined,
     href: `/events/${event.slug?.current}`,
     id: event._id,
     image: event.cover,
@@ -191,14 +192,10 @@ async function CachedEventsPage({
         title={pageSettings?.title ?? "Events"}
       />
       <div className="space-y-10 pb-10">
-        <div>
-          <Button className="font-mono uppercase">Filters</Button>
-        </div>
-
         {futureEvents.length > 0 && (
           <section>
             <h2 className="mb-6 border-b pb-2 font-mono text-sm uppercase">
-              Next
+              Upcoming
             </h2>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {futureEvents.map((event) => (
@@ -209,7 +206,9 @@ async function CachedEventsPage({
                   image={event.image}
                   key={event.id}
                   title={event.title}
-                  variant={event.badgeVariant}
+                  variant={
+                    event.badgeLabel ? EVENT_TYPE_BADGE_VARIANT : undefined
+                  }
                 />
               ))}
             </div>
@@ -229,7 +228,9 @@ async function CachedEventsPage({
                 image={event.image}
                 key={event.id}
                 title={event.title}
-                variant={event.badgeVariant}
+                variant={
+                  event.badgeLabel ? EVENT_TYPE_BADGE_VARIANT : undefined
+                }
               />
             ))}
           </div>
