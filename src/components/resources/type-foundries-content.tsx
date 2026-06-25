@@ -3,41 +3,60 @@
 import { useState } from "react";
 
 import { PlacesDisplay } from "@/components/resources/location-display";
+import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
 import { TagsDisplay } from "@/components/resources/tags-display";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
+import { buildHrefFromSocialLinks } from "@/lib/resource-website-url";
+import type { UtmSettings } from "@/lib/tracked-link";
 import type { TYPE_FOUNDRIES_QUERY_RESULT } from "@/sanity/types";
 
 type TypeFoundry = TYPE_FOUNDRIES_QUERY_RESULT[number];
 
-function TypeFoundryListCard({ foundry }: { foundry: TypeFoundry }) {
-  return (
-    <ResourceListItem>
-      <li className="col-span-8">{foundry.name}</li>
-      <li className="col-span-2">
-        <PlacesDisplay places={foundry.places} showCountry={false} />
-      </li>
-      <li className="col-span-2">
-        <PlacesDisplay places={foundry.places} showCity={false} />
-      </li>
-    </ResourceListItem>
+function TypeFoundryCard({
+  foundry,
+  utmSettings,
+  variant,
+}: {
+  foundry: TypeFoundry;
+  utmSettings: UtmSettings;
+  variant: "grid" | "list";
+}) {
+  const href = buildHrefFromSocialLinks(
+    foundry.socialLinks,
+    "type-foundry",
+    utmSettings
   );
-}
 
-function TypeFoundryGridCard({ foundry }: { foundry: TypeFoundry }) {
+  if (variant === "list") {
+    return (
+      <ResourceListItem href={href}>
+        <span className="col-span-8">{foundry.name}</span>
+        <span className="col-span-2">
+          <PlacesDisplay places={foundry.places} showCountry={false} />
+        </span>
+        <span className="col-span-2">
+          <PlacesDisplay places={foundry.places} showCity={false} />
+        </span>
+      </ResourceListItem>
+    );
+  }
+
   return (
-    <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
-      <span className="font-medium">{foundry.name}</span>
-      <span className="text-muted-foreground text-sm">
-        <TagsDisplay tags={foundry.tags} />
-      </span>
-      <span className="text-sm">
-        <PlacesDisplay places={foundry.places} />
-      </span>
-    </div>
+    <ResourceGridCard href={href}>
+      <div className="flex flex-col gap-1 rounded-lg bg-secondary p-2.5">
+        <span className="font-medium">{foundry.name}</span>
+        <span className="text-muted-foreground text-sm">
+          <TagsDisplay tags={foundry.tags} />
+        </span>
+        <span className="text-sm">
+          <PlacesDisplay places={foundry.places} />
+        </span>
+      </div>
+    </ResourceGridCard>
   );
 }
 
@@ -45,12 +64,14 @@ interface TypeFoundriesContentProps {
   enabledViews: ViewMode[];
   foundries: TYPE_FOUNDRIES_QUERY_RESULT;
   searchEnabled: boolean;
+  utmSettings: UtmSettings;
 }
 
 export function TypeFoundriesContent({
   foundries,
   enabledViews,
   searchEnabled,
+  utmSettings,
 }: TypeFoundriesContentProps) {
   const defaultView = enabledViews[0] ?? "list";
   const [view, setView] = useState<string>(defaultView);
@@ -109,7 +130,12 @@ export function TypeFoundriesContent({
           <section className="flex flex-col gap-1.5">
             {foundries.length > 0 ? (
               foundries.map((foundry) => (
-                <TypeFoundryListCard foundry={foundry} key={foundry._id} />
+                <TypeFoundryCard
+                  foundry={foundry}
+                  key={foundry._id}
+                  utmSettings={utmSettings}
+                  variant="list"
+                />
               ))
             ) : (
               <p className="text-center text-muted-foreground">
@@ -125,7 +151,12 @@ export function TypeFoundriesContent({
           <div className="grid grid-cols-4 gap-1.5">
             {foundries.length > 0 ? (
               foundries.map((foundry) => (
-                <TypeFoundryGridCard foundry={foundry} key={foundry._id} />
+                <TypeFoundryCard
+                  foundry={foundry}
+                  key={foundry._id}
+                  utmSettings={utmSettings}
+                  variant="grid"
+                />
               ))
             ) : (
               <p className="col-span-4 text-center text-muted-foreground">
