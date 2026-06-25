@@ -23,7 +23,7 @@
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "react-leaflet": "^5.0.0",
-    "sanity": "^5.30.0",
+    "sanity": "^5.31.1",
     "sanity-plugin-media": "^4.3.0",
     "styled-components": "^6.4.2",
     "tailwind-merge": "^3.6.0"
