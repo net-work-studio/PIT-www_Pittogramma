@@ -5,20 +5,13 @@ import ProjectMetaItem from "@/components/modules/shared/meta-item";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
-type ProjectTag = NonNullable<
-  NonNullable<PROJECT_QUERY_RESULT>["tags"]
->[number];
-type Teacher = NonNullable<
-  NonNullable<PROJECT_QUERY_RESULT>["teachers"]
->[number];
-
 interface ProjectInfoProps {
   description?: string | null;
   designers?: Designer[] | null;
   institute?: string | null;
   projectId?: string;
-  tags?: ProjectTag[] | null;
-  teachers?: Teacher[] | null;
+  tags?: NonNullable<PROJECT_QUERY_RESULT>["tags"];
+  teachers?: NonNullable<PROJECT_QUERY_RESULT>["teachers"];
   title?: string | null;
   year?: number | null;
 }
@@ -33,10 +26,7 @@ export default function ProjectInfo({
   institute,
   projectId,
 }: ProjectInfoProps) {
-  const teacherNames = teachers
-    ?.map((t) => t.name)
-    .filter(Boolean)
-    .join(", ");
+  const teacherNames = teachers?.map((t) => t.name).join(", ");
 
   return (
     <div className="flex w-full flex-col gap-12.5 pr-10 pb-6 lg:sticky lg:top-20 lg:h-[calc(100dvh-5rem)] lg:w-1/3">
