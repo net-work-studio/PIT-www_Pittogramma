@@ -954,6 +954,7 @@ export const BOOKSHOPS_QUERY = defineQuery(`
   *[_type == "bookshop"] | order(name asc) {
     _id,
     name,
+    "websiteUrl": socialLinks.links[platform == "website"][0].url,
     tags[]->{
       _id,
       name
@@ -986,6 +987,7 @@ export const INSTITUTES_QUERY = defineQuery(`
   *[_type == "institute"] | order(name asc) {
     _id,
     name,
+    "websiteUrl": socialLinks.links[platform == "website"][0].url,
     yearFoundation,
     languages[]->{
       _id,
@@ -1007,6 +1009,7 @@ export const STUDIOS_QUERY = defineQuery(`
   *[_type == "studio"] | order(name asc) {
     _id,
     name,
+    "websiteUrl": socialLinks.links[platform == "website"][0].url,
     description,
     cover { ${COVER_MEDIA_FIELDS} },
     category->{
@@ -1032,6 +1035,7 @@ export const TYPE_FOUNDRIES_QUERY = defineQuery(`
   *[_type == "typeFoundry"] | order(name asc) {
     _id,
     name,
+    "websiteUrl": socialLinks.links[platform == "website"][0].url,
     tags[]->{
       _id,
       name

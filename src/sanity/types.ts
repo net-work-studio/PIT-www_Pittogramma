@@ -6216,6 +6216,7 @@ export type BIBLIOGRAPHY_QUERY_RESULT = Array<{
 export type BOOKSHOPS_QUERY_RESULT = Array<{
   _id: string;
   name: string;
+  websiteUrl: string | null;
   tags: Array<{
     _id: string;
     name: string;
@@ -6283,6 +6284,7 @@ export type GLOSSARY_QUERY_RESULT = Array<{
 export type INSTITUTES_QUERY_RESULT = Array<{
   _id: string;
   name: string;
+  websiteUrl: string | null;
   yearFoundation: number;
   languages: Array<{
     _id: string;
@@ -6324,6 +6326,7 @@ export type INSTITUTES_QUERY_RESULT = Array<{
 export type STUDIOS_QUERY_RESULT = Array<{
   _id: string;
   name: string;
+  websiteUrl: string | null;
   description: string | null;
   cover: {
     type: "image" | "video" | null;
@@ -6389,6 +6392,7 @@ export type STUDIOS_QUERY_RESULT = Array<{
 export type TYPE_FOUNDRIES_QUERY_RESULT = Array<{
   _id: string;
   name: string;
+  websiteUrl: string | null;
   tags: Array<{
     _id: string;
     name: string;
@@ -7216,11 +7220,11 @@ declare module "@sanity/client" {
     '\n  array::unique(*[_type == "interview" && defined(tags)].tags[]->{ _id, name, "slug": slug.current })\n': INTERVIEWS_TAGS_QUERY_RESULT;
     '\n  *[_type == "interview" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    publishingDate,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    designersAndProfessionals[]{ ...@->{ _id, name, portrait }, _key },\n    interviewToType,\n    studio->{\n      _id,\n      name\n    },\n    typeFoundry->{\n      _id,\n      name\n    },\n    place->{ _id, name, city, country, countryCode, lat, lng },\n    readingTime,\n    tags[]->{\n      _id,\n      name\n    },\n    introText,\n    interview[] {\n      ...,\n      _type == "imageBlock" => {\n        _key,\n        _type,\n        image {\n          image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n          alt,\n          caption\n        }\n      },\n      _type == "multipleImageBlock" => {\n        _key,\n        _type,\n        images[] {\n          _key,\n          image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n          alt,\n          caption\n        }\n      }\n    },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': INTERVIEW_QUERY_RESULT;
     '\n  *[_type == "bibliography"] | order(name asc) {\n    _id,\n    name,\n    year,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    languages[]{ ...@->{ _id, name }, _key },\n    authors[]{ ...@->{ _id, name }, _key },\n    publisher->{\n      _id,\n      name\n    },\n    tags[]->{\n      _id,\n      name\n    },\n    affiliateLink,\n    isbn,\n    description,\n    pageCount,\n    categories\n  }\n': BIBLIOGRAPHY_QUERY_RESULT;
-    '\n  *[_type == "bookshop"] | order(name asc) {\n    _id,\n    name,\n    tags[]->{\n      _id,\n      name\n    },\n    place->{ _id, name, city, country, countryCode, lat, lng },\n    address,\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': BOOKSHOPS_QUERY_RESULT;
+    '\n  *[_type == "bookshop"] | order(name asc) {\n    _id,\n    name,\n    "websiteUrl": socialLinks.links[platform == "website"][0].url,\n    tags[]->{\n      _id,\n      name\n    },\n    place->{ _id, name, city, country, countryCode, lat, lng },\n    address,\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': BOOKSHOPS_QUERY_RESULT;
     '\n  *[_type == "glossary"] | order(name asc) {\n    _id,\n    name,\n    description,\n    image {\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt\n    }\n  }\n': GLOSSARY_QUERY_RESULT;
-    '\n  *[_type == "institute"] | order(name asc) {\n    _id,\n    name,\n    yearFoundation,\n    languages[]->{\n      _id,\n      name\n    },\n    place->{ _id, name, city, country, countryCode, lat, lng },\n    address,\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': INSTITUTES_QUERY_RESULT;
-    '\n  *[_type == "studio"] | order(name asc) {\n    _id,\n    name,\n    description,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    category->{\n      _id,\n      name\n    },\n    tags[]->{\n      _id,\n      name\n    },\n    places[]->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': STUDIOS_QUERY_RESULT;
-    '\n  *[_type == "typeFoundry"] | order(name asc) {\n    _id,\n    name,\n    tags[]->{\n      _id,\n      name\n    },\n    places[]->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': TYPE_FOUNDRIES_QUERY_RESULT;
+    '\n  *[_type == "institute"] | order(name asc) {\n    _id,\n    name,\n    "websiteUrl": socialLinks.links[platform == "website"][0].url,\n    yearFoundation,\n    languages[]->{\n      _id,\n      name\n    },\n    place->{ _id, name, city, country, countryCode, lat, lng },\n    address,\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': INSTITUTES_QUERY_RESULT;
+    '\n  *[_type == "studio"] | order(name asc) {\n    _id,\n    name,\n    "websiteUrl": socialLinks.links[platform == "website"][0].url,\n    description,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    category->{\n      _id,\n      name\n    },\n    tags[]->{\n      _id,\n      name\n    },\n    places[]->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': STUDIOS_QUERY_RESULT;
+    '\n  *[_type == "typeFoundry"] | order(name asc) {\n    _id,\n    name,\n    "websiteUrl": socialLinks.links[platform == "website"][0].url,\n    tags[]->{\n      _id,\n      name\n    },\n    places[]->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    }\n  }\n': TYPE_FOUNDRIES_QUERY_RESULT;
     '\n  *[_type == "webSource"] | order(name asc) {\n    _id,\n    name,\n    description,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    category->{\n      _id,\n      name\n    },\n    tags[]->{ _id, name },\n    sourceUrl,\n    ogTitle,\n    ogDescription,\n    ogSiteName,\n    ogImageUrl\n  }\n': WEB_SOURCES_QUERY_RESULT;
     '\n  *[_type == "adv" && dateStart <= now() && dateEnd >= now()] | order(tier asc) {\n    _id,\n    title,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    description,\n    externalUrl,\n    tier,\n    dateStart,\n    dateEnd,\n    sponsor->{ _id, name }\n  }\n': ADVS_QUERY_RESULT;
     '\n  *[\n    _type == "adv"\n    && tier in ["gold", "silver", "bronze"]\n    && dateStart <= $today\n    && dateEnd >= $today\n  ] | order(\n    select(tier == "gold" => 0, tier == "silver" => 1, tier == "bronze" => 2, 99) asc,\n    dateStart asc,\n    _createdAt asc\n  ) [0...16] {\n    _id,\n    title,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    coverPortrait { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n    description,\n    externalUrl,\n    tier,\n    dateStart,\n    dateEnd,\n    sponsor->{ _id, name }\n  }\n': FEED_QUERY_RESULT;

@@ -4,9 +4,8 @@ import { useState } from "react";
 
 import { LanguagesDisplay } from "@/components/resources/languages-display";
 import {
-  CityDisplay,
-  CountryDisplay,
   LocationDisplay,
+  PlacesDisplay,
 } from "@/components/resources/location-display";
 import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
@@ -14,7 +13,7 @@ import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
-import { buildHrefFromSocialLinks } from "@/lib/resource-website-url";
+import { buildHrefFromUrl } from "@/lib/resource-website-url";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { INSTITUTES_QUERY_RESULT } from "@/sanity/types";
 
@@ -29,11 +28,8 @@ function InstituteCard({
   utmSettings: UtmSettings;
   variant: "grid" | "list";
 }) {
-  const href = buildHrefFromSocialLinks(
-    institute.socialLinks,
-    "institute",
-    utmSettings
-  );
+  const href = buildHrefFromUrl(institute.websiteUrl, "institute", utmSettings);
+  const places = institute.place ? [institute.place] : undefined;
 
   if (variant === "list") {
     return (
@@ -42,13 +38,13 @@ function InstituteCard({
         <span className="col-span-2">
           <LanguagesDisplay languages={institute.languages} />
         </span>
-        <span className="col-span-2">
-          <CityDisplay place={institute.place} />
-        </span>
-        <span className="col-span-2">
-          <CountryDisplay place={institute.place} />
-        </span>
         <span className="col-span-2">{institute.yearFoundation || "-"}</span>
+        <span className="col-span-2">
+          <PlacesDisplay places={places} showCountry={false} />
+        </span>
+        <span className="col-span-2">
+          <PlacesDisplay places={places} showCity={false} />
+        </span>
       </ResourceListItem>
     );
   }
