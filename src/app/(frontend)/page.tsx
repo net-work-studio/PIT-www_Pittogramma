@@ -6,6 +6,10 @@ import RecentUpdates from "@/components/home/recent-updates";
 import HomeGrid, { type HomeGridSlot } from "@/components/home-grid";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
+import {
+  getJournalHeroCover,
+  hasCoverMedia,
+} from "@/lib/cover-media-utils";
 import { buildLocalToday } from "@/lib/date-utils";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -88,12 +92,9 @@ function getFeaturedCover(item: EditorialItem | null) {
     return null;
   }
   if (item._type === "journal") {
-    const fc = item.featuredCover;
-    if (fc?.image?.asset || (fc?.type === "video" && fc?.videoUrl)) {
-      return fc;
-    }
+    return getJournalHeroCover(item);
   }
-  return item.cover;
+  return hasCoverMedia(item.cover) ? item.cover : null;
 }
 
 // Builds a flat stream of slots by interleaving editorial items and ADVs
@@ -217,10 +218,7 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
 
   return (
     <>
-      {(featuredItem?.cover?.image?.asset ||
-        (featuredItem?.cover?.type === "video" &&
-          featuredItem?.cover?.videoUrl)) &&
-        featuredCover && (
+      {featuredCover ? (
         <FeaturedHero
           badgeLabel={featuredBadge.label}
           badgeVariant={featuredBadge.variant}
@@ -232,7 +230,7 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
           subtitle={featuredSubtitle}
           title={featuredItem.title ?? ""}
         />
-      )}
+      ) : null}
 
       <PageHeader subtitle={homePage?.introText} title="Pittogramma" />
 

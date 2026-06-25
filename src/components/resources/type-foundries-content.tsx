@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { PlacesDisplay } from "@/components/resources/location-display";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
 import { TagsDisplay } from "@/components/resources/tags-display";
@@ -12,40 +13,16 @@ import type { TYPE_FOUNDRIES_QUERY_RESULT } from "@/sanity/types";
 
 type TypeFoundry = TYPE_FOUNDRIES_QUERY_RESULT[number];
 
-function getCities(places: TypeFoundry["places"]) {
-  if (!places || places.length === 0) {
-    return "-";
-  }
-  const uniqueCities = new Set<string>();
-  for (const place of places) {
-    if (place?.city) {
-      uniqueCities.add(place.city);
-    }
-  }
-  return uniqueCities.size > 0 ? Array.from(uniqueCities).join(", ") : "-";
-}
-
-function getCountries(places: TypeFoundry["places"]) {
-  if (!places || places.length === 0) {
-    return "-";
-  }
-  const uniqueCountries = new Set<string>();
-  for (const place of places) {
-    if (place?.country) {
-      uniqueCountries.add(place.country);
-    }
-  }
-  return uniqueCountries.size > 0
-    ? Array.from(uniqueCountries).join(", ")
-    : "-";
-}
-
 function TypeFoundryListCard({ foundry }: { foundry: TypeFoundry }) {
   return (
     <ResourceListItem>
       <li className="col-span-8">{foundry.name}</li>
-      <li className="col-span-2">{getCities(foundry.places)}</li>
-      <li className="col-span-2">{getCountries(foundry.places)}</li>
+      <li className="col-span-2">
+        <PlacesDisplay places={foundry.places} showCountry={false} />
+      </li>
+      <li className="col-span-2">
+        <PlacesDisplay places={foundry.places} showCity={false} />
+      </li>
     </ResourceListItem>
   );
 }
@@ -57,7 +34,9 @@ function TypeFoundryGridCard({ foundry }: { foundry: TypeFoundry }) {
       <span className="text-muted-foreground text-sm">
         <TagsDisplay tags={foundry.tags} />
       </span>
-      <span className="text-sm">{getCities(foundry.places)}</span>
+      <span className="text-sm">
+        <PlacesDisplay places={foundry.places} />
+      </span>
     </div>
   );
 }

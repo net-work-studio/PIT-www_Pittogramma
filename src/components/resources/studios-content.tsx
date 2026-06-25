@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import SanityImage from "@/components/modules/shared/sanity-image";
+import { PlacesDisplay } from "@/components/resources/location-display";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
 import { TagsDisplay } from "@/components/resources/tags-display";
@@ -12,34 +13,6 @@ import type { STUDIOS_QUERY_RESULT } from "@/sanity/types";
 
 type Studio = STUDIOS_QUERY_RESULT[number];
 
-function getCities(places: Studio["places"]) {
-  if (!places || places.length === 0) {
-    return "-";
-  }
-  const uniqueCities = new Set<string>();
-  for (const place of places) {
-    if (place?.city) {
-      uniqueCities.add(place.city);
-    }
-  }
-  return uniqueCities.size > 0 ? Array.from(uniqueCities).join(", ") : "-";
-}
-
-function getCountries(places: Studio["places"]) {
-  if (!places || places.length === 0) {
-    return "-";
-  }
-  const uniqueCountries = new Set<string>();
-  for (const place of places) {
-    if (place?.country) {
-      uniqueCountries.add(place.country);
-    }
-  }
-  return uniqueCountries.size > 0
-    ? Array.from(uniqueCountries).join(", ")
-    : "-";
-}
-
 function StudioListCard({ studio }: { studio: Studio }) {
   return (
     <ResourceListItem>
@@ -48,8 +21,12 @@ function StudioListCard({ studio }: { studio: Studio }) {
       <li className="col-span-2">
         <TagsDisplay tags={studio.tags} />
       </li>
-      <li className="col-span-2">{getCities(studio.places)}</li>
-      <li className="col-span-2">{getCountries(studio.places)}</li>
+      <li className="col-span-2">
+        <PlacesDisplay places={studio.places} showCountry={false} />
+      </li>
+      <li className="col-span-2">
+        <PlacesDisplay places={studio.places} showCity={false} />
+      </li>
     </ResourceListItem>
   );
 }
@@ -73,7 +50,7 @@ function StudioGridCard({ studio }: { studio: Studio }) {
       <p className="flex justify-between">
         <span className="font-medium">{studio.name}</span>
         <span className="text-sm">
-          {getCities(studio.places)}, {getCountries(studio.places)}
+          <PlacesDisplay places={studio.places} />
         </span>
       </p>
       <span className="text-muted-foreground text-sm">

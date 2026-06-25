@@ -19,11 +19,11 @@ type Bookshop = BOOKSHOPS_QUERY_RESULT[number];
 function BookshopListCard({ bookshop }: { bookshop: Bookshop }) {
   return (
     <ResourceListItem>
-      <li className="col-span-6">{bookshop.name}</li>
-      <li className="col-span-3">
+      <li className="col-span-8">{bookshop.name}</li>
+      <li className="col-span-2">
         <CityDisplay place={bookshop.place} />
       </li>
-      <li className="col-span-3">
+      <li className="col-span-2">
         <CountryDisplay place={bookshop.place} />
       </li>
     </ResourceListItem>
@@ -95,9 +95,9 @@ export function BookshopsContent({
         </div>
         {view === "list" && enabledViews.includes("list") && (
           <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase">
-            <li className="col-span-6">Name</li>
-            <li className="col-span-3">City</li>
-            <li className="col-span-3">Country</li>
+            <li className="col-span-8">Name</li>
+            <li className="col-span-2">City</li>
+            <li className="col-span-2">Country</li>
           </ul>
         )}
       </div>
