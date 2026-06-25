@@ -1,0 +1,20 @@
+src/components/modules/project/project-info.tsx
+  s_45f4edbbc4faa7::t_e29e44064036d0 13-14
+  s_45f4edbbc4faa7::t_3ae5bb6c795598 29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "f7a7a0de84ae13ba0b52e4d00786043e5e507a9b",
+  "prompts": {},
+  "sessions": {
+    "s_45f4edbbc4faa7": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "db16da96-40a1-45c8-8770-6bea8f7bdf2c",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
