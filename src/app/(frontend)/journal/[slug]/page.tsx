@@ -8,8 +8,7 @@ import ShareLinks from "@/components/modules/project/share-links";
 import CoverMedia from "@/components/modules/shared/cover-media";
 import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Badge } from "@/components/ui/badge";
-import { DETAIL_PAGE_BADGE_VARIANT } from "@/lib/content-type-badge";
+import { DetailPageBadge } from "@/lib/content-type-badge";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -167,9 +166,7 @@ async function CachedJournalArticlePage({
           <div className="flex flex-1 flex-col justify-between gap-8">
             <hgroup className="flex flex-col gap-2">
               {labelConfig ? (
-                <Badge variant={DETAIL_PAGE_BADGE_VARIANT}>
-                  {labelConfig.label}
-                </Badge>
+                <DetailPageBadge label={labelConfig.label} />
               ) : null}
               <h1 className="text-pretty text-3xl">{article.title}</h1>
               {article.excerpt ? (

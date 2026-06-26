@@ -1,5 +1,7 @@
-import { Badge } from "@/components/ui/badge";
-import { DETAIL_PAGE_BADGE_VARIANT } from "@/lib/content-type-badge";
+import {
+  DETAIL_PAGE_LABELS,
+  DetailPageBadge,
+} from "@/lib/content-type-badge";
 
 interface Person {
   _id: string;
@@ -82,7 +84,7 @@ export default function InterviewInfo({
   return (
     <div className="flex flex-1 flex-col justify-between gap-8">
       <hgroup className="flex flex-col gap-2">
-        <Badge variant={DETAIL_PAGE_BADGE_VARIANT}>Interview</Badge>
+        <DetailPageBadge label={DETAIL_PAGE_LABELS.interview} />
         {title ? (
           <h1 className="text-2xl leading-tight lg:text-[2rem]">{title}</h1>
         ) : null}

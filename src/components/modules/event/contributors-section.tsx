@@ -1,6 +1,13 @@
 import LogoFrame, {
-  type ContributorWithLogo,
+  type LogoFields,
 } from "@/components/modules/shared/logo-frame";
+
+interface ContributorWithLogo {
+  _id: string;
+  description: string | null;
+  logo: LogoFields | null;
+  name: string | null;
+}
 
 interface ContributorsSectionProps {
   partners?: ContributorWithLogo[] | null;

@@ -15,13 +15,6 @@ export interface LogoFields {
   logoLight: LogoImageField | null;
 }
 
-export interface ContributorWithLogo {
-  _id: string;
-  description: string | null;
-  logo: LogoFields | null;
-  name: string | null;
-}
-
 interface LogoFrameProps {
   className?: string;
   description?: string | null;

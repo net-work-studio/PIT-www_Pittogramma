@@ -10,6 +10,12 @@ import type { CoverMedia, ImageWithMetadata } from "@/sanity/types";
 
 type SanityImageFit = "intrinsic" | "crop";
 
+/**
+ * Hotspot handling depends on layout:
+ * - `fill` (default): CSS object-position from Sanity hotspot via `respectHotspot` (defaults on).
+ * - Fixed width/height with `fit="crop"`: Sanity CDN crops using hotspot/crop metadata in the URL.
+ * Set `respectHotspot={false}` for logos and other object-contain layouts.
+ */
 type Props = {
   /** Non-fill URL strategy. `crop` requests exact width×height from Sanity CDN. */
   fit?: SanityImageFit;
