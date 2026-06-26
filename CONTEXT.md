@@ -39,6 +39,30 @@ _Avoid_: Description, excerpt, lead paragraph
 The editorial page describing Pittogramma. Shows a page title only — no intro text. The opening copy lives in the main content body, not as a separate subtitle field.
 _Avoid_: Info page (routing label only, not a content type)
 
+**Contributor**:
+An organization or entity that supports Pittogramma. Stored once in Studio (name, logo, optional description) and referenced wherever that entity appears — on events, the About page, editions, ads, and community items.
+_Avoid_: Brand, sponsor document (as a type name — use `contributor`)
+
+**Contributor role**:
+How a contributor is labelled and presented on the front end in a given context — supporter (About), sponsor or partner (event), named credit (edition). One document in Studio; role and layout are decided per page, not stored on the contributor.
+_Avoid_: Treating sponsor, partner, and supporter as different content types or backend entities
+
+**Logo frame**:
+The standard boxed presentation for a contributor logo. Optional copy below the frame is handled by a separate wrapper, so pages can show logo-only or logo plus description.
+_Avoid_: Different logo treatments per page, inline logos without a frame
+
+**About supporters**:
+Contributors shown at the bottom of the About page. Logo frame only — no description.
+_Avoid_: Sponsor, partner (on the About page)
+
+**Event sponsor / partner**:
+Contributors on an event detail page, grouped and labelled separately. Same document type; sponsor vs partner is editorial per event. Logo frame with optional description below.
+_Avoid_: Supporter (on event pages)
+
+**Edition supporters**:
+Contributors credited on an edition detail page. Shown as names in metadata, not logo frames — different front-end presentation for that context.
+_Avoid_: Expecting the same logo layout as About or events
+
 **Place**:
 A geographic location stored as its own document (city, country, coordinates). Referenced by studios, type foundries, designers, and other resources.
 _Avoid_: Location (as a document type — "location" is fine in user-facing copy for events)
