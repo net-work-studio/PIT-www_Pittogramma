@@ -1,0 +1,36 @@
+src/sanity/lib/fragments.ts
+  s_ff0088e5cb820c::t_d28a4572b58c21 15-27
+src/sanity/lib/image.ts
+  s_ff0088e5cb820c::t_ec0298d1bf5f40 34-41
+  s_ff0088e5cb820c::t_e491e216e85bf6 29-33,42-46
+src/sanity/lib/queries.ts
+  s_ff0088e5cb820c::t_45ee8ca99eebf8 874
+  s_ff0088e5cb820c::t_fce9840aef74af 196
+  s_ff0088e5cb820c::t_193c3c4c93626a 10
+  s_ff0088e5cb820c::t_bd85b8e5da7034 310,329,372,391,410
+  s_ff0088e5cb820c::t_7eac7dc8396473 164
+  s_ff0088e5cb820c::t_11986f168e4670 676
+CONTEXT.md
+  s_ff0088e5cb820c::t_8dc7d31ec2048d 82-85
+src/sanity/types.ts
+  s_ff0088e5cb820c::t_5c1dc75a0fc338 2750,2756,2758,2774,2845,3322,3352-3372,3425,3455-3475,3547,3577-3597,3650,3680-3700,3753,3783-3803,4676,4706-4726,6137,6167-6187,6358,6426,6468,6534,7332-7333,7338-7339,7343-7345,7356,7364
+src/components/modules/shared/sanity-image.tsx
+  s_ff0088e5cb820c::t_f22b4605d79a27 3-7
+  s_ff0088e5cb820c::t_3529946fbd4198 44,52,54-55,57-58,67-70,84,96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "91dafb9be934a68ee58c50e86156a529e17d4abb",
+  "prompts": {},
+  "sessions": {
+    "s_ff0088e5cb820c": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "71f07813-3fa6-4490-9806-bb1435961569",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
