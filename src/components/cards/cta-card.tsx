@@ -55,7 +55,7 @@ export default function CtaCard({
 
   if (resolvedVariant === "withImage" && image) {
     return (
-      <div className="w-full overflow-hidden rounded-[10px] bg-secondary">
+      <div className="w-full overflow-hidden rounded-xl bg-secondary">
         <div className="mx-auto flex max-w-375 flex-col gap-4 p-4 md:flex-row md:p-8">
           <div className="md:w-1/3">
             <SanityImage

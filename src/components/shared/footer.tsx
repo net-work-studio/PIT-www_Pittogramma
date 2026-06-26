@@ -3,6 +3,8 @@ import Link from "next/link";
 import { type DynamicFetchOptions, sanityFetch } from "@/sanity/lib/live";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
+const footerLinkListClass = "[&_a]:hover:text-muted-foreground";
+
 export default async function Footer({
   perspective,
   stega,
@@ -25,7 +27,7 @@ export default async function Footer({
           </li>
         </ul>
         {/* Col 2 */}
-        <ul>
+        <ul className={footerLinkListClass}>
           {siteSettings?.substackUrl && (
             <li>
               <a
@@ -62,7 +64,7 @@ export default async function Footer({
         </ul>
 
         {/* Col 3 */}
-        <ul>
+        <ul className={footerLinkListClass}>
           <li>
             <Link href="/submit">Submit your project</Link>
           </li>
@@ -75,7 +77,7 @@ export default async function Footer({
         </ul>
 
         {/* Col 4 */}
-        <ul>
+        <ul className={footerLinkListClass}>
           <li>
             <Link href="/terms-of-service">Privacy Policy</Link>
           </li>

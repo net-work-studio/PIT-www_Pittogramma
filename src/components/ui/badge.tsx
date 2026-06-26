@@ -23,6 +23,7 @@ const badgeVariants = cva(
           "group-hover:bg-yellow-500 group-hover:text-black group-hover:outline-yellow-500",
         feat: "group-hover:bg-background group-hover:text-foreground group-hover:outline-background",
         outline: "",
+        detail: "hover:outline-[1px] hover:outline-foreground",
         event: "group-hover:bg-background group-hover:text-foreground",
         "event-type":
           "hover:bg-foreground hover:text-background hover:outline-foreground group-hover:bg-foreground group-hover:text-background group-hover:outline-foreground",

@@ -3,31 +3,18 @@ import { cn } from "@/lib/utils";
 import {
   getBlurDataUrl,
   getHotspotObjectPosition,
+  type ImageLike,
   urlForImage,
 } from "@/sanity/lib/image";
 import type { CoverMedia, ImageWithMetadata } from "@/sanity/types";
 
-interface ImageLike {
-  _type?: string;
-  alt?: string | null;
-  image?: {
-    _type?: string;
-    asset?:
-      | {
-          _id?: string;
-          url?: string;
-          metadata?: {
-            lqip?: string;
-            dimensions?: { width: number; height: number };
-          };
-        }
-      | unknown;
-    hotspot?: unknown;
-    crop?: unknown;
-  } | null;
-}
+type SanityImageFit = "intrinsic" | "crop";
 
 type Props = {
+  /** Non-fill URL strategy. `crop` requests exact width×height from Sanity CDN. */
+  fit?: SanityImageFit;
+  /** Apply Sanity hotspot as CSS object-position (fill + object-cover layouts). */
+  respectHotspot?: boolean;
   source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined;
 } & Partial<React.ComponentProps<typeof Image>>;
 
@@ -37,10 +24,12 @@ export default function SanityImage({
   width = 800,
   height = 600,
   fill,
+  fit = "intrinsic",
   sizes,
   className,
   priority,
   quality = 75,
+  respectHotspot,
   style,
   ...props
 }: Props) {
@@ -52,11 +41,13 @@ export default function SanityImage({
   const sizedBuilder = builder.quality(Number(quality)).auto("format");
   const url = fill
     ? sizedBuilder.width(1920).url()
-    : sizedBuilder
-        .width(Number(width))
-        .height(Number(height))
-        .fit("crop")
-        .url();
+    : fit === "crop"
+      ? sizedBuilder
+          .width(Number(width))
+          .height(Number(height))
+          .fit("crop")
+          .url()
+      : sizedBuilder.width(Number(width)).url();
 
   if (!url) {
     return null;
@@ -64,7 +55,10 @@ export default function SanityImage({
 
   const blurDataUrl = getBlurDataUrl(source);
   const imageAlt = source?.alt ?? alt ?? "";
-  const objectPosition = getHotspotObjectPosition(source);
+  const useHotspot = respectHotspot ?? Boolean(fill);
+  const objectPosition = useHotspot
+    ? getHotspotObjectPosition(source)
+    : undefined;
   const imageStyle = objectPosition
     ? { objectPosition, ...style }
     : style;

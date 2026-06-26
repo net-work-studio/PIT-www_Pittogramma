@@ -10,7 +10,7 @@ interface AssetMetadata {
   lqip?: string;
 }
 
-interface ImageLike {
+export interface ImageLike {
   _type?: string;
   alt?: string | null;
   image?: {
@@ -26,7 +26,7 @@ const builder = createImageUrlBuilder({ projectId, dataset });
 
 export const urlFor = (source: SanityImageSource) => builder.image(source);
 
-/** CSS object-position from Sanity hotspot focal point (for object-cover layouts). */
+/** CSS object-position from Sanity hotspot focal point (for fill + object-cover). */
 export const getHotspotObjectPosition = (
   source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined
 ): string | undefined => {

@@ -23,6 +23,10 @@ _Avoid_: "At" (capitalised), "Online" (capitalised), showing address on cards
 Whether an event is held in person (`offline`) or remotely (`online`). Drives card byline, detail location display, and structured data. When online, location name and address are hidden in Studio.
 _Avoid_: format, venue type, isOnline
 
+**Content-type badge (detail page)**:
+The outline badge above a detail page title that identifies the content type (Project, Articles, Diary, Baseline, Interview). Matches the label on listing cards but uses outline-only hover — no fill color.
+_Avoid_: Colored card hover on detail pages, discipline tags in the hero (those stay in metadata)
+
 **Page intro (`introText`)**:
 Short description shown under a section page title (e.g. Journal, Projects, Events). Edited on each page singleton in Studio; required, max 170 characters. On pages with a featured hero, the intro appears below the hero.
 _Avoid_: description, subtitle (in CMS field names — use `introText`)

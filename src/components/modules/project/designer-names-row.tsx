@@ -2,6 +2,8 @@
 
 import DesignerModal from "@/components/modules/designer/designer-modal";
 import SanityImage from "@/components/modules/shared/sanity-image";
+import { Badge } from "@/components/ui/badge";
+import { DETAIL_PAGE_BADGE_VARIANT } from "@/lib/content-type-badge";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
@@ -32,6 +34,7 @@ function DesignerAvatar({ designer }: { designer: Designer }) {
   return hasPortrait ? (
     <SanityImage
       className="size-7 shrink-0 rounded-full object-cover"
+      fit="crop"
       height={96}
       source={designer.portrait}
       width={96}
@@ -55,7 +58,10 @@ export default function DesignerNamesRow({
 
   return (
     <div className="flex flex-col gap-3">
-      {title ? <h1 className="text-3xl">{title}</h1> : null}
+      <hgroup className="flex flex-col gap-2">
+        <Badge variant={DETAIL_PAGE_BADGE_VARIANT}>Project</Badge>
+        {title ? <h1 className="text-3xl">{title}</h1> : null}
+      </hgroup>
       {hasAnyName ? (
         <div className="flex flex-wrap items-start gap-x-6 gap-y-3 text-muted-foreground text-xl">
           {namedDesigners.map((designer) => {

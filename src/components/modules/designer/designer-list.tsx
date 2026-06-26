@@ -41,6 +41,7 @@ function DesignerListItem({
             {hasPortrait ? (
               <SanityImage
                 className="size-7 shrink-0 rounded-full object-cover"
+                fit="crop"
                 height={112}
                 source={designer.portrait}
                 width={112}
@@ -69,6 +70,7 @@ function DesignerListItem({
                 {project.cover?.image?.asset ? (
                   <SanityImage
                     className="aspect-4/3 h-7 w-auto shrink-0 rounded-sm object-cover transition-opacity duration-100 ease-out group-hover/project:opacity-80"
+                    fit="crop"
                     height={80}
                     source={project.cover}
                     width={112}

@@ -1,4 +1,4 @@
-import LogoFrameBlock from "@/components/modules/shared/logo-frame-block";
+import LogoFrame from "@/components/modules/shared/logo-frame";
 import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity/types";
 
 interface AboutSupportersProps {
@@ -17,9 +17,9 @@ export default function AboutSupporters({ supporters }: AboutSupportersProps) {
       </p>
       <div className="grid w-full grid-cols-2 gap-2.5 sm:grid-cols-4">
         {supporters.map((supporter) => (
-          <LogoFrameBlock
-            className="w-full sm:w-full"
+          <LogoFrame
             key={supporter._id}
+            layout="grid"
             logo={supporter.logo}
             name={supporter.name}
             sizes="(min-width: 640px) 25vw, 50vw"
