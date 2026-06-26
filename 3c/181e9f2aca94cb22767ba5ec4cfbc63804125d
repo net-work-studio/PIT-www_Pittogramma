@@ -1,0 +1,19 @@
+src/lib/content-type-badge.tsx
+  s_933b7bc720ac72::t_4d9734f7c62e23 1-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "3c181e9f2aca94cb22767ba5ec4cfbc63804125d",
+  "prompts": {},
+  "sessions": {
+    "s_933b7bc720ac72": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e9db4a54-7832-4905-918c-66c47d10f148",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
