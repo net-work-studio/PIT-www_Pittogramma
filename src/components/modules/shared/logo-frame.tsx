@@ -1,19 +1,13 @@
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { cn } from "@/lib/utils";
-import type { SanityImageCrop, SanityImageHotspot } from "@/sanity/types";
+import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity/types";
 
-interface LogoImageField {
-  asset?: { _id?: string; url?: string; metadata?: unknown } | null;
-  crop?: SanityImageCrop | null;
-  hotspot?: SanityImageHotspot | null;
-}
+export type LogoFields = NonNullable<
+  NonNullable<ABOUT_PAGE_QUERY_RESULT>["supporters"]
+>[number]["logo"];
 
-export interface LogoFields {
-  alt: string | null;
-  logoDark: LogoImageField | null;
-  logoLight: LogoImageField | null;
-}
+type LogoImageSource = NonNullable<LogoFields["logoLight"]>;
 
 interface LogoFrameProps {
   className?: string;
@@ -23,6 +17,31 @@ interface LogoFrameProps {
   name?: string | null;
   sizes?: string;
   title?: string;
+}
+
+function LogoImage({
+  alt,
+  image,
+  sizes,
+  visibilityClass,
+}: {
+  alt: string;
+  image: LogoImageSource;
+  sizes: string;
+  visibilityClass?: string;
+}) {
+  return (
+    <div className={cn("relative h-full w-full", visibilityClass)}>
+      <SanityImage
+        alt={alt}
+        className="h-full w-full object-contain"
+        fill
+        respectHotspot={false}
+        sizes={sizes}
+        source={{ image, alt }}
+      />
+    </div>
+  );
 }
 
 export default function LogoFrame({
@@ -52,43 +71,28 @@ export default function LogoFrame({
         layout === "grid" && "w-full",
         className
       )}
-      title={title}
+      title={title ?? name ?? undefined}
     >
       <AspectRatio
         className="relative w-full overflow-hidden rounded-xl bg-neutral-100 dark:bg-neutral-900"
         ratio={4 / 3}
       >
         <div className="flex h-full w-full items-center justify-center p-6">
-          {hasLight ? (
-            <div
-              className={cn("relative h-full w-full", hasBoth && "dark:hidden")}
-            >
-              <SanityImage
-                alt={alt}
-                className="h-full w-full object-contain"
-                fill
-                respectHotspot={false}
-                sizes={sizes}
-                source={{ image: light, alt }}
-              />
-            </div>
+          {light ? (
+            <LogoImage
+              alt={alt}
+              image={light}
+              sizes={sizes}
+              visibilityClass={hasBoth ? "dark:hidden" : undefined}
+            />
           ) : null}
-          {hasDark ? (
-            <div
-              className={cn(
-                "relative h-full w-full",
-                hasBoth && "hidden dark:block"
-              )}
-            >
-              <SanityImage
-                alt={alt}
-                className="h-full w-full object-contain"
-                fill
-                respectHotspot={false}
-                sizes={sizes}
-                source={{ image: dark, alt }}
-              />
-            </div>
+          {dark ? (
+            <LogoImage
+              alt={alt}
+              image={dark}
+              sizes={sizes}
+              visibilityClass={hasBoth ? "hidden dark:block" : undefined}
+            />
           ) : null}
         </div>
       </AspectRatio>

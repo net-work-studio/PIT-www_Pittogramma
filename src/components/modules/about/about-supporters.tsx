@@ -23,7 +23,6 @@ export default function AboutSupporters({ supporters }: AboutSupportersProps) {
             logo={supporter.logo}
             name={supporter.name}
             sizes="(min-width: 640px) 25vw, 50vw"
-            title={supporter.name ?? undefined}
           />
         ))}
       </div>

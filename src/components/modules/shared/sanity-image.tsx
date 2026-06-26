@@ -17,9 +17,7 @@ type SanityImageFit = "intrinsic" | "crop";
  * Set `respectHotspot={false}` for logos and other object-contain layouts.
  */
 type Props = {
-  /** Non-fill URL strategy. `crop` requests exact width×height from Sanity CDN. */
   fit?: SanityImageFit;
-  /** Apply Sanity hotspot as CSS object-position (fill + object-cover layouts). */
   respectHotspot?: boolean;
   source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined;
 } & Partial<React.ComponentProps<typeof Image>>;
@@ -45,15 +43,18 @@ export default function SanityImage({
   }
 
   const sizedBuilder = builder.quality(Number(quality)).auto("format");
-  const url = fill
-    ? sizedBuilder.width(1920).url()
-    : fit === "crop"
-      ? sizedBuilder
-          .width(Number(width))
-          .height(Number(height))
-          .fit("crop")
-          .url()
-      : sizedBuilder.width(Number(width)).url();
+  let url: string | undefined;
+  if (fill) {
+    url = sizedBuilder.width(1920).url();
+  } else if (fit === "crop") {
+    url = sizedBuilder
+      .width(Number(width))
+      .height(Number(height))
+      .fit("crop")
+      .url();
+  } else {
+    url = sizedBuilder.width(Number(width)).url();
+  }
 
   if (!url) {
     return null;
@@ -72,30 +73,20 @@ export default function SanityImage({
     ? { blurDataURL: blurDataUrl, placeholder: "blur" as const }
     : {};
 
+  const imageProps = {
+    alt: imageAlt,
+    ...blurProps,
+    className: cn("object-cover", className),
+    priority,
+    sizes: fill ? (sizes ?? "100vw") : sizes,
+    src: url,
+    style: imageStyle,
+    ...props,
+  };
+
   return fill ? (
-    <Image
-      alt={imageAlt}
-      {...blurProps}
-      className={cn("object-cover", className)}
-      fill
-      priority={priority}
-      sizes={sizes ?? "100vw"}
-      src={url}
-      style={imageStyle}
-      {...props}
-    />
+    <Image {...imageProps} fill />
   ) : (
-    <Image
-      alt={imageAlt}
-      {...blurProps}
-      className={cn("object-cover", className)}
-      height={height}
-      priority={priority}
-      sizes={sizes}
-      src={url}
-      style={imageStyle}
-      width={width}
-      {...props}
-    />
+    <Image {...imageProps} height={height} width={width} />
   );
 }

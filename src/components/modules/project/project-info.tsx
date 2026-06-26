@@ -2,10 +2,7 @@ import Link from "next/link";
 import DesignerNamesRow from "@/components/modules/project/designer-names-row";
 import ProjectDescription from "@/components/modules/project/project-description";
 import ProjectMetaItem from "@/components/modules/shared/meta-item";
-import {
-  DETAIL_PAGE_LABELS,
-  DetailPageBadge,
-} from "@/lib/content-type-badge";
+import { DetailPageBadge } from "@/lib/content-type-badge";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
@@ -36,7 +33,7 @@ export default function ProjectInfo({
     <div className="flex h-fit w-full flex-col gap-12.5 pr-0 pb-10 lg:sticky lg:top-20 lg:h-[calc(100dvh-5rem)] lg:w-1/3 lg:pr-10 lg:pb-0">
       <div className="flex flex-col gap-3">
         <hgroup className="flex flex-col gap-2">
-          <DetailPageBadge label={DETAIL_PAGE_LABELS.project} />
+          <DetailPageBadge type="project" />
           {title ? <h1 className="text-3xl">{title}</h1> : null}
         </hgroup>
         <DesignerNamesRow

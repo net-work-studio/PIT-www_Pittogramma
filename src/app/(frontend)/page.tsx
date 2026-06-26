@@ -6,10 +6,7 @@ import RecentUpdates from "@/components/home/recent-updates";
 import HomeGrid, { type HomeGridSlot } from "@/components/home-grid";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
-import {
-  getJournalHeroCover,
-  hasCoverMedia,
-} from "@/lib/cover-media-utils";
+import { getJournalHeroCover, hasCoverMedia } from "@/lib/cover-media-utils";
 import { buildLocalToday } from "@/lib/date-utils";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";

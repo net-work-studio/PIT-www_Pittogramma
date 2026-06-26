@@ -40,7 +40,7 @@ export default function CtaCard({
   const isExternal = resolvedLinkType === "external" && externalUrl;
 
   const buttonElement = href ? (
-    <Button asChild>
+    <Button asChild variant="mono">
       {isExternal ? (
         <a href={href} rel="noopener noreferrer" target="_blank">
           {buttonText}
@@ -66,7 +66,7 @@ export default function CtaCard({
           </div>
           <div className="flex w-full flex-col items-center justify-center md:w-2/3">
             {headline && (
-              <h3 className="mb-2 text-balance text-center text-3xl text-foreground">
+              <h3 className="mb-2 max-w-prose text-balance text-center text-3xl text-foreground">
                 {headline}
               </h3>
             )}

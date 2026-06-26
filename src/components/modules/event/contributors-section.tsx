@@ -1,13 +1,9 @@
-import LogoFrame, {
-  type LogoFields,
-} from "@/components/modules/shared/logo-frame";
+import LogoFrame from "@/components/modules/shared/logo-frame";
+import type { EVENT_QUERY_RESULT } from "@/sanity/types";
 
-interface ContributorWithLogo {
-  _id: string;
-  description: string | null;
-  logo: LogoFields | null;
-  name: string | null;
-}
+type ContributorWithLogo = NonNullable<
+  NonNullable<EVENT_QUERY_RESULT>["sponsors"]
+>[number];
 
 interface ContributorsSectionProps {
   partners?: ContributorWithLogo[] | null;
