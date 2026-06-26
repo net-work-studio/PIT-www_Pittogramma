@@ -15,10 +15,10 @@ export default function AboutSupporters({ supporters }: AboutSupportersProps) {
       <p className="mb-6 font-mono text-muted-foreground text-xs uppercase tracking-wide">
         Our Supporters
       </p>
-      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+      <div className="grid w-full grid-cols-2 gap-2.5 sm:grid-cols-4">
         {supporters.map((supporter) => (
           <LogoFrameBlock
-            className="w-full"
+            className="w-full sm:w-full"
             key={supporter._id}
             logo={supporter.logo}
             name={supporter.name}
