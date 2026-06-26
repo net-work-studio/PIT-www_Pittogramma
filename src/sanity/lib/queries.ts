@@ -7,6 +7,7 @@ import {
   IMAGE_FIELDS,
   JOURNAL_REFERENCE_BLOCK_FIELDS,
   MEDIA_BLOCKS_FIELDS,
+  PORTRAIT_FIELDS,
   SEO_FIELDS,
 } from "./fragments";
 
@@ -160,10 +161,7 @@ export const DESIGNERS_QUERY = defineQuery(`
     _id,
     name,
     slug,
-    portrait {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    ${PORTRAIT_FIELDS},
     birthYear,
     bio,
     place->{ _id, name, city, country, countryCode, lat, lng },
@@ -195,15 +193,7 @@ export const DESIGNER_QUERY = defineQuery(`
     _id,
     name,
     slug,
-    portrait {
-      _type,
-      image {
-        _type,
-        ${IMAGE_FIELDS}
-      },
-      alt,
-      caption
-    },
+    ${PORTRAIT_FIELDS},
     birthYear,
     bio,
     education[] {
@@ -317,7 +307,7 @@ export const PROJECTS_QUERY = defineQuery(`
     cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
-    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    designers[]{ ...@->{ _id, name, slug, ${PORTRAIT_FIELDS} }, _key },
     tags[]->{
       _id,
       name,
@@ -336,7 +326,7 @@ export const PROJECTS_FILTERED_QUERY = defineQuery(`
     cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
-    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    designers[]{ ...@->{ _id, name, slug, ${PORTRAIT_FIELDS} }, _key },
     tags[]->{
       _id,
       name,
@@ -379,7 +369,7 @@ const PROJECTS_FILTERED_OLDEST_QUERY = defineQuery(`
     cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
-    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    designers[]{ ...@->{ _id, name, slug, ${PORTRAIT_FIELDS} }, _key },
     tags[]->{
       _id,
       name,
@@ -398,7 +388,7 @@ const PROJECTS_FILTERED_AZ_QUERY = defineQuery(`
     cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
-    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    designers[]{ ...@->{ _id, name, slug, ${PORTRAIT_FIELDS} }, _key },
     tags[]->{
       _id,
       name,
@@ -417,7 +407,7 @@ const PROJECTS_FILTERED_ZA_QUERY = defineQuery(`
     cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
-    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    designers[]{ ...@->{ _id, name, slug, ${PORTRAIT_FIELDS} }, _key },
     tags[]->{
       _id,
       name,
@@ -683,7 +673,7 @@ export const PROJECT_QUERY = defineQuery(`
         _id,
         name,
         slug,
-        portrait,
+        ${PORTRAIT_FIELDS},
         bio,
         birthYear,
         place->{ city, country },
@@ -881,7 +871,7 @@ export const INTERVIEW_QUERY = defineQuery(`
     slug,
     publishingDate,
     cover { ${COVER_MEDIA_FIELDS} },
-    designersAndProfessionals[]{ ...@->{ _id, name, portrait }, _key },
+    designersAndProfessionals[]{ ...@->{ _id, name, ${PORTRAIT_FIELDS} }, _key },
     interviewToType,
     studio->{
       _id,

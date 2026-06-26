@@ -1,6 +1,10 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { getBlurDataUrl, urlForImage } from "@/sanity/lib/image";
+import {
+  getBlurDataUrl,
+  getHotspotObjectPosition,
+  urlForImage,
+} from "@/sanity/lib/image";
 import type { CoverMedia, ImageWithMetadata } from "@/sanity/types";
 
 interface ImageLike {
@@ -37,6 +41,7 @@ export default function SanityImage({
   className,
   priority,
   quality = 75,
+  style,
   ...props
 }: Props) {
   const builder = urlForImage(source);
@@ -44,12 +49,13 @@ export default function SanityImage({
     return null;
   }
 
+  const sizedBuilder = builder.quality(Number(quality)).auto("format");
   const url = fill
-    ? builder.width(1920).quality(Number(quality)).auto("format").url()
-    : builder
+    ? sizedBuilder.width(1920).url()
+    : sizedBuilder
         .width(Number(width))
-        .quality(Number(quality))
-        .auto("format")
+        .height(Number(height))
+        .fit("crop")
         .url();
 
   if (!url) {
@@ -58,6 +64,10 @@ export default function SanityImage({
 
   const blurDataUrl = getBlurDataUrl(source);
   const imageAlt = source?.alt ?? alt ?? "";
+  const objectPosition = getHotspotObjectPosition(source);
+  const imageStyle = objectPosition
+    ? { objectPosition, ...style }
+    : style;
   const blurProps = blurDataUrl
     ? { blurDataURL: blurDataUrl, placeholder: "blur" as const }
     : {};
@@ -71,6 +81,7 @@ export default function SanityImage({
       priority={priority}
       sizes={sizes ?? "100vw"}
       src={url}
+      style={imageStyle}
       {...props}
     />
   ) : (
@@ -82,6 +93,7 @@ export default function SanityImage({
       priority={priority}
       sizes={sizes}
       src={url}
+      style={imageStyle}
       width={width}
       {...props}
     />
