@@ -31,7 +31,7 @@ export default function GlobalError({
         </header>
 
         <main className="mt-14 mb-auto flex flex-1 flex-col items-center justify-center px-5 text-center">
-          <p className="font-mono text-sm tracking-widest text-muted-foreground">
+          <p className="font-mono text-muted-foreground text-sm tracking-widest">
             Error
           </p>
           <h1 className="mt-4 text-2xl uppercase">Something went wrong</h1>
@@ -39,7 +39,7 @@ export default function GlobalError({
             A critical error occurred. Please try reloading the page.
           </p>
           <button
-            className="mt-10 inline-flex h-9 items-center justify-center rounded-full border px-4 py-2 text-sm font-medium shadow-xs transition-all hover:cursor-pointer hover:bg-accent hover:text-accent-foreground"
+            className="mt-10 inline-flex h-9 items-center justify-center rounded-full border px-4 py-2 font-medium text-sm shadow-xs transition-all hover:cursor-pointer hover:bg-accent hover:text-accent-foreground"
             onClick={reset}
           >
             Try again

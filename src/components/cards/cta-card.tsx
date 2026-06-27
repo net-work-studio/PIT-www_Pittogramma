@@ -66,7 +66,7 @@ export default function CtaCard({
           </div>
           <div className="flex w-full flex-col items-center justify-center md:w-2/3">
             {headline && (
-              <h3 className="mb-2 max-w-prose text-balance text-center text-3xl text-foreground">
+              <h3 className="mb-2 max-w-prose text-pretty text-center text-3xl text-foreground">
                 {headline}
               </h3>
             )}
@@ -79,7 +79,7 @@ export default function CtaCard({
 
   return (
     <div className="flex flex-col items-center justify-start gap-6 text-balance rounded-lg bg-secondary p-5 text-center text-3xl">
-      {headline && <h2>{headline}</h2>}
+      {headline && <h2 className="max-w-prose text-balance">{headline}</h2>}
       {buttonElement}
     </div>
   );

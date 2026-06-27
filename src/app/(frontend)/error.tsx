@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 
-export default function Error({
+export default function ServerError({
   reset,
 }: {
   error: Error & { digest?: string };
@@ -10,9 +10,7 @@ export default function Error({
 }) {
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center px-5 text-center">
-      <p className="font-mono text-sm tracking-widest text-muted-foreground">
-        500
-      </p>
+      <p className="font-mono text-muted-foreground text-sm">500</p>
       <h1 className="mt-4 text-2xl uppercase">Something went wrong</h1>
       <p className="mt-4 max-w-prose text-balance text-muted-foreground">
         An unexpected error occurred. Please try again.
