@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 
-import CoverPosterThumb from "@/components/modules/shared/cover-poster-thumb";
+import DesignerProjectLink from "@/components/modules/designer/designer-project-link";
 import SanityImage from "@/components/modules/shared/sanity-image";
 import {
   Dialog,
@@ -19,65 +18,19 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { sortEducationByYearDesc } from "@/lib/education-utils";
-import type { DESIGNERS_QUERY_RESULT } from "@/sanity/types";
+import {
+  educationTextParts,
+  sortEducationByYearDesc,
+} from "@/lib/education-utils";
+import { SOCIAL_LINK_LABELS } from "@/lib/social-link-labels";
+import type {
+  DESIGNERS_QUERY_RESULT,
+  PROJECT_QUERY_RESULT,
+} from "@/sanity/types";
 
-type SocialLinkPlatform =
-  | "behance"
-  | "bluesky"
-  | "ig"
-  | "linkedin"
-  | "linktree"
-  | "mastodon"
-  | "spotify"
-  | "substack"
-  | "tiktok"
-  | "website"
-  | "x";
-
-interface SocialLink {
-  _key: string;
-  platform: SocialLinkPlatform;
-  url: string;
-}
-
-export interface DesignerForModal {
-  _id?: string;
-  bio: string | null;
-  birthYear: number | null;
-  education: DESIGNERS_QUERY_RESULT[number]["education"];
-  name: string | null;
-  place?: {
-    city?: string | null;
-    country?: string | null;
-  } | null;
-  portrait: {
-    image?: {
-      asset?: unknown;
-      hotspot?: unknown;
-      crop?: unknown;
-    } | null;
-    alt?: string | null;
-  } | null;
-  projects?: NonNullable<DESIGNERS_QUERY_RESULT[number]["projects"]> | null;
-  socialLinks: {
-    links?: SocialLink[] | null;
-  } | null;
-}
-
-const PLATFORM_LABELS: Record<SocialLinkPlatform, string> = {
-  behance: "Behance",
-  bluesky: "Bluesky",
-  ig: "Instagram",
-  linkedin: "LinkedIn",
-  linktree: "Linktree",
-  mastodon: "Mastodon",
-  spotify: "Spotify",
-  substack: "Substack",
-  tiktok: "TikTok",
-  website: "Website",
-  x: "X",
-};
+export type DesignerForModal =
+  | DESIGNERS_QUERY_RESULT[number]
+  | NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
 
 interface DesignerModalProps {
   children: ReactNode;
@@ -221,15 +174,7 @@ function DesignerModalContent({
                 <ul className="flex flex-col gap-2">
                   {filteredProjects.map((project) => (
                     <li key={project._id}>
-                      <Link
-                        className="group/project inline-flex w-fit items-center gap-2"
-                        href={`/projects/${project.slug.current}`}
-                      >
-                        <CoverPosterThumb cover={project.cover} />
-                        <span className="line-clamp-1 transition-opacity duration-100 ease-out group-hover/project:opacity-60">
-                          {project.title}
-                        </span>
-                      </Link>
+                      <DesignerProjectLink project={project} />
                     </li>
                   ))}
                 </ul>
@@ -245,9 +190,7 @@ function DesignerModalContent({
                   {sortedEducation.map((edu) => (
                     <li className="flex" key={edu._key}>
                       <span className="w-12.5">{edu.year}</span>
-                      {[edu.institute?.name, edu.courseName, edu.degree]
-                        .filter(Boolean)
-                        .join(", ")}
+                      {educationTextParts(edu).join(", ")}
                     </li>
                   ))}
                 </ul>
@@ -268,7 +211,7 @@ function DesignerModalContent({
                         rel="noopener noreferrer"
                         target="_blank"
                       >
-                        ↗ {PLATFORM_LABELS[link.platform] ?? link.platform}
+                        ↗ {SOCIAL_LINK_LABELS[link.platform] ?? link.platform}
                       </a>
                     </li>
                   ))}

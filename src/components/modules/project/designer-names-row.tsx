@@ -1,7 +1,7 @@
 "use client";
 
 import DesignerModal from "@/components/modules/designer/designer-modal";
-import SanityImage from "@/components/modules/shared/sanity-image";
+import DesignerPortraitThumb from "@/components/modules/designer/designer-portrait-thumb";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
@@ -22,26 +22,6 @@ function hasModalData(d: Designer, currentProjectId?: string): boolean {
       d.socialLinks?.links?.length ||
       d.education?.length ||
       otherProjects.length
-  );
-}
-
-function DesignerAvatar({ designer }: { designer: Designer }) {
-  const hasPortrait = Boolean(designer.portrait?.image?.asset);
-
-  return hasPortrait ? (
-    <SanityImage
-      className="size-7 shrink-0 rounded-full object-cover"
-      fit="crop"
-      height={96}
-      source={designer.portrait}
-      width={96}
-    />
-  ) : (
-    <div className="grid size-7 shrink-0 place-items-center rounded-full bg-primary/5">
-      <span className="text-muted-foreground text-xs">
-        {designer.name?.slice(0, 1)}
-      </span>
-    </div>
   );
 }
 
@@ -70,7 +50,10 @@ export default function DesignerNamesRow({
               className="inline-flex cursor-pointer items-center gap-1.5 decoration-1 underline-offset-4 hover:underline"
               type="button"
             >
-              <DesignerAvatar designer={designer} />
+              <DesignerPortraitThumb
+                name={designer.name}
+                portrait={designer.portrait}
+              />
               {designer.name}
             </button>
           </DesignerModal>
@@ -79,7 +62,10 @@ export default function DesignerNamesRow({
             className="inline-flex items-center gap-2.5"
             key={designer._id}
           >
-            <DesignerAvatar designer={designer} />
+            <DesignerPortraitThumb
+              name={designer.name}
+              portrait={designer.portrait}
+            />
             {designer.name}
           </span>
         );

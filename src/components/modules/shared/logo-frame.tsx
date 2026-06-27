@@ -1,19 +1,21 @@
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { cn } from "@/lib/utils";
-import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity/types";
+import type { ImageLike } from "@/sanity/lib/image";
 
-export type LogoFields = NonNullable<
-  NonNullable<ABOUT_PAGE_QUERY_RESULT>["supporters"]
->[number]["logo"];
+type LogoImageSource = NonNullable<ImageLike["image"]>;
 
-type LogoImageSource = NonNullable<LogoFields["logoLight"]>;
+export type ContributorLogo = {
+  alt?: string | null;
+  logoDark?: LogoImageSource | null;
+  logoLight?: LogoImageSource | null;
+} | null;
 
 interface LogoFrameProps {
   className?: string;
   description?: string | null;
   layout?: "card" | "grid";
-  logo: LogoFields | null;
+  logo: ContributorLogo;
   name?: string | null;
   sizes?: string;
   title?: string;

@@ -10,6 +10,60 @@ import type { CoverMedia, ImageWithMetadata } from "@/sanity/types";
 
 type SanityImageFit = "intrinsic" | "crop";
 
+function buildSizedImageUrl(
+  sizedBuilder: ReturnType<NonNullable<ReturnType<typeof urlForImage>>["quality"]>,
+  {
+    fill,
+    sizeMode,
+    height,
+    width,
+  }: {
+    fill: boolean | undefined;
+    sizeMode: SanityImageFit;
+    height: number;
+    width: number;
+  }
+): string | undefined {
+  if (fill) {
+    return sizedBuilder.width(1920).url();
+  }
+  switch (sizeMode) {
+    case "crop":
+      return sizedBuilder
+        .width(Number(width))
+        .height(Number(height))
+        // biome-ignore lint/suspicious/noFocusedTests: Sanity image URL builder fit mode
+        .fit("crop")
+        .url();
+    case "intrinsic":
+      return sizedBuilder.width(Number(width)).url();
+    default: {
+      const _exhaustive: never = sizeMode;
+      return _exhaustive;
+    }
+  }
+}
+
+function shouldUseCssHotspot(
+  respectHotspot: boolean | undefined,
+  fill: boolean | undefined,
+  sizeMode: SanityImageFit
+): boolean {
+  if (respectHotspot === false) {
+    return false;
+  }
+  switch (sizeMode) {
+    case "crop":
+      return false;
+    case "intrinsic":
+      return Boolean(fill) || respectHotspot === true;
+    default: {
+      const _exhaustive: never = sizeMode;
+      return _exhaustive;
+    }
+  }
+}
+
 /**
  * Hotspot handling depends on layout:
  * - `fill` (default): CSS object-position from Sanity hotspot via `respectHotspot` (defaults on).
@@ -45,18 +99,12 @@ export default function SanityImage({
   }
 
   const sizedBuilder = builder.quality(Number(quality)).auto("format");
-  let url: string | undefined;
-  if (fill) {
-    url = sizedBuilder.width(1920).url();
-  } else if (fit === "crop") {
-    url = sizedBuilder
-      .width(Number(width))
-      .height(Number(height))
-      .fit("crop")
-      .url();
-  } else {
-    url = sizedBuilder.width(Number(width)).url();
-  }
+  const url = buildSizedImageUrl(sizedBuilder, {
+    fill,
+    height: Number(height),
+    sizeMode: fit,
+    width: Number(width),
+  });
 
   if (!url) {
     return null;
@@ -64,10 +112,11 @@ export default function SanityImage({
 
   const blurDataUrl = getBlurDataUrl(source);
   const imageAlt = source?.alt ?? alt ?? "";
-  const useHotspot = respectHotspot ?? Boolean(fill);
   const objectPosition =
     objectPositionProp ??
-    (useHotspot ? getHotspotObjectPosition(source) : undefined);
+    (shouldUseCssHotspot(respectHotspot, fill, fit)
+      ? getHotspotObjectPosition(source)
+      : undefined);
   const blurProps = blurDataUrl
     ? { blurDataURL: blurDataUrl, placeholder: "blur" as const }
     : {};

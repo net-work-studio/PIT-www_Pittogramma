@@ -13,13 +13,6 @@ export function hasCoverMedia(
   );
 }
 
-/** Static thumb for listings: cover image, or video poster when type is video. */
-export function hasCoverPoster(
-  cover: CoverMediaData | null | undefined
-): boolean {
-  return Boolean(cover?.image?.asset);
-}
-
 /** Prefer featuredCover when it has media; otherwise fall back to cover. */
 export function resolveJournalHeroCover(article: {
   cover?: CoverMediaData | null;

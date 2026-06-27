@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { type Ref, useCallback, useEffect, useRef, useState } from "react";
 
-import CoverPosterThumb from "@/components/modules/shared/cover-poster-thumb";
-import SanityImage from "@/components/modules/shared/sanity-image";
 import type { DESIGNERS_QUERY_RESULT } from "@/sanity/types";
 import DesignerModal from "./designer-modal";
+import DesignerPortraitThumb from "./designer-portrait-thumb";
+import DesignerProjectLink from "./designer-project-link";
 
 type Designer = DESIGNERS_QUERY_RESULT[number];
 
@@ -22,8 +21,6 @@ function DesignerListItem({
   onOpenChange?: (open: boolean) => void;
   ref?: Ref<HTMLDivElement>;
 }) {
-  const hasPortrait = Boolean(designer.portrait?.image?.asset);
-
   return (
     <div
       className="grid w-full grid-cols-12 items-start gap-2.5 border-b px-2.5 py-3 text-left transition-colors duration-75 ease-in-out hover:bg-muted max-md:grid-cols-1 max-md:gap-1"
@@ -39,21 +36,10 @@ function DesignerListItem({
             className="inline-flex items-center gap-2 transition-colors hover:text-muted-foreground"
             type="button"
           >
-            {hasPortrait ? (
-              <SanityImage
-                className="size-7 shrink-0 rounded-full object-cover"
-                fit="crop"
-                height={112}
-                source={designer.portrait}
-                width={112}
-              />
-            ) : (
-              <div className="grid size-7 shrink-0 place-items-center rounded-full bg-primary/5">
-                <span className="text-muted-foreground text-xs">
-                  {designer.name.slice(0, 1)}
-                </span>
-              </div>
-            )}
+            <DesignerPortraitThumb
+              name={designer.name}
+              portrait={designer.portrait}
+            />
             <span className="max-md:font-medium">{designer.name}</span>
           </button>
         </DesignerModal>
@@ -63,16 +49,7 @@ function DesignerListItem({
         {designer.projects && designer.projects.length > 0 ? (
           <div className="flex flex-col gap-2">
             {designer.projects.map((project) => (
-              <Link
-                className="group/project flex w-fit items-center gap-2"
-                href={`/projects/${project.slug.current}`}
-                key={project._id}
-              >
-                <CoverPosterThumb cover={project.cover} />
-                <span className="line-clamp-1 transition-opacity duration-100 ease-out group-hover/project:opacity-60">
-                  {project.title}
-                </span>
-              </Link>
+              <DesignerProjectLink key={project._id} project={project} />
             ))}
           </div>
         ) : (

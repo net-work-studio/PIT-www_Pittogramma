@@ -1,4 +1,7 @@
-import { sortEducationByYearDesc } from "@/lib/education-utils";
+import {
+  formatEducationInline,
+  sortEducationByYearDesc,
+} from "@/lib/education-utils";
 import type { DESIGNER_QUERY_RESULT } from "@/sanity/types";
 
 type Designer = NonNullable<DESIGNER_QUERY_RESULT>;
@@ -59,14 +62,7 @@ export default function DesignerInfo({
                     {sortedEducation.map(
                       (edu: NonNullable<Designer["education"]>[number]) => (
                         <li className="text-sm" key={edu._key}>
-                          {[
-                            edu.institute?.name,
-                            edu.degree,
-                            edu.courseName,
-                            edu.year,
-                          ]
-                            .filter(Boolean)
-                            .join(", ")}
+                          {formatEducationInline(edu)}
                         </li>
                       )
                     )}
