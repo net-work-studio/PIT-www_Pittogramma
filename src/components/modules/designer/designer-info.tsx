@@ -2,6 +2,7 @@ import {
   formatEducationInline,
   sortEducationByYearDesc,
 } from "@/lib/education-utils";
+import { SOCIAL_LINK_LABELS } from "@/lib/social-link-labels";
 import type { DESIGNER_QUERY_RESULT } from "@/sanity/types";
 
 type Designer = NonNullable<DESIGNER_QUERY_RESULT>;
@@ -59,13 +60,11 @@ export default function DesignerInfo({
                 </dt>
                 <dd>
                   <ul className="flex flex-col gap-1">
-                    {sortedEducation.map(
-                      (edu: NonNullable<Designer["education"]>[number]) => (
-                        <li className="text-sm" key={edu._key}>
-                          {formatEducationInline(edu)}
-                        </li>
-                      )
-                    )}
+                    {sortedEducation.map((edu) => (
+                      <li className="text-sm" key={edu._key}>
+                        {formatEducationInline(edu)}
+                      </li>
+                    ))}
                   </ul>
                 </dd>
               </div>
@@ -77,15 +76,15 @@ export default function DesignerInfo({
                 </dt>
                 <dd>
                   <ul className="flex flex-col gap-1">
-                    {links.map((link: NonNullable<typeof links>[number]) => (
+                    {links.map((link) => (
                       <li key={link._key}>
                         <a
                           className="text-sm underline"
-                          href={link.url ?? "#"}
+                          href={link.url}
                           rel="noopener noreferrer"
                           target="_blank"
                         >
-                          {link.platform}
+                          {SOCIAL_LINK_LABELS[link.platform] ?? link.platform}
                         </a>
                       </li>
                     ))}

@@ -10,6 +10,13 @@ import DesignerProjectLink from "./designer-project-link";
 
 type Designer = DESIGNERS_QUERY_RESULT[number];
 
+function clearDesignerSearchParam(searchParams: URLSearchParams) {
+  const params = new URLSearchParams(searchParams.toString());
+  params.delete("designer");
+  const qs = params.toString();
+  window.history.replaceState(null, "", `/designers${qs ? `?${qs}` : ""}`);
+}
+
 function DesignerListItem({
   designer,
   defaultOpen,
@@ -46,7 +53,7 @@ function DesignerListItem({
       </div>
 
       <div className="col-span-4 max-md:col-span-1 max-md:pl-9 max-md:text-muted-foreground max-md:text-sm">
-        {designer.projects && designer.projects.length > 0 ? (
+        {designer.projects?.length ? (
           <div className="flex flex-col gap-2">
             {designer.projects.map((project) => (
               <DesignerProjectLink key={project._id} project={project} />
@@ -86,10 +93,7 @@ export default function DesignerList({ designers }: DesignerListProps) {
 
   useEffect(() => {
     if (urlSlug && !designers.some((d) => d.slug?.current === urlSlug)) {
-      const params = new URLSearchParams(searchParams.toString());
-      params.delete("designer");
-      const qs = params.toString();
-      window.history.replaceState(null, "", `/designers${qs ? `?${qs}` : ""}`);
+      clearDesignerSearchParam(searchParams);
       setOpenSlug(null);
     }
   }, [urlSlug, designers, searchParams]);
@@ -105,10 +109,7 @@ export default function DesignerList({ designers }: DesignerListProps) {
 
   const handleModalClose = useCallback(() => {
     setOpenSlug(null);
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete("designer");
-    const qs = params.toString();
-    window.history.replaceState(null, "", `/designers${qs ? `?${qs}` : ""}`);
+    clearDesignerSearchParam(searchParams);
   }, [searchParams]);
 
   return (

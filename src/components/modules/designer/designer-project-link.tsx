@@ -1,11 +1,16 @@
 import Link from "next/link";
 
 import CoverPosterThumb from "@/components/modules/shared/cover-poster-thumb";
-import type { DESIGNERS_QUERY_RESULT } from "@/sanity/types";
+import type {
+  DESIGNERS_QUERY_RESULT,
+  PROJECT_QUERY_RESULT,
+} from "@/sanity/types";
 
-type DesignerProject = NonNullable<
-  DESIGNERS_QUERY_RESULT[number]["projects"]
->[number];
+type DesignerProject =
+  | NonNullable<DESIGNERS_QUERY_RESULT[number]["projects"]>[number]
+  | NonNullable<
+      NonNullable<PROJECT_QUERY_RESULT>["designers"][number]["projects"]
+    >[number];
 
 interface DesignerProjectLinkProps {
   project: DesignerProject;

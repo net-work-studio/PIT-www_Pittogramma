@@ -1,9 +1,8 @@
-interface EducationEntry {
-  courseName?: string | null;
-  degree?: string | null;
-  institute?: { name?: string | null } | null;
-  year?: number | null;
-}
+import type { DESIGNERS_QUERY_RESULT } from "@/sanity/types";
+
+type EducationEntry = NonNullable<
+  DESIGNERS_QUERY_RESULT[number]["education"]
+>[number];
 
 /** Shared field order: institute, course, degree. */
 export function educationTextParts(edu: EducationEntry): string[] {
@@ -13,9 +12,11 @@ export function educationTextParts(edu: EducationEntry): string[] {
 }
 
 export function formatEducationInline(edu: EducationEntry): string {
-  return [...educationTextParts(edu), edu.year]
-    .filter((part) => part !== null && part !== undefined && part !== "")
-    .join(", ");
+  const parts = educationTextParts(edu);
+  if (edu.year == null) {
+    return parts.join(", ");
+  }
+  return [...parts, edu.year].join(", ");
 }
 
 /** Most recent graduation year first; entries without a year sink to the bottom. */

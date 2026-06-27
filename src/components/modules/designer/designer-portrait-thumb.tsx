@@ -1,8 +1,13 @@
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { cn } from "@/lib/utils";
+import { getImageSource } from "@/sanity/lib/image";
 import type { DESIGNERS_QUERY_RESULT } from "@/sanity/types";
 
 type Portrait = DESIGNERS_QUERY_RESULT[number]["portrait"];
+
+export function designerInitial(name?: string | null): string {
+  return name?.trim().slice(0, 1) || "?";
+}
 
 interface DesignerPortraitThumbProps {
   className?: string;
@@ -15,7 +20,7 @@ export default function DesignerPortraitThumb({
   name,
   className,
 }: DesignerPortraitThumbProps) {
-  if (portrait?.image?.asset) {
+  if (getImageSource(portrait)) {
     return (
       <SanityImage
         className={cn("size-7 shrink-0 rounded-full object-cover", className)}
@@ -34,7 +39,9 @@ export default function DesignerPortraitThumb({
         className
       )}
     >
-      <span className="text-muted-foreground text-xs">{name?.slice(0, 1)}</span>
+      <span className="text-muted-foreground text-xs">
+        {designerInitial(name)}
+      </span>
     </div>
   );
 }

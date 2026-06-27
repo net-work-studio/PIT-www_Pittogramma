@@ -11,7 +11,9 @@ import type { CoverMedia, ImageWithMetadata } from "@/sanity/types";
 type SanityImageFit = "intrinsic" | "crop";
 
 function buildSizedImageUrl(
-  sizedBuilder: ReturnType<NonNullable<ReturnType<typeof urlForImage>>["quality"]>,
+  sizedBuilder: ReturnType<
+    NonNullable<ReturnType<typeof urlForImage>>["quality"]
+  >,
   {
     fill,
     sizeMode,
@@ -23,20 +25,22 @@ function buildSizedImageUrl(
     height: number;
     width: number;
   }
-): string | undefined {
+): string {
   if (fill) {
     return sizedBuilder.width(1920).url();
   }
   switch (sizeMode) {
     case "crop":
-      return sizedBuilder
-        .width(Number(width))
-        .height(Number(height))
-        // biome-ignore lint/suspicious/noFocusedTests: Sanity image URL builder fit mode
-        .fit("crop")
-        .url();
+      return (
+        sizedBuilder
+          .width(width)
+          .height(height)
+          // biome-ignore lint/suspicious/noFocusedTests: Sanity CDN fit mode, not Jest
+          .fit("crop")
+          .url()
+      );
     case "intrinsic":
-      return sizedBuilder.width(Number(width)).url();
+      return sizedBuilder.width(width).url();
     default: {
       const _exhaustive: never = sizeMode;
       return _exhaustive;
@@ -105,10 +109,6 @@ export default function SanityImage({
     sizeMode: fit,
     width: Number(width),
   });
-
-  if (!url) {
-    return null;
-  }
 
   const blurDataUrl = getBlurDataUrl(source);
   const imageAlt = source?.alt ?? alt ?? "";

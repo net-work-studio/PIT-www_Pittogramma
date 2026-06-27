@@ -1,6 +1,8 @@
 "use client";
 
-import DesignerModal from "@/components/modules/designer/designer-modal";
+import DesignerModal, {
+  designerHasModalContent,
+} from "@/components/modules/designer/designer-modal";
 import DesignerPortraitThumb from "@/components/modules/designer/designer-portrait-thumb";
 import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
@@ -9,20 +11,6 @@ type Designer = NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
 interface DesignerNamesRowProps {
   currentProjectId?: string;
   designers?: Designer[] | null;
-}
-
-function hasModalData(d: Designer, currentProjectId?: string): boolean {
-  const otherProjects = (d.projects ?? []).filter(
-    (p) => p._id !== currentProjectId
-  );
-  return Boolean(
-    d.bio ||
-      d.portrait?.image?.asset ||
-      d.birthYear ||
-      d.socialLinks?.links?.length ||
-      d.education?.length ||
-      otherProjects.length
-  );
 }
 
 export default function DesignerNamesRow({
@@ -38,7 +26,7 @@ export default function DesignerNamesRow({
   return (
     <div className="flex flex-wrap items-start gap-x-6 gap-y-3 text-muted-foreground text-xl">
       {namedDesigners.map((designer) => {
-        const interactive = hasModalData(designer, currentProjectId);
+        const interactive = designerHasModalContent(designer, currentProjectId);
 
         return interactive ? (
           <DesignerModal
@@ -58,10 +46,7 @@ export default function DesignerNamesRow({
             </button>
           </DesignerModal>
         ) : (
-          <span
-            className="inline-flex items-center gap-2.5"
-            key={designer._id}
-          >
+          <span className="inline-flex items-center gap-2.5" key={designer._id}>
             <DesignerPortraitThumb
               name={designer.name}
               portrait={designer.portrait}

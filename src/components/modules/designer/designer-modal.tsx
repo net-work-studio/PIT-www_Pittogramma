@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
-
+import { designerInitial } from "@/components/modules/designer/designer-portrait-thumb";
 import DesignerProjectLink from "@/components/modules/designer/designer-project-link";
 import SanityImage from "@/components/modules/shared/sanity-image";
 import {
@@ -31,6 +31,27 @@ import type {
 export type DesignerForModal =
   | DESIGNERS_QUERY_RESULT[number]
   | NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
+
+export function filterDesignerProjects(
+  projects: DesignerForModal["projects"],
+  currentProjectId?: string
+) {
+  return (projects ?? []).filter((p) => p._id !== currentProjectId);
+}
+
+export function designerHasModalContent(
+  designer: DesignerForModal,
+  currentProjectId?: string
+): boolean {
+  return Boolean(
+    designer.bio ||
+      designer.portrait?.image?.asset ||
+      designer.birthYear ||
+      designer.socialLinks?.links?.length ||
+      designer.education?.length ||
+      filterDesignerProjects(designer.projects, currentProjectId).length
+  );
+}
 
 interface DesignerModalProps {
   children: ReactNode;
@@ -120,9 +141,7 @@ function DesignerModalContent({
   const hasPortrait = Boolean(portrait?.image?.asset);
   const links = socialLinks?.links ?? [];
   const locationLine = [place?.city, place?.country].filter(Boolean).join(", ");
-  const filteredProjects = (projects ?? []).filter(
-    (p) => p._id !== currentProjectId
-  );
+  const filteredProjects = filterDesignerProjects(projects, currentProjectId);
   const sortedEducation = education ? sortEducationByYearDesc(education) : [];
 
   return (
@@ -142,7 +161,7 @@ function DesignerModalContent({
               className="absolute inset-0 grid place-items-center rounded-xl bg-primary/5 md:rounded-none md:rounded-l-xl"
             >
               <span className="text-5xl text-muted-foreground uppercase">
-                {name?.trim().slice(0, 1) ?? "?"}
+                {designerInitial(name)}
               </span>
             </div>
           )}
@@ -156,69 +175,63 @@ function DesignerModalContent({
             {birthYear ? <p>, {birthYear}</p> : null}
           </hgroup>
           {locationLine ? (
-            <p className="col-span-2 text-muted-foreground">{locationLine}</p>
+            <p className="text-muted-foreground">{locationLine}</p>
           ) : null}
         </div>
 
         {bio ? <p>{bio}</p> : null}
 
-        {filteredProjects.length > 0 ||
-        sortedEducation.length > 0 ||
-        links.length > 0 ? (
-          <div className="space-y-5">
-            {filteredProjects.length > 0 ? (
-              <section className="flex flex-col space-y-1.5">
-                <p className="font-mono text-muted-foreground text-xxs uppercase">
-                  Projects
-                </p>
-                <ul className="flex flex-col gap-2">
-                  {filteredProjects.map((project) => (
-                    <li key={project._id}>
-                      <DesignerProjectLink project={project} />
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ) : null}
+        {filteredProjects.length > 0 ? (
+          <section className="flex flex-col space-y-1.5">
+            <p className="font-mono text-muted-foreground text-xxs uppercase">
+              Projects
+            </p>
+            <ul className="flex flex-col gap-2">
+              {filteredProjects.map((project) => (
+                <li key={project._id}>
+                  <DesignerProjectLink project={project} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
 
-            {sortedEducation.length > 0 ? (
-              <section className="flex flex-col">
-                <p className="space-y-1.5 font-mono text-muted-foreground text-xxs uppercase">
-                  Education
-                </p>
-                <ul className="flex flex-col">
-                  {sortedEducation.map((edu) => (
-                    <li className="flex" key={edu._key}>
-                      <span className="w-12.5">{edu.year}</span>
-                      {educationTextParts(edu).join(", ")}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ) : null}
+        {sortedEducation.length > 0 ? (
+          <section className="flex flex-col">
+            <p className="font-mono text-muted-foreground text-xxs uppercase">
+              Education
+            </p>
+            <ul className="flex flex-col">
+              {sortedEducation.map((edu) => (
+                <li className="flex" key={edu._key}>
+                  <span className="w-12.5">{edu.year}</span>
+                  {educationTextParts(edu).join(", ")}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
 
-            {links.length > 0 ? (
-              <section className="flex flex-col">
-                <p className="space-y-1.5 font-mono text-muted-foreground text-xxs uppercase">
-                  Links
-                </p>
-                <ul className="flex flex-col">
-                  {links.map((link) => (
-                    <li key={link._key}>
-                      <a
-                        className="hover:text-muted-foreground"
-                        href={link.url}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        ↗ {SOCIAL_LINK_LABELS[link.platform] ?? link.platform}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ) : null}
-          </div>
+        {links.length > 0 ? (
+          <section className="flex flex-col">
+            <p className="font-mono text-muted-foreground text-xxs uppercase">
+              Links
+            </p>
+            <ul className="flex flex-col">
+              {links.map((link) => (
+                <li key={link._key}>
+                  <a
+                    className="hover:text-muted-foreground"
+                    href={link.url}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    ↗ {SOCIAL_LINK_LABELS[link.platform] ?? link.platform}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
         ) : null}
       </div>
     </div>
