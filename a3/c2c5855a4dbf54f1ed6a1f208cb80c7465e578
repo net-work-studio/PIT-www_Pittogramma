@@ -1,0 +1,81 @@
+src/components/modules/designer/designer-modal.tsx
+  s_c6dc81c087337b::t_66067154fa3852 239,245
+  s_c6dc81c087337b::t_0a665f1467154d 213
+  s_c6dc81c087337b::t_8445db6855a168 228
+  s_c6dc81c087337b::t_bcb26fb49a128d 173
+  s_c6dc81c087337b::t_b779bafb9dcb0d 249-250
+  s_c6dc81c087337b::t_01a688b5e11e99 220,260-261
+  s_c6dc81c087337b::t_4397897ece7357 176-178,189
+  s_c6dc81c087337b::t_cf4c051c8642bd 221-227,230-231,269
+  s_c6dc81c087337b::t_f836ea9dd9a597 7
+  s_c6dc81c087337b::t_8bce45e8de4434 242-243
+  s_c6dc81c087337b::t_8ca53019f4431c 48
+  s_c6dc81c087337b::t_c01e9aac0b6872 62
+  s_c6dc81c087337b::t_a88a94c3462408 50-53
+  s_c6dc81c087337b::t_181277997a0a88 202
+  s_c6dc81c087337b::t_6d404c421364cd 157-164,166,169
+  s_c6dc81c087337b::t_56739f14a3524a 179,186-188,190-195
+  s_c6dc81c087337b::t_7b18a3585c49b9 181
+  s_c6dc81c087337b::t_577a686752c392 165
+  s_c6dc81c087337b::t_ceb60b138a82b6 199-201
+  s_c6dc81c087337b::t_22964ebf4453db 203-205
+  s_c6dc81c087337b::t_cfa900df980194 212
+  s_c6dc81c087337b::t_a7f55fdfdd29df 214-219
+  s_c6dc81c087337b::t_48ba3f348e3028 229
+  s_c6dc81c087337b::t_58eeaf8b7b570f 232-234
+  s_c6dc81c087337b::t_5ba32a8d35f9e6 240-241
+  s_c6dc81c087337b::t_98355fb3af063e 244
+  s_c6dc81c087337b::t_5e99858eb16cef 246-248
+  s_c6dc81c087337b::t_decea0f4a062bf 251-253,257-259
+  s_c6dc81c087337b::t_65fd585fec61ed 262-264,266-268
+  s_c6dc81c087337b::t_9cc06b7c9a5e36 270-272
+src/components/modules/designer/designer-list.tsx
+  s_c6dc81c087337b::t_0cc4e8ac5c091c 71
+  s_3e398c3ff0526c::t_eea5fb4af6a6df 144
+  s_c6dc81c087337b::t_82de1c20aa1fc8 7
+CONTEXT.md
+  s_c6dc81c087337b::t_5bd4befd36ad64 90-94,96-97
+  s_c6dc81c087337b::t_55b1114dc4ad29 95
+src/components/modules/shared/logo-frame.tsx
+  s_c6dc81c087337b::t_e31c07213cd205 37,39
+src/components/resources/book-details-drawer.tsx
+  s_c6dc81c087337b::t_5267a4e9d31352 61
+src/components/modules/designer/designer-info.tsx
+  s_c6dc81c087337b::t_5199a659c80ef6 52,59
+  s_c6dc81c087337b::t_ddade1004fdbb3 1
+  s_c6dc81c087337b::t_222f314c63ed28 26
+src/lib/cover-media-utils.ts
+  s_c6dc81c087337b::t_18c4a329a27703 16-22
+src/components/modules/shared/sanity-image.tsx
+  s_c6dc81c087337b::t_2ff90b77af891b 37-38,68-70,78-83,87
+src/sanity/lib/queries.ts
+  s_c6dc81c087337b::t_56922e2913e7de 691-692
+src/sanity/types.ts
+  s_c6dc81c087337b::t_3a020fed8a2cb4 4676,4748-4768,7377
+src/sanity/schemaTypes/objects/cover-media.ts
+  s_c6dc81c087337b::t_50587b9d4d429d 26-27,32-34,37-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "a3c2c5855a4dbf54f1ed6a1f208cb80c7465e578",
+  "prompts": {},
+  "sessions": {
+    "s_3e398c3ff0526c": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "05a2f903-1de6-4587-bc63-2b28b3e8b80a",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_c6dc81c087337b": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "3e1db4e4-11da-4575-b744-a6e1a40c634f",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
