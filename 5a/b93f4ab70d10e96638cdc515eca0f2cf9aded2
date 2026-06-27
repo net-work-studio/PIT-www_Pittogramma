@@ -1,0 +1,21 @@
+src/lib/education-utils.ts
+  s_c6dc81c087337b::t_3580b7d788fd92 1-17
+src/components/modules/shared/cover-poster-thumb.tsx
+  s_c6dc81c087337b::t_1e15af6c49a067 1-36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "5ab93f4ab70d10e96638cdc515eca0f2cf9aded2",
+  "prompts": {},
+  "sessions": {
+    "s_c6dc81c087337b": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "3e1db4e4-11da-4575-b744-a6e1a40c634f",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
