@@ -12,6 +12,19 @@ export const IMAGE_FIELDS = /* groq */ `
   crop
 `;
 
+// Reusable portrait projection for person headshots
+export const PORTRAIT_FIELDS = /* groq */ `
+  portrait {
+    _type,
+    image {
+      _type,
+      ${IMAGE_FIELDS}
+    },
+    alt,
+    caption
+  }
+`;
+
 // Reusable cover media fields fragment (image + optional video)
 export const COVER_MEDIA_FIELDS = /* groq */ `
   type,

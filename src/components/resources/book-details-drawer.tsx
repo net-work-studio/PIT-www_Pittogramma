@@ -58,6 +58,7 @@ export function BookDetailsDrawer({
                 alt={book.cover?.alt || book.name || "Book cover"}
                 className="object-cover"
                 fill
+                objectFit="cover"
                 sizes="200px"
                 src={coverUrl}
                 {...(blurDataURL

@@ -25,7 +25,7 @@ export default function RecentUpdates({ items }: RecentUpdatesProps) {
   }
 
   return (
-    <section className="space-y-6 rounded-lg bg-black px-5 py-6 sm:px-6 sm:py-8">
+    <section className="space-y-6 rounded-lg bg-foreground px-5 py-6 sm:px-6 sm:py-8">
       <h2 className="font-mono text-muted text-sm uppercase">Recent Updates</h2>
 
       <ul className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 lg:grid-cols-4">
