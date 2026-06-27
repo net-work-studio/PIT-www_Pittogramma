@@ -688,7 +688,8 @@ export const PROJECT_QUERY = defineQuery(`
         "projects": *[_type == "project" && references(^._id)] | order(_createdAt desc) {
           _id,
           title,
-          slug
+          slug,
+          cover { ${COVER_MEDIA_FIELDS} }
         }
       },
       _key

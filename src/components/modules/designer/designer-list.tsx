@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { type Ref, useCallback, useEffect, useRef, useState } from "react";
 
+import CoverPosterThumb from "@/components/modules/shared/cover-poster-thumb";
 import SanityImage from "@/components/modules/shared/sanity-image";
 import type { DESIGNERS_QUERY_RESULT } from "@/sanity/types";
 import DesignerModal from "./designer-modal";
@@ -67,17 +68,7 @@ function DesignerListItem({
                 href={`/projects/${project.slug.current}`}
                 key={project._id}
               >
-                {project.cover?.image?.asset ? (
-                  <SanityImage
-                    className="aspect-4/3 h-7 w-auto shrink-0 rounded-sm object-cover transition-opacity duration-100 ease-out group-hover/project:opacity-80"
-                    fit="crop"
-                    height={80}
-                    source={project.cover}
-                    width={112}
-                  />
-                ) : (
-                  <div className="aspect-4/3 h-7 w-auto shrink-0 rounded-sm bg-primary/5" />
-                )}
+                <CoverPosterThumb cover={project.cover} />
                 <span className="line-clamp-1 transition-opacity duration-100 ease-out group-hover/project:opacity-60">
                   {project.title}
                 </span>
@@ -150,7 +141,7 @@ export default function DesignerList({ designers }: DesignerListProps) {
         <span className="col-span-4">Projects</span>
         <span className="col-span-2">City</span>
         <span className="col-span-2">Country</span>
-        <span className="col-span-1">Birth Year</span>
+        <span className="col-span-1">Year</span>
       </div>
       <div>
         {designers.map((designer) => {

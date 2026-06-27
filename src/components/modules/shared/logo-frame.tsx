@@ -34,8 +34,9 @@ function LogoImage({
     <div className={cn("relative h-full w-full", visibilityClass)}>
       <SanityImage
         alt={alt}
-        className="h-full w-full object-contain"
+        className="h-full w-full"
         fill
+        objectFit="contain"
         respectHotspot={false}
         sizes={sizes}
         source={{ image, alt }}

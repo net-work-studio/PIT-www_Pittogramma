@@ -34,6 +34,8 @@ export default function SanityImage({
   priority,
   quality = 75,
   respectHotspot,
+  objectFit = "cover",
+  objectPosition: objectPositionProp,
   style,
   ...props
 }: Props) {
@@ -63,12 +65,9 @@ export default function SanityImage({
   const blurDataUrl = getBlurDataUrl(source);
   const imageAlt = source?.alt ?? alt ?? "";
   const useHotspot = respectHotspot ?? Boolean(fill);
-  const objectPosition = useHotspot
-    ? getHotspotObjectPosition(source)
-    : undefined;
-  const imageStyle = objectPosition
-    ? { objectPosition, ...style }
-    : style;
+  const objectPosition =
+    objectPositionProp ??
+    (useHotspot ? getHotspotObjectPosition(source) : undefined);
   const blurProps = blurDataUrl
     ? { blurDataURL: blurDataUrl, placeholder: "blur" as const }
     : {};
@@ -76,11 +75,16 @@ export default function SanityImage({
   const imageProps = {
     alt: imageAlt,
     ...blurProps,
-    className: cn("object-cover", className),
+    className: cn(
+      objectFit === "contain" ? "object-contain" : "object-cover",
+      className
+    ),
+    objectFit,
+    ...(objectPosition ? { objectPosition } : {}),
     priority,
     sizes: fill ? (sizes ?? "100vw") : sizes,
     src: url,
-    style: imageStyle,
+    style,
     ...props,
   };
 

@@ -23,14 +23,22 @@ export const coverMedia = defineType({
       type: "image",
       name: "image",
       title: "Image",
-      description: "Cover image. When type is Video, used as poster thumbnail.",
+      description:
+        "Cover image. When type is Video, used as the poster in listings and before playback.",
       options: { hotspot: true },
       validation: (rule) =>
         rule.custom((value, context) => {
           const parent = context.parent as { type?: string };
-          if ((!parent?.type || parent.type === "image") && !value) {
+          const type = parent?.type ?? "image";
+
+          if (type === "image" && !value) {
             return "Image is required";
           }
+
+          if (type === "video" && !value) {
+            return "Poster image is required for video covers";
+          }
+
           return true;
         }),
     }),

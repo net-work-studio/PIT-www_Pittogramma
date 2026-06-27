@@ -1,3 +1,4 @@
+import { sortEducationByYearDesc } from "@/lib/education-utils";
 import type { DESIGNER_QUERY_RESULT } from "@/sanity/types";
 
 type Designer = NonNullable<DESIGNER_QUERY_RESULT>;
@@ -22,6 +23,7 @@ export default function DesignerInfo({
   const locationParts = [place?.city, place?.country].filter(Boolean);
 
   const links = socialLinks?.links;
+  const sortedEducation = education ? sortEducationByYearDesc(education) : [];
 
   return (
     <div className="h-fit w-full pr-10 lg:sticky lg:top-14 lg:w-1/3">
@@ -47,14 +49,14 @@ export default function DesignerInfo({
                 <dd className="text-sm">{birthYear}</dd>
               </div>
             ) : null}
-            {education?.length ? (
+            {sortedEducation.length > 0 ? (
               <div className="flex gap-x-8">
                 <dt className="font-mono text-muted-foreground text-sm uppercase">
                   Education
                 </dt>
                 <dd>
                   <ul className="flex flex-col gap-1">
-                    {education.map(
+                    {sortedEducation.map(
                       (edu: NonNullable<Designer["education"]>[number]) => (
                         <li className="text-sm" key={edu._key}>
                           {[

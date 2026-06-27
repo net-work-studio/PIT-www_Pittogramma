@@ -87,6 +87,14 @@ _Avoid_: Hiding partial rows, omitting unknown fields
 The headshot image on a Person document (`portrait`). Editors set a hotspot focal point in Studio so faces stay in frame when the image is cropped to cards, avatars, or detail layouts.
 _Avoid_: Portfolio image (there is no separate field — use `portrait`)
 
+**Cover**:
+The primary visual for a content item (project, event, interview, etc.). Either a still image or a video file.
+_Avoid_: Thumbnail, hero (as CMS field names)
+
+**Cover poster**:
+When a cover is video, the still image shown before playback and in small listings (designer rows, cards). Stored in the cover’s Image field in Studio — the same field used for image-only covers. Required when cover type is Video; legacy items without one show a placeholder on the front end until updated.
+_Avoid_: Video thumbnail, frame grab, separate poster field
+
 **Multi-location listing**:
 When a studio, agency, or type foundry has more than one Place, each Place is shown on its own row in list and grid views — city and country stay paired (e.g. Milan / Italy, then London / UK). Rows follow the editor-defined order of the `places[]` array in Sanity. Never comma-join cities and countries into separate deduplicated lists. Duplicate city–country pairs are still shown as separate rows when they are separate Place documents.
 _Avoid_: Aggregating cities and countries independently, deduplicating identical city–country pairs, sorting places alphabetically in listings
