@@ -1,0 +1,46 @@
+src/components/modules/designer/designer-portrait-thumb.tsx
+  s_a0888f6f88a820::t_77553b20fab5eb 1-40
+src/lib/education-utils.ts
+  s_a0888f6f88a820::t_c47d3d6b997b38 1,6
+  s_a0888f6f88a820::t_88b5bc0b374546 2-5,7-20
+src/components/modules/designer/designer-modal.tsx
+  s_a0888f6f88a820::t_12a880f6ccb340 6,21-33,177,193,214
+src/components/modules/designer/designer-project-link.tsx
+  s_a0888f6f88a820::t_e46e41c4cd72f0 1-31
+src/components/modules/shared/cover-poster-thumb.tsx
+  s_a0888f6f88a820::t_ecb0f03d2ca713 5,16,24
+src/lib/social-link-labels.ts
+  s_a0888f6f88a820::t_a13ba78787db97 1-19
+src/components/modules/designer/designer-info.tsx
+  s_a0888f6f88a820::t_8ba6f9d1becf92 65
+  s_a0888f6f88a820::t_0e70ef8301ab6a 1-4
+src/components/modules/designer/designer-list.tsx
+  s_a0888f6f88a820::t_c9ad5b1944c3b2 39-42,52
+  s_a0888f6f88a820::t_618b278fe58e07 8-9
+src/components/modules/project/designer-names-row.tsx
+  s_a0888f6f88a820::t_d02ce16b062965 4,53-56,65-68
+src/components/modules/shared/sanity-image.tsx
+  s_a0888f6f88a820::t_75a460b8c86bf4 13-16,18-21,23-29,44-49,51,53-54,65-66
+  s_a0888f6f88a820::t_572dd69df530f6 105
+  s_a0888f6f88a820::t_b1ed50b7ba57b9 17,22,30-34,36-43,50,52,55-64
+  s_a0888f6f88a820::t_2b0cad6874b02b 102-104,106-107,117-119
+  s_a0888f6f88a820::t_4b4035f90ed4c6 35
+src/components/modules/shared/logo-frame.tsx
+  s_a0888f6f88a820::t_4a7bbcb5d75050 4,6,8-12,18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "e231cb5dbcf5ee08561d53bee820bb7c7589f998",
+  "prompts": {},
+  "sessions": {
+    "s_a0888f6f88a820": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e8ae9d67-58ad-44d6-a2e8-5adc0cb3e000",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
