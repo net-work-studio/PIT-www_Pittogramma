@@ -7,7 +7,7 @@ interface ResourceListItemProps {
 }
 
 const rowClassName =
-  "grid grid-cols-12 gap-2.5 rounded-lg bg-muted p-2.5 transition-colors duration-75 hover:bg-foreground hover:text-background";
+  "grid w-full grid-cols-12 items-start gap-2.5 border-b px-2.5 py-3 text-left transition-colors duration-75 ease-in-out hover:bg-muted";
 
 export function ResourceListItem({
   children,

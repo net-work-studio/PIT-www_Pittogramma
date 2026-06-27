@@ -1,20 +1,25 @@
 "use client";
 
-import { useState } from "react";
-
 import { PlacesDisplay } from "@/components/resources/location-display";
 import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
-import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
+import {
+  type ResourceListColumn,
+  ResourceViewTabs,
+} from "@/components/resources/resource-view-tabs";
 import { TagsDisplay } from "@/components/resources/tags-display";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
 import { buildHrefFromUrl } from "@/lib/resource-website-url";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { TYPE_FOUNDRIES_QUERY_RESULT } from "@/sanity/types";
 
 type TypeFoundry = TYPE_FOUNDRIES_QUERY_RESULT[number];
+
+const LIST_COLUMNS: ResourceListColumn[] = [
+  { className: "col-span-8", label: "Name" },
+  { className: "col-span-2", label: "City" },
+  { className: "col-span-2", label: "Country" },
+];
 
 function TypeFoundryCard({
   foundry,
@@ -25,7 +30,11 @@ function TypeFoundryCard({
   utmSettings: UtmSettings;
   variant: "grid" | "list";
 }) {
-  const href = buildHrefFromUrl(foundry.websiteUrl, "type-foundry", utmSettings);
+  const href = buildHrefFromUrl(
+    foundry.websiteUrl,
+    "type-foundry",
+    utmSettings
+  );
 
   if (variant === "list") {
     return (
@@ -69,9 +78,6 @@ export function TypeFoundriesContent({
   searchEnabled,
   utmSettings,
 }: TypeFoundriesContentProps) {
-  const defaultView = enabledViews[0] ?? "list";
-  const [view, setView] = useState<string>(defaultView);
-
   const markers = foundries.flatMap((foundry) =>
     (foundry.places ?? []).flatMap((p) => {
       if (p?.lat == null || p.lng == null) {
@@ -90,84 +96,29 @@ export function TypeFoundriesContent({
   );
 
   return (
-    <Tabs
-      className="w-full gap-0"
-      defaultValue={defaultView}
-      onValueChange={setView}
-    >
-      <div className="sticky top-0 z-10 bg-background pt-16 pb-2.5">
-        <div className="flex w-full items-center justify-between pb-2.5">
-          {searchEnabled && <Input placeholder="Search" type="search" />}
-          {enabledViews.length > 1 && (
-            <TabsList>
-              {enabledViews.includes("list") && (
-                <TabsTrigger value="list">List</TabsTrigger>
-              )}
-              {enabledViews.includes("grid") && (
-                <TabsTrigger value="grid">Grid</TabsTrigger>
-              )}
-              {enabledViews.includes("map") && (
-                <TabsTrigger value="map">Map</TabsTrigger>
-              )}
-            </TabsList>
-          )}
-        </div>
-        {view === "list" && enabledViews.includes("list") && (
-          <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase">
-            <li className="col-span-8">Name</li>
-            <li className="col-span-2">City</li>
-            <li className="col-span-2">Country</li>
-          </ul>
-        )}
-      </div>
-
-      {enabledViews.includes("list") && (
-        <TabsContent value="list">
-          <section className="flex flex-col gap-1.5">
-            {foundries.length > 0 ? (
-              foundries.map((foundry) => (
-                <TypeFoundryCard
-                  foundry={foundry}
-                  key={foundry._id}
-                  utmSettings={utmSettings}
-                  variant="list"
-                />
-              ))
-            ) : (
-              <p className="text-center text-muted-foreground">
-                No type foundries available yet.
-              </p>
-            )}
-          </section>
-        </TabsContent>
+    <ResourceViewTabs
+      emptyMessage="No type foundries available yet."
+      enabledViews={enabledViews}
+      items={foundries}
+      listColumns={LIST_COLUMNS}
+      markers={markers}
+      renderGridItem={(foundry) => (
+        <TypeFoundryCard
+          foundry={foundry}
+          key={foundry._id}
+          utmSettings={utmSettings}
+          variant="grid"
+        />
       )}
-
-      {enabledViews.includes("grid") && (
-        <TabsContent value="grid">
-          <div className="grid grid-cols-4 gap-1.5">
-            {foundries.length > 0 ? (
-              foundries.map((foundry) => (
-                <TypeFoundryCard
-                  foundry={foundry}
-                  key={foundry._id}
-                  utmSettings={utmSettings}
-                  variant="grid"
-                />
-              ))
-            ) : (
-              <p className="col-span-4 text-center text-muted-foreground">
-                No type foundries available yet.
-              </p>
-            )}
-          </div>
-        </TabsContent>
+      renderListItem={(foundry) => (
+        <TypeFoundryCard
+          foundry={foundry}
+          key={foundry._id}
+          utmSettings={utmSettings}
+          variant="list"
+        />
       )}
-
-      {enabledViews.includes("map") && (
-        <TabsContent value="map">
-          <ResourceMapView markers={markers} />
-        </TabsContent>
-      )}
-    </Tabs>
+      searchEnabled={searchEnabled}
+    />
   );
 }
