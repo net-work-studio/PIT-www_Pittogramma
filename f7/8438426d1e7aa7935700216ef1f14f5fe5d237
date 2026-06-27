@@ -1,0 +1,40 @@
+src/components/resources/websites-content.tsx
+  s_c69275a5bbba1d::t_8e99127ad51455 5-8,19-25,90-101,103-109,111
+  s_c69275a5bbba1d::t_2c306e900c717c 112
+src/components/resources/resource-list-item.tsx
+  s_56e1ff1c57c904::t_54d857fd01b53d 10
+src/components/resources/type-foundries-content.tsx
+  s_c69275a5bbba1d::t_850c285a8ef07e 6-9,18-23,33-37,99-111,113-119,121
+  s_c69275a5bbba1d::t_da8bce9ca8cc3c 122
+src/components/resources/bookshops-content.tsx
+  s_c69275a5bbba1d::t_715d2be0b6d3fa 9-12,20-25,93-105,107-113,115
+  s_c69275a5bbba1d::t_677ef8f54d1625 116
+src/components/resources/institutes-content.tsx
+  s_c69275a5bbba1d::t_c49f6e392fb922 10-13,21-28,104-116,118-124,126-127
+src/components/resources/studios-content.tsx
+  s_c69275a5bbba1d::t_e33b41fd58b3fc 7-10,19-26,117-129,131-137,139-140
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "f78438426d1e7aa7935700216ef1f14f5fe5d237",
+  "prompts": {},
+  "sessions": {
+    "s_56e1ff1c57c904": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "b0e9b80b-8bd9-416b-b1a4-63848b5b5b99",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_c69275a5bbba1d": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "0b95bfa8-7081-466c-845c-eb5bc01f0514",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
