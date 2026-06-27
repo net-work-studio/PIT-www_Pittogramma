@@ -1,0 +1,51 @@
+src/components/modules/designer/designer-info.tsx
+  s_79c8fcb5cddf0f::t_dd08182092ec0f 63-67
+  s_79c8fcb5cddf0f::t_1c58a6b6a9b6c3 5
+  s_79c8fcb5cddf0f::t_e52fe566545b3f 79,83,87
+src/components/modules/project/designer-names-row.tsx
+  s_79c8fcb5cddf0f::t_105e47a65b330f 29
+  s_79c8fcb5cddf0f::t_7b498fa97b9321 3-5
+  s_79c8fcb5cddf0f::t_6c89bacb0e333d 49
+src/components/modules/designer/designer-project-link.tsx
+  s_79c8fcb5cddf0f::t_2610848b2d47ba 4-7,9-13
+src/components/modules/shared/sanity-image.tsx
+  s_79c8fcb5cddf0f::t_3ea36289d444d6 28,43
+  s_79c8fcb5cddf0f::t_e085f98a361084 34-41
+  s_79c8fcb5cddf0f::t_b95f68cc4a3258 14-16
+src/components/modules/designer/designer-modal.tsx
+  s_79c8fcb5cddf0f::t_dcc0f2534e9a4a 35-55
+  s_79c8fcb5cddf0f::t_2cd8795abdf87a 184-234
+  s_79c8fcb5cddf0f::t_5314c1ffe2e993 144
+  s_79c8fcb5cddf0f::t_3ac8a23b1637dd 178
+  s_79c8fcb5cddf0f::t_2f41855f4b63f2 164
+  s_79c8fcb5cddf0f::t_ce9c48bcf0fd2e 5
+src/components/modules/designer/designer-list.tsx
+  s_79c8fcb5cddf0f::t_5a0f4a65d32f8e 112
+  s_79c8fcb5cddf0f::t_90c121f992e95b 56
+  s_79c8fcb5cddf0f::t_f0ee9bcdfbaf41 13-19
+  s_79c8fcb5cddf0f::t_f5ead35564dac5 96
+src/components/modules/designer/designer-portrait-thumb.tsx
+  s_79c8fcb5cddf0f::t_14e817f602ef02 42
+  s_79c8fcb5cddf0f::t_7913a23b626565 23
+  s_79c8fcb5cddf0f::t_6c8b21807c698d 3,8-10
+  s_79c8fcb5cddf0f::t_4ddd354e6b342c 11,43-44
+src/lib/education-utils.ts
+  s_79c8fcb5cddf0f::t_be8b0d545894e5 1-5,15
+  s_79c8fcb5cddf0f::t_ad08ec3956b084 16-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "27a768639efc30f22c8b9e09b0d3b69646414902",
+  "prompts": {},
+  "sessions": {
+    "s_79c8fcb5cddf0f": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "4f1a0430-49f5-41b7-b3d2-eea2a66a869e",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
