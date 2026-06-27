@@ -1,0 +1,21 @@
+src/components/resources/resource-view-tabs.tsx
+  s_c69275a5bbba1d::t_b2281279d9e7bd 1-76,78-87,89-105
+  s_c69275a5bbba1d::t_e2188ac0511eaa 77
+  s_c69275a5bbba1d::t_222726c371d04d 88
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.3",
+  "base_commit_sha": "e2ae92203106d62cc742c337096c006c14c639c0",
+  "prompts": {},
+  "sessions": {
+    "s_c69275a5bbba1d": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "0b95bfa8-7081-466c-845c-eb5bc01f0514",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
