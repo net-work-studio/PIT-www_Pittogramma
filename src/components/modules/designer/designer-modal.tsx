@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
-
+import { designerInitial } from "@/components/modules/designer/designer-portrait-thumb";
+import DesignerProjectLink from "@/components/modules/designer/designer-project-link";
 import SanityImage from "@/components/modules/shared/sanity-image";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
   Dialog,
   DialogContent,
@@ -19,68 +18,40 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import {
+  educationTextParts,
+  sortEducationByYearDesc,
+} from "@/lib/education-utils";
+import { SOCIAL_LINK_LABELS } from "@/lib/social-link-labels";
+import type {
+  DESIGNERS_QUERY_RESULT,
+  PROJECT_QUERY_RESULT,
+} from "@/sanity/types";
 
-type SocialLinkPlatform =
-  | "behance"
-  | "bluesky"
-  | "ig"
-  | "linkedin"
-  | "linktree"
-  | "mastodon"
-  | "spotify"
-  | "substack"
-  | "tiktok"
-  | "website"
-  | "x";
+export type DesignerForModal =
+  | DESIGNERS_QUERY_RESULT[number]
+  | NonNullable<PROJECT_QUERY_RESULT>["designers"][number];
 
-interface SocialLink {
-  _key: string;
-  platform: SocialLinkPlatform;
-  url: string;
+export function filterDesignerProjects(
+  projects: DesignerForModal["projects"],
+  currentProjectId?: string
+) {
+  return (projects ?? []).filter((p) => p._id !== currentProjectId);
 }
 
-export interface DesignerForModal {
-  _id?: string;
-  bio: string | null;
-  birthYear: number | null;
-  education: Array<{
-    _key: string;
-    degree: string | null;
-    courseName?: string | null;
-    year: number | null;
-  }> | null;
-  name: string | null;
-  portrait: {
-    image?: {
-      asset?: unknown;
-      hotspot?: unknown;
-      crop?: unknown;
-    } | null;
-    alt?: string | null;
-  } | null;
-  projects?: Array<{
-    _id: string;
-    title: string | null;
-    slug: { current: string };
-  }> | null;
-  socialLinks: {
-    links?: SocialLink[] | null;
-  } | null;
+export function designerHasModalContent(
+  designer: DesignerForModal,
+  currentProjectId?: string
+): boolean {
+  return Boolean(
+    designer.bio ||
+      designer.portrait?.image?.asset ||
+      designer.birthYear ||
+      designer.socialLinks?.links?.length ||
+      designer.education?.length ||
+      filterDesignerProjects(designer.projects, currentProjectId).length
+  );
 }
-
-const PLATFORM_LABELS: Record<SocialLinkPlatform, string> = {
-  behance: "Behance",
-  bluesky: "Bluesky",
-  ig: "Instagram",
-  linkedin: "LinkedIn",
-  linktree: "Linktree",
-  mastodon: "Mastodon",
-  spotify: "Spotify",
-  substack: "Substack",
-  tiktok: "TikTok",
-  website: "Website",
-  x: "X",
-};
 
 interface DesignerModalProps {
   children: ReactNode;
@@ -125,7 +96,7 @@ export default function DesignerModal({
       <Dialog onOpenChange={handleOpenChange} open={open}>
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent
-          className="max-h-[85vh] overflow-y-auto p-10 sm:max-w-4xl"
+          className="max-h-[85vh] overflow-y-auto p-0 sm:max-w-5xl"
           onCloseAutoFocus={(e) => e.preventDefault()}
         >
           <DialogTitle className="sr-only">{titleText}</DialogTitle>
@@ -157,119 +128,112 @@ function DesignerModalContent({
   designer: DesignerForModal;
   currentProjectId?: string;
 }) {
-  const { name, portrait, bio, birthYear, socialLinks, education, projects } =
-    designer;
+  const {
+    name,
+    portrait,
+    bio,
+    birthYear,
+    place,
+    socialLinks,
+    education,
+    projects,
+  } = designer;
   const hasPortrait = Boolean(portrait?.image?.asset);
   const links = socialLinks?.links ?? [];
-  const filteredProjects = (projects ?? []).filter(
-    (p) => p._id !== currentProjectId
-  );
+  const locationLine = [place?.city, place?.country].filter(Boolean).join(", ");
+  const filteredProjects = filterDesignerProjects(projects, currentProjectId);
+  const sortedEducation = education ? sortEducationByYearDesc(education) : [];
 
   return (
-    <div className="flex flex-col gap-10">
-      {hasPortrait ? (
-        <div className="w-full max-w-sm">
-          <AspectRatio
-            className="relative overflow-hidden rounded-xl"
-            ratio={3 / 4}
-          >
+    <div className="flex w-full flex-col md:flex-row md:items-stretch">
+      <div className="aspect-3/4 w-full md:relative md:aspect-auto md:w-2/5 md:shrink-0">
+        <div className="relative h-full w-full overflow-hidden rounded-xl md:absolute md:inset-0 md:rounded-none md:rounded-l-xl">
+          {hasPortrait ? (
             <SanityImage
-              className="rounded-xl"
+              className="rounded-xl md:rounded-none md:rounded-l-xl"
               fill
               sizes="(min-width: 768px) 40vw, 100vw"
               source={portrait}
             />
-          </AspectRatio>
+          ) : (
+            <div
+              aria-hidden
+              className="absolute inset-0 grid place-items-center rounded-xl bg-primary/5 md:rounded-none md:rounded-l-xl"
+            >
+              <span className="text-5xl text-muted-foreground uppercase">
+                {designerInitial(name)}
+              </span>
+            </div>
+          )}
         </div>
-      ) : null}
-
-      <div className="flex items-start justify-between gap-6">
-        {name ? (
-          <h2 className="text-[28px] leading-tight md:text-[44px]">{name}</h2>
-        ) : null}
-        {birthYear ? (
-          <p className="text-[28px] leading-tight md:text-[44px]">
-            {birthYear}
-          </p>
-        ) : null}
       </div>
 
-      {bio ? (
-        <div className="flex flex-col">
-          <p className="text-[20px] text-muted-foreground leading-tight md:text-[32px]">
-            Bio
-          </p>
-          <p className="text-[20px] leading-tight md:text-[32px]">{bio}</p>
-        </div>
-      ) : null}
-
-      {filteredProjects.length > 0 ||
-      (education && education.length > 0) ||
-      links.length > 0 ? (
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
-          {filteredProjects.length > 0 ? (
-            <section className="flex flex-col">
-              <p className="text-[18px] text-muted-foreground leading-tight md:text-[24px]">
-                Projects
-              </p>
-              <ul className="flex flex-col">
-                {filteredProjects.map((project) => (
-                  <li
-                    className="text-[18px] leading-tight md:text-[24px]"
-                    key={project._id}
-                  >
-                    <Link href={`/projects/${project.slug.current}`}>
-                      {project.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ) : null}
-
-          {education && education.length > 0 ? (
-            <section className="flex flex-col">
-              <p className="text-[18px] text-muted-foreground leading-tight md:text-[24px]">
-                Studies
-              </p>
-              <ul className="flex flex-col">
-                {education.map((edu) => (
-                  <li
-                    className="text-[18px] leading-tight md:text-[24px]"
-                    key={edu._key}
-                  >
-                    {[edu.degree, edu.year].filter(Boolean).join(", ")}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ) : null}
-
-          {links.length > 0 ? (
-            <section className="flex flex-col">
-              <p className="text-[18px] text-muted-foreground leading-tight md:text-[24px]">
-                Contacts
-              </p>
-              <ul className="flex flex-col">
-                {links.map((link) => (
-                  <li
-                    className="text-[18px] leading-tight md:text-[24px]"
-                    key={link._key}
-                  >
-                    <a
-                      href={link.url}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      ↗ {PLATFORM_LABELS[link.platform] ?? link.platform}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
+      <div className="w-full space-y-5 p-5 max-md:px-0 max-md:pb-0 md:w-3/5">
+        <div className="flex flex-col text-base">
+          <hgroup className="flex">
+            {name ? <h2>{name}</h2> : null}
+            {birthYear ? <p>, {birthYear}</p> : null}
+          </hgroup>
+          {locationLine ? (
+            <p className="text-muted-foreground">{locationLine}</p>
           ) : null}
         </div>
-      ) : null}
+
+        {bio ? <p>{bio}</p> : null}
+
+        {filteredProjects.length > 0 ? (
+          <section className="flex flex-col space-y-1.5">
+            <p className="font-mono text-muted-foreground text-xxs uppercase">
+              Projects
+            </p>
+            <ul className="flex flex-col gap-2">
+              {filteredProjects.map((project) => (
+                <li key={project._id}>
+                  <DesignerProjectLink project={project} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        {sortedEducation.length > 0 ? (
+          <section className="flex flex-col">
+            <p className="font-mono text-muted-foreground text-xxs uppercase">
+              Education
+            </p>
+            <ul className="flex flex-col">
+              {sortedEducation.map((edu) => (
+                <li className="flex" key={edu._key}>
+                  <span className="w-12.5">{edu.year}</span>
+                  {educationTextParts(edu).join(", ")}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        {links.length > 0 ? (
+          <section className="flex flex-col">
+            <p className="font-mono text-muted-foreground text-xxs uppercase">
+              Links
+            </p>
+            <ul className="flex flex-col">
+              {links.map((link) => (
+                <li key={link._key}>
+                  <a
+                    className="hover:text-muted-foreground"
+                    href={link.url}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    ↗ {SOCIAL_LINK_LABELS[link.platform] ?? link.platform}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+      </div>
     </div>
   );
 }

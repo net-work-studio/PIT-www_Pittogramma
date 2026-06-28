@@ -1,5 +1,7 @@
 import AdvCard from "@/components/cards/adv-card";
 import BaseCard from "@/components/cards/base-card";
+import { resolveJournalHeroCover } from "@/lib/cover-media-utils";
+import { getJournalLabelConfig } from "@/lib/journal-label";
 import type {
   HOME_ADV_QUERY_RESULT,
   HOME_FEED_QUERY_RESULT,
@@ -27,17 +29,7 @@ function getCardVariant(item: EditorialItem) {
     return item._type;
   }
 
-  if (item.label === "articles") {
-    return "article";
-  }
-  if (item.label === "diary") {
-    return "diary";
-  }
-  if (item.label === "baseline") {
-    return "baseline";
-  }
-
-  return "journal";
+  return getJournalLabelConfig(item.label)?.badgeVariant ?? "journal";
 }
 
 function getAuthors(item: EditorialItem) {
@@ -88,7 +80,7 @@ function renderSlot(slot: HomeGridSlot) {
     <BaseCard
       authors={getAuthors(item)}
       href={getEditorialHref(item)}
-      image={item.cover}
+      image={item._type === "journal" ? resolveJournalHeroCover(item) : item.cover}
       key={item._id}
       title={item.title ?? ""}
       variant={getCardVariant(item)}

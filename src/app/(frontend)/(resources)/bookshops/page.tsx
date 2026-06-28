@@ -11,12 +11,13 @@ import {
   isResourceEnabled,
   isSearchEnabled,
 } from "@/lib/feature-flags";
+import { utmSettingsFromSiteSettings } from "@/lib/tracked-link";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
   sanityFetch,
 } from "@/sanity/lib/live";
-import { BOOKSHOPS_QUERY } from "@/sanity/lib/queries";
+import { BOOKSHOPS_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
 export default async function Page() {
   if (!isResourceEnabled("bookshops")) {
@@ -43,11 +44,12 @@ async function CachedBookshopsPage({
   stega,
 }: DynamicFetchOptions) {
   "use cache";
-  const { data: bookshops } = await sanityFetch({
-    query: BOOKSHOPS_QUERY,
-    perspective,
-    stega,
-  });
+  const [{ data: bookshops }, { data: settings }] = await Promise.all([
+    sanityFetch({ query: BOOKSHOPS_QUERY, perspective, stega }),
+    sanityFetch({ query: SITE_SETTINGS_QUERY, perspective, stega }),
+  ]);
+
+  const utmSettings = utmSettingsFromSiteSettings(settings);
 
   return (
     <>
@@ -63,6 +65,7 @@ async function CachedBookshopsPage({
         bookshops={bookshops}
         enabledViews={getEnabledViews("bookshops")}
         searchEnabled={isSearchEnabled("bookshops")}
+        utmSettings={utmSettings}
       />
     </>
   );

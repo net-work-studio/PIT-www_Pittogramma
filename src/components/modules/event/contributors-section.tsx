@@ -1,5 +1,9 @@
-import type { ContributorWithLogo } from "@/components/modules/event/contributor-card";
-import ContributorCard from "@/components/modules/event/contributor-card";
+import LogoFrame from "@/components/modules/shared/logo-frame";
+import type { EVENT_QUERY_RESULT } from "@/sanity/types";
+
+type ContributorWithLogo = NonNullable<
+  NonNullable<EVENT_QUERY_RESULT>["sponsors"]
+>[number];
 
 interface ContributorsSectionProps {
   partners?: ContributorWithLogo[] | null;
@@ -18,7 +22,12 @@ function ContributorGroup({
       <p className="font-mono text-xs uppercase">{label}</p>
       <div className="flex flex-wrap gap-4">
         {contributors.map((contributor) => (
-          <ContributorCard contributor={contributor} key={contributor._id} />
+          <LogoFrame
+            description={contributor.description}
+            key={contributor._id}
+            logo={contributor.logo}
+            name={contributor.name}
+          />
         ))}
       </div>
     </div>

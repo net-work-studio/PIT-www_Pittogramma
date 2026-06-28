@@ -2,7 +2,6 @@ import { CalendarIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
-import { requiredHttpUrlWhen } from "@/sanity/utils/validation";
 
 export const event = defineType({
   type: "document",
@@ -46,55 +45,6 @@ export const event = defineType({
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "string",
-      name: "status",
-      title: "Status",
-      group: "content",
-      initialValue: "coming-soon",
-      options: {
-        list: [
-          { title: "Coming soon", value: "coming-soon" },
-          { title: "Tickets available", value: "tickets-available" },
-          { title: "Free RSVP", value: "free-rsvp" },
-          { title: "Free entry", value: "free-entry" },
-          { title: "Sold out", value: "sold-out" },
-          { title: "Waitlist", value: "waitlist" },
-          { title: "Postponed", value: "postponed" },
-          { title: "Cancelled", value: "cancelled" },
-        ],
-        layout: "dropdown",
-      },
-      validation: (rule) =>
-        rule.custom((value, context) => {
-          const dateStart = (context.parent as { dateStart?: string })
-            ?.dateStart;
-          const today = new Date();
-          const localToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
-          const isFuture = !dateStart || dateStart >= localToday;
-          if (isFuture && !value) {
-            return "Status is required for upcoming events";
-          }
-          return true;
-        }),
-    }),
-    defineField({
-      type: "url",
-      name: "ctaUrl",
-      title: "CTA Link",
-      description: "External link for tickets, registration, or waitlist",
-      group: "content",
-      hidden: ({ parent }) =>
-        !["tickets-available", "free-rsvp", "waitlist"].includes(
-          parent?.status
-        ),
-      validation: requiredHttpUrlWhen((context) => {
-        const status = (context.parent as { status?: string })?.status;
-        return ["tickets-available", "free-rsvp", "waitlist"].includes(
-          status ?? ""
-        );
-      }, "A CTA link is required for this status"),
-    }),
-    defineField({
       type: "coverMedia",
       name: "cover",
       title: "Cover",
@@ -117,15 +67,32 @@ export const event = defineType({
     }),
     defineField({
       type: "string",
+      name: "attendanceMode",
+      title: "Attendance",
+      group: "content",
+      options: {
+        list: [
+          { title: "In person", value: "offline" },
+          { title: "Online", value: "online" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "offline",
+      validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "string",
       name: "locationName",
       title: "Location Name",
       group: "content",
+      hidden: ({ parent }) => parent?.attendanceMode === "online",
     }),
     defineField({
       type: "string",
       name: "locationAddress",
       title: "Location Address",
       group: "content",
+      hidden: ({ parent }) => parent?.attendanceMode === "online",
     }),
     defineField({
       type: "text",

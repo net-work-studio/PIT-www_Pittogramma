@@ -15,7 +15,7 @@ export default function SubmitDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Submit</Button>
+        <Button>Submit your project</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

@@ -12,9 +12,14 @@ import CoverMedia from "@/components/modules/shared/cover-media";
 import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { buildLocalToday, formatDateRange } from "@/lib/date-utils";
-import { getEventStatusConfig } from "@/lib/event-status";
+import { hasCoverMedia } from "@/lib/cover-media-utils";
+import { formatDateRange } from "@/lib/date-utils";
+import {
+  formatEventLocationDisplay,
+  getSchemaEventAttendanceMode,
+  getSchemaEventLocation,
+} from "@/lib/event-location";
+import { EVENT_TYPE_BADGE_VARIANT, getEventTypeLabel } from "@/lib/event-type";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoImageSource, SeoModule } from "@/lib/types/seo";
@@ -27,16 +32,6 @@ import {
   sanityFetchStaticParams,
 } from "@/sanity/lib/live";
 import { EVENT_QUERY } from "@/sanity/lib/queries";
-
-function getSchemaEventStatus(status: string | null | undefined): string {
-  if (status === "cancelled") {
-    return "https://schema.org/EventCancelled";
-  }
-  if (status === "postponed") {
-    return "https://schema.org/EventPostponed";
-  }
-  return "https://schema.org/EventScheduled";
-}
 
 export async function generateStaticParams() {
   const eventSlugsQuery = defineQuery(
@@ -115,7 +110,6 @@ async function CachedEventPage({
   stega,
 }: { slug: string } & DynamicFetchOptions) {
   "use cache";
-  const today = buildLocalToday();
   const { data: event } = await sanityFetch({
     query: EVENT_QUERY,
     params: { slug },
@@ -131,15 +125,15 @@ async function CachedEventPage({
     ? urlForImage(event.cover)?.url()
     : undefined;
 
-  const isPast = !event.dateStart || event.dateStart < today;
-  const statusConfig = getEventStatusConfig(event.status);
-  const ctaUrl = !isPast && statusConfig?.ctaLabel ? event.ctaUrl : null;
+  const typeLabel = getEventTypeLabel(event.type);
 
   const eventUrl = `${siteDefaults.baseUrl}/events/${slug}`;
 
-  const location = [event.locationName, event.locationAddress]
-    .filter(Boolean)
-    .join(" — ");
+  const location = formatEventLocationDisplay(
+    event.attendanceMode,
+    event.locationName,
+    event.locationAddress
+  );
 
   const dateDisplay = formatDateRange(event.dateStart, event.dateEnd);
 
@@ -151,17 +145,19 @@ async function CachedEventPage({
           description: event.description,
           startDate: event.dateStart,
           endDate: event.dateEnd ?? event.dateStart,
-          location: event.locationName
-            ? {
-                "@type": "Place",
-                name: event.locationName,
-                address: event.locationAddress ?? undefined,
-              }
-            : undefined,
+          location: getSchemaEventLocation(
+            event.attendanceMode,
+            event.locationName,
+            event.locationAddress,
+            eventUrl
+          ),
           image: imageUrl,
           url: eventUrl,
-          eventStatus: getSchemaEventStatus(event.status),
-          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+          eventStatus: "https://schema.org/EventScheduled",
+          eventAttendanceMode: getSchemaEventAttendanceMode(
+            event.attendanceMode,
+            event.locationName
+          ),
         }}
         type="Event"
       />
@@ -170,13 +166,11 @@ async function CachedEventPage({
         {/* Hero Section */}
         <div className="order-1 flex flex-col gap-6 px-2.5 pt-6 lg:flex-row lg:gap-10 lg:pt-16">
           <EventInfo
-            ctaUrl={event.ctaUrl}
+            attendanceMode={event.attendanceMode}
             dateEnd={event.dateEnd}
             dateStart={event.dateStart}
-            isPast={isPast}
             locationAddress={event.locationAddress}
             locationName={event.locationName}
-            status={event.status}
             tags={event.tags}
             title={event.title}
             type={event.type}
@@ -186,8 +180,7 @@ async function CachedEventPage({
               className="relative w-full overflow-hidden rounded-xl"
               ratio={4 / 3}
             >
-              {event.cover?.image?.asset ||
-              (event.cover?.type === "video" && event.cover?.videoUrl) ? (
+              {hasCoverMedia(event.cover) ? (
                 <CoverMedia
                   className="rounded-xl object-cover"
                   cover={event.cover}
@@ -235,18 +228,8 @@ async function CachedEventPage({
 
         {/* Mobile-only metadata */}
         <div className="order-6 mt-6 flex flex-col gap-4 px-2.5 lg:hidden">
-          {statusConfig ? (
-            <Badge variant={statusConfig.badgeVariant}>
-              {statusConfig.label}
-            </Badge>
-          ) : null}
-
-          {ctaUrl ? (
-            <a href={ctaUrl} rel="noopener noreferrer" target="_blank">
-              <Button className="font-mono uppercase">
-                {statusConfig?.ctaLabel}
-              </Button>
-            </a>
+          {typeLabel ? (
+            <Badge variant={EVENT_TYPE_BADGE_VARIANT}>{typeLabel}</Badge>
           ) : null}
 
           <dl className="flex flex-col gap-1">

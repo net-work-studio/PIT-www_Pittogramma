@@ -7,6 +7,7 @@ import {
   IMAGE_FIELDS,
   JOURNAL_REFERENCE_BLOCK_FIELDS,
   MEDIA_BLOCKS_FIELDS,
+  PORTRAIT_FIELDS,
   SEO_FIELDS,
 } from "./fragments";
 
@@ -160,10 +161,7 @@ export const DESIGNERS_QUERY = defineQuery(`
     _id,
     name,
     slug,
-    portrait {
-      image { ${IMAGE_FIELDS} },
-      alt
-    },
+    ${PORTRAIT_FIELDS},
     birthYear,
     bio,
     place->{ _id, name, city, country, countryCode, lat, lng },
@@ -195,15 +193,7 @@ export const DESIGNER_QUERY = defineQuery(`
     _id,
     name,
     slug,
-    portrait {
-      _type,
-      image {
-        _type,
-        ${IMAGE_FIELDS}
-      },
-      alt,
-      caption
-    },
+    ${PORTRAIT_FIELDS},
     birthYear,
     bio,
     education[] {
@@ -243,11 +233,10 @@ const EVENT_FIELDS = `
     title,
     slug,
     type,
-    status,
-    ctaUrl,
     cover { ${COVER_MEDIA_FIELDS} },
     dateStart,
     dateEnd,
+    attendanceMode,
     locationName,
     description,
     sponsors[]->{ _id, name },
@@ -256,20 +245,21 @@ const EVENT_FIELDS = `
     ${SEO_FIELDS}
 `;
 
+// Upcoming/past split uses effective end date: coalesce(dateEnd, dateStart).
 export const FUTURE_EVENTS_QUERY = defineQuery(`
-  *[_type == "event" && defined(slug.current) && dateStart >= $today] | order(dateStart asc) {
+  *[_type == "event" && defined(slug.current) && coalesce(dateEnd, dateStart) >= $today] | order(dateStart asc) {
     ${EVENT_FIELDS}
   }
 `);
 
 export const PAST_EVENTS_QUERY = defineQuery(`
-  *[_type == "event" && defined(slug.current) && dateStart < $today] | order(dateStart desc) [$start...$end] {
+  *[_type == "event" && defined(slug.current) && coalesce(dateEnd, dateStart) < $today] | order(dateStart desc) [$start...$end] {
     ${EVENT_FIELDS}
   }
 `);
 
 export const PAST_EVENTS_COUNT_QUERY = defineQuery(`
-  count(*[_type == "event" && defined(slug.current) && dateStart < $today])
+  count(*[_type == "event" && defined(slug.current) && coalesce(dateEnd, dateStart) < $today])
 `);
 
 export const EVENT_QUERY = defineQuery(`
@@ -278,11 +268,10 @@ export const EVENT_QUERY = defineQuery(`
     title,
     slug,
     type,
-    status,
-    ctaUrl,
     cover { ${COVER_MEDIA_FIELDS} },
     dateStart,
     dateEnd,
+    attendanceMode,
     locationName,
     locationAddress,
     description,
@@ -318,7 +307,7 @@ export const PROJECTS_QUERY = defineQuery(`
     cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
-    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    designers[]{ ...@->{ _id, name, slug, ${PORTRAIT_FIELDS} }, _key },
     tags[]->{
       _id,
       name,
@@ -337,7 +326,7 @@ export const PROJECTS_FILTERED_QUERY = defineQuery(`
     cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
-    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    designers[]{ ...@->{ _id, name, slug, ${PORTRAIT_FIELDS} }, _key },
     tags[]->{
       _id,
       name,
@@ -380,7 +369,7 @@ const PROJECTS_FILTERED_OLDEST_QUERY = defineQuery(`
     cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
-    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    designers[]{ ...@->{ _id, name, slug, ${PORTRAIT_FIELDS} }, _key },
     tags[]->{
       _id,
       name,
@@ -399,7 +388,7 @@ const PROJECTS_FILTERED_AZ_QUERY = defineQuery(`
     cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
-    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    designers[]{ ...@->{ _id, name, slug, ${PORTRAIT_FIELDS} }, _key },
     tags[]->{
       _id,
       name,
@@ -418,7 +407,7 @@ const PROJECTS_FILTERED_ZA_QUERY = defineQuery(`
     cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
-    designers[]{ ...@->{ _id, name, slug, portrait }, _key },
+    designers[]{ ...@->{ _id, name, slug, ${PORTRAIT_FIELDS} }, _key },
     tags[]->{
       _id,
       name,
@@ -684,7 +673,7 @@ export const PROJECT_QUERY = defineQuery(`
         _id,
         name,
         slug,
-        portrait,
+        ${PORTRAIT_FIELDS},
         bio,
         birthYear,
         place->{ city, country },
@@ -699,14 +688,16 @@ export const PROJECT_QUERY = defineQuery(`
         "projects": *[_type == "project" && references(^._id)] | order(_createdAt desc) {
           _id,
           title,
-          slug
+          slug,
+          cover { ${COVER_MEDIA_FIELDS} }
         }
       },
       _key
     },
     tags[]->{
       _id,
-      name
+      name,
+      "slug": slug.current
     },
     teachers[]{ ...@->{ _id, name }, _key },
     institute->{
@@ -881,7 +872,7 @@ export const INTERVIEW_QUERY = defineQuery(`
     slug,
     publishingDate,
     cover { ${COVER_MEDIA_FIELDS} },
-    designersAndProfessionals[]{ ...@->{ _id, name, portrait }, _key },
+    designersAndProfessionals[]{ ...@->{ _id, name, ${PORTRAIT_FIELDS} }, _key },
     interviewToType,
     studio->{
       _id,
@@ -954,6 +945,7 @@ export const BOOKSHOPS_QUERY = defineQuery(`
   *[_type == "bookshop"] | order(name asc) {
     _id,
     name,
+    "websiteUrl": socialLinks.links[platform == "website"][0].url,
     tags[]->{
       _id,
       name
@@ -986,6 +978,7 @@ export const INSTITUTES_QUERY = defineQuery(`
   *[_type == "institute"] | order(name asc) {
     _id,
     name,
+    "websiteUrl": socialLinks.links[platform == "website"][0].url,
     yearFoundation,
     languages[]->{
       _id,
@@ -1007,6 +1000,7 @@ export const STUDIOS_QUERY = defineQuery(`
   *[_type == "studio"] | order(name asc) {
     _id,
     name,
+    "websiteUrl": socialLinks.links[platform == "website"][0].url,
     description,
     cover { ${COVER_MEDIA_FIELDS} },
     category->{
@@ -1032,6 +1026,7 @@ export const TYPE_FOUNDRIES_QUERY = defineQuery(`
   *[_type == "typeFoundry"] | order(name asc) {
     _id,
     name,
+    "websiteUrl": socialLinks.links[platform == "website"][0].url,
     tags[]->{
       _id,
       name

@@ -1,6 +1,33 @@
+import type { ReactNode } from "react";
+
 interface PlaceData {
+  _id?: string;
   city?: string | null;
   country?: string | null;
+}
+
+function PlacesStack({
+  places,
+  renderPlace,
+}: {
+  places: PlaceData[] | null | undefined;
+  renderPlace: (place: PlaceData) => ReactNode;
+}) {
+  if (!places?.length) {
+    return <>-</>;
+  }
+
+  if (places.length === 1) {
+    return <>{renderPlace(places[0])}</>;
+  }
+
+  return (
+    <div className="flex flex-col">
+      {places.map((place, index) => (
+        <span key={place._id ?? index}>{renderPlace(place)}</span>
+      ))}
+    </div>
+  );
 }
 
 interface LocationDisplayProps {
@@ -39,18 +66,25 @@ export function LocationDisplay({
   return null;
 }
 
-export function CityDisplay({
-  place,
+export function PlacesDisplay({
+  places,
+  showCity = true,
+  showCountry = true,
 }: {
-  place: PlaceData | null | undefined;
+  places: PlaceData[] | null | undefined;
+  showCity?: boolean;
+  showCountry?: boolean;
 }) {
-  return <LocationDisplay place={place} showCity showCountry={false} />;
-}
-
-export function CountryDisplay({
-  place,
-}: {
-  place: PlaceData | null | undefined;
-}) {
-  return <LocationDisplay place={place} showCity={false} showCountry />;
+  return (
+    <PlacesStack
+      places={places}
+      renderPlace={(place) => (
+        <LocationDisplay
+          place={place}
+          showCity={showCity}
+          showCountry={showCountry}
+        />
+      )}
+    />
+  );
 }
