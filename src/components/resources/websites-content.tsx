@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-
 import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
+import {
+  type ResourceListColumn,
+  ResourceViewTabs,
+} from "@/components/resources/resource-view-tabs";
 import { TagsDisplay } from "@/components/resources/tags-display";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
 import { buildHrefFromUrl } from "@/lib/resource-website-url";
 import type { UtmSettings } from "@/lib/tracked-link";
@@ -15,6 +15,13 @@ import type { WEB_SOURCES_QUERY_RESULT } from "@/sanity/types";
 type WebSource = WEB_SOURCES_QUERY_RESULT[number];
 
 const WWW_PREFIX_REGEX = /^www\./;
+
+const LIST_COLUMNS: ResourceListColumn[] = [
+  { className: "col-span-4", label: "Name" },
+  { className: "col-span-2", label: "Category" },
+  { className: "col-span-2", label: "Tag" },
+  { className: "col-span-4", label: "Website" },
+];
 
 function formatUrl(url: string): string {
   try {
@@ -79,80 +86,29 @@ export function WebsitesContent({
   searchEnabled,
   utmSettings,
 }: WebsitesContentProps) {
-  const defaultView = enabledViews[0] ?? "list";
-  const [view, setView] = useState<string>(defaultView);
-
   return (
-    <Tabs
-      className="w-full gap-0"
-      defaultValue={defaultView}
-      onValueChange={setView}
-    >
-      <div className="sticky top-0 z-10 bg-background pt-16 pb-2.5">
-        <div className="flex w-full items-center justify-between pb-2.5">
-          {searchEnabled && <Input placeholder="Search" type="search" />}
-          {enabledViews.length > 1 && (
-            <TabsList>
-              {enabledViews.includes("list") && (
-                <TabsTrigger value="list">List</TabsTrigger>
-              )}
-              {enabledViews.includes("grid") && (
-                <TabsTrigger value="grid">Grid</TabsTrigger>
-              )}
-            </TabsList>
-          )}
-        </div>
-        {view === "list" && enabledViews.includes("list") && (
-          <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase">
-            <li className="col-span-4">Name</li>
-            <li className="col-span-2">Category</li>
-            <li className="col-span-2">Tag</li>
-            <li className="col-span-4">Website</li>
-          </ul>
-        )}
-      </div>
-
-      {enabledViews.includes("list") && (
-        <TabsContent value="list">
-          <section className="flex flex-col gap-1.5">
-            {sources.length > 0 ? (
-              sources.map((source) => (
-                <WebSourceCard
-                  key={source._id}
-                  source={source}
-                  utmSettings={utmSettings}
-                  variant="list"
-                />
-              ))
-            ) : (
-              <p className="text-center text-muted-foreground">
-                No websites available yet.
-              </p>
-            )}
-          </section>
-        </TabsContent>
+    <ResourceViewTabs
+      emptyMessage="No websites available yet."
+      enabledViews={enabledViews}
+      items={sources}
+      listColumns={LIST_COLUMNS}
+      renderGridItem={(source) => (
+        <WebSourceCard
+          key={source._id}
+          source={source}
+          utmSettings={utmSettings}
+          variant="grid"
+        />
       )}
-
-      {enabledViews.includes("grid") && (
-        <TabsContent value="grid">
-          <div className="grid grid-cols-4 gap-1.5">
-            {sources.length > 0 ? (
-              sources.map((source) => (
-                <WebSourceCard
-                  key={source._id}
-                  source={source}
-                  utmSettings={utmSettings}
-                  variant="grid"
-                />
-              ))
-            ) : (
-              <p className="col-span-4 text-center text-muted-foreground">
-                No websites available yet.
-              </p>
-            )}
-          </div>
-        </TabsContent>
+      renderListItem={(source) => (
+        <WebSourceCard
+          key={source._id}
+          source={source}
+          utmSettings={utmSettings}
+          variant="list"
+        />
       )}
-    </Tabs>
+      searchEnabled={searchEnabled}
+    />
   );
 }

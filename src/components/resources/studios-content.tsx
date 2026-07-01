@@ -1,20 +1,28 @@
 "use client";
 
-import { useState } from "react";
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { PlacesDisplay } from "@/components/resources/location-display";
 import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
-import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
+import {
+  ResourceViewTabs,
+  type ResourceListColumn,
+} from "@/components/resources/resource-view-tabs";
 import { TagsDisplay } from "@/components/resources/tags-display";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
 import { buildHrefFromUrl } from "@/lib/resource-website-url";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { STUDIOS_QUERY_RESULT } from "@/sanity/types";
 
 type Studio = STUDIOS_QUERY_RESULT[number];
+
+const LIST_COLUMNS: ResourceListColumn[] = [
+  { className: "col-span-4", label: "Name" },
+  { className: "col-span-2", label: "Category" },
+  { className: "col-span-2", label: "Tag" },
+  { className: "col-span-2", label: "City" },
+  { className: "col-span-2", label: "Country" },
+];
 
 function StudioCard({
   studio,
@@ -88,9 +96,6 @@ export function StudiosContent({
   searchEnabled,
   utmSettings,
 }: StudiosContentProps) {
-  const defaultView = enabledViews[0] ?? "list";
-  const [view, setView] = useState<string>(defaultView);
-
   const markers = studios.flatMap((studio) =>
     (studio.places ?? []).flatMap((p) => {
       if (p?.lat == null || p.lng == null) {
@@ -109,86 +114,29 @@ export function StudiosContent({
   );
 
   return (
-    <Tabs
-      className="w-full gap-0"
-      defaultValue={defaultView}
-      onValueChange={setView}
-    >
-      <div className="sticky top-0 z-10 bg-background pt-16 pb-2.5">
-        <div className="flex w-full items-center justify-between pb-2.5">
-          {searchEnabled && <Input placeholder="Search" type="search" />}
-          {enabledViews.length > 1 && (
-            <TabsList>
-              {enabledViews.includes("list") && (
-                <TabsTrigger value="list">List</TabsTrigger>
-              )}
-              {enabledViews.includes("grid") && (
-                <TabsTrigger value="grid">Grid</TabsTrigger>
-              )}
-              {enabledViews.includes("map") && (
-                <TabsTrigger value="map">Map</TabsTrigger>
-              )}
-            </TabsList>
-          )}
-        </div>
-        {view === "list" && enabledViews.includes("list") && (
-          <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase">
-            <li className="col-span-4">Name</li>
-            <li className="col-span-2">Category</li>
-            <li className="col-span-2">Tag</li>
-            <li className="col-span-2">City</li>
-            <li className="col-span-2">Country</li>
-          </ul>
-        )}
-      </div>
-
-      {enabledViews.includes("list") && (
-        <TabsContent value="list">
-          <section className="flex flex-col gap-1.5">
-            {studios.length > 0 ? (
-              studios.map((studio) => (
-                <StudioCard
-                  key={studio._id}
-                  studio={studio}
-                  utmSettings={utmSettings}
-                  variant="list"
-                />
-              ))
-            ) : (
-              <p className="text-center text-muted-foreground">
-                No studios or agencies available yet.
-              </p>
-            )}
-          </section>
-        </TabsContent>
+    <ResourceViewTabs
+      emptyMessage="No studios or agencies available yet."
+      enabledViews={enabledViews}
+      items={studios}
+      listColumns={LIST_COLUMNS}
+      markers={markers}
+      renderGridItem={(studio) => (
+        <StudioCard
+          key={studio._id}
+          studio={studio}
+          utmSettings={utmSettings}
+          variant="grid"
+        />
       )}
-
-      {enabledViews.includes("grid") && (
-        <TabsContent value="grid">
-          <div className="grid grid-cols-4 gap-1.5">
-            {studios.length > 0 ? (
-              studios.map((studio) => (
-                <StudioCard
-                  key={studio._id}
-                  studio={studio}
-                  utmSettings={utmSettings}
-                  variant="grid"
-                />
-              ))
-            ) : (
-              <p className="col-span-4 text-center text-muted-foreground">
-                No studios or agencies available yet.
-              </p>
-            )}
-          </div>
-        </TabsContent>
+      renderListItem={(studio) => (
+        <StudioCard
+          key={studio._id}
+          studio={studio}
+          utmSettings={utmSettings}
+          variant="list"
+        />
       )}
-
-      {enabledViews.includes("map") && (
-        <TabsContent value="map">
-          <ResourceMapView markers={markers} />
-        </TabsContent>
-      )}
-    </Tabs>
+      searchEnabled={searchEnabled}
+    />
   );
 }
