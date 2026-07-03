@@ -2,6 +2,7 @@
 
 import SanityImage from "@/components/modules/shared/sanity-image";
 import VideoPlayer from "@/components/modules/shared/video-player";
+import { hasCoverMedia } from "@/lib/cover-media-utils";
 import { urlForImage } from "@/sanity/lib/image";
 
 export interface CoverMediaData {
@@ -32,6 +33,10 @@ export default function CoverMedia({
   sizes,
 }: CoverMediaProps) {
   if (!cover) {
+    return null;
+  }
+
+  if (!hasCoverMedia(cover)) {
     return null;
   }
 

@@ -17,6 +17,7 @@ export const aboutPage = defineType({
       group: "content",
       readOnly: true,
       initialValue: "About",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "content",

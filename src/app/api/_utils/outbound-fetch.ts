@@ -252,7 +252,13 @@ export async function assertSanityProjectUser(
   }
 
   const fetcher = options.fetcher ?? fetch;
-  const verificationUrl = `https://api.sanity.io/${SANITY_PROJECT_USER_API_VERSION}/projects/${encodeURIComponent(projectId)}/users/me`;
+  // Validate against the project's data API host (`{projectId}.api.sanity.io`),
+  // which is the endpoint the Studio session token is scoped for. Using the
+  // global management host (`api.sanity.io/.../projects/{id}/users/me`) rejects
+  // valid editor tokens with a non-401 error, surfaced to the client as
+  // "Forbidden". The project ID is part of the hostname here, so this stays
+  // scoped to "is this token a member of THIS project".
+  const verificationUrl = `https://${encodeURIComponent(projectId)}.api.sanity.io/${SANITY_PROJECT_USER_API_VERSION}/users/me`;
 
   let response: Response;
   try {

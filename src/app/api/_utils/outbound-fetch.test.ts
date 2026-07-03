@@ -200,7 +200,7 @@ describe("assertSanityProjectUser", () => {
 
     expect(response).toBeNull();
     expect(verificationUrl).toBe(
-      "https://api.sanity.io/v2021-06-07/projects/project-id/users/me"
+      "https://project-id.api.sanity.io/v2021-06-07/users/me"
     );
     expect(verificationAuthorization).toBe("Bearer ok-token");
   });

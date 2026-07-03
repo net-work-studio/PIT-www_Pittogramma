@@ -8,7 +8,7 @@ import ShareLinks from "@/components/modules/project/share-links";
 import CoverMedia from "@/components/modules/shared/cover-media";
 import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Badge } from "@/components/ui/badge";
+import { DetailPageBadge } from "@/lib/content-type-badge";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -165,11 +165,9 @@ async function CachedJournalArticlePage({
           {/* Title + Excerpt + Metadata */}
           <div className="flex flex-1 flex-col justify-between gap-8">
             <hgroup className="flex flex-col gap-2">
-              {labelConfig && (
-                <Badge variant={labelConfig.badgeVariant}>
-                  {labelConfig.label}
-                </Badge>
-              )}
+              {labelConfig ? (
+                <DetailPageBadge label={labelConfig.label} />
+              ) : null}
               <h1 className="text-pretty text-3xl">{article.title}</h1>
               {article.excerpt ? (
                 <p className="text-pretty text-2xl text-muted-foreground">
@@ -228,11 +226,11 @@ async function CachedJournalArticlePage({
           {/* Cover image */}
           <div className="w-full lg:w-[49%] lg:shrink-0">
             <AspectRatio
-              className="relative w-full overflow-hidden rounded-lg"
+              className="relative w-full overflow-hidden rounded-xl"
               ratio={4 / 3}
             >
               <CoverMedia
-                className="rounded-lg object-cover"
+                className="rounded-xl object-cover"
                 cover={article.cover}
                 fill
                 priority

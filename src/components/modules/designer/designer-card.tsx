@@ -27,24 +27,24 @@ export default function DesignerCard({
   return (
     <button
       {...props}
-      className="span-col-1 group col-span-1 flex h-fit w-full cursor-pointer flex-col items-start justify-center gap-2.5 rounded-[1.25rem] text-left"
+      className="span-col-1 group col-span-1 flex h-fit w-full cursor-pointer flex-col items-start justify-center gap-2.5 rounded-card text-left"
       ref={ref}
       type="button"
     >
       <AspectRatio
-        className="relative overflow-hidden rounded-lg"
+        className="relative overflow-hidden rounded-xl"
         ratio={4 / 3}
       >
         {hasImage ? (
           <SanityImage
             alt={designer.name ?? ""}
-            className="h-full w-full rounded-lg transition-transform duration-300 group-hover:scale-105"
+            className="h-full w-full rounded-xl transition-transform duration-300 group-hover:scale-105"
             fill
             sizes="(min-width: 768px) 25vw, 50vw"
             source={designer.portrait}
           />
         ) : (
-          <div className="h-full w-full rounded-lg bg-neutral-200" />
+          <div className="h-full w-full rounded-xl bg-neutral-200" />
         )}
       </AspectRatio>
       <div className="inline-flex w-full flex-col items-start justify-start gap-3">

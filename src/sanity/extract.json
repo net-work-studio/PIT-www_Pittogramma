@@ -1407,6 +1407,13 @@
         },
         "optional": true
       },
+      "introText": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "featuredArticle": {
         "type": "objectAttribute",
         "value": {
@@ -1503,7 +1510,7 @@
         "value": {
           "type": "string"
         },
-        "optional": true
+        "optional": false
       },
       "content": {
         "type": "objectAttribute",
@@ -3568,54 +3575,6 @@
         },
         "optional": false
       },
-      "status": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "union",
-          "of": [
-            {
-              "type": "string",
-              "value": "coming-soon"
-            },
-            {
-              "type": "string",
-              "value": "tickets-available"
-            },
-            {
-              "type": "string",
-              "value": "free-rsvp"
-            },
-            {
-              "type": "string",
-              "value": "free-entry"
-            },
-            {
-              "type": "string",
-              "value": "sold-out"
-            },
-            {
-              "type": "string",
-              "value": "waitlist"
-            },
-            {
-              "type": "string",
-              "value": "postponed"
-            },
-            {
-              "type": "string",
-              "value": "cancelled"
-            }
-          ]
-        },
-        "optional": true
-      },
-      "ctaUrl": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
       "cover": {
         "type": "objectAttribute",
         "value": {
@@ -3637,6 +3596,23 @@
           "type": "string"
         },
         "optional": true
+      },
+      "attendanceMode": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "offline"
+            },
+            {
+              "type": "string",
+              "value": "online"
+            }
+          ]
+        },
+        "optional": false
       },
       "locationName": {
         "type": "objectAttribute",
@@ -4037,6 +4013,156 @@
     }
   },
   {
+    "type": "type",
+    "name": "bibliography.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "bibliography"
+    }
+  },
+  {
+    "type": "type",
+    "name": "webSource.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "webSource"
+    }
+  },
+  {
+    "type": "type",
+    "name": "glossary.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "glossary"
+    }
+  },
+  {
+    "type": "type",
+    "name": "typeFoundry.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "typeFoundry"
+    }
+  },
+  {
+    "type": "type",
+    "name": "bookshop.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "bookshop"
+    }
+  },
+  {
     "name": "journal",
     "type": "document",
     "attributes": {
@@ -4420,6 +4546,92 @@
                   "type": "inline",
                   "name": "gridFourMediaBlock"
                 }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "title": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "references": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "array",
+                      "of": {
+                        "type": "union",
+                        "of": [
+                          {
+                            "type": "inline",
+                            "name": "bibliography.reference"
+                          },
+                          {
+                            "type": "inline",
+                            "name": "webSource.reference"
+                          },
+                          {
+                            "type": "inline",
+                            "name": "glossary.reference"
+                          },
+                          {
+                            "type": "inline",
+                            "name": "person.reference"
+                          },
+                          {
+                            "type": "inline",
+                            "name": "studio.reference"
+                          },
+                          {
+                            "type": "inline",
+                            "name": "typeFoundry.reference"
+                          },
+                          {
+                            "type": "inline",
+                            "name": "institute.reference"
+                          },
+                          {
+                            "type": "inline",
+                            "name": "bookshop.reference"
+                          },
+                          {
+                            "type": "inline",
+                            "name": "project.reference"
+                          },
+                          {
+                            "type": "inline",
+                            "name": "interview.reference"
+                          },
+                          {
+                            "type": "inline",
+                            "name": "journal.reference"
+                          }
+                        ]
+                      }
+                    },
+                    "optional": false
+                  },
+                  "_type": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string",
+                      "value": "referencesBlock"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
               }
             ]
           }
@@ -4434,36 +4646,6 @@
         },
         "optional": true
       }
-    }
-  },
-  {
-    "type": "type",
-    "name": "typeFoundry.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "typeFoundry"
     }
   },
   {

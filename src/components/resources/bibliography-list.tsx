@@ -25,7 +25,7 @@ interface BookCardListProps {
 function BookCardList({ book, onClick }: BookCardListProps) {
   return (
     <ResourceListItem className="cursor-pointer transition-colors hover:bg-secondary/80">
-      <li className="col-span-3">
+      <span className="col-span-3">
         <button
           className="text-left underline hover:no-underline"
           onClick={onClick}
@@ -33,16 +33,16 @@ function BookCardList({ book, onClick }: BookCardListProps) {
         >
           {book.name}
         </button>
-      </li>
-      <li className="col-span-1">
+      </span>
+      <span className="col-span-1">
         <LanguagesDisplay languages={book.languages} />
-      </li>
-      <li className="col-span-3">{getAuthors(book.authors)}</li>
-      <li className="col-span-2">{book.publisher?.name || "-"}</li>
-      <li className="col-span-2">
+      </span>
+      <span className="col-span-3">{getAuthors(book.authors)}</span>
+      <span className="col-span-2">{book.publisher?.name || "-"}</span>
+      <span className="col-span-2">
         <TagsDisplay tags={book.tags} />
-      </li>
-      <li className="col-span-1">{book.year || "-"}</li>
+      </span>
+      <span className="col-span-1">{book.year || "-"}</span>
     </ResourceListItem>
   );
 }

@@ -12,6 +12,19 @@ export const IMAGE_FIELDS = /* groq */ `
   crop
 `;
 
+// Reusable portrait projection for person headshots
+export const PORTRAIT_FIELDS = /* groq */ `
+  portrait {
+    _type,
+    image {
+      _type,
+      ${IMAGE_FIELDS}
+    },
+    alt,
+    caption
+  }
+`;
+
 // Reusable cover media fields fragment (image + optional video)
 export const COVER_MEDIA_FIELDS = /* groq */ `
   type,
@@ -140,6 +153,28 @@ export const MEDIA_BLOCKS_FIELDS = /* groq */ `
       videoUrl,
       caption,
       alt
+    }
+  }
+`;
+
+export const JOURNAL_REFERENCE_BLOCK_FIELDS = /* groq */ `
+  _type in ["referencesBlock", "referenceBlock", "references"] => {
+    title,
+    references[]{
+      ...@->{
+        _id,
+        _type,
+        name,
+        title,
+        slug,
+        sourceUrl,
+        year,
+        description,
+        authors[]{ ...@->{ _id, name }, _key },
+        publisher->{ _id, name },
+        category->{ _id, name }
+      },
+      _key
     }
   }
 `;

@@ -11,12 +11,13 @@ import {
   isResourceEnabled,
   isSearchEnabled,
 } from "@/lib/feature-flags";
+import { utmSettingsFromSiteSettings } from "@/lib/tracked-link";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
   sanityFetch,
 } from "@/sanity/lib/live";
-import { INSTITUTES_QUERY } from "@/sanity/lib/queries";
+import { INSTITUTES_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
 export default async function Page() {
   if (!isResourceEnabled("institutes")) {
@@ -43,11 +44,12 @@ async function CachedInstitutesPage({
   stega,
 }: DynamicFetchOptions) {
   "use cache";
-  const { data: institutes } = await sanityFetch({
-    query: INSTITUTES_QUERY,
-    perspective,
-    stega,
-  });
+  const [{ data: institutes }, { data: settings }] = await Promise.all([
+    sanityFetch({ query: INSTITUTES_QUERY, perspective, stega }),
+    sanityFetch({ query: SITE_SETTINGS_QUERY, perspective, stega }),
+  ]);
+
+  const utmSettings = utmSettingsFromSiteSettings(settings);
 
   return (
     <>
@@ -63,6 +65,7 @@ async function CachedInstitutesPage({
         enabledViews={getEnabledViews("institutes")}
         institutes={institutes}
         searchEnabled={isSearchEnabled("institutes")}
+        utmSettings={utmSettings}
       />
     </>
   );

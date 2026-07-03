@@ -137,7 +137,7 @@ async function CachedEditionPage({
         <div className="w-full lg:w-2/3">
           <MediaBlocks
             blocks={(edition.gallery ?? []) as readonly MediaBlockShape[]}
-            rounded={{ single: "3xl", multi: "xl" }}
+            rounded="xl"
             showCaptions={false}
           />
           <ShareLinks title={edition.title ?? ""} url={editionUrl} />

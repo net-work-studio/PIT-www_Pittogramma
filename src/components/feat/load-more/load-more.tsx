@@ -36,7 +36,7 @@ export default function LoadMore({ currentPage, totalPages }: LoadMoreProps) {
 
   return (
     <div className="flex items-center justify-center">
-      <Button asChild className="rounded-full font-mono uppercase">
+      <Button asChild variant="mono">
         <Link href={href} scroll={false}>
           <LoadMoreLabel />
         </Link>

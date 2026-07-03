@@ -94,7 +94,7 @@ export default function AboutContent({ content }: AboutContentProps) {
           </div>
         ) : (
           <div className="mx-auto w-full max-w-[1000px]" key={group.key}>
-            <MediaBlock block={group.block} rounded="lg" showCaptions />
+            <MediaBlock block={group.block} rounded="xl" showCaptions />
           </div>
         )
       )}

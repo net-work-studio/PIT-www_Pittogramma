@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { type DynamicFetchOptions, sanityFetch } from "@/sanity/lib/live";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
-import NewsletterSignupForm from "../newsletter/newsletter-signup-form";
 import Logotype from "../brand/logotype";
+import NewsletterSignupForm from "../newsletter/newsletter-signup-form";
+
+const footerLinkListClass = "[&_a]:hover:text-muted-foreground";
 
 export default async function Footer({
   perspective,
@@ -21,7 +23,7 @@ export default async function Footer({
         {/* Col 1 */}
         <ul className="flex flex-col items-start gap-1">
           <li className="h-5">
-            <Logotype/>
+            <Logotype />
           </li>
           <li>
             <p>© {new Date().getFullYear()}. All Rights Reserved</p>
@@ -35,8 +37,19 @@ export default async function Footer({
           </li>
         </ul>
         {/* Col 2 */}
-        <ul className="">
-          {siteSettings?.instagramUrl ? (
+        <ul className={footerLinkListClass}>
+          {siteSettings?.substackUrl && (
+            <li>
+              <a
+                href={siteSettings.substackUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Subscribe to our Substack
+              </a>
+            </li>
+          )}
+          {siteSettings?.instagramUrl && (
             <li>
               <a
                 href={siteSettings.instagramUrl}
@@ -46,8 +59,8 @@ export default async function Footer({
                 Follow us on Instagram
               </a>
             </li>
-          ) : null}
-          {siteSettings?.spotifyUrl ? (
+          )}
+          {siteSettings?.spotifyUrl && (
             <li>
               <a
                 href={siteSettings.spotifyUrl}
@@ -57,11 +70,11 @@ export default async function Footer({
                 Listen our music on Spotify
               </a>
             </li>
-          ) : null}
+          )}
         </ul>
 
         {/* Col 3 */}
-        <ul>
+        <ul className={footerLinkListClass}>
           <li>
             <Link href="/submit">Submit your project</Link>
           </li>

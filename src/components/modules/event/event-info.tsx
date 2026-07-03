@@ -1,7 +1,10 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { formatDateRange } from "@/lib/date-utils";
-import { getEventStatusConfig } from "@/lib/event-status";
+import {
+  type EventAttendanceMode,
+  formatEventLocationDisplay,
+} from "@/lib/event-location";
+import { EVENT_TYPE_BADGE_VARIANT, getEventTypeLabel } from "@/lib/event-type";
 
 interface Tag {
   _id: string;
@@ -9,13 +12,11 @@ interface Tag {
 }
 
 interface EventInfoProps {
-  ctaUrl?: string | null;
+  attendanceMode?: EventAttendanceMode | null;
   dateEnd?: string | null;
   dateStart?: string | null;
-  isPast?: boolean;
   locationAddress?: string | null;
   locationName?: string | null;
-  status?: string | null;
   tags?: Tag[] | null;
   title?: string | null;
   type?: string | null;
@@ -24,19 +25,20 @@ interface EventInfoProps {
 export default function EventInfo({
   title,
   type,
-  status,
-  ctaUrl,
   dateStart,
   dateEnd,
+  attendanceMode,
   locationName,
   locationAddress,
   tags,
-  isPast,
 }: EventInfoProps) {
-  const statusConfig = getEventStatusConfig(status);
-  const showCta = !isPast && statusConfig?.ctaLabel && ctaUrl;
+  const typeLabel = getEventTypeLabel(type);
 
-  const location = [locationName, locationAddress].filter(Boolean).join(" — ");
+  const location = formatEventLocationDisplay(
+    attendanceMode,
+    locationName,
+    locationAddress
+  );
 
   const dateDisplay = formatDateRange(dateStart, dateEnd);
 
@@ -46,26 +48,11 @@ export default function EventInfo({
         {title ? (
           <h1 className="text-3xl leading-tight lg:text-[2rem]">{title}</h1>
         ) : null}
-        {type ? (
-          <h2 className="text-base text-muted-foreground uppercase leading-tight lg:text-2xl">
-            {type}
-          </h2>
-        ) : null}
       </hgroup>
 
       <div className="flex flex-col gap-4">
-        {statusConfig ? (
-          <Badge variant={statusConfig.badgeVariant}>
-            {statusConfig.label}
-          </Badge>
-        ) : null}
-
-        {showCta ? (
-          <a href={ctaUrl} rel="noopener noreferrer" target="_blank">
-            <Button className="font-mono uppercase">
-              {statusConfig.ctaLabel}
-            </Button>
-          </a>
+        {typeLabel ? (
+          <Badge variant={EVENT_TYPE_BADGE_VARIANT}>{typeLabel}</Badge>
         ) : null}
       </div>
 

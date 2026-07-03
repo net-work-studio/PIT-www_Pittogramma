@@ -19,7 +19,7 @@ export const institute = defineType({
     defineField({
       type: "number",
       name: "yearFoundation",
-      title: "Year Foundation",
+      title: "Since",
       validation: (e) =>
         e
           .required()
@@ -29,7 +29,7 @@ export const institute = defineType({
               value &&
               (value < minYearFoundation || value > maxYearFoundation)
             ) {
-              return "Year foundation must be exactly 4 digits";
+              return "Since must be exactly 4 digits";
             }
             return true;
           }),
