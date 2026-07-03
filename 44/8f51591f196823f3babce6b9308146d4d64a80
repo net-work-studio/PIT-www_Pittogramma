@@ -1,0 +1,62 @@
+pittogramma-countdown.html
+  s_714acfbfdc08ec::t_41a9b8433c417a 119
+  s_1c342f28372353::t_783c4177820b19 145-153,156,160-161,164-168,170-171,173-177,180-183,185-186
+  s_1c342f28372353::t_c2c54f3fd9a3a9 46,54,69,73,78,92
+  s_1c342f28372353::t_f9e3a9e99dfd02 115
+  s_21a227c2666c15::t_1dc8b173425637 61
+  s_1c342f28372353::t_924c3091b36a52 10,52-53,59
+  s_21a227c2666c15::t_0fdf172df2f51a 66-68
+  s_21a227c2666c15::t_ee8cdb41d11854 38
+  s_aa3833a8a7c59d::t_0d6aece04a2aba 144,154-155,157,169,172
+  s_714acfbfdc08ec::t_24c4c1ba264299 70,158,162,178,187
+  s_1c342f28372353::t_826339c6908235 1-9,11-37,39-45,47-51,55-58,60,62,65,72,74,76-77,79-81,83-89,91,93-114,116-118,120-123,125-127,129-131,133-135,137-143,188-190
+  s_1c342f28372353::t_a78975ff01a11e 63-64
+  s_1c342f28372353::t_47048d4c991a4e 75
+  s_1c342f28372353::t_af028124907e91 82
+  s_1c342f28372353::t_4ae54bba34320a 90
+  s_1c342f28372353::t_a9c9fcd1cb2dfa 124
+  s_1c342f28372353::t_1deb3e2e7ce6c9 128
+  s_1c342f28372353::t_be3621a92106b3 132
+  s_1c342f28372353::t_b20712c41f4450 136
+  s_1c342f28372353::t_789b2e28bc6e25 184
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "448f51591f196823f3babce6b9308146d4d64a80",
+  "prompts": {},
+  "sessions": {
+    "s_1c342f28372353": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "a77644ed-8a96-47e7-8408-33584b8d1538",
+        "model": "gpt-5.5"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_21a227c2666c15": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "3f59ce6c-5bf8-4df8-a0e8-e3e35db8e627",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_714acfbfdc08ec": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "5fb78a79-d11f-4415-9a5d-af7962a40faa",
+        "model": "gpt-5.5-high"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_aa3833a8a7c59d": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "8ddc1e3d-6ca0-470c-a854-7a25870ebd2f",
+        "model": "gpt-5.5-high"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
