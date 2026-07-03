@@ -1,0 +1,40 @@
+src/lib/newsletter/substack-url-map.test.ts
+  s_ad803c8115bcff::t_410ed8ceea0015 68
+  s_ad803c8115bcff::t_d977b63f252bd1 3
+  s_ad803c8115bcff::t_a5542073880f5c 67,69
+src/components/newsletter/newsletter-signup-form.tsx
+  s_ad803c8115bcff::t_5af84f9fe67bf4 121
+src/app/api/newsletter/subscribe/route.ts
+  s_ad803c8115bcff::t_22e60eb0362aa6 53
+  s_ad803c8115bcff::t_d20c68f018f4ed 3
+src/app/api/newsletter/subscribe/route.test.ts
+  s_ad803c8115bcff::t_ab4348c1639314 5
+src/lib/newsletter/substack-url-map.ts
+  s_ad803c8115bcff::t_10f02dc52b9877 99,103-110
+src/lib/newsletter/preview.ts
+  s_ad803c8115bcff::t_f1189b9555c369 1-2,20-22,24,54-58,65
+scripts/validate-substack-url-map.ts
+  s_ad803c8115bcff::t_58b12483e65af0 62-63,66-67
+scripts/export-newsletter-preview.ts
+  s_ad803c8115bcff::t_947d6292f6769f 49
+  s_ad803c8115bcff::t_23f312f1c56b72 15,17
+  s_ad803c8115bcff::t_ac56dff27c019c 29
+src/lib/newsletter/parse-subscribe-body.ts
+  s_ad803c8115bcff::t_8f3ab3f48d1eb1 19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "84ee09c15e73d23c47ec674e1dbc8058e8892ac4",
+  "prompts": {},
+  "sessions": {
+    "s_ad803c8115bcff": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "aa6f2139-8687-4d70-aacf-ae32ec92d404",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
