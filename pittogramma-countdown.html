@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Pittogramma is coming soon</title>
+    <style>
+    :root {
+      --background: #ffffff;
+      --foreground: #111111;
+      --muted: #6f6b64;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--foreground);
+      font-family: "FT Aktual", "Aktual", "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    main {
+      display: grid;
+      min-height: 100vh;
+      min-height: 100dvh;
+      place-items: center;
+      padding: clamp(24px, 6vw, 80px);
+    }
+
+    .card {
+      display: grid;
+      justify-items: center;
+      width: min(100%, 920px);
+      text-align: center;
+    }
+
+    .logo {
+      display: block;
+      width: auto;
+      height: 32px;
+      margin-bottom: clamp(24px, 5vw, 48px);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 8vw, 40px);
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, auto);
+      justify-content: center;
+      gap: clamp(12px, 4vw, 24px);
+      margin-top: clamp(24px, 5vw, 48px);
+    }
+
+    .time-unit {
+      padding-top: 0;
+    }
+
+    .time-value {
+      display: block;
+      font-size: 24px;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    .time-label {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .date {
+      margin-top: clamp(16px, 3vw, 28px);
+      color: var(--muted);
+      font-size: 14px;
+    }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="card" aria-labelledby="page-title">
+        <svg
+          class="logo"
+          fill="none"
+          role="img"
+          viewBox="0 0 15 17"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title>Pittogramma</title>
+          <path
+            d="M8.938 1.895H5.1V7.56h3.84zM14.692 17h-1.915V1.895h-1.924V17H8.938V9.439H5.1q-1.977 0-3.389-1.39-1.402-1.4-1.402-3.32 0-1.95 1.411-3.339Q3.14 0 5.1 0h9.593z"
+            fill="currentColor"
+          />
+        </svg>
+
+        <h1 id="page-title">A new version of Pittogramma is coming soon.</h1>
+
+        <div
+          class="countdown"
+          role="timer"
+          aria-label="Countdown to 1 September 2026 at midnight Italy time"
+        >
+          <span class="time-unit">
+            <span class="time-value" data-unit="days">00</span>
+            <span class="time-label">D</span>
+          </span>
+          <span class="time-unit">
+            <span class="time-value" data-unit="hours">00</span>
+            <span class="time-label">H</span>
+          </span>
+          <span class="time-unit">
+            <span class="time-value" data-unit="minutes">00</span>
+            <span class="time-label">M</span>
+          </span>
+          <span class="time-unit">
+            <span class="time-value" data-unit="seconds">00</span>
+            <span class="time-label">S</span>
+          </span>
+        </div>
+
+        <p class="date">Launching 1 September 2026, 00:00 CEST.</p>
+      </section>
+    </main>
+
+    <script>
+    "use strict";
+
+    const deadlineTime = new Date("2026-09-01T00:00:00+02:00").getTime();
+    const millisecondsPerSecond = 1000;
+    const secondsPerMinute = 60;
+    const secondsPerHour = secondsPerMinute * 60;
+    const secondsPerDay = secondsPerHour * 24;
+    const pageTitle = document.querySelector("#page-title");
+    const units = {
+      days: document.querySelector('[data-unit="days"]'),
+      hours: document.querySelector('[data-unit="hours"]'),
+      minutes: document.querySelector('[data-unit="minutes"]'),
+      seconds: document.querySelector('[data-unit="seconds"]'),
+    };
+
+    function pad(value) {
+      return String(value).padStart(2, "0");
+    }
+
+    function updateCountdown() {
+      const remaining = Math.max(0, deadlineTime - Date.now());
+      const totalSeconds = Math.floor(remaining / millisecondsPerSecond);
+
+      const days = Math.floor(totalSeconds / secondsPerDay);
+      const hours = Math.floor((totalSeconds % secondsPerDay) / secondsPerHour);
+      const minutes = Math.floor(
+        (totalSeconds % secondsPerHour) / secondsPerMinute
+      );
+      const seconds = totalSeconds % secondsPerMinute;
+
+      units.days.textContent = String(days);
+      units.hours.textContent = pad(hours);
+      units.minutes.textContent = pad(minutes);
+      units.seconds.textContent = pad(seconds);
+
+      if (remaining === 0) {
+        pageTitle.textContent =
+          "The new version of Pittogramma is launching now.";
+      }
+    }
+
+    updateCountdown();
+    window.setInterval(updateCountdown, 1000);
+    </script>
+  </body>
+</html>
