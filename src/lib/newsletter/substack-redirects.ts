@@ -1,4 +1,4 @@
-import { validateSubstackUrlMapStructure } from "@/lib/newsletter/substack-url-map";
+import { validateSubstackUrlMapStructure } from "./substack-url-map";
 import substackUrlMap from "../../../data/substack-url-map.json";
 
 export function getSubstackRedirects(): Array<{
