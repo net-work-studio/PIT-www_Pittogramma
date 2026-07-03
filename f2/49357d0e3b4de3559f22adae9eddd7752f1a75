@@ -1,0 +1,19 @@
+src/lib/newsletter/substack-redirects.ts
+  s_9bc97ce9cb917b::t_ec83ea053bb1ef 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "f249357d0e3b4de3559f22adae9eddd7752f1a75",
+  "prompts": {},
+  "sessions": {
+    "s_9bc97ce9cb917b": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "cc36448b-f67d-48d9-8b02-cdb986368a7c",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
