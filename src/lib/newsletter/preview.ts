@@ -1,3 +1,5 @@
+import { getJournalHeroCover } from "@/lib/cover-media-utils";
+import { resolveInternalLink } from "@/lib/resolve-link";
 import { urlForImage } from "@/sanity/lib/image";
 import type { NEWSLETTER_PREVIEW_QUERY_RESULT } from "@/sanity/types";
 
@@ -14,35 +16,17 @@ export interface NewsletterPreviewBlock {
   title: string;
 }
 
-function getPreviewCover(item: NewsletterPreviewItem) {
-  if (item._type === "journal") {
-    return item.featuredCover ?? item.cover;
-  }
-
-  return item.cover;
-}
-
 function getPreviewImageUrl(item: NewsletterPreviewItem): string | null {
+  const cover =
+    item._type === "journal" ? getJournalHeroCover(item) : item.cover;
+
   return (
-    urlForImage(getPreviewCover(item))
+    urlForImage(cover)
       ?.width(1200)
       .height(630)
       .auto("format")
       .url() ?? null
   );
-}
-
-function getPreviewDestinationUrl(
-  item: NewsletterPreviewItem,
-  baseUrl: string
-): string {
-  const slug = item.slug.current;
-
-  if (item._type === "project") {
-    return `${baseUrl}/projects/${slug}`;
-  }
-
-  return `${baseUrl}/journal/${slug}`;
 }
 
 function getPreviewExcerpt(item: NewsletterPreviewItem): string {
@@ -67,13 +51,18 @@ export function toNewsletterPreviewBlock(
   item: NewsletterPreviewItem,
   baseUrl: string
 ): NewsletterPreviewBlock {
+  const path = resolveInternalLink({
+    _type: item._type,
+    slug: item.slug,
+  });
+
   return {
     contentType: item._type,
     title: item.title.trim() || "Untitled",
     excerpt: getPreviewExcerpt(item),
     imageUrl: getPreviewImageUrl(item),
     ctaText: "Read more",
-    destinationUrl: getPreviewDestinationUrl(item, baseUrl),
+    destinationUrl: path ? `${baseUrl}${path}` : baseUrl,
     publishedDate: item.publishingDate.date ?? null,
     byline: getPreviewByline(item),
   };

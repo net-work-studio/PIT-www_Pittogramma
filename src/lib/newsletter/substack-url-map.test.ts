@@ -1,9 +1,6 @@
 import { describe, expect, test } from "bun:test";
 
-import {
-  SubstackUrlMapError,
-  validateSubstackUrlMapStructure,
-} from "@/lib/newsletter/substack-url-map";
+import { validateSubstackUrlMapStructure } from "@/lib/newsletter/substack-url-map";
 
 describe("validateSubstackUrlMapStructure", () => {
   test("accepts valid map with fallback", () => {
@@ -67,10 +64,8 @@ describe("validateSubstackUrlMapStructure", () => {
   });
 
   test("throws SubstackUrlMapError", () => {
-    try {
-      validateSubstackUrlMapStructure(null);
-    } catch (error) {
-      expect(error).toBeInstanceOf(SubstackUrlMapError);
-    }
+    expect(() => validateSubstackUrlMapStructure(null)).toThrow(
+      "Substack URL map must be an object"
+    );
   });
 });

@@ -59,20 +59,12 @@ async function main() {
     const label = `mappings[${index}]`;
     const parsed = parseDestinationPath(entry.destination);
 
-    if (parsed.type === "journal" && parsed.slug) {
-      if (!journalSet.has(parsed.slug)) {
-        errors.push(
-          `${label}: journal slug not found in Sanity (${parsed.slug})`
-        );
-      }
+    if (parsed.type === "journal" && !journalSet.has(parsed.slug)) {
+      errors.push(`${label}: journal slug not found in Sanity (${parsed.slug})`);
     }
 
-    if (parsed.type === "project" && parsed.slug) {
-      if (!projectSet.has(parsed.slug)) {
-        errors.push(
-          `${label}: project slug not found in Sanity (${parsed.slug})`
-        );
-      }
+    if (parsed.type === "project" && !projectSet.has(parsed.slug)) {
+      errors.push(`${label}: project slug not found in Sanity (${parsed.slug})`);
     }
   }
 

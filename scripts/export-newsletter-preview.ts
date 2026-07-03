@@ -12,7 +12,9 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import { createClient } from "@sanity/client";
 
+import { buildLocalToday } from "../src/lib/date-utils";
 import { toNewsletterPreviewBlock } from "../src/lib/newsletter/preview";
+import { siteDefaults } from "../src/lib/seo/site-defaults";
 import { NEWSLETTER_PREVIEW_QUERY } from "../src/sanity/lib/queries";
 import type { NEWSLETTER_PREVIEW_QUERY_RESULT } from "../src/sanity/types";
 
@@ -24,7 +26,7 @@ const outputPath = outputArg?.split("=")[1];
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://pittogramma.xyz";
+const baseUrl = siteDefaults.baseUrl;
 
 if (!(projectId && dataset)) {
   console.error(
@@ -41,17 +43,10 @@ const client = createClient({
 });
 
 async function main() {
-  const today = new Date();
-  const todayString = [
-    today.getFullYear(),
-    String(today.getMonth() + 1).padStart(2, "0"),
-    String(today.getDate()).padStart(2, "0"),
-  ].join("-");
-
   const items = await client.fetch<NEWSLETTER_PREVIEW_QUERY_RESULT>(
     NEWSLETTER_PREVIEW_QUERY,
     {
-      today: todayString,
+      today: buildLocalToday(),
       limit,
     }
   );

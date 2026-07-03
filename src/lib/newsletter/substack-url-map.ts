@@ -96,14 +96,18 @@ export function validateSubstackUrlMapStructure(raw: unknown): SubstackUrlMap {
 
   return {
     mappings,
-    ...(typeof fallbackDestination === "string" ? { fallbackDestination } : {}),
+    ...(fallbackDestination !== undefined && { fallbackDestination }),
   };
 }
 
-export function parseDestinationPath(destination: string): {
-  slug?: string;
-  type: "journal" | "project" | "static";
-} {
+export type ParsedDestinationPath =
+  | { slug: string; type: "journal" }
+  | { slug: string; type: "project" }
+  | { type: "static" };
+
+export function parseDestinationPath(
+  destination: string
+): ParsedDestinationPath {
   const journalMatch = destination.match(JOURNAL_DESTINATION_REGEX);
   if (journalMatch) {
     return { type: "journal", slug: journalMatch[1] };

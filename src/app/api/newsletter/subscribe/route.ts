@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 
-import {
-  assertAllowedOrigin,
-  OutboundFetchError,
-} from "@/app/api/_utils/outbound-fetch";
+import { assertAllowedOrigin } from "@/app/api/_utils/outbound-fetch";
 import { BrevoApiError, createDoiContact } from "@/lib/brevo/client";
 import { getBrevoNewsletterConfig } from "@/lib/env/newsletter";
 import {
@@ -53,16 +50,7 @@ export async function POST(request: Request) {
         { headers: NO_STORE_HEADERS, status: error.status }
       );
     }
-    if (error instanceof OutboundFetchError) {
-      return NextResponse.json(
-        { ok: false, error: error.message },
-        { headers: NO_STORE_HEADERS, status: error.status }
-      );
-    }
-    return NextResponse.json(
-      { ok: false, error: "Invalid subscription request" },
-      { headers: NO_STORE_HEADERS, status: 400 }
-    );
+    throw error;
   }
 
   if (parseResult.kind === "bot") {

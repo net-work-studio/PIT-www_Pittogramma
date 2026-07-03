@@ -118,7 +118,7 @@ export default function NewsletterSignupForm({
           value={email}
         />
         <Button
-          className={cn(compact ? "w-full sm:w-auto" : "w-full sm:w-auto")}
+          className="w-full sm:w-auto"
           disabled={status === "loading" || status === "success"}
           size="sm"
           type="submit"

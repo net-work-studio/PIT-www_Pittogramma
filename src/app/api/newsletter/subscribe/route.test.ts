@@ -2,10 +2,7 @@ import { afterEach, describe, expect, mock, test } from "bun:test";
 
 import { BrevoApiError, createDoiContact } from "@/lib/brevo/client";
 import { getBrevoNewsletterConfig } from "@/lib/env/newsletter";
-import {
-  isHoneypotTriggered,
-  parseSubscribeBody,
-} from "@/lib/newsletter/parse-subscribe-body";
+import { parseSubscribeBody } from "@/lib/newsletter/parse-subscribe-body";
 import { validateEmail } from "@/lib/newsletter/validate-email";
 import { POST } from "./route";
 
@@ -94,11 +91,6 @@ describe("parseSubscribeBody", () => {
         website: "https://spam.example",
       })
     ).toEqual({ kind: "bot" });
-  });
-
-  test("detects honeypot field", () => {
-    expect(isHoneypotTriggered("bot")).toBe(true);
-    expect(isHoneypotTriggered("")).toBe(false);
   });
 });
 

@@ -16,7 +16,7 @@ export class SubscribeParseError extends Error {
   }
 }
 
-export function isHoneypotTriggered(website: unknown): boolean {
+function isHoneypotTriggered(website: unknown): boolean {
   return typeof website === "string" && website.trim() !== "";
 }
 
