@@ -7,13 +7,25 @@ import {
 import { BrevoApiError, createDoiContact } from "@/lib/brevo/client";
 import { getBrevoNewsletterConfig } from "@/lib/env/newsletter";
 import {
-  isHoneypotTriggered,
   parseSubscribeBody,
   SubscribeParseError,
+  type SubscribeParseResult,
 } from "@/lib/newsletter/parse-subscribe-body";
-import type { NewsletterSubscribeRequest } from "@/lib/newsletter/types";
 
 const NO_STORE_HEADERS = { "Cache-Control": "no-store" };
+
+const SUBSCRIBE_SUCCESS_MESSAGE =
+  "Thanks for subscribing. Please check your email to confirm your subscription.";
+
+function subscribeSuccessResponse() {
+  return NextResponse.json(
+    {
+      ok: true,
+      message: SUBSCRIBE_SUCCESS_MESSAGE,
+    },
+    { headers: NO_STORE_HEADERS, status: 200 }
+  );
+}
 
 export async function POST(request: Request) {
   const originError = assertAllowedOrigin(request);
@@ -31,24 +43,9 @@ export async function POST(request: Request) {
     );
   }
 
-  if (
-    body &&
-    typeof body === "object" &&
-    isHoneypotTriggered((body as Record<string, unknown>).website)
-  ) {
-    return NextResponse.json(
-      {
-        ok: true,
-        message:
-          "Thanks for subscribing. Please check your email to confirm your subscription.",
-      },
-      { headers: NO_STORE_HEADERS, status: 200 }
-    );
-  }
-
-  let parsed: NewsletterSubscribeRequest;
+  let parseResult: SubscribeParseResult;
   try {
-    parsed = parseSubscribeBody(body);
+    parseResult = parseSubscribeBody(body);
   } catch (error) {
     if (error instanceof SubscribeParseError) {
       return NextResponse.json(
@@ -68,6 +65,11 @@ export async function POST(request: Request) {
     );
   }
 
+  if (parseResult.kind === "bot") {
+    return subscribeSuccessResponse();
+  }
+
+  const parsed = parseResult.request;
   const brevoConfig = getBrevoNewsletterConfig();
   if (!brevoConfig.configured) {
     return NextResponse.json(
@@ -109,12 +111,5 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.json(
-    {
-      ok: true,
-      message:
-        "Thanks for subscribing. Please check your email to confirm your subscription.",
-    },
-    { headers: NO_STORE_HEADERS, status: 200 }
-  );
+  return subscribeSuccessResponse();
 }

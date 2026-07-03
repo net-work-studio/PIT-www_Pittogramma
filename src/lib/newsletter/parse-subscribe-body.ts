@@ -20,7 +20,11 @@ export function isHoneypotTriggered(website: unknown): boolean {
   return typeof website === "string" && website.trim() !== "";
 }
 
-export function parseSubscribeBody(body: unknown): NewsletterSubscribeRequest {
+export type SubscribeParseResult =
+  | { kind: "bot" }
+  | { kind: "valid"; request: NewsletterSubscribeRequest };
+
+export function parseSubscribeBody(body: unknown): SubscribeParseResult {
   if (!body || typeof body !== "object") {
     throw new SubscribeParseError("Invalid JSON body");
   }
@@ -43,7 +47,7 @@ export function parseSubscribeBody(body: unknown): NewsletterSubscribeRequest {
   }
 
   if (isHoneypotTriggered(website)) {
-    throw new SubscribeParseError("Invalid subscription request", 400);
+    return { kind: "bot" };
   }
 
   const emailResult = validateEmail(email);
@@ -52,8 +56,11 @@ export function parseSubscribeBody(body: unknown): NewsletterSubscribeRequest {
   }
 
   return {
-    email: emailResult.email,
-    source,
-    website: typeof website === "string" ? website : undefined,
+    kind: "valid",
+    request: {
+      email: emailResult.email,
+      source,
+      website: typeof website === "string" ? website : undefined,
+    },
   };
 }

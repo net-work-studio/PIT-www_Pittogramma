@@ -6,20 +6,14 @@
  *   bun run scripts/validate-substack-url-map.ts
  */
 
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { createClient } from "@sanity/client";
 
-interface SubstackUrlMapping {
-  destination: string;
-  note?: string;
-  source: string;
-}
-
-interface SubstackUrlMap {
-  fallbackDestination?: string;
-  mappings: SubstackUrlMapping[];
-}
+import {
+  parseDestinationPath,
+  validateSubstackUrlMapStructure,
+} from "../src/lib/newsletter/substack-url-map";
 
 const MAP_PATH = join(process.cwd(), "data/substack-url-map.json");
 
@@ -43,39 +37,9 @@ const client = createClient({
 const JOURNAL_SLUGS_QUERY = `*[_type == "journal" && defined(slug.current)].slug.current`;
 const PROJECT_SLUGS_QUERY = `*[_type == "project" && defined(slug.current)].slug.current`;
 
-function loadMap(): SubstackUrlMap {
-  if (!existsSync(MAP_PATH)) {
-    throw new Error(`Mapping file not found: ${MAP_PATH}`);
-  }
-
-  const parsed = JSON.parse(readFileSync(MAP_PATH, "utf-8")) as SubstackUrlMap;
-
-  if (!Array.isArray(parsed.mappings)) {
-    throw new Error("Invalid map: mappings must be an array");
-  }
-
-  return parsed;
-}
-
-function parseDestinationPath(destination: string): {
-  type: "journal" | "project" | "static";
-  slug?: string;
-} {
-  const journalMatch = destination.match(/^\/journal\/([^/]+)$/);
-  if (journalMatch) {
-    return { type: "journal", slug: journalMatch[1] };
-  }
-
-  const projectMatch = destination.match(/^\/projects\/([^/]+)$/);
-  if (projectMatch) {
-    return { type: "project", slug: projectMatch[1] };
-  }
-
-  return { type: "static" };
-}
-
 async function main() {
-  const map = loadMap();
+  const raw = JSON.parse(readFileSync(MAP_PATH, "utf-8")) as unknown;
+  const map = validateSubstackUrlMapStructure(raw);
   const [journalSlugs, projectSlugs] = await Promise.all([
     client.fetch<string[]>(JOURNAL_SLUGS_QUERY),
     client.fetch<string[]>(PROJECT_SLUGS_QUERY),
@@ -83,7 +47,6 @@ async function main() {
 
   const journalSet = new Set(journalSlugs);
   const projectSet = new Set(projectSlugs);
-  const seenSources = new Set<string>();
   const errors: string[] = [];
 
   if (map.mappings.length === 0) {
@@ -94,27 +57,6 @@ async function main() {
 
   for (const [index, entry] of map.mappings.entries()) {
     const label = `mappings[${index}]`;
-
-    if (!(entry.source && entry.destination)) {
-      errors.push(`${label}: source and destination are required`);
-      continue;
-    }
-
-    if (!entry.source.startsWith("/")) {
-      errors.push(`${label}: source must start with / (${entry.source})`);
-    }
-
-    if (!entry.destination.startsWith("/")) {
-      errors.push(
-        `${label}: destination must start with / (${entry.destination})`
-      );
-    }
-
-    if (seenSources.has(entry.source)) {
-      errors.push(`${label}: duplicate source ${entry.source}`);
-    }
-    seenSources.add(entry.source);
-
     const parsed = parseDestinationPath(entry.destination);
 
     if (parsed.type === "journal" && parsed.slug) {

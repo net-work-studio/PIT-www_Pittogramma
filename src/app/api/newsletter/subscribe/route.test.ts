@@ -70,8 +70,11 @@ describe("parseSubscribeBody", () => {
       source: "footer",
     });
 
-    expect(parsed.email).toBe("reader@example.com");
-    expect(parsed.source).toBe("footer");
+    expect(parsed.kind).toBe("valid");
+    if (parsed.kind === "valid") {
+      expect(parsed.request.email).toBe("reader@example.com");
+      expect(parsed.request.source).toBe("footer");
+    }
   });
 
   test("rejects invalid source", () => {
@@ -81,6 +84,16 @@ describe("parseSubscribeBody", () => {
         source: "sidebar",
       })
     ).toThrow("Invalid signup source");
+  });
+
+  test("returns bot outcome for honeypot field", () => {
+    expect(
+      parseSubscribeBody({
+        email: "reader@example.com",
+        source: "footer",
+        website: "https://spam.example",
+      })
+    ).toEqual({ kind: "bot" });
   });
 
   test("detects honeypot field", () => {

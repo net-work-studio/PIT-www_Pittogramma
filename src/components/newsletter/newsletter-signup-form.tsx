@@ -30,10 +30,6 @@ export default function NewsletterSignupForm({
   >("idle");
   const [message, setMessage] = useState<string | null>(null);
 
-  const showingStatusMessage =
-    (status === "success" || status === "error") && Boolean(message);
-  const inputValue = showingStatusMessage ? (message ?? "") : email;
-
   function clearFeedback() {
     if (status === "error") {
       setStatus("idle");
@@ -105,15 +101,10 @@ export default function NewsletterSignupForm({
         )}
       >
         <Input
+          aria-describedby={message ? `newsletter-status-${source}` : undefined}
           aria-invalid={status === "error"}
           autoComplete="email"
-          className={cn(
-            "min-w-0 flex-1 truncate",
-            status === "error" && showingStatusMessage && "text-destructive",
-            status === "success" &&
-              showingStatusMessage &&
-              "text-muted-foreground"
-          )}
+          className="min-w-0 flex-1"
           disabled={status === "loading" || status === "success"}
           name="email"
           onChange={(event) => {
@@ -122,10 +113,9 @@ export default function NewsletterSignupForm({
           }}
           onFocus={clearFeedback}
           placeholder="Email address"
-          readOnly={showingStatusMessage}
-          required={!showingStatusMessage}
-          type={showingStatusMessage ? "text" : "email"}
-          value={inputValue}
+          required
+          type="email"
+          value={email}
         />
         <Button
           className={cn(compact ? "w-full sm:w-auto" : "w-full sm:w-auto")}
@@ -138,9 +128,20 @@ export default function NewsletterSignupForm({
         </Button>
       </div>
 
-      <p aria-live="polite" className="sr-only">
-        {message}
-      </p>
+      {message ? (
+        <p
+          aria-live="polite"
+          className={cn(
+            "mt-2 text-sm",
+            status === "error" && "text-destructive",
+            status === "success" && "text-muted-foreground"
+          )}
+          id={`newsletter-status-${source}`}
+          role={status === "error" ? "alert" : "status"}
+        >
+          {message}
+        </p>
+      ) : null}
     </form>
   );
 }
