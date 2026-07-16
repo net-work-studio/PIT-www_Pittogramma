@@ -6,7 +6,7 @@ function AspectRatio({ ratio = 1, style, ...props }: AspectRatioProps) {
   return (
     <div
       data-slot="aspect-ratio"
-      style={{ ...style, aspectRatio: ratio }}
+      style={{ ...style, width: "100%", aspectRatio: ratio }}
       {...props}
     />
   );

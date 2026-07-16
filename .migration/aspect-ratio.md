@@ -4,13 +4,15 @@
 
 ## Changed
 
-`src/components/ui/aspect-ratio.tsx:1` replaces `@radix-ui/react-aspect-ratio` with a typed native `<div>`, preserves the public `ratio` prop and its default of `1`, forwards ordinary div props, and maps the ratio to the CSS `aspect-ratio` property. The component no longer needs a client boundary.
+`src/components/ui/aspect-ratio.tsx:1` replaces `@radix-ui/react-aspect-ratio` with a typed native `<div>`, preserves the public `ratio` prop and its default of `1`, forwards ordinary div props, maps the ratio to the CSS `aspect-ratio` property, and preserves Radix's full-width sizing for flex-column card layouts. The component no longer needs a client boundary.
+
+`src/components/ui/aspect-ratio.test.tsx:1` locks down the full-width and ratio styles that card layouts depend on.
 
 `.migration/aspect-ratio.md` records the migration and verification results.
 
 The leftover scan is clean: `grep -n "radix-ui\|@radix-ui" src/components/ui/aspect-ratio.tsx` returned no matches.
 
-Verification passed with `bun run typecheck`, `bunx ultracite check src/components/ui/aspect-ratio.tsx`, and `bun run build`. The build retained the pre-existing Portable Text `codeBlock` warning.
+Verification passed with `bun test src/components/ui/aspect-ratio.test.tsx`, `bun run typecheck`, `bunx ultracite check src/components/ui/aspect-ratio.tsx src/components/ui/aspect-ratio.test.tsx`, and `bun run build`. The build retained the pre-existing Portable Text `codeBlock` warning.
 
 ## Left alone
 
@@ -20,7 +22,7 @@ All AspectRatio consumers were left unchanged because their existing `ratio`, `c
 
 ## Behavior changes
 
-The wrapper now uses the browser's native CSS `aspect-ratio` sizing and renders one `<div>` instead of Radix's two nested `<div>` elements. No user-visible behavior change is expected for the current consumers, which already provide positioned or full-size children.
+The wrapper now uses the browser's native CSS `aspect-ratio` sizing and renders one `<div>` instead of Radix's two nested `<div>` elements. It explicitly retains Radix's `width: 100%` sizing so card media does not collapse inside `items-start` flex columns.
 
 ## Verify by hand
 
