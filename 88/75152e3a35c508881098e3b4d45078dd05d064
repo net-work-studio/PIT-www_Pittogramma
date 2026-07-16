@@ -1,0 +1,65 @@
+.agents/skills/migrate-radix-to-base/SKILL.md
+  s_21c9af38be5d77::t_c29a7da3dcec2b 1-173
+.agents/skills/migrate-radix-to-base/class-mapping.md
+  s_21c9af38be5d77::t_7fa129ed0dbd4a 1-62
+.agents/skills/migrate-radix-to-base/consumer-props.md
+  s_21c9af38be5d77::t_3b6650564f885b 1-58
+.agents/skills/migrate-radix-to-base/disclosure.md
+  s_21c9af38be5d77::t_4b61d18aecf623 1-353
+.agents/skills/migrate-radix-to-base/display-misc.md
+  s_21c9af38be5d77::t_198e2a8318fd24 1-410
+.agents/skills/migrate-radix-to-base/form-controls.md
+  s_21c9af38be5d77::t_dee80b3b38428d 1-390
+.agents/skills/migrate-radix-to-base/menus.md
+  s_21c9af38be5d77::t_1ec0d3d74fd603 1-409
+.agents/skills/migrate-radix-to-base/overlays.md
+  s_21c9af38be5d77::t_74039e82c8c32f 1-459
+.agents/skills/migrate-radix-to-base/universal-patterns.md
+  s_21c9af38be5d77::t_7cc8569c9066cc 1-286
+.agents/skills/migrate-radix-to-base/wrapper-shapes.md
+  s_21c9af38be5d77::t_586607c5901e96 1-110
+.agents/skills/shadcn/SKILL.md
+  s_21c9af38be5d77::t_531986cc8a0bf3 1-275
+.agents/skills/shadcn/agents/openai.yml
+  s_21c9af38be5d77::t_ce11e9b09d3169 1-5
+.agents/skills/shadcn/cli.md
+  s_21c9af38be5d77::t_0081aafc10aaf7 1-290
+.agents/skills/shadcn/customization.md
+  s_21c9af38be5d77::t_fad54d560027b6 1-209
+.agents/skills/shadcn/evals/evals.json
+  s_21c9af38be5d77::t_91b628caa72cf3 1-77
+.agents/skills/shadcn/mcp.md
+  s_21c9af38be5d77::t_f434f7983e61cd 1-105
+.agents/skills/shadcn/registry.md
+  s_21c9af38be5d77::t_481b3122df861c 1-277
+.agents/skills/shadcn/rules/base-vs-radix.md
+  s_21c9af38be5d77::t_61dc90a9c2b0a7 1-306
+.agents/skills/shadcn/rules/chat.md
+  s_21c9af38be5d77::t_beefe761ebaf45 1-224
+.agents/skills/shadcn/rules/composition.md
+  s_21c9af38be5d77::t_b9744715dce605 1-201
+.agents/skills/shadcn/rules/forms.md
+  s_21c9af38be5d77::t_7ba1af9210b2aa 1-192
+.agents/skills/shadcn/rules/icons.md
+  s_21c9af38be5d77::t_f66871bc4c3624 1-101
+.agents/skills/shadcn/rules/styling.md
+  s_21c9af38be5d77::t_09511331d30ac3 1-185
+skills-lock.json
+  s_21c9af38be5d77::t_5a6486efbbbb65 4-9,14-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "8875152e3a35c508881098e3b4d45078dd05d064",
+  "prompts": {},
+  "sessions": {
+    "s_21c9af38be5d77": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6bdd-7a52-7b10-b2d7-49ad73ef46ce",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
