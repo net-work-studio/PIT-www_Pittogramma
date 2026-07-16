@@ -1,0 +1,29 @@
+.migration/accordion.md
+  s_c5dd6d2aec3085::t_01eb65e3a8775d 1-28
+src/app/(frontend)/(resources)/glossary/page.tsx
+  s_c5dd6d2aec3085::t_2c7e21a8259a32 107
+src/components/ui/accordion.tsx
+  s_c5dd6d2aec3085::t_e51e022b84b29c 3,8,12,26,31,48,50-51,55-63
+package.json
+  s_c5dd6d2aec3085::t_48e830d7778f49 3
+src/app/(frontend)/design-system/_components/ui-section.tsx
+  s_c5dd6d2aec3085::t_2c7e21a8259a32 165
+bun.lock
+  s_c5dd6d2aec3085::t_df124a88f4be2f 8,300-303
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "3919a6a1ef72de9c4b0a88327a2c1033ae7bf797",
+  "prompts": {},
+  "sessions": {
+    "s_c5dd6d2aec3085": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6be2-61c9-76d1-9390-2ccc77eafc79",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
