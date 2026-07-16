@@ -24,7 +24,7 @@ All AspectRatio consumers were left unchanged because their existing `ratio`, `c
 
 The wrapper now uses the browser's native CSS `aspect-ratio` sizing and renders one `<div>` instead of Radix's two nested `<div>` elements. It explicitly retains Radix's `width: 100%` sizing so card media does not collapse inside `items-start` flex columns.
 
-## Verify by hand
+## Verify by hand OK
 
 Open representative designer, project, interview, journal, and event pages and confirm images retain their intended ratios without layout shift. Check an interview or journal video and iframe, then load a project detail skeleton and confirm each placeholder fills its frame.
 
