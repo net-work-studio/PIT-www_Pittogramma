@@ -162,7 +162,7 @@ export default function UiSection() {
       <div className="space-y-6">
         <SectionLabel>Accordion</SectionLabel>
         <div className="max-w-lg">
-          <Accordion collapsible type="single">
+          <Accordion>
             <AccordionItem value="item-1">
               <AccordionTrigger>What is Pittogramma?</AccordionTrigger>
               <AccordionContent>
