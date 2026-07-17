@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { ReactElement } from "react";
 import { useEffect, useState } from "react";
 import { designerInitial } from "@/components/modules/designer/designer-portrait-thumb";
 import DesignerProjectLink from "@/components/modules/designer/designer-project-link";
@@ -54,7 +54,7 @@ export function designerHasModalContent(
 }
 
 interface DesignerModalProps {
-  children: ReactNode;
+  children: ReactElement;
   currentProjectId?: string;
   defaultOpen?: boolean;
   designer: DesignerForModal;
@@ -94,10 +94,10 @@ export default function DesignerModal({
   if (isDesktop) {
     return (
       <Dialog onOpenChange={handleOpenChange} open={open}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogTrigger render={children} />
         <DialogContent
           className="max-h-[85vh] overflow-y-auto p-0 sm:max-w-5xl"
-          onCloseAutoFocus={(e) => e.preventDefault()}
+          finalFocus={false}
         >
           <DialogTitle className="sr-only">{titleText}</DialogTitle>
           {content}

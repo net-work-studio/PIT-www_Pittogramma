@@ -221,8 +221,8 @@ export default function UiSection() {
       <div className="space-y-6">
         <SectionLabel>Dialog</SectionLabel>
         <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline">Open Dialog</Button>
+          <DialogTrigger render={<Button variant="outline" />}>
+            Open Dialog
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
