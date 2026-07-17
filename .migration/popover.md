@@ -20,7 +20,7 @@
 - `PopoverAnchor` is now an inert compatibility wrapper. Base UI positions against the trigger by default; a future consumer needing a separate anchor must pass an anchor element or ref to the Popover positioner through an expanded wrapper API.
 - Base UI's `onOpenChange` callback includes event details as a second argument. Existing one-argument handlers remain compatible.
 
-## Verify by hand
+## Verify by hand - OK
 
 - Open Filters and confirm the popover aligns to the trigger's start edge with the expected spacing.
 - Use Tab and Shift+Tab inside the popover, then press Escape and confirm focus returns to Filters.

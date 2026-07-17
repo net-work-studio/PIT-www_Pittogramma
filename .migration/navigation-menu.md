@@ -25,7 +25,7 @@
 - Base UI's default open delay is 50 ms instead of Radix Navigation Menu's 200 ms, and Radix's `skipDelayDuration` has no equivalent. Base UI also applies its 50 ms default close delay.
 - Radix's list-level active-trigger `Indicator` has no Base UI equivalent. The compatibility export now wraps Base UI's trigger `Icon`; it is currently unused by the application.
 
-## Verify by hand
+## Verify by hand - OK
 
 - At desktop width, open Features and Resources with the pointer and confirm the popup is aligned below the active trigger and switches content cleanly.
 - Confirm the blurred backdrop appears, background scrolling locks while open, and clicking the backdrop closes the menu and restores scrolling.
