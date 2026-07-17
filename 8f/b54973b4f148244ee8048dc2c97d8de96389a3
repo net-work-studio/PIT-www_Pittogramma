@@ -1,0 +1,58 @@
+src/components/modules/journal/journal-article-cta.tsx
+  s_5450e3612e7cfa::t_76553ccf601fa3 32
+  s_5450e3612e7cfa::t_8bd0edf613b447 31
+  s_5450e3612e7cfa::t_e8bbed51aa96f3 30,33,36
+src/components/ui/button.tsx
+  s_5450e3612e7cfa::t_f8e7395d5c446d 1,44-45,47
+src/components/cards/cta-card.tsx
+  s_5450e3612e7cfa::t_76553ccf601fa3 47
+  s_5450e3612e7cfa::t_2e6fd59b4d1283 43-45,48-54
+  s_5450e3612e7cfa::t_8bd0edf613b447 46
+.migration/badge.md
+  s_869d20c7aabdf6::t_849c85f5b3f249 11
+  s_869d20c7aabdf6::t_811cac1a80ba64 1-10,12-21,23-26
+  s_869d20c7aabdf6::t_42965dcca59b0c 22
+src/app/not-found.tsx
+  s_5450e3612e7cfa::t_fc8c54e9041dcc 23
+src/components/resources/book-details-drawer.tsx
+  s_5450e3612e7cfa::t_8bd0edf613b447 136
+  s_5450e3612e7cfa::t_a265b0f14cd3e7 133-135,137-148
+src/components/navigation/navigation-mobile.tsx
+  s_5450e3612e7cfa::t_b06ad59cd63596 102,105,146,149
+src/components/feat/load-more/load-more.tsx
+  s_5450e3612e7cfa::t_36f6ec4c8d59e7 39-40
+src/components/modules/edition/edition-info.tsx
+  s_5450e3612e7cfa::t_85b0522f13ac20 63-64,67-70
+  s_5450e3612e7cfa::t_8bd0edf613b447 65
+  s_5450e3612e7cfa::t_76553ccf601fa3 66
+src/components/navigation/resources-navigation.tsx
+  s_5450e3612e7cfa::t_44d6f36c804d9d 23-28
+src/components/ui/badge.tsx
+  s_869d20c7aabdf6::t_811cac1a80ba64 1-2,48,50,53-64
+.migration/button.md
+  s_5450e3612e7cfa::t_f22f4e82ae4bcb 1-37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "8fb54973b4f148244ee8048dc2c97d8de96389a3",
+  "prompts": {},
+  "sessions": {
+    "s_5450e3612e7cfa": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6ed5-3d49-7082-8e4c-0f142a9fe011",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_869d20c7aabdf6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6c01-1ba1-76d2-bb28-fb07416c25a4",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
