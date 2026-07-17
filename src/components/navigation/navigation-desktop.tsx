@@ -16,10 +16,7 @@ import type { Resource } from "./resources-navigation.data";
 
 export function NavigationDesktop({ resources }: { resources: Resource[] }) {
   return (
-    <NavigationMenu
-      className="absolute right-1/2 left-1/2 hidden -translate-x-1/2 lg:flex"
-      viewport={false}
-    >
+    <NavigationMenu className="absolute right-1/2 left-1/2 hidden -translate-x-1/2 lg:flex">
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Features</NavigationMenuTrigger>
@@ -42,18 +39,30 @@ export function NavigationDesktop({ resources }: { resources: Resource[] }) {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/journal">Journal</Link>
+          <NavigationMenuLink
+            className={navigationMenuTriggerStyle()}
+            closeOnClick
+            render={<Link href="/journal" />}
+          >
+            Journal
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/events">Events</Link>
+          <NavigationMenuLink
+            className={navigationMenuTriggerStyle()}
+            closeOnClick
+            render={<Link href="/events" />}
+          >
+            Events
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/about">About</Link>
+          <NavigationMenuLink
+            className={navigationMenuTriggerStyle()}
+            closeOnClick
+            render={<Link href="/about" />}
+          >
+            About
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
@@ -69,12 +78,10 @@ function ListItem({
 }: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
   return (
     <li {...props}>
-      <NavigationMenuLink asChild>
-        <Link href={href}>
-          <div className="whitespace-break-spaces text-3xl leading-none hover:text-muted-foreground">
-            {title}
-          </div>
-        </Link>
+      <NavigationMenuLink closeOnClick render={<Link href={href} />}>
+        <div className="whitespace-break-spaces text-3xl leading-none hover:text-muted-foreground">
+          {title}
+        </div>
       </NavigationMenuLink>
     </li>
   );
