@@ -59,11 +59,13 @@ function FeedDialogInner({ advs, communityItems }: FeedDialogProps) {
 
   return (
     <Sheet onOpenChange={handleOpenChange} open={isOpen}>
-      <SheetTrigger asChild>
-        <Button aria-label="Feed" size="icon" variant="outline">
-          <Newspaper size={16} />
-        </Button>
-      </SheetTrigger>
+      <SheetTrigger
+        render={
+          <Button aria-label="Feed" size="icon" variant="outline">
+            <Newspaper size={16} />
+          </Button>
+        }
+      />
       <SheetContent
         className={
           isDesktop

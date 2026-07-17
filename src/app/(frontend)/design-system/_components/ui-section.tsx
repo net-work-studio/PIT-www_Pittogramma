@@ -297,9 +297,9 @@ export default function UiSection() {
       <div className="space-y-6">
         <SectionLabel>Sheet</SectionLabel>
         <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline">Open Sheet</Button>
-          </SheetTrigger>
+          <SheetTrigger
+            render={<Button variant="outline">Open Sheet</Button>}
+          />
           <SheetContent>
             <SheetHeader>
               <SheetTitle>Sheet Title</SheetTitle>

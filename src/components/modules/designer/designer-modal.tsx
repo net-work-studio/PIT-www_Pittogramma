@@ -108,10 +108,10 @@ export default function DesignerModal({
 
   return (
     <Sheet onOpenChange={handleOpenChange} open={open}>
-      <SheetTrigger asChild>{children}</SheetTrigger>
+      <SheetTrigger render={children} />
       <SheetContent
         className="max-h-[85vh] overflow-y-auto p-6"
-        onCloseAutoFocus={(e) => e.preventDefault()}
+        finalFocus={false}
         side="bottom"
       >
         <SheetTitle className="sr-only">{titleText}</SheetTitle>
