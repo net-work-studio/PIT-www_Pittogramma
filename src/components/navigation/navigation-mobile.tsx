@@ -98,6 +98,7 @@ export function NavigationMobile({ resources }: { resources: Resource[] }) {
               {/* Submit button */}
               <Button
                 className="w-fit"
+                nativeButton={false}
                 onClick={closeMenu}
                 render={<Link href="/submit" />}
                 variant="outline"
@@ -142,6 +143,7 @@ export function NavigationMobile({ resources }: { resources: Resource[] }) {
                   <Button
                     className="w-fit"
                     key={item.label}
+                    nativeButton={false}
                     onClick={closeMenu}
                     render={<Link href={item.href} />}
                     variant="outline"

@@ -27,6 +27,7 @@ export default async function JournalArticleCta({
       </p>
       <Button
         className="mt-4 rounded-full font-mono uppercase"
+        nativeButton={false}
         render={
           // biome-ignore lint/a11y/useAnchorContent: Base UI injects the Button children into this render element.
           <a href={substackUrl} rel="noopener noreferrer" target="_blank" />

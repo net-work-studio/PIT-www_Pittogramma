@@ -41,6 +41,7 @@ export default function CtaCard({
 
   const buttonElement = href ? (
     <Button
+      nativeButton={false}
       render={
         isExternal ? (
           // biome-ignore lint/a11y/useAnchorContent: Base UI injects the Button children into this render element.

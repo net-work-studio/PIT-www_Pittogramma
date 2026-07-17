@@ -22,6 +22,7 @@ export default function ResourcesNavigation({
             <li key={res.href}>
               <Button
                 data-active={isActive}
+                nativeButton={false}
                 render={<Link href={res.href} />}
                 variant="ghost"
               >
