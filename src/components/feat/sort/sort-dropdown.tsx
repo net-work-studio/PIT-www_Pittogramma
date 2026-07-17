@@ -43,8 +43,8 @@ export default function SortDropdown() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button className="font-mono uppercase">{currentLabel}</Button>
+      <DropdownMenuTrigger render={<Button className="font-mono uppercase" />}>
+        {currentLabel}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuRadioGroup

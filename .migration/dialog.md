@@ -27,7 +27,7 @@
 - Base UI's `onOpenChange` callback supplies an additional event-details argument. Existing single-argument handlers remain valid.
 - On touch-open, Base UI focuses the Popup instead of the first tabbable control to avoid opening the virtual keyboard. Keyboard and pointer opens retain normal initial focus behavior.
 
-## Verify by hand
+## Verify by hand - OK
 
 - Open `/design-system`, activate the dialog with mouse and keyboard, and confirm the backdrop plus fade/scale transitions render correctly.
 - Close with the X button, Escape, and an outside press; confirm focus returns to the design-system trigger each time.

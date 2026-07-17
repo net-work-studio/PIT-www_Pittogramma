@@ -24,6 +24,7 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
@@ -248,43 +249,45 @@ export default function UiSection() {
         <SectionLabel>Dropdown Menu</SectionLabel>
         <div className="flex flex-wrap gap-3">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">
-                Menu <ChevronDown />
-              </Button>
+            <DropdownMenuTrigger render={<Button variant="outline" />}>
+              Menu <ChevronDown />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>Checkboxes</DropdownMenuLabel>
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Checkboxes</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem
+                  checked={checkboxOne}
+                  onCheckedChange={setCheckboxOne}
+                >
+                  Show projects
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={checkboxTwo}
+                  onCheckedChange={setCheckboxTwo}
+                >
+                  Show interviews
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuGroup>
               <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem
-                checked={checkboxOne}
-                onCheckedChange={setCheckboxOne}
-              >
-                Show projects
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                checked={checkboxTwo}
-                onCheckedChange={setCheckboxTwo}
-              >
-                Show interviews
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuLabel>Radio Group</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuRadioGroup
-                onValueChange={setRadioValue}
-                value={radioValue}
-              >
-                <DropdownMenuRadioItem value="option-1">
-                  Option One
-                </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="option-2">
-                  Option Two
-                </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="option-3">
-                  Option Three
-                </DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Radio Group</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup
+                  onValueChange={setRadioValue}
+                  value={radioValue}
+                >
+                  <DropdownMenuRadioItem value="option-1">
+                    Option One
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="option-2">
+                    Option Two
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="option-3">
+                    Option Three
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
