@@ -14,13 +14,11 @@ import { Button } from "../../ui/button";
 export default function SubmitDialog() {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button>Submit your project</Button>
-      </DialogTrigger>
+      <DialogTrigger render={<Button />}>Submit your project</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Submit Your Project</DialogTitle>
-          <DialogDescription>
+          <DialogDescription render={<div />}>
             <div>
               <small>Description</small>
               <p>

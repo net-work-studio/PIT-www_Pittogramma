@@ -26,13 +26,15 @@ export default async function JournalArticleCta({
         Do you want to be updated on next articles?
       </p>
       <Button
-        asChild
         className="mt-4 rounded-full font-mono uppercase"
+        nativeButton={false}
+        render={
+          // biome-ignore lint/a11y/useAnchorContent: Base UI injects the Button children into this render element.
+          <a href={substackUrl} rel="noopener noreferrer" target="_blank" />
+        }
         variant="outline"
       >
-        <a href={substackUrl} rel="noopener noreferrer" target="_blank">
-          Subscribe to our newsletter
-        </a>
+        Subscribe to our newsletter
       </Button>
     </div>
   );

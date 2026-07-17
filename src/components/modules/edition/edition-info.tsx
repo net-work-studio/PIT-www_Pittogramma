@@ -60,10 +60,15 @@ export default function EditionInfo({
 
           {buyUrl ? (
             <div>
-              <Button asChild size="sm">
-                <a href={buyUrl} rel="noopener noreferrer" target="_blank">
-                  Buy
-                </a>
+              <Button
+                nativeButton={false}
+                render={
+                  // biome-ignore lint/a11y/useAnchorContent: Base UI injects the Button children into this render element.
+                  <a href={buyUrl} rel="noopener noreferrer" target="_blank" />
+                }
+                size="sm"
+              >
+                Buy
               </Button>
             </div>
           ) : null}

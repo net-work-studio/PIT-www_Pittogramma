@@ -20,8 +20,8 @@ export default function NotFound() {
               moved.
             </p>
           </hgroup>
-          <Button asChild>
-            <Link href="/">Back to home</Link>
+          <Button nativeButton={false} render={<Link href="/" />}>
+            Back to home
           </Button>
         </div>
       </main>

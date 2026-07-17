@@ -97,12 +97,13 @@ export function NavigationMobile({ resources }: { resources: Resource[] }) {
             <div className="flex flex-col gap-3">
               {/* Submit button */}
               <Button
-                asChild
                 className="w-fit"
+                nativeButton={false}
                 onClick={closeMenu}
+                render={<Link href="/submit" />}
                 variant="outline"
               >
-                <Link href="/submit">Submit your project</Link>
+                Submit your project
               </Button>
 
               {/* Menu items */}
@@ -140,13 +141,14 @@ export function NavigationMobile({ resources }: { resources: Resource[] }) {
                   </div>
                 ) : (
                   <Button
-                    asChild
                     className="w-fit"
                     key={item.label}
+                    nativeButton={false}
                     onClick={closeMenu}
+                    render={<Link href={item.href} />}
                     variant="outline"
                   >
-                    <Link href={item.href}>{item.label}</Link>
+                    {item.label}
                   </Button>
                 )
               )}

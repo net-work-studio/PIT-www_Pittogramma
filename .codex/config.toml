@@ -1,0 +1,5 @@
+[mcp_servers.cubic]
+url = "https://www.cubic.dev/api/mcp"
+
+[mcp_servers.cubic.http_headers]
+Authorization = "Bearer cbk_R7RjU9lc3no3xLjGvC4CAEmvu_Gg5LGn"
