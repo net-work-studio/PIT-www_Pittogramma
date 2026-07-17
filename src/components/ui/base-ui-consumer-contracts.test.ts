@@ -142,4 +142,56 @@ describe("Base UI consumer contracts", () => {
 
     expect(violations.join("\n")).toBe("");
   });
+
+  test("paragraph-backed DialogDescription content stays phrasing-only", async () => {
+    const violations: string[] = [];
+    const blockTags = new Set(["div", "p"]);
+
+    for (const { path, sourceFile } of await readSourceFiles()) {
+      function visit(node: ts.Node) {
+        if (
+          ts.isJsxElement(node) &&
+          getTagName(node.openingElement, sourceFile) === "DialogDescription"
+        ) {
+          const render = getAttribute(
+            node.openingElement,
+            "render",
+            sourceFile
+          );
+          const renderedTags = collectRenderedRootTags(
+            getRenderExpression(render),
+            sourceFile
+          );
+          const rendersParagraph =
+            render === undefined || renderedTags.includes("p");
+
+          if (rendersParagraph) {
+            function inspect(child: ts.Node) {
+              if (
+                ts.isJsxElement(child) &&
+                blockTags.has(getTagName(child.openingElement, sourceFile))
+              ) {
+                violations.push(
+                  `${location(path, child, sourceFile)} nests <${getTagName(
+                    child.openingElement,
+                    sourceFile
+                  )}> inside paragraph-backed DialogDescription`
+                );
+              }
+
+              ts.forEachChild(child, inspect);
+            }
+
+            node.children.forEach(inspect);
+          }
+        }
+
+        ts.forEachChild(node, visit);
+      }
+
+      visit(sourceFile);
+    }
+
+    expect(violations.join("\n")).toBe("");
+  });
 });

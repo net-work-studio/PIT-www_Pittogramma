@@ -18,7 +18,7 @@ export default function SubmitDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Submit Your Project</DialogTitle>
-          <DialogDescription>
+          <DialogDescription render={<div />}>
             <div>
               <small>Description</small>
               <p>

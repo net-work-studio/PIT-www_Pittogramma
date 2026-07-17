@@ -1,6 +1,6 @@
 # dialog
 
-2026-07-17, transformation engine for customized legacy `new-york` styling, migrated successfully; typecheck, focused Biome check, tests, and production build pass.
+2026-07-17, transformation engine follow-up for customized legacy `new-york` styling, corrected successfully; structured submit-dialog description content now renders valid HTML and regression coverage passes.
 
 ## Changed
 
@@ -10,7 +10,9 @@
 - `src/app/(frontend)/design-system/_components/ui-section.tsx:224` replaces the Radix `asChild` trigger with Base UI's `render` composition.
 - `src/components/modules/designer/designer-modal.tsx:57` requires the trigger child to be a `ReactElement`; `src/components/modules/designer/designer-modal.tsx:97` composes that element through `render`, and `src/components/modules/designer/designer-modal.tsx:100` maps the prevented close autofocus to `finalFocus={false}`.
 - `src/components/feat/submit/submit-dialog.tsx:17` replaces the Radix `asChild` trigger with Base UI's `render` composition.
-- `.migration/dialog.md` records this migration and its verification.
+- `src/components/feat/submit/submit-dialog.tsx:21` renders the structured description through a `<div>` while retaining Base UI's accessible description association, preventing block elements from nesting inside the primitive's default `<p>`.
+- `src/components/ui/base-ui-consumer-contracts.test.ts:146` adds regression coverage that rejects block content inside paragraph-backed DialogDescription consumers.
+- `.migration/dialog.md` records the corrected consumer markup and verification.
 - Leftover scan is clean: `grep -n "radix-ui\|@radix-ui" src/components/ui/dialog.tsx` returns no matches.
 
 ## Left alone
