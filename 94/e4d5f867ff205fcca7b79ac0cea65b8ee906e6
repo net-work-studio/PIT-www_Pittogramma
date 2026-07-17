@@ -1,0 +1,28 @@
+.migration/sheet.md
+  s_424219cc6172f9::t_03a72bf35bc024 1-34
+src/components/feat/feed/feed-dialog.tsx
+  s_424219cc6172f9::t_315fcdc0e84dac 62-68
+src/components/ui/sheet.tsx
+  s_424219cc6172f9::t_31b59094cfba9b 3,10,14,18,22,28,30,40,44,46-47,49,64,69,71,76,83,108,121
+  s_424219cc6172f9::t_a007acde36a4ed 26
+src/app/(frontend)/design-system/_components/ui-section.tsx
+  s_424219cc6172f9::t_d174f11601bf8d 300-302
+src/components/modules/designer/designer-modal.tsx
+  s_424219cc6172f9::t_a76e65f824147d 111,114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "94e4d5f867ff205fcca7b79ac0cea65b8ee906e6",
+  "prompts": {},
+  "sessions": {
+    "s_424219cc6172f9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6f66-44c4-7153-8854-a84abe755ef7",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
