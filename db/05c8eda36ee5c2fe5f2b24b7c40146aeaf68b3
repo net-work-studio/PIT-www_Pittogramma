@@ -1,0 +1,39 @@
+src/components/resources/book-details-drawer.tsx
+  s_b07c53aa56d6b8::t_85df51f6e2f994 135
+src/components/cards/cta-card.tsx
+  s_b07c53aa56d6b8::t_85df51f6e2f994 44
+src/components/navigation/navigation-mobile.tsx
+  s_b07c53aa56d6b8::t_85df51f6e2f994 101,146
+src/components/navigation/resources-navigation.tsx
+  s_b07c53aa56d6b8::t_85df51f6e2f994 25
+src/components/modules/journal/journal-article-cta.tsx
+  s_b07c53aa56d6b8::t_85df51f6e2f994 30
+src/components/modules/edition/edition-info.tsx
+  s_b07c53aa56d6b8::t_85df51f6e2f994 64
+src/components/feat/load-more/load-more.tsx
+  s_b07c53aa56d6b8::t_85df51f6e2f994 39-43
+src/app/not-found.tsx
+  s_b07c53aa56d6b8::t_85df51f6e2f994 23-25
+.migration/button.md
+  s_b07c53aa56d6b8::t_74ec4ceb44d7e2 3,7-17,24,28,30
+src/components/ui/base-ui-consumer-contracts.test.ts
+  s_b07c53aa56d6b8::t_f5516968174a80 1,4-5,19-22,25,27,29-39,44-53,56-95,97-142,144-145
+  s_b07c53aa56d6b8::t_b6fc87e50397b3 2-3,6-18,23-24,26,28,143
+  s_b07c53aa56d6b8::t_c22db6d2b17c3e 40-43,54-55,96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "db05c8eda36ee5c2fe5f2b24b7c40146aeaf68b3",
+  "prompts": {},
+  "sessions": {
+    "s_b07c53aa56d6b8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6eed-0ad0-7c40-a297-c4d93ebf2b62",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
