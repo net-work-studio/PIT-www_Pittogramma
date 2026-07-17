@@ -1,0 +1,24 @@
+src/components/ui/popover.tsx
+  s_4d8b618fbb33dc::t_509e9701fff0ae 3,8-14,18,23,27-28,30,33,36,38-40,42-51,56
+  s_4d8b618fbb33dc::t_9a24622a052fb8 22
+.migration/popover.md
+  s_4d8b618fbb33dc::t_509e9701fff0ae 1-27
+src/components/feat/filter/filter.tsx
+  s_4d8b618fbb33dc::t_9a24622a052fb8 89-91
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "0b075f56a859095b861f16f6f2f8efdfa7da6e01",
+  "prompts": {},
+  "sessions": {
+    "s_4d8b618fbb33dc": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6f55-84d0-7783-a992-a8c80ea0141a",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
