@@ -27,7 +27,7 @@
 
 None identified. Link composition uses Base UI's supported `render` prop in place of Radix Slot's `asChild` prop.
 
-## Verify by hand
+## Verify by hand - OK
 
 - Open `/design-system` and confirm every button variant and size looks unchanged.
 - Tab to native buttons and link-rendered buttons; confirm the focus ring is visible and Enter activates each control.
