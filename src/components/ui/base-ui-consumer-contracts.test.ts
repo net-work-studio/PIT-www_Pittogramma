@@ -100,37 +100,48 @@ function location(path: string, node: ts.Node, sourceFile: ts.SourceFile) {
   return `${path}:${position.line + 1}`;
 }
 
+function getOpeningElement(node: ts.Node) {
+  if (ts.isJsxElement(node)) {
+    return node.openingElement;
+  }
+
+  if (ts.isJsxSelfClosingElement(node)) {
+    return node;
+  }
+}
+
 describe("Base UI consumer contracts", () => {
   test("non-native Button render elements declare nativeButton={false}", async () => {
     const violations: string[] = [];
 
     for (const { path, sourceFile } of await readSourceFiles()) {
       function visit(node: ts.Node) {
-        if (ts.isJsxElement(node)) {
-          const openingElement = node.openingElement;
+        const openingElement = getOpeningElement(node);
 
-          if (getTagName(openingElement, sourceFile) === "Button") {
-            const render = getAttribute(openingElement, "render", sourceFile);
-            const renderedTags = collectRenderedRootTags(
-              getRenderExpression(render),
-              sourceFile
-            );
-            const nativeButton = getAttribute(
-              openingElement,
-              "nativeButton",
-              sourceFile
-            );
+        if (
+          openingElement &&
+          getTagName(openingElement, sourceFile) === "Button"
+        ) {
+          const render = getAttribute(openingElement, "render", sourceFile);
+          const renderedTags = collectRenderedRootTags(
+            getRenderExpression(render),
+            sourceFile
+          );
+          const nativeButton = getAttribute(
+            openingElement,
+            "nativeButton",
+            sourceFile
+          );
 
-            if (
-              renderedTags.some((tag) => tag !== "button") &&
-              !isExplicitlyFalse(nativeButton)
-            ) {
-              violations.push(
-                `${location(path, openingElement, sourceFile)} renders ${renderedTags
-                  .map((tag) => `<${tag}>`)
-                  .join(" or ")} without nativeButton={false}`
-              );
-            }
+          if (
+            renderedTags.some((tag) => tag !== "button") &&
+            !isExplicitlyFalse(nativeButton)
+          ) {
+            violations.push(
+              `${location(path, openingElement, sourceFile)} renders ${renderedTags
+                .map((tag) => `<${tag}>`)
+                .join(" or ")} without nativeButton={false}`
+            );
           }
         }
 
@@ -167,13 +178,15 @@ describe("Base UI consumer contracts", () => {
 
           if (rendersParagraph) {
             function inspect(child: ts.Node) {
+              const openingElement = getOpeningElement(child);
+
               if (
-                ts.isJsxElement(child) &&
-                blockTags.has(getTagName(child.openingElement, sourceFile))
+                openingElement &&
+                blockTags.has(getTagName(openingElement, sourceFile))
               ) {
                 violations.push(
                   `${location(path, child, sourceFile)} nests <${getTagName(
-                    child.openingElement,
+                    openingElement,
                     sourceFile
                   )}> inside paragraph-backed DialogDescription`
                 );

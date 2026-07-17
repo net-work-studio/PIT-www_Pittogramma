@@ -98,9 +98,9 @@ Same for triggers whose `render` is not a `Button`:
 
 ```tsx
 const items = [
-  { label: "Select a fruit", value: null },
-  { label: "Apple", value: "apple" },
-  { label: "Banana", value: "banana" },
+  { id: "placeholder", label: "Select a fruit", value: null },
+  { id: "apple", label: "Apple", value: "apple" },
+  { id: "banana", label: "Banana", value: "banana" },
 ]
 
 <Select items={items}>
@@ -110,7 +110,7 @@ const items = [
   <SelectContent>
     <SelectGroup>
       {items.map((item) => (
-        <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>
+        <SelectItem key={item.id} value={item.value}>{item.label}</SelectItem>
       ))}
     </SelectGroup>
   </SelectContent>

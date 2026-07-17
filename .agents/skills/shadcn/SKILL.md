@@ -113,12 +113,12 @@ These are the most common patterns that differentiate correct shadcn/ui code. Fo
 </Button>
 
 // Spacing: gap-*, not space-y-*.
-<div className="flex flex-col gap-4">  // correct
-<div className="space-y-4">           // wrong
+<div className="flex flex-col gap-4"></div>  // correct
+<div className="space-y-4"></div>           // wrong
 
 // Equal dimensions: size-*, not w-* h-*.
-<Avatar className="size-10">   // correct
-<Avatar className="w-10 h-10"> // wrong
+<Avatar className="size-10" />   // correct
+<Avatar className="w-10 h-10" /> // wrong
 
 // Status colors: Badge variants or semantic tokens, not raw colors.
 <Badge variant="secondary">+20.1%</Badge>    // correct

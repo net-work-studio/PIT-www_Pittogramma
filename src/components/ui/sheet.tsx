@@ -37,7 +37,7 @@ function SheetOverlay({ className, ...props }: DialogPrimitive.Backdrop.Props) {
 }
 
 const sheetVariants = cva(
-  "group fixed z-50 gap-4 bg-background shadow-lg transition-transform duration-500 ease-in-out data-ending-style:duration-300",
+  "fixed z-50 gap-4 bg-background shadow-lg transition-transform duration-500 ease-in-out data-ending-style:duration-300",
   {
     variants: {
       side: {
@@ -73,7 +73,7 @@ function SheetContent({
         {...props}
       >
         <DialogPrimitive.Close
-          className="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none group-data-open:bg-secondary [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
+          className="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
           data-slot="sheet-close"
         >
           <XIcon />

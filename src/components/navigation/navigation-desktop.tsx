@@ -72,10 +72,9 @@ export function NavigationDesktop({ resources }: { resources: Resource[] }) {
 
 function ListItem({
   title,
-  children,
   href,
   ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
+}: Omit<React.ComponentPropsWithoutRef<"li">, "children"> & { href: string }) {
   return (
     <li {...props}>
       <NavigationMenuLink closeOnClick render={<Link href={href} />}>

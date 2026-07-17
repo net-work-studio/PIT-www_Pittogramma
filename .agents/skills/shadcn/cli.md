@@ -121,7 +121,7 @@ npx shadcn@latest add button --diff globals.css
 - When checking what CSS changes would be made to `globals.css` — use `--diff globals.css`.
 - When the user asks to review or audit third-party registry code before installing — use `--view` to inspect the source.
 
-> **`npx shadcn@latest add --dry-run` vs `npx shadcn@latest view`:** Prefer `npx shadcn@latest add --dry-run/--diff/--view` over `npx shadcn@latest view` when the user wants to preview changes to their project. `npx shadcn@latest view` only shows raw registry metadata. `npx shadcn@latest add --dry-run` shows exactly what would happen in the user's project: resolved file paths, diffs against existing files, and CSS updates. Use `npx shadcn@latest view` only when the user wants to browse registry info without a project context.
+> **`npx shadcn@latest add --dry-run/--diff/--view` vs `npx shadcn@latest view`:** Use `npx shadcn@latest add --dry-run` and `--diff` to preview changes to the user's project, including resolved file paths, diffs against existing files, and CSS updates. Use `npx shadcn@latest add --view` for source inspection in project context. Use `npx shadcn@latest view` to inspect or audit registry items without installing them, including their metadata and file contents.
 
 #### Smart Merge from Upstream
 

@@ -11,11 +11,22 @@ function NavigationMenu({
   align = "start",
   className,
   children,
+  defaultValue,
+  value: controlledValue,
+  onValueChange,
   ...props
 }: NavigationMenuPrimitive.Root.Props<string> &
   Pick<NavigationMenuPrimitive.Positioner.Props, "align">) {
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = useState<string | null>(
+    controlledValue ?? defaultValue ?? null
+  );
   const isOpen = value !== null;
+
+  useEffect(() => {
+    if (controlledValue !== undefined) {
+      setValue(controlledValue);
+    }
+  }, [controlledValue]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -31,6 +42,16 @@ function NavigationMenu({
   }, [isOpen]);
 
   const handleClose = useCallback(() => setValue(null), []);
+  const handleValueChange = useCallback(
+    (
+      nextValue: string | null,
+      eventDetails: NavigationMenuPrimitive.Root.ChangeEventDetails
+    ) => {
+      setValue(nextValue);
+      onValueChange?.(nextValue, eventDetails);
+    },
+    [onValueChange]
+  );
 
   return (
     <>
@@ -43,14 +64,14 @@ function NavigationMenu({
         />
       ) : null}
       <NavigationMenuPrimitive.Root<string>
+        {...props}
         className={cn(
           "group/navigation-menu relative z-50 flex max-w-max flex-1 items-center justify-center",
           className
         )}
         data-slot="navigation-menu"
-        onValueChange={setValue}
+        onValueChange={handleValueChange}
         value={value}
-        {...props}
       >
         {children}
         <NavigationMenuPositioner align={align} />
