@@ -40,14 +40,18 @@ export default function CtaCard({
   const isExternal = resolvedLinkType === "external" && externalUrl;
 
   const buttonElement = href ? (
-    <Button asChild variant="mono">
-      {isExternal ? (
-        <a href={href} rel="noopener noreferrer" target="_blank">
-          {buttonText}
-        </a>
-      ) : (
-        <Link href={href}>{buttonText}</Link>
-      )}
+    <Button
+      render={
+        isExternal ? (
+          // biome-ignore lint/a11y/useAnchorContent: Base UI injects the Button children into this render element.
+          <a href={href} rel="noopener noreferrer" target="_blank" />
+        ) : (
+          <Link href={href} />
+        )
+      }
+      variant="mono"
+    >
+      {buttonText}
     </Button>
   ) : (
     <Button>{buttonText}</Button>

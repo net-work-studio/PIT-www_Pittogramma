@@ -20,8 +20,12 @@ export default function ResourcesNavigation({
             pathname === res.href || pathname.startsWith(`${res.href}/`);
           return (
             <li key={res.href}>
-              <Button asChild data-active={isActive} variant="ghost">
-                <Link href={res.href}>{res.label}</Link>
+              <Button
+                data-active={isActive}
+                render={<Link href={res.href} />}
+                variant="ghost"
+              >
+                {res.label}
               </Button>
             </li>
           );

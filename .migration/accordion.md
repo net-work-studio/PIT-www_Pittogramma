@@ -21,7 +21,7 @@
 
 - Base UI follows the updated accordion APG guidance and does not provide Radix's roving Up/Down arrow-key focus between triggers. Tab navigation and Enter/Space activation remain available.
 
-## Verify by hand
+## Verify by hand - OK
 
 - Open `/design-system`, expand each accordion item, confirm only one remains open, confirm an open item can close, and check the chevron and height animations in both directions.
 - On `/glossary`, expand and collapse several cards and confirm their custom zero-padding content styling remains intact.

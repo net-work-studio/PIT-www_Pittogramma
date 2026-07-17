@@ -130,14 +130,22 @@ export function BookDetailsDrawer({
           </div>
 
           {book.affiliateLink && (
-            <Button asChild className="mt-auto w-full">
-              <a
-                href={buildTrackedLink(book.affiliateLink, "book", utmSettings)}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Buy
-              </a>
+            <Button
+              className="mt-auto w-full"
+              render={
+                // biome-ignore lint/a11y/useAnchorContent: Base UI injects the Button children into this render element.
+                <a
+                  href={buildTrackedLink(
+                    book.affiliateLink,
+                    "book",
+                    utmSettings
+                  )}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                />
+              }
+            >
+              Buy
             </Button>
           )}
         </div>
