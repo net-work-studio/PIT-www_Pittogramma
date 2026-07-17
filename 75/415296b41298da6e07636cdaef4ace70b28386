@@ -1,0 +1,42 @@
+src/components/ui/dropdown-menu.tsx
+  s_1aafc91f54d425::t_5826759764a8de 3,9-16,19,27,37-38,40,43,46-50,52-54,56-61,66,77,100,112,114,123,136,147,149,160,164,179,207-208,216,220,231,236-237,239-240,242,244-253,255-261
+  s_1aafc91f54d425::t_38c67275080991 55,84,105,140,222,254
+.migration/dropdown-menu.md
+  s_1aafc91f54d425::t_fe23f01ea8558a 1-38
+src/components/mode-toggle.tsx
+  s_1aafc91f54d425::t_5c36348e86e869 24
+  s_1aafc91f54d425::t_db84cfeaf6cbf2 25-27
+src/app/(frontend)/design-system/_components/ui-section.tsx
+  s_1aafc91f54d425::t_572cd15d5e980d 27,252-253,256-271,273-290
+src/components/feat/sort/sort-dropdown.tsx
+  s_1aafc91f54d425::t_5c36348e86e869 46
+  s_1aafc91f54d425::t_3f00ed7deeb38b 47
+src/components/design-system/navigation-dropdown.tsx
+  s_1aafc91f54d425::t_c5519bd7b1a278 21
+.migration/dialog.md
+  s_83a64e74e55410::t_4a2e9e5659b760 30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "75415296b41298da6e07636cdaef4ace70b28386",
+  "prompts": {},
+  "sessions": {
+    "s_1aafc91f54d425": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6f30-16ff-7030-8994-ca4a9866d908",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_83a64e74e55410": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6c04-8ef0-75d2-808e-15c97e920596",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
