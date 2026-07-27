@@ -101,7 +101,6 @@ export function NavigationMobile({ resources }: { resources: Resource[] }) {
                 nativeButton={false}
                 onClick={closeMenu}
                 render={<Link href="/submit" />}
-                variant="outline"
               >
                 Submit your project
               </Button>
