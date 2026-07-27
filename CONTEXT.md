@@ -4,6 +4,14 @@ Pittogramma is a cultural platform covering graphic design, visual culture, even
 
 ## Language
 
+**Project submission**:
+A project proposed to Pittogramma through the public submission flow. The flow has a stable canonical route at `/submit`, so it can evolve independently of its current form provider.
+_Avoid_: Submission modal, Fillout page
+
+**Submission form**:
+The provider-hosted form embedded on the Project submission route. It owns the submission questions and accompanying instructions.
+_Avoid_: Submission page, submission modal
+
 **Upcoming (events)**:
 Events that have not yet ended. Includes events scheduled for the future and events currently in progress.
 _Avoid_: Next, future (in user-facing copy)
