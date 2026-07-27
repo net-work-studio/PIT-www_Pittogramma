@@ -14,7 +14,6 @@ export default function Page() {
           className="size-full"
           data-fillout-embed-type="fullscreen"
           data-fillout-id="jyMdNbBqwRus"
-          data-fillout-inherit-parameters
         />
       </div>
       <Script
