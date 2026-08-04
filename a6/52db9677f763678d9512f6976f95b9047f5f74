@@ -1,0 +1,26 @@
+src/components/ui/base-ui-consumer-contracts.test.ts
+  s_3aac0afd8888aa::t_c9c7e91e8595a5 53,84
+package.json
+  s_3aac0afd8888aa::t_da1f31d3676872 36
+  s_3aac0afd8888aa::t_33a49667369f0c 44
+tsconfig.json
+  s_3aac0afd8888aa::t_33a49667369f0c 16-17
+bun.lock
+  s_3aac0afd8888aa::t_050d2934933f61 41,1003-1042,2171-2172
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "a652db9677f763678d9512f6976f95b9047f5f74",
+  "prompts": {},
+  "sessions": {
+    "s_3aac0afd8888aa": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fcd91-0834-72b3-b51f-2efa9caec387",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
