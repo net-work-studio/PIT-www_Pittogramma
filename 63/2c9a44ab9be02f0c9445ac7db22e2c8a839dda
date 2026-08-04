@@ -1,0 +1,21 @@
+package.json
+  s_dc9e066bfb315a::t_ae7f21bff4087c 32,56
+bun.lock
+  s_dc9e066bfb315a::t_fe39367c0f6aa8 37,978,2166
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "632c9a44ab9be02f0c9445ac7db22e2c8a839dda",
+  "prompts": {},
+  "sessions": {
+    "s_dc9e066bfb315a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fcdbc-2675-73e0-8d42-dcd131420469",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
