@@ -1,0 +1,19 @@
+src/components/resources/book-details-drawer.tsx
+  s_209ac9e42ccbe6::t_7199243ae7dbe8 131,149
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "0276cb30a3ad75fdd307c12f17454c3593a3c3fb",
+  "prompts": {},
+  "sessions": {
+    "s_209ac9e42ccbe6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fcdc8-8c76-7032-be21-b33fe3cb19df",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
