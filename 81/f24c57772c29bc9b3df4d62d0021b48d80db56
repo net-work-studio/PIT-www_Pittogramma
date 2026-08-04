@@ -1,0 +1,103 @@
+src/sanity/schemaTypes/documents/publisher.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/singletons/pages/events-page.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/singletons/pages/projects-page.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/singletons/pages/editions-page.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/singletons/pages/interviews-page.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/journal.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1-2
+src/sanity/schemaTypes/documents/event.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/studio.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/project.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+package.json
+  s_8ae1bed3cf2b33::t_23c58f0a809ef3 50
+  s_8ae1bed3cf2b33::t_984cb7ae14121d 4
+  s_8ae1bed3cf2b33::t_baaa0933eb5ddc 55-57
+  s_8ae1bed3cf2b33::t_f25d541e24366d 5
+  s_8ae1bed3cf2b33::t_965e4789d3fe1a 58-60
+  s_8ae1bed3cf2b33::t_a92251df4380ad 7-8
+  s_8ae1bed3cf2b33::t_311f9be4c391ee 21
+src/sanity/utils/groups.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1-4
+src/sanity/schemaTypes/documents/glossary.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/contributor.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/institute.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/language.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/place.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+postcss.config.mjs
+  s_8ae1bed3cf2b33::t_cc58930b41252c 2-4
+src/sanity/components/three-side-by-side-input.tsx
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 3-6
+src/sanity/schemaTypes/singletons/pages/journal-page.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/category.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/components/grid-four-input.tsx
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 3-6
+src/sanity/schemaTypes/documents/bibliography.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/bookshop.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/community.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1-3
+src/sanity/schemaTypes/documents/interview.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/tag.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/web-source.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/cta.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/singletons/pages/about-page.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/edition.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/objects/media-item.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1-3
+src/sanity/schemaTypes/singletons/pages/designers-page.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/objects/cover-media.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/singletons/pages/home-page.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/documents/type-foundry.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+src/sanity/schemaTypes/objects/gallery-blocks.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1-5
+src/sanity/components/side-by-side-input.tsx
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 3-6
+src/sanity/schemaTypes/documents/adv.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1-3
+src/sanity/schemaTypes/documents/person.ts
+  s_8ae1bed3cf2b33::t_971ba0a4ef94e2 1
+bun.lock
+  s_8ae1bed3cf2b33::t_7d23fea7ac32fe 9-10,12-13,26,48-50,70,72,76,80,332,336,342,346,368,370,374-375,378-379,578,604-619,622-624,626,628,630,660,662,686-687,694-700,702,704,706,708,710,712,714,716,718,720,724,726,742,744,746,748,750,752,754,756,758,760,762,764,766,768,770,772,774,778-779,788,790,792,794,796,798,804,810,818,832,834,836,838,842,844,846,852,854,864,866,868,872,882-885,890,892,894,896,898,900,902-904,948,952,954,966-967,1052-1054,1056,1058,1060,1062,1066,1076,1086,1102,1160,1198,1200,1224,1270,1276,1362-1363,1394,1452,1490,1518,1520,1530,1532,1586-1587,1612-1614,1624,1658,1662,1730,1758,1760,1772,1836,1840,1850,1870,1912,1936,1938,1946,1996,2012,2016,2072-2073,2078,2096,2098,2124,2126,2132,2134,2144,2210,2216,2218,2220,2226,2228,2230,2232,2246,2256,2282,2284,2298-2323,2332,2334,2336,2338,2340,2342,2344,2346,2348,2350,2352,2354,2356,2358,2360,2362,2364,2366,2368,2372,2376,2380,2386,2388,2390,2394-2395,2400,2402,2404,2406,2408,2430-2431,2448,2450,2452-2454,2456-2458,2498,2508,2510,2512,2518,2520,2524-2525,2528-2530,2532,2538-2546,2568,2578,2580,2602,2604,2606,2626,2632,2634,2636,2638,2640,2642,2644,2646,2648,2650,2652,2654,2656,2658,2660,2718,2774,2776,2778,2800,2904
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "81f24c57772c29bc9b3df4d62d0021b48d80db56",
+  "prompts": {},
+  "sessions": {
+    "s_8ae1bed3cf2b33": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fcdaf-8b5a-7c80-95e1-cb792626f717",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
