@@ -128,7 +128,6 @@ export default function SanityImage({
       objectFit === "contain" ? "object-contain" : "object-cover",
       className
     ),
-    objectFit,
     ...(objectPosition ? { objectPosition } : {}),
     priority,
     sizes: fill ? (sizes ?? "100vw") : sizes,

@@ -53,23 +53,22 @@ export function BookDetailsDrawer({
 
         <div className="flex flex-col gap-6 p-6">
           {coverUrl && (
-            <div className="relative aspect-2/3 w-full max-w-[200px] overflow-hidden rounded-xl bg-muted">
+            <div className="relative aspect-2/3 w-full max-w-50 overflow-hidden rounded-xl bg-muted">
               <Image
                 alt={book.cover?.alt || book.name || "Book cover"}
                 className="object-cover"
                 fill
-                objectFit="cover"
                 sizes="200px"
                 src={coverUrl}
                 {...(blurDataURL
-                  ? { placeholder: "blur" as const, blurDataURL }
+                  ? { blurDataURL, placeholder: "blur" as const }
                   : {})}
               />
             </div>
           )}
 
           <div className="flex flex-col gap-4">
-            {book.publisher?.name && (
+            {Boolean(book.publisher?.name) && (
               <div>
                 <p className="text-muted-foreground text-xs uppercase">
                   Publisher
@@ -78,21 +77,21 @@ export function BookDetailsDrawer({
               </div>
             )}
 
-            {book.year && (
+            {Boolean(book.year) && (
               <div>
                 <p className="text-muted-foreground text-xs uppercase">Year</p>
                 <p className="font-medium">{book.year}</p>
               </div>
             )}
 
-            {book.pageCount && (
+            {Boolean(book.pageCount) && (
               <div>
                 <p className="text-muted-foreground text-xs uppercase">Pages</p>
                 <p className="font-medium">{book.pageCount}</p>
               </div>
             )}
 
-            {book.isbn && (
+            {Boolean(book.isbn) && (
               <div>
                 <p className="text-muted-foreground text-xs uppercase">ISBN</p>
                 <p className="font-medium font-mono text-sm">{book.isbn}</p>
@@ -117,7 +116,7 @@ export function BookDetailsDrawer({
               </div>
             )}
 
-            {book.description && (
+            {Boolean(book.description) && (
               <div>
                 <p className="text-muted-foreground text-xs uppercase">
                   Description
@@ -129,12 +128,11 @@ export function BookDetailsDrawer({
             )}
           </div>
 
-          {book.affiliateLink && (
+          {Boolean(book.affiliateLink) && (
             <Button
               className="mt-auto w-full"
               nativeButton={false}
               render={
-                // biome-ignore lint/a11y/useAnchorContent: Base UI injects the Button children into this render element.
                 <a
                   href={buildTrackedLink(
                     book.affiliateLink,
