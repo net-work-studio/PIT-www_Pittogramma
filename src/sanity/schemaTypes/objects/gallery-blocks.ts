@@ -1,10 +1,8 @@
-import {
-  BlockElementIcon,
-  ImageIcon,
-  InlineIcon,
-  SquareIcon,
-  ThLargeIcon,
-} from "@sanity/icons";
+import { BlockElementIcon } from "@sanity/icons/BlockElement";
+import { ImageIcon } from "@sanity/icons/Image";
+import { InlineIcon } from "@sanity/icons/Inline";
+import { SquareIcon } from "@sanity/icons/Square";
+import { ThLargeIcon } from "@sanity/icons/ThLarge";
 import { defineField, defineType } from "sanity";
 import { GridFourInput } from "@/sanity/components/grid-four-input";
 import { SideBySideInput } from "@/sanity/components/side-by-side-input";

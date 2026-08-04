@@ -1,4 +1,4 @@
-import { InfoOutlineIcon } from "@sanity/icons";
+import { InfoOutlineIcon } from "@sanity/icons/InfoOutline";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { groups } from "@/sanity/utils/groups";
 

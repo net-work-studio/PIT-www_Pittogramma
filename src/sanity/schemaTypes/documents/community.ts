@@ -1,4 +1,6 @@
-import { CogIcon, DocumentTextIcon, UsersIcon } from "@sanity/icons";
+import { CogIcon } from "@sanity/icons/Cog";
+import { DocumentTextIcon } from "@sanity/icons/DocumentText";
+import { UsersIcon } from "@sanity/icons/Users";
 import { defineField, defineType } from "sanity";
 import { buildLocalToday } from "@/lib/date-utils";
 import { httpUrlValidation } from "@/sanity/utils/validation";
