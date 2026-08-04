@@ -128,7 +128,7 @@ export function BookDetailsDrawer({
             )}
           </div>
 
-          {Boolean(book.affiliateLink) && (
+          {book.affiliateLink ? (
             <Button
               className="mt-auto w-full"
               nativeButton={false}
@@ -146,7 +146,7 @@ export function BookDetailsDrawer({
             >
               Buy
             </Button>
-          )}
+          ) : null}
         </div>
       </SheetContent>
     </Sheet>
