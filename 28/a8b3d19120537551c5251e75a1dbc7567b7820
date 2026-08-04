@@ -1,0 +1,16 @@
+bun.lock
+  h_75f73f9fd69b93 12,18-19,30,34,36-37,304,306,308,310,312,314,316,318,320,610,612,614,616,618,620,622,624,626,800,958,974,976,1084,1436,1662,1724,1726
+package.json
+  h_75f73f9fd69b93 7,13-14,25,29,31-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "28a8b3d19120537551c5251e75a1dbc7567b7820",
+  "prompts": {},
+  "humans": {
+    "h_75f73f9fd69b93": {
+      "author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
