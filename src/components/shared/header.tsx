@@ -4,7 +4,6 @@ import { Suspense } from "react";
 
 import Mark from "@/components/brand/mark";
 import FeedDialog from "@/components/feat/feed/feed-dialog";
-import SubmitDialog from "@/components/feat/submit/submit-dialog";
 import { ModeToggle } from "@/components/mode-toggle";
 import { type AdvTier, TIER_CAPS, TIER_ORDER } from "@/lib/adv-config";
 import { buildLocalToday } from "@/lib/date-utils";
@@ -64,7 +63,12 @@ export default async function Header({
       <NavigationDesktop resources={enabledResources} />
       <div className="flex items-center gap-2.5">
         <div className="hidden md:flex">
-          <SubmitDialog />
+          <Button
+            nativeButton={false}
+            render={<Link href="/submit" />}
+          >
+            Submit your project
+          </Button>
         </div>
         <Suspense
           fallback={
