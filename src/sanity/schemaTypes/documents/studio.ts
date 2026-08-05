@@ -1,4 +1,4 @@
-import { DesktopIcon } from "@sanity/icons";
+import { DesktopIcon } from "@sanity/icons/Desktop";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { FetchWebsiteDataButton } from "@/sanity/components/fetch-website-data-button";
 import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";

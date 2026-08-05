@@ -1,4 +1,4 @@
-import { TextIcon } from "@sanity/icons";
+import { TextIcon } from "@sanity/icons/Text";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { FetchWebsiteDataButton } from "@/sanity/components/fetch-website-data-button";
 import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";

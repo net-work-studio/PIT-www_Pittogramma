@@ -1,4 +1,6 @@
-import { BoltIcon, CogIcon, DocumentTextIcon } from "@sanity/icons";
+import { BoltIcon } from "@sanity/icons/Bolt";
+import { CogIcon } from "@sanity/icons/Cog";
+import { DocumentTextIcon } from "@sanity/icons/DocumentText";
 import { defineField, defineType } from "sanity";
 import { TIER_CAPS } from "@/lib/adv-config";
 import { buildLocalToday } from "@/lib/date-utils";

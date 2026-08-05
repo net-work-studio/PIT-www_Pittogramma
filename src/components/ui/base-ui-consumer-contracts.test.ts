@@ -50,7 +50,7 @@ function getAttribute(
   sourceFile: ts.SourceFile
 ) {
   return element.attributes.properties.find(
-    (attribute): attribute is ts.JsxAttribute =>
+    (attribute: ts.JsxAttributeLike): attribute is ts.JsxAttribute =>
       ts.isJsxAttribute(attribute) &&
       attribute.name.getText(sourceFile) === name
   );
@@ -81,7 +81,7 @@ function collectRenderedRootTags(
     return tags;
   }
 
-  ts.forEachChild(node, (child) => {
+  ts.forEachChild(node, (child: ts.Node) => {
     collectRenderedRootTags(child, sourceFile, tags);
   });
 

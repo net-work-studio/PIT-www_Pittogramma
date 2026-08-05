@@ -1,4 +1,4 @@
-import { LinkIcon } from "@sanity/icons";
+import { LinkIcon } from "@sanity/icons/Link";
 import { defineField, defineType } from "sanity";
 import { UrlInput } from "@/sanity/components/url-input";
 import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";

@@ -1,4 +1,6 @@
-import { ImageIcon, LinkIcon, PlayIcon } from "@sanity/icons";
+import { ImageIcon } from "@sanity/icons/Image";
+import { LinkIcon } from "@sanity/icons/Link";
+import { PlayIcon } from "@sanity/icons/Play";
 import { defineField, defineType } from "sanity";
 import { videoEmbedUrlValidation } from "@/sanity/utils/validation";
 

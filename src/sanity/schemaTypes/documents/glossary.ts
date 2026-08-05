@@ -1,4 +1,4 @@
-import { BlockquoteIcon } from "@sanity/icons";
+import { BlockquoteIcon } from "@sanity/icons/Blockquote";
 import { defineField, defineType } from "sanity";
 
 export const glossary = defineType({

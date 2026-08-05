@@ -1,9 +1,7 @@
-import {
-  DatabaseIcon,
-  DocumentTextIcon,
-  InfoOutlineIcon,
-  SearchIcon,
-} from "@sanity/icons";
+import { DatabaseIcon } from "@sanity/icons/Database";
+import { DocumentTextIcon } from "@sanity/icons/DocumentText";
+import { InfoOutlineIcon } from "@sanity/icons/InfoOutline";
+import { SearchIcon } from "@sanity/icons/Search";
 
 export const groups = [
   {

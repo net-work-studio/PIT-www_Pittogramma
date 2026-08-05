@@ -131,7 +131,7 @@ describe("assertSanityProjectUser", () => {
       {
         fetcher: (() => {
           throw new Error("fetcher should not be called");
-        }) as typeof fetch,
+        }) as unknown as typeof fetch,
         projectId: "project-id",
       }
     );
@@ -148,7 +148,7 @@ describe("assertSanityProjectUser", () => {
       {
         fetcher: (() => {
           throw new Error("fetcher should not be called");
-        }) as typeof fetch,
+        }) as unknown as typeof fetch,
         projectId: "project-id",
       }
     );
@@ -166,7 +166,7 @@ describe("assertSanityProjectUser", () => {
         fetcher: (() =>
           Promise.resolve(
             new Response("Nope", { status: 403 })
-          )) as typeof fetch,
+          )) as unknown as typeof fetch,
         projectId: "project-id",
       }
     );
@@ -184,7 +184,7 @@ describe("assertSanityProjectUser", () => {
         method: "POST",
       }),
       {
-        fetcher: ((input, init) => {
+        fetcher: ((input: Parameters<typeof fetch>[0], init: Parameters<typeof fetch>[1]) => {
           verificationUrl = input.toString();
           verificationAuthorization =
             init?.headers instanceof Headers
@@ -193,7 +193,7 @@ describe("assertSanityProjectUser", () => {
                   ?.Authorization ?? null);
 
           return Promise.resolve(new Response("{}", { status: 200 }));
-        }) as typeof fetch,
+        }) as unknown as typeof fetch,
         projectId: "project-id",
       }
     );
@@ -228,7 +228,7 @@ describe("assertSanityProjectUser", () => {
           fetcher: (() =>
             Promise.resolve(
               new Response("Unauthorized", { status: 401 })
-            )) as typeof fetch,
+            )) as unknown as typeof fetch,
           projectId: "project-id",
         }
       );
@@ -300,8 +300,10 @@ describe("fetchWithSafeRedirects", () => {
         PUBLIC_TEST_URL,
         {},
         {
-          fetcher: () =>
-            Promise.resolve(Response.redirect("http://127.0.0.1/private", 302)),
+          fetcher: (() =>
+            Promise.resolve(
+              Response.redirect("http://127.0.0.1/private", 302)
+            )) as unknown as typeof fetch,
           maxRedirects: 3,
         }
       )
@@ -316,11 +318,11 @@ describe("fetchWithSafeRedirects", () => {
         PUBLIC_TEST_URL,
         {},
         {
-          fetcher: () => {
+          fetcher: (() => {
             calls += 1;
             const redirectUrl = new URL(`/redirect-${calls}`, PUBLIC_TEST_URL);
             return Promise.resolve(Response.redirect(redirectUrl, 302));
-          },
+          }) as unknown as typeof fetch,
           maxRedirects: 3,
         }
       )

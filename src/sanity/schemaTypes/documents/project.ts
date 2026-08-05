@@ -1,4 +1,4 @@
-import { ProjectsIcon } from "@sanity/icons";
+import { ProjectsIcon } from "@sanity/icons/Projects";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";

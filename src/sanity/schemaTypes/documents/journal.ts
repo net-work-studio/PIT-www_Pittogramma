@@ -1,4 +1,5 @@
-import { DocumentTextIcon, LinkIcon } from "@sanity/icons";
+import { DocumentTextIcon } from "@sanity/icons/DocumentText";
+import { LinkIcon } from "@sanity/icons/Link";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { JOURNAL_LABELS } from "@/lib/journal-labels";
 import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
