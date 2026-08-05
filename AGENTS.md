@@ -1,5 +1,19 @@
 # AGENTS.md
 
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked in Linear under the Work team and PIT-www_Pittogramma project. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the five default triage labels. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+This is a single-context repository. See `docs/agents/domain.md`.
+
 ## Cursor Cloud specific instructions
 
 Pittogramma (`pittogramma-web`) is a single Next.js 16 (App Router) app with an embedded Sanity Studio. It is not a multi-app monorepo.

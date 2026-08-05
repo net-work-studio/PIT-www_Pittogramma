@@ -49,6 +49,27 @@ export function requiredHttpUrlWhen(
     });
 }
 
+export function requiredHttpsUrlWhen(
+  predicate: ValidationPredicate,
+  message: string
+): <T extends CustomStringValidationRule<T>>(rule: T) => T {
+  return (rule) =>
+    rule.custom((value: string | undefined, context) => {
+      if (predicate(context) && !value) {
+        return message;
+      }
+      if (!value) {
+        return true;
+      }
+
+      try {
+        return new URL(value).protocol === "https:" ? true : "Must use HTTPS";
+      } catch {
+        return "Must be a valid HTTPS URL";
+      }
+    });
+}
+
 export function videoEmbedUrlValidation<
   T extends CustomStringValidationRule<T>,
 >(rule: T): T {

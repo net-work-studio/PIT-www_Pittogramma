@@ -31,6 +31,14 @@ _Avoid_: "At" (capitalised), "Online" (capitalised), showing address on cards
 Whether an event is held in person (`offline`) or remotely (`online`). Drives card byline, detail location display, and structured data. When online, location name and address are hidden in Studio.
 _Avoid_: format, venue type, isOnline
 
+**Event card destination**:
+Where an event card sends a visitor. A Pittogramma event page renders at the event's branded `/events/{slug}` route; an external page uses that same branded route as a permanent redirect to an editor-provided HTTPS URL. Existing events default to a Pittogramma event page.
+_Avoid_: Luma event, internal/external event, hosted on Luma
+
+**External event redirect**:
+The branded Pittogramma `/events/{slug}` route for an event whose card destination is an external page. Event cards open this route in a new tab; the route permanently redirects to the external URL with Pittogramma-managed `utm_source`, `utm_medium`, and event-slug `utm_content` parameters.
+_Avoid_: External event page, Luma page (unless specifically referring to Luma's page)
+
 **Content-type badge (detail page)**:
 The outline badge above a detail page title that identifies the content type (Project, Articles, Diary, Baseline, Interview). Matches the label on listing cards but uses outline-only hover — no fill color.
 _Avoid_: Colored card hover on detail pages, discipline tags in the hero (those stay in metadata)

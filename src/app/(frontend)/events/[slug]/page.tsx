@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { defineQuery } from "next-sanity";
 import { Suspense } from "react";
 
@@ -14,6 +14,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { hasCoverMedia } from "@/lib/cover-media-utils";
 import { formatDateRange } from "@/lib/date-utils";
+import { buildExternalEventUrl } from "@/lib/event-destination";
 import {
   formatEventLocationDisplay,
   getSchemaEventAttendanceMode,
@@ -22,6 +23,7 @@ import {
 import { EVENT_TYPE_BADGE_VARIANT, getEventTypeLabel } from "@/lib/event-type";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
+import { utmSettingsFromSiteSettings } from "@/lib/tracked-link";
 import type { SeoImageSource, SeoModule } from "@/lib/types/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import {
@@ -31,7 +33,7 @@ import {
   sanityFetchMetadata,
   sanityFetchStaticParams,
 } from "@/sanity/lib/live";
-import { EVENT_QUERY } from "@/sanity/lib/queries";
+import { EVENT_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
 export async function generateStaticParams() {
   const eventSlugsQuery = defineQuery(
@@ -110,15 +112,28 @@ async function CachedEventPage({
   stega,
 }: { slug: string } & DynamicFetchOptions) {
   "use cache";
-  const { data: event } = await sanityFetch({
-    query: EVENT_QUERY,
-    params: { slug },
-    perspective,
-    stega,
-  });
+  const [{ data: event }, { data: siteSettings }] = await Promise.all([
+    sanityFetch({
+      params: { slug },
+      perspective,
+      query: EVENT_QUERY,
+      stega,
+    }),
+    sanityFetch({ perspective, query: SITE_SETTINGS_QUERY, stega }),
+  ]);
 
   if (!event) {
     notFound();
+  }
+
+  if (event.cardDestination === "external" && event.externalUrl) {
+    permanentRedirect(
+      buildExternalEventUrl(
+        event.externalUrl,
+        slug,
+        utmSettingsFromSiteSettings(siteSettings)
+      )
+    );
   }
 
   const imageUrl = event.cover?.image?.asset
