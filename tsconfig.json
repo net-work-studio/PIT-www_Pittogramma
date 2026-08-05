@@ -14,7 +14,7 @@
     "jsx": "react-jsx",
     "incremental": true,
     "rootDir": ".",
-    "types": ["node", "react", "react-dom", "leaflet"],
+    "types": ["node", "react", "react-dom", "leaflet", "bun"],
     "plugins": [
       {
         "name": "next"
