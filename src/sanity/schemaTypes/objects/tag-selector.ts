@@ -1,15 +1,20 @@
+import type { ConditionalPropertyCallback } from "@sanity/types";
 import { defineArrayMember, defineField } from "sanity";
 
-export const tagsField = (group?: string) =>
+export const tagsField = (
+  group?: string,
+  hidden?: ConditionalPropertyCallback
+) =>
   defineField({
-    type: "array",
     name: "tags",
     title: "Tags",
+    type: "array",
     ...(group ? { group } : {}),
+    ...(hidden ? { hidden } : {}),
     of: [
       defineArrayMember({
-        type: "reference",
         to: [{ type: "tag" }],
+        type: "reference",
       }),
     ],
     validation: (rule) =>

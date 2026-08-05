@@ -1,3 +1,4 @@
+import { ExternalLinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import SanityImage from "@/components/modules/shared/sanity-image";
@@ -133,7 +134,7 @@ export default function BaseCard({
         big ? "col-span-2" : "col-span-1"
       )}
       href={href}
-      {...(isExternal ? { target: "_blank", rel: linkRel } : {})}
+      {...(isExternal ? { rel: linkRel, target: "_blank" } : {})}
     >
       <AspectRatio
         className="relative overflow-hidden rounded-xl"
@@ -148,8 +149,14 @@ export default function BaseCard({
       ) : null}
       <div className="inline-flex w-full flex-col items-start justify-start">
         <hgroup className="flex flex-col items-start justify-start gap-1">
-          <h3 className="text-pretty text-foreground text-lg leading-tight">
-            {title}
+          <h3 className="inline-flex items-baseline gap-1.5 text-pretty text-foreground text-lg leading-tight">
+            <span>{title}</span>
+            {external ? (
+              <ExternalLinkIcon
+                aria-label="Opens an external page in a new tab"
+                className="size-3.5 shrink-0"
+              />
+            ) : null}
           </h3>
           {cardByline ? (
             <p className="font-normal text-base text-muted-foreground">
