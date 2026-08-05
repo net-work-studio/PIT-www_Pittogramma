@@ -1,0 +1,76 @@
+src/lib/event-destination.test.ts
+  s_50b24186462045::t_38cb3a3ea54fa2 1-8,11-24,26-35
+  s_50b24186462045::t_e45dd7c9c961ae 9-10,25
+src/sanity/schemaTypes/objects/tag-selector.ts
+  s_50b24186462045::t_2131a7f24e84fd 1,4-7,13
+  s_50b24186462045::t_bf519ca7f891a1 11,17
+src/app/(frontend)/events/page.tsx
+  s_50b24186462045::t_fc13db0e440bf2 73
+  s_50b24186462045::t_c6b3c6d60fd09d 71-72,74
+  s_50b24186462045::t_38cb3a3ea54fa2 62,83,207,230
+docs/agents/issue-tracker.md
+  s_be76519a9daaee::t_e1de0359c55cef 1-49
+AGENTS.md
+  s_be76519a9daaee::t_e1de0359c55cef 3-16
+docs/agents/domain.md
+  s_be76519a9daaee::t_e1de0359c55cef 1-39
+src/sanity/extract.json
+  s_50b24186462045::t_a0cafb30574a36 3553-3576
+  s_50b24186462045::t_6d928b5b3b326d 3639
+src/sanity/components/location-name-input.tsx
+  s_50b24186462045::t_906964b45f758f 1-17
+CONTEXT.md
+  s_50b24186462045::t_0247ab69293f6a 34-41
+docs/agents/triage-labels.md
+  s_be76519a9daaee::t_e1de0359c55cef 1-15
+src/components/cards/base-card.tsx
+  s_50b24186462045::t_023130732ee6ca 1,137
+  s_50b24186462045::t_38cb3a3ea54fa2 152-159
+src/sanity/schemaTypes/documents/event.ts
+  s_50b24186462045::t_6adf3645fd3a65 6,58
+  s_50b24186462045::t_c6b3c6d60fd09d 114-120,128,130,137-139
+  s_50b24186462045::t_2131a7f24e84fd 172-175
+  s_50b24186462045::t_906964b45f758f 3,126
+  s_50b24186462045::t_38cb3a3ea54fa2 32,34-57,59-62,146,153,161,169,181
+  s_50b24186462045::t_fc13db0e440bf2 129
+  s_50b24186462045::t_cdebba7b25ffa0 33
+src/sanity/lib/queries.ts
+  s_50b24186462045::t_38cb3a3ea54fa2 235-236,272-273
+src/app/(frontend)/events/[slug]/page.tsx
+  s_50b24186462045::t_38cb3a3ea54fa2 3,17,26,36,115-118,120-121,123,129-136
+  s_50b24186462045::t_023130732ee6ca 119,122
+  s_50b24186462045::t_e11eb4a13039e0 137-138
+src/lib/event-destination.ts
+  s_50b24186462045::t_6adf3645fd3a65 11-15,17-18
+  s_50b24186462045::t_38cb3a3ea54fa2 1-10,16,19-26
+src/sanity/types.ts
+  s_50b24186462045::t_6d928b5b3b326d 681,3009,3100,3196
+  s_50b24186462045::t_a0cafb30574a36 675-676,2978,2983-2984,3069,3074-3075,3165,3170-3171,7363-7364,7366
+src/sanity/utils/validation.ts
+  s_50b24186462045::t_023130732ee6ca 66
+  s_50b24186462045::t_6adf3645fd3a65 52-65,67-72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "b2200eea7fd881d4d32a534363a15fb6880a70f9",
+  "prompts": {},
+  "sessions": {
+    "s_50b24186462045": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd2de-9526-7032-9f52-ddb204340d45",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_be76519a9daaee": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd2e9-e670-7790-817f-0e9cbc15ad9d",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
