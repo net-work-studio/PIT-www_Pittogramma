@@ -27,13 +27,6 @@ export const siteSettings = defineType({
       description: "Default SEO settings for the site and homepage",
     }),
     defineField({
-      name: "substackUrl",
-      title: "Substack URL",
-      type: "url",
-      group: "footer",
-      validation: httpUrlValidation,
-    }),
-    defineField({
       name: "instagramUrl",
       title: "Instagram URL",
       type: "url",

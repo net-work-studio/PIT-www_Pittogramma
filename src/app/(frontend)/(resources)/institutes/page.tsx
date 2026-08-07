@@ -13,9 +13,9 @@ import {
 } from "@/lib/feature-flags";
 import { utmSettingsFromSiteSettings } from "@/lib/tracked-link";
 import {
+  type DynamicFetchOptions,
   getDynamicFetchOptions,
   sanityFetch,
-  type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { INSTITUTES_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
@@ -39,7 +39,10 @@ async function DynamicInstitutesPage() {
   return <CachedInstitutesPage perspective={perspective} stega={stega} />;
 }
 
-async function CachedInstitutesPage({ perspective, stega }: DynamicFetchOptions) {
+async function CachedInstitutesPage({
+  perspective,
+  stega,
+}: DynamicFetchOptions) {
   "use cache";
   const [{ data: institutes }, { data: settings }] = await Promise.all([
     sanityFetch({ query: INSTITUTES_QUERY, perspective, stega }),

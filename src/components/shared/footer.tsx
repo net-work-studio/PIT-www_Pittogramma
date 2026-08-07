@@ -1,7 +1,8 @@
 import Link from "next/link";
-
 import { type DynamicFetchOptions, sanityFetch } from "@/sanity/lib/live";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
+import Logotype from "../brand/logotype";
+import NewsletterSignupForm from "../newsletter/newsletter-signup-form";
 
 const footerLinkListClass = "[&_a]:hover:text-muted-foreground";
 
@@ -20,25 +21,23 @@ export default async function Footer({
     <footer className="p-4">
       <div className="grid grid-cols-1 gap-4 rounded-lg bg-secondary p-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-0">
         {/* Col 1 */}
-        <ul>
-          <li>Pittogramma</li>
+        <ul className="flex flex-col items-start gap-1">
+          <li className="h-5">
+            <Logotype />
+          </li>
           <li>
             <p>© {new Date().getFullYear()}. All Rights Reserved</p>
+          </li>
+          <br />
+          <li className="w-fit text-muted-foreground decoration-1 underline-offset-4 hover:underline">
+            <Link href="/terms-of-service">Privacy Policy</Link>
+          </li>
+          <li className="w-fit text-muted-foreground decoration-1 underline-offset-4 hover:underline">
+            <Link href="/terms-of-service">Impressum</Link>
           </li>
         </ul>
         {/* Col 2 */}
         <ul className={footerLinkListClass}>
-          {siteSettings?.substackUrl && (
-            <li>
-              <a
-                href={siteSettings.substackUrl}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Subscribe to our Substack
-              </a>
-            </li>
-          )}
           {siteSettings?.instagramUrl && (
             <li>
               <a
@@ -77,14 +76,14 @@ export default async function Footer({
         </ul>
 
         {/* Col 4 */}
-        <ul className={footerLinkListClass}>
-          <li>
-            <Link href="/terms-of-service">Privacy Policy</Link>
-          </li>
-          <li>
-            <Link href="/terms-of-service">Impressum</Link>
-          </li>
-        </ul>
+        <div>
+          <p className="">Newsletter</p>
+          <NewsletterSignupForm
+            buttonText="Subscribe"
+            compact
+            source="footer"
+          />
+        </div>
       </div>
     </footer>
   );

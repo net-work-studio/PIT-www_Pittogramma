@@ -1,41 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { type DynamicFetchOptions, sanityFetch } from "@/sanity/lib/live";
-import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
+import NewsletterSignupForm from "@/components/newsletter/newsletter-signup-form";
 
-export default async function JournalArticleCta({
-  perspective,
-  stega,
-}: DynamicFetchOptions) {
-  "use cache";
-  const { data: settings } = await sanityFetch({
-    query: SITE_SETTINGS_QUERY,
-    perspective,
-    stega,
-  });
-
-  const substackUrl = settings?.substackUrl;
-
-  if (!substackUrl) {
-    return null;
-  }
-
+export default function JournalArticleCta() {
   return (
     <div className="mx-auto max-w-[700px] rounded-lg bg-foreground p-6 text-background">
       <p className="font-mono text-[10px] uppercase">Newsletter</p>
       <p className="mt-2 text-base lg:text-lg">
         Do you want to be updated on next articles?
       </p>
-      <Button
-        className="mt-4 rounded-full font-mono uppercase"
-        nativeButton={false}
-        render={
-          // biome-ignore lint/a11y/useAnchorContent: Base UI injects the Button children into this render element.
-          <a href={substackUrl} rel="noopener noreferrer" target="_blank" />
-        }
-        variant="outline"
-      >
-        Subscribe to our newsletter
-      </Button>
+      <NewsletterSignupForm
+        buttonText="Subscribe to our newsletter"
+        className="mt-4"
+        source="journal_article"
+      />
     </div>
   );
 }
