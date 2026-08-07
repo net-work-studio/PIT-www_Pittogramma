@@ -1,0 +1,23 @@
+data/substack-post-inventory.json
+  s_b92f12f0f509ac::t_c551de4babac7e 1-48
+src/sanity/types.ts
+  s_b92f12f0f509ac::t_e797917d76aca9 1426,7443
+docs/newsletter/brevo-setup.md
+  s_b92f12f0f509ac::t_c4b4bac8b1e7f9 20,31-35,136
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "ffa3c25a0cf184e1adc6309485730e0369f4bcc0",
+  "prompts": {},
+  "sessions": {
+    "s_b92f12f0f509ac": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fdca0-641e-7151-8078-31b81075b4b7",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
