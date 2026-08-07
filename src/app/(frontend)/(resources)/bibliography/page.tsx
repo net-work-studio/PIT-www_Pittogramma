@@ -54,7 +54,7 @@ async function CachedBibliographyPage({
         <PageHeader
           className="pb-0"
           subtitle="A constantly updated list of books on graphic design"
-          title="Resources"
+          title="Bibliography"
         />
         <ResourcesNavigation resources={getEnabledResources()} />
       </div>
