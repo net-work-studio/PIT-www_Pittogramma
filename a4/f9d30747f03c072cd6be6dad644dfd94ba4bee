@@ -1,0 +1,19 @@
+AGENTS.md
+  s_e236aee6701f3b::t_80a8df880305ea 32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "a4f9d30747f03c072cd6be6dad644dfd94ba4bee",
+  "prompts": {},
+  "sessions": {
+    "s_e236aee6701f3b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fdccc-1f6e-7e20-81a1-98dd813c3afe",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
