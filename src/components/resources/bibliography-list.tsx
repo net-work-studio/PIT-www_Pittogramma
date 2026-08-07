@@ -1,12 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useState } from "react";
 import { BookDetailsModal } from "@/components/resources/book-details-modal";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import { TagsDisplay } from "@/components/resources/tags-display";
 import type { UtmSettings } from "@/lib/tracked-link";
-import { getBlurDataUrl, urlForImage } from "@/sanity/lib/image";
 import type { BIBLIOGRAPHY_QUERY_RESULT } from "@/sanity/types";
 
 type BibliographyItem = BIBLIOGRAPHY_QUERY_RESULT[number];
@@ -24,8 +22,6 @@ interface BookCardListProps {
 }
 
 function BookListItem({ book, onSelect }: BookCardListProps) {
-  const coverUrl = urlForImage(book.cover)?.width(96).height(144).url();
-  const blurDataURL = getBlurDataUrl(book.cover);
   const handleClick = useCallback(() => {
     onSelect(book);
   }, [book, onSelect]);
@@ -34,28 +30,14 @@ function BookListItem({ book, onSelect }: BookCardListProps) {
     <ResourceListItem className="max-md:grid-cols-1 max-md:gap-1">
       <span className="col-span-4 max-md:col-span-1">
         <button
-          className="inline-flex items-center gap-2 text-left transition-colors hover:text-muted-foreground"
+          className="text-left transition-colors hover:text-muted-foreground"
           onClick={handleClick}
           type="button"
         >
-          <span className="relative h-10 w-7 shrink-0 overflow-hidden bg-muted">
-            {coverUrl ? (
-              <Image
-                alt=""
-                className="object-cover"
-                fill
-                sizes="28px"
-                src={coverUrl}
-                {...(blurDataURL
-                  ? { blurDataURL, placeholder: "blur" as const }
-                  : {})}
-              />
-            ) : null}
-          </span>
-          <span>{book.name}</span>
+          {book.name}
         </button>
       </span>
-      <span className="col-span-2 max-md:col-span-1 max-md:pl-6 max-md:text-muted-foreground max-md:text-sm">
+      <span className="col-span-2 max-md:col-span-1 max-md:text-muted-foreground max-md:text-sm">
         {getAuthors(book.authors)}
       </span>
       <span className="col-span-2 max-md:hidden">
