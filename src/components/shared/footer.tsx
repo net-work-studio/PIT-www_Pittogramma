@@ -38,17 +38,6 @@ export default async function Footer({
         </ul>
         {/* Col 2 */}
         <ul className={footerLinkListClass}>
-          {siteSettings?.substackUrl && (
-            <li>
-              <a
-                href={siteSettings.substackUrl}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Subscribe to our Substack
-              </a>
-            </li>
-          )}
           {siteSettings?.instagramUrl && (
             <li>
               <a

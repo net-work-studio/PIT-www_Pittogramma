@@ -1838,13 +1838,6 @@
         },
         "optional": true
       },
-      "substackUrl": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
       "instagramUrl": {
         "type": "objectAttribute",
         "value": {

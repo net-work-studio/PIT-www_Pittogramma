@@ -16,7 +16,6 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     utmSource,
     utmMedium,
     utmCampaign,
-    substackUrl,
     instagramUrl,
     spotifyUrl
   }
