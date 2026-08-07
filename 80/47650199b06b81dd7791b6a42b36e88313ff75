@@ -1,0 +1,277 @@
+src/sanity/schemaTypes/documents/event.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1,3,6,32-62,114-120,126,128-130,137-139,146,153,161,169,172-175,181
+tsconfig.json
+  s_b92f12f0f509ac::t_6c7c0917be7da2 16-17
+src/sanity/schemaTypes/documents/edition.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/sanity/schemaTypes/documents/type-foundry.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+.migration/navigation-menu.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-33
+src/components/ui/dialog.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3,8,12,16,20,27,29,31,45,51,53,62,69,97,110
+src/app/api/newsletter/subscribe/route.test.ts
+  s_b92f12f0f509ac::t_3cc3abd57ed735 249-251,286,308-310
+src/app/(frontend)/(support)/submit/page.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-7,9-24
+AGENTS.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3-16
+src/sanity/components/location-name-input.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-17
+src/components/ui/input.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1,6-10,12
+.agents/skills/shadcn/rules/icons.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-101
+.agents/skills/migrate-radix-to-base/overlays.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-459
+.agents/skills/shadcn/rules/composition.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-201
+src/app/(frontend)/(resources)/glossary/page.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 107
+.migration/accordion.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-28
+.migration/badge.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-26
+.agents/skills/migrate-radix-to-base/menus.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-409
+src/components/shared/header.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 66-71
+src/components/ui/navigation-menu.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3,11,14-16,18-29,44-54,66-67,73,77,86,102,113,120,123,132,141,145,154-156,158-159,161,163-166,168,171-172,174-179,186,190,202,204,206,213,224
+src/sanity/schemaTypes/documents/contributor.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/components/feat/sort/sort-dropdown.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 46-47
+src/components/feat/filter/filter.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 89-91
+src/components/ui/popover.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3,8-14,18,22-23,27-28,30,33,36,38-40,42-51,56
+src/sanity/utils/validation.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 52-72
+src/components/feat/load-more/load-more.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 39-44
+.migration/dropdown-menu.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-38
+.agents/skills/shadcn/cli.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-290
+src/sanity/schemaTypes/documents/language.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+.agents/skills/migrate-radix-to-base/form-controls.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-390
+.agents/skills/shadcn/mcp.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-105
+src/components/modules/designer/designer-modal.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3,57,97,100,111,114
+src/sanity/components/side-by-side-input.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3-6
+src/sanity/schemaTypes/singletons/pages/projects-page.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+.migration/popover.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-27
+.agents/skills/shadcn/rules/styling.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-185
+src/sanity/schemaTypes/documents/web-source.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/components/ui/base-ui-consumer-contracts.test.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-210
+src/sanity/schemaTypes/documents/person.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/sanity/schemaTypes/documents/bookshop.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/lib/event-destination.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-26
+.agents/skills/migrate-radix-to-base/universal-patterns.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-286
+src/sanity/components/grid-four-input.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3-6
+src/components/ui/dropdown-menu.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3,9-16,19,27,37-38,40,43,46-50,52-61,66,77,84,100,105,112,114,123,136,140,147,149,160,164,179,207-208,216,220,222,231,236-237,239-240,242,244-261
+src/sanity/schemaTypes/documents/glossary.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/sanity/schemaTypes/documents/interview.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/components/ui/aspect-ratio.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-3,5-12
+.agents/skills/shadcn/customization.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-208
+src/sanity/schemaTypes/objects/media-item.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-3
+src/sanity/schemaTypes/documents/adv.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-3
+.migration/project.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-26
+src/sanity/schemaTypes/singletons/pages/events-page.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/app/(frontend)/events/[slug]/page.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3,17,26,36,115-123,129-136
+  s_b92f12f0f509ac::t_171d8dccbdcf05 137-138
+src/sanity/schemaTypes/objects/gallery-blocks.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-5
+.codex/config.toml
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-3
+.migration/button.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-37
+src/sanity/schemaTypes/documents/place.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/sanity/schemaTypes/singletons/pages/home-page.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/sanity/extract.json
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3546-3569,3632
+src/sanity/schemaTypes/documents/studio.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+.migration/sheet.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-34
+data/substack-post-inventory.json
+  s_b92f12f0f509ac::t_3cec95eb9e0d60 6-29,31-34,36-79,81-84,86-157
+src/sanity/schemaTypes/objects/cover-media.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+.migration/aspect-ratio.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-31
+src/components/ui/aspect-ratio.test.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-14
+src/sanity/types.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 674-675,680,3076,3081-3082,3107,3167,3172-3173,3198,3263,3268-3269,3294,7462-7463,7465
+.agents/skills/migrate-radix-to-base/wrapper-shapes.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-110
+.agents/skills/shadcn/rules/chat.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-224
+src/app/(frontend)/design-system/_components/ui-section.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 27,166,225-226,252-253,256-271,273-290,300-302
+CONTEXT.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 7-14,34-40
+  s_b92f12f0f509ac::t_32aac12741230d 41
+src/components/ui/sheet.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3,10,14,18,22,26,28,30,40,44,46-47,49,64,69,71,76,83,108,121
+src/sanity/schemaTypes/documents/publisher.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+.agents/skills/shadcn/registry.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-277
+src/sanity/schemaTypes/singletons/pages/designers-page.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/sanity/utils/groups.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-4
+src/sanity/schemaTypes/singletons/pages/interviews-page.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/app/api/_utils/outbound-fetch.test.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 134,151,169,187,196,231,303-306,321,325
+package.json
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3-5,7-10,14-16,18-19,21-23,27-28,30-36,39-40,47,58-63
+src/components/resources/book-details-drawer.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 56,64,71,80,87,94,119,131-147,149
+.agents/skills/shadcn/agents/openai.yml
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-5
+src/sanity/schemaTypes/objects/tag-selector.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1,4-7,11,13,17
+.migration/dialog.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-35
+src/sanity/schemaTypes/documents/category.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/components/design-system/navigation-dropdown.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 21
+docs/agents/issue-tracker.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-49
+src/sanity/schemaTypes/documents/project.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/components/navigation/resources-navigation.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 23-29
+.agents/skills/migrate-radix-to-base/consumer-props.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-58
+src/components/ui/tabs.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3,7,17,30,32,34,43,45
+src/sanity/schemaTypes/documents/community.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-3
+docs/agents/triage-labels.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-15
+src/components/navigation/navigation-mobile.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 101,103,105,145,147,150
+src/sanity/schemaTypes/singletons/pages/journal-page.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+.migration/input.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-29
+.migration/tabs.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-28
+src/lib/brevo/client.ts
+  s_b92f12f0f509ac::t_ad603302e32c0b 6-10,24
+src/sanity/schemaTypes/documents/cta.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/components/modules/edition/edition-info.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 63-71
+src/components/navigation/navigation-desktop.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 19,42-47,51-56,60-65,77,80-83
+src/sanity/schemaTypes/singletons/pages/about-page.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+.agents/skills/migrate-radix-to-base/display-misc.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-410
+src/app/(frontend)/events/page.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 62,71-74,83,207,230
+src/components/cards/cta-card.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 43-55
+src/sanity/components/three-side-by-side-input.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3-6
+src/sanity/schemaTypes/documents/journal.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-2
+.agents/skills/shadcn/evals/evals.json
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-77
+.agents/skills/shadcn/rules/base-vs-radix.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-306
+src/sanity/lib/queries.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 259-260,296-297
+docs/agents/domain.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-39
+skills-lock.json
+  s_b92f12f0f509ac::t_6c7c0917be7da2 4-9,14-19
+src/lib/event-destination.test.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-35
+src/sanity/schemaTypes/documents/bibliography.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+.agents/skills/migrate-radix-to-base/disclosure.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-353
+src/sanity/schemaTypes/singletons/pages/editions-page.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/components/ui/accordion.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3,8,12,26,31,48,50-51,56
+src/components/ui/button.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1,44-45,47
+src/components/cards/base-card.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1,137,152-159
+.agents/skills/migrate-radix-to-base/SKILL.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-173
+src/components/ui/badge.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-2,48,50,53-64
+src/app/not-found.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 23-24
+src/sanity/schemaTypes/documents/tag.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+components.json
+  s_b92f12f0f509ac::t_6c7c0917be7da2 3
+.agents/skills/shadcn/SKILL.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-275
+.agents/skills/migrate-radix-to-base/class-mapping.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-62
+src/components/mode-toggle.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 24-27
+src/sanity/schemaTypes/documents/institute.ts
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1
+src/components/feat/feed/feed-dialog.tsx
+  s_b92f12f0f509ac::t_6c7c0917be7da2 62-68
+.agents/skills/shadcn/rules/forms.md
+  s_b92f12f0f509ac::t_6c7c0917be7da2 1-192
+bun.lock
+  s_b92f12f0f509ac::t_6fdcd46f4cc0e7 8-10,12-15,19-21,23-24,26-28,32-33,35-41,44-45,49-51,71,73,77,81,89-92,95-98,303-307,309,311,313,315,317,319,321,323,333,337,343,347,369,371,375-376,379-380,457-470,485-493,579,605-620,623-625,627,629,631,633,635,637,639,641,643,645,647,649,661,663,687-688,695,697,699,701,703,705,707,709,711,713,715,717,719,721,723,725,727,729,731,733,743,745,747,749,751,753,755,757,759,761,763,765,767,769,771,773,775,779-780,785,789,791,793,795,797,799,805,811,815,819,831,833,835,837,841,843,845,847,851,853,863,865,867,871,873,875,881-884,889,891,893,895,897,899,901-903,913,915,917,919,921,923,925,927,929,931,933,935,937,939,941,947,951,953,955,957,967-968,971-973,981,987,989,999-1025,1027,1029,1031,1033,1035-1063,1067,1073-1074,1077,1081-1082,1087,1103,1137,1159-1160,1163,1177,1201,1203,1227,1273,1279,1297-1298,1349,1365-1366,1373-1380,1383-1385,1397,1411-1412,1429-1430,1443,1447-1450,1455,1481,1491,1493,1521,1523,1533,1535,1545,1547,1589-1590,1615-1617,1627,1633-1634,1641-1642,1645-1646,1657-1658,1661,1665-1667,1671,1673,1675,1677,1679,1681,1683,1685,1687,1689,1691,1693,1701,1717,1733,1761,1763,1775-1777,1779,1781,1815-1816,1819,1821,1839,1843,1845,1853,1865,1873,1881,1887-1888,1915,1921,1927,1937,1939,1941,1949,1955,1999,2015,2017,2019,2075-2076,2081,2089,2099,2101,2105,2127,2129,2135,2137,2139,2141,2147,2155-2156,2163-2164,2167,2171,2193-2194,2213,2217,2219,2221,2223,2229,2231,2233,2235,2241-2242,2249,2259,2267-2268,2285-2287,2301-2326,2335-2341,2343,2345-2349,2353-2355,2357-2359,2363-2365,2369-2370,2373-2374,2381,2385,2389,2395-2397,2401-2402,2407-2408,2411-2415,2417,2419,2421-2423,2437-2440,2453,2455,2457-2459,2461-2467,2471-2476,2499-2500,2507,2511-2512,2517,2519,2525-2528,2531,2537-2546,2567,2571-2572,2577,2579,2601,2603,2605,2607,2609,2611-2617,2619,2621,2623,2625,2627,2629-2633,2647,2651,2653,2655,2657,2715-2716,2771,2773,2775,2777,2793-2796,2893,2895,2897
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "8047650199b06b81dd7791b6a42b36e88313ff75",
+  "prompts": {},
+  "sessions": {
+    "s_b92f12f0f509ac": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fdca0-641e-7151-8078-31b81075b4b7",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
