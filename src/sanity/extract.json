@@ -462,6 +462,13 @@
           },
           "optional": true
         },
+        "preserveAnimation": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
         "video": {
           "type": "objectAttribute",
           "value": {

@@ -76,6 +76,7 @@ function shouldUseCssHotspot(
  */
 type Props = {
   fit?: SanityImageFit;
+  preserveAnimation?: boolean;
   respectHotspot?: boolean;
   source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined;
 } & Partial<React.ComponentProps<typeof Image>>;
@@ -91,10 +92,12 @@ export default function SanityImage({
   className,
   priority,
   quality = 75,
+  preserveAnimation = false,
   respectHotspot,
   objectFit = "cover",
   objectPosition: objectPositionProp,
   style,
+  unoptimized: unoptimizedProp,
   ...props
 }: Props) {
   const builder = urlForImage(source);
@@ -133,6 +136,7 @@ export default function SanityImage({
     sizes: fill ? (sizes ?? "100vw") : sizes,
     src: url,
     style,
+    unoptimized: preserveAnimation || unoptimizedProp,
     ...props,
   };
 

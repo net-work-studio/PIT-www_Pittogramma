@@ -29,6 +29,7 @@ export const PORTRAIT_FIELDS = /* groq */ `
 export const COVER_MEDIA_FIELDS = /* groq */ `
   type,
   image { ${IMAGE_FIELDS} },
+  preserveAnimation,
   "videoUrl": video.asset->url,
   caption,
   alt

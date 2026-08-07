@@ -43,6 +43,15 @@ export const coverMedia = defineType({
         }),
     }),
     defineField({
+      type: "boolean",
+      name: "preserveAnimation",
+      title: "Preserve animation",
+      description:
+        "Enable only for animated GIF or WebP covers that do not play. This bypasses Next.js image optimization while retaining the Sanity crop and hotspot.",
+      hidden: ({ parent }) => parent?.type === "video",
+      initialValue: false,
+    }),
+    defineField({
       type: "file",
       name: "video",
       title: "Video File",
