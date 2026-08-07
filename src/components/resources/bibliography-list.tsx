@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { BookDetailsDrawer } from "@/components/resources/book-details-drawer";
-import { LanguagesDisplay } from "@/components/resources/languages-display";
+import { useCallback, useState } from "react";
+import { BookDetailsModal } from "@/components/resources/book-details-modal";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import { TagsDisplay } from "@/components/resources/tags-display";
 import type { UtmSettings } from "@/lib/tracked-link";
@@ -19,88 +18,61 @@ function getAuthors(authors: BibliographyItem["authors"]) {
 
 interface BookCardListProps {
   book: BibliographyItem;
-  onClick: () => void;
+  onSelect: (book: BibliographyItem) => void;
 }
 
-function BookCardList({ book, onClick }: BookCardListProps) {
+function BookListItem({ book, onSelect }: BookCardListProps) {
+  const handleClick = useCallback(() => {
+    onSelect(book);
+  }, [book, onSelect]);
+
   return (
-    <ResourceListItem className="cursor-pointer transition-colors hover:bg-secondary/80">
-      <span className="col-span-3">
+    <ResourceListItem className="max-md:grid-cols-1 max-md:gap-1">
+      <span className="col-span-4 max-md:col-span-1">
         <button
-          className="text-left underline hover:no-underline"
-          onClick={onClick}
+          className="text-left transition-colors hover:text-muted-foreground"
+          onClick={handleClick}
           type="button"
         >
           {book.name}
         </button>
       </span>
-      <span className="col-span-1">
-        <LanguagesDisplay languages={book.languages} />
-      </span>
-      <span className="col-span-3">{getAuthors(book.authors)}</span>
-      <span className="col-span-2">{book.publisher?.name || "-"}</span>
-      <span className="col-span-2">
-        <TagsDisplay tags={book.tags} />
-      </span>
-      <span className="col-span-1">{book.year || "-"}</span>
-    </ResourceListItem>
-  );
-}
-
-interface BookCardGridProps {
-  book: BibliographyItem;
-  onClick: () => void;
-}
-
-function BookCardGrid({ book, onClick }: BookCardGridProps) {
-  return (
-    <button
-      className="col-span-2 grid cursor-pointer gap-2.5 rounded-lg bg-secondary p-2.5 text-left transition-colors hover:bg-secondary/80"
-      onClick={onClick}
-      type="button"
-    >
-      <span className="font-medium">{book.name}</span>
-      <span className="text-muted-foreground text-sm">
+      <span className="col-span-2 max-md:col-span-1 max-md:text-muted-foreground max-md:text-sm">
         {getAuthors(book.authors)}
       </span>
-      <span className="text-muted-foreground text-sm">
+      <span className="col-span-2 max-md:hidden">
         {book.publisher?.name || "-"}
       </span>
-      <span className="text-sm">{book.year || "-"}</span>
-    </button>
+      <span className="col-span-2 max-md:hidden">
+        <TagsDisplay tags={book.tags} />
+      </span>
+      <span className="col-span-2 max-md:hidden">{book.year || "-"}</span>
+    </ResourceListItem>
   );
 }
 
 interface BibliographyListProps {
   books: BIBLIOGRAPHY_QUERY_RESULT;
   utmSettings?: UtmSettings;
-  view: "list" | "grid";
 }
 
 export function BibliographyList({
   books,
-  view,
   utmSettings,
 }: BibliographyListProps) {
   const [selectedBook, setSelectedBook] = useState<BibliographyItem | null>(
     null
   );
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const handleBookClick = (book: BibliographyItem) => {
+  const handleBookClick = useCallback((book: BibliographyItem) => {
     setSelectedBook(book);
-    setDrawerOpen(true);
-  };
+    setModalOpen(true);
+  }, []);
 
   if (books.length === 0) {
     return (
-      <p
-        className={
-          view === "grid"
-            ? "col-span-6 text-center text-muted-foreground"
-            : "text-center text-muted-foreground"
-        }
-      >
+      <p className="py-8 text-center text-muted-foreground">
         No books available yet.
       </p>
     );
@@ -108,32 +80,16 @@ export function BibliographyList({
 
   return (
     <>
-      {view === "list" ? (
-        <div className="space-y-1.5">
-          {books.map((book) => (
-            <BookCardList
-              book={book}
-              key={book._id}
-              onClick={() => handleBookClick(book)}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="grid w-full grid-cols-6 gap-1.5">
-          {books.map((book) => (
-            <BookCardGrid
-              book={book}
-              key={book._id}
-              onClick={() => handleBookClick(book)}
-            />
-          ))}
-        </div>
-      )}
+      <div>
+        {books.map((book) => (
+          <BookListItem book={book} key={book._id} onSelect={handleBookClick} />
+        ))}
+      </div>
 
-      <BookDetailsDrawer
+      <BookDetailsModal
         book={selectedBook}
-        onOpenChange={setDrawerOpen}
-        open={drawerOpen}
+        onOpenChange={setModalOpen}
+        open={modalOpen}
         utmSettings={utmSettings}
       />
     </>

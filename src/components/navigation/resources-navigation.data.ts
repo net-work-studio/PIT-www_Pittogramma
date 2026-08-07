@@ -1,38 +1,38 @@
 export const resources = [
   {
+    href: "/studios-agencies",
     key: "studios-agencies" as const,
     label: "Studios & Agencies",
-    href: "/studios-agencies",
   },
   {
+    href: "/type-foundries",
     key: "type-foundries" as const,
     label: "Type Foundries",
-    href: "/type-foundries",
   },
   {
+    href: "/institutes",
     key: "institutes" as const,
     label: "Institutes",
-    href: "/institutes",
   },
   {
+    href: "/bookshops",
     key: "bookshops" as const,
     label: "Bookshops",
-    href: "/bookshops",
   },
   {
+    href: "/websites",
     key: "websites" as const,
     label: "Websites",
-    href: "/websites",
   },
   {
-    key: "glossary" as const,
-    label: "Glossary",
-    href: "/glossary",
-  },
-  {
+    href: "/bibliography",
     key: "bibliography" as const,
     label: "Bibliography",
-    href: "/bibliography",
+  },
+  {
+    href: "/glossary",
+    key: "glossary" as const,
+    label: "Glossary",
   },
 ];
 
