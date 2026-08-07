@@ -11,14 +11,20 @@ type ResourceKey =
 
 export type ViewMode = "list" | "grid" | "map";
 
-const envMap: Record<ResourceKey, string> = {
-  bibliography: "NEXT_PUBLIC_FEATURE_BIBLIOGRAPHY",
+type OptionallyPublishedResourceKey = Exclude<ResourceKey, "bibliography">;
+
+const publicationEnvMap: Record<OptionallyPublishedResourceKey, string> = {
   bookshops: "NEXT_PUBLIC_FEATURE_BOOKSHOPS",
   glossary: "NEXT_PUBLIC_FEATURE_GLOSSARY",
   institutes: "NEXT_PUBLIC_FEATURE_INSTITUTES",
   "studios-agencies": "NEXT_PUBLIC_FEATURE_STUDIOS_AGENCIES",
   "type-foundries": "NEXT_PUBLIC_FEATURE_TYPE_FOUNDRIES",
   websites: "NEXT_PUBLIC_FEATURE_WEBSITES",
+};
+
+const resourceEnvPrefix: Record<ResourceKey, string> = {
+  bibliography: "NEXT_PUBLIC_FEATURE_BIBLIOGRAPHY",
+  ...publicationEnvMap,
 };
 
 /** Which view modes each resource supports. */
@@ -36,13 +42,16 @@ const resourceViews: Partial<Record<ResourceKey, ViewMode[]>> = {
  * e.g. ("studios-agencies", "map") → "NEXT_PUBLIC_FEATURE_STUDIOS_AGENCIES_MAP"
  */
 function viewEnvVar(resourceKey: ResourceKey, view: ViewMode): string {
-  const base = envMap[resourceKey]; // e.g. "NEXT_PUBLIC_FEATURE_STUDIOS_AGENCIES"
+  const base = resourceEnvPrefix[resourceKey]; // e.g. "NEXT_PUBLIC_FEATURE_STUDIOS_AGENCIES"
   return `${base}_${view.toUpperCase()}`; // e.g. "NEXT_PUBLIC_FEATURE_STUDIOS_AGENCIES_MAP"
 }
 
 /** Returns `true` unless the env var is explicitly set to `"false"`. */
 export function isResourceEnabled(key: ResourceKey): boolean {
-  const envVar = envMap[key];
+  if (key === "bibliography") {
+    return true;
+  }
+  const envVar = publicationEnvMap[key];
   return process.env[envVar] !== "false";
 }
 
@@ -73,7 +82,7 @@ export function getEnabledViews(key: ResourceKey): ViewMode[] {
  * Defaults to enabled.
  */
 export function isSearchEnabled(key: ResourceKey): boolean {
-  return process.env[`${envMap[key]}_SEARCH`] !== "false";
+  return process.env[`${resourceEnvPrefix[key]}_SEARCH`] !== "false";
 }
 
 /**

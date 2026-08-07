@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
-import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
 import { BibliographyContent } from "@/components/resources/bibliography-content";
 import PageHeader from "@/components/shared/page-header";
-import {
-  getEnabledResources,
-  getEnabledViews,
-  isResourceEnabled,
-  isSearchEnabled,
-} from "@/lib/feature-flags";
+import { getEnabledResources } from "@/lib/feature-flags";
 import { utmSettingsFromSiteSettings } from "@/lib/tracked-link";
 import {
   type DynamicFetchOptions,
@@ -21,14 +15,11 @@ import {
 import { BIBLIOGRAPHY_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
-  title: "Bibliography",
   description: "A constantly updated list of books on graphic design",
+  title: "Bibliography",
 };
 
 export default async function Page() {
-  if (!isResourceEnabled("bibliography")) {
-    redirect("/");
-  }
   const { isEnabled: isDraftMode } = await draftMode();
   if (isDraftMode) {
     return (
@@ -51,8 +42,8 @@ async function CachedBibliographyPage({
 }: DynamicFetchOptions) {
   "use cache";
   const [{ data: books }, { data: settings }] = await Promise.all([
-    sanityFetch({ query: BIBLIOGRAPHY_QUERY, perspective, stega }),
-    sanityFetch({ query: SITE_SETTINGS_QUERY, perspective, stega }),
+    sanityFetch({ perspective, query: BIBLIOGRAPHY_QUERY, stega }),
+    sanityFetch({ perspective, query: SITE_SETTINGS_QUERY, stega }),
   ]);
 
   const utmSettings = utmSettingsFromSiteSettings(settings);
@@ -67,12 +58,7 @@ async function CachedBibliographyPage({
         />
         <ResourcesNavigation resources={getEnabledResources()} />
       </div>
-      <BibliographyContent
-        books={books}
-        enabledViews={getEnabledViews("bibliography")}
-        searchEnabled={isSearchEnabled("bibliography")}
-        utmSettings={utmSettings}
-      />
+      <BibliographyContent books={books} utmSettings={utmSettings} />
     </>
   );
 }
