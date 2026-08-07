@@ -1,7 +1,9 @@
-import { CalendarIcon } from "@sanity/icons";
+import { CalendarIcon } from "@sanity/icons/Calendar";
 import { defineField, defineType } from "sanity";
+import { LocationNameInput } from "@/sanity/components/location-name-input";
 import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
+import { requiredHttpsUrlWhen } from "@/sanity/utils/validation";
 
 export const event = defineType({
   type: "document",
@@ -26,6 +28,37 @@ export const event = defineType({
         source: "title",
       },
       validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "string",
+      name: "cardDestination",
+      title: "Card Destination",
+      description: "Choose where the event card sends visitors.",
+      group: "content",
+      options: {
+        list: [
+          {
+            title: "Pittogramma event page",
+            value: "internal",
+          },
+          { title: "External page", value: "external" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "internal",
+    }),
+    defineField({
+      type: "url",
+      name: "externalUrl",
+      title: "External URL",
+      description:
+        "The event's branded Pittogramma URL will permanently redirect here.",
+      group: "content",
+      hidden: ({ document }) => document?.cardDestination !== "external",
+      validation: requiredHttpsUrlWhen(
+        ({ document }) => document?.cardDestination === "external",
+        "External URL is required when the card destination is an external page"
+      ),
     }),
     defineField({
       type: "string",
@@ -78,33 +111,46 @@ export const event = defineType({
         layout: "radio",
       },
       initialValue: "offline",
-      validation: (e) => e.required(),
+      hidden: ({ document }) => document?.cardDestination === "external",
+      validation: (rule) =>
+        rule.custom((value, { document }) =>
+          document?.cardDestination === "external" || value
+            ? true
+            : "Attendance is required"
+        ),
     }),
     defineField({
       type: "string",
       name: "locationName",
       title: "Location Name",
+      components: { input: LocationNameInput },
       group: "content",
-      hidden: ({ parent }) => parent?.attendanceMode === "online",
+      hidden: ({ document, parent }) =>
+        document?.cardDestination !== "external" &&
+        parent?.attendanceMode === "online",
     }),
     defineField({
       type: "string",
       name: "locationAddress",
       title: "Location Address",
       group: "content",
-      hidden: ({ parent }) => parent?.attendanceMode === "online",
+      hidden: ({ document, parent }) =>
+        document?.cardDestination === "external" ||
+        parent?.attendanceMode === "online",
     }),
     defineField({
       type: "text",
       name: "description",
       title: "Description",
       group: "content",
+      hidden: ({ document }) => document?.cardDestination === "external",
     }),
     defineField({
       type: "array",
       name: "sponsors",
       title: "Sponsors",
       group: "content",
+      hidden: ({ document }) => document?.cardDestination === "external",
       of: [{ type: "reference", to: [{ type: "contributor" }] }],
     }),
     defineField({
@@ -112,6 +158,7 @@ export const event = defineType({
       name: "partners",
       title: "Partners",
       group: "content",
+      hidden: ({ document }) => document?.cardDestination === "external",
       of: [{ type: "reference", to: [{ type: "contributor" }] }],
     }),
     defineField({
@@ -119,14 +166,19 @@ export const event = defineType({
       name: "info",
       title: "Info",
       group: "content",
+      hidden: ({ document }) => document?.cardDestination === "external",
       of: [{ type: "infoItem" }],
     }),
-    tagsField("content"),
+    tagsField(
+      "content",
+      ({ document }) => document?.cardDestination === "external"
+    ),
     defineField({
       type: "seoModule",
       name: "seo",
       title: "SEO",
       group: "seo",
+      hidden: ({ document }) => document?.cardDestination === "external",
     }),
   ],
   orderings: [

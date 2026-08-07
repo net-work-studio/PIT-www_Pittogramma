@@ -86,11 +86,9 @@ export default function FilterBar({
   return (
     <div className="flex flex-wrap items-center gap-2">
       <Popover>
-        <PopoverTrigger asChild>
-          <Button className="font-mono uppercase">
-            Filters
-            {activeSlugs.length > 0 && ` (${activeSlugs.length})`}
-          </Button>
+        <PopoverTrigger render={<Button className="font-mono uppercase" />}>
+          Filters
+          {activeSlugs.length > 0 && ` (${activeSlugs.length})`}
         </PopoverTrigger>
         <PopoverContent align="start" className="w-72 p-3">
           <div className="flex flex-wrap gap-2">

@@ -59,6 +59,7 @@ interface EventCard {
   href: string;
   id: string;
   image: SanityImageSource;
+  isExternal: boolean;
   title: string;
 }
 
@@ -67,10 +68,10 @@ type EventDoc =
   | PAST_EVENTS_QUERY_RESULT[number];
 
 function mapEventToCard(event: EventDoc): EventCard {
-  const subtitle = formatEventCardLocation(
-    event.attendanceMode,
-    event.locationName
-  );
+  const subtitle =
+    event.cardDestination === "external"
+      ? formatEventCardLocation("offline", event.locationName)
+      : formatEventCardLocation(event.attendanceMode, event.locationName);
   const typeLabel = getEventTypeLabel(event.type);
 
   return {
@@ -79,6 +80,7 @@ function mapEventToCard(event: EventDoc): EventCard {
     href: `/events/${event.slug?.current}`,
     id: event._id,
     image: event.cover,
+    isExternal: event.cardDestination === "external",
     title: event.title ?? "",
   };
 }
@@ -202,6 +204,7 @@ async function CachedEventsPage({
                 <BaseCard
                   authors={event.authors}
                   badgeLabel={event.badgeLabel}
+                  external={event.isExternal}
                   href={event.href}
                   image={event.image}
                   key={event.id}
@@ -224,6 +227,7 @@ async function CachedEventsPage({
               <BaseCard
                 authors={event.authors}
                 badgeLabel={event.badgeLabel}
+                external={event.isExternal}
                 href={event.href}
                 image={event.image}
                 key={event.id}

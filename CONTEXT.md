@@ -4,6 +4,14 @@ Pittogramma is a cultural platform covering graphic design, visual culture, even
 
 ## Language
 
+**Project submission**:
+A project proposed to Pittogramma through the public submission flow. The flow has a stable canonical route at `/submit`, so it can evolve independently of its current form provider.
+_Avoid_: Submission modal, Fillout page
+
+**Submission form**:
+The provider-hosted form embedded on the Project submission route. It owns the submission questions and accompanying instructions.
+_Avoid_: Submission page, submission modal
+
 **Upcoming (events)**:
 Events that have not yet ended. Includes events scheduled for the future and events currently in progress.
 _Avoid_: Next, future (in user-facing copy)
@@ -22,6 +30,14 @@ _Avoid_: "At" (capitalised), "Online" (capitalised), showing address on cards
 **Attendance mode**:
 Whether an event is held in person (`offline`) or remotely (`online`). Drives card byline, detail location display, and structured data. When online, location name and address are hidden in Studio.
 _Avoid_: format, venue type, isOnline
+
+**Event card destination**:
+Where an event card sends a visitor. A Pittogramma event page renders at the event's branded `/events/{slug}` route; an external page uses that same branded route as a permanent redirect to an editor-provided HTTPS URL. Existing events default to a Pittogramma event page.
+_Avoid_: Luma event, internal/external event, hosted on Luma
+
+**External event redirect**:
+The branded Pittogramma `/events/{slug}` route for an event whose card destination is an external page. Event cards open this route in a new tab; the route permanently redirects to the external URL with Pittogramma-managed `utm_source`, `utm_medium`, and event-slug `utm_content` parameters.
+_Avoid_: External event page, Luma page (unless specifically referring to Luma's page)
 
 **Content-type badge (detail page)**:
 The outline badge above a detail page title that identifies the content type (Project, Articles, Diary, Baseline, Interview). Matches the label on listing cards but uses outline-only hover — no fill color.

@@ -24,6 +24,7 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
@@ -162,7 +163,7 @@ export default function UiSection() {
       <div className="space-y-6">
         <SectionLabel>Accordion</SectionLabel>
         <div className="max-w-lg">
-          <Accordion collapsible type="single">
+          <Accordion>
             <AccordionItem value="item-1">
               <AccordionTrigger>What is Pittogramma?</AccordionTrigger>
               <AccordionContent>
@@ -221,8 +222,8 @@ export default function UiSection() {
       <div className="space-y-6">
         <SectionLabel>Dialog</SectionLabel>
         <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline">Open Dialog</Button>
+          <DialogTrigger render={<Button variant="outline" />}>
+            Open Dialog
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -248,43 +249,45 @@ export default function UiSection() {
         <SectionLabel>Dropdown Menu</SectionLabel>
         <div className="flex flex-wrap gap-3">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">
-                Menu <ChevronDown />
-              </Button>
+            <DropdownMenuTrigger render={<Button variant="outline" />}>
+              Menu <ChevronDown />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>Checkboxes</DropdownMenuLabel>
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Checkboxes</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem
+                  checked={checkboxOne}
+                  onCheckedChange={setCheckboxOne}
+                >
+                  Show projects
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={checkboxTwo}
+                  onCheckedChange={setCheckboxTwo}
+                >
+                  Show interviews
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuGroup>
               <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem
-                checked={checkboxOne}
-                onCheckedChange={setCheckboxOne}
-              >
-                Show projects
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                checked={checkboxTwo}
-                onCheckedChange={setCheckboxTwo}
-              >
-                Show interviews
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuLabel>Radio Group</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuRadioGroup
-                onValueChange={setRadioValue}
-                value={radioValue}
-              >
-                <DropdownMenuRadioItem value="option-1">
-                  Option One
-                </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="option-2">
-                  Option Two
-                </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="option-3">
-                  Option Three
-                </DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Radio Group</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup
+                  onValueChange={setRadioValue}
+                  value={radioValue}
+                >
+                  <DropdownMenuRadioItem value="option-1">
+                    Option One
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="option-2">
+                    Option Two
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="option-3">
+                    Option Three
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -294,9 +297,9 @@ export default function UiSection() {
       <div className="space-y-6">
         <SectionLabel>Sheet</SectionLabel>
         <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline">Open Sheet</Button>
-          </SheetTrigger>
+          <SheetTrigger
+            render={<Button variant="outline">Open Sheet</Button>}
+          />
           <SheetContent>
             <SheetHeader>
               <SheetTitle>Sheet Title</SheetTitle>

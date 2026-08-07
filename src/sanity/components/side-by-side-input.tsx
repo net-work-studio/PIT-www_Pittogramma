@@ -1,6 +1,9 @@
 "use client";
 
-import { EditIcon, ImageIcon, LinkIcon, PlayIcon } from "@sanity/icons";
+import { EditIcon } from "@sanity/icons/Edit";
+import { ImageIcon } from "@sanity/icons/Image";
+import { LinkIcon } from "@sanity/icons/Link";
+import { PlayIcon } from "@sanity/icons/Play";
 import { Box, Card, Dialog, Flex, Stack, Text } from "@sanity/ui";
 import { useCallback, useMemo, useState } from "react";
 import { ObjectInputMember, type ObjectInputProps } from "sanity";

@@ -18,9 +18,7 @@ export default function NavigationDropdown({
 }: NavigationDropdownProps) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button>{title}</Button>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger render={<Button />}>{title}</DropdownMenuTrigger>
       <DropdownMenuContent>
         {links.map(({ href, label }) => (
           <DropdownMenuItem key={href}>

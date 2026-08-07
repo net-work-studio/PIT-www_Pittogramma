@@ -1,4 +1,4 @@
-import { PublishIcon } from "@sanity/icons";
+import { PublishIcon } from "@sanity/icons/Publish";
 import { defineField, defineType } from "sanity";
 
 export const publisher = defineType({

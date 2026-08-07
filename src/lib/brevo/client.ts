@@ -3,6 +3,11 @@ import type { NewsletterSignupSource } from "@/lib/newsletter/types";
 const BREVO_DOI_ENDPOINT =
   "https://api.brevo.com/v3/contacts/doubleOptinConfirmation";
 
+type Fetcher = (
+  input: RequestInfo | URL,
+  init?: RequestInit
+) => Promise<Response>;
+
 export class BrevoApiError extends Error {
   readonly status: number;
 
@@ -16,7 +21,7 @@ export class BrevoApiError extends Error {
 export interface CreateDoiContactInput {
   apiKey: string;
   email: string;
-  fetcher?: typeof fetch;
+  fetcher?: Fetcher;
   listId: number;
   redirectUrl: string;
   source: NewsletterSignupSource;

@@ -104,11 +104,7 @@ interface GlossaryCardProps {
 
 function GlossaryCard({ word, definition }: GlossaryCardProps) {
   return (
-    <Accordion
-      className="rounded-lg bg-secondary p-2.5"
-      collapsible
-      type="single"
-    >
+    <Accordion className="rounded-lg bg-secondary p-2.5">
       <AccordionItem value="item-1">
         <AccordionTrigger className="p-0 font-mono uppercase">
           {word}

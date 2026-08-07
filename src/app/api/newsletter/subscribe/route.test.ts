@@ -246,7 +246,9 @@ describe("POST /api/newsletter/subscribe", () => {
     setConfiguredBrevoEnv();
 
     const originalFetch = globalThis.fetch;
-    globalThis.fetch = mock(async () => new Response(null, { status: 201 }));
+    globalThis.fetch = mock(
+      async () => new Response(null, { status: 201 })
+    ) as unknown as typeof fetch;
 
     try {
       const response = await POST(
@@ -281,7 +283,7 @@ describe("POST /api/newsletter/subscribe", () => {
             headers: { "Content-Type": "application/json" },
           }
         )
-    );
+    ) as unknown as typeof fetch;
 
     try {
       const response = await POST(
@@ -303,7 +305,9 @@ describe("POST /api/newsletter/subscribe", () => {
     setConfiguredBrevoEnv();
 
     const originalFetch = globalThis.fetch;
-    globalThis.fetch = mock(async () => new Response(null, { status: 500 }));
+    globalThis.fetch = mock(
+      async () => new Response(null, { status: 500 })
+    ) as unknown as typeof fetch;
 
     try {
       const response = await POST(
