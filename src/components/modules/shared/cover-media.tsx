@@ -13,6 +13,7 @@ export interface CoverMediaData {
     hotspot?: unknown;
     crop?: unknown;
   } | null;
+  preserveAnimation?: boolean | null;
   type?: string | null;
   videoUrl?: string | null;
 }
@@ -63,6 +64,7 @@ export default function CoverMedia({
     <SanityImage
       className={className}
       fill={fill}
+      preserveAnimation={cover.preserveAnimation === true}
       priority={priority}
       sizes={sizes}
       source={cover}
