@@ -1,0 +1,37 @@
+AGENTS.md
+  s_ffec13725b90ee::t_dc754683ad3902 18
+src/components/resources/book-details-modal.tsx
+  s_ffec13725b90ee::t_705e35074a97b8 23,26,126,163
+  s_ffec13725b90ee::t_69ae623f95b42e 4,6-8,15,22,29,34-36,41-56,60-66,71-125,127-162,164-175
+CONTEXT.md
+  s_ffec13725b90ee::t_37fc64b079fb50 7-10
+src/components/resources/bibliography-content.tsx
+  s_ffec13725b90ee::t_69ae623f95b42e 15-21,23-24
+src/lib/feature-flags.test.ts
+  s_ffec13725b90ee::t_9083d33e0acc50 1-4,6-20,22-26
+  s_ffec13725b90ee::t_357a838b09b6ba 5,21
+src/components/resources/bibliography-list.tsx
+  s_ffec13725b90ee::t_e59dce517ed405 85-88
+  s_ffec13725b90ee::t_705e35074a97b8 4,22,25-29,35,70,73
+  s_ffec13725b90ee::t_69ae623f95b42e 3,5,31-32,34,38,42,45,48-52,68,72,77,89,91,93-94
+src/app/(frontend)/(resources)/bibliography/page.tsx
+  s_ffec13725b90ee::t_705e35074a97b8 8,19,45-46,61
+src/lib/feature-flags.ts
+  s_ffec13725b90ee::t_9ce149fe759a3f 14-16,25-29,45,51-54,85
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "6d260d7bd9b368edf1521c9d33a9304519a70160",
+  "prompts": {},
+  "sessions": {
+    "s_ffec13725b90ee": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd30d-30f4-7b71-9f2c-8579a7a8fc5f",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
