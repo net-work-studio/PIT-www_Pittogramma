@@ -1,0 +1,21 @@
+src/components/resources/bibliography-content.tsx
+  s_ffec13725b90ee::t_47e1ccd83d9622 15-24
+src/app/(frontend)/(resources)/bibliography/page.tsx
+  s_ffec13725b90ee::t_47e1ccd83d9622 57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "2448838da85ecb96ff702d418277baa172fe273d",
+  "prompts": {},
+  "sessions": {
+    "s_ffec13725b90ee": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd30d-30f4-7b71-9f2c-8579a7a8fc5f",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
