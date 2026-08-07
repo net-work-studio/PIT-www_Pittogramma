@@ -44,10 +44,7 @@ export function BookDetailsModal({
   if (isDesktop) {
     return (
       <Dialog onOpenChange={onOpenChange} open={open}>
-        <DialogContent
-          className="max-h-[85vh] overflow-y-auto p-0 sm:max-w-5xl"
-          finalFocus={false}
-        >
+        <DialogContent className="max-h-[85vh] overflow-y-auto p-0 sm:max-w-5xl">
           <DialogTitle className="sr-only">{title}</DialogTitle>
           {content}
         </DialogContent>
@@ -57,11 +54,7 @@ export function BookDetailsModal({
 
   return (
     <Sheet onOpenChange={onOpenChange} open={open}>
-      <SheetContent
-        className="max-h-[85vh] overflow-y-auto p-6"
-        finalFocus={false}
-        side="bottom"
-      >
+      <SheetContent className="max-h-[85vh] overflow-y-auto p-6" side="bottom">
         <SheetTitle className="sr-only">{title}</SheetTitle>
         {content}
       </SheetContent>
