@@ -29,7 +29,7 @@ Pittogramma (`pittogramma-web`) is a single Next.js 16 (App Router) app with an 
 - The `production` dataset is publicly readable, so all published content renders without a valid token. `SANITY_API_READ_TOKEN` in `.env.local` is a placeholder — published-content browsing works with it, but draft mode / Presentation preview and authoring writes in `/admin` require a real Sanity read token plus an interactive Sanity login in the browser.
 
 ### Tooling
-- GitHub CLI checks may fail inside the sandbox with a misleading authentication or API connection error. Before reporting `gh` as unauthenticated, retry the same read-only command with network escalation.
+- GitHub CLI access is available through the user's terminal/keychain. Sandbox `gh` failures can be misleading: retry the same command with network escalation before reporting an authentication problem. Do not ask the user to log in or re-authenticate unless escalated `gh auth status` also fails.
 - Package manager is Bun (pinned `bun@1.3.14`). Bun is installed at `~/.bun` and its PATH export lives in `~/.bashrc`.
 - `bunfig.toml` sets `minimumReleaseAge` (3 days) for installs; `bun install` against the committed `bun.lock` is unaffected.
 This is a single Next.js 16 (App Router, React 19) app named `pittogramma-web` backed by Sanity as the CMS. The Sanity Studio is **embedded** in the same app at the `/admin` route — there is **one** dev server (`bun dev`) that serves both the public frontend (route group `(frontend)`) and the Studio. There is no separate Studio server.
