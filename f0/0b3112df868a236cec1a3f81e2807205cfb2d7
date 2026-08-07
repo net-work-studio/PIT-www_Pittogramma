@@ -1,0 +1,22 @@
+src/components/resources/bibliography-list.tsx
+  s_ffec13725b90ee::t_47ffb8905fcb73 33,37,40
+src/components/navigation/resources-navigation.data.ts
+  s_ffec13725b90ee::t_229e4994e278bc 3,8,13,18,23,28,33
+  s_ffec13725b90ee::t_47ffb8905fcb73 31-32,34-35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "f00b3112df868a236cec1a3f81e2807205cfb2d7",
+  "prompts": {},
+  "sessions": {
+    "s_ffec13725b90ee": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd30d-30f4-7b71-9f2c-8579a7a8fc5f",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
