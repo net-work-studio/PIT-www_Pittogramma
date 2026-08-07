@@ -1,0 +1,19 @@
+src/components/resources/book-details-modal.tsx
+  s_ffec13725b90ee::t_3660da5ff36837 47,57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "fc0a136342d7f4a5c2ac803cb60270f0e27c5bca",
+  "prompts": {},
+  "sessions": {
+    "s_ffec13725b90ee": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd30d-30f4-7b71-9f2c-8579a7a8fc5f",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
