@@ -165,10 +165,22 @@ function UploadedVideo({
   );
 }
 
-function EmbeddedVideo({ media }: { media: MediaItemShape }) {
+function EmbeddedVideo({
+  active,
+  media,
+}: {
+  active: boolean;
+  media: MediaItemShape;
+}) {
   const [playing, setPlaying] = useState(false);
   const embed = getEmbedInfo(media.videoUrl);
   const handlePlayButtonClick = useCallback(() => setPlaying(true), []);
+
+  useEffect(() => {
+    if (!active) {
+      setPlaying(false);
+    }
+  }, [active]);
 
   if (!embed) {
     return null;
@@ -216,7 +228,7 @@ function LightboxMedia({
   }
 
   if (media.type === "videoEmbed") {
-    return <EmbeddedVideo media={media} />;
+    return <EmbeddedVideo active={active} media={media} />;
   }
 
   if (media.image) {

@@ -116,7 +116,7 @@ When a cover is video, the still image shown before playback and in small listin
 _Avoid_: Video thumbnail, frame grab, separate poster field
 
 **Full project gallery**:
-The ordered sequence of every image and video in a Project’s Gallery. It can be browsed from a selected gallery item without preserving the Gallery’s visual block grouping.
+The ordered sequence of a Project’s Cover followed by every image and video in its Gallery. It can be browsed from a selected item without preserving the Gallery’s visual block grouping.
 _Avoid_: Image gallery (it also includes video), individual gallery blocks (which only describe the page layout)
 
 **Multi-location listing**:

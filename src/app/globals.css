@@ -171,7 +171,7 @@
     --muted: var(--color-pit-dark-surface-muted);
     --muted-foreground: var(--color-pit-dark-gray);
     --lightbox-control: var(--background);
-    --lightbox-control-foreground: var(--muted-foreground);
+    --lightbox-control-foreground: var(--foreground);
     --lightbox-control-hover: var(--card);
     --accent: var(--color-pit-dark-surface-accent);
     --accent-foreground: var(--color-pit-white);
