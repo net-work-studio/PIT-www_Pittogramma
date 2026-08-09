@@ -4,6 +4,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { getGalleryRatio } from "@/lib/gallery";
 import { cn } from "@/lib/utils";
 import { getEmbedInfo } from "@/lib/video-embed";
+import MediaSlotButton from "./media-slot-button";
 
 export interface MediaItemShape {
   alt?: string | null;
@@ -28,6 +29,38 @@ export interface MediaBlockShape {
   topRight?: MediaItemShape | null;
 }
 
+export function flattenMediaBlocks(
+  blocks: readonly MediaBlockShape[] | null | undefined
+): MediaItemShape[] {
+  if (!blocks) {
+    return [];
+  }
+
+  return blocks.flatMap((block) => {
+    switch (block._type) {
+      case "singleMediaBlock":
+        return block.media ? [block.media] : [];
+      case "sideBySideMediaBlock":
+        return [block.left, block.right].filter(
+          (media): media is MediaItemShape => Boolean(media)
+        );
+      case "threeSideBySideMediaBlock":
+        return [block.left, block.center, block.right].filter(
+          (media): media is MediaItemShape => Boolean(media)
+        );
+      case "gridFourMediaBlock":
+        return [
+          block.topLeft,
+          block.topRight,
+          block.bottomLeft,
+          block.bottomRight,
+        ].filter((media): media is MediaItemShape => Boolean(media));
+      default:
+        return [];
+    }
+  });
+}
+
 const ROUNDED_CLASS = {
   xl: "rounded-xl",
 } as const;
@@ -39,11 +72,12 @@ export interface RoundedConfig {
   single: RoundedKey;
 }
 
-const DEFAULT_ROUNDED: RoundedConfig = { single: "xl", multi: "xl" };
+const DEFAULT_ROUNDED: RoundedConfig = { multi: "xl", single: "xl" };
 
 interface MediaBlocksProps {
   blocks: readonly MediaBlockShape[] | null | undefined;
   className?: string;
+  onMediaClick?: (media: MediaItemShape) => void;
   priorityFirst?: boolean;
   rounded?: RoundedKey | RoundedConfig;
   showCaptions?: boolean;
@@ -56,7 +90,7 @@ function resolveRounded(
     return DEFAULT_ROUNDED;
   }
   if (typeof rounded === "string") {
-    return { single: rounded, multi: rounded };
+    return { multi: rounded, single: rounded };
   }
   return rounded;
 }
@@ -106,7 +140,7 @@ function MediaContent({
         fill
         priority={priority}
         sizes={sizes}
-        source={{ image: media.image, alt: media.alt }}
+        source={{ alt: media.alt, image: media.image }}
       />
     );
   }
@@ -130,6 +164,7 @@ function MediaSlot({
   priority,
   showCaptions,
   className,
+  onMediaClick,
 }: {
   media: MediaItemShape | null | undefined;
   ratio: number;
@@ -138,20 +173,31 @@ function MediaSlot({
   priority?: boolean;
   showCaptions: boolean;
   className?: string;
+  onMediaClick?: (media: MediaItemShape) => void;
 }) {
+  const content = (
+    <AspectRatio
+      className={cn("relative overflow-hidden", ROUNDED_CLASS[rounded])}
+      ratio={ratio}
+    >
+      <MediaContent
+        media={media}
+        priority={priority}
+        rounded={rounded}
+        sizes={sizes}
+      />
+    </AspectRatio>
+  );
+
   return (
     <div className={className}>
-      <AspectRatio
-        className={cn("relative overflow-hidden", ROUNDED_CLASS[rounded])}
-        ratio={ratio}
-      >
-        <MediaContent
-          media={media}
-          priority={priority}
-          rounded={rounded}
-          sizes={sizes}
-        />
-      </AspectRatio>
+      {onMediaClick && media ? (
+        <MediaSlotButton media={media} onMediaClick={onMediaClick}>
+          {content}
+        </MediaSlotButton>
+      ) : (
+        content
+      )}
       {showCaptions && media?.caption ? <Caption text={media.caption} /> : null}
     </div>
   );
@@ -162,16 +208,19 @@ function SingleBlock({
   showCaptions,
   rounded,
   priority,
+  onMediaClick,
 }: {
   block: MediaBlockShape;
   showCaptions: boolean;
   rounded: RoundedKey;
   priority?: boolean;
+  onMediaClick?: (media: MediaItemShape) => void;
 }) {
   const ratio = getGalleryRatio(block.orientation);
   return (
     <MediaSlot
       media={block.media}
+      onMediaClick={onMediaClick}
       priority={priority}
       ratio={ratio}
       rounded={rounded}
@@ -185,10 +234,12 @@ function SideBySideBlock({
   block,
   showCaptions,
   rounded,
+  onMediaClick,
 }: {
   block: MediaBlockShape;
   showCaptions: boolean;
   rounded: RoundedKey;
+  onMediaClick?: (media: MediaItemShape) => void;
 }) {
   const ratio = getGalleryRatio(block.orientation);
   return (
@@ -196,6 +247,7 @@ function SideBySideBlock({
       <MediaSlot
         className="flex-1"
         media={block.left}
+        onMediaClick={onMediaClick}
         ratio={ratio}
         rounded={rounded}
         showCaptions={showCaptions}
@@ -204,6 +256,7 @@ function SideBySideBlock({
       <MediaSlot
         className="flex-1"
         media={block.right}
+        onMediaClick={onMediaClick}
         ratio={ratio}
         rounded={rounded}
         showCaptions={showCaptions}
@@ -217,10 +270,12 @@ function ThreeSideBySideBlock({
   block,
   showCaptions,
   rounded,
+  onMediaClick,
 }: {
   block: MediaBlockShape;
   showCaptions: boolean;
   rounded: RoundedKey;
+  onMediaClick?: (media: MediaItemShape) => void;
 }) {
   const ratio = getGalleryRatio(block.orientation);
   return (
@@ -228,6 +283,7 @@ function ThreeSideBySideBlock({
       <MediaSlot
         className="flex-1"
         media={block.left}
+        onMediaClick={onMediaClick}
         ratio={ratio}
         rounded={rounded}
         showCaptions={showCaptions}
@@ -236,6 +292,7 @@ function ThreeSideBySideBlock({
       <MediaSlot
         className="flex-1"
         media={block.center}
+        onMediaClick={onMediaClick}
         ratio={ratio}
         rounded={rounded}
         showCaptions={showCaptions}
@@ -244,6 +301,7 @@ function ThreeSideBySideBlock({
       <MediaSlot
         className="flex-1"
         media={block.right}
+        onMediaClick={onMediaClick}
         ratio={ratio}
         rounded={rounded}
         showCaptions={showCaptions}
@@ -257,16 +315,19 @@ function GridFourBlock({
   block,
   showCaptions,
   rounded,
+  onMediaClick,
 }: {
   block: MediaBlockShape;
   showCaptions: boolean;
   rounded: RoundedKey;
+  onMediaClick?: (media: MediaItemShape) => void;
 }) {
   const ratio = getGalleryRatio(block.orientation);
   return (
     <div className="grid grid-cols-2 gap-2.5">
       <MediaSlot
         media={block.topLeft}
+        onMediaClick={onMediaClick}
         ratio={ratio}
         rounded={rounded}
         showCaptions={showCaptions}
@@ -274,6 +335,7 @@ function GridFourBlock({
       />
       <MediaSlot
         media={block.topRight}
+        onMediaClick={onMediaClick}
         ratio={ratio}
         rounded={rounded}
         showCaptions={showCaptions}
@@ -281,6 +343,7 @@ function GridFourBlock({
       />
       <MediaSlot
         media={block.bottomLeft}
+        onMediaClick={onMediaClick}
         ratio={ratio}
         rounded={rounded}
         showCaptions={showCaptions}
@@ -288,6 +351,7 @@ function GridFourBlock({
       />
       <MediaSlot
         media={block.bottomRight}
+        onMediaClick={onMediaClick}
         ratio={ratio}
         rounded={rounded}
         showCaptions={showCaptions}
@@ -302,11 +366,13 @@ export function MediaBlock({
   showCaptions = false,
   rounded,
   priority = false,
+  onMediaClick,
 }: {
   block: MediaBlockShape;
   showCaptions?: boolean;
   rounded?: RoundedKey | RoundedConfig;
   priority?: boolean;
+  onMediaClick?: (media: MediaItemShape) => void;
 }) {
   const radii = resolveRounded(rounded);
   switch (block._type) {
@@ -314,6 +380,7 @@ export function MediaBlock({
       return (
         <SingleBlock
           block={block}
+          onMediaClick={onMediaClick}
           priority={priority}
           rounded={radii.single}
           showCaptions={showCaptions}
@@ -323,6 +390,7 @@ export function MediaBlock({
       return (
         <SideBySideBlock
           block={block}
+          onMediaClick={onMediaClick}
           rounded={radii.multi}
           showCaptions={showCaptions}
         />
@@ -331,6 +399,7 @@ export function MediaBlock({
       return (
         <ThreeSideBySideBlock
           block={block}
+          onMediaClick={onMediaClick}
           rounded={radii.multi}
           showCaptions={showCaptions}
         />
@@ -339,6 +408,7 @@ export function MediaBlock({
       return (
         <GridFourBlock
           block={block}
+          onMediaClick={onMediaClick}
           rounded={radii.multi}
           showCaptions={showCaptions}
         />
@@ -354,6 +424,7 @@ export default function MediaBlocks({
   rounded,
   priorityFirst = false,
   className,
+  onMediaClick,
 }: MediaBlocksProps) {
   if (!blocks?.length) {
     return null;
@@ -365,6 +436,7 @@ export default function MediaBlocks({
         <MediaBlock
           block={block}
           key={block._key ?? index}
+          onMediaClick={onMediaClick}
           priority={priorityFirst && index === 0}
           rounded={rounded}
           showCaptions={showCaptions}

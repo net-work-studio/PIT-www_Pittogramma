@@ -5,10 +5,8 @@ import { defineQuery } from "next-sanity";
 import ProjectGallery from "@/components/modules/project/project-gallery";
 import ProjectInfo from "@/components/modules/project/project-info";
 import ShareLinks from "@/components/modules/project/share-links";
-import CoverMedia from "@/components/modules/shared/cover-media";
 import DiscoverMore from "@/components/modules/shared/discover-more";
 import { JsonLd } from "@/components/seo/json-ld";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -134,18 +132,7 @@ async function CachedProjectPage({
           year={project.year}
         />
         <div className="w-full lg:w-2/3">
-          <AspectRatio
-            className="relative overflow-hidden rounded-xl"
-            ratio={4 / 3}
-          >
-            <CoverMedia
-              className="rounded-xl"
-              cover={project.cover}
-              fill
-              priority
-            />
-          </AspectRatio>
-          <ProjectGallery gallery={project.gallery} />
+          <ProjectGallery cover={project.cover} gallery={project.gallery} />
           <ShareLinks title={project.title} url={projectUrl} />
         </div>
       </div>

@@ -108,6 +108,9 @@
     --secondary-foreground: var(--color-pit-black);
     --muted: var(--color-pit-light-gray);
     --muted-foreground: var(--color-pit-dark-gray);
+    --lightbox-control: var(--muted);
+    --lightbox-control-foreground: var(--foreground);
+    --lightbox-control-hover: var(--accent);
     --accent: var(--color-pit-mid-gray);
     --accent-foreground: var(--color-pit-black);
     --destructive: oklch(0.63 0.19 23.03);
@@ -167,6 +170,9 @@
     --secondary-foreground: var(--color-pit-white);
     --muted: var(--color-pit-dark-surface-muted);
     --muted-foreground: var(--color-pit-dark-gray);
+    --lightbox-control: var(--background);
+    --lightbox-control-foreground: var(--muted-foreground);
+    --lightbox-control-hover: var(--card);
     --accent: var(--color-pit-dark-surface-accent);
     --accent-foreground: var(--color-pit-white);
     --destructive: oklch(0.69 0.2 23.91);
@@ -224,6 +230,9 @@
     --color-secondary-foreground: var(--secondary-foreground);
     --color-muted: var(--muted);
     --color-muted-foreground: var(--muted-foreground);
+    --color-lightbox-control: var(--lightbox-control);
+    --color-lightbox-control-foreground: var(--lightbox-control-foreground);
+    --color-lightbox-control-hover: var(--lightbox-control-hover);
     --color-accent: var(--accent);
     --color-accent-foreground: var(--accent-foreground);
     --color-destructive: var(--destructive);

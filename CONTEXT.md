@@ -115,6 +115,10 @@ _Avoid_: Thumbnail, hero (as CMS field names)
 When a cover is video, the still image shown before playback and in small listings (designer rows, cards). Stored in the cover’s Image field in Studio — the same field used for image-only covers. Required when cover type is Video; legacy items without one show a placeholder on the front end until updated.
 _Avoid_: Video thumbnail, frame grab, separate poster field
 
+**Full project gallery**:
+The ordered sequence of every image and video in a Project’s Gallery. It can be browsed from a selected gallery item without preserving the Gallery’s visual block grouping.
+_Avoid_: Image gallery (it also includes video), individual gallery blocks (which only describe the page layout)
+
 **Multi-location listing**:
 When a studio, agency, or type foundry has more than one Place, each Place is shown on its own row in list and grid views — city and country stay paired (e.g. Milan / Italy, then London / UK). Rows follow the editor-defined order of the `places[]` array in Sanity. Never comma-join cities and countries into separate deduplicated lists. Duplicate city–country pairs are still shown as separate rows when they are separate Place documents.
 _Avoid_: Aggregating cities and countries independently, deduplicating identical city–country pairs, sorting places alphabetically in listings
