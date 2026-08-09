@@ -1,0 +1,23 @@
+CONTEXT.md
+  s_9b3272dcfee380::t_ad202434b7392e 119
+src/components/modules/project/project-gallery.tsx
+  s_9b3272dcfee380::t_c3e2c12b5b9ca1 168-174,179-184,231
+src/app/globals.css
+  s_9b3272dcfee380::t_ad202434b7392e 174
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "1e77d7d422a0519965992887fa9d0258d0cbb5ca",
+  "prompts": {},
+  "sessions": {
+    "s_9b3272dcfee380": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fe74a-2c97-7220-aab1-818006727f3b",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
