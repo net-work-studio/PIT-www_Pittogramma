@@ -1,0 +1,35 @@
+CONTEXT.md
+  s_308a1f01455680::t_9ccb05e9ca46fe 118-121
+bun.lock
+  s_308a1f01455680::t_f3e11257e7588c 18,1344-1349
+package.json
+  s_308a1f01455680::t_d2cfb9884d0cda 13
+src/app/(frontend)/(features)/projects/[slug]/page.tsx
+  s_308a1f01455680::t_ae520b1504de1a 135
+src/app/globals.css
+  s_308a1f01455680::t_9e5479b08317bb 111-113,173-175,233-235
+src/components/modules/project/project-gallery.tsx
+  s_308a1f01455680::t_8c81c278904bbb 1-5,7,9,11-25,29,33-136,141-190,192-395
+src/components/modules/shared/media-blocks.tsx
+  s_308a1f01455680::t_6caa61062059e5 7,32-63,75,80,93,143,167,176,178-191,194-200,211,217,223,237,242,250,259,273,278,286,295,304,318,323,330,338,346,354,369,375,383,393,402,411,427,439
+src/components/ui/button.tsx
+  s_308a1f01455680::t_eab28a6b3c53bf 15-16
+src/components/ui/dialog.tsx
+  s_308a1f01455680::t_b432406964bc26 43,47,62,70,72-79
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "df13209817d03c48f6df0d8c4efda2ce4ae6c3b5",
+  "prompts": {},
+  "sessions": {
+    "s_308a1f01455680": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fe742-fa27-78f1-b0c7-1cb034300412",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
