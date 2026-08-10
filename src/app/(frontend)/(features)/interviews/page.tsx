@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import AdvCard from "@/components/cards/adv-card";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
-import FilterBar from "@/components/feat/filter/filter";
+import FilterSheet from "@/components/feat/filter/filter-sheet";
 import LoadMore from "@/components/feat/load-more/load-more";
 import SortDropdown from "@/components/feat/sort/sort-dropdown";
 import { isValidSort } from "@/components/feat/sort/sort-options";
@@ -208,7 +208,7 @@ async function CachedInterviewsPage({
       />
       <div className="space-y-10 pb-10">
         <div className="flex items-start justify-between gap-4">
-          <FilterBar
+          <FilterSheet
             availableTags={uniqueTags}
             label="interviews"
             totalCount={totalCount}
