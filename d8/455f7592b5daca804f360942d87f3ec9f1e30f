@@ -1,0 +1,40 @@
+src/components/resources/bibliography-list.tsx
+  s_fc60f51f7fb29c::t_0234ac34f82952 3,75-76
+  s_fc60f51f7fb29c::t_3c601d4f47d39f 6-9,78-90
+  s_fc60f51f7fb29c::t_9c54d6f9ad9fdb 11,35-38
+  s_fc60f51f7fb29c::t_08cacf933f3fae 99-104,121-122
+  s_fc60f51f7fb29c::t_b9483a594f4585 105-113,115-120
+  s_fc60f51f7fb29c::t_e485a58c21a612 77
+src/components/home/recent-updates.tsx
+  s_fc60f51f7fb29c::t_b9483a594f4585 11,13-15
+  s_fc60f51f7fb29c::t_8440864134f70e 3,42
+src/app/(frontend)/(resources)/glossary/page.tsx
+  s_fc60f51f7fb29c::t_b9483a594f4585 33,69,151
+  s_fc60f51f7fb29c::t_434ffee310ca4e 8,21,94,105,109,111-114,170-172
+src/components/resources/resource-list-item.tsx
+  s_fc60f51f7fb29c::t_9c54d6f9ad9fdb 7,17,24,33-37
+src/components/resources/resource-view-tabs.tsx
+  s_fc60f51f7fb29c::t_b9483a594f4585 46-51,65,68
+  s_fc60f51f7fb29c::t_08cacf933f3fae 98-105,120-127
+  s_fc60f51f7fb29c::t_26d08ae50e2db1 3,7-10,14,21,32,44-45,53-62,97,106-108,119,128-130
+  s_fc60f51f7fb29c::t_a47b4a701f56ae 52
+CONTEXT.md
+  s_fc60f51f7fb29c::t_a1e7e0bff2fc1d 11,13-14
+  s_fc60f51f7fb29c::t_3c601d4f47d39f 12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "d8455f7592b5daca804f360942d87f3ec9f1e30f",
+  "prompts": {},
+  "sessions": {
+    "s_fc60f51f7fb29c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fec4a-4584-77b3-9494-9df2d5e76caf",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
