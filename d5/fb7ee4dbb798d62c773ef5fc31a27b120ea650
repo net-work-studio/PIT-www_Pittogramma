@@ -1,0 +1,45 @@
+src/components/feat/filter/filter-sheet.tsx
+  s_9476914d547b44::t_213d119fd55f5b 114,125-128,130
+  s_9476914d547b44::t_68104f92158aea 129
+  s_9476914d547b44::t_fc004e1f8805dc 122
+  s_9476914d547b44::t_ea6a057153c2de 136
+  s_9476914d547b44::t_ae0b9e43e55b18 123-124
+  s_9476914d547b44::t_dfa5772d98ea3f 100,112-113,115-118,121,131,183
+  s_9476914d547b44::t_cbd9adf191a49a 103
+  s_9476914d547b44::t_24f56cee5abe3b 120
+  s_9476914d547b44::t_e463fc4a091c5c 75-79,170-171
+  s_9476914d547b44::t_ec928c2adce490 102,104-109
+  s_9476914d547b44::t_0ac8b5c83b9894 119
+  s_9476914d547b44::t_3b21a1d6100c79 132-133
+src/app/(frontend)/layout.tsx
+  s_9476914d547b44::t_2ab1fff403f94f 35,40
+  s_9476914d547b44::t_d88e761a7ff565 25-34,36-39,41-48
+src/app/(frontend)/journal/page.tsx
+  s_9476914d547b44::t_e07a69f15b1ccb 243-255
+  s_9476914d547b44::t_3bd51d1f26381e 6,212-222
+src/app/(frontend)/(features)/projects/page.tsx
+  s_9476914d547b44::t_dfa5772d98ea3f 210-218,220
+  s_9476914d547b44::t_5c3ae1eb704a72 219
+  s_9476914d547b44::t_d88e761a7ff565 260-272
+src/components/feat/sort/sort-dropdown.tsx
+  s_9476914d547b44::t_dfa5772d98ea3f 3,47-57
+src/app/(frontend)/(features)/interviews/page.tsx
+  s_9476914d547b44::t_5c3ae1eb704a72 219
+  s_9476914d547b44::t_dfa5772d98ea3f 210-218,220
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "d5fb7ee4dbb798d62c773ef5fc31a27b120ea650",
+  "prompts": {},
+  "sessions": {
+    "s_9476914d547b44": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fea6e-d1f5-7ff0-b5cb-0d42642f1092",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
