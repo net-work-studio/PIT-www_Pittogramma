@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
 import {
   getResourceTargetElementId,
@@ -9,11 +10,10 @@ import {
 
 export function useResourceTarget(resourceIds: string[]) {
   const [targetResourceId, setTargetResourceId] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const requestedResourceId = searchParams.get(RESOURCE_TARGET_SEARCH_PARAM);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const requestedResourceId = searchParams.get(RESOURCE_TARGET_SEARCH_PARAM);
-
     if (!requestedResourceId) {
       setTargetResourceId(null);
       return;
@@ -24,15 +24,16 @@ export function useResourceTarget(resourceIds: string[]) {
       return;
     }
 
-    searchParams.delete(RESOURCE_TARGET_SEARCH_PARAM);
-    const query = searchParams.toString();
+    const cleanupSearchParams = new URLSearchParams(searchParams.toString());
+    cleanupSearchParams.delete(RESOURCE_TARGET_SEARCH_PARAM);
+    const query = cleanupSearchParams.toString();
     window.history.replaceState(
       null,
       "",
       `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`
     );
     setTargetResourceId(null);
-  }, [resourceIds]);
+  }, [requestedResourceId, resourceIds, searchParams]);
 
   return targetResourceId;
 }
@@ -58,6 +59,18 @@ export function useScrollToResourceTarget(
 }
 
 export function ResourceTargetScroller({
+  resourceIds,
+}: {
+  resourceIds: string[];
+}) {
+  return (
+    <Suspense fallback={null}>
+      <ResourceTargetScrollerContent resourceIds={resourceIds} />
+    </Suspense>
+  );
+}
+
+function ResourceTargetScrollerContent({
   resourceIds,
 }: {
   resourceIds: string[];

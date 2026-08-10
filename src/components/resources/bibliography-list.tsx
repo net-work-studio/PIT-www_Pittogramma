@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { BookDetailsModal } from "@/components/resources/book-details-modal";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import {
@@ -65,6 +65,17 @@ interface BibliographyListProps {
 }
 
 export function BibliographyList({
+  books,
+  utmSettings,
+}: BibliographyListProps) {
+  return (
+    <Suspense fallback={null}>
+      <BibliographyListContent books={books} utmSettings={utmSettings} />
+    </Suspense>
+  );
+}
+
+function BibliographyListContent({
   books,
   utmSettings,
 }: BibliographyListProps) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, Suspense, useEffect, useMemo, useState } from "react";
 
 import type { ResourceMapMarker } from "@/components/resources/resource-map-view";
 import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
@@ -29,7 +29,17 @@ interface ResourceViewTabsProps<T extends { _id: string }> {
   searchEnabled: boolean;
 }
 
-export function ResourceViewTabs<T extends { _id: string }>({
+export function ResourceViewTabs<T extends { _id: string }>(
+  props: ResourceViewTabsProps<T>
+) {
+  return (
+    <Suspense fallback={null}>
+      <ResourceViewTabsContent {...props} />
+    </Suspense>
+  );
+}
+
+function ResourceViewTabsContent<T extends { _id: string }>({
   emptyMessage,
   enabledViews,
   items,
