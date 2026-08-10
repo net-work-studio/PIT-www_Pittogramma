@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowDownUpIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
@@ -43,8 +44,17 @@ export default function SortDropdown() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button className="font-mono uppercase" />}>
-        {currentLabel}
+      <DropdownMenuTrigger
+        render={
+          <Button
+            aria-label={`Sort: ${currentLabel}`}
+            className="font-mono uppercase max-sm:w-9 max-sm:px-0"
+            title={`Sort: ${currentLabel}`}
+          />
+        }
+      >
+        <ArrowDownUpIcon className="sm:hidden" />
+        <span className="max-sm:sr-only">{currentLabel}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuRadioGroup

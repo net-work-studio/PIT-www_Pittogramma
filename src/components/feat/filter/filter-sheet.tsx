@@ -29,13 +29,11 @@ interface Tag {
 interface FilterSheetProps {
   availableTags: Tag[];
   label: string;
-  totalCount: number;
 }
 
 export default function FilterSheet({
   availableTags,
   label,
-  totalCount,
 }: FilterSheetProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -70,11 +68,15 @@ export default function FilterSheet({
   );
 
   const open = useCallback(() => setIsOpen(true), []);
-  const clearDraft = useCallback(() => setDraftSlugs([]), []);
   const clearApplied = useCallback(
     () => startTransition(() => pushUrl([])),
     [pushUrl]
   );
+  const clearAll = useCallback(() => {
+    setDraftSlugs([]);
+    setIsOpen(false);
+    startTransition(() => pushUrl([]));
+  }, [pushUrl]);
   const handleDraftChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const slug = event.currentTarget.dataset.tag;
@@ -95,34 +97,43 @@ export default function FilterSheet({
   }, [draftSlugs, pushUrl]);
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <Button onClick={open} variant="mono">
-        <SlidersHorizontalIcon />
-        Filter {activeSlugs.length > 0 && `(${activeSlugs.length})`}
-      </Button>
-
+    <>
       {activeSlugs.length > 0 && (
-        <>
-          <button
-            className="font-mono text-muted-foreground text-xs uppercase underline underline-offset-4 hover:text-foreground"
-            disabled={isPending}
-            onClick={clearApplied}
-            type="button"
-          >
-            Reset
-          </button>
-          <p
-            aria-live="polite"
-            className="font-mono text-muted-foreground text-xs uppercase"
-          >
-            {totalCount} {label}
-          </p>
-        </>
+        <button
+          className="mr-2 font-mono text-muted-foreground text-xs uppercase underline underline-offset-4 hover:text-foreground"
+          disabled={isPending}
+          onClick={clearApplied}
+          type="button"
+        >
+          Reset
+        </button>
       )}
+
+      <Button
+        aria-label={`Filter ${label}${activeSlugs.length > 0 ? ` (${activeSlugs.length} active)` : ""}`}
+        className="relative max-sm:w-9 max-sm:px-0"
+        onClick={open}
+        title={`Filter ${label}`}
+        variant="mono"
+      >
+        <SlidersHorizontalIcon />
+        <span className="max-sm:sr-only">Filter</span>
+        {activeSlugs.length > 0 && (
+          <span className="font-mono text-xs max-sm:sr-only">
+            ({activeSlugs.length})
+          </span>
+        )}
+        {activeSlugs.length > 0 && (
+          <span
+            aria-hidden="true"
+            className="absolute -top-px -right-px size-3 rounded-full bg-blue-500 sm:hidden"
+          />
+        )}
+      </Button>
 
       <Sheet onOpenChange={setIsOpen} open={isOpen}>
         <SheetContent
-          className="max-sm:!inset-x-0 max-sm:!top-auto max-sm:!bottom-0 max-sm:!h-[min(85dvh,44rem)] max-sm:!w-full max-sm:!max-w-none max-sm:!border-x-0 max-sm:!border-t flex flex-col p-0"
+          className="max-sm:!inset-x-0 max-sm:!top-auto max-sm:!bottom-0 max-sm:!h-[min(85dvh,44rem)] max-sm:!w-full max-sm:!max-w-none max-sm:!border-x-0 max-sm:!border-t flex flex-col p-0 max-sm:data-ending-style:translate-x-0 max-sm:data-starting-style:translate-x-0 max-sm:data-ending-style:translate-y-full max-sm:data-starting-style:translate-y-full"
           side="right"
         >
           <SheetHeader className="p-6">
@@ -156,7 +167,8 @@ export default function FilterSheet({
             <div className="flex items-center justify-between gap-3">
               <button
                 className="font-mono text-muted-foreground text-xs uppercase underline underline-offset-4 hover:text-foreground"
-                onClick={clearDraft}
+                disabled={isPending}
+                onClick={clearAll}
                 type="button"
               >
                 Clear all
@@ -168,6 +180,6 @@ export default function FilterSheet({
           </SheetFooter>
         </SheetContent>
       </Sheet>
-    </div>
+    </>
   );
 }

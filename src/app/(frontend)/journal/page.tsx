@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { type ReactNode, Suspense } from "react";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
-import FilterBar from "@/components/feat/filter/filter";
+import FilterSheet from "@/components/feat/filter/filter-sheet";
 import LoadMore from "@/components/feat/load-more/load-more";
 import SortDropdown from "@/components/feat/sort/sort-dropdown";
 import { isValidSort } from "@/components/feat/sort/sort-options";
@@ -209,13 +209,17 @@ async function CachedJournalPage({
         title={pageSettings?.title ?? "Journal"}
       />
       <div className="space-y-10 pb-10">
-        <div className="flex items-start justify-between gap-4">
-          <FilterBar
-            availableTags={JOURNAL_LABEL_OPTIONS}
-            label="articles"
-            totalCount={totalCount}
-          />
-          <SortDropdown />
+        <div className="flex items-center justify-between gap-4">
+          <p
+            aria-live="polite"
+            className="font-mono text-muted-foreground text-xs uppercase"
+          >
+            {totalCount} {totalCount === 1 ? "article" : "articles"}
+          </p>
+          <div className="flex items-center justify-end gap-2">
+            <FilterSheet availableTags={JOURNAL_LABEL_OPTIONS} label="articles" />
+            <SortDropdown />
+          </div>
         </div>
 
         <section>
@@ -236,17 +240,19 @@ async function CachedJournalPage({
 
         <LoadMore currentPage={page} totalPages={totalPages} />
       </div>
-      {cta && (
-        <CtaCard
-          buttonText={cta.buttonText}
-          externalUrl={cta.externalUrl}
-          headline={cta.headline}
-          image={cta.image}
-          internalLink={cta.internalLink}
-          linkType={cta.linkType}
-          variant={cta.variant}
-        />
-      )}
+      {cta ? (
+        <div className="mt-auto pt-10">
+          <CtaCard
+            buttonText={cta.buttonText}
+            externalUrl={cta.externalUrl}
+            headline={cta.headline}
+            image={cta.image}
+            internalLink={cta.internalLink}
+            linkType={cta.linkType}
+            variant={cta.variant}
+          />
+        </div>
+      ) : null}
     </>
   );
 }
