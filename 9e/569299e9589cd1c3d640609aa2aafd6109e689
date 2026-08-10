@@ -1,0 +1,28 @@
+src/lib/resource-target.ts
+  s_fc60f51f7fb29c::t_8440864134f70e 1-13
+src/lib/resource-target.test.ts
+  s_fc60f51f7fb29c::t_f647bdb0e26b07 1-20
+src/components/resources/resource-target.tsx
+  s_fc60f51f7fb29c::t_52cc5f2bd80b29 11
+  s_fc60f51f7fb29c::t_8440864134f70e 1-2,4-10,12-13,24-26,36-44,46-48,55,57-59,65-69
+  s_fc60f51f7fb29c::t_b9483a594f4585 45,60-64
+  s_fc60f51f7fb29c::t_600cfed5d270a1 50-52,56
+  s_fc60f51f7fb29c::t_bcd33c6544ce88 49,53-54
+  s_fc60f51f7fb29c::t_d1d24b4a1467b1 3,14-23,27-35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "9e569299e9589cd1c3d640609aa2aafd6109e689",
+  "prompts": {},
+  "sessions": {
+    "s_fc60f51f7fb29c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fec4a-4584-77b3-9494-9df2d5e76caf",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
