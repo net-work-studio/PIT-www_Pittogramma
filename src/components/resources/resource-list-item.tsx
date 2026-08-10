@@ -4,6 +4,7 @@ interface ResourceListItemProps {
   children: React.ReactNode;
   className?: string;
   href?: string;
+  id?: string;
 }
 
 const rowClassName =
@@ -13,12 +14,14 @@ export function ResourceListItem({
   children,
   className,
   href,
+  id,
 }: ResourceListItemProps) {
   if (href) {
     return (
       <a
         className={cn(rowClassName, "no-underline", className)}
         href={href}
+        id={id}
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -27,5 +30,9 @@ export function ResourceListItem({
     );
   }
 
-  return <div className={cn(rowClassName, className)}>{children}</div>;
+  return (
+    <div className={cn(rowClassName, className)} id={id}>
+      {children}
+    </div>
+  );
 }

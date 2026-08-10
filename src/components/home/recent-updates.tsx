@@ -1,17 +1,18 @@
 import Link from "next/link";
 
+import { buildResourceTargetHref } from "@/lib/resource-target";
 import type { RECENT_UPDATES_QUERY_RESULT } from "@/sanity/types";
 
 type RecentUpdate = RECENT_UPDATES_QUERY_RESULT[number];
 
 const TYPE_META: Record<string, { label: string; route: string }> = {
+  bibliography: { label: "Bibliography", route: "/bibliography" },
+  bookshop: { label: "Bookshop", route: "/bookshops" },
+  glossary: { label: "Glossary", route: "/glossary" },
+  institute: { label: "Institute", route: "/institutes" },
   person: { label: "Designer", route: "/designers" },
   studio: { label: "Studios & Agencies", route: "/studios-agencies" },
   typeFoundry: { label: "Type Foundries", route: "/type-foundries" },
-  glossary: { label: "Glossary", route: "/glossary" },
-  bibliography: { label: "Bibliography", route: "/bibliography" },
-  bookshop: { label: "Bookshop", route: "/bookshops" },
-  institute: { label: "Institute", route: "/institutes" },
   webSource: { label: "Web Sources", route: "/websites" },
 };
 
@@ -38,7 +39,7 @@ export default function RecentUpdates({ items }: RecentUpdatesProps) {
           const href =
             item._type === "person" && "slug" in item && item.slug?.trim()
               ? `/designers?designer=${encodeURIComponent(item.slug)}`
-              : meta.route;
+              : buildResourceTargetHref(meta.route, item._id);
 
           return (
             <li
