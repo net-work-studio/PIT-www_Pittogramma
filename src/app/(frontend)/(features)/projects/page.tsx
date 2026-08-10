@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import AdvCard from "@/components/cards/adv-card";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
-import FilterBar from "@/components/feat/filter/filter";
+import FilterSheet from "@/components/feat/filter/filter-sheet";
 import LoadMore from "@/components/feat/load-more/load-more";
 import SortDropdown from "@/components/feat/sort/sort-dropdown";
 import { isValidSort } from "@/components/feat/sort/sort-options";
@@ -207,13 +207,17 @@ async function CachedProjectsPage({
         title={pageSettings?.title ?? "Projects"}
       />
       <div className="space-y-10 pb-10">
-        <div className="flex items-start justify-between gap-4">
-          <FilterBar
-            availableTags={uniqueTags}
-            label="projects"
-            totalCount={totalCount}
-          />
-          <SortDropdown />
+        <div className="flex items-center justify-between gap-4">
+          <p
+            aria-live="polite"
+            className="font-mono text-muted-foreground text-xs uppercase"
+          >
+            {totalCount} {totalCount === 1 ? "project" : "projects"}
+          </p>
+          <div className="flex items-center justify-end gap-2">
+            <FilterSheet availableTags={uniqueTags} label="projects" />
+            <SortDropdown />
+          </div>
         </div>
         {projectCards.length === 0 ? (
           <p className="py-20 text-center text-muted-foreground">
@@ -253,17 +257,19 @@ async function CachedProjectsPage({
         )}
         <LoadMore currentPage={page} totalPages={totalPages} />
       </div>
-      {cta && (
-        <CtaCard
-          buttonText={cta.buttonText}
-          externalUrl={cta.externalUrl}
-          headline={cta.headline}
-          image={cta.image}
-          internalLink={cta.internalLink}
-          linkType={cta.linkType}
-          variant={cta.variant}
-        />
-      )}
+      {cta ? (
+        <div className="mt-auto pt-10">
+          <CtaCard
+            buttonText={cta.buttonText}
+            externalUrl={cta.externalUrl}
+            headline={cta.headline}
+            image={cta.image}
+            internalLink={cta.internalLink}
+            linkType={cta.linkType}
+            variant={cta.variant}
+          />
+        </div>
+      ) : null}
     </>
   );
 }

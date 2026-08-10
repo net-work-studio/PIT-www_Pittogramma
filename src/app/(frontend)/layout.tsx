@@ -22,28 +22,30 @@ export default async function FrontendLayout({
       disableTransitionOnChange
       enableSystem
     >
-      {isDraftMode ? (
-        <Suspense fallback={<HeaderFallback />}>
-          <DynamicHeader />
-        </Suspense>
-      ) : (
-        <Header perspective="published" stega={false} />
-      )}
-      <main className="mt-14 mb-auto px-5">{children}</main>
-      <SanityLive includeDrafts={isDraftMode} />
-      {isDraftMode && (
-        <>
-          <DisableDraftMode />
-          <VisualEditing />
-        </>
-      )}
-      {isDraftMode ? (
-        <Suspense fallback={<FooterFallback />}>
-          <DynamicFooter />
-        </Suspense>
-      ) : (
-        <Footer perspective="published" stega={false} />
-      )}
+      <div className="flex min-h-dvh flex-col">
+        {isDraftMode ? (
+          <Suspense fallback={<HeaderFallback />}>
+            <DynamicHeader />
+          </Suspense>
+        ) : (
+          <Header perspective="published" stega={false} />
+        )}
+        <main className="mt-14 flex flex-1 flex-col px-5">{children}</main>
+        <SanityLive includeDrafts={isDraftMode} />
+        {isDraftMode ? (
+          <>
+            <DisableDraftMode />
+            <VisualEditing />
+          </>
+        ) : null}
+        {isDraftMode ? (
+          <Suspense fallback={<FooterFallback />}>
+            <DynamicFooter />
+          </Suspense>
+        ) : (
+          <Footer perspective="published" stega={false} />
+        )}
+      </div>
     </ThemeProvider>
   );
 }

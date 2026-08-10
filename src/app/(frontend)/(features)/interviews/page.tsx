@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import AdvCard from "@/components/cards/adv-card";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
-import FilterBar from "@/components/feat/filter/filter";
+import FilterSheet from "@/components/feat/filter/filter-sheet";
 import LoadMore from "@/components/feat/load-more/load-more";
 import SortDropdown from "@/components/feat/sort/sort-dropdown";
 import { isValidSort } from "@/components/feat/sort/sort-options";
@@ -207,13 +207,17 @@ async function CachedInterviewsPage({
         title={pageSettings?.title ?? "Interviews"}
       />
       <div className="space-y-10 pb-10">
-        <div className="flex items-start justify-between gap-4">
-          <FilterBar
-            availableTags={uniqueTags}
-            label="interviews"
-            totalCount={totalCount}
-          />
-          <SortDropdown />
+        <div className="flex items-center justify-between gap-4">
+          <p
+            aria-live="polite"
+            className="font-mono text-muted-foreground text-xs uppercase"
+          >
+            {totalCount} {totalCount === 1 ? "interview" : "interviews"}
+          </p>
+          <div className="flex items-center justify-end gap-2">
+            <FilterSheet availableTags={uniqueTags} label="interviews" />
+            <SortDropdown />
+          </div>
         </div>
         {interviewCards.length === 0 ? (
           <p className="py-20 text-center text-muted-foreground">
