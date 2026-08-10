@@ -1,0 +1,25 @@
+src/components/feat/filter/filter-sheet.tsx
+  s_9476914d547b44::t_557301b95ac766 125-126
+  s_9476914d547b44::t_5b5fef52662433 128-134
+  s_9476914d547b44::t_85b466d70c4a1a 1-124,127,135-173
+src/app/(frontend)/(features)/interviews/page.tsx
+  s_9476914d547b44::t_f92cec3f780765 7,211
+src/app/(frontend)/(features)/projects/page.tsx
+  s_9476914d547b44::t_f92cec3f780765 7,211
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "75a647dadc3f68f70bf7194ec9216a853057e073",
+  "prompts": {},
+  "sessions": {
+    "s_9476914d547b44": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fea6e-d1f5-7ff0-b5cb-0d42642f1092",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
