@@ -191,7 +191,7 @@ function MediaSlot({
 
   return (
     <div className={className}>
-      {onMediaClick && media ? (
+      {onMediaClick && media?.type === "image" ? (
         <MediaSlotButton media={media} onMediaClick={onMediaClick}>
           {content}
         </MediaSlotButton>

@@ -63,7 +63,11 @@ const DEFAULT_MEDIA_ASPECT_RATIO = 16 / 9;
 const LIGHTBOX_HORIZONTAL_GUTTER = 32;
 const LIGHTBOX_VERTICAL_GUTTER = 80;
 
-function getMediaAspectRatio(media: MediaItemShape) {
+function getMediaAspectRatio(media: MediaItemShape | undefined) {
+  if (!media) {
+    return DEFAULT_MEDIA_ASPECT_RATIO;
+  }
+
   const dimensions = media.image
     ? getImageDimensions({ alt: media.alt, image: media.image })
     : undefined;
@@ -191,7 +195,11 @@ function EmbeddedVideo({
   src.searchParams.delete("loop");
   src.searchParams.set("autoplay", "1");
   src.searchParams.set("controls", "1");
-  src.searchParams.set("muted", "0");
+  if (embed.provider === "youtube") {
+    src.searchParams.set("mute", "0");
+  } else {
+    src.searchParams.set("muted", "0");
+  }
 
   return playing ? (
     <iframe
@@ -379,13 +387,7 @@ export default function ProjectGallery({
                     <CarouselItem
                       className="h-full pl-0"
                       key={
-                        media.videoFileUrl ??
-                        media.videoUrl ??
-                        JSON.stringify(media.image?.asset) ??
-                        media.alt ??
-                        media.caption ??
-                        media.type ??
-                        "media"
+                        `${index}-${media.videoFileUrl ?? media.videoUrl ?? media.type ?? "media"}`
                       }
                     >
                       <div className="relative h-full w-full">

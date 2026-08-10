@@ -59,6 +59,14 @@ function DialogContent({
         {...props}
       >
         {children}
+        {portalControls ? (
+          <div
+            className="pointer-events-none fixed inset-0 z-50"
+            data-slot="dialog-portal-controls"
+          >
+            {portalControls}
+          </div>
+        ) : null}
         {showCloseButton ? (
           <DialogPrimitive.Close
             className="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
@@ -69,14 +77,6 @@ function DialogContent({
           </DialogPrimitive.Close>
         ) : null}
       </DialogPrimitive.Popup>
-      {portalControls ? (
-        <div
-          className="pointer-events-none fixed inset-0 z-50"
-          data-slot="dialog-portal-controls"
-        >
-          {portalControls}
-        </div>
-      ) : null}
     </DialogPortal>
   );
 }
