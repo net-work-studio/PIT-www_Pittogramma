@@ -37,7 +37,6 @@ export const seoModule = defineType({
     defineField({
       description:
         "Controls if search engines index this page and follow its links.",
-      initialValue: "index, follow",
       name: "metaRobots",
       options: {
         list: [

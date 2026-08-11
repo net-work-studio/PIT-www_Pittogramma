@@ -21,16 +21,14 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
 import {
+  type ResourceListSortColumn,
   type ResourceListSortState,
-  type ResourceListSortValue,
   sortResourceListItems,
 } from "@/lib/resource-list-sort";
 import { getResourceTargetElementId } from "@/lib/resource-target";
 
-export interface ResourceListColumn<T> {
+export interface ResourceListColumn<T> extends ResourceListSortColumn<T> {
   className: string;
-  getSortValue: (item: T) => ResourceListSortValue;
-  id: string;
   label: string;
 }
 
