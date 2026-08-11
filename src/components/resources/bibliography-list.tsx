@@ -1,6 +1,14 @@
 "use client";
 
-import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
+import {
+  type MouseEvent,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { BookDetailsModal } from "@/components/resources/book-details-modal";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import {
@@ -8,6 +16,10 @@ import {
   useScrollToResourceTarget,
 } from "@/components/resources/resource-target";
 import { TagsDisplay } from "@/components/resources/tags-display";
+import {
+  type ResourceListSortState,
+  sortResourceListItems,
+} from "@/lib/resource-list-sort";
 import { getResourceTargetElementId } from "@/lib/resource-target";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { BIBLIOGRAPHY_QUERY_RESULT } from "@/sanity/types";
@@ -20,6 +32,39 @@ function getAuthors(authors: BibliographyItem["authors"]) {
   }
   return authors.map((author) => author.name).join(", ");
 }
+
+const LIST_COLUMNS = [
+  {
+    className: "col-span-4",
+    getSortValue: (book: BibliographyItem) => book.name,
+    id: "name",
+    label: "Title",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (book: BibliographyItem) => book.authors?.[0]?.name,
+    id: "author",
+    label: "Author/s",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (book: BibliographyItem) => book.publisher?.name,
+    id: "publisher",
+    label: "Publisher",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (book: BibliographyItem) => book.tags?.[0]?.name,
+    id: "tag",
+    label: "Tag",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (book: BibliographyItem) => book.year,
+    id: "year",
+    label: "Year",
+  },
+];
 
 interface BookCardListProps {
   book: BibliographyItem;
@@ -83,7 +128,12 @@ function BibliographyListContent({
     null
   );
   const [modalOpen, setModalOpen] = useState(false);
+  const [sort, setSort] = useState<ResourceListSortState | null>(null);
   const resourceIds = useMemo(() => books.map((book) => book._id), [books]);
+  const sortedBooks = useMemo(
+    () => sortResourceListItems(books, LIST_COLUMNS, sort),
+    [books, sort]
+  );
   const targetResourceId = useResourceTarget(resourceIds);
 
   useScrollToResourceTarget(targetResourceId);
@@ -105,6 +155,23 @@ function BibliographyListContent({
     setModalOpen(true);
   }, []);
 
+  const handleSort = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+    const { dataset } = event.currentTarget;
+    const { columnId } = dataset;
+
+    if (!columnId) {
+      return;
+    }
+
+    setSort((currentSort) => ({
+      columnId,
+      direction:
+        currentSort?.columnId === columnId && currentSort.direction === "asc"
+          ? "desc"
+          : "asc",
+    }));
+  }, []);
+
   return (
     <>
       {books.length === 0 ? (
@@ -113,8 +180,37 @@ function BibliographyListContent({
         </p>
       ) : (
         <>
+          <div className="sticky top-0 z-10 bg-background pt-16">
+            <div className="pb-2.5" />
+            <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-muted-foreground text-xs uppercase max-md:hidden">
+              {LIST_COLUMNS.map((column) => {
+                const isActive = sort?.columnId === column.id;
+                const sortDirection = isActive ? sort?.direction : undefined;
+                const SortIcon =
+                  sortDirection === "asc" ? ArrowUpIcon : ArrowDownIcon;
+
+                return (
+                  <li className={column.className} key={column.id}>
+                    <button
+                      aria-label={`Sort by ${column.label}${sortDirection ? `, ${sortDirection === "asc" ? "ascending" : "descending"}` : ""}`}
+                      aria-pressed={isActive}
+                      className="inline-flex w-full cursor-pointer items-center gap-1 text-left uppercase"
+                      data-column-id={column.id}
+                      onClick={handleSort}
+                      type="button"
+                    >
+                      {column.label}
+                      {isActive && (
+                        <SortIcon aria-hidden="true" className="size-3" />
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
           <div>
-            {books.map((book) => (
+            {sortedBooks.map((book) => (
               <BookListItem
                 book={book}
                 key={book._id}

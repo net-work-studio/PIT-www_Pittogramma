@@ -16,11 +16,32 @@ type WebSource = WEB_SOURCES_QUERY_RESULT[number];
 
 const WWW_PREFIX_REGEX = /^www\./;
 
-const LIST_COLUMNS: ResourceListColumn[] = [
-  { className: "col-span-4", label: "Name" },
-  { className: "col-span-2", label: "Category" },
-  { className: "col-span-2", label: "Tag" },
-  { className: "col-span-4", label: "Website" },
+const LIST_COLUMNS: ResourceListColumn<WebSource>[] = [
+  {
+    className: "col-span-4",
+    getSortValue: (source) => source.name,
+    id: "name",
+    label: "Name",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (source) => source.category?.name,
+    id: "category",
+    label: "Category",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (source) => source.tags?.[0]?.name,
+    id: "tag",
+    label: "Tag",
+  },
+  {
+    className: "col-span-4",
+    getSortValue: (source) =>
+      source.sourceUrl ? formatUrl(source.sourceUrl) : undefined,
+    id: "website",
+    label: "Website",
+  },
 ];
 
 function formatUrl(url: string): string {

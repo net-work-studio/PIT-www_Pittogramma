@@ -17,10 +17,25 @@ import type { BOOKSHOPS_QUERY_RESULT } from "@/sanity/types";
 
 type Bookshop = BOOKSHOPS_QUERY_RESULT[number];
 
-const LIST_COLUMNS: ResourceListColumn[] = [
-  { className: "col-span-8", label: "Name" },
-  { className: "col-span-2", label: "City" },
-  { className: "col-span-2", label: "Country" },
+const LIST_COLUMNS: ResourceListColumn<Bookshop>[] = [
+  {
+    className: "col-span-8",
+    getSortValue: (bookshop) => bookshop.name,
+    id: "name",
+    label: "Name",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (bookshop) => bookshop.place?.city,
+    id: "city",
+    label: "City",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (bookshop) => bookshop.place?.country,
+    id: "country",
+    label: "Country",
+  },
 ];
 
 function BookshopCard({

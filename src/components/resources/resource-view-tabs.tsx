@@ -1,6 +1,15 @@
 "use client";
 
-import { type ReactNode, Suspense, useEffect, useMemo, useState } from "react";
+import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
+import {
+  type MouseEvent,
+  type ReactNode,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import type { ResourceMapMarker } from "@/components/resources/resource-map-view";
 import ResourceMapView from "@/components/resources/resource-map-view-wrapper";
@@ -11,10 +20,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ViewMode } from "@/lib/feature-flags";
+import {
+  type ResourceListSortState,
+  type ResourceListSortValue,
+  sortResourceListItems,
+} from "@/lib/resource-list-sort";
 import { getResourceTargetElementId } from "@/lib/resource-target";
 
-export interface ResourceListColumn {
+export interface ResourceListColumn<T> {
   className: string;
+  getSortValue: (item: T) => ResourceListSortValue;
+  id: string;
   label: string;
 }
 
@@ -22,7 +38,7 @@ interface ResourceViewTabsProps<T extends { _id: string }> {
   emptyMessage: string;
   enabledViews: ViewMode[];
   items: T[];
-  listColumns: ResourceListColumn[];
+  listColumns: ResourceListColumn<T>[];
   markers?: ResourceMapMarker[];
   renderGridItem: (item: T) => ReactNode;
   renderListItem: (item: T) => ReactNode;
@@ -51,7 +67,12 @@ function ResourceViewTabsContent<T extends { _id: string }>({
 }: ResourceViewTabsProps<T>) {
   const defaultView = enabledViews[0] ?? "list";
   const [view, setView] = useState<string>(defaultView);
+  const [sort, setSort] = useState<ResourceListSortState | null>(null);
   const resourceIds = useMemo(() => items.map((item) => item._id), [items]);
+  const sortedListItems = useMemo(
+    () => sortResourceListItems(items, listColumns, sort),
+    [items, listColumns, sort]
+  );
   const targetResourceId = useResourceTarget(resourceIds);
   let targetView: "grid" | "list" | null = null;
   if (enabledViews.includes("list")) {
@@ -70,6 +91,23 @@ function ResourceViewTabsContent<T extends { _id: string }>({
     targetResourceId,
     Boolean(targetView && view === targetView)
   );
+
+  const handleSort = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+    const { dataset } = event.currentTarget;
+    const { columnId } = dataset;
+
+    if (!columnId) {
+      return;
+    }
+
+    setSort((currentSort) => ({
+      columnId,
+      direction:
+        currentSort?.columnId === columnId && currentSort.direction === "asc"
+          ? "desc"
+          : "asc",
+    }));
+  }, []);
 
   return (
     <Tabs className="w-full gap-0" onValueChange={setView} value={view}>
@@ -92,19 +130,38 @@ function ResourceViewTabsContent<T extends { _id: string }>({
         </div>
         {view === "list" && enabledViews.includes("list") && (
           <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase">
-            {listColumns.map((column) => (
-              <li className={column.className} key={column.label}>
-                {column.label}
-              </li>
-            ))}
+            {listColumns.map((column) => {
+              const isActive = sort?.columnId === column.id;
+              const sortDirection = isActive ? sort?.direction : undefined;
+              const SortIcon =
+                sortDirection === "asc" ? ArrowUpIcon : ArrowDownIcon;
+
+              return (
+                <li className={column.className} key={column.label}>
+                  <button
+                    aria-label={`Sort by ${column.label}${sortDirection ? `, ${sortDirection === "asc" ? "ascending" : "descending"}` : ""}`}
+                    aria-pressed={isActive}
+                    className="inline-flex w-full cursor-pointer items-center gap-1 text-left text-muted-foreground uppercase"
+                    data-column-id={column.id}
+                    onClick={handleSort}
+                    type="button"
+                  >
+                    {column.label}
+                    {isActive && (
+                      <SortIcon aria-hidden="true" className="size-3" />
+                    )}
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>
 
       {enabledViews.includes("list") && (
         <TabsContent value="list">
-          {items.length > 0 ? (
-            items.map((item) => (
+          {sortedListItems.length > 0 ? (
+            sortedListItems.map((item) => (
               <div
                 id={
                   view === "list"

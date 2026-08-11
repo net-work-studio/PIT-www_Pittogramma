@@ -5,8 +5,8 @@ import { PlacesDisplay } from "@/components/resources/location-display";
 import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
 import {
-  ResourceViewTabs,
   type ResourceListColumn,
+  ResourceViewTabs,
 } from "@/components/resources/resource-view-tabs";
 import { TagsDisplay } from "@/components/resources/tags-display";
 import type { ViewMode } from "@/lib/feature-flags";
@@ -16,12 +16,37 @@ import type { STUDIOS_QUERY_RESULT } from "@/sanity/types";
 
 type Studio = STUDIOS_QUERY_RESULT[number];
 
-const LIST_COLUMNS: ResourceListColumn[] = [
-  { className: "col-span-4", label: "Name" },
-  { className: "col-span-2", label: "Category" },
-  { className: "col-span-2", label: "Tag" },
-  { className: "col-span-2", label: "City" },
-  { className: "col-span-2", label: "Country" },
+const LIST_COLUMNS: ResourceListColumn<Studio>[] = [
+  {
+    className: "col-span-4",
+    getSortValue: (studio) => studio.name,
+    id: "name",
+    label: "Name",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (studio) => studio.category?.name,
+    id: "category",
+    label: "Category",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (studio) => studio.tags?.[0]?.name,
+    id: "tag",
+    label: "Tag",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (studio) => studio.places?.[0]?.city,
+    id: "city",
+    label: "City",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (studio) => studio.places?.[0]?.country,
+    id: "country",
+    label: "Country",
+  },
 ];
 
 function StudioCard({
