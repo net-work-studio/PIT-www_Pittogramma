@@ -1,0 +1,19 @@
+src/components/resources/resource-view-tabs.tsx
+  s_8c23209b75b994::t_5c8211a274a1ec 24,30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "b5296aca18e35c32df34f3f0066023c7603835f5",
+  "prompts": {},
+  "sessions": {
+    "s_8c23209b75b994": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ff03d-b25b-71e3-a318-d1044f953cef",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
