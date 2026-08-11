@@ -8,6 +8,10 @@ Pittogramma is a cultural platform covering graphic design, visual culture, even
 An always-published Resource containing Pittogramma's curated list of books on graphic design. It is available at `/bibliography` and appears in Resource navigation.
 _Avoid_: Treating Bibliography as an optionally published feature
 
+**Targeted Resource navigation**:
+A Recent Updates link to a Resource index that brings its matching Resource into view and opens its existing detail dialog when one is available. Resources without a detail dialog only scroll to their matching item.
+_Avoid_: Sending Recent Updates Resource links only to an unpositioned index page, treating them as external website links
+
 **Project submission**:
 A project proposed to Pittogramma through the public submission flow. The flow has a stable canonical route at `/submit`, so it can evolve independently of its current form provider.
 _Avoid_: Submission modal, Fillout page

@@ -5,6 +5,7 @@ import { Suspense } from "react";
 
 import SearchInput from "@/components/feat/search-input";
 import ResourcesNavigation from "@/components/navigation/resources-navigation";
+import { ResourceTargetScroller } from "@/components/resources/resource-target";
 import PageHeader from "@/components/shared/page-header";
 import {
   Accordion,
@@ -17,6 +18,7 @@ import {
   isResourceEnabled,
   isSearchEnabled,
 } from "@/lib/feature-flags";
+import { getResourceTargetElementId } from "@/lib/resource-target";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
@@ -26,9 +28,9 @@ import { GLOSSARY_QUERY } from "@/sanity/lib/queries";
 import type { GLOSSARY_QUERY_RESULT } from "@/sanity/types";
 
 export const metadata: Metadata = {
-  title: "Glossary",
   description:
     "A list of the most common and used terms in the design industry",
+  title: "Glossary",
 };
 
 type GlossaryItem = GLOSSARY_QUERY_RESULT[number];
@@ -64,7 +66,7 @@ function splitIntoColumns(
   let runningCount = 0;
   let splitIndex = 0;
 
-  for (let i = 0; i < groups.length; i++) {
+  for (let i = 0; i < groups.length; i += 1) {
     const nextCount = runningCount + groups[i].words.length;
     // Stop when adding the next group would cross the halfway mark —
     // unless the left column is still empty (at least one group per side).
@@ -89,6 +91,7 @@ function LetterSection({ letter, words }: GroupedGlossary) {
           <GlossaryCard
             definition={item.description}
             key={item._id}
+            resourceId={item._id}
             word={item.name}
           />
         ))}
@@ -99,12 +102,16 @@ function LetterSection({ letter, words }: GroupedGlossary) {
 
 interface GlossaryCardProps {
   definition: string;
+  resourceId: string;
   word: string;
 }
 
-function GlossaryCard({ word, definition }: GlossaryCardProps) {
+function GlossaryCard({ word, definition, resourceId }: GlossaryCardProps) {
   return (
-    <Accordion className="rounded-lg bg-secondary p-2.5">
+    <Accordion
+      className="rounded-lg bg-secondary p-2.5"
+      id={getResourceTargetElementId(resourceId)}
+    >
       <AccordionItem value="item-1">
         <AccordionTrigger className="p-0 font-mono uppercase">
           {word}
@@ -140,8 +147,8 @@ async function DynamicGlossaryPage() {
 async function CachedGlossaryPage({ perspective, stega }: DynamicFetchOptions) {
   "use cache";
   const { data: glossaryItems } = await sanityFetch({
-    query: GLOSSARY_QUERY,
     perspective,
+    query: GLOSSARY_QUERY,
     stega,
   });
 
@@ -160,6 +167,9 @@ async function CachedGlossaryPage({ perspective, stega }: DynamicFetchOptions) {
         {isSearchEnabled("glossary") && <SearchInput />}
       </div>
       <section className="grid grid-cols-1 gap-x-2.5 pt-30 md:grid-cols-2">
+        <ResourceTargetScroller
+          resourceIds={glossaryItems.map((item) => item._id)}
+        />
         {groupedGlossary.length > 0 ? (
           <>
             <div className="space-y-5">
