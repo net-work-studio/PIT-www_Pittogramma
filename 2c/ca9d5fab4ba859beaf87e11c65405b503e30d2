@@ -1,0 +1,56 @@
+src/components/resources/resource-view-tabs.tsx
+  s_3f4c38b1031b1e::t_2a834ec274ffb4 4-7,9-12,98-101,136,140-141,143,145-154
+  s_3f4c38b1031b1e::t_60fcf9199dccdc 144
+  s_3f4c38b1031b1e::t_2df14004ea63ad 135,137,142
+  s_3f4c38b1031b1e::t_84b3442554d1ef 8,95-97,110
+  s_3f4c38b1031b1e::t_bc311ae7d7b0b0 3,23-27,30,32-33,41,70,72-75,103-109,111,133-134,138-139,155-156,163-164
+  s_3f4c38b1031b1e::t_fae8677a18d499 102
+src/components/resources/institutes-content.tsx
+  s_3f4c38b1031b1e::t_e5ef7e95916c28 12
+  s_3f4c38b1031b1e::t_e6a66d153d6354 22-51
+  s_3f4c38b1031b1e::t_bc311ae7d7b0b0 21
+src/components/resources/bookshops-content.tsx
+  s_3f4c38b1031b1e::t_e6a66d153d6354 21-38
+  s_3f4c38b1031b1e::t_bc311ae7d7b0b0 20
+src/components/resources/studios-content.tsx
+  s_3f4c38b1031b1e::t_e6a66d153d6354 20-49
+  s_3f4c38b1031b1e::t_bc311ae7d7b0b0 19
+  s_3f4c38b1031b1e::t_e5ef7e95916c28 9
+src/components/resources/type-foundries-content.tsx
+  s_3f4c38b1031b1e::t_e6a66d153d6354 19-36
+  s_3f4c38b1031b1e::t_bc311ae7d7b0b0 18
+src/lib/resource-list-sort.test.ts
+  s_3f4c38b1031b1e::t_2a834ec274ffb4 5
+  s_3f4c38b1031b1e::t_7882cf44ecd3e1 1-4,6-52
+src/components/resources/bibliography-list.tsx
+  s_3f4c38b1031b1e::t_2df14004ea63ad 188,190,195
+  s_3f4c38b1031b1e::t_2a834ec274ffb4 4-11,161-164
+  s_3f4c38b1031b1e::t_0762c24e5fdc19 45
+  s_3f4c38b1031b1e::t_5091779222bec9 38,41,44,47,50,56,62,183-187,189,192-194,196,198-211
+  s_3f4c38b1031b1e::t_7882cf44ecd3e1 3,19-22,36-37,39-40,42-43,46,48-49,51-55,57-61,63-68,131,133-136,166-172,174,191,213
+  s_3f4c38b1031b1e::t_84b3442554d1ef 158-160,173
+  s_3f4c38b1031b1e::t_60fcf9199dccdc 197
+  s_3f4c38b1031b1e::t_645314b62e8a97 165
+src/lib/resource-list-sort.ts
+  s_3f4c38b1031b1e::t_bc311ae7d7b0b0 1-20,22-28,32,36-64
+  s_3f4c38b1031b1e::t_2a834ec274ffb4 21,29-31,33-35
+src/components/resources/websites-content.tsx
+  s_3f4c38b1031b1e::t_bc311ae7d7b0b0 19
+  s_3f4c38b1031b1e::t_e6a66d153d6354 20-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "2cca9d5fab4ba859beaf87e11c65405b503e30d2",
+  "prompts": {},
+  "sessions": {
+    "s_3f4c38b1031b1e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fefee-9bb9-7733-9d39-03e1b5f7bed2",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
