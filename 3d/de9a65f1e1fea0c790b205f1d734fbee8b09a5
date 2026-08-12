@@ -1,0 +1,14 @@
+src/app/globals.css
+  h_75f73f9fd69b93 9-15,17-20,35-40,42-46,48-53,55-59,61-87,95,97
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "3dde9a65f1e1fea0c790b205f1d734fbee8b09a5",
+  "prompts": {},
+  "humans": {
+    "h_75f73f9fd69b93": {
+      "author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
