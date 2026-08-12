@@ -83,7 +83,8 @@ export const getImageDimensions = (
 };
 
 /** Generate blur data URL for Next.js Image placeholder.
- *  Prefers native LQIP from metadata, falls back to tiny CDN image. */
+ *  Prefers native LQIP from metadata, falling back to a tiny image that keeps
+ *  the source aspect ratio. */
 export const getBlurDataUrl = (
   source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined
 ): string | undefined => {
@@ -91,10 +92,5 @@ export const getBlurDataUrl = (
   if (lqip) {
     return lqip;
   }
-  return urlForImage(source)
-    ?.width(24)
-    .height(24)
-    .quality(5)
-    .auto("format")
-    .url();
+  return urlForImage(source)?.width(24).quality(5).auto("format").url();
 };
