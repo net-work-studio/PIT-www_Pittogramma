@@ -11,7 +11,6 @@ import ShareLinks from "@/components/modules/project/share-links";
 import CoverMedia from "@/components/modules/shared/cover-media";
 import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Badge } from "@/components/ui/badge";
 import { hasCoverMedia } from "@/lib/cover-media-utils";
 import { formatDateRange } from "@/lib/date-utils";
 import { buildExternalEventUrl } from "@/lib/event-destination";
@@ -20,7 +19,6 @@ import {
   getSchemaEventAttendanceMode,
   getSchemaEventLocation,
 } from "@/lib/event-location";
-import { EVENT_TYPE_BADGE_VARIANT, getEventTypeLabel } from "@/lib/event-type";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import { utmSettingsFromSiteSettings } from "@/lib/tracked-link";
@@ -140,8 +138,6 @@ async function CachedEventPage({
     ? urlForImage(event.cover)?.url()
     : undefined;
 
-  const typeLabel = getEventTypeLabel(event.type);
-
   const eventUrl = `${siteDefaults.baseUrl}/events/${slug}`;
 
   const location = formatEventLocationDisplay(
@@ -243,10 +239,6 @@ async function CachedEventPage({
 
         {/* Mobile-only metadata */}
         <div className="order-6 mt-6 flex flex-col gap-4 px-2.5 lg:hidden">
-          {typeLabel ? (
-            <Badge variant={EVENT_TYPE_BADGE_VARIANT}>{typeLabel}</Badge>
-          ) : null}
-
           <dl className="flex flex-col gap-1">
             {dateDisplay ? (
               <div className="flex gap-x-12">

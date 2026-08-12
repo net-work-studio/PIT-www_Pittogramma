@@ -44,7 +44,7 @@ _Avoid_: Next, future (in user-facing copy)
 Events that have ended.
 
 **Event type**:
-The format of an event: Talk, Workshop, 5+1, or a generic Event. Shown as an outline badge on cards and event pages (TALK, WORKSHOP, 5+1, EVENT).
+The format of an event: Talk, Workshop, 5+1, or a generic Event. Shown as a solid pink chip on detail pages and as an outline badge on cards (TALK, WORKSHOP, 5+1, EVENT).
 _Avoid_: Tag, category, tipologia (in code — use "type")
 
 **Event card location byline**:
@@ -64,8 +64,8 @@ The branded Pittogramma `/events/{slug}` route for an event whose card destinati
 _Avoid_: External event page, Luma page (unless specifically referring to Luma's page)
 
 **Content-type badge (detail page)**:
-The outline badge above a detail page title that identifies the content type (Project, Articles, Diary, Baseline, Interview). Matches the label on listing cards but uses outline-only hover — no fill color.
-_Avoid_: Colored card hover on detail pages, discipline tags in the hero (those stay in metadata)
+The solid-color chip above a detail page title that identifies the content type (Project, Articles, Diary, Baseline, Interview, Event). Its color maps to the content type: Project blue, Interview yellow, Diary green, Baseline purple, Article orange, Event pink; it remains visually unchanged on hover.
+_Avoid_: Outline-only detail-page badges, discipline tags in the hero (those stay in metadata)
 
 **Page intro (`introText`)**:
 Short description shown under a section page title (e.g. Journal, Projects, Events). Edited on each page singleton in Studio; required, max 170 characters. On pages with a featured hero, the intro appears below the hero.

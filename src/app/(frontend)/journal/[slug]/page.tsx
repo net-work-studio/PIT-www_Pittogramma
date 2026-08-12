@@ -166,7 +166,10 @@ async function CachedJournalArticlePage({
           <div className="flex flex-1 flex-col justify-between gap-8">
             <hgroup className="flex flex-col gap-2">
               {labelConfig ? (
-                <DetailPageBadge label={labelConfig.label} />
+                <DetailPageBadge
+                  label={labelConfig.label}
+                  type={labelConfig.badgeVariant}
+                />
               ) : null}
               <h1 className="text-pretty text-3xl">{article.title}</h1>
               {article.excerpt ? (
