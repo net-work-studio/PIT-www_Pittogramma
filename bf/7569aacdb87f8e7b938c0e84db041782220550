@@ -1,0 +1,24 @@
+src/app/(frontend)/(features)/interviews/[slug]/loading.tsx
+  s_c40e6bde33113e::t_47048007106355 1-2,4
+src/app/(frontend)/journal/[slug]/loading.tsx
+  s_c40e6bde33113e::t_47048007106355 1-2,4
+src/sanity/lib/image.ts
+  s_c40e6bde33113e::t_bcf8814e1fa51d 86-87
+  s_c40e6bde33113e::t_c54bfe129ccb60 95
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "bf7569aacdb87f8e7b938c0e84db041782220550",
+  "prompts": {},
+  "sessions": {
+    "s_c40e6bde33113e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ff629-b49b-7ac3-864a-2a542e86645c",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
