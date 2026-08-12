@@ -1,0 +1,20 @@
+src/components/modules/shared/editorial-article-skeleton.tsx
+  s_c40e6bde33113e::t_47048007106355 1-12,18-83
+  s_c40e6bde33113e::t_6a576319be790b 13-17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "c1cb76f52bae25ca1cd043640ef59a3b91fa1f44",
+  "prompts": {},
+  "sessions": {
+    "s_c40e6bde33113e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ff629-b49b-7ac3-864a-2a542e86645c",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
