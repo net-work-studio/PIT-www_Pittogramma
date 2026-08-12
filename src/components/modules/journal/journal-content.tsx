@@ -81,7 +81,7 @@ function MediaRenderer({
           <SanityImage
             className="rounded-xl object-cover"
             fill
-            source={{ image, alt }}
+            source={{ alt, image }}
           />
         </AspectRatio>
       );
@@ -187,7 +187,7 @@ function ReferencesBlock({ value }: ReferencesBlockProps) {
   }
 
   return (
-    <section className="mx-auto my-10 max-w-[700px] border-t pt-4">
+    <section className="mx-auto my-16 max-w-[700px] border-t pt-4">
       <h2 className="mb-4 font-mono text-muted-foreground text-xs uppercase">
         {value.title || "References"}
       </h2>
@@ -315,25 +315,25 @@ function GridFourMediaBlock({ value }: GridFourMediaBlockProps) {
 
 const components: PortableTextComponents = {
   block: {
-    normal: ({ children }) => (
-      <p className="mx-auto mb-4 max-w-[700px] text-base leading-relaxed lg:text-xl">
+    blockquote: ({ children }) => (
+      <blockquote className="mx-auto my-12 max-w-[700px] text-2xl leading-tight lg:text-[2.5rem] lg:leading-tight">
         {children}
-      </p>
+      </blockquote>
     ),
     h2: ({ children }) => (
-      <h2 className="mx-auto mt-10 mb-4 max-w-[700px] text-xl leading-tight lg:text-2xl">
+      <h2 className="mx-auto mt-16 mb-6 max-w-[700px] text-2xl leading-tight lg:text-3xl">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="mx-auto mt-8 mb-3 max-w-[700px] text-lg leading-tight lg:text-xl">
+      <h3 className="mx-auto mt-12 mb-4 max-w-[700px] text-xl leading-tight lg:text-2xl">
         {children}
       </h3>
     ),
-    blockquote: ({ children }) => (
-      <blockquote className="mx-auto my-8 max-w-[700px] text-2xl leading-tight lg:text-[2.5rem] lg:leading-tight">
+    normal: ({ children }) => (
+      <p className="mx-auto mb-6 max-w-[700px] font-serif text-xl leading-snug lg:text-2xl">
         {children}
-      </blockquote>
+      </p>
     ),
   },
   marks: {
@@ -352,13 +352,13 @@ const components: PortableTextComponents = {
       ),
   },
   types: {
-    singleMediaBlock: SingleMediaBlock,
-    sideBySideMediaBlock: SideBySideMediaBlock,
-    threeSideBySideMediaBlock: ThreeSideBySideMediaBlock,
     gridFourMediaBlock: GridFourMediaBlock,
-    referencesBlock: ReferencesBlock,
     referenceBlock: ReferencesBlock,
     references: ReferencesBlock,
+    referencesBlock: ReferencesBlock,
+    sideBySideMediaBlock: SideBySideMediaBlock,
+    singleMediaBlock: SingleMediaBlock,
+    threeSideBySideMediaBlock: ThreeSideBySideMediaBlock,
   },
 };
 

@@ -1,12 +1,13 @@
 export type EventType = "talk" | "workshop" | "5+1" | "event";
 
 export const EVENT_TYPE_BADGE_VARIANT = "event-type" as const;
+export const EVENT_TYPE_DETAIL_BADGE_VARIANT = "detail-event" as const;
 
 const TYPE_LABELS: Record<EventType, string> = {
-  talk: "TALK",
-  workshop: "WORKSHOP",
   "5+1": "5+1",
   event: "EVENT",
+  talk: "TALK",
+  workshop: "WORKSHOP",
 };
 
 export function isEventType(type: string): type is EventType {

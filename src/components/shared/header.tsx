@@ -28,11 +28,11 @@ export default async function Header({
   const headerSearchEnabled = isHeaderSearchEnabled();
 
   const [advsRes, communityRes] = await Promise.all([
-    sanityFetch({ query: FEED_QUERY, params: { today }, perspective, stega }),
+    sanityFetch({ params: { today }, perspective, query: FEED_QUERY, stega }),
     sanityFetch({
-      query: FEED_COMMUNITY_QUERY,
       params: { today },
       perspective,
+      query: FEED_COMMUNITY_QUERY,
       stega,
     }),
   ]);
@@ -41,9 +41,9 @@ export default async function Header({
   const communityItems = communityRes.data ?? [];
 
   const byTier: Record<AdvTier, typeof allAdvs> = {
+    bronze: [],
     gold: [],
     silver: [],
-    bronze: [],
   };
   for (const adv of allAdvs) {
     if (adv.tier === "gold" || adv.tier === "silver" || adv.tier === "bronze") {
@@ -66,6 +66,7 @@ export default async function Header({
           <Button
             nativeButton={false}
             render={<Link href="/submit" />}
+            variant="mono"
           >
             Submit your project
           </Button>

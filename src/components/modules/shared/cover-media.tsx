@@ -22,6 +22,7 @@ interface CoverMediaProps {
   className?: string;
   cover: CoverMediaData | null | undefined;
   fill?: boolean;
+  fillWidth?: number;
   priority?: boolean;
   sizes?: string;
 }
@@ -30,6 +31,7 @@ export default function CoverMedia({
   cover,
   className,
   fill,
+  fillWidth,
   priority,
   sizes,
 }: CoverMediaProps) {
@@ -64,6 +66,7 @@ export default function CoverMedia({
     <SanityImage
       className={className}
       fill={fill}
+      fillWidth={fillWidth}
       preserveAnimation={cover.preserveAnimation === true}
       priority={priority}
       sizes={sizes}

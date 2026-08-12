@@ -5,10 +5,10 @@ import { defineQuery } from "next-sanity";
 import JournalArticleCta from "@/components/modules/journal/journal-article-cta";
 import JournalContent from "@/components/modules/journal/journal-content";
 import ShareLinks from "@/components/modules/project/share-links";
-import CoverMedia from "@/components/modules/shared/cover-media";
+import EditorialPageHero from "@/components/modules/shared/editorial-page-hero";
 import { JsonLd } from "@/components/seo/json-ld";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { DetailPageBadge } from "@/lib/content-type-badge";
+import { formatEventDate } from "@/lib/date-utils";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -22,37 +22,6 @@ import {
   sanityFetchStaticParams,
 } from "@/sanity/lib/live";
 import { JOURNAL_ARTICLE_QUERY } from "@/sanity/lib/queries";
-
-const WHITESPACE_RE = /\s+/;
-
-function estimateReadingTime(
-  content: NonNullable<
-    Awaited<
-      ReturnType<typeof sanityFetch<typeof JOURNAL_ARTICLE_QUERY>>
-    >["data"]
-  >["content"]
-): number {
-  if (!content) {
-    return 0;
-  }
-  const words = content.reduce(
-    (count: number, block: (typeof content)[number]) => {
-      if (block._type === "block" && block.children) {
-        return (
-          count +
-          block.children.reduce(
-            (acc: number, child: (typeof block.children)[number]) =>
-              acc + (child.text?.split(WHITESPACE_RE).length ?? 0),
-            0
-          )
-        );
-      }
-      return count;
-    },
-    0
-  );
-  return Math.max(1, Math.ceil(words / 200));
-}
 
 export async function generateStaticParams() {
   const journalSlugsQuery = defineQuery(
@@ -72,9 +41,9 @@ export async function generateMetadata({
     getDynamicFetchOptions(),
   ]);
   const { data: article } = await sanityFetchMetadata({
-    query: JOURNAL_ARTICLE_QUERY,
     params: { slug },
     perspective,
+    query: JOURNAL_ARTICLE_QUERY,
   });
 
   if (!article) {
@@ -82,13 +51,13 @@ export async function generateMetadata({
   }
 
   return mapSanityToMetadata({
-    page: {
-      title: article.title,
-      description: article.excerpt ?? undefined,
-      coverImage: article.cover ?? undefined,
-      seo: article.seo as SeoModule | undefined,
-    },
     baseUrl: siteDefaults.baseUrl,
+    page: {
+      coverImage: article.cover ?? undefined,
+      description: article.excerpt ?? undefined,
+      seo: article.seo as SeoModule | undefined,
+      title: article.title,
+    },
     path: `/journal/${slug}`,
     siteDefaults,
   });
@@ -119,9 +88,9 @@ async function CachedJournalArticlePage({
 }: { slug: string } & DynamicFetchOptions) {
   "use cache";
   const { data: article } = await sanityFetch({
-    query: JOURNAL_ARTICLE_QUERY,
     params: { slug },
     perspective,
+    query: JOURNAL_ARTICLE_QUERY,
     stega,
   });
 
@@ -132,12 +101,9 @@ async function CachedJournalArticlePage({
   const imageUrl = article.cover?.image?.asset
     ? urlForImage(article.cover)?.url()
     : undefined;
-
   const authors = article.authors
     ?.map((author: { name: string }) => author.name)
     .filter(Boolean);
-
-  const readingTime = estimateReadingTime(article.content);
   const articleUrl = `${siteDefaults.baseUrl}/journal/${slug}`;
   const labelConfig = getJournalLabelConfig(article.label);
 
@@ -145,161 +111,49 @@ async function CachedJournalArticlePage({
     <>
       <JsonLd
         data={{
-          name: article.title,
-          description: article.excerpt,
           author: authors?.length
             ? authors.map((name: string) => ({
                 "@type": "Person",
                 name,
               }))
             : undefined,
+          description: article.excerpt,
           image: imageUrl,
+          name: article.title,
           url: articleUrl,
         }}
         type="Article"
       />
 
-      <div className="flex flex-col">
-        {/* Hero Section */}
-        <div className="order-1 flex flex-col gap-6 px-2.5 pt-6 lg:flex-row lg:gap-10 lg:pt-16">
-          {/* Title + Excerpt + Metadata */}
-          <div className="flex flex-1 flex-col justify-between gap-8">
-            <hgroup className="flex flex-col gap-2">
-              {labelConfig ? (
-                <DetailPageBadge label={labelConfig.label} />
-              ) : null}
-              <h1 className="text-pretty text-3xl">{article.title}</h1>
-              {article.excerpt ? (
-                <p className="text-pretty text-2xl text-muted-foreground">
-                  {article.excerpt}
-                </p>
-              ) : null}
-            </hgroup>
-
-            {/* Desktop metadata */}
-            <dl className="hidden flex-col gap-1 lg:flex">
-              {article.publishingDate?.date ? (
-                <div className="flex gap-x-8">
-                  <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                    Date
-                  </dt>
-                  <dd className="text-sm">{article.publishingDate.date}</dd>
-                </div>
-              ) : null}
-              {readingTime > 0 ? (
-                <div className="flex gap-x-8">
-                  <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                    Read Time
-                  </dt>
-                  <dd className="text-sm">{readingTime} min</dd>
-                </div>
-              ) : null}
-              {authors?.length ? (
-                <div className="flex gap-x-8">
-                  <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                    {authors.length > 1 ? "Authors" : "Author"}
-                  </dt>
-                  <dd className="text-sm">{authors.join(", ")}</dd>
-                </div>
-              ) : null}
-              {article.tags?.length ? (
-                <div className="flex gap-x-8">
-                  <dt className="w-28 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                    Topics
-                  </dt>
-                  <dd>
-                    <ul className="flex flex-col">
-                      {article.tags.map(
-                        (tag: { _id: string; name: string }) => (
-                          <li className="text-sm underline" key={tag._id}>
-                            {tag.name}
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </dd>
-                </div>
-              ) : null}
-            </dl>
-          </div>
-
-          {/* Cover image */}
-          <div className="w-full lg:w-[49%] lg:shrink-0">
-            <AspectRatio
-              className="relative w-full overflow-hidden rounded-xl"
-              ratio={4 / 3}
-            >
-              <CoverMedia
-                className="rounded-xl object-cover"
-                cover={article.cover}
-                fill
-                priority
+      <div className="flex flex-col pb-12">
+        <EditorialPageHero
+          badge={
+            labelConfig ? (
+              <DetailPageBadge
+                label={labelConfig.label}
+                type={labelConfig.badgeVariant}
               />
-            </AspectRatio>
-            {article.cover?.alt ? (
-              <p className="mt-1.5 font-mono text-[0.5rem] text-muted-foreground uppercase">
-                {article.cover.alt}
-              </p>
-            ) : null}
-          </div>
-        </div>
+            ) : null
+          }
+          byline={authors?.join(", ")}
+          cover={article.cover}
+          date={
+            article.publishingDate?.date
+              ? formatEventDate(article.publishingDate.date)
+              : undefined
+          }
+          title={article.title}
+        />
 
-        {/* Mobile metadata */}
-        <dl className="order-2 mt-6 flex flex-col gap-1 px-2.5 lg:hidden">
-          {article.publishingDate?.date ? (
-            <div className="flex gap-x-12">
-              <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                Date
-              </dt>
-              <dd className="text-sm">{article.publishingDate.date}</dd>
-            </div>
-          ) : null}
-          {readingTime > 0 ? (
-            <div className="flex gap-x-12">
-              <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                Read Time
-              </dt>
-              <dd className="text-sm">{readingTime} min</dd>
-            </div>
-          ) : null}
-          {authors?.length ? (
-            <div className="flex gap-x-12">
-              <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                {authors.length > 1 ? "Authors" : "Author"}
-              </dt>
-              <dd className="text-sm">{authors.join(", ")}</dd>
-            </div>
-          ) : null}
-          {article.tags?.length ? (
-            <div className="flex gap-x-12">
-              <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                Topics
-              </dt>
-              <dd>
-                <ul className="flex flex-col">
-                  {article.tags.map((tag: { _id: string; name: string }) => (
-                    <li className="text-sm underline" key={tag._id}>
-                      {tag.name}
-                    </li>
-                  ))}
-                </ul>
-              </dd>
-            </div>
-          ) : null}
-        </dl>
-
-        {/* Article Content */}
-        <div className="order-3 py-10 lg:py-16">
+        <div className="py-16 lg:py-24">
           <JournalContent content={article.content} />
         </div>
 
-        {/* Newsletter CTA */}
-        <div className="order-4 px-2.5">
+        <div className="px-2.5">
           <JournalArticleCta />
         </div>
 
-        {/* Share Links */}
-        <div className="order-5 px-2.5">
+        <div className="px-2.5">
           <ShareLinks title={article.title ?? ""} url={articleUrl} />
         </div>
       </div>

@@ -16,18 +16,20 @@ function buildSizedImageUrl(
   >,
   {
     fill,
+    fillWidth,
     sizeMode,
     height,
     width,
   }: {
     fill: boolean | undefined;
+    fillWidth: number | undefined;
     sizeMode: SanityImageFit;
     height: number;
     width: number;
   }
 ): string {
   if (fill) {
-    return sizedBuilder.width(1920).url();
+    return sizedBuilder.width(fillWidth ?? 1920).url();
   }
   switch (sizeMode) {
     case "crop":
@@ -75,6 +77,7 @@ function shouldUseCssHotspot(
  * Set `respectHotspot={false}` for logos and other object-contain layouts.
  */
 type Props = {
+  fillWidth?: number;
   fit?: SanityImageFit;
   preserveAnimation?: boolean;
   respectHotspot?: boolean;
@@ -87,6 +90,7 @@ export default function SanityImage({
   width = 800,
   height = 600,
   fill,
+  fillWidth,
   fit = "intrinsic",
   sizes,
   className,
@@ -108,6 +112,7 @@ export default function SanityImage({
   const sizedBuilder = builder.quality(Number(quality)).auto("format");
   const url = buildSizedImageUrl(sizedBuilder, {
     fill,
+    fillWidth,
     height: Number(height),
     sizeMode: fit,
     width: Number(width),

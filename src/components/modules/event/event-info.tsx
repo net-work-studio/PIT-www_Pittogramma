@@ -4,7 +4,10 @@ import {
   type EventAttendanceMode,
   formatEventLocationDisplay,
 } from "@/lib/event-location";
-import { EVENT_TYPE_BADGE_VARIANT, getEventTypeLabel } from "@/lib/event-type";
+import {
+  EVENT_TYPE_DETAIL_BADGE_VARIANT,
+  getEventTypeLabel,
+} from "@/lib/event-type";
 
 interface Tag {
   _id: string;
@@ -44,15 +47,14 @@ export default function EventInfo({
 
   return (
     <div className="flex flex-1 flex-col justify-between gap-8">
-      <hgroup className="flex flex-col gap-2">
-        {title ? (
-          <h1 className="text-3xl leading-tight lg:text-[2rem]">{title}</h1>
-        ) : null}
-      </hgroup>
-
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
         {typeLabel ? (
-          <Badge variant={EVENT_TYPE_BADGE_VARIANT}>{typeLabel}</Badge>
+          <Badge variant={EVENT_TYPE_DETAIL_BADGE_VARIANT}>{typeLabel}</Badge>
+        ) : null}
+        {title ? (
+          <hgroup>
+            <h1 className="text-3xl leading-tight lg:text-[2rem]">{title}</h1>
+          </hgroup>
         ) : null}
       </div>
 
