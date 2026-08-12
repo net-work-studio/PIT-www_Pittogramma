@@ -49,7 +49,7 @@ function MediaRenderer({
           <SanityImage
             className="rounded-xl object-cover"
             fill
-            source={{ image, alt }}
+            source={{ alt, image }}
           />
         </AspectRatio>
       );
@@ -205,20 +205,20 @@ function GridFourMediaBlock({ value }: GridFourMediaBlockProps) {
 
 const components: PortableTextComponents = {
   block: {
-    normal: ({ children }) => (
-      <p className="mx-auto mb-2 max-w-[700px] text-muted-foreground text-xl lg:text-2xl">
-        {children}
-      </p>
-    ),
     answer: ({ children }) => (
-      <p className="mx-auto mb-6 max-w-[700px] font-serif text-xl lg:text-2xl">
+      <p className="mx-auto mb-8 max-w-[700px] font-serif text-xl leading-snug lg:text-2xl">
         {children}
       </p>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="mx-auto my-8 max-w-[700px] text-2xl leading-tight lg:text-[2.5rem]">
+      <blockquote className="mx-auto my-12 max-w-[700px] text-2xl leading-tight lg:text-[2.5rem]">
         {children}
       </blockquote>
+    ),
+    normal: ({ children }) => (
+      <p className="mx-auto mb-2 max-w-[700px] text-muted-foreground text-xl leading-snug lg:text-2xl">
+        {children}
+      </p>
     ),
   },
   list: {
@@ -232,10 +232,10 @@ const components: PortableTextComponents = {
     bullet: ({ children }) => <li className="mb-1">{children}</li>,
   },
   types: {
-    singleMediaBlock: SingleMediaBlock,
-    sideBySideMediaBlock: SideBySideMediaBlock,
-    threeSideBySideMediaBlock: ThreeSideBySideMediaBlock,
     gridFourMediaBlock: GridFourMediaBlock,
+    sideBySideMediaBlock: SideBySideMediaBlock,
+    singleMediaBlock: SingleMediaBlock,
+    threeSideBySideMediaBlock: ThreeSideBySideMediaBlock,
   },
 };
 

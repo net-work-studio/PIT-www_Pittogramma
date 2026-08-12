@@ -3,12 +3,11 @@ import { notFound } from "next/navigation";
 import { defineQuery } from "next-sanity";
 
 import InterviewContent from "@/components/modules/interview/interview-content";
-import InterviewInfo from "@/components/modules/interview/interview-info";
 import ShareLinks from "@/components/modules/project/share-links";
-import CoverMedia from "@/components/modules/shared/cover-media";
 import DiscoverMore from "@/components/modules/shared/discover-more";
+import EditorialPageHero from "@/components/modules/shared/editorial-page-hero";
 import { JsonLd } from "@/components/seo/json-ld";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { DetailPageBadge } from "@/lib/content-type-badge";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -21,24 +20,6 @@ import {
   sanityFetchStaticParams,
 } from "@/sanity/lib/live";
 import { INTERVIEW_QUERY } from "@/sanity/lib/queries";
-
-function getInterviewEntity({
-  interviewToType,
-  studioName,
-  typeFoundryName,
-}: {
-  interviewToType?: "designers" | "studio" | "typeFoundry" | null;
-  studioName?: string | null;
-  typeFoundryName?: string | null;
-}): { label: string; name: string } | null {
-  if (interviewToType === "studio" && studioName) {
-    return { label: "Studio", name: studioName };
-  }
-  if (interviewToType === "typeFoundry" && typeFoundryName) {
-    return { label: "Type Foundry", name: typeFoundryName };
-  }
-  return null;
-}
 
 export async function generateStaticParams() {
   const interviewSlugsQuery = defineQuery(
@@ -60,9 +41,9 @@ export async function generateMetadata({
     getDynamicFetchOptions(),
   ]);
   const { data: interview } = await sanityFetchMetadata({
-    query: INTERVIEW_QUERY,
     params: { slug },
     perspective,
+    query: INTERVIEW_QUERY,
   });
 
   if (!interview) {
@@ -70,13 +51,13 @@ export async function generateMetadata({
   }
 
   return mapSanityToMetadata({
-    page: {
-      title: interview.title,
-      description: interview.introText ?? undefined,
-      coverImage: interview.cover ?? undefined,
-      seo: interview.seo as SeoModule | undefined,
-    },
     baseUrl: siteDefaults.baseUrl,
+    page: {
+      coverImage: interview.cover ?? undefined,
+      description: interview.introText ?? undefined,
+      seo: interview.seo as SeoModule | undefined,
+      title: interview.title,
+    },
     path: `/interviews/${slug}`,
     siteDefaults,
   });
@@ -103,9 +84,9 @@ async function CachedInterviewPage({
 }: { slug: string } & DynamicFetchOptions) {
   "use cache";
   const { data: interview } = await sanityFetch({
-    query: INTERVIEW_QUERY,
     params: { slug },
     perspective,
+    query: INTERVIEW_QUERY,
     stega,
   });
 
@@ -116,158 +97,47 @@ async function CachedInterviewPage({
   const imageUrl = interview.cover?.image?.asset
     ? urlForImage(interview.cover)?.url()
     : undefined;
-
   const interviewees = interview.designersAndProfessionals
     ?.map((person: { name: string }) => person.name)
     .filter(Boolean);
-
   const interviewUrl = `${siteDefaults.baseUrl}/interviews/${slug}`;
-  const interviewEntity = getInterviewEntity({
-    interviewToType: interview.interviewToType,
-    studioName: interview.studio?.name,
-    typeFoundryName: interview.typeFoundry?.name,
-  });
 
   return (
     <>
       <JsonLd
         data={{
-          name: interview.title,
-          description: interview.introText,
           author: interviewees?.length
             ? interviewees.map((name: string) => ({
                 "@type": "Person",
                 name,
               }))
             : undefined,
+          description: interview.introText,
           image: imageUrl,
+          name: interview.title,
           url: interviewUrl,
         }}
         type="Article"
       />
 
-      <div className="flex flex-col space-y-16">
-        {/* Hero Section */}
-        <div className="order-1 flex flex-col gap-6 px-2.5 pt-6 lg:flex-row lg:gap-10 lg:pt-16">
-          <InterviewInfo
-            interviewTo={interview.designersAndProfessionals}
-            interviewToType={interview.interviewToType}
-            place={interview.place}
-            publishingDate={interview.publishingDate?.date}
-            readingTime={interview.readingTime}
-            studio={
-              interview.interviewToType === "studio"
-                ? interview.studio?.name
-                : undefined
-            }
-            tags={interview.tags}
-            title={interview.title}
-            typeFoundry={
-              interview.interviewToType === "typeFoundry"
-                ? interview.typeFoundry?.name
-                : undefined
-            }
-          />
-          <div className="w-full lg:w-[49%] lg:shrink-0">
-            <AspectRatio
-              className="relative w-full overflow-hidden rounded-xl"
-              ratio={4 / 3}
-            >
-              <CoverMedia
-                className="rounded-xl object-cover"
-                cover={interview.cover}
-                fill
-                priority
-              />
-            </AspectRatio>
-            {interview.cover?.alt ? (
-              <p className="mt-1.5 font-mono text-[0.5rem] text-muted-foreground uppercase">
-                {interview.cover.alt}
-              </p>
-            ) : null}
-          </div>
-        </div>
+      <div className="flex flex-col pb-12">
+        <EditorialPageHero
+          badge={<DetailPageBadge type="interview" />}
+          byline={interviewees?.join(", ")}
+          cover={interview.cover}
+          date={interview.publishingDate?.date}
+          title={interview.title}
+        />
 
-        {/* Bio Section */}
-        {interview.introText ? (
-          <div className="order-3 mx-auto w-fit space-y-2 rounded-lg border-foreground bg-muted p-4 lg:order-2 lg:p-8">
-            <p className="font-mono text-base text-muted-foreground uppercase">
-              Biography
-            </p>
-            <p className="max-w-prose text-xl">{interview.introText}</p>
-          </div>
-        ) : null}
-
-        {/* Mobile-only metadata */}
-        <dl className="order-4 mt-6 flex flex-col gap-1 px-2.5 lg:hidden">
-          {interview.publishingDate?.date ? (
-            <div className="flex gap-x-12">
-              <dt className="w-34.5 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                Date
-              </dt>
-              <dd className="text-sm">{interview.publishingDate.date}</dd>
-            </div>
-          ) : null}
-          {interview.readingTime ? (
-            <div className="flex gap-x-12">
-              <dt className="w-34.5 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                Reading Time
-              </dt>
-              <dd className="text-sm">{interview.readingTime} min</dd>
-            </div>
-          ) : null}
-          {interview.place?.city || interview.place?.country ? (
-            <div className="flex gap-x-12">
-              <dt className="w-34.5 shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                Place
-              </dt>
-              <dd className="text-sm">
-                {[interview.place?.city, interview.place?.country]
-                  .filter(Boolean)
-                  .join(", ")}
-              </dd>
-            </div>
-          ) : null}
-          {interviewEntity ? (
-            <div className="flex gap-x-12">
-              <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                {interviewEntity.label}
-              </dt>
-              <dd className="text-sm">{interviewEntity.name}</dd>
-            </div>
-          ) : null}
-          {interview.tags?.length ? (
-            <div className="flex gap-x-12">
-              <dt className="w-[138px] shrink-0 font-mono text-muted-foreground text-sm uppercase">
-                Disciplines
-              </dt>
-              <dd>
-                <ul className="flex flex-col">
-                  {interview.tags.map(
-                    (tag: { _id: string; name: string | null }) => (
-                      <li className="text-sm underline" key={tag._id}>
-                        {tag.name}
-                      </li>
-                    )
-                  )}
-                </ul>
-              </dd>
-            </div>
-          ) : null}
-        </dl>
-
-        {/* Interview Content */}
-        <div className="order-2 overflow-x-hidden py-10 lg:order-3 lg:py-16">
+        <div className="overflow-x-hidden py-16 lg:py-24">
           <InterviewContent content={interview.interview} />
         </div>
 
-        {/* Share Links */}
-        <div className="order-5 px-2.5">
+        <div className="px-2.5">
           <ShareLinks title={interview.title ?? ""} url={interviewUrl} />
         </div>
 
-        {/* Related Content */}
-        <div className="order-6 px-2.5 pt-10 pb-4">
+        <div className="px-2.5 pt-10 pb-4">
           <DiscoverMore />
         </div>
       </div>
