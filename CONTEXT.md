@@ -4,9 +4,25 @@ Pittogramma is a cultural platform covering graphic design, visual culture, even
 
 ## Language
 
+**Resource end-of-page CTA**:
+An optional reusable CTA selected independently for each Resource page and displayed after that page's resource content.
+_Avoid_: A single global Resource CTA, inline resource CTA
+
+**Resource page settings**:
+The dedicated Sanity singleton for one public Resource page. It provides that page's editable intro text, SEO, and optional Resource end-of-page CTA.
+_Avoid_: Resource records, global Resource settings
+
+**Resource page CTA destination**:
+A public Resource page selected as the internal destination of a reusable CTA. Its fixed route is resolved by the front end.
+_Avoid_: Storing the Resource page URL in a CTA
+
 **Bibliography**:
 An always-published Resource containing Pittogramma's curated list of books on graphic design. It is available at `/bibliography` and appears in Resource navigation.
 _Avoid_: Treating Bibliography as an optionally published feature
+
+**Bibliography Studio section**:
+The Resources Studio subsection that groups Bibliography Page settings, bibliography entries, and Publishers. Publishers are maintained there because they are only referenced by bibliography entries and have no public Resource page.
+_Avoid_: A separate Publisher Resource page, treating Publishers as a sibling public Resource
 
 **Targeted Resource navigation**:
 A Recent Updates link to a Resource index that brings its matching Resource into view and opens its existing detail dialog when one is available. Resources without a detail dialog only scroll to their matching item.

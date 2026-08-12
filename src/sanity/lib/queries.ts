@@ -180,6 +180,56 @@ export const EVENTS_PAGE_QUERY = defineQuery(`
   }
 `);
 
+const RESOURCE_PAGE_SETTINGS_FIELDS = `
+  _id,
+  title,
+  introText,
+  ${CTA_FIELDS},
+  ${SEO_FIELDS}
+`;
+
+export const BIBLIOGRAPHY_PAGE_QUERY = defineQuery(`
+  *[_type == "bibliographyPage"][0] {
+    ${RESOURCE_PAGE_SETTINGS_FIELDS}
+  }
+`);
+
+export const BOOKSHOPS_PAGE_QUERY = defineQuery(`
+  *[_type == "bookshopsPage"][0] {
+    ${RESOURCE_PAGE_SETTINGS_FIELDS}
+  }
+`);
+
+export const GLOSSARY_PAGE_QUERY = defineQuery(`
+  *[_type == "glossaryPage"][0] {
+    ${RESOURCE_PAGE_SETTINGS_FIELDS}
+  }
+`);
+
+export const INSTITUTES_PAGE_QUERY = defineQuery(`
+  *[_type == "institutesPage"][0] {
+    ${RESOURCE_PAGE_SETTINGS_FIELDS}
+  }
+`);
+
+export const STUDIOS_AGENCIES_PAGE_QUERY = defineQuery(`
+  *[_type == "studiosAgenciesPage"][0] {
+    ${RESOURCE_PAGE_SETTINGS_FIELDS}
+  }
+`);
+
+export const TYPE_FOUNDRIES_PAGE_QUERY = defineQuery(`
+  *[_type == "typeFoundriesPage"][0] {
+    ${RESOURCE_PAGE_SETTINGS_FIELDS}
+  }
+`);
+
+export const WEBSITES_PAGE_QUERY = defineQuery(`
+  *[_type == "websitesPage"][0] {
+    ${RESOURCE_PAGE_SETTINGS_FIELDS}
+  }
+`);
+
 export const DESIGNERS_QUERY = defineQuery(`
   *[_type == "person" && "designer" in roles] | order(name asc) {
     _id,
@@ -658,23 +708,23 @@ const INTERVIEWS_FILTERED_ZA_QUERY = defineQuery(`
 `);
 
 const PROJECTS_SORT_QUERY_MAP = {
+  "a-z": PROJECTS_FILTERED_AZ_QUERY,
   newest: PROJECTS_FILTERED_QUERY,
   oldest: PROJECTS_FILTERED_OLDEST_QUERY,
-  "a-z": PROJECTS_FILTERED_AZ_QUERY,
   "z-a": PROJECTS_FILTERED_ZA_QUERY,
 } as const satisfies Record<SortKey, string>;
 
 const JOURNAL_SORT_QUERY_MAP = {
+  "a-z": JOURNAL_FILTERED_AZ_QUERY,
   newest: JOURNAL_FILTERED_NEWEST_QUERY,
   oldest: JOURNAL_FILTERED_OLDEST_QUERY,
-  "a-z": JOURNAL_FILTERED_AZ_QUERY,
   "z-a": JOURNAL_FILTERED_ZA_QUERY,
 } as const satisfies Record<SortKey, string>;
 
 const INTERVIEWS_SORT_QUERY_MAP = {
+  "a-z": INTERVIEWS_FILTERED_AZ_QUERY,
   newest: INTERVIEWS_FILTERED_NEWEST_QUERY,
   oldest: INTERVIEWS_FILTERED_OLDEST_QUERY,
-  "a-z": INTERVIEWS_FILTERED_AZ_QUERY,
   "z-a": INTERVIEWS_FILTERED_ZA_QUERY,
 } as const satisfies Record<SortKey, string>;
 

@@ -3,6 +3,7 @@ import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
+import CtaCard from "@/components/cards/cta-card";
 import SearchInput from "@/components/feat/search-input";
 import ResourcesHeader from "@/components/navigation/resources-header";
 import { ResourceTargetScroller } from "@/components/resources/resource-target";
@@ -13,20 +14,39 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { isResourceEnabled, isSearchEnabled } from "@/lib/feature-flags";
+import { RESOURCE_PAGE_DEFAULTS } from "@/lib/resource-page";
 import { getResourceTargetElementId } from "@/lib/resource-target";
+import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
+import { siteDefaults } from "@/lib/seo/site-defaults";
+import type { SeoModule } from "@/lib/types/seo";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
   sanityFetch,
+  sanityFetchMetadata,
 } from "@/sanity/lib/live";
-import { GLOSSARY_QUERY } from "@/sanity/lib/queries";
+import { GLOSSARY_PAGE_QUERY, GLOSSARY_QUERY } from "@/sanity/lib/queries";
 import type { GLOSSARY_QUERY_RESULT } from "@/sanity/types";
 
-export const metadata: Metadata = {
-  description:
-    "A list of the most common and used terms in the design industry",
-  title: "Glossary",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { perspective } = await getDynamicFetchOptions();
+  const { data: page } = await sanityFetchMetadata({
+    perspective,
+    query: GLOSSARY_PAGE_QUERY,
+  });
+
+  const defaults = RESOURCE_PAGE_DEFAULTS.glossary;
+  return mapSanityToMetadata({
+    baseUrl: siteDefaults.baseUrl,
+    page: {
+      description: page?.introText ?? defaults.introText,
+      seo: page?.seo as SeoModule | undefined,
+      title: page?.title ?? defaults.title,
+    },
+    path: defaults.route,
+    siteDefaults,
+  });
+}
 
 type GlossaryItem = GLOSSARY_QUERY_RESULT[number];
 
@@ -141,20 +161,21 @@ async function DynamicGlossaryPage() {
 
 async function CachedGlossaryPage({ perspective, stega }: DynamicFetchOptions) {
   "use cache";
-  const { data: glossaryItems } = await sanityFetch({
-    perspective,
-    query: GLOSSARY_QUERY,
-    stega,
-  });
+  const [{ data: glossaryItems }, { data: pageSettings }] = await Promise.all([
+    sanityFetch({ perspective, query: GLOSSARY_QUERY, stega }),
+    sanityFetch({ perspective, query: GLOSSARY_PAGE_QUERY, stega }),
+  ]);
 
   const groupedGlossary = groupByFirstLetter(glossaryItems);
   const [leftColumn, rightColumn] = splitIntoColumns(groupedGlossary);
+  const defaults = RESOURCE_PAGE_DEFAULTS.glossary;
+  const cta = pageSettings?.endOfPageCta;
 
   return (
     <>
       <ResourcesHeader
-        intro="A list of the most common and used terms in the design industry"
-        title="Glossary"
+        intro={pageSettings?.introText ?? defaults.introText}
+        title={defaults.title}
       >
         {isSearchEnabled("glossary") && <SearchInput />}
       </ResourcesHeader>
@@ -189,6 +210,19 @@ async function CachedGlossaryPage({ perspective, stega }: DynamicFetchOptions) {
           </p>
         )}
       </section>
+      {cta ? (
+        <div className="pt-10 pb-10">
+          <CtaCard
+            buttonText={cta.buttonText}
+            externalUrl={cta.externalUrl}
+            headline={cta.headline}
+            image={cta.image}
+            internalLink={cta.internalLink}
+            linkType={cta.linkType}
+            variant={cta.variant}
+          />
+        </div>
+      ) : null}
     </>
   );
 }
