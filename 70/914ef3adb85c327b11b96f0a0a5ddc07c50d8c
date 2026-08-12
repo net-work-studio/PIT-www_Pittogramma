@@ -1,0 +1,21 @@
+src/lib/resolve-link.test.ts
+  s_2419b3e08cd897::t_5f6db805627021 32-41
+src/lib/resolve-link.ts
+  s_2419b3e08cd897::t_5f6db805627021 21,46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "70914ef3adb85c327b11b96f0a0a5ddc07c50d8c",
+  "prompts": {},
+  "sessions": {
+    "s_2419b3e08cd897": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ff52f-fec6-77b3-a668-1b9379cd6137",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
