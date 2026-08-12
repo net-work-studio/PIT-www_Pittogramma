@@ -47,14 +47,16 @@ export default function EventInfo({
 
   return (
     <div className="flex flex-1 flex-col justify-between gap-8">
-      <hgroup className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
         {typeLabel ? (
           <Badge variant={EVENT_TYPE_DETAIL_BADGE_VARIANT}>{typeLabel}</Badge>
         ) : null}
         {title ? (
-          <h1 className="text-3xl leading-tight lg:text-[2rem]">{title}</h1>
+          <hgroup>
+            <h1 className="text-3xl leading-tight lg:text-[2rem]">{title}</h1>
+          </hgroup>
         ) : null}
-      </hgroup>
+      </div>
 
       <dl className="hidden flex-col gap-1 lg:flex">
         {dateDisplay ? (

@@ -8,6 +8,7 @@ import ShareLinks from "@/components/modules/project/share-links";
 import EditorialPageHero from "@/components/modules/shared/editorial-page-hero";
 import { JsonLd } from "@/components/seo/json-ld";
 import { DetailPageBadge } from "@/lib/content-type-badge";
+import { formatEventDate } from "@/lib/date-utils";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -136,7 +137,11 @@ async function CachedJournalArticlePage({
           }
           byline={authors?.join(", ")}
           cover={article.cover}
-          date={article.publishingDate?.date}
+          date={
+            article.publishingDate?.date
+              ? formatEventDate(article.publishingDate.date)
+              : undefined
+          }
           title={article.title}
         />
 

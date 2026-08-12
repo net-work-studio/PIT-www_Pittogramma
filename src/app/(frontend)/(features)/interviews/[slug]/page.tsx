@@ -8,6 +8,7 @@ import DiscoverMore from "@/components/modules/shared/discover-more";
 import EditorialPageHero from "@/components/modules/shared/editorial-page-hero";
 import { JsonLd } from "@/components/seo/json-ld";
 import { DetailPageBadge } from "@/lib/content-type-badge";
+import { formatEventDate } from "@/lib/date-utils";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -125,7 +126,11 @@ async function CachedInterviewPage({
           badge={<DetailPageBadge type="interview" />}
           byline={interviewees?.join(", ")}
           cover={interview.cover}
-          date={interview.publishingDate?.date}
+          date={
+            interview.publishingDate?.date
+              ? formatEventDate(interview.publishingDate.date)
+              : undefined
+          }
           title={interview.title}
         />
 

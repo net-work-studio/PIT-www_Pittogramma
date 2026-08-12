@@ -31,9 +31,9 @@ export default function EditorialPageHero({
             priority
           />
         </div>
-        {cover?.alt ? (
+        {cover?.caption ? (
           <figcaption className="mt-1.5 font-mono text-muted-foreground text-xs uppercase">
-            {cover.alt}
+            {cover.caption}
           </figcaption>
         ) : null}
       </figure>

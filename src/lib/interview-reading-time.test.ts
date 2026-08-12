@@ -7,23 +7,20 @@ describe("calculateInterviewReadingTime", () => {
       interview: [
         {
           _type: "block",
-          children: [
-            { _key: "question", _type: "span", text: "What inspires you?" },
-            { _key: "answer", _type: "span", text: "Daily observation." },
-          ],
+          children: [{ _key: "answer", _type: "span", text: "One" }],
         },
         {
           _type: "singleMediaBlock",
           media: {
             alt: "This does not count",
-            caption: "A caption that counts",
+            caption: "Caption",
           },
         },
       ],
-      introText: "A brief introduction",
+      introText: Array.from({ length: 199 }, () => "word").join(" "),
     });
 
-    expect(readingTime).toBe(1);
+    expect(readingTime).toBe(2);
   });
 
   it("rounds every non-empty estimate up at 200 words per minute", () => {

@@ -6,7 +6,7 @@ import { type NumberInputProps, set, unset, useFormValue } from "sanity";
 import { calculateInterviewReadingTime } from "@/lib/interview-reading-time";
 
 export function InterviewReadingTimeInput(props: NumberInputProps) {
-  const { elementProps, onChange, value } = props;
+  const { elementProps, onChange, readOnly, value } = props;
   const [isEditingOverride, setIsEditingOverride] = useState(false);
   const introText = useFormValue(["introText"]);
   const interview = useFormValue(["interview"]);
@@ -57,13 +57,20 @@ export function InterviewReadingTimeInput(props: NumberInputProps) {
   }
 
   let overrideAction = (
-    <Button fontSize={0} mode="ghost" onClick={startOverride} padding={2}>
+    <Button
+      disabled={readOnly}
+      fontSize={0}
+      mode="ghost"
+      onClick={startOverride}
+      padding={2}
+    >
       Override estimate
     </Button>
   );
   if (hasOverride) {
     overrideAction = (
       <Button
+        disabled={readOnly}
         fontSize={0}
         mode="ghost"
         onClick={resetOverride}
