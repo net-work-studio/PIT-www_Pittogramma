@@ -18,7 +18,7 @@ const SINGLETON_PAGE_ROUTES: Record<string, string> = {
 };
 
 const ROUTE_MAP: Record<string, string> = {
-  edition: "/editions",
+  edition: "/",
   event: "/events",
   interview: "/interviews",
   journal: "/journal",
@@ -43,7 +43,7 @@ export function resolveInternalLink(
   }
 
   // Singleton pages don't need a slug
-  if (doc._type in SINGLETON_PAGE_ROUTES) {
+  if (doc._type === "edition" || doc._type in SINGLETON_PAGE_ROUTES) {
     return basePath;
   }
 

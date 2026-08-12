@@ -29,4 +29,14 @@ describe("resolveInternalLink", () => {
       })
     ).toBe("/projects/poster-series");
   });
+
+  test("resolves edition CTAs to the home page without requiring a slug", () => {
+    expect(resolveInternalLink({ _type: "edition" })).toBe("/");
+    expect(
+      resolveInternalLink({
+        _type: "edition",
+        slug: { current: "issue-1" },
+      })
+    ).toBe("/");
+  });
 });
