@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { Suspense } from "react";
 
-import ResourcesNavigation from "@/components/navigation/resources-navigation";
+import ResourcesHeader from "@/components/navigation/resources-header";
 import { BibliographyContent } from "@/components/resources/bibliography-content";
-import PageHeader from "@/components/shared/page-header";
-import { getEnabledResources } from "@/lib/feature-flags";
 import { utmSettingsFromSiteSettings } from "@/lib/tracked-link";
 import {
   type DynamicFetchOptions,
@@ -50,14 +48,10 @@ async function CachedBibliographyPage({
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-7.5">
-        <PageHeader
-          className="pb-0"
-          subtitle="A constantly updated list of books on graphic design"
-          title="Bibliography"
-        />
-        <ResourcesNavigation resources={getEnabledResources()} />
-      </div>
+      <ResourcesHeader
+        intro="A constantly updated list of books on graphic design"
+        title="Bibliography"
+      />
       <BibliographyContent books={books} utmSettings={utmSettings} />
     </>
   );

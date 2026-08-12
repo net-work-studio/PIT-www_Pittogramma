@@ -2,11 +2,9 @@ import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-import ResourcesNavigation from "@/components/navigation/resources-navigation";
+import ResourcesHeader from "@/components/navigation/resources-header";
 import { TypeFoundriesContent } from "@/components/resources/type-foundries-content";
-import PageHeader from "@/components/shared/page-header";
 import {
-  getEnabledResources,
   getEnabledViews,
   isResourceEnabled,
   isSearchEnabled,
@@ -53,14 +51,10 @@ async function CachedTypeFoundriesPage({
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-7.5">
-        <PageHeader
-          className="pb-0"
-          subtitle="A mapping of the creative realities around the world"
-          title="Type Foundries"
-        />
-        <ResourcesNavigation resources={getEnabledResources()} />
-      </div>
+      <ResourcesHeader
+        intro="A mapping of the creative realities around the world"
+        title="Type Foundries"
+      />
       <TypeFoundriesContent
         enabledViews={getEnabledViews("type-foundries")}
         foundries={foundries}

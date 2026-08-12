@@ -2,11 +2,9 @@ import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-import ResourcesNavigation from "@/components/navigation/resources-navigation";
+import ResourcesHeader from "@/components/navigation/resources-header";
 import { WebsitesContent } from "@/components/resources/websites-content";
-import PageHeader from "@/components/shared/page-header";
 import {
-  getEnabledResources,
   getEnabledViews,
   isResourceEnabled,
   isSearchEnabled,
@@ -50,14 +48,10 @@ async function CachedWebsitesPage({ perspective, stega }: DynamicFetchOptions) {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-7.5">
-        <PageHeader
-          className="pb-0"
-          subtitle="A curated list of websites and online resources for designers"
-          title="Websites"
-        />
-        <ResourcesNavigation resources={getEnabledResources()} />
-      </div>
+      <ResourcesHeader
+        intro="A curated list of websites and online resources for designers"
+        title="Websites"
+      />
       <WebsitesContent
         enabledViews={getEnabledViews("websites")}
         searchEnabled={isSearchEnabled("websites")}

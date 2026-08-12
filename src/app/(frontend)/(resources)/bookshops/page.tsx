@@ -2,11 +2,9 @@ import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-import ResourcesNavigation from "@/components/navigation/resources-navigation";
+import ResourcesHeader from "@/components/navigation/resources-header";
 import { BookshopsContent } from "@/components/resources/bookshops-content";
-import PageHeader from "@/components/shared/page-header";
 import {
-  getEnabledResources,
   getEnabledViews,
   isResourceEnabled,
   isSearchEnabled,
@@ -53,14 +51,10 @@ async function CachedBookshopsPage({
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-7.5">
-        <PageHeader
-          className="pb-0"
-          subtitle="A mapping of independent bookshops around the world"
-          title="Bookshops"
-        />
-        <ResourcesNavigation resources={getEnabledResources()} />
-      </div>
+      <ResourcesHeader
+        intro="A mapping of independent bookshops around the world"
+        title="Bookshops"
+      />
       <BookshopsContent
         bookshops={bookshops}
         enabledViews={getEnabledViews("bookshops")}

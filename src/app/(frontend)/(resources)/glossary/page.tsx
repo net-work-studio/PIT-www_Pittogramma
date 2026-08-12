@@ -4,20 +4,15 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 import SearchInput from "@/components/feat/search-input";
-import ResourcesNavigation from "@/components/navigation/resources-navigation";
+import ResourcesHeader from "@/components/navigation/resources-header";
 import { ResourceTargetScroller } from "@/components/resources/resource-target";
-import PageHeader from "@/components/shared/page-header";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  getEnabledResources,
-  isResourceEnabled,
-  isSearchEnabled,
-} from "@/lib/feature-flags";
+import { isResourceEnabled, isSearchEnabled } from "@/lib/feature-flags";
 import { getResourceTargetElementId } from "@/lib/resource-target";
 import {
   type DynamicFetchOptions,
@@ -157,16 +152,13 @@ async function CachedGlossaryPage({ perspective, stega }: DynamicFetchOptions) {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-7.5">
-        <PageHeader
-          className="pb-0"
-          subtitle="A list of the most common and used terms in the design industry"
-          title="Glossary"
-        />
-        <ResourcesNavigation resources={getEnabledResources()} />
+      <ResourcesHeader
+        intro="A list of the most common and used terms in the design industry"
+        title="Glossary"
+      >
         {isSearchEnabled("glossary") && <SearchInput />}
-      </div>
-      <section className="grid grid-cols-1 gap-x-2.5 pt-30 md:grid-cols-2">
+      </ResourcesHeader>
+      <section className="grid grid-cols-1 gap-x-2.5 md:grid-cols-2">
         <ResourceTargetScroller
           resourceIds={glossaryItems.map((item) => item._id)}
         />

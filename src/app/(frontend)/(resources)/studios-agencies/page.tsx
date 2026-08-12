@@ -2,11 +2,9 @@ import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-import ResourcesNavigation from "@/components/navigation/resources-navigation";
+import ResourcesHeader from "@/components/navigation/resources-header";
 import { StudiosContent } from "@/components/resources/studios-content";
-import PageHeader from "@/components/shared/page-header";
 import {
-  getEnabledResources,
   getEnabledViews,
   isResourceEnabled,
   isSearchEnabled,
@@ -50,14 +48,10 @@ async function CachedStudiosPage({ perspective, stega }: DynamicFetchOptions) {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-7.5">
-        <PageHeader
-          className="pb-0"
-          subtitle="A mapping of the creative realities around the world"
-          title="Studios & Agencies"
-        />
-        <ResourcesNavigation resources={getEnabledResources()} />
-      </div>
+      <ResourcesHeader
+        intro="A mapping of the creative realities around the world"
+        title="Studios & Agencies"
+      />
       <StudiosContent
         enabledViews={getEnabledViews("studios-agencies")}
         searchEnabled={isSearchEnabled("studios-agencies")}
