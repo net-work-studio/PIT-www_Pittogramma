@@ -2,6 +2,7 @@
 
 import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
+import { ResourceMobileCard } from "@/components/resources/resource-mobile-card";
 import {
   type ResourceListColumn,
   ResourceViewTabs,
@@ -67,7 +68,23 @@ function WebSourceCard({
 
   if (variant === "list") {
     return (
-      <ResourceListItem href={href}>
+      <ResourceListItem
+        href={href}
+        mobileContent={
+          <ResourceMobileCard
+            badge={
+              source.tags?.length ? (
+                <TagsDisplay tags={source.tags} />
+              ) : undefined
+            }
+            fields={[
+              { label: "Category", value: source.category?.name || "-" },
+              { label: "Website", value: displayUrl },
+            ]}
+            name={source.name}
+          />
+        }
+      >
         <span className="col-span-4">{source.name}</span>
         <span className="col-span-2">{source.category?.name || "-"}</span>
         <span className="col-span-2">

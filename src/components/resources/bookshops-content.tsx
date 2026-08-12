@@ -6,6 +6,7 @@ import {
 } from "@/components/resources/location-display";
 import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
+import { ResourceMobileCard } from "@/components/resources/resource-mobile-card";
 import {
   type ResourceListColumn,
   ResourceViewTabs,
@@ -52,7 +53,24 @@ function BookshopCard({
 
   if (variant === "list") {
     return (
-      <ResourceListItem href={href}>
+      <ResourceListItem
+        href={href}
+        mobileContent={
+          <ResourceMobileCard
+            fields={[
+              {
+                label: "City",
+                value: <PlacesDisplay places={places} showCountry={false} />,
+              },
+              {
+                label: "Country",
+                value: <PlacesDisplay places={places} showCity={false} />,
+              },
+            ]}
+            name={bookshop.name}
+          />
+        }
+      >
         <span className="col-span-8">{bookshop.name}</span>
         <span className="col-span-2">
           <PlacesDisplay places={places} showCountry={false} />

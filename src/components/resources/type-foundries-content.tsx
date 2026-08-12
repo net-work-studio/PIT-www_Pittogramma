@@ -3,6 +3,7 @@
 import { PlacesDisplay } from "@/components/resources/location-display";
 import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
+import { ResourceMobileCard } from "@/components/resources/resource-mobile-card";
 import {
   type ResourceListColumn,
   ResourceViewTabs,
@@ -53,7 +54,36 @@ function TypeFoundryCard({
 
   if (variant === "list") {
     return (
-      <ResourceListItem href={href}>
+      <ResourceListItem
+        href={href}
+        mobileContent={
+          <ResourceMobileCard
+            badge={
+              foundry.tags?.length ? (
+                <TagsDisplay tags={foundry.tags} />
+              ) : undefined
+            }
+            fields={[
+              {
+                label: "City",
+                value: (
+                  <PlacesDisplay
+                    places={foundry.places}
+                    showCountry={false}
+                  />
+                ),
+              },
+              {
+                label: "Country",
+                value: (
+                  <PlacesDisplay places={foundry.places} showCity={false} />
+                ),
+              },
+            ]}
+            name={foundry.name}
+          />
+        }
+      >
         <span className="col-span-8">{foundry.name}</span>
         <span className="col-span-2">
           <PlacesDisplay places={foundry.places} showCountry={false} />

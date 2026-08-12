@@ -11,6 +11,7 @@ import {
 } from "react";
 import { BookDetailsModal } from "@/components/resources/book-details-modal";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
+import { ResourceMobileCard } from "@/components/resources/resource-mobile-card";
 import {
   useResourceTarget,
   useScrollToResourceTarget,
@@ -78,10 +79,28 @@ function BookListItem({ book, onSelect }: BookCardListProps) {
 
   return (
     <ResourceListItem
-      className="max-md:grid-cols-1 max-md:gap-1"
       id={getResourceTargetElementId(book._id)}
+      mobileContent={
+        <ResourceMobileCard
+          badge={book.tags?.length ? <TagsDisplay tags={book.tags} /> : undefined}
+          fields={[
+            { label: "Author/s", value: getAuthors(book.authors) },
+            { label: "Publisher", value: book.publisher?.name || "-" },
+            { label: "Year", value: book.year || "-" },
+          ]}
+          name={
+            <button
+              className="cursor-pointer text-left"
+              onClick={handleClick}
+              type="button"
+            >
+              {book.name}
+            </button>
+          }
+        />
+      }
     >
-      <span className="col-span-4 max-md:col-span-1">
+      <span className="col-span-4">
         <button
           className="text-left transition-colors hover:text-muted-foreground"
           onClick={handleClick}
@@ -90,7 +109,7 @@ function BookListItem({ book, onSelect }: BookCardListProps) {
           {book.name}
         </button>
       </span>
-      <span className="col-span-2 max-md:col-span-1 max-md:text-muted-foreground max-md:text-sm">
+      <span className="col-span-2">
         {getAuthors(book.authors)}
       </span>
       <span className="col-span-2 max-md:hidden">
@@ -180,7 +199,7 @@ function BibliographyListContent({
         </p>
       ) : (
         <>
-          <div className="sticky top-0 z-10 bg-background pt-16">
+              <div className="sticky top-0 z-10 bg-background pt-16 max-md:static max-md:pt-4">
             <div className="pb-2.5" />
             <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-muted-foreground text-xs uppercase max-md:hidden">
               {LIST_COLUMNS.map((column) => {

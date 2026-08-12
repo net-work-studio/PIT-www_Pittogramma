@@ -7,6 +7,7 @@ import {
 } from "@/components/resources/location-display";
 import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
+import { ResourceMobileCard } from "@/components/resources/resource-mobile-card";
 import {
   type ResourceListColumn,
   ResourceViewTabs,
@@ -65,7 +66,29 @@ function InstituteCard({
 
   if (variant === "list") {
     return (
-      <ResourceListItem href={href}>
+      <ResourceListItem
+        href={href}
+        mobileContent={
+          <ResourceMobileCard
+            fields={[
+              {
+                label: "Language",
+                value: <LanguagesDisplay languages={institute.languages} />,
+              },
+              { label: "Since", value: institute.yearFoundation || "-" },
+              {
+                label: "City",
+                value: <PlacesDisplay places={places} showCountry={false} />,
+              },
+              {
+                label: "Country",
+                value: <PlacesDisplay places={places} showCity={false} />,
+              },
+            ]}
+            name={institute.name}
+          />
+        }
+      >
         <span className="col-span-4">{institute.name}</span>
         <span className="col-span-2">
           <LanguagesDisplay languages={institute.languages} />

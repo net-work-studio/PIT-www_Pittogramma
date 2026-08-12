@@ -109,7 +109,7 @@ function ResourceViewTabsContent<T extends { _id: string }>({
 
   return (
     <Tabs className="w-full gap-0" onValueChange={setView} value={view}>
-      <div className="sticky top-0 z-10 bg-background pt-16">
+      <div className="sticky top-0 z-10 bg-background pt-16 max-md:static max-md:pt-4">
         <div className="flex w-full items-center justify-between pb-2.5">
           {searchEnabled ? <Input placeholder="Search" type="search" /> : null}
           {enabledViews.length > 1 && (
@@ -127,7 +127,7 @@ function ResourceViewTabsContent<T extends { _id: string }>({
           )}
         </div>
         {view === "list" && enabledViews.includes("list") && (
-          <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase">
+          <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase max-md:hidden">
             {listColumns.map((column) => {
               const isActive = sort?.columnId === column.id;
               const sortDirection = isActive ? sort?.direction : undefined;
@@ -179,7 +179,7 @@ function ResourceViewTabsContent<T extends { _id: string }>({
 
       {enabledViews.includes("grid") && (
         <TabsContent value="grid">
-          <div className="grid grid-cols-4 gap-1.5">
+          <div className="grid grid-cols-4 gap-1.5 max-md:grid-cols-1">
             {items.length > 0 ? (
               items.map((item) => (
                 <div
@@ -194,7 +194,7 @@ function ResourceViewTabsContent<T extends { _id: string }>({
                 </div>
               ))
             ) : (
-              <p className="col-span-4 text-center text-muted-foreground">
+              <p className="col-span-4 text-center text-muted-foreground max-md:col-span-1">
                 {emptyMessage}
               </p>
             )}

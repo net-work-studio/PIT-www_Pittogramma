@@ -4,6 +4,7 @@ import SanityImage from "@/components/modules/shared/sanity-image";
 import { PlacesDisplay } from "@/components/resources/location-display";
 import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
+import { ResourceMobileCard } from "@/components/resources/resource-mobile-card";
 import {
   type ResourceListColumn,
   ResourceViewTabs,
@@ -62,7 +63,38 @@ function StudioCard({
 
   if (variant === "list") {
     return (
-      <ResourceListItem href={href}>
+      <ResourceListItem
+        href={href}
+        mobileContent={
+          <ResourceMobileCard
+            badge={
+              studio.tags?.length ? <TagsDisplay tags={studio.tags} /> : undefined
+            }
+            fields={[
+              {
+                label: "Typology",
+                value: studio.category?.name || "-",
+              },
+              {
+                label: "City",
+                value: (
+                  <PlacesDisplay
+                    places={studio.places}
+                    showCountry={false}
+                  />
+                ),
+              },
+              {
+                label: "Country",
+                value: (
+                  <PlacesDisplay places={studio.places} showCity={false} />
+                ),
+              },
+            ]}
+            name={studio.name}
+          />
+        }
+      >
         <span className="col-span-4">{studio.name}</span>
         <span className="col-span-2">{studio.category?.name || "-"}</span>
         <span className="col-span-2">
