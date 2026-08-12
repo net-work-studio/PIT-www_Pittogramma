@@ -1,6 +1,7 @@
 import { CommentIcon } from "@sanity/icons/Comment";
 import { createElement } from "react";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { InterviewReadingTimeInput } from "@/sanity/components/interview-reading-time-input";
 import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
 
@@ -158,8 +159,11 @@ export const interview = defineType({
     defineField({
       type: "number",
       name: "readingTime",
-      title: "Reading Time (minutes)",
+      title: "Reading Time",
       group: "content",
+      description:
+        "Calculated live from the intro, interview text, quotes, and media captions at 200 words per minute.",
+      components: { input: InterviewReadingTimeInput },
       validation: (e) => e.min(1).integer(),
     }),
     tagsField("content"),

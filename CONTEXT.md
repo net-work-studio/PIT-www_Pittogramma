@@ -4,6 +4,10 @@ Pittogramma is a cultural platform covering graphic design, visual culture, even
 
 ## Language
 
+**Reading time**:
+The estimated number of minutes required to read an Interview. It is calculated live from its intro, body text, questions, answers, quotes, and captions; it excludes titles, metadata, and media-only content, using 200 words per minute and rounding up. An editor may deliberately override the estimate for genuinely media-heavy pieces whose experience exceeds their text length.
+_Avoid_: Manually maintained default duration, media viewing time
+
 **Resource end-of-page CTA**:
 An optional reusable CTA selected independently for each Resource page and displayed after that page's resource content.
 _Avoid_: A single global Resource CTA, inline resource CTA
