@@ -1,0 +1,78 @@
+src/sanity/lib/queries.ts
+  s_1c2a6cc9eff39a::t_05c4fa4047cc0e 183-232
+  s_1c2a6cc9eff39a::t_5bbb0d0eaaf930 711,718,725
+src/app/(frontend)/(resources)/websites/page.tsx
+  s_1c2a6cc9eff39a::t_aade8e3fb65c19 95,107
+  s_1c2a6cc9eff39a::t_630b6b2ed5b4f1 5,13-15,17,22,24-26,28-48,72-73,76-77,80-81,86-87,96-106
+  s_1c2a6cc9eff39a::t_5bbb0d0eaaf930 1,27,74-75
+src/sanity/schemaTypes/index.ts
+  s_1c2a6cc9eff39a::t_43657494d027b6 49-57,99-105
+src/app/(frontend)/(resources)/bibliography/page.tsx
+  s_1c2a6cc9eff39a::t_aade8e3fb65c19 85,97
+  s_1c2a6cc9eff39a::t_628071beb52d4f 5,8-10,12,17,19-30,32-43,67-68,71-72,75-76,81-82,86-96
+  s_1c2a6cc9eff39a::t_5bbb0d0eaaf930 69-70
+src/app/(frontend)/(resources)/glossary/page.tsx
+  s_1c2a6cc9eff39a::t_117069e9a2e965 6,17,19-21,26,28,31-49,171-172,177-178,214-224
+  s_1c2a6cc9eff39a::t_aade8e3fb65c19 213,225
+  s_1c2a6cc9eff39a::t_5bbb0d0eaaf930 164-167
+src/sanity/structure/structure.ts
+  s_1c2a6cc9eff39a::t_bc4e0e9493f3be 122-204
+src/sanity/schemaTypes/documents/cta.ts
+  s_1c2a6cc9eff39a::t_5bbb0d0eaaf930 8,15,18,24-25,33,53,56,62-63,66,88,99,109-110,115-116,119-123,125-126
+  s_1c2a6cc9eff39a::t_43657494d027b6 80-86
+src/lib/resolve-link.test.ts
+  s_1c2a6cc9eff39a::t_5bbb0d0eaaf930 10
+  s_1c2a6cc9eff39a::t_41f9d05d8e764f 1-9,11-32
+src/lib/resolve-link.ts
+  s_1c2a6cc9eff39a::t_43657494d027b6 5-6
+  s_1c2a6cc9eff39a::t_3f9a145039dd11 12,14-15,17-19,27,46
+  s_1c2a6cc9eff39a::t_5bbb0d0eaaf930 13,16,21-22,26
+src/app/(frontend)/(resources)/institutes/page.tsx
+  s_1c2a6cc9eff39a::t_630b6b2ed5b4f1 5,13-15,17,22,24-48,75-76,79-80,83-84,89-90,99-109
+  s_1c2a6cc9eff39a::t_5bbb0d0eaaf930 1,77-78
+  s_1c2a6cc9eff39a::t_aade8e3fb65c19 98,110
+src/sanity/schemaTypes/singletons/pages/resource-pages.ts
+  s_1c2a6cc9eff39a::t_5bbb0d0eaaf930 17,19-20,25,27-28,32,36,39,45-52,62,72
+  s_1c2a6cc9eff39a::t_43657494d027b6 1-16,18,21-24,26,29-31,33-35,37-38,40-44,53-61,63-71
+src/sanity/extract.json
+  s_1c2a6cc9eff39a::t_787f1483e4b014 2852-3061,3204-3231,3246-3714
+src/sanity/types.ts
+  s_1c2a6cc9eff39a::t_787f1483e4b014 553-601,624-631,635-718,1469-1475,1477-1483,1771-1778,1791-1794,1799-1802,1827-1838,1870-1877,1890-1893,1898-1901,1926-1937,2525-3494,3510-3585,3630-3632,3664-3671,3684-3687,3692-3695,3720-3731,3779-3781,3813-3820,3833-3836,3841-3844,3869-3880,3928-3930,3962-3969,3982-3985,3990-3993,4018-4029,4077-4079,4111-4118,4131-4134,4139-4142,4167-4178,6709-6716,6729-6732,6737-6740,6765-6776,8568-8575,8588-8591,8596-8599,8624-8635,8937-8943
+src/lib/resource-page.ts
+  s_1c2a6cc9eff39a::t_43657494d027b6 1-14,17-49
+  s_1c2a6cc9eff39a::t_5bbb0d0eaaf930 15-16,50-53
+src/app/(frontend)/(resources)/type-foundries/page.tsx
+  s_1c2a6cc9eff39a::t_5bbb0d0eaaf930 1,77-78
+  s_1c2a6cc9eff39a::t_aade8e3fb65c19 98,110
+  s_1c2a6cc9eff39a::t_630b6b2ed5b4f1 5,13-15,17,22,24-48,75-76,79-80,83-84,89-90,99-109
+src/app/(frontend)/(resources)/bookshops/page.tsx
+  s_1c2a6cc9eff39a::t_5bbb0d0eaaf930 1,77-78
+  s_1c2a6cc9eff39a::t_628071beb52d4f 5,13-15,17,22,24-48,75-76,79-80,83-84,89-90,99-109
+  s_1c2a6cc9eff39a::t_aade8e3fb65c19 98,110
+src/app/(frontend)/(resources)/studios-agencies/page.tsx
+  s_1c2a6cc9eff39a::t_aade8e3fb65c19 95,107
+  s_1c2a6cc9eff39a::t_630b6b2ed5b4f1 5,13-15,17,22,24-48,72-73,76-77,80-81,86-87,96-106
+  s_1c2a6cc9eff39a::t_5bbb0d0eaaf930 1,74-75
+CONTEXT.md
+  s_1c2a6cc9eff39a::t_9241aa27cbf01b 11,13-14
+  s_1c2a6cc9eff39a::t_3f9ca3224defe1 23-26
+  s_1c2a6cc9eff39a::t_8033db5f9d64d8 7-10
+  s_1c2a6cc9eff39a::t_95c7bb86f18aed 12
+  s_1c2a6cc9eff39a::t_3e45dd298ed870 15-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "e682941bdc114d71133dfeb81f18404b2569b0a7",
+  "prompts": {},
+  "sessions": {
+    "s_1c2a6cc9eff39a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ff4df-175a-7492-8712-49ba210ec970",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
