@@ -1,0 +1,41 @@
+src/components/resources/resource-view-tabs.tsx
+  s_efeeef2fc299a4::t_78f2d5a032bb6b 112,130,182,197
+src/components/resources/resource-list-item.tsx
+  s_efeeef2fc299a4::t_be40f4b196a12a 36
+  s_efeeef2fc299a4::t_78f2d5a032bb6b 8,19,21-29,31-32,42,48-49
+  s_efeeef2fc299a4::t_14631080122df0 30
+src/components/resources/institutes-content.tsx
+  s_efeeef2fc299a4::t_78f2d5a032bb6b 10,69-91
+src/components/resources/bookshops-content.tsx
+  s_efeeef2fc299a4::t_78f2d5a032bb6b 9,56-73
+src/components/resources/bibliography-list.tsx
+  s_efeeef2fc299a4::t_78f2d5a032bb6b 14,83-101,103,112,202
+src/components/resources/resource-mobile-card.tsx
+  s_efeeef2fc299a4::t_9024d9a5648ebd 20
+  s_efeeef2fc299a4::t_fbdfc96e735863 24
+  s_efeeef2fc299a4::t_c2a5e5c3710acf 35
+  s_efeeef2fc299a4::t_78f2d5a032bb6b 1-19,21-23,25-34,36-41
+src/components/resources/studios-content.tsx
+  s_efeeef2fc299a4::t_78f2d5a032bb6b 7,66-97
+src/components/resources/websites-content.tsx
+  s_efeeef2fc299a4::t_2c54cf7d63f375 74-79
+  s_efeeef2fc299a4::t_78f2d5a032bb6b 5,71-73,80-87
+src/components/resources/type-foundries-content.tsx
+  s_efeeef2fc299a4::t_78f2d5a032bb6b 6,57-86
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "509eab306d7dd06533b27b09c75ba39f973280e8",
+  "prompts": {},
+  "sessions": {
+    "s_efeeef2fc299a4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ff1bc-f7d5-7032-b1e3-a3a837f8c521",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
