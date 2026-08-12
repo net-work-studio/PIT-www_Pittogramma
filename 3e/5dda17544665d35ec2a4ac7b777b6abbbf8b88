@@ -1,0 +1,22 @@
+src/components/cards/cta-card.tsx
+  s_feff147009c4b9::t_bf3a0b1151098a 73,77
+  s_feff147009c4b9::t_86add42e238cdd 87-89
+  s_feff147009c4b9::t_bf43856dc7c8e6 72
+  s_feff147009c4b9::t_08c9ba4631b8bd 86
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "3e5dda17544665d35ec2a4ac7b777b6abbbf8b88",
+  "prompts": {},
+  "sessions": {
+    "s_feff147009c4b9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ff5b5-9e05-74b3-bfc5-f6c4ed2775e6",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
