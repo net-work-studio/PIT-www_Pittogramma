@@ -6,6 +6,7 @@ import {
 } from "@/components/resources/location-display";
 import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
+import { ResourceMobileCard } from "@/components/resources/resource-mobile-card";
 import {
   type ResourceListColumn,
   ResourceViewTabs,
@@ -17,10 +18,25 @@ import type { BOOKSHOPS_QUERY_RESULT } from "@/sanity/types";
 
 type Bookshop = BOOKSHOPS_QUERY_RESULT[number];
 
-const LIST_COLUMNS: ResourceListColumn[] = [
-  { className: "col-span-8", label: "Name" },
-  { className: "col-span-2", label: "City" },
-  { className: "col-span-2", label: "Country" },
+const LIST_COLUMNS: ResourceListColumn<Bookshop>[] = [
+  {
+    className: "col-span-8",
+    getSortValue: (bookshop) => bookshop.name,
+    id: "name",
+    label: "Name",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (bookshop) => bookshop.place?.city,
+    id: "city",
+    label: "City",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (bookshop) => bookshop.place?.country,
+    id: "country",
+    label: "Country",
+  },
 ];
 
 function BookshopCard({
@@ -37,7 +53,24 @@ function BookshopCard({
 
   if (variant === "list") {
     return (
-      <ResourceListItem href={href}>
+      <ResourceListItem
+        href={href}
+        mobileContent={
+          <ResourceMobileCard
+            fields={[
+              {
+                label: "City",
+                value: <PlacesDisplay places={places} showCountry={false} />,
+              },
+              {
+                label: "Country",
+                value: <PlacesDisplay places={places} showCity={false} />,
+              },
+            ]}
+            name={bookshop.name}
+          />
+        }
+      >
         <span className="col-span-8">{bookshop.name}</span>
         <span className="col-span-2">
           <PlacesDisplay places={places} showCountry={false} />

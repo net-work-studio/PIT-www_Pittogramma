@@ -5,6 +5,7 @@ interface ResourceListItemProps {
   className?: string;
   href?: string;
   id?: string;
+  mobileContent?: React.ReactNode;
 }
 
 const rowClassName =
@@ -15,24 +16,37 @@ export function ResourceListItem({
   className,
   href,
   id,
+  mobileContent,
 }: ResourceListItemProps) {
+  const content = mobileContent ? (
+    <>
+      <div className="hidden md:contents">{children}</div>
+      <div className="md:hidden">{mobileContent}</div>
+    </>
+  ) : (
+    children
+  );
+  const mobileClassName = mobileContent
+    ? "max-md:block max-md:py-[15px]"
+    : undefined;
+
   if (href) {
     return (
       <a
-        className={cn(rowClassName, "no-underline", className)}
+        className={cn(rowClassName, "no-underline", mobileClassName, className)}
         href={href}
         id={id}
         rel="noopener noreferrer"
         target="_blank"
       >
-        {children}
+        {content}
       </a>
     );
   }
 
   return (
-    <div className={cn(rowClassName, className)} id={id}>
-      {children}
+    <div className={cn(rowClassName, mobileClassName, className)} id={id}>
+      {content}
     </div>
   );
 }

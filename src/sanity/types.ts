@@ -550,6 +550,55 @@ export type DesignersPageReference = {
   [internalGroqTypeReferenceTo]?: "designersPage";
 };
 
+export type BibliographyPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "bibliographyPage";
+};
+
+export type BookshopsPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "bookshopsPage";
+};
+
+export type GlossaryPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "glossaryPage";
+};
+
+export type InstitutesPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "institutesPage";
+};
+
+export type StudiosAgenciesPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "studiosAgenciesPage";
+};
+
+export type TypeFoundriesPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "typeFoundriesPage";
+};
+
+export type WebsitesPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "websitesPage";
+};
+
 export type Cta = {
   _id: string;
   _type: "cta";
@@ -572,8 +621,99 @@ export type Cta = {
     | HomePageReference
     | ProjectsPageReference
     | InterviewsPageReference
-    | DesignersPageReference;
+    | DesignersPageReference
+    | BibliographyPageReference
+    | BookshopsPageReference
+    | GlossaryPageReference
+    | InstitutesPageReference
+    | StudiosAgenciesPageReference
+    | TypeFoundriesPageReference
+    | WebsitesPageReference;
   externalUrl?: string;
+};
+
+export type WebsitesPage = {
+  _id: string;
+  _type: "websitesPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  introText: string;
+  endOfPageCta?: CtaReference;
+  seo?: SeoModule;
+};
+
+export type TypeFoundriesPage = {
+  _id: string;
+  _type: "typeFoundriesPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  introText: string;
+  endOfPageCta?: CtaReference;
+  seo?: SeoModule;
+};
+
+export type StudiosAgenciesPage = {
+  _id: string;
+  _type: "studiosAgenciesPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  introText: string;
+  endOfPageCta?: CtaReference;
+  seo?: SeoModule;
+};
+
+export type InstitutesPage = {
+  _id: string;
+  _type: "institutesPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  introText: string;
+  endOfPageCta?: CtaReference;
+  seo?: SeoModule;
+};
+
+export type GlossaryPage = {
+  _id: string;
+  _type: "glossaryPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  introText: string;
+  endOfPageCta?: CtaReference;
+  seo?: SeoModule;
+};
+
+export type BookshopsPage = {
+  _id: string;
+  _type: "bookshopsPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  introText: string;
+  endOfPageCta?: CtaReference;
+  seo?: SeoModule;
+};
+
+export type BibliographyPage = {
+  _id: string;
+  _type: "bibliographyPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  introText: string;
+  endOfPageCta?: CtaReference;
+  seo?: SeoModule;
 };
 
 export type DesignersPage = {
@@ -1326,7 +1466,21 @@ export type AllSanitySchemaTypes =
   | ProjectsPageReference
   | InterviewsPageReference
   | DesignersPageReference
+  | BibliographyPageReference
+  | BookshopsPageReference
+  | GlossaryPageReference
+  | InstitutesPageReference
+  | StudiosAgenciesPageReference
+  | TypeFoundriesPageReference
+  | WebsitesPageReference
   | Cta
+  | WebsitesPage
+  | TypeFoundriesPage
+  | StudiosAgenciesPage
+  | InstitutesPage
+  | GlossaryPage
+  | BookshopsPage
+  | BibliographyPage
   | DesignersPage
   | InterviewsPage
   | ProjectsPage
@@ -1615,6 +1769,14 @@ export type HOME_PAGE_QUERY_RESULT = {
     linkType: "external" | "internal" | null;
     internalLink:
       | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
           _type: "designersPage";
           slug: null;
         }
@@ -1627,7 +1789,15 @@ export type HOME_PAGE_QUERY_RESULT = {
           slug: Slug;
         }
       | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
           _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
           slug: null;
         }
       | {
@@ -1652,6 +1822,18 @@ export type HOME_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
           slug: null;
         }
       | null;
@@ -1686,6 +1868,14 @@ export type HOME_PAGE_QUERY_RESULT = {
     linkType: "external" | "internal" | null;
     internalLink:
       | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
           _type: "designersPage";
           slug: null;
         }
@@ -1698,7 +1888,15 @@ export type HOME_PAGE_QUERY_RESULT = {
           slug: Slug;
         }
       | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
           _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
           slug: null;
         }
       | {
@@ -1723,6 +1921,18 @@ export type HOME_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
           slug: null;
         }
       | null;
@@ -2409,6 +2619,14 @@ export type PROJECTS_PAGE_QUERY_RESULT = {
     linkType: "external" | "internal" | null;
     internalLink:
       | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
           _type: "designersPage";
           slug: null;
         }
@@ -2421,7 +2639,15 @@ export type PROJECTS_PAGE_QUERY_RESULT = {
           slug: Slug;
         }
       | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
           _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
           slug: null;
         }
       | {
@@ -2446,6 +2672,18 @@ export type PROJECTS_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
           slug: null;
         }
       | null;
@@ -2530,6 +2768,14 @@ export type INTERVIEWS_PAGE_QUERY_RESULT = {
     linkType: "external" | "internal" | null;
     internalLink:
       | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
           _type: "designersPage";
           slug: null;
         }
@@ -2542,7 +2788,15 @@ export type INTERVIEWS_PAGE_QUERY_RESULT = {
           slug: Slug;
         }
       | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
           _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
           slug: null;
         }
       | {
@@ -2567,6 +2821,18 @@ export type INTERVIEWS_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
           slug: null;
         }
       | null;
@@ -2651,6 +2917,14 @@ export type DESIGNERS_PAGE_QUERY_RESULT = {
     linkType: "external" | "internal" | null;
     internalLink:
       | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
           _type: "designersPage";
           slug: null;
         }
@@ -2663,7 +2937,15 @@ export type DESIGNERS_PAGE_QUERY_RESULT = {
           slug: Slug;
         }
       | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
           _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
           slug: null;
         }
       | {
@@ -2688,6 +2970,18 @@ export type DESIGNERS_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
           slug: null;
         }
       | null;
@@ -2772,6 +3066,14 @@ export type EVENTS_PAGE_QUERY_RESULT = {
     linkType: "external" | "internal" | null;
     internalLink:
       | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
           _type: "designersPage";
           slug: null;
         }
@@ -2784,7 +3086,15 @@ export type EVENTS_PAGE_QUERY_RESULT = {
           slug: Slug;
         }
       | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
           _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
           slug: null;
         }
       | {
@@ -2809,6 +3119,1061 @@ export type EVENTS_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
+          slug: null;
+        }
+      | null;
+    externalUrl: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: BIBLIOGRAPHY_PAGE_QUERY
+// Query: *[_type == "bibliographyPage"][0] {      _id,  title,  introText,  endOfPageCta->{    _id,    title,    variant,    headline,    image {      _type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt,      caption    },    buttonText,    linkType,    internalLink->{      _type,      "slug": slug    },    externalUrl  },    seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+export type BIBLIOGRAPHY_PAGE_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  introText: string;
+  endOfPageCta: {
+    _id: string;
+    title: string;
+    variant: "simple" | "withImage" | null;
+    headline: string | null;
+    image: {
+      _type: "imageWithMetadata";
+      image: {
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+    buttonText: string;
+    linkType: "external" | "internal" | null;
+    internalLink:
+      | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
+          _type: "designersPage";
+          slug: null;
+        }
+      | {
+          _type: "edition";
+          slug: Slug;
+        }
+      | {
+          _type: "event";
+          slug: Slug;
+        }
+      | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
+          _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
+          slug: null;
+        }
+      | {
+          _type: "interview";
+          slug: Slug;
+        }
+      | {
+          _type: "interviewsPage";
+          slug: null;
+        }
+      | {
+          _type: "journal";
+          slug: Slug;
+        }
+      | {
+          _type: "person";
+          slug: Slug | null;
+        }
+      | {
+          _type: "project";
+          slug: Slug;
+        }
+      | {
+          _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
+          slug: null;
+        }
+      | null;
+    externalUrl: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: BOOKSHOPS_PAGE_QUERY
+// Query: *[_type == "bookshopsPage"][0] {      _id,  title,  introText,  endOfPageCta->{    _id,    title,    variant,    headline,    image {      _type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt,      caption    },    buttonText,    linkType,    internalLink->{      _type,      "slug": slug    },    externalUrl  },    seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+export type BOOKSHOPS_PAGE_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  introText: string;
+  endOfPageCta: {
+    _id: string;
+    title: string;
+    variant: "simple" | "withImage" | null;
+    headline: string | null;
+    image: {
+      _type: "imageWithMetadata";
+      image: {
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+    buttonText: string;
+    linkType: "external" | "internal" | null;
+    internalLink:
+      | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
+          _type: "designersPage";
+          slug: null;
+        }
+      | {
+          _type: "edition";
+          slug: Slug;
+        }
+      | {
+          _type: "event";
+          slug: Slug;
+        }
+      | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
+          _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
+          slug: null;
+        }
+      | {
+          _type: "interview";
+          slug: Slug;
+        }
+      | {
+          _type: "interviewsPage";
+          slug: null;
+        }
+      | {
+          _type: "journal";
+          slug: Slug;
+        }
+      | {
+          _type: "person";
+          slug: Slug | null;
+        }
+      | {
+          _type: "project";
+          slug: Slug;
+        }
+      | {
+          _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
+          slug: null;
+        }
+      | null;
+    externalUrl: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: GLOSSARY_PAGE_QUERY
+// Query: *[_type == "glossaryPage"][0] {      _id,  title,  introText,  endOfPageCta->{    _id,    title,    variant,    headline,    image {      _type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt,      caption    },    buttonText,    linkType,    internalLink->{      _type,      "slug": slug    },    externalUrl  },    seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+export type GLOSSARY_PAGE_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  introText: string;
+  endOfPageCta: {
+    _id: string;
+    title: string;
+    variant: "simple" | "withImage" | null;
+    headline: string | null;
+    image: {
+      _type: "imageWithMetadata";
+      image: {
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+    buttonText: string;
+    linkType: "external" | "internal" | null;
+    internalLink:
+      | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
+          _type: "designersPage";
+          slug: null;
+        }
+      | {
+          _type: "edition";
+          slug: Slug;
+        }
+      | {
+          _type: "event";
+          slug: Slug;
+        }
+      | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
+          _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
+          slug: null;
+        }
+      | {
+          _type: "interview";
+          slug: Slug;
+        }
+      | {
+          _type: "interviewsPage";
+          slug: null;
+        }
+      | {
+          _type: "journal";
+          slug: Slug;
+        }
+      | {
+          _type: "person";
+          slug: Slug | null;
+        }
+      | {
+          _type: "project";
+          slug: Slug;
+        }
+      | {
+          _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
+          slug: null;
+        }
+      | null;
+    externalUrl: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: INSTITUTES_PAGE_QUERY
+// Query: *[_type == "institutesPage"][0] {      _id,  title,  introText,  endOfPageCta->{    _id,    title,    variant,    headline,    image {      _type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt,      caption    },    buttonText,    linkType,    internalLink->{      _type,      "slug": slug    },    externalUrl  },    seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+export type INSTITUTES_PAGE_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  introText: string;
+  endOfPageCta: {
+    _id: string;
+    title: string;
+    variant: "simple" | "withImage" | null;
+    headline: string | null;
+    image: {
+      _type: "imageWithMetadata";
+      image: {
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+    buttonText: string;
+    linkType: "external" | "internal" | null;
+    internalLink:
+      | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
+          _type: "designersPage";
+          slug: null;
+        }
+      | {
+          _type: "edition";
+          slug: Slug;
+        }
+      | {
+          _type: "event";
+          slug: Slug;
+        }
+      | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
+          _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
+          slug: null;
+        }
+      | {
+          _type: "interview";
+          slug: Slug;
+        }
+      | {
+          _type: "interviewsPage";
+          slug: null;
+        }
+      | {
+          _type: "journal";
+          slug: Slug;
+        }
+      | {
+          _type: "person";
+          slug: Slug | null;
+        }
+      | {
+          _type: "project";
+          slug: Slug;
+        }
+      | {
+          _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
+          slug: null;
+        }
+      | null;
+    externalUrl: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: STUDIOS_AGENCIES_PAGE_QUERY
+// Query: *[_type == "studiosAgenciesPage"][0] {      _id,  title,  introText,  endOfPageCta->{    _id,    title,    variant,    headline,    image {      _type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt,      caption    },    buttonText,    linkType,    internalLink->{      _type,      "slug": slug    },    externalUrl  },    seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+export type STUDIOS_AGENCIES_PAGE_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  introText: string;
+  endOfPageCta: {
+    _id: string;
+    title: string;
+    variant: "simple" | "withImage" | null;
+    headline: string | null;
+    image: {
+      _type: "imageWithMetadata";
+      image: {
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+    buttonText: string;
+    linkType: "external" | "internal" | null;
+    internalLink:
+      | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
+          _type: "designersPage";
+          slug: null;
+        }
+      | {
+          _type: "edition";
+          slug: Slug;
+        }
+      | {
+          _type: "event";
+          slug: Slug;
+        }
+      | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
+          _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
+          slug: null;
+        }
+      | {
+          _type: "interview";
+          slug: Slug;
+        }
+      | {
+          _type: "interviewsPage";
+          slug: null;
+        }
+      | {
+          _type: "journal";
+          slug: Slug;
+        }
+      | {
+          _type: "person";
+          slug: Slug | null;
+        }
+      | {
+          _type: "project";
+          slug: Slug;
+        }
+      | {
+          _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
+          slug: null;
+        }
+      | null;
+    externalUrl: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: TYPE_FOUNDRIES_PAGE_QUERY
+// Query: *[_type == "typeFoundriesPage"][0] {      _id,  title,  introText,  endOfPageCta->{    _id,    title,    variant,    headline,    image {      _type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt,      caption    },    buttonText,    linkType,    internalLink->{      _type,      "slug": slug    },    externalUrl  },    seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+export type TYPE_FOUNDRIES_PAGE_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  introText: string;
+  endOfPageCta: {
+    _id: string;
+    title: string;
+    variant: "simple" | "withImage" | null;
+    headline: string | null;
+    image: {
+      _type: "imageWithMetadata";
+      image: {
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+    buttonText: string;
+    linkType: "external" | "internal" | null;
+    internalLink:
+      | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
+          _type: "designersPage";
+          slug: null;
+        }
+      | {
+          _type: "edition";
+          slug: Slug;
+        }
+      | {
+          _type: "event";
+          slug: Slug;
+        }
+      | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
+          _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
+          slug: null;
+        }
+      | {
+          _type: "interview";
+          slug: Slug;
+        }
+      | {
+          _type: "interviewsPage";
+          slug: null;
+        }
+      | {
+          _type: "journal";
+          slug: Slug;
+        }
+      | {
+          _type: "person";
+          slug: Slug | null;
+        }
+      | {
+          _type: "project";
+          slug: Slug;
+        }
+      | {
+          _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
+          slug: null;
+        }
+      | null;
+    externalUrl: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaRobots:
+      | "index, follow"
+      | "index, nofollow"
+      | "noindex, follow"
+      | "noindex, nofollow"
+      | null;
+    canonicalURL: string | null;
+    openGraph: {
+      title: string | null;
+      description: string | null;
+      url: string | null;
+    } | null;
+    xCard: {
+      title: string | null;
+      description: string | null;
+    } | null;
+    metaImage: {
+      _type: "imageWithMetadata";
+      image: {
+        _type: "image";
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: WEBSITES_PAGE_QUERY
+// Query: *[_type == "websitesPage"][0] {      _id,  title,  introText,  endOfPageCta->{    _id,    title,    variant,    headline,    image {      _type,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop },      alt,      caption    },    buttonText,    linkType,    internalLink->{      _type,      "slug": slug    },    externalUrl  },    seo {    metaTitle,    metaDescription,    metaRobots,    canonicalURL,    openGraph {      title,      description,      url    },    xCard {      title,      description    },    metaImage {      _type,      image {        _type,          asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  hotspot,  crop      },      alt,      caption    }  }  }
+export type WEBSITES_PAGE_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  introText: string;
+  endOfPageCta: {
+    _id: string;
+    title: string;
+    variant: "simple" | "withImage" | null;
+    headline: string | null;
+    image: {
+      _type: "imageWithMetadata";
+      image: {
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+            } | null;
+          } | null;
+        } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+      } | null;
+      alt: string | null;
+      caption: string | null;
+    } | null;
+    buttonText: string;
+    linkType: "external" | "internal" | null;
+    internalLink:
+      | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
+          _type: "designersPage";
+          slug: null;
+        }
+      | {
+          _type: "edition";
+          slug: Slug;
+        }
+      | {
+          _type: "event";
+          slug: Slug;
+        }
+      | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
+          _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
+          slug: null;
+        }
+      | {
+          _type: "interview";
+          slug: Slug;
+        }
+      | {
+          _type: "interviewsPage";
+          slug: null;
+        }
+      | {
+          _type: "journal";
+          slug: Slug;
+        }
+      | {
+          _type: "person";
+          slug: Slug | null;
+        }
+      | {
+          _type: "project";
+          slug: Slug;
+        }
+      | {
+          _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
           slug: null;
         }
       | null;
@@ -5342,6 +6707,14 @@ export type JOURNAL_PAGE_QUERY_RESULT = {
     linkType: "external" | "internal" | null;
     internalLink:
       | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
           _type: "designersPage";
           slug: null;
         }
@@ -5354,7 +6727,15 @@ export type JOURNAL_PAGE_QUERY_RESULT = {
           slug: Slug;
         }
       | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
           _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
           slug: null;
         }
       | {
@@ -5379,6 +6760,18 @@ export type JOURNAL_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
           slug: null;
         }
       | null;
@@ -7173,6 +8566,14 @@ export type EDITIONS_PAGE_QUERY_RESULT = {
     linkType: "external" | "internal" | null;
     internalLink:
       | {
+          _type: "bibliographyPage";
+          slug: null;
+        }
+      | {
+          _type: "bookshopsPage";
+          slug: null;
+        }
+      | {
           _type: "designersPage";
           slug: null;
         }
@@ -7185,7 +8586,15 @@ export type EDITIONS_PAGE_QUERY_RESULT = {
           slug: Slug;
         }
       | {
+          _type: "glossaryPage";
+          slug: null;
+        }
+      | {
           _type: "homePage";
+          slug: null;
+        }
+      | {
+          _type: "institutesPage";
           slug: null;
         }
       | {
@@ -7210,6 +8619,18 @@ export type EDITIONS_PAGE_QUERY_RESULT = {
         }
       | {
           _type: "projectsPage";
+          slug: null;
+        }
+      | {
+          _type: "studiosAgenciesPage";
+          slug: null;
+        }
+      | {
+          _type: "typeFoundriesPage";
+          slug: null;
+        }
+      | {
+          _type: "websitesPage";
           slug: null;
         }
       | null;
@@ -7513,6 +8934,13 @@ declare module "@sanity/client" {
     '\n  *[_type == "interviewsPage"][0] {\n    _id,\n    title,\n    introText,\n    endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': INTERVIEWS_PAGE_QUERY_RESULT;
     '\n  *[_type == "designersPage"][0] {\n    _id,\n    title,\n    introText,\n    endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': DESIGNERS_PAGE_QUERY_RESULT;
     '\n  *[_type == "eventsPage"][0] {\n    _id,\n    title,\n    introText,\n    endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': EVENTS_PAGE_QUERY_RESULT;
+    '\n  *[_type == "bibliographyPage"][0] {\n    \n  _id,\n  title,\n  introText,\n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n  \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n\n  }\n': BIBLIOGRAPHY_PAGE_QUERY_RESULT;
+    '\n  *[_type == "bookshopsPage"][0] {\n    \n  _id,\n  title,\n  introText,\n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n  \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n\n  }\n': BOOKSHOPS_PAGE_QUERY_RESULT;
+    '\n  *[_type == "glossaryPage"][0] {\n    \n  _id,\n  title,\n  introText,\n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n  \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n\n  }\n': GLOSSARY_PAGE_QUERY_RESULT;
+    '\n  *[_type == "institutesPage"][0] {\n    \n  _id,\n  title,\n  introText,\n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n  \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n\n  }\n': INSTITUTES_PAGE_QUERY_RESULT;
+    '\n  *[_type == "studiosAgenciesPage"][0] {\n    \n  _id,\n  title,\n  introText,\n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n  \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n\n  }\n': STUDIOS_AGENCIES_PAGE_QUERY_RESULT;
+    '\n  *[_type == "typeFoundriesPage"][0] {\n    \n  _id,\n  title,\n  introText,\n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n  \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n\n  }\n': TYPE_FOUNDRIES_PAGE_QUERY_RESULT;
+    '\n  *[_type == "websitesPage"][0] {\n    \n  _id,\n  title,\n  introText,\n  endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n  \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n\n  }\n': WEBSITES_PAGE_QUERY_RESULT;
     '\n  *[_type == "person" && "designer" in roles] | order(name asc) {\n    _id,\n    name,\n    slug,\n    \n  portrait {\n    _type,\n    image {\n      _type,\n      \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n    },\n    alt,\n    caption\n  }\n,\n    birthYear,\n    bio,\n    place->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    },\n    education[] {\n      _key,\n      institute->{ _id, name },\n      degree,\n      courseName,\n      year\n    },\n    "projects": *[_type == "project" && references(^._id)] | order(_createdAt desc) {\n      _id,\n      title,\n      slug,\n      cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  preserveAnimation,\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n }\n    }\n  }\n': DESIGNERS_QUERY_RESULT;
     '\n  *[_type == "person" && "designer" in roles && slug.current == $slug][0] {\n    _id,\n    name,\n    slug,\n    \n  portrait {\n    _type,\n    image {\n      _type,\n      \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n    },\n    alt,\n    caption\n  }\n,\n    birthYear,\n    bio,\n    education[] {\n      _key,\n      institute->{ _id, name },\n      degree,\n      courseName,\n      year\n    },\n    place->{ _id, name, city, country, countryCode, lat, lng },\n    socialLinks {\n      links[] {\n        _key,\n        platform,\n        url\n      }\n    },\n    "relatedProjects": *[_type == "project" && references(^._id)] | order(_createdAt desc) [0...4] {\n      _id,\n      cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  preserveAnimation,\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n      title,\n      slug,\n      designers[]{ ...@->{ _id, name }, _key }\n    },\n    "relatedInterviews": *[_type == "interview" && references(^._id)] | order(publishingDate.date desc) [0...4] {\n      _id,\n      title,\n      slug,\n      cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  preserveAnimation,\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n      designersAndProfessionals[]{ ...@->{ _id, name }, _key }\n    }\n  }\n': DESIGNER_QUERY_RESULT;
     '\n  *[_type == "event" && defined(slug.current) && coalesce(dateEnd, dateStart) >= $today] | order(dateStart asc) {\n    \n    _id,\n    title,\n    slug,\n    cardDestination,\n    externalUrl,\n    type,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  preserveAnimation,\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    dateStart,\n    dateEnd,\n    attendanceMode,\n    locationName,\n    description,\n    sponsors[]->{ _id, name },\n    partners[]->{ _id, name },\n    tags[]->{ _id, name },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n\n  }\n': FUTURE_EVENTS_QUERY_RESULT;

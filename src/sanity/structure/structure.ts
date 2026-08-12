@@ -119,14 +119,89 @@ export const structure: StructureResolver = (S) =>
         S,
         "Resources",
         [
-          docListItem(S, "bibliography", "Bibliography"),
-          docListItem(S, "bookshop", "Bookshop"),
-          docListItem(S, "glossary", "Glossary"),
-          docListItem(S, "institute", "Institute", GraduationCap),
-          docListItem(S, "publisher", "Publisher"),
-          docListItem(S, "studio", "Studio"),
-          docListItem(S, "typeFoundry", "Type Foundry"),
-          docListItem(S, "webSource", "Web Source"),
+          group(
+            S,
+            "Bibliography",
+            [
+              singleton(S, "bibliographyPage", "Bibliography Page", BookOpen),
+              S.divider(),
+              docListItem(S, "bibliography", "Bibliography"),
+              docListItem(S, "publisher", "Publisher"),
+            ],
+            "bibliography",
+            BookOpen
+          ),
+          group(
+            S,
+            "Bookshops",
+            [
+              singleton(S, "bookshopsPage", "Bookshops Page", MapPin),
+              S.divider(),
+              docListItem(S, "bookshop", "Bookshop", MapPin),
+            ],
+            "bookshops",
+            MapPin
+          ),
+          group(
+            S,
+            "Glossary",
+            [
+              singleton(S, "glossaryPage", "Glossary Page", Languages),
+              S.divider(),
+              docListItem(S, "glossary", "Glossary", Languages),
+            ],
+            "glossary",
+            Languages
+          ),
+          group(
+            S,
+            "Institutes",
+            [
+              singleton(S, "institutesPage", "Institutes Page", GraduationCap),
+              S.divider(),
+              docListItem(S, "institute", "Institute", GraduationCap),
+            ],
+            "institutes",
+            GraduationCap
+          ),
+          group(
+            S,
+            "Studios & Agencies",
+            [
+              singleton(
+                S,
+                "studiosAgenciesPage",
+                "Studios & Agencies Page",
+                Users
+              ),
+              S.divider(),
+              docListItem(S, "studio", "Studio", Users),
+            ],
+            "studios-agencies",
+            Users
+          ),
+          group(
+            S,
+            "Type Foundries",
+            [
+              singleton(S, "typeFoundriesPage", "Type Foundries Page", MapPin),
+              S.divider(),
+              docListItem(S, "typeFoundry", "Type Foundry", MapPin),
+            ],
+            "type-foundries",
+            MapPin
+          ),
+          group(
+            S,
+            "Websites",
+            [
+              singleton(S, "websitesPage", "Websites Page", MousePointerClick),
+              S.divider(),
+              docListItem(S, "webSource", "Web Source", MousePointerClick),
+            ],
+            "websites",
+            MousePointerClick
+          ),
         ],
         "resources"
       ),

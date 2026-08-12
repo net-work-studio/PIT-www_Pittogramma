@@ -2,23 +2,29 @@
  * Resolves internal document references to their frontend URLs
  */
 
+import { RESOURCE_PAGE_ROUTES } from "@/lib/resource-page";
+
 interface InternalLinkDoc {
   _type: string;
   slug?: { current: string } | null;
 }
 
+const SINGLETON_PAGE_ROUTES: Record<string, string> = {
+  designersPage: "/designers",
+  homePage: "/",
+  interviewsPage: "/interviews",
+  projectsPage: "/projects",
+  ...RESOURCE_PAGE_ROUTES,
+};
+
 const ROUTE_MAP: Record<string, string> = {
-  project: "/projects",
+  edition: "/",
+  event: "/events",
   interview: "/interviews",
   journal: "/journal",
   person: "/designers",
-  event: "/events",
-  edition: "/editions",
-  // Singleton pages
-  homePage: "/",
-  projectsPage: "/projects",
-  interviewsPage: "/interviews",
-  designersPage: "/designers",
+  project: "/projects",
+  ...SINGLETON_PAGE_ROUTES,
 };
 
 /**
@@ -37,11 +43,7 @@ export function resolveInternalLink(
   }
 
   // Singleton pages don't need a slug
-  if (
-    ["homePage", "projectsPage", "interviewsPage", "designersPage"].includes(
-      doc._type
-    )
-  ) {
+  if (doc._type === "edition" || doc._type in SINGLETON_PAGE_ROUTES) {
     return basePath;
   }
 

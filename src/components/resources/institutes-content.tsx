@@ -7,9 +7,10 @@ import {
 } from "@/components/resources/location-display";
 import { ResourceGridCard } from "@/components/resources/resource-grid-card";
 import { ResourceListItem } from "@/components/resources/resource-list-item";
+import { ResourceMobileCard } from "@/components/resources/resource-mobile-card";
 import {
-  ResourceViewTabs,
   type ResourceListColumn,
+  ResourceViewTabs,
 } from "@/components/resources/resource-view-tabs";
 import type { ViewMode } from "@/lib/feature-flags";
 import { buildHrefFromUrl } from "@/lib/resource-website-url";
@@ -18,12 +19,37 @@ import type { INSTITUTES_QUERY_RESULT } from "@/sanity/types";
 
 type Institute = INSTITUTES_QUERY_RESULT[number];
 
-const LIST_COLUMNS: ResourceListColumn[] = [
-  { className: "col-span-4", label: "Name" },
-  { className: "col-span-2", label: "Language" },
-  { className: "col-span-2", label: "Since" },
-  { className: "col-span-2", label: "City" },
-  { className: "col-span-2", label: "Country" },
+const LIST_COLUMNS: ResourceListColumn<Institute>[] = [
+  {
+    className: "col-span-4",
+    getSortValue: (institute) => institute.name,
+    id: "name",
+    label: "Name",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (institute) => institute.languages?.[0]?.name,
+    id: "language",
+    label: "Language",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (institute) => institute.yearFoundation,
+    id: "since",
+    label: "Since",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (institute) => institute.place?.city,
+    id: "city",
+    label: "City",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (institute) => institute.place?.country,
+    id: "country",
+    label: "Country",
+  },
 ];
 
 function InstituteCard({
@@ -40,7 +66,29 @@ function InstituteCard({
 
   if (variant === "list") {
     return (
-      <ResourceListItem href={href}>
+      <ResourceListItem
+        href={href}
+        mobileContent={
+          <ResourceMobileCard
+            fields={[
+              {
+                label: "Language",
+                value: <LanguagesDisplay languages={institute.languages} />,
+              },
+              { label: "Since", value: institute.yearFoundation || "-" },
+              {
+                label: "City",
+                value: <PlacesDisplay places={places} showCountry={false} />,
+              },
+              {
+                label: "Country",
+                value: <PlacesDisplay places={places} showCity={false} />,
+              },
+            ]}
+            name={institute.name}
+          />
+        }
+      >
         <span className="col-span-4">{institute.name}</span>
         <span className="col-span-2">
           <LanguagesDisplay languages={institute.languages} />

@@ -20,7 +20,9 @@ export default function PageHeader({
     >
       <h1 className="text-2xl uppercase">{title}</h1>
       {subtitle ? (
-        <p className="max-w-prose text-balance text-2xl">{subtitle}</p>
+        <p className="min-h-16 max-w-prose text-balance text-2xl lg:min-h-0">
+          {subtitle}
+        </p>
       ) : null}
     </hgroup>
   );

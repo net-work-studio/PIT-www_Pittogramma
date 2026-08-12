@@ -46,6 +46,15 @@ import { homePage } from "./singletons/pages/home-page";
 import { interviewsPage } from "./singletons/pages/interviews-page";
 import { journalPage } from "./singletons/pages/journal-page";
 import { projectsPage } from "./singletons/pages/projects-page";
+import {
+  bibliographyPage,
+  bookshopsPage,
+  glossaryPage,
+  institutesPage,
+  studiosAgenciesPage,
+  typeFoundriesPage,
+  websitesPage,
+} from "./singletons/pages/resource-pages";
 import { siteSettings } from "./singletons/site-settings";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -87,6 +96,13 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     designersPage,
     eventsPage,
     editionsPage,
+    bibliographyPage,
+    bookshopsPage,
+    glossaryPage,
+    institutesPage,
+    studiosAgenciesPage,
+    typeFoundriesPage,
+    websitesPage,
     socialLinks,
     publishingDate,
     category,

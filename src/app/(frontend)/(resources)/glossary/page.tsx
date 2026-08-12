@@ -3,35 +3,50 @@ import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
+import CtaCard from "@/components/cards/cta-card";
 import SearchInput from "@/components/feat/search-input";
-import ResourcesNavigation from "@/components/navigation/resources-navigation";
+import ResourcesHeader from "@/components/navigation/resources-header";
 import { ResourceTargetScroller } from "@/components/resources/resource-target";
-import PageHeader from "@/components/shared/page-header";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  getEnabledResources,
-  isResourceEnabled,
-  isSearchEnabled,
-} from "@/lib/feature-flags";
+import { isResourceEnabled, isSearchEnabled } from "@/lib/feature-flags";
+import { RESOURCE_PAGE_DEFAULTS } from "@/lib/resource-page";
 import { getResourceTargetElementId } from "@/lib/resource-target";
+import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
+import { siteDefaults } from "@/lib/seo/site-defaults";
+import type { SeoModule } from "@/lib/types/seo";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
   sanityFetch,
+  sanityFetchMetadata,
 } from "@/sanity/lib/live";
-import { GLOSSARY_QUERY } from "@/sanity/lib/queries";
+import { GLOSSARY_PAGE_QUERY, GLOSSARY_QUERY } from "@/sanity/lib/queries";
 import type { GLOSSARY_QUERY_RESULT } from "@/sanity/types";
 
-export const metadata: Metadata = {
-  description:
-    "A list of the most common and used terms in the design industry",
-  title: "Glossary",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { perspective } = await getDynamicFetchOptions();
+  const { data: page } = await sanityFetchMetadata({
+    perspective,
+    query: GLOSSARY_PAGE_QUERY,
+  });
+
+  const defaults = RESOURCE_PAGE_DEFAULTS.glossary;
+  return mapSanityToMetadata({
+    baseUrl: siteDefaults.baseUrl,
+    page: {
+      description: page?.introText ?? defaults.introText,
+      seo: page?.seo as SeoModule | undefined,
+      title: page?.title ?? defaults.title,
+    },
+    path: defaults.route,
+    siteDefaults,
+  });
+}
 
 type GlossaryItem = GLOSSARY_QUERY_RESULT[number];
 
@@ -146,27 +161,25 @@ async function DynamicGlossaryPage() {
 
 async function CachedGlossaryPage({ perspective, stega }: DynamicFetchOptions) {
   "use cache";
-  const { data: glossaryItems } = await sanityFetch({
-    perspective,
-    query: GLOSSARY_QUERY,
-    stega,
-  });
+  const [{ data: glossaryItems }, { data: pageSettings }] = await Promise.all([
+    sanityFetch({ perspective, query: GLOSSARY_QUERY, stega }),
+    sanityFetch({ perspective, query: GLOSSARY_PAGE_QUERY, stega }),
+  ]);
 
   const groupedGlossary = groupByFirstLetter(glossaryItems);
   const [leftColumn, rightColumn] = splitIntoColumns(groupedGlossary);
+  const defaults = RESOURCE_PAGE_DEFAULTS.glossary;
+  const cta = pageSettings?.endOfPageCta;
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-7.5">
-        <PageHeader
-          className="pb-0"
-          subtitle="A list of the most common and used terms in the design industry"
-          title="Glossary"
-        />
-        <ResourcesNavigation resources={getEnabledResources()} />
+      <ResourcesHeader
+        intro={pageSettings?.introText ?? defaults.introText}
+        title={defaults.title}
+      >
         {isSearchEnabled("glossary") && <SearchInput />}
-      </div>
-      <section className="grid grid-cols-1 gap-x-2.5 pt-30 md:grid-cols-2">
+      </ResourcesHeader>
+      <section className="grid grid-cols-1 gap-x-2.5 md:grid-cols-2">
         <ResourceTargetScroller
           resourceIds={glossaryItems.map((item) => item._id)}
         />
@@ -197,6 +210,19 @@ async function CachedGlossaryPage({ perspective, stega }: DynamicFetchOptions) {
           </p>
         )}
       </section>
+      {cta ? (
+        <div className="pt-10 pb-10">
+          <CtaCard
+            buttonText={cta.buttonText}
+            externalUrl={cta.externalUrl}
+            headline={cta.headline}
+            image={cta.image}
+            internalLink={cta.internalLink}
+            linkType={cta.linkType}
+            variant={cta.variant}
+          />
+        </div>
+      ) : null}
     </>
   );
 }
