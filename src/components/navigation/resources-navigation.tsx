@@ -84,7 +84,7 @@ export default function ResourcesNavigation({
 
   return (
     <nav
-      className="flex w-full items-center overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] lg:justify-center lg:overflow-visible [&::-webkit-scrollbar]:hidden"
+      className="flex w-full items-center overflow-x-auto px-5 [-ms-overflow-style:none] [scrollbar-width:none] lg:justify-center lg:overflow-visible lg:px-0 [&::-webkit-scrollbar]:hidden"
       onScroll={handleScroll}
       ref={navigationRef}
     >

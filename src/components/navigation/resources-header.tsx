@@ -26,8 +26,10 @@ export default function ResourcesHeader({
         <ResourcesNavigation resources={getEnabledResources()} />
         {children}
       </div>
-      <div className="flex w-full flex-col items-center pt-15 pb-8 md:hidden">
-        <ResourcesNavigation resources={getEnabledResources()} />
+      <div className="flex w-full flex-col items-center pt-10 pb-8 md:hidden">
+        <div className="-mx-5 w-[calc(100%+2.5rem)]">
+          <ResourcesNavigation resources={getEnabledResources()} />
+        </div>
         <p className="mt-6 max-w-prose text-balance text-center text-2xl">
           {intro}
         </p>
