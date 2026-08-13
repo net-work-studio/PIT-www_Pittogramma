@@ -146,3 +146,7 @@ _Avoid_: Image gallery (it also includes video), individual gallery blocks (whic
 **Multi-location listing**:
 When a studio, agency, or type foundry has more than one Place, each Place is shown on its own row in list and grid views — city and country stay paired (e.g. Milan / Italy, then London / UK). Rows follow the editor-defined order of the `places[]` array in Sanity. Never comma-join cities and countries into separate deduplicated lists. Duplicate city–country pairs are still shown as separate rows when they are separate Place documents.
 _Avoid_: Aggregating cities and countries independently, deduplicating identical city–country pairs, sorting places alphabetically in listings
+
+**Interview related Interviews**:
+Up to four other Interviews suggested under the “Discover More” heading at the end of an Interview. Shared-tag Interviews appear first, then randomly selected unselected Interviews fill remaining positions; the current Interview is never recommended, and the random selection is shared while the page data is cached and rotates on revalidation. Cards use the standard plain Interview treatment (cover, title, and person-interviewee byline, with no content-type pill). Studio and Type Foundry interviews have no byline. An Interview recommends Interviews only, while a Project recommends Projects only.
+_Avoid_: Project recommendations on Interview pages, Interview recommendations on Project pages
