@@ -1,6 +1,5 @@
 export const NEWSLETTER_SIGNUP_SOURCES = [
   "footer",
-  "journal_article",
   "newsletter_card",
 ] as const;
 

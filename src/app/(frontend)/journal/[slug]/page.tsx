@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { defineQuery } from "next-sanity";
 
-import JournalArticleCta from "@/components/modules/journal/journal-article-cta";
 import JournalContent from "@/components/modules/journal/journal-content";
 import ShareLinks from "@/components/modules/project/share-links";
 import EditorialPageHero from "@/components/modules/shared/editorial-page-hero";
@@ -147,10 +146,6 @@ async function CachedJournalArticlePage({
 
         <div className="py-16 lg:py-24">
           <JournalContent content={article.content} />
-        </div>
-
-        <div className="px-2.5">
-          <JournalArticleCta />
         </div>
 
         <div className="px-2.5">

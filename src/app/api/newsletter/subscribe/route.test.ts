@@ -254,7 +254,7 @@ describe("POST /api/newsletter/subscribe", () => {
       const response = await POST(
         createSubscribeRequest({
           email: "reader@example.com",
-          source: "journal_article",
+          source: "newsletter_card",
         })
       );
 
