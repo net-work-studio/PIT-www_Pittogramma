@@ -5,6 +5,7 @@ import {
   getHotspotObjectPosition,
   type ImageLike,
   urlForImage,
+  urlForOriginalImage,
 } from "@/sanity/lib/image";
 import type { CoverMedia, ImageWithMetadata } from "@/sanity/types";
 
@@ -79,6 +80,7 @@ function shouldUseCssHotspot(
 type Props = {
   fillWidth?: number;
   fit?: SanityImageFit;
+  ignoreCrop?: boolean;
   preserveAnimation?: boolean;
   respectHotspot?: boolean;
   source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined;
@@ -92,6 +94,7 @@ export default function SanityImage({
   fill,
   fillWidth,
   fit = "intrinsic",
+  ignoreCrop = false,
   sizes,
   className,
   priority,
@@ -104,7 +107,9 @@ export default function SanityImage({
   unoptimized: unoptimizedProp,
   ...props
 }: Props) {
-  const builder = urlForImage(source);
+  const builder = ignoreCrop
+    ? urlForOriginalImage(source)
+    : urlForImage(source);
   if (!builder) {
     return null;
   }
@@ -118,7 +123,7 @@ export default function SanityImage({
     width: Number(width),
   });
 
-  const blurDataUrl = getBlurDataUrl(source);
+  const blurDataUrl = getBlurDataUrl(source, ignoreCrop);
   const imageAlt = source?.alt ?? alt ?? "";
   const objectPosition =
     objectPositionProp ??

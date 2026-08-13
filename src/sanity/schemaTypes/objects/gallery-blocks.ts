@@ -5,22 +5,41 @@ import { SquareIcon } from "@sanity/icons/Square";
 import { ThLargeIcon } from "@sanity/icons/ThLarge";
 import { defineField, defineType } from "sanity";
 import { GridFourInput } from "@/sanity/components/grid-four-input";
+import { OrientationInput } from "@/sanity/components/orientation-input";
 import { SideBySideInput } from "@/sanity/components/side-by-side-input";
 import { ThreeSideBySideInput } from "@/sanity/components/three-side-by-side-input";
 
 const orientationField = defineField({
-  type: "string",
+  components: {
+    input: OrientationInput,
+  },
+  initialValue: "landscape",
   name: "orientation",
-  title: "Orientation",
   options: {
+    layout: "radio",
     list: [
       { title: "Landscape (4:3)", value: "landscape" },
       { title: "Portrait (3:4)", value: "portrait" },
+      { title: "Free Form (Original Proportions)", value: "freeform" },
     ],
-    layout: "radio",
   },
-  initialValue: "landscape",
-  validation: (e) => e.required(),
+  title: "Image Presentation",
+  type: "string",
+  validation: (rule) =>
+    rule.required().custom((value, context) => {
+      if (value !== "freeform") {
+        return true;
+      }
+
+      const document = context.document as { _type?: string } | undefined;
+      const parent = context.parent as
+        | { media?: { type?: string } }
+        | undefined;
+
+      return document?._type === "journal" && parent?.media?.type === "image"
+        ? true
+        : "Free form is available only for single images in Journal entries.";
+    }),
 });
 
 export const singleMediaBlock = defineType({
