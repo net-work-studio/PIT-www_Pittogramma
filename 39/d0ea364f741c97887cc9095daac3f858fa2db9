@@ -1,0 +1,47 @@
+src/sanity/schemaTypes/objects/gallery-blocks.ts
+  s_cd736bbf72a0c0::t_7c72c83aa4c479 16,19,26-27
+  s_cd736bbf72a0c0::t_dd7c368417c9cb 28-42
+  s_cd736bbf72a0c0::t_2bbbaa8fbab219 8,13-15,23
+src/sanity/components/orientation-input.tsx
+  s_cd736bbf72a0c0::t_2bbbaa8fbab219 1-3,5-22,24-28,34-38,40-49
+  s_cd736bbf72a0c0::t_7c72c83aa4c479 4,23,29-33,39
+src/sanity/types.ts
+  s_cd736bbf72a0c0::t_8173a3c47d97ae 414,423,431,438,2268,2361,2410,2437,6299,6392,6441,6468,7005,7294,7343,7370,7798,7807,7814,7820,8765,8810
+src/sanity/lib/image.ts
+  s_cd736bbf72a0c0::t_2bbbaa8fbab219 61-68,97-98,107
+  s_cd736bbf72a0c0::t_7c72c83aa4c479 104-106
+src/components/modules/journal/journal-content.tsx
+  s_cd736bbf72a0c0::t_c91f853b67faa5 150-151,153
+  s_cd736bbf72a0c0::t_2bbbaa8fbab219 11,129,133,323-327
+  s_cd736bbf72a0c0::t_43dcda0d8b0cc6 56-125,149,155-162,167,199-200,227-229
+  s_cd736bbf72a0c0::t_0278f9a913c274 154
+  s_cd736bbf72a0c0::t_4028707ebc6f17 235,368,373,378,383
+CONTEXT.md
+  s_cd736bbf72a0c0::t_3da9f8d376abbb 151
+  s_cd736bbf72a0c0::t_9ff1fe3f874956 149,154
+  s_cd736bbf72a0c0::t_1e38f37b7df60a 150,153,155-156
+  s_cd736bbf72a0c0::t_da5333db956ee4 152
+src/sanity/extract.json
+  s_cd736bbf72a0c0::t_8173a3c47d97ae 2090-2093,2159-2162,2220-2223,2273-2276
+src/components/modules/shared/sanity-image.tsx
+  s_cd736bbf72a0c0::t_7c72c83aa4c479 110-112
+  s_cd736bbf72a0c0::t_2bbbaa8fbab219 8,83,97,126
+package.json
+  s_cd736bbf72a0c0::t_ce4adc5f54311a 52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "39d0ea364f741c97887cc9095daac3f858fa2db9",
+  "prompts": {},
+  "sessions": {
+    "s_cd736bbf72a0c0": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ffb90-870c-7d02-afc1-48a53583388a",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
