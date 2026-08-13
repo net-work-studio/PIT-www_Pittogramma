@@ -50,7 +50,7 @@ Create two lists for launch segmentation:
 
 | List              | Purpose                                                      |
 | ----------------- | ------------------------------------------------------------ |
-| Website signups   | Contacts from footer, article CTA, and newsletter card forms |
+| Website signups   | Contacts from footer and newsletter card forms                |
 | Migrated Substack | Contacts imported from Substack export                       |
 
 
@@ -60,7 +60,7 @@ Create contact attributes in Brevo before enabling the website API:
 | Attribute          | Type | Example values                                 |
 | ------------------ | ---- | ---------------------------------------------- |
 | `SIGNUP_SOURCE`    | Text | `website`                                      |
-| `SIGNUP_CONTEXT`   | Text | `footer`, `journal_article`, `newsletter_card` |
+| `SIGNUP_CONTEXT`   | Text | `footer`, `newsletter_card`                    |
 | `MIGRATION_SOURCE` | Text | `substack` (set on import)                     |
 
 
@@ -116,7 +116,6 @@ Paste exported blocks into the Brevo campaign template. Promotional blocks remai
 The shared signup form appears in:
 
 - Footer (`SIGNUP_CONTEXT=footer`)
-- Journal article CTA (`SIGNUP_CONTEXT=journal_article`)
 - Newsletter card (`SIGNUP_CONTEXT=newsletter_card`)
 
 All website signups use double opt-in and land in the website list.
@@ -126,7 +125,7 @@ All website signups use double opt-in and land in the website list.
 Before retiring Substack from live CTAs:
 
 1. Add all env vars locally and on Vercel.
-2. Submit test signups from footer, article CTA, and newsletter card.
+2. Submit test signups from the footer and newsletter card.
 3. Confirm DOI email delivery and list membership in Brevo.
 4. Verify contact attributes (`SIGNUP_SOURCE`, `SIGNUP_CONTEXT`).
 5. Test unsubscribe behavior.
