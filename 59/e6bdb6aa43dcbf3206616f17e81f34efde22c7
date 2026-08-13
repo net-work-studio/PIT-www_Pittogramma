@@ -1,0 +1,29 @@
+CONTEXT.md
+  s_dd323d527c3106::t_a0192ec3b63beb 149-152
+src/app/(frontend)/(features)/interviews/[slug]/page.tsx
+  s_dd323d527c3106::t_ce967adb74e0a9 12,106-109,151
+src/components/modules/shared/discover-more.tsx
+  s_dd323d527c3106::t_6b798b8b993462 2-5,9-10,13,17-21,29,53-78
+src/lib/select-related-interviews.test.ts
+  s_dd323d527c3106::t_618eac066974d8 1-36
+src/lib/select-related-interviews.ts
+  s_dd323d527c3106::t_b4ec2ff807dc67 1-27
+src/sanity/lib/queries.ts
+  s_dd323d527c3106::t_c062e8a811f6cf 970-993
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "59e6bdb6aa43dcbf3206616f17e81f34efde22c7",
+  "prompts": {},
+  "sessions": {
+    "s_dd323d527c3106": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ffa17-a317-73e0-9331-3ff8af8088f5",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
