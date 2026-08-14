@@ -1,0 +1,20 @@
+src/components/modules/journal/journal-content.tsx
+  s_c75cb46e03a17c::t_238b035c4385ae 80-83,85,97-100
+  s_c75cb46e03a17c::t_fea3aff396ec74 101
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "bde70cf1e9f92bce61c6d1ebced87b34420a332b",
+  "prompts": {},
+  "sessions": {
+    "s_c75cb46e03a17c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fff73-5091-70c2-90c2-631fab7da5eb",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
