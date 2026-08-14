@@ -1,0 +1,26 @@
+src/components/modules/journal/journal-footnote-marker.tsx
+  s_c75cb46e03a17c::t_4ed6cc72ddaa5a 14,19
+src/components/modules/journal/journal-footnotes.test.ts
+  s_c75cb46e03a17c::t_4ed6cc72ddaa5a 2-5,47-54
+  s_c75cb46e03a17c::t_47dd2647ed2b60 55-56
+src/components/modules/journal/journal-footnotes.tsx
+  s_c75cb46e03a17c::t_4ed6cc72ddaa5a 7-26,136,138
+src/components/modules/journal/journal-content.tsx
+  s_c75cb46e03a17c::t_4ed6cc72ddaa5a 9,392-393,430-434,485-486,491-494
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "f1e301cef9366f6bdd163390e18541e94f1ea4aa",
+  "prompts": {},
+  "sessions": {
+    "s_c75cb46e03a17c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fff73-5091-70c2-90c2-631fab7da5eb",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
