@@ -77,9 +77,12 @@ function ImageMedia({
 
   if (freeform && imageRatio) {
     return (
-      <AspectRatio className="relative w-full" ratio={imageRatio}>
+      <AspectRatio
+        className="relative w-full overflow-hidden rounded-xl"
+        ratio={imageRatio}
+      >
         <SanityImage
-          className="rounded-xl"
+          className="object-contain"
           fill
           ignoreCrop
           objectFit="contain"
@@ -91,12 +94,11 @@ function ImageMedia({
   }
 
   return (
-    <AspectRatio className="relative w-full" ratio={ratio}>
-      <SanityImage
-        className="rounded-xl object-cover"
-        fill
-        source={{ alt, image }}
-      />
+    <AspectRatio
+      className="relative w-full overflow-hidden rounded-xl"
+      ratio={ratio}
+    >
+      <SanityImage className="object-cover" fill source={{ alt, image }} />
     </AspectRatio>
   );
 }
