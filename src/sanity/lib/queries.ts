@@ -984,7 +984,7 @@ export const INTERVIEW_QUERY = defineQuery(`
       _id != ^._id &&
       defined(slug.current) &&
       count(tags[@._ref in ^.tags[]._ref]) == 0
-    ] {
+    ] | order(_createdAt desc) [0...4] {
       _id,
       title,
       slug,
