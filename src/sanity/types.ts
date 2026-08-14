@@ -411,7 +411,7 @@ export type TitleSlug = {
 
 export type GridFourMediaBlock = {
   _type: "gridFourMediaBlock";
-  orientation: "landscape" | "portrait";
+  orientation: "landscape" | "portrait" | "freeform";
   topLeft: MediaItem;
   topRight: MediaItem;
   bottomLeft: MediaItem;
@@ -420,7 +420,7 @@ export type GridFourMediaBlock = {
 
 export type ThreeSideBySideMediaBlock = {
   _type: "threeSideBySideMediaBlock";
-  orientation: "landscape" | "portrait";
+  orientation: "landscape" | "portrait" | "freeform";
   left: MediaItem;
   center: MediaItem;
   right: MediaItem;
@@ -428,14 +428,14 @@ export type ThreeSideBySideMediaBlock = {
 
 export type SideBySideMediaBlock = {
   _type: "sideBySideMediaBlock";
-  orientation: "landscape" | "portrait";
+  orientation: "landscape" | "portrait" | "freeform";
   left: MediaItem;
   right: MediaItem;
 };
 
 export type SingleMediaBlock = {
   _type: "singleMediaBlock";
-  orientation: "landscape" | "portrait";
+  orientation: "landscape" | "portrait" | "freeform";
   media: MediaItem;
 };
 
@@ -2265,7 +2265,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
     | {
         _key: string;
         _type: "gridFourMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         topLeft: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -2358,7 +2358,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
     | {
         _key: string;
         _type: "sideBySideMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         left: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -2407,7 +2407,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
     | {
         _key: string;
         _type: "singleMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         media: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -2434,7 +2434,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
     | {
         _key: string;
         _type: "threeSideBySideMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         left: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -6296,7 +6296,7 @@ export type PROJECT_QUERY_RESULT = {
     | {
         _key: string;
         _type: "gridFourMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         topLeft: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -6389,7 +6389,7 @@ export type PROJECT_QUERY_RESULT = {
     | {
         _key: string;
         _type: "sideBySideMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         left: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -6438,7 +6438,7 @@ export type PROJECT_QUERY_RESULT = {
     | {
         _key: string;
         _type: "singleMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         media: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -6465,7 +6465,7 @@ export type PROJECT_QUERY_RESULT = {
     | {
         _key: string;
         _type: "threeSideBySideMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         left: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -7002,7 +7002,7 @@ export type JOURNAL_ARTICLE_QUERY_RESULT = {
     | {
         _key: string;
         _type: "gridFourMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         topLeft: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -7291,7 +7291,7 @@ export type JOURNAL_ARTICLE_QUERY_RESULT = {
     | {
         _key: string;
         _type: "sideBySideMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         left: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -7340,7 +7340,7 @@ export type JOURNAL_ARTICLE_QUERY_RESULT = {
     | {
         _key: string;
         _type: "singleMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         media: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -7367,7 +7367,7 @@ export type JOURNAL_ARTICLE_QUERY_RESULT = {
     | {
         _key: string;
         _type: "threeSideBySideMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         left: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -7795,7 +7795,7 @@ export type INTERVIEW_QUERY_RESULT = {
     | {
         _key: string;
         _type: "gridFourMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         topLeft: MediaItem;
         topRight: MediaItem;
         bottomLeft: MediaItem;
@@ -7804,20 +7804,20 @@ export type INTERVIEW_QUERY_RESULT = {
     | {
         _key: string;
         _type: "sideBySideMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         left: MediaItem;
         right: MediaItem;
       }
     | {
         _key: string;
         _type: "singleMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         media: MediaItem;
       }
     | {
         _key: string;
         _type: "threeSideBySideMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         left: MediaItem;
         center: MediaItem;
         right: MediaItem;
@@ -8762,7 +8762,7 @@ export type EDITION_QUERY_RESULT = {
     | {
         _key: string;
         _type: "sideBySideMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         left: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {
@@ -8807,7 +8807,7 @@ export type EDITION_QUERY_RESULT = {
     | {
         _key: string;
         _type: "singleMediaBlock";
-        orientation: "landscape" | "portrait";
+        orientation: "freeform" | "landscape" | "portrait";
         media: {
           type: "image" | "videoEmbed" | "videoUpload";
           image: {

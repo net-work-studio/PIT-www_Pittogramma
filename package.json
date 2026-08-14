@@ -49,7 +49,7 @@
     "predev": "bun run typegen",
     "check": "ultracite check",
     "fix": "ultracite fix",
-    "typegen": "bunx sanity schema extract --force --enforce-required-fields --path ./src/sanity/extract.json && bunx sanity typegen generate",
+    "typegen": "rm -f ./src/sanity/extract.json && bunx sanity schema extract --enforce-required-fields --path ./src/sanity/extract.json && bunx sanity typegen generate",
     "cleanup": "rm -rf node_modules .next",
     "newsletter:validate-map": "bun run scripts/validate-substack-url-map.ts",
     "newsletter:export-preview": "bun run scripts/export-newsletter-preview.ts"

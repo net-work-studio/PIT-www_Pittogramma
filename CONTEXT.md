@@ -146,3 +146,11 @@ _Avoid_: Image gallery (it also includes video), individual gallery blocks (whic
 **Multi-location listing**:
 When a studio, agency, or type foundry has more than one Place, each Place is shown on its own row in list and grid views — city and country stay paired (e.g. Milan / Italy, then London / UK). Rows follow the editor-defined order of the `places[]` array in Sanity. Never comma-join cities and countries into separate deduplicated lists. Duplicate city–country pairs are still shown as separate rows when they are separate Place documents.
 _Avoid_: Aggregating cities and countries independently, deduplicating identical city–country pairs, sorting places alphabetically in listings
+
+**Free-form media**:
+An editor-selected presentation available only for a single-image Journal body block. It opts that image out of its default editorial crop: the image retains the existing centered single-media width and its height follows the source image’s intrinsic proportions, without cropping. It is unavailable for videos; multi-image Journal blocks and video players retain their fixed editorial ratios. It is not available on Project, Interview, or About media.
+_Avoid_: “don’t respect aspect ratio”, uncropped frame, free-form grid
+
+**Journal body image**:
+An image placed within the portable-text body of an Article, Diary, or Baseline Journal entry. It uses the default editorial crop unless the editor selects Free-form media. This rule does not apply to Covers, Featured Covers, or listing-card imagery.
+_Avoid_: Journal cover image, always-free-form Journal image
