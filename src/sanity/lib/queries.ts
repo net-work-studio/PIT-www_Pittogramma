@@ -967,6 +967,30 @@ export const INTERVIEW_QUERY = defineQuery(`
       name
     },
     introText,
+    "relatedInterviews": *[
+      _type == "interview" &&
+      _id != ^._id &&
+      defined(slug.current) &&
+      count(tags[@._ref in ^.tags[]._ref]) > 0
+    ] | order(_createdAt desc) [0...4] {
+      _id,
+      title,
+      slug,
+      cover { ${COVER_MEDIA_FIELDS} },
+      designersAndProfessionals[]{ ...@->{ _id, name }, _key }
+    },
+    "fallbackInterviews": *[
+      _type == "interview" &&
+      _id != ^._id &&
+      defined(slug.current) &&
+      count(tags[@._ref in ^.tags[]._ref]) == 0
+    ] | order(_createdAt desc) [0...4] {
+      _id,
+      title,
+      slug,
+      cover { ${COVER_MEDIA_FIELDS} },
+      designersAndProfessionals[]{ ...@->{ _id, name }, _key }
+    },
     interview[] {
       ...,
       _type == "imageBlock" => {

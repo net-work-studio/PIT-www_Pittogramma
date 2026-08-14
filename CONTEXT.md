@@ -154,3 +154,7 @@ _Avoid_: “don’t respect aspect ratio”, uncropped frame, free-form grid
 **Journal body image**:
 An image placed within the portable-text body of an Article, Diary, or Baseline Journal entry. It uses the default editorial crop unless the editor selects Free-form media. This rule does not apply to Covers, Featured Covers, or listing-card imagery.
 _Avoid_: Journal cover image, always-free-form Journal image
+
+**Interview related Interviews**:
+Up to four other Interviews suggested under the “Discover More” heading at the end of an Interview. Shared-tag Interviews appear first, then randomly selected unselected Interviews fill remaining positions; the current Interview is never recommended, and the random selection is shared while the page data is cached and rotates on revalidation. Cards use the standard plain Interview treatment (cover, title, and person-interviewee byline, with no content-type pill). Studio and Type Foundry interviews have no byline. An Interview recommends Interviews only, while a Project recommends Projects only.
+_Avoid_: Project recommendations on Interview pages, Interview recommendations on Project pages

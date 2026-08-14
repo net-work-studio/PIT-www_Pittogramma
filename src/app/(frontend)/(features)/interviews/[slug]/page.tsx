@@ -9,6 +9,7 @@ import EditorialPageHero from "@/components/modules/shared/editorial-page-hero";
 import { JsonLd } from "@/components/seo/json-ld";
 import { DetailPageBadge } from "@/lib/content-type-badge";
 import { formatEventDate } from "@/lib/date-utils";
+import { selectRelatedInterviews } from "@/lib/select-related-interviews";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -102,6 +103,10 @@ async function CachedInterviewPage({
     ?.map((person: { name: string }) => person.name)
     .filter(Boolean);
   const interviewUrl = `${siteDefaults.baseUrl}/interviews/${slug}`;
+  const relatedInterviews = selectRelatedInterviews({
+    fallbackInterviews: interview.fallbackInterviews,
+    relatedInterviews: interview.relatedInterviews,
+  });
 
   return (
     <>
@@ -143,7 +148,7 @@ async function CachedInterviewPage({
         </div>
 
         <div className="px-2.5 pt-10 pb-4">
-          <DiscoverMore />
+          <DiscoverMore interviews={relatedInterviews} />
         </div>
       </div>
     </>
