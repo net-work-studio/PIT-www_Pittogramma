@@ -1,0 +1,40 @@
+src/sanity/types.ts
+  s_41866ba6e6902b::t_7296f956744c5d 414,423,431,438,2268,2361,2410,2437,6299,6392,6441,6468,7005,7294,7343,7370,7862,7871,7878,7884,8829,8874
+src/components/modules/shared/sanity-image.tsx
+  s_41866ba6e6902b::t_7296f956744c5d 8,83,97,110-112,126
+CONTEXT.md
+  s_41866ba6e6902b::t_7296f956744c5d 150-156
+  s_41866ba6e6902b::t_20a7d2b80a1e1f 157
+src/sanity/lib/image.ts
+  s_41866ba6e6902b::t_7296f956744c5d 61-68,97-98,104-107
+docs/newsletter/brevo-setup.md
+  s_41866ba6e6902b::t_7296f956744c5d 53,63,128
+src/components/modules/journal/journal-content.tsx
+  s_41866ba6e6902b::t_7296f956744c5d 11,56-125,129,133,149-151,153-162,167,199-200,227-229,235,323-327,368,373,378,383
+src/sanity/schemaTypes/objects/gallery-blocks.ts
+  s_41866ba6e6902b::t_7296f956744c5d 8,13-16,19,23,26-42
+src/app/api/newsletter/subscribe/route.test.ts
+  s_41866ba6e6902b::t_7296f956744c5d 257
+src/sanity/components/orientation-input.tsx
+  s_41866ba6e6902b::t_7296f956744c5d 1-49
+src/sanity/extract.json
+  s_41866ba6e6902b::t_7296f956744c5d 2090-2093,2159-2162,2220-2223,2273-2276
+package.json
+  s_41866ba6e6902b::t_7296f956744c5d 52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "593739c06ea3e39f16b08d6dea9bbb04bd705fae",
+  "prompts": {},
+  "sessions": {
+    "s_41866ba6e6902b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fff00-666b-7793-a8f8-9e1e3462567b",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
