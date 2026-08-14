@@ -4,6 +4,30 @@ Pittogramma is a cultural platform covering graphic design, visual culture, even
 
 ## Language
 
+**Code block (Journal)**:
+A Journal content block for a short piece of monospaced text. Line breaks and
+repeated spaces are preserved exactly as entered. It is editorial content
+rather than syntax-highlighted programming code; it renders in a muted surface
+with rounded corners and internal padding. Studio provides one multiline Text
+field, without language or syntax-highlighting controls.
+_Avoid_: Quote (the existing large serif pull-quote style), syntax-highlighted code
+
+**Footnote (Journal)**:
+An inline citation or editorial note in a Journal entry. Footnotes are numbered
+automatically in reading order, link to a generated endnotes list, and provide
+a return link to the cited passage. One Footnote can hold a bibliographic source,
+a URL, or a brief explanatory note. Studio provides a required Note field and
+an optional URL field. The generated Footnotes section appears at the end of an
+entry only when that entry contains Footnotes. On desktop, the Footnote marker
+previews its Note in a popover on hover or keyboard focus; clicking still goes
+to its endnote.
+_Avoid_: A manually ordered References list, duplicated source text
+
+**References list (Journal)**:
+The legacy standalone list of Journal references. It is retained temporarily
+for comparison, but new citations use Footnotes.
+_Avoid_: Adding new citations to a References list
+
 **Reading time**:
 The estimated number of minutes required to read an Interview. It is calculated live from its intro, body text, questions, answers, quotes, and captions; it excludes titles, metadata, and media-only content, using 200 words per minute and rounding up. An editor may deliberately override the estimate for genuinely media-heavy pieces whose experience exceeds their text length.
 _Avoid_: Manually maintained default duration, media viewing time

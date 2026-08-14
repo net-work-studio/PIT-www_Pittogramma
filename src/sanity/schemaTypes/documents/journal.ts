@@ -4,6 +4,7 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 import { JOURNAL_LABELS } from "@/lib/journal-labels";
 import { tagsField } from "@/sanity/schemaTypes/objects/tag-selector";
 import { groups } from "@/sanity/utils/groups";
+import { httpUrlValidation } from "@/sanity/utils/validation";
 
 const journalReferenceTargets = [
   { type: "bibliography" },
@@ -108,11 +109,82 @@ export const journal = defineType({
       title: "Content",
       group: "content",
       of: [
-        defineArrayMember({ type: "block" }),
+        defineArrayMember({
+          type: "block",
+          marks: {
+            decorators: [
+              { title: "Strong", value: "strong" },
+              { title: "Emphasis", value: "em" },
+              { title: "Code", value: "code" },
+              { title: "Underline", value: "underline" },
+              { title: "Strike", value: "strike-through" },
+            ],
+            annotations: [
+              {
+                name: "link",
+                type: "object",
+                title: "Link",
+                fields: [
+                  {
+                    name: "href",
+                    type: "url",
+                    title: "URL",
+                    validation: httpUrlValidation,
+                  },
+                ],
+              },
+              {
+                name: "footnote",
+                type: "object",
+                title: "Footnote",
+                fields: [
+                  {
+                    name: "note",
+                    type: "text",
+                    title: "Note",
+                    rows: 4,
+                    validation: (rule) => rule.required(),
+                  },
+                  {
+                    name: "url",
+                    type: "url",
+                    title: "URL",
+                    validation: httpUrlValidation,
+                  },
+                ],
+              },
+            ],
+          },
+        }),
         defineArrayMember({ type: "singleMediaBlock" }),
         defineArrayMember({ type: "sideBySideMediaBlock" }),
         defineArrayMember({ type: "threeSideBySideMediaBlock" }),
         defineArrayMember({ type: "gridFourMediaBlock" }),
+        defineArrayMember({
+          type: "object",
+          name: "codeBlock",
+          title: "Code block",
+          fields: [
+            defineField({
+              type: "text",
+              name: "code",
+              title: "Text",
+              rows: 5,
+              description: "Spacing and line breaks are preserved on the site.",
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: { code: "code" },
+            prepare({ code }) {
+              const text = typeof code === "string" ? code : "";
+              return {
+                title: "Code block",
+                subtitle: text.replace(/\s+/g, " ").slice(0, 100),
+              };
+            },
+          },
+        }),
         defineArrayMember({
           type: "object",
           name: "referencesBlock",

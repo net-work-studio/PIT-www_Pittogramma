@@ -3,7 +3,12 @@ import {
   type PortableTextComponents,
   stegaClean,
 } from "next-sanity";
-
+import { FootnoteMarker } from "@/components/modules/journal/journal-footnote-marker";
+import {
+  collectJournalFootnotes,
+  getJournalFootnote,
+  JournalFootnotes,
+} from "@/components/modules/journal/journal-footnotes";
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { getGalleryRatio } from "@/lib/gallery";
@@ -72,9 +77,12 @@ function ImageMedia({
 
   if (freeform && imageRatio) {
     return (
-      <AspectRatio className="relative w-full" ratio={imageRatio}>
+      <AspectRatio
+        className="relative w-full overflow-hidden rounded-xl"
+        ratio={imageRatio}
+      >
         <SanityImage
-          className="rounded-xl"
+          className="object-contain"
           fill
           ignoreCrop
           objectFit="contain"
@@ -86,12 +94,11 @@ function ImageMedia({
   }
 
   return (
-    <AspectRatio className="relative w-full" ratio={ratio}>
-      <SanityImage
-        className="rounded-xl object-cover"
-        fill
-        source={{ alt, image }}
-      />
+    <AspectRatio
+      className="relative w-full overflow-hidden rounded-xl"
+      ratio={ratio}
+    >
+      <SanityImage className="object-cover" fill source={{ alt, image }} />
     </AspectRatio>
   );
 }
@@ -362,54 +369,95 @@ function GridFourMediaBlock({ value }: GridFourMediaBlockProps) {
   );
 }
 
-const components: PortableTextComponents = {
-  block: {
-    blockquote: ({ children }) => (
-      <blockquote className="mx-auto my-12 max-w-175 text-2xl leading-tight lg:text-[2.5rem] lg:leading-tight">
-        {children}
-      </blockquote>
-    ),
-    h2: ({ children }) => (
-      <h2 className="mx-auto mt-16 mb-6 max-w-175 text-2xl leading-tight lg:text-3xl">
-        {children}
-      </h2>
-    ),
-    h3: ({ children }) => (
-      <h3 className="mx-auto mt-12 mb-4 max-w-175 text-xl leading-tight lg:text-2xl">
-        {children}
-      </h3>
-    ),
-    normal: ({ children }) => (
-      <p className="mx-auto mb-6 max-w-175 font-serif text-xl leading-snug lg:text-2xl">
-        {children}
-      </p>
-    ),
-  },
-  marks: {
-    link: ({ children, value }) =>
-      value?.href ? (
-        <a
-          className="underline"
-          href={value.href}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+interface CodeBlockProps {
+  value?: {
+    code?: string | null;
+  };
+}
+
+function CodeBlock({ value }: CodeBlockProps) {
+  if (!value?.code) {
+    return null;
+  }
+
+  return (
+    <pre className="mx-auto my-10 max-w-175 whitespace-pre-wrap break-words rounded-xl bg-muted p-5 font-mono text-sm leading-relaxed lg:p-6 lg:text-base">
+      <code>{value.code}</code>
+    </pre>
+  );
+}
+
+function getPortableTextComponents(
+  footnoteNumbers: Map<string, number>
+): PortableTextComponents {
+  return {
+    block: {
+      blockquote: ({ children }) => (
+        <blockquote className="mx-auto my-12 max-w-175 font-normal text-2xl leading-tight lg:text-[2.5rem] lg:leading-tight">
           {children}
-        </a>
-      ) : (
-        children
+        </blockquote>
       ),
-  },
-  types: {
-    gridFourMediaBlock: GridFourMediaBlock,
-    referenceBlock: ReferencesBlock,
-    references: ReferencesBlock,
-    referencesBlock: ReferencesBlock,
-    sideBySideMediaBlock: SideBySideMediaBlock,
-    singleMediaBlock: SingleMediaBlock,
-    threeSideBySideMediaBlock: ThreeSideBySideMediaBlock,
-  },
-};
+      h2: ({ children }) => (
+        <h2 className="mx-auto mt-16 mb-6 max-w-175 text-2xl leading-tight lg:text-3xl">
+          {children}
+        </h2>
+      ),
+      h3: ({ children }) => (
+        <h3 className="mx-auto mt-12 mb-4 max-w-175 text-xl leading-tight lg:text-2xl">
+          {children}
+        </h3>
+      ),
+      normal: ({ children }) => (
+        <p className="mx-auto mb-6 max-w-175 font-serif text-xl leading-snug lg:text-2xl">
+          {children}
+        </p>
+      ),
+    },
+    marks: {
+      code: ({ children }) => (
+        <code className="rounded border border-border bg-secondary px-1 py-0.5 font-mono text-base text-foreground/80">
+          {children}
+        </code>
+      ),
+      footnote: ({ children, value }) => {
+        const footnote = getJournalFootnote(value);
+        const number = footnote
+          ? footnoteNumbers.get(footnote._key)
+          : undefined;
+        return footnote && number ? (
+          <FootnoteMarker footnote={footnote} number={number}>
+            {children}
+          </FootnoteMarker>
+        ) : (
+          children
+        );
+      },
+      link: ({ children, value }) =>
+        value?.href ? (
+          <a
+            className="underline"
+            href={value.href}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {children}
+          </a>
+        ) : (
+          children
+        ),
+    },
+    types: {
+      codeBlock: CodeBlock,
+      gridFourMediaBlock: GridFourMediaBlock,
+      referenceBlock: ReferencesBlock,
+      references: ReferencesBlock,
+      referencesBlock: ReferencesBlock,
+      sideBySideMediaBlock: SideBySideMediaBlock,
+      singleMediaBlock: SingleMediaBlock,
+      threeSideBySideMediaBlock: ThreeSideBySideMediaBlock,
+    },
+  };
+}
 
 type JournalContentBlocks = NonNullable<
   NonNullable<JOURNAL_ARTICLE_QUERY_RESULT>["content"]
@@ -424,9 +472,18 @@ export default function JournalContent({ content }: JournalContentProps) {
     return null;
   }
 
+  const footnotes = collectJournalFootnotes(content);
+  const footnoteNumbers = new Map(
+    footnotes.map((footnote, index) => [footnote._key, index + 1])
+  );
+
   return (
     <div className="px-2.5">
-      <PortableText components={components} value={content} />
+      <PortableText
+        components={getPortableTextComponents(footnoteNumbers)}
+        value={content}
+      />
+      <JournalFootnotes footnotes={footnotes} />
     </div>
   );
 }
