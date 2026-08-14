@@ -964,11 +964,19 @@ export type Journal = {
           | "h6"
           | "blockquote";
         listItem?: "bullet" | "number";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
+        markDefs?: Array<
+          | {
+              href?: string;
+              _type: "link";
+              _key: string;
+            }
+          | {
+              note: string;
+              url?: string;
+              _type: "footnote";
+              _key: string;
+            }
+        >;
         level?: number;
         _type: "block";
         _key: string;
@@ -985,6 +993,11 @@ export type Journal = {
     | ({
         _key: string;
       } & GridFourMediaBlock)
+    | {
+        code: string;
+        _type: "codeBlock";
+        _key: string;
+      }
     | {
         title?: string;
         references: ArrayOf<
@@ -6990,13 +7003,26 @@ export type JOURNAL_ARTICLE_QUERY_RESULT = {
           | "h6"
           | "normal";
         listItem?: "bullet" | "number";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
+        markDefs?: Array<
+          | {
+              note: string;
+              url?: string;
+              _type: "footnote";
+              _key: string;
+            }
+          | {
+              href?: string;
+              _type: "link";
+              _key: string;
+            }
+        >;
         level?: number;
         _type: "block";
+        _key: string;
+      }
+    | {
+        code: string;
+        _type: "codeBlock";
         _key: string;
       }
     | {
