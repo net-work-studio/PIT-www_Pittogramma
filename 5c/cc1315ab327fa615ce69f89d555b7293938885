@@ -1,0 +1,21 @@
+src/sanity/lib/queries.ts
+  s_41866ba6e6902b::t_75f96fc3f544b5 987
+src/sanity/types.ts
+  s_41866ba6e6902b::t_792bef8860ac0a 7702,9040
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "5ccc1315ab327fa615ce69f89d555b7293938885",
+  "prompts": {},
+  "sessions": {
+    "s_41866ba6e6902b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fff00-666b-7793-a8f8-9e1e3462567b",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
