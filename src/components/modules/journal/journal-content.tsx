@@ -8,6 +8,7 @@ import SanityImage from "@/components/modules/shared/sanity-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { getGalleryRatio } from "@/lib/gallery";
 import { resolveInternalLink } from "@/lib/resolve-link";
+import { getImageDimensions } from "@/sanity/lib/image";
 import type { JOURNAL_ARTICLE_QUERY_RESULT } from "@/sanity/types";
 
 interface MediaItemValue {
@@ -52,12 +53,84 @@ interface ReferencesBlockProps {
   };
 }
 
+function ImageMedia({
+  alt,
+  freeform,
+  image,
+  ratio,
+}: {
+  alt?: string | null;
+  freeform: boolean;
+  image: NonNullable<MediaItemValue["image"]>;
+  ratio: number;
+}) {
+  const dimensions = getImageDimensions({ image });
+  const imageRatio =
+    dimensions && dimensions.width > 0 && dimensions.height > 0
+      ? dimensions.width / dimensions.height
+      : null;
+
+  if (freeform && imageRatio) {
+    return (
+      <AspectRatio className="relative w-full" ratio={imageRatio}>
+        <SanityImage
+          className="rounded-xl"
+          fill
+          ignoreCrop
+          objectFit="contain"
+          respectHotspot={false}
+          source={{ alt, image }}
+        />
+      </AspectRatio>
+    );
+  }
+
+  return (
+    <AspectRatio className="relative w-full" ratio={ratio}>
+      <SanityImage
+        className="rounded-xl object-cover"
+        fill
+        source={{ alt, image }}
+      />
+    </AspectRatio>
+  );
+}
+
+function UploadedVideo({ src }: { src: string }) {
+  return (
+    <AspectRatio className="relative w-full" ratio={16 / 9}>
+      {/* biome-ignore lint/a11y/useMediaCaption: captions not available for uploaded videos */}
+      <video
+        className="absolute inset-0 h-full w-full rounded-xl object-cover"
+        controls
+        src={src}
+      />
+    </AspectRatio>
+  );
+}
+
+function EmbeddedVideo({ src }: { src: string }) {
+  return (
+    <AspectRatio className="relative w-full" ratio={16 / 9}>
+      <iframe
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        className="absolute inset-0 h-full w-full rounded-xl"
+        src={src}
+        title="Video embed"
+      />
+    </AspectRatio>
+  );
+}
+
 function MediaRenderer({
   media,
   ratio = 4 / 3,
+  freeform = false,
 }: {
   media?: MediaItemValue;
   ratio?: number;
+  freeform?: boolean;
 }) {
   if (!media) {
     return null;
@@ -73,55 +146,25 @@ function MediaRenderer({
     alt,
   } = media;
   const type = stegaClean(rawType);
+  const uploadedVideoUrl = video?.asset?.url ?? videoFileUrl;
+  const embedSrc =
+    type === "videoEmbed" && videoUrl ? getEmbedUrl(videoUrl) : null;
 
-  function renderMedia() {
-    if (type === "image" && image) {
-      return (
-        <AspectRatio className="relative w-full" ratio={ratio}>
-          <SanityImage
-            className="rounded-xl object-cover"
-            fill
-            source={{ alt, image }}
-          />
-        </AspectRatio>
-      );
-    }
-    const uploadedVideoUrl = video?.asset?.url ?? videoFileUrl;
-    if (type === "videoUpload" && uploadedVideoUrl) {
-      return (
-        <AspectRatio className="relative w-full" ratio={16 / 9}>
-          {/* biome-ignore lint/a11y/useMediaCaption: captions not available for uploaded videos */}
-          <video
-            className="absolute inset-0 h-full w-full rounded-xl object-cover"
-            controls
-            src={uploadedVideoUrl}
-          />
-        </AspectRatio>
-      );
-    }
-    if (type === "videoEmbed" && videoUrl) {
-      const embedSrc = getEmbedUrl(videoUrl);
-      if (!embedSrc) {
-        return null;
-      }
-      return (
-        <AspectRatio className="relative w-full" ratio={16 / 9}>
-          <iframe
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="absolute inset-0 h-full w-full rounded-xl"
-            src={embedSrc}
-            title="Video embed"
-          />
-        </AspectRatio>
-      );
-    }
-    return null;
+  let content: React.ReactNode = null;
+
+  if (type === "image" && image) {
+    content = (
+      <ImageMedia alt={alt} freeform={freeform} image={image} ratio={ratio} />
+    );
+  } else if (type === "videoUpload" && uploadedVideoUrl) {
+    content = <UploadedVideo src={uploadedVideoUrl} />;
+  } else if (embedSrc) {
+    content = <EmbeddedVideo src={embedSrc} />;
   }
 
   return (
     <figure>
-      {renderMedia()}
+      {content}
       {caption ? (
         <figcaption className="mt-1.5 font-mono text-muted-foreground text-xs uppercase">
           {caption}
@@ -153,8 +196,8 @@ function getReferenceTitle(reference: JournalReference): string {
 
 function getReferenceMeta(reference: JournalReference): string | null {
   if (reference._type === "bibliography") {
-    const authors = reference.authors
-      ?.map((author) => author?.name)
+    const authors = (Array.isArray(reference.authors) ? reference.authors : [])
+      .map((author) => author?.name)
       .filter(Boolean)
       .join(", ");
     return [authors, reference.publisher?.name, reference.year]
@@ -181,13 +224,15 @@ function getReferenceHref(reference: JournalReference): string | null {
 }
 
 function ReferencesBlock({ value }: ReferencesBlockProps) {
-  const references = value.references?.filter(Boolean) ?? [];
+  const references = Array.isArray(value.references)
+    ? value.references.filter(Boolean)
+    : [];
   if (references.length === 0) {
     return null;
   }
 
   return (
-    <section className="mx-auto my-16 max-w-[700px] border-t pt-4">
+    <section className="mx-auto my-16 max-w-175 border-t pt-4">
       <h2 className="mb-4 font-mono text-muted-foreground text-xs uppercase">
         {value.title || "References"}
       </h2>
@@ -275,7 +320,11 @@ function SingleMediaBlock({ value }: SingleMediaBlockProps) {
   const ratio = getGalleryRatio(value.orientation);
   return (
     <div className="my-10 lg:mx-auto lg:max-w-[65%]">
-      <MediaRenderer media={value.media} ratio={ratio} />
+      <MediaRenderer
+        freeform={value.orientation === "freeform"}
+        media={value.media}
+        ratio={ratio}
+      />
     </div>
   );
 }
@@ -316,22 +365,22 @@ function GridFourMediaBlock({ value }: GridFourMediaBlockProps) {
 const components: PortableTextComponents = {
   block: {
     blockquote: ({ children }) => (
-      <blockquote className="mx-auto my-12 max-w-[700px] text-2xl leading-tight lg:text-[2.5rem] lg:leading-tight">
+      <blockquote className="mx-auto my-12 max-w-175 text-2xl leading-tight lg:text-[2.5rem] lg:leading-tight">
         {children}
       </blockquote>
     ),
     h2: ({ children }) => (
-      <h2 className="mx-auto mt-16 mb-6 max-w-[700px] text-2xl leading-tight lg:text-3xl">
+      <h2 className="mx-auto mt-16 mb-6 max-w-175 text-2xl leading-tight lg:text-3xl">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="mx-auto mt-12 mb-4 max-w-[700px] text-xl leading-tight lg:text-2xl">
+      <h3 className="mx-auto mt-12 mb-4 max-w-175 text-xl leading-tight lg:text-2xl">
         {children}
       </h3>
     ),
     normal: ({ children }) => (
-      <p className="mx-auto mb-6 max-w-[700px] font-serif text-xl leading-snug lg:text-2xl">
+      <p className="mx-auto mb-6 max-w-175 font-serif text-xl leading-snug lg:text-2xl">
         {children}
       </p>
     ),

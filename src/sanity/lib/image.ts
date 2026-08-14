@@ -58,6 +58,14 @@ export const urlForImage = (
   return img ? builder.image(img) : null;
 };
 
+/** Build an image URL without Studio crop or hotspot metadata. */
+export const urlForOriginalImage = (
+  source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined
+) => {
+  const asset = source?.image?.asset;
+  return asset ? builder.image(asset as SanityImageSource) : null;
+};
+
 /** Extract native LQIP from resolved asset metadata */
 export const getLqip = (
   source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined
@@ -86,11 +94,15 @@ export const getImageDimensions = (
  *  Prefers native LQIP from metadata, falling back to a tiny image that keeps
  *  the source aspect ratio. */
 export const getBlurDataUrl = (
-  source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined
+  source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined,
+  ignoreCrop = false
 ): string | undefined => {
   const lqip = getLqip(source);
   if (lqip) {
     return lqip;
   }
-  return urlForImage(source)?.width(24).quality(5).auto("format").url();
+  const imageUrl = ignoreCrop
+    ? urlForOriginalImage(source)
+    : urlForImage(source);
+  return imageUrl?.width(24).quality(5).auto("format").url();
 };

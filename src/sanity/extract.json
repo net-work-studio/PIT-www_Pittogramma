@@ -2087,6 +2087,10 @@
               {
                 "type": "string",
                 "value": "portrait"
+              },
+              {
+                "type": "string",
+                "value": "freeform"
               }
             ]
           },
@@ -2152,6 +2156,10 @@
               {
                 "type": "string",
                 "value": "portrait"
+              },
+              {
+                "type": "string",
+                "value": "freeform"
               }
             ]
           },
@@ -2209,6 +2217,10 @@
               {
                 "type": "string",
                 "value": "portrait"
+              },
+              {
+                "type": "string",
+                "value": "freeform"
               }
             ]
           },
@@ -2258,6 +2270,10 @@
               {
                 "type": "string",
                 "value": "portrait"
+              },
+              {
+                "type": "string",
+                "value": "freeform"
               }
             ]
           },
