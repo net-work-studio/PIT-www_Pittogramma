@@ -1,0 +1,38 @@
+src/sanity/structure/structure.ts
+  s_8ad8c6f065dc22::t_42905a98189134 35-44
+src/sanity/schemaTypes/index.ts
+  s_8ad8c6f065dc22::t_42905a98189134 48-51,96-97
+src/sanity/types.ts
+  s_8ad8c6f065dc22::t_7d1f1daf327722 300-355,1539-1540,2765-2898,9323-9324
+src/sanity/lib/queries.ts
+  s_8ad8c6f065dc22::t_42905a98189134 163-188
+src/app/(frontend)/(info)/privacy-policy/page.tsx
+  s_8ad8c6f065dc22::t_42905a98189134 2-4,6-11,17-46,49,51-58
+  s_8ad8c6f065dc22::t_5900373d2806be 1,5,12-16,47-48,50,59-62
+src/app/(frontend)/(info)/impressum/page.tsx
+  s_8ad8c6f065dc22::t_5900373d2806be 1,5,12-16,47-48,50,59-62
+  s_8ad8c6f065dc22::t_42905a98189134 2-4,6-11,17-46,49,51-58
+src/components/modules/legal/legal-page-content.tsx
+  s_8ad8c6f065dc22::t_10941752a2c52e 11
+  s_8ad8c6f065dc22::t_42905a98189134 1-10,12-40
+src/sanity/extract.json
+  s_8ad8c6f065dc22::t_7d1f1daf327722 1450-1911
+src/sanity/schemaTypes/singletons/pages/legal-pages.ts
+  s_8ad8c6f065dc22::t_42905a98189134 1-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "3f3ae0a8f62a15d1b82f964c9f4ae10eed137102",
+  "prompts": {},
+  "sessions": {
+    "s_8ad8c6f065dc22": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a03900-1feb-7651-91e6-70c1986df555",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
