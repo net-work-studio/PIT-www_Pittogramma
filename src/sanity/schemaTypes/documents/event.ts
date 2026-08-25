@@ -11,6 +11,28 @@ export const event = defineType({
   title: "Event",
   icon: CalendarIcon,
   groups,
+  orderings: [
+    {
+      title: "Publishing Date, Newest",
+      name: "publishingDateDesc",
+      by: [{ field: "publishingDate.date", direction: "desc" }],
+    },
+    {
+      title: "Publishing Date, Oldest",
+      name: "publishingDateAsc",
+      by: [{ field: "publishingDate.date", direction: "asc" }],
+    },
+    {
+      title: "Event Date, Newest",
+      name: "dateStartDesc",
+      by: [{ field: "dateStart", direction: "desc" }],
+    },
+    {
+      title: "Event Date, Oldest",
+      name: "dateStartAsc",
+      by: [{ field: "dateStart", direction: "asc" }],
+    },
+  ],
   fields: [
     defineField({
       type: "string",
@@ -27,6 +49,13 @@ export const event = defineType({
       options: {
         source: "title",
       },
+      validation: (e) => e.required(),
+    }),
+    defineField({
+      type: "publishingDate",
+      name: "publishingDate",
+      title: "Publishing Date",
+      group: "content",
       validation: (e) => e.required(),
     }),
     defineField({
@@ -180,18 +209,6 @@ export const event = defineType({
       group: "seo",
       hidden: ({ document }) => document?.cardDestination === "external",
     }),
-  ],
-  orderings: [
-    {
-      title: "Event Date, Newest",
-      name: "dateStartDesc",
-      by: [{ field: "dateStart", direction: "desc" }],
-    },
-    {
-      title: "Event Date, Oldest",
-      name: "dateStartAsc",
-      by: [{ field: "dateStart", direction: "asc" }],
-    },
   ],
   preview: {
     select: {

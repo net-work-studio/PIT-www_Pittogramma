@@ -90,6 +90,7 @@ export const getImageDimensions = (
   return;
 };
 
+/** Prevent transformed Sanity URLs from upscaling beyond the source asset. */
 /** Generate blur data URL for Next.js Image placeholder.
  *  Prefers native LQIP from metadata, falling back to a tiny image that keeps
  *  the source aspect ratio. */

@@ -4,6 +4,18 @@ Pittogramma is a cultural platform covering graphic design, visual culture, even
 
 ## Language
 
+**Designer Index ordering**:
+The visitor-selected ascending or descending order applied to any visible desktop column of the public Designers Index. The default is Designer name A–Z.
+_Avoid_: Chronological designer ordering, manually fixed list order, name-only sorting
+
+**Designer project sort key**:
+The alphabetically first title among a Designer’s associated projects, used when the Designers Index is ordered by Projects.
+_Avoid_: Project creation date, the number of associated projects, the arbitrary display order of projects
+
+**Missing Designer Index value**:
+A Designer Index value that is absent and rendered as `-`. Missing values always sort after populated values in either direction.
+_Avoid_: Treating `-` as a literal sortable value, placing absent values first in descending order
+
 **Code block (Journal)**:
 A Journal content block for a short piece of monospaced text. Line breaks and
 repeated spaces are preserved exactly as entered. It is editorial content
@@ -44,6 +56,10 @@ _Avoid_: Resource records, global Resource settings
 A public Resource page selected as the internal destination of a reusable CTA. Its fixed route is resolved by the front end.
 _Avoid_: Storing the Resource page URL in a CTA
 
+**Index**:
+The public navigation and Studio sidebar grouping for Pittogramma’s curated directories, including Studios / Agencies, Type Foundries, Bibliography, and the other existing Resource pages. “Index” is the user-facing label; internal code may continue to use Resource terminology.
+_Avoid_: Renaming individual directory types, treating Index as a separate content type
+
 **Bibliography**:
 An always-published Resource containing Pittogramma's curated list of books on graphic design. It is available at `/bibliography` and appears in Resource navigation.
 _Avoid_: Treating Bibliography as an optionally published feature
@@ -51,6 +67,14 @@ _Avoid_: Treating Bibliography as an optionally published feature
 **Bibliography Studio section**:
 The Resources Studio subsection that groups Bibliography Page settings, bibliography entries, and Publishers. Publishers are maintained there because they are only referenced by bibliography entries and have no public Resource page.
 _Avoid_: A separate Publisher Resource page, treating Publishers as a sibling public Resource
+
+**Contribution form**:
+An external Notion form for proposing a particular Resource type. The currently available Contribution forms propose a Studio / Agency, a Type Foundry, or a Bibliography entry. Each form is optional and is configured from the dedicated Contributions tab in Site Settings; the public Contribute page shows only forms with a configured URL and opens them in a new tab.
+_Avoid_: Project submission form (which has its own `/submit` route), a general-purpose contribution form
+
+**Contribute page**:
+The public `/contribute` page, titled “Contribute to the index,” that lists the currently configured Contribution forms and directs visitors to the appropriate external Notion form. It has no introductory copy. Contribution forms do not appear on individual Resource indexes.
+_Avoid_: Project submission page, repository contribution guide. The footer link uses the same “Contribute to the index” label.
 
 **Targeted Resource navigation**:
 A Recent Updates link to a Resource index that brings its matching Resource into view and opens its existing detail dialog when one is available. Resources without a detail dialog only scroll to their matching item.
@@ -67,6 +91,22 @@ _Avoid_: Submission page, submission modal
 **Upcoming (events)**:
 Events that have not yet ended. Includes events scheduled for the future and events currently in progress.
 _Avoid_: Next, future (in user-facing copy)
+
+**Homepage content stream**:
+The fixed number of editorial and advertising cards shown on the homepage. Projects, Interviews, Journal entries, and Events share one chronological stream, ordered by their publishing date; adding a content type replaces another stream card rather than increasing the card total.
+_Avoid_: Separate per-type homepage feeds, event-date ordering, an expanding homepage card count
+
+**Event publishing date**:
+The editorial date when an Event joins the homepage content stream. It is independent of the Event's start and end dates, which only describe when the event happens.
+_Avoid_: Deriving editorial position from event schedule
+
+**Homepage-eligible Event**:
+An Event whose end date (or start date when no end date exists) is today or later. Only Homepage-eligible Events can appear in either the homepage content stream or homepage hero.
+_Avoid_: Showing completed Events on the homepage, treating an Event ending today as past
+
+**Homepage featured item**:
+The optional editorial item selected for the homepage hero. A Project, Interview, Journal entry, or Event may be featured; the featured item does not also appear in the homepage content stream.
+_Avoid_: A hero item duplicated in the card stream, a hero limited to Projects and Interviews
 
 **Past (events)**:
 Events that have ended.

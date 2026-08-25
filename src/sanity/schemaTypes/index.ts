@@ -45,6 +45,10 @@ import { eventsPage } from "./singletons/pages/events-page";
 import { homePage } from "./singletons/pages/home-page";
 import { interviewsPage } from "./singletons/pages/interviews-page";
 import { journalPage } from "./singletons/pages/journal-page";
+import {
+  impressumPage,
+  privacyPolicyPage,
+} from "./singletons/pages/legal-pages";
 import { projectsPage } from "./singletons/pages/projects-page";
 import {
   bibliographyPage,
@@ -89,6 +93,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     xCard,
     siteSettings,
     aboutPage,
+    impressumPage,
+    privacyPolicyPage,
     homePage,
     projectsPage,
     interviewsPage,

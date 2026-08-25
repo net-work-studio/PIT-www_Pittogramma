@@ -29,10 +29,15 @@ export const homePage = defineType({
       name: "featuredItem",
       title: "Featured Item",
       type: "reference",
-      to: [{ type: "project" }, { type: "interview" }, { type: "journal" }],
+      to: [
+        { type: "project" },
+        { type: "interview" },
+        { type: "journal" },
+        { type: "event" },
+      ],
       group: "content",
       description:
-        "Select a project, interview, or journal article to feature as the hero. If empty, the latest published item is used.",
+        "Select a project, interview, journal article, or event to feature as the hero. If empty, the latest published item is used.",
     }),
     defineField({
       name: "midPageCta",

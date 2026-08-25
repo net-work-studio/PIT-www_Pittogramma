@@ -7,8 +7,8 @@ import {
   Stack,
   Text,
   TextInput,
-  useToast,
 } from "@sanity/ui";
+import { useToast } from "@sanity/ui/toast";
 import { useCallback, useState } from "react";
 import {
   type StringInputProps,
@@ -258,7 +258,7 @@ export function UrlInput(props: StringInputProps) {
   }, [value, patchDocumentFields, sanityAuthToken]);
 
   return (
-    <Stack space={3} style={{ width: "100%" }}>
+    <Stack gap={3} style={{ width: "100%" }}>
       <Flex align="center" gap={2} style={{ width: "100%" }}>
         <TextInput
           {...elementProps}
@@ -293,11 +293,11 @@ export function UrlInput(props: StringInputProps) {
 
       {fetchedData && !isPatching && (
         <Card border padding={3} radius={2} tone="positive">
-          <Stack space={3}>
+          <Stack gap={3}>
             <Text size={1} weight="semibold">
               Fields auto-filled from OG tags:
             </Text>
-            <Stack space={2}>
+            <Stack gap={2}>
               {fetchedData.siteName && (
                 <Text size={1}>
                   <strong>Site Name:</strong> {fetchedData.siteName}

@@ -29,7 +29,7 @@ export function NavigationDesktop({ resources }: { resources: Resource[] }) {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+          <NavigationMenuTrigger>Index</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="w-100">
               {resources.map((res) => (

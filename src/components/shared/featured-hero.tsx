@@ -7,9 +7,16 @@ import { cn } from "@/lib/utils";
 
 interface FeaturedHeroProps {
   badgeLabel?: string;
-  badgeVariant?: "project" | "interview" | "article" | "diary" | "baseline";
-  contentType: "project" | "interview" | "journal";
+  badgeVariant?:
+    | "project"
+    | "interview"
+    | "article"
+    | "diary"
+    | "baseline"
+    | "event";
+  contentType: "project" | "interview" | "journal" | "event";
   cover: CoverMediaData | null | undefined;
+  external?: boolean;
   href: string;
   subtitle?: string | null;
   title: string;
@@ -18,11 +25,12 @@ interface FeaturedHeroProps {
 
 const badgeVariantMap: Record<
   FeaturedHeroProps["contentType"],
-  "project" | "interview" | "article"
+  "project" | "interview" | "article" | "event"
 > = {
+  event: "event",
+  interview: "interview",
   journal: "article",
   project: "project",
-  interview: "interview",
 };
 
 const HEIGHT_BY_VARIANT = {
@@ -37,6 +45,7 @@ export default function FeaturedHero({
   title,
   href,
   cover,
+  external,
   subtitle,
   variant = "full",
 }: FeaturedHeroProps) {
@@ -47,6 +56,7 @@ export default function FeaturedHero({
         HEIGHT_BY_VARIANT[variant]
       )}
       href={href}
+      {...(external ? { rel: "noopener noreferrer", target: "_blank" } : {})}
     >
       <div className="z-10 flex w-full flex-col items-center gap-4 px-4 text-center text-white sm:px-6">
         {badgeLabel && (

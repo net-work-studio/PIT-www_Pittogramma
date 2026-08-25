@@ -7,8 +7,8 @@ import {
   Stack,
   Text,
   TextInput,
-  useToast,
 } from "@sanity/ui";
+import { useToast } from "@sanity/ui/toast";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   type StringInputProps,
@@ -186,7 +186,7 @@ export function PlaceInput(props: StringInputProps) {
   );
 
   return (
-    <Stack space={3}>
+    <Stack gap={3}>
       {/* Name field (editable) */}
       <TextInput {...elementProps} onChange={handleNameChange} value={value} />
 
@@ -216,7 +216,7 @@ export function PlaceInput(props: StringInputProps) {
                 overflowY: "auto",
               }}
             >
-              <Stack padding={1} space={1}>
+              <Stack gap={1} padding={1}>
                 {results.map((result: NominatimResult) => (
                   <Button
                     key={result.place_id}
@@ -259,7 +259,7 @@ export function PlaceInput(props: StringInputProps) {
       {/* Show populated data summary */}
       {currentCity && currentCountry && !isPatching && (
         <Card border padding={3} radius={2} tone="positive">
-          <Stack space={2}>
+          <Stack gap={2}>
             <Text size={1} weight="semibold">
               Place data:
             </Text>

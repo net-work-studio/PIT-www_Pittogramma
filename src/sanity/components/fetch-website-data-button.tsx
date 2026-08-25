@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, Card, Flex, Stack, Text, useToast } from "@sanity/ui";
+import { Button, Card, Flex, Stack, Text } from "@sanity/ui";
+import { useToast } from "@sanity/ui/toast";
 import { useCallback, useState } from "react";
 import { type StringInputProps, useClient, useFormValue } from "sanity";
 import { apiVersion } from "@/sanity/env";
@@ -224,7 +225,7 @@ export function FetchWebsiteDataButton(_props: StringInputProps) {
   }, [websiteUrl, patchDocumentFields, sanityAuthToken]);
 
   return (
-    <Stack space={3} style={{ width: "100%" }}>
+    <Stack gap={3} style={{ width: "100%" }}>
       <Flex align="center" gap={2} style={{ width: "100%" }}>
         {websiteUrl ? (
           <>
@@ -264,11 +265,11 @@ export function FetchWebsiteDataButton(_props: StringInputProps) {
 
       {fetchedData && !isPatching && (
         <Card border padding={3} radius={2} tone="positive">
-          <Stack space={3}>
+          <Stack gap={3}>
             <Text size={1} weight="semibold">
               Fields auto-filled from OG tags:
             </Text>
-            <Stack space={2}>
+            <Stack gap={2}>
               {fetchedData.siteName && (
                 <Text size={1}>
                   <strong>Site Name:</strong> {fetchedData.siteName}

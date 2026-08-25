@@ -13,6 +13,16 @@ export function buildLocalToday(): string {
   return `${y}-${m}-${day}`;
 }
 
+/** An event remains homepage-eligible through its final calendar day. */
+export function isUpcomingEvent(
+  dateStart: string | null | undefined,
+  dateEnd: string | null | undefined,
+  today: string
+): boolean {
+  const endDate = dateEnd ?? dateStart;
+  return Boolean(endDate && endDate >= today);
+}
+
 export function formatEventDate(date: string): string {
   return new Date(`${date}T00:00:00`).toLocaleDateString("en-GB", {
     day: "numeric",

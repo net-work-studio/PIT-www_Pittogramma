@@ -17,7 +17,10 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     utmMedium,
     utmCampaign,
     instagramUrl,
-    spotifyUrl
+    linkedinUrl,
+    studioAgencyContributionUrl,
+    typeFoundriesContributionUrl,
+    bibliographyContributionUrl
   }
 `);
 
@@ -51,6 +54,14 @@ export const HOME_PAGE_QUERY = defineQuery(`
         excerpt,
         featuredCover { ${COVER_MEDIA_FIELDS} },
       },
+      _type == "event" => {
+        type,
+        dateStart,
+        dateEnd,
+        attendanceMode,
+        locationName,
+        cardDestination,
+      },
       tags[]->{ _id, name }
     },
     midPageCta->${CTA_PROJECTION},
@@ -61,9 +72,10 @@ export const HOME_PAGE_QUERY = defineQuery(`
 
 export const HOME_FEED_QUERY = defineQuery(`
   *[
-    _type in ["project", "interview", "journal"]
+    _type in ["project", "interview", "journal", "event"]
     && defined(publishingDate.date)
     && publishingDate.date <= $today
+    && (_type != "event" || coalesce(dateEnd, dateStart) >= $today)
   ] | order(publishingDate.date desc) [0...32] {
     _id,
     _type,
@@ -87,6 +99,14 @@ export const HOME_FEED_QUERY = defineQuery(`
       label,
       excerpt,
       featuredCover { ${COVER_MEDIA_FIELDS} },
+    },
+    _type == "event" => {
+      type,
+      dateStart,
+      dateEnd,
+      attendanceMode,
+      locationName,
+      cardDestination,
     },
     tags[]->{ _id, name }
   }
@@ -135,6 +155,32 @@ export const ABOUT_PAGE_QUERY = defineQuery(`
         logoDark { ${IMAGE_FIELDS} },
         alt
       }
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
+export const IMPRESSUM_PAGE_QUERY = defineQuery(`
+  *[_type == "impressumPage"][0] {
+    _id,
+    title,
+    content[] {
+      _key,
+      _type,
+      _type == "block" => @
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
+export const PRIVACY_POLICY_PAGE_QUERY = defineQuery(`
+  *[_type == "privacyPolicyPage"][0] {
+    _id,
+    title,
+    content[] {
+      _key,
+      _type,
+      _type == "block" => @
     },
     ${SEO_FIELDS}
   }

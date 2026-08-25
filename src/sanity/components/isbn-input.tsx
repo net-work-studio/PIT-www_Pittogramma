@@ -7,8 +7,8 @@ import {
   Stack,
   Text,
   TextInput,
-  useToast,
 } from "@sanity/ui";
+import { useToast } from "@sanity/ui/toast";
 import { useCallback, useState } from "react";
 import {
   type StringInputProps,
@@ -220,7 +220,7 @@ export function IsbnInput(props: StringInputProps) {
   }, [value, patchDocumentFields, sanityAuthToken]);
 
   return (
-    <Stack space={3}>
+    <Stack gap={3}>
       <Flex align="center" gap={2}>
         <TextInput
           {...elementProps}
@@ -255,11 +255,11 @@ export function IsbnInput(props: StringInputProps) {
 
       {fetchedData && !isPatching && (
         <Card border padding={3} radius={2} tone="positive">
-          <Stack space={3}>
+          <Stack gap={3}>
             <Text size={1} weight="semibold">
               Fields auto-filled from Google Books:
             </Text>
-            <Stack space={2}>
+            <Stack gap={2}>
               {fetchedData.title && (
                 <Text size={1}>
                   <strong>Title:</strong> {fetchedData.title}

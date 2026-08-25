@@ -1,8 +1,13 @@
 import Image from "next/image";
+import {
+  getSafeImageWidth,
+  shouldBypassImageOptimization,
+} from "@/lib/image-width";
 import { cn } from "@/lib/utils";
 import {
   getBlurDataUrl,
   getHotspotObjectPosition,
+  getImageDimensions,
   type ImageLike,
   urlForImage,
   urlForOriginalImage,
@@ -114,13 +119,16 @@ export default function SanityImage({
     return null;
   }
 
-  const sizedBuilder = builder.quality(Number(quality)).auto("format");
+  const requestedWidth = fill ? (fillWidth ?? 1920) : Number(width);
+  const sourceWidth = getImageDimensions(source)?.width;
+  const safeWidth = getSafeImageWidth(requestedWidth, sourceWidth);
+  const sizedBuilder = builder.quality(Number(quality));
   const url = buildSizedImageUrl(sizedBuilder, {
     fill,
-    fillWidth,
+    fillWidth: fill ? safeWidth : fillWidth,
     height: Number(height),
     sizeMode: fit,
-    width: Number(width),
+    width: safeWidth,
   });
 
   const blurDataUrl = getBlurDataUrl(source, ignoreCrop);
@@ -146,7 +154,10 @@ export default function SanityImage({
     sizes: fill ? (sizes ?? "100vw") : sizes,
     src: url,
     style,
-    unoptimized: preserveAnimation || unoptimizedProp,
+    unoptimized:
+      preserveAnimation ||
+      unoptimizedProp ||
+      shouldBypassImageOptimization(requestedWidth, sourceWidth),
     ...props,
   };
 

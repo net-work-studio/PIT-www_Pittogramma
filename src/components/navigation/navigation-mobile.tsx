@@ -39,7 +39,7 @@ export function NavigationMobile({ resources }: { resources: Resource[] }) {
         ],
       },
       {
-        label: "Resources",
+        label: "Index",
         children: resources.map((r) => ({ href: r.href, label: r.label })),
       },
       { label: "Journal", href: "/journal" },

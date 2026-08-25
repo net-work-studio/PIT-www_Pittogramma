@@ -74,7 +74,7 @@ function MediaThumbnail({
       tone={hasMedia ? "default" : "transparent"}
       type="button"
     >
-      <Stack space={2}>
+      <Stack gap={2}>
         {/* Thumbnail preview */}
         <Box
           style={{
@@ -173,7 +173,7 @@ export function SideBySideInput(props: ObjectInputProps) {
   };
 
   return (
-    <Stack space={4}>
+    <Stack gap={4}>
       {/* Orientation selector */}
       {orientationMember && (
         <ObjectInputMember member={orientationMember} {...renderProps} />
