@@ -4,6 +4,18 @@ Pittogramma is a cultural platform covering graphic design, visual culture, even
 
 ## Language
 
+**Designer Index ordering**:
+The visitor-selected ascending or descending order applied to any visible desktop column of the public Designers Index. The default is Designer name A–Z.
+_Avoid_: Chronological designer ordering, manually fixed list order, name-only sorting
+
+**Designer project sort key**:
+The alphabetically first title among a Designer’s associated projects, used when the Designers Index is ordered by Projects.
+_Avoid_: Project creation date, the number of associated projects, the arbitrary display order of projects
+
+**Missing Designer Index value**:
+A Designer Index value that is absent and rendered as `-`. Missing values always sort after populated values in either direction.
+_Avoid_: Treating `-` as a literal sortable value, placing absent values first in descending order
+
 **Code block (Journal)**:
 A Journal content block for a short piece of monospaced text. Line breaks and
 repeated spaces are preserved exactly as entered. It is editorial content

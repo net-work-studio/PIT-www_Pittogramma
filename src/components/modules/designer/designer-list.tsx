@@ -1,14 +1,87 @@
 "use client";
 
+import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { type Ref, useCallback, useEffect, useRef, useState } from "react";
+import {
+  type MouseEvent,
+  type Ref,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
+import {
+  type ResourceListSortColumn,
+  type ResourceListSortState,
+  sortResourceListItems,
+} from "@/lib/resource-list-sort";
 import type { DESIGNERS_QUERY_RESULT } from "@/sanity/types";
 import DesignerModal from "./designer-modal";
 import DesignerPortraitThumb from "./designer-portrait-thumb";
 import DesignerProjectLink from "./designer-project-link";
 
 type Designer = DESIGNERS_QUERY_RESULT[number];
+
+interface DesignerListColumn extends ResourceListSortColumn<Designer> {
+  className: string;
+  label: string;
+}
+
+const projectTitleCollator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: "base",
+});
+
+function getFirstProjectTitle(designer: Designer) {
+  return designer.projects?.reduce<string | undefined>(
+    (firstTitle, project) => {
+      const { title } = project;
+      if (!title) {
+        return firstTitle;
+      }
+
+      return !firstTitle || projectTitleCollator.compare(title, firstTitle) < 0
+        ? title
+        : firstTitle;
+    },
+    undefined
+  );
+}
+
+const DESIGNER_LIST_COLUMNS: DesignerListColumn[] = [
+  {
+    className: "col-span-3",
+    getSortValue: (designer) => designer.name,
+    id: "designer",
+    label: "Designer",
+  },
+  {
+    className: "col-span-4",
+    getSortValue: getFirstProjectTitle,
+    id: "projects",
+    label: "Projects",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (designer) => designer.place?.city,
+    id: "city",
+    label: "City",
+  },
+  {
+    className: "col-span-2",
+    getSortValue: (designer) => designer.place?.country,
+    id: "country",
+    label: "Country",
+  },
+  {
+    className: "col-span-1",
+    getSortValue: (designer) => designer.birthYear,
+    id: "year",
+    label: "Year",
+  },
+];
 
 function clearDesignerSearchParam(searchParams: URLSearchParams) {
   const params = new URLSearchParams(searchParams.toString());
@@ -85,7 +158,12 @@ export default function DesignerList({ designers }: DesignerListProps) {
   const searchParams = useSearchParams();
   const urlSlug = searchParams.get("designer");
   const [openSlug, setOpenSlug] = useState<string | null>(urlSlug);
+  const [sort, setSort] = useState<ResourceListSortState | null>(null);
   const activeRowRef = useRef<HTMLDivElement>(null);
+  const sortedDesigners = useMemo(
+    () => sortResourceListItems(designers, DESIGNER_LIST_COLUMNS, sort),
+    [designers, sort]
+  );
 
   useEffect(() => {
     setOpenSlug(urlSlug);
@@ -112,17 +190,50 @@ export default function DesignerList({ designers }: DesignerListProps) {
     clearDesignerSearchParam(searchParams);
   }, [searchParams]);
 
+  const handleSort = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+    const { columnId } = event.currentTarget.dataset;
+
+    if (!columnId) {
+      return;
+    }
+
+    setSort((currentSort) => ({
+      columnId,
+      direction:
+        currentSort?.columnId === columnId && currentSort.direction === "asc"
+          ? "desc"
+          : "asc",
+    }));
+  }, []);
+
   return (
     <section>
-      <div className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase max-md:hidden">
-        <span className="col-span-3">Designer</span>
-        <span className="col-span-4">Projects</span>
-        <span className="col-span-2">City</span>
-        <span className="col-span-2">Country</span>
-        <span className="col-span-1">Year</span>
-      </div>
+      <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-xs uppercase max-md:hidden">
+        {DESIGNER_LIST_COLUMNS.map((column) => {
+          const isActive = sort?.columnId === column.id;
+          const sortDirection = isActive ? sort?.direction : undefined;
+          const SortIcon =
+            sortDirection === "asc" ? ArrowUpIcon : ArrowDownIcon;
+
+          return (
+            <li className={column.className} key={column.id}>
+              <button
+                aria-label={`Sort by ${column.label}${sortDirection ? `, ${sortDirection === "asc" ? "ascending" : "descending"}` : ""}`}
+                aria-pressed={isActive}
+                className="inline-flex w-full cursor-pointer items-center gap-1 text-left text-muted-foreground uppercase"
+                data-column-id={column.id}
+                onClick={handleSort}
+                type="button"
+              >
+                {column.label}
+                {isActive && <SortIcon aria-hidden="true" className="size-3" />}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
       <div>
-        {designers.map((designer) => {
+        {sortedDesigners.map((designer) => {
           const isActive = designer.slug?.current === openSlug;
           return (
             <DesignerListItem
