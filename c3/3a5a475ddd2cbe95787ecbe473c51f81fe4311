@@ -1,0 +1,25 @@
+src/components/modules/designer/designer-list.tsx
+  s_b06b17b6419a6a::t_441ee968675de9 38-43,45-50
+  s_b06b17b6419a6a::t_6af41e10e43707 3,5-13,15-19,27-37,44,51-85,161,163-166,193-208,211-234,236
+CONTEXT.md
+  s_b06b17b6419a6a::t_3fcaed29c4e93f 8-9
+  s_b06b17b6419a6a::t_d0443de20e2d6d 15-18
+  s_b06b17b6419a6a::t_21ae76f92eff7c 11-14
+  s_b06b17b6419a6a::t_643c7c0049f1f5 7,10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "c33a5a475ddd2cbe95787ecbe473c51f81fe4311",
+  "prompts": {},
+  "sessions": {
+    "s_b06b17b6419a6a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a038b6-1d9d-7f63-8f0e-e453def48a8b",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
