@@ -92,6 +92,22 @@ _Avoid_: Submission page, submission modal
 Events that have not yet ended. Includes events scheduled for the future and events currently in progress.
 _Avoid_: Next, future (in user-facing copy)
 
+**Homepage content stream**:
+The fixed number of editorial and advertising cards shown on the homepage. Projects, Interviews, Journal entries, and Events share one chronological stream, ordered by their publishing date; adding a content type replaces another stream card rather than increasing the card total.
+_Avoid_: Separate per-type homepage feeds, event-date ordering, an expanding homepage card count
+
+**Event publishing date**:
+The editorial date when an Event joins the homepage content stream. It is independent of the Event's start and end dates, which only describe when the event happens.
+_Avoid_: Deriving editorial position from event schedule
+
+**Homepage-eligible Event**:
+An Event whose end date (or start date when no end date exists) is today or later. Only Homepage-eligible Events can appear in either the homepage content stream or homepage hero.
+_Avoid_: Showing completed Events on the homepage, treating an Event ending today as past
+
+**Homepage featured item**:
+The optional editorial item selected for the homepage hero. A Project, Interview, Journal entry, or Event may be featured; the featured item does not also appear in the homepage content stream.
+_Avoid_: A hero item duplicated in the card stream, a hero limited to Projects and Interviews
+
 **Past (events)**:
 Events that have ended.
 

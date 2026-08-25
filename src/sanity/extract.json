@@ -4015,6 +4015,10 @@
             {
               "type": "inline",
               "name": "journal.reference"
+            },
+            {
+              "type": "inline",
+              "name": "event.reference"
             }
           ]
         },
@@ -4291,6 +4295,14 @@
         "value": {
           "type": "inline",
           "name": "slug"
+        },
+        "optional": false
+      },
+      "publishingDate": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "publishingDate"
         },
         "optional": false
       },

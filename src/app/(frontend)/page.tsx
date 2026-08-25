@@ -7,7 +7,8 @@ import HomeGrid, { type HomeGridSlot } from "@/components/home-grid";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
 import { getJournalHeroCover, hasCoverMedia } from "@/lib/cover-media-utils";
-import { buildLocalToday } from "@/lib/date-utils";
+import { buildLocalToday, isUpcomingEvent } from "@/lib/date-utils";
+import { formatEventCardLocation } from "@/lib/event-location";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -48,7 +49,18 @@ function getEditorialHref(item: EditorialItem): string {
   if (item._type === "journal") {
     return `/journal/${item.slug?.current ?? ""}`;
   }
+  if (item._type === "event") {
+    return `/events/${item.slug?.current ?? ""}`;
+  }
   return `/interviews/${item.slug?.current ?? ""}`;
+}
+
+function isHomepageEligible(item: EditorialItem, today: string): boolean {
+  if (item._type !== "event") {
+    return true;
+  }
+
+  return isUpcomingEvent(item.dateStart, item.dateEnd, today);
 }
 
 function getFeaturedSubtitle(
@@ -66,6 +78,15 @@ function getFeaturedSubtitle(
     return names ? `Interview to ${names}` : null;
   }
 
+  if (featuredItem._type === "event") {
+    return formatEventCardLocation(
+      featuredItem.cardDestination === "external"
+        ? "offline"
+        : featuredItem.attendanceMode,
+      featuredItem.locationName
+    );
+  }
+
   const names = featuredItem.people?.map((p) => p.name).join(", ");
   return names || null;
 }
@@ -79,6 +100,9 @@ function getFeaturedBadge(item: EditorialItem | null) {
   }
   if (item._type === "interview") {
     return { label: "Interview", variant: undefined };
+  }
+  if (item._type === "event") {
+    return { label: "Event", variant: "event" as const };
   }
   const config = getJournalLabelConfig(item.label);
   return { label: config?.label, variant: config?.badgeVariant };
@@ -185,9 +209,16 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
   const cta = homePage?.endOfPageCta;
 
   // Resolve featured: manual pick with fallback to latest editorial.
+  const selectedFeatured = homePage?.featuredItem as unknown as
+    | EditorialItem
+    | null
+    | undefined;
   const featuredItem: EditorialItem | null =
-    (homePage?.featuredItem as EditorialItem | null) ?? feedItems?.[0] ?? null;
-  const editorialPool = ((feedItems ?? []) as EditorialItem[]).filter(
+    (selectedFeatured && isHomepageEligible(selectedFeatured, today)
+      ? selectedFeatured
+      : null) ??
+    ((feedItems?.[0] as unknown as EditorialItem | undefined) ?? null);
+  const editorialPool = ((feedItems ?? []) as unknown as EditorialItem[]).filter(
     (item) => item._id !== featuredItem?._id
   );
 
@@ -215,14 +246,18 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
 
   return (
     <>
-      {featuredCover ? (
+      {featuredItem && featuredCover ? (
         <FeaturedHero
           badgeLabel={featuredBadge.label}
           badgeVariant={featuredBadge.variant}
           contentType={
-            featuredItem._type as "project" | "interview" | "journal"
+            featuredItem._type as "project" | "interview" | "journal" | "event"
           }
           cover={featuredCover}
+          external={
+            featuredItem._type === "event" &&
+            featuredItem.cardDestination === "external"
+          }
           href={getEditorialHref(featuredItem)}
           subtitle={featuredSubtitle}
           title={featuredItem.title ?? ""}

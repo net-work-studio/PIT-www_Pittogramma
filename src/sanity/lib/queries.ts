@@ -54,6 +54,14 @@ export const HOME_PAGE_QUERY = defineQuery(`
         excerpt,
         featuredCover { ${COVER_MEDIA_FIELDS} },
       },
+      _type == "event" => {
+        type,
+        dateStart,
+        dateEnd,
+        attendanceMode,
+        locationName,
+        cardDestination,
+      },
       tags[]->{ _id, name }
     },
     midPageCta->${CTA_PROJECTION},
@@ -64,9 +72,10 @@ export const HOME_PAGE_QUERY = defineQuery(`
 
 export const HOME_FEED_QUERY = defineQuery(`
   *[
-    _type in ["project", "interview", "journal"]
+    _type in ["project", "interview", "journal", "event"]
     && defined(publishingDate.date)
     && publishingDate.date <= $today
+    && (_type != "event" || coalesce(dateEnd, dateStart) >= $today)
   ] | order(publishingDate.date desc) [0...32] {
     _id,
     _type,
@@ -90,6 +99,14 @@ export const HOME_FEED_QUERY = defineQuery(`
       label,
       excerpt,
       featuredCover { ${COVER_MEDIA_FIELDS} },
+    },
+    _type == "event" => {
+      type,
+      dateStart,
+      dateEnd,
+      attendanceMode,
+      locationName,
+      cardDestination,
     },
     tags[]->{ _id, name }
   }

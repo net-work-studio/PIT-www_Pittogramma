@@ -1,6 +1,8 @@
 import AdvCard from "@/components/cards/adv-card";
 import BaseCard from "@/components/cards/base-card";
 import { resolveJournalHeroCover } from "@/lib/cover-media-utils";
+import { formatEventCardLocation } from "@/lib/event-location";
+import { EVENT_TYPE_BADGE_VARIANT, getEventTypeLabel } from "@/lib/event-type";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import type {
   HOME_ADV_QUERY_RESULT,
@@ -9,6 +11,7 @@ import type {
 
 type EditorialItem = HOME_FEED_QUERY_RESULT[number];
 type AdvItem = HOME_ADV_QUERY_RESULT[number];
+type BaseCardVariant = Parameters<typeof BaseCard>[0]["variant"];
 
 export type HomeGridSlot =
   | { kind: "editorial"; item: EditorialItem }
@@ -21,10 +24,13 @@ function getEditorialHref(item: EditorialItem): string {
   if (item._type === "journal") {
     return `/journal/${item.slug?.current ?? ""}`;
   }
+  if (item._type === "event") {
+    return `/events/${item.slug?.current ?? ""}`;
+  }
   return `/interviews/${item.slug?.current ?? ""}`;
 }
 
-function getCardVariant(item: EditorialItem) {
+function getCardVariant(item: EditorialItem): BaseCardVariant {
   if (item._type !== "journal") {
     return item._type;
   }
@@ -33,6 +39,14 @@ function getCardVariant(item: EditorialItem) {
 }
 
 function getAuthors(item: EditorialItem) {
+  if (item._type === "event") {
+    const location = formatEventCardLocation(
+      item.cardDestination === "external" ? "offline" : item.attendanceMode,
+      item.locationName
+    );
+    return location ? [{ name: location }] : undefined;
+  }
+
   if (item.people?.length) {
     return item.people.map((p) => ({ name: p.name ?? "" }));
   }
@@ -74,16 +88,27 @@ function renderSlot(slot: HomeGridSlot) {
     );
   }
 
-  const item = slot.item;
+  const { item } = slot;
+  const isEvent = item._type === "event";
+  const eventTypeLabel = isEvent ? getEventTypeLabel(item.type) : null;
+  let cardVariant = getCardVariant(item);
+
+  if (isEvent && eventTypeLabel) {
+    cardVariant = EVENT_TYPE_BADGE_VARIANT;
+  }
 
   return (
     <BaseCard
       authors={getAuthors(item)}
+      badgeLabel={eventTypeLabel ?? undefined}
+      external={isEvent && item.cardDestination === "external"}
       href={getEditorialHref(item)}
-      image={item._type === "journal" ? resolveJournalHeroCover(item) : item.cover}
+      image={
+        item._type === "journal" ? resolveJournalHeroCover(item) : item.cover
+      }
       key={item._id}
       title={item.title ?? ""}
-      variant={getCardVariant(item)}
+      variant={cardVariant}
     />
   );
 }
