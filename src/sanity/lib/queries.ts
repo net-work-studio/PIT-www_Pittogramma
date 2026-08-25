@@ -17,7 +17,10 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     utmMedium,
     utmCampaign,
     instagramUrl,
-    spotifyUrl
+    linkedinUrl,
+    studioAgencyContributionUrl,
+    typeFoundriesContributionUrl,
+    bibliographyContributionUrl
   }
 `);
 

@@ -45,18 +45,18 @@ export default async function Footer({
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                Follow us on Instagram
+                Instagram
               </a>
             </li>
           )}
-          {siteSettings?.spotifyUrl && (
+          {siteSettings?.linkedinUrl && (
             <li>
               <a
-                href={siteSettings.spotifyUrl}
+                href={siteSettings.linkedinUrl}
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                Listen our music on Spotify
+                LinkedIn
               </a>
             </li>
           )}
@@ -68,10 +68,7 @@ export default async function Footer({
             <Link href="/submit">Submit your project</Link>
           </li>
           <li>
-            <Link href="/contribute">Contribute to the repository</Link>
-          </li>
-          <li>
-            <Link href="/donate">Donate to the project</Link>
+            <Link href="/contribute">Contribute to the index</Link>
           </li>
         </ul>
 

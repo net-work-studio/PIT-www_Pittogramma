@@ -44,6 +44,10 @@ _Avoid_: Resource records, global Resource settings
 A public Resource page selected as the internal destination of a reusable CTA. Its fixed route is resolved by the front end.
 _Avoid_: Storing the Resource page URL in a CTA
 
+**Index**:
+The public navigation and Studio sidebar grouping for Pittogramma’s curated directories, including Studios / Agencies, Type Foundries, Bibliography, and the other existing Resource pages. “Index” is the user-facing label; internal code may continue to use Resource terminology.
+_Avoid_: Renaming individual directory types, treating Index as a separate content type
+
 **Bibliography**:
 An always-published Resource containing Pittogramma's curated list of books on graphic design. It is available at `/bibliography` and appears in Resource navigation.
 _Avoid_: Treating Bibliography as an optionally published feature
@@ -51,6 +55,14 @@ _Avoid_: Treating Bibliography as an optionally published feature
 **Bibliography Studio section**:
 The Resources Studio subsection that groups Bibliography Page settings, bibliography entries, and Publishers. Publishers are maintained there because they are only referenced by bibliography entries and have no public Resource page.
 _Avoid_: A separate Publisher Resource page, treating Publishers as a sibling public Resource
+
+**Contribution form**:
+An external Notion form for proposing a particular Resource type. The currently available Contribution forms propose a Studio / Agency, a Type Foundry, or a Bibliography entry. Each form is optional and is configured from the dedicated Contributions tab in Site Settings; the public Contribute page shows only forms with a configured URL and opens them in a new tab.
+_Avoid_: Project submission form (which has its own `/submit` route), a general-purpose contribution form
+
+**Contribute page**:
+The public `/contribute` page, titled “Contribute to the index,” that lists the currently configured Contribution forms and directs visitors to the appropriate external Notion form. It has no introductory copy. Contribution forms do not appear on individual Resource indexes.
+_Avoid_: Project submission page, repository contribution guide. The footer link uses the same “Contribute to the index” label.
 
 **Targeted Resource navigation**:
 A Recent Updates link to a Resource index that brings its matching Resource into view and opens its existing detail dialog when one is available. Resources without a detail dialog only scroll to their matching item.

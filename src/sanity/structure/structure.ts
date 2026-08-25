@@ -117,7 +117,7 @@ export const structure: StructureResolver = (S) =>
 
       group(
         S,
-        "Resources",
+        "Index",
         [
           group(
             S,

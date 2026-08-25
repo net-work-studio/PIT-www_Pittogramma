@@ -28,6 +28,9 @@ const nextConfig: NextConfig = {
     ];
   },
   experimental: {
+    // Next's runtime config currently does not backfill this default when
+    // cacheComponents is enabled, despite the main config normalizer doing so.
+    instantInsights: { validationLevel: "warning" },
     prefetchInlining: true,
   },
   images: {

@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, Card, Flex, Stack, Text, useToast } from "@sanity/ui";
+import { Button, Card, Flex, Stack, Text } from "@sanity/ui";
+import { useToast } from "@sanity/ui/toast";
 import { useCallback, useState } from "react";
 import { type StringInputProps, useClient, useFormValue } from "sanity";
 import { apiVersion } from "@/sanity/env";

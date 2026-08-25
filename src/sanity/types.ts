@@ -368,7 +368,10 @@ export type SiteSettings = {
   title?: string;
   seo?: SeoModule;
   instagramUrl?: string;
-  spotifyUrl?: string;
+  linkedinUrl?: string;
+  studioAgencyContributionUrl?: string;
+  typeFoundriesContributionUrl?: string;
+  bibliographyContributionUrl?: string;
   utmSource: string;
   utmMedium?: string;
   utmCampaign?: string;
@@ -1325,6 +1328,23 @@ export type Contributor = {
   description?: string;
 };
 
+export type MediaFolderReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "media.folder";
+};
+
+export type MediaFolder = {
+  _id: string;
+  _type: "media.folder";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  parent?: MediaFolderReference;
+};
+
 export type MediaTag = {
   _id: string;
   _type: "media.tag";
@@ -1521,6 +1541,8 @@ export type AllSanitySchemaTypes =
   | Community
   | Adv
   | Contributor
+  | MediaFolderReference
+  | MediaFolder
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -1593,13 +1615,16 @@ export type SITEMAP_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_type == "siteSettings"][0] {    utmSource,    utmMedium,    utmCampaign,    instagramUrl,    spotifyUrl  }
+// Query: *[_type == "siteSettings"][0] {    utmSource,    utmMedium,    utmCampaign,    instagramUrl,    linkedinUrl,    studioAgencyContributionUrl,    typeFoundriesContributionUrl,    bibliographyContributionUrl  }
 export type SITE_SETTINGS_QUERY_RESULT = {
   utmSource: string;
   utmMedium: string | null;
   utmCampaign: string | null;
   instagramUrl: string | null;
-  spotifyUrl: string | null;
+  linkedinUrl: string | null;
+  studioAgencyContributionUrl: string | null;
+  typeFoundriesContributionUrl: string | null;
+  bibliographyContributionUrl: string | null;
 } | null;
 
 // Source: src/sanity/lib/queries.ts
@@ -9015,7 +9040,7 @@ declare module "@sanity/client" {
     '*[_type == "event" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}': EventSlugsQueryResult;
     '*[_type == "journal" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}': JournalSlugsQueryResult;
     '{\n  "projects": *[_type == "project" && defined(slug.current)] {\n    "slug": slug.current,\n    _updatedAt\n  },\n  "interviews": *[_type == "interview" && defined(slug.current)] {\n    "slug": slug.current,\n    _updatedAt\n  },\n  "journals": *[_type == "journal" && defined(slug.current)] {\n    "slug": slug.current,\n    _updatedAt\n  }\n}': SITEMAP_QUERY_RESULT;
-    '\n  *[_type == "siteSettings"][0] {\n    utmSource,\n    utmMedium,\n    utmCampaign,\n    instagramUrl,\n    spotifyUrl\n  }\n': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[_type == "siteSettings"][0] {\n    utmSource,\n    utmMedium,\n    utmCampaign,\n    instagramUrl,\n    linkedinUrl,\n    studioAgencyContributionUrl,\n    typeFoundriesContributionUrl,\n    bibliographyContributionUrl\n  }\n': SITE_SETTINGS_QUERY_RESULT;
     '\n  *[_type == "homePage"][0] {\n    _id,\n    title,\n    introText,\n    featuredItem->{\n      _id,\n      _type,\n      title,\n      slug,\n      publishingDate,\n      cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  preserveAnimation,\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n      _type == "project" => {\n        "people": designers[]{ ...@->{ _id, name }, _key },\n      },\n      _type == "interview" => {\n        "people": designersAndProfessionals[]{ ...@->{ _id, name }, _key },\n        interviewToType,\n        "studio": studio->name,\n        "typeFoundry": typeFoundry->name,\n        introText,\n      },\n      _type == "journal" => {\n        "people": authors[]{ ...@->{ _id, name }, _key },\n        label,\n        excerpt,\n        featuredCover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  preserveAnimation,\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n      },\n      tags[]->{ _id, name }\n    },\n    midPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n    endOfPageCta->{\n    _id,\n    title,\n    variant,\n    headline,\n    image {\n      _type,\n      image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n      alt,\n      caption\n    },\n    buttonText,\n    linkType,\n    internalLink->{\n      _type,\n      "slug": slug\n    },\n    externalUrl\n  },\n    \n  seo {\n    metaTitle,\n    metaDescription,\n    metaRobots,\n    canonicalURL,\n    openGraph {\n      title,\n      description,\n      url\n    },\n    xCard {\n      title,\n      description\n    },\n    metaImage {\n      _type,\n      image {\n        _type,\n        \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n\n      },\n      alt,\n      caption\n    }\n  }\n\n  }\n': HOME_PAGE_QUERY_RESULT;
     '\n  *[\n    _type in ["project", "interview", "journal"]\n    && defined(publishingDate.date)\n    && publishingDate.date <= $today\n  ] | order(publishingDate.date desc) [0...32] {\n    _id,\n    _type,\n    title,\n    slug,\n    publishingDate,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  preserveAnimation,\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    _type == "project" => {\n      "people": designers[]{ ...@->{ _id, name }, _key },\n    },\n    _type == "interview" => {\n      "people": designersAndProfessionals[]{ ...@->{ _id, name }, _key },\n      interviewToType,\n      "studio": studio->name,\n      "typeFoundry": typeFoundry->name,\n      introText,\n      readingTime,\n    },\n    _type == "journal" => {\n      "people": authors[]{ ...@->{ _id, name }, _key },\n      label,\n      excerpt,\n      featuredCover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  preserveAnimation,\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    },\n    tags[]->{ _id, name }\n  }\n': HOME_FEED_QUERY_RESULT;
     '\n  *[\n    _type in ["project", "journal"]\n    && defined(publishingDate.date)\n    && publishingDate.date <= $today\n  ] | order(publishingDate.date desc) [0...$limit] {\n    _id,\n    _type,\n    title,\n    slug,\n    publishingDate,\n    cover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  preserveAnimation,\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n    _type == "project" => {\n      description,\n      "people": designers[]{ ...@->{ _id, name }, _key },\n    },\n    _type == "journal" => {\n      excerpt,\n      featuredCover { \n  type,\n  image { \n  asset->{\n    _id,\n    url,\n    metadata {\n      lqip,\n      dimensions { width, height }\n    }\n  },\n  hotspot,\n  crop\n },\n  preserveAnimation,\n  "videoUrl": video.asset->url,\n  caption,\n  alt\n },\n      "people": authors[]{ ...@->{ _id, name }, _key },\n      label,\n    },\n  }\n': NEWSLETTER_PREVIEW_QUERY_RESULT;

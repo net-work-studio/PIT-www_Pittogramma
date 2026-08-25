@@ -7,8 +7,8 @@ import {
   Stack,
   Text,
   TextInput,
-  useToast,
 } from "@sanity/ui";
+import { useToast } from "@sanity/ui/toast";
 import { useCallback, useState } from "react";
 import {
   type StringInputProps,
