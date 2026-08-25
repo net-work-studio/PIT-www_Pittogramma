@@ -1,0 +1,25 @@
+src/components/mode-toggle.tsx
+  s_800497d28b6d76::t_61086eb23325f5 3
+src/components/theme-provider.tsx
+  s_800497d28b6d76::t_61086eb23325f5 1
+package.json
+  s_800497d28b6d76::t_e40b3938e46903 9
+bun.lock
+  s_800497d28b6d76::t_a1cee6823f7c66 14,932-933,1610,1612,1614,1616,1618,1620,1622,1624,1626,1628,1630,1632,2350-2351,2560-2581
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "46ba038404315acb73a92c4f3dfca1ec59e74135",
+  "prompts": {},
+  "sessions": {
+    "s_800497d28b6d76": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a03835-b694-78b0-80a1-0755026bb221",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
