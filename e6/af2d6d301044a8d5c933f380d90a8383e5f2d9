@@ -1,0 +1,19 @@
+src/app/not-found.tsx
+  s_800497d28b6d76::t_5cb2595c3e9e47 2-3,15-33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "e6af2d6d301044a8d5c933f380d90a8383e5f2d9",
+  "prompts": {},
+  "sessions": {
+    "s_800497d28b6d76": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a03835-b694-78b0-80a1-0755026bb221",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
