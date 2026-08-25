@@ -91,7 +91,7 @@ export function DurationInput(props: NumberInputProps) {
   );
 
   return (
-    <Stack space={2}>
+    <Stack gap={2}>
       <select
         {...elementProps}
         onChange={handleChange}

@@ -225,7 +225,7 @@ export function FetchWebsiteDataButton(_props: StringInputProps) {
   }, [websiteUrl, patchDocumentFields, sanityAuthToken]);
 
   return (
-    <Stack space={3} style={{ width: "100%" }}>
+    <Stack gap={3} style={{ width: "100%" }}>
       <Flex align="center" gap={2} style={{ width: "100%" }}>
         {websiteUrl ? (
           <>
@@ -265,11 +265,11 @@ export function FetchWebsiteDataButton(_props: StringInputProps) {
 
       {fetchedData && !isPatching && (
         <Card border padding={3} radius={2} tone="positive">
-          <Stack space={3}>
+          <Stack gap={3}>
             <Text size={1} weight="semibold">
               Fields auto-filled from OG tags:
             </Text>
-            <Stack space={2}>
+            <Stack gap={2}>
               {fetchedData.siteName && (
                 <Text size={1}>
                   <strong>Site Name:</strong> {fetchedData.siteName}

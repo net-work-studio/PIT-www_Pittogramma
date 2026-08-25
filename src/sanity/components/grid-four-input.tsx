@@ -81,7 +81,7 @@ function MediaThumbnail({
       tone={hasMedia ? "default" : "transparent"}
       type="button"
     >
-      <Stack space={2}>
+      <Stack gap={2}>
         <Box
           style={{
             aspectRatio,
@@ -220,13 +220,13 @@ export function GridFourInput(props: ObjectInputProps) {
   };
 
   return (
-    <Stack space={4}>
+    <Stack gap={4}>
       {/* Orientation selector */}
       {orientationMember && (
         <ObjectInputMember member={orientationMember} {...renderProps} />
       )}
 
-      <Stack space={3}>
+      <Stack gap={3}>
         {/* Top row */}
         <Flex gap={3}>
           <MediaThumbnail
