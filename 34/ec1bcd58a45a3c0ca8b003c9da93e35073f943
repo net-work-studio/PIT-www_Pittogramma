@@ -1,0 +1,66 @@
+src/components/modules/shared/sanity-image.tsx
+  s_9cee762f65c249::t_421ca7d34d10b0 2-5,123,157-160
+  s_9cee762f65c249::t_47a50e8eaa8c47 10
+  s_9cee762f65c249::t_3390623fadae25 122,128,131
+  s_9cee762f65c249::t_478b9324656fb8 124
+  s_9cee762f65c249::t_a20eccc510fff1 125
+src/sanity/schemaTypes/singletons/pages/home-page.ts
+  s_9cee762f65c249::t_57f91c3e8d2820 32-37,40
+src/components/shared/featured-hero.tsx
+  s_9cee762f65c249::t_2b465d1d72d3b7 31
+  s_9cee762f65c249::t_fc334d8ebbee4f 10-17,19,28,30,48,59
+src/components/home-grid.tsx
+  s_9cee762f65c249::t_aef8ff4e9af87a 91,94-98,106-108,111
+  s_9cee762f65c249::t_fc334d8ebbee4f 4-5,27-29,42-49,92-93,103-104
+  s_9cee762f65c249::t_54fb5f402c70cf 14,33
+src/lib/image-width.ts
+  s_9cee762f65c249::t_47a50e8eaa8c47 1-7
+  s_9cee762f65c249::t_421ca7d34d10b0 8-15
+src/sanity/lib/image.ts
+  s_9cee762f65c249::t_3390623fadae25 93
+src/sanity/lib/queries.ts
+  s_9cee762f65c249::t_1c204408a7d150 59-60,78,105-106
+  s_9cee762f65c249::t_57f91c3e8d2820 57-58,61-64,75,103-104,107-109
+  s_9cee762f65c249::t_954fb0471487bc 110
+src/sanity/extract.json
+  s_9cee762f65c249::t_79b7779558187a 4018-4021,4301-4305
+  s_9cee762f65c249::t_65324ac6afaadd 4306-4308
+src/app/(frontend)/page.tsx
+  s_9cee762f65c249::t_3de08f0dda39ac 220-221,249
+  s_9cee762f65c249::t_60c535ef006c8d 11,52-54,81-89,104-106,254,257-260
+  s_9cee762f65c249::t_dbdc98d817b574 10,63
+  s_9cee762f65c249::t_1c204408a7d150 58-62,64-65,212-215,217-219
+src/sanity/schemaTypes/documents/event.ts
+  s_9cee762f65c249::t_57f91c3e8d2820 14-35,54-58
+  s_9cee762f65c249::t_fd23bceaa18ac1 59-60
+src/sanity/types.ts
+  s_9cee762f65c249::t_79b7779558187a 766-770,822,1643-1671,1674-1681,2070-2098,2101-2108
+  s_9cee762f65c249::t_728b853c29887b 1637,1672-1673,2068,2099-2100,9127-9128
+CONTEXT.md
+  s_9cee762f65c249::t_8b77d8078188e4 99-102,107-110
+  s_9cee762f65c249::t_1c204408a7d150 103-106
+  s_9cee762f65c249::t_23ba3d3e9da717 95-98
+src/lib/date-utils.test.ts
+  s_9cee762f65c249::t_dbdc98d817b574 1-20
+src/lib/date-utils.ts
+  s_9cee762f65c249::t_dbdc98d817b574 16-25
+src/lib/image-width.test.ts
+  s_9cee762f65c249::t_9c20ff10288608 1,6-13,20-21
+  s_9cee762f65c249::t_421ca7d34d10b0 2-5,14-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "34ec1bcd58a45a3c0ca8b003c9da93e35073f943",
+  "prompts": {},
+  "sessions": {
+    "s_9cee762f65c249": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a038c0-6360-73a0-97c1-9d1e4873b925",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
