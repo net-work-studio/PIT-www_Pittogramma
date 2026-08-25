@@ -160,6 +160,32 @@ export const ABOUT_PAGE_QUERY = defineQuery(`
   }
 `);
 
+export const IMPRESSUM_PAGE_QUERY = defineQuery(`
+  *[_type == "impressumPage"][0] {
+    _id,
+    title,
+    content[] {
+      _key,
+      _type,
+      _type == "block" => @
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
+export const PRIVACY_POLICY_PAGE_QUERY = defineQuery(`
+  *[_type == "privacyPolicyPage"][0] {
+    _id,
+    title,
+    content[] {
+      _key,
+      _type,
+      _type == "block" => @
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
 export const PROJECTS_PAGE_QUERY = defineQuery(`
   *[_type == "projectsPage"][0] {
     _id,
