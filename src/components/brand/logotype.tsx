@@ -2,7 +2,7 @@ import type { SVGProps } from "react";
 
 const SVGComponent = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    className="h-full w-full fill-foreground"
+    className="h-5 w-full fill-foreground"
     fill="none"
     viewBox="0 0 2566 442"
     xmlns="http://www.w3.org/2000/svg"
