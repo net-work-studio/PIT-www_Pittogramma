@@ -1,0 +1,19 @@
+package.json
+  s_7d523b473d51fa::t_e66c2c2cac650a 46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "2c03a79849186e841348ca54682d958bd59f8005",
+  "prompts": {},
+  "sessions": {
+    "s_7d523b473d51fa": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a03974-8e44-7612-9514-24a268b28447",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
