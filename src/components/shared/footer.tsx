@@ -12,13 +12,13 @@ export default async function Footer({
 }: DynamicFetchOptions) {
   "use cache";
   const { data: siteSettings } = await sanityFetch({
-    query: SITE_SETTINGS_QUERY,
     perspective,
+    query: SITE_SETTINGS_QUERY,
     stega,
   });
 
   return (
-    <footer className="p-4">
+    <footer className="p-4 pt-8">
       <div className="grid grid-cols-1 gap-4 rounded-lg bg-secondary p-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-0">
         {/* Col 1 */}
         <ul className="flex flex-col items-start gap-1">
