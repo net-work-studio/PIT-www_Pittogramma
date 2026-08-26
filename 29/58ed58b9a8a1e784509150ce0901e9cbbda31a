@@ -1,0 +1,20 @@
+netlify/edge-functions/public-site-robots.ts
+  s_2d4a81bfd3e734::t_a3f91e124bf324 1-19,90-117
+  s_2d4a81bfd3e734::t_e6548c84381fad 118
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "2958ed58b9a8a1e784509150ce0901e9cbbda31a",
+  "prompts": {},
+  "sessions": {
+    "s_2d4a81bfd3e734": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a03cfb-0464-7821-9cf2-616a933d57f8",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
