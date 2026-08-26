@@ -1,0 +1,67 @@
+src/sanity/extract.json
+  s_bae89ac5bfced5::t_03735f6b5c3b9a 2310-2529
+src/sanity/types.ts
+  s_bae89ac5bfced5::t_26654487a1cbb3 426-460,1716,1726-1760,9388
+CONTEXT.md
+  s_1b73f90c5f63ba::t_c009f3b9e5b3e2 63-72,77-80
+src/app/(frontend)/(resources)/bibliography/page.tsx
+  s_1b73f90c5f63ba::t_a089150f83c4e9 8-11,79,87
+src/app/(frontend)/(resources)/bookshops/page.tsx
+  s_1b73f90c5f63ba::t_26c23f6cfb8127 3,9-11,79-83,91,96-97
+src/app/(frontend)/(resources)/glossary/page.tsx
+  s_1b73f90c5f63ba::t_aae11f4916704a 3,16-19,31-35,168-179,189,192
+src/app/(frontend)/(resources)/institutes/page.tsx
+  s_1b73f90c5f63ba::t_b22e07e05bda42 3,9-11,79-83,91,95,97
+src/app/(frontend)/(resources)/studios-agencies/page.tsx
+  s_1b73f90c5f63ba::t_222e34413fb978 3,9-11,76-80,88,92-93
+src/app/(frontend)/(resources)/type-foundries/page.tsx
+  s_1b73f90c5f63ba::t_5805ac3b45aee2 3,9-11,79-83,91,95,97
+src/app/(frontend)/(resources)/websites/page.tsx
+  s_1b73f90c5f63ba::t_3436798acd0f9f 3,9-11,76-80,88,92-93
+src/components/navigation/resources-header.tsx
+  s_1b73f90c5f63ba::t_5eed1394668a06 3,9,16,28,34
+src/components/resources/bookshops-content.tsx
+  s_1b73f90c5f63ba::t_88a07901b89a53 14
+src/components/resources/institutes-content.tsx
+  s_1b73f90c5f63ba::t_49b1d0c9aa9f6e 15
+src/components/resources/resource-view-tabs.tsx
+  s_1b73f90c5f63ba::t_9af81c697b03fc 22
+src/components/resources/studios-content.tsx
+  s_1b73f90c5f63ba::t_65059a08024c8e 13
+src/components/resources/type-foundries-content.tsx
+  s_1b73f90c5f63ba::t_a8166f4eb7917d 12
+src/components/resources/websites-content.tsx
+  s_1b73f90c5f63ba::t_38922b428fb453 11
+src/components/shared/header.tsx
+  s_1b73f90c5f63ba::t_c159f32b247eb1 12-13,15-19,32,40,45-46,88,94
+src/lib/feature-availability.test.ts
+  s_1b73f90c5f63ba::t_b3698f2be960c7 1,3-6,8-10,12-44,46-51,53-54,60-69
+src/lib/feature-availability.ts
+  s_1b73f90c5f63ba::t_f4aa8f510b266b 3,6-10,12-23,25-30,33-36,39-41,44-85,88-94,96-97,101-102,104-137,140-143
+src/sanity/lib/queries.ts
+  s_1b73f90c5f63ba::t_12665654b2aa2f 23-33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "89d2c6875a44ada5d1d5d8fcecf70a8ac92914a9",
+  "prompts": {},
+  "sessions": {
+    "s_1b73f90c5f63ba": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a03d3f-6c8f-7171-b3ce-9d64bc20dd70",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_bae89ac5bfced5": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a03d3e-e927-7dd3-84c2-8850512b086c",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
