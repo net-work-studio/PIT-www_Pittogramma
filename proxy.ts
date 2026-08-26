@@ -25,10 +25,6 @@ export async function proxy() {
 }
 
 async function getCurrentPublicSiteState() {
-  if (process.env.PUBLIC_SITE_MODE_BYPASS === "true") {
-    return { mode: "live" } as const;
-  }
-
   if (cachedState && cacheExpiresAt > Date.now()) {
     return cachedState;
   }
