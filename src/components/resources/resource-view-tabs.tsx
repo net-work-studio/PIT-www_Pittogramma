@@ -19,7 +19,7 @@ import {
 } from "@/components/resources/resource-target";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { ViewMode } from "@/lib/feature-flags";
+import type { ViewMode } from "@/lib/feature-availability";
 import {
   type ResourceListSortColumn,
   type ResourceListSortState,

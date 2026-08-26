@@ -20,7 +20,17 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     linkedinUrl,
     studioAgencyContributionUrl,
     typeFoundriesContributionUrl,
-    bibliographyContributionUrl
+    bibliographyContributionUrl,
+    indexAvailability {
+      headerSearchEnabled,
+      studiosAgencies { published, enabledViews, searchEnabled },
+      typeFoundries { published, enabledViews, searchEnabled },
+      institutes { published, enabledViews, searchEnabled },
+      bookshops { published, enabledViews, searchEnabled },
+      websites { published, enabledViews, searchEnabled },
+      glossary { published, searchEnabled },
+      bibliography { published }
+    }
   }
 `);
 

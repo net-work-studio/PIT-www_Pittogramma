@@ -60,9 +60,23 @@ _Avoid_: Storing the Resource page URL in a CTA
 The public navigation and Studio sidebar grouping for Pittogramma’s curated directories, including Studios / Agencies, Type Foundries, Bibliography, and the other existing Resource pages. “Index” is the user-facing label; internal code may continue to use Resource terminology.
 _Avoid_: Renaming individual directory types, treating Index as a separate content type
 
+**Index availability**:
+The editorial Site Settings configuration that controls whether an Index is published and which of its supported public views are enabled. It has one fixed, named configuration section for each Index. Every published Index has at least one enabled view.
+_Avoid_: Deployment-time feature flags, a published Index with no usable view
+
+Missing Index availability values retain the all-enabled default during the configuration rollout.
+
+An unpublished Index is unavailable at its public route and returns a 404. Permanently retired Indexes may subsequently have their content deleted from Sanity.
+
+Search availability is configured only for Studios / Agencies, Type Foundries, Institutes, Bookshops, Websites, and Glossary. Header search availability is a separate site-wide setting.
+
 **Bibliography**:
 An always-published Resource containing Pittogramma's curated list of books on graphic design. It is available at `/bibliography` and appears in Resource navigation.
 _Avoid_: Treating Bibliography as an optionally published feature
+
+**Bibliography availability**:
+The fixed availability state shown in Site Settings for Bibliography. It is published, with no editable view or search controls because the public Bibliography is one sortable list.
+_Avoid_: Configurable Bibliography publication, dormant view or search toggles
 
 **Bibliography Studio section**:
 The Resources Studio subsection that groups Bibliography Page settings, bibliography entries, and Publishers. Publishers are maintained there because they are only referenced by bibliography entries and have no public Resource page.

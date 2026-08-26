@@ -1,17 +1,19 @@
 import type { ReactNode } from "react";
 
-import { getEnabledResources } from "@/lib/feature-flags";
+import type { Resource } from "@/components/navigation/resources-navigation.data";
 import ResourcesNavigation from "../navigation/resources-navigation";
 
 interface ResourcesHeaderProps {
   children?: ReactNode;
   intro: string;
+  resources: Resource[];
   title: string;
 }
 
 export default function ResourcesHeader({
   children,
   intro,
+  resources,
   title,
 }: ResourcesHeaderProps) {
   return (
@@ -23,13 +25,13 @@ export default function ResourcesHeader({
             {intro}
           </p>
         </hgroup>
-        <ResourcesNavigation resources={getEnabledResources()} />
+        <ResourcesNavigation resources={resources} />
         {children}
       </div>
       <div className="flex w-full flex-col items-center pt-10 pb-8 md:hidden">
         <h1 className="mb-6 text-2xl uppercase">{title}</h1>
         <div className="-mx-5 w-[calc(100%+2.5rem)]">
-          <ResourcesNavigation resources={getEnabledResources()} />
+          <ResourcesNavigation resources={resources} />
         </div>
         <p className="mt-6 max-w-prose text-balance text-center text-2xl">
           {intro}

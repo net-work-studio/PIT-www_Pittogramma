@@ -9,10 +9,14 @@ import { type AdvTier, TIER_CAPS, TIER_ORDER } from "@/lib/adv-config";
 import { buildLocalToday } from "@/lib/date-utils";
 import {
   getEnabledResources,
-  isHeaderSearchEnabled,
-} from "@/lib/feature-flags";
+  getFeatureAvailability,
+} from "@/lib/feature-availability";
 import { type DynamicFetchOptions, sanityFetch } from "@/sanity/lib/live";
-import { FEED_COMMUNITY_QUERY, FEED_QUERY } from "@/sanity/lib/queries";
+import {
+  FEED_COMMUNITY_QUERY,
+  FEED_QUERY,
+  SITE_SETTINGS_QUERY,
+} from "@/sanity/lib/queries";
 
 import { NavigationDesktop } from "../navigation/navigation-desktop";
 import { NavigationMobile } from "../navigation/navigation-mobile";
@@ -24,10 +28,8 @@ export default async function Header({
 }: DynamicFetchOptions) {
   "use cache";
   const today = buildLocalToday();
-  const enabledResources = getEnabledResources();
-  const headerSearchEnabled = isHeaderSearchEnabled();
 
-  const [advsRes, communityRes] = await Promise.all([
+  const [advsRes, communityRes, settingsRes] = await Promise.all([
     sanityFetch({ params: { today }, perspective, query: FEED_QUERY, stega }),
     sanityFetch({
       params: { today },
@@ -35,10 +37,13 @@ export default async function Header({
       query: FEED_COMMUNITY_QUERY,
       stega,
     }),
+    sanityFetch({ perspective, query: SITE_SETTINGS_QUERY, stega }),
   ]);
 
   const allAdvs = advsRes.data ?? [];
   const communityItems = communityRes.data ?? [];
+  const availability = getFeatureAvailability(settingsRes.data);
+  const enabledResources = getEnabledResources(availability);
 
   const byTier: Record<AdvTier, typeof allAdvs> = {
     bronze: [],
@@ -80,13 +85,13 @@ export default async function Header({
         >
           <FeedDialog advs={advs} communityItems={communityItems} />
         </Suspense>
-        {headerSearchEnabled && (
+        {availability.headerSearchEnabled ? (
           <div className="hidden md:flex">
             <Button size="icon" variant="outline">
               <Search size={16} />
             </Button>
           </div>
-        )}
+        ) : null}
         <div className="hidden lg:flex">
           <ModeToggle />
         </div>

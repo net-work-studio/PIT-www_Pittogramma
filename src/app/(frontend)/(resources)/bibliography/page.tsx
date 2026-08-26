@@ -5,6 +5,10 @@ import { Suspense } from "react";
 import CtaCard from "@/components/cards/cta-card";
 import ResourcesHeader from "@/components/navigation/resources-header";
 import { BibliographyContent } from "@/components/resources/bibliography-content";
+import {
+  getEnabledResources,
+  getFeatureAvailability,
+} from "@/lib/feature-availability";
 import { RESOURCE_PAGE_DEFAULTS } from "@/lib/resource-page";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -72,6 +76,7 @@ async function CachedBibliographyPage({
     ]);
 
   const utmSettings = utmSettingsFromSiteSettings(settings);
+  const availability = getFeatureAvailability(settings);
   const defaults = RESOURCE_PAGE_DEFAULTS.bibliography;
   const cta = pageSettings?.endOfPageCta;
 
@@ -79,6 +84,7 @@ async function CachedBibliographyPage({
     <>
       <ResourcesHeader
         intro={pageSettings?.introText ?? defaults.introText}
+        resources={getEnabledResources(availability)}
         title={defaults.title}
       />
       <BibliographyContent books={books} utmSettings={utmSettings} />
