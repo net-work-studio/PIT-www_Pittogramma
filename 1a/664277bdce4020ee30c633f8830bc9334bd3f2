@@ -1,0 +1,41 @@
+src/components/shared/countdown-timer.tsx
+  s_2d4a81bfd3e734::t_94caaca4c51ef6 1-73
+src/app/(frontend)/layout.tsx
+  s_2d4a81bfd3e734::t_7a8ae0ec8b46fd 66-82
+  s_2d4a81bfd3e734::t_4647af0603e17f 52-54,93-95,115
+  s_2d4a81bfd3e734::t_5e814d6ee79c85 13
+  s_2d4a81bfd3e734::t_94caaca4c51ef6 1,9,11,18-35,59-63,65,83-92
+  s_2d4a81bfd3e734::t_3618c2471aeb8a 12,14-17,64,99-113
+  s_2d4a81bfd3e734::t_d989d9b7cd6cb6 36-38,96-98,114,141-144
+src/lib/public-site-state.ts
+  s_2d4a81bfd3e734::t_48311e070fa87b 1-73
+src/sanity/schemaTypes/singletons/site-settings.ts
+  s_2d4a81bfd3e734::t_96c42b81d67105 21-89,376
+src/sanity/types.ts
+  s_2d4a81bfd3e734::t_e879bc40336555 426-437,1775-1792,9419
+src/sanity/extract.json
+  s_2d4a81bfd3e734::t_e25c90dec6b66d 2310-2397
+src/sanity/lib/queries.ts
+  s_2d4a81bfd3e734::t_96c42b81d67105 37-53
+src/components/shared/public-holding-page.tsx
+  s_2d4a81bfd3e734::t_b82c6812891538 97-101
+  s_2d4a81bfd3e734::t_94caaca4c51ef6 1-96
+src/lib/public-site-state.test.ts
+  s_2d4a81bfd3e734::t_48311e070fa87b 1-67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "1a664277bdce4020ee30c633f8830bc9334bd3f2",
+  "prompts": {},
+  "sessions": {
+    "s_2d4a81bfd3e734": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a03cfb-0464-7821-9cf2-616a933d57f8",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": null
+    }
+  }
+}
