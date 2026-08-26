@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 import CtaCard from "@/components/cards/cta-card";
@@ -13,7 +13,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { isResourceEnabled, isSearchEnabled } from "@/lib/feature-flags";
+import {
+  getEnabledResources,
+  getFeatureAvailability,
+} from "@/lib/feature-availability";
 import { RESOURCE_PAGE_DEFAULTS } from "@/lib/resource-page";
 import { getResourceTargetElementId } from "@/lib/resource-target";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -25,7 +28,11 @@ import {
   sanityFetch,
   sanityFetchMetadata,
 } from "@/sanity/lib/live";
-import { GLOSSARY_PAGE_QUERY, GLOSSARY_QUERY } from "@/sanity/lib/queries";
+import {
+  GLOSSARY_PAGE_QUERY,
+  GLOSSARY_QUERY,
+  SITE_SETTINGS_QUERY,
+} from "@/sanity/lib/queries";
 import type { GLOSSARY_QUERY_RESULT } from "@/sanity/types";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -140,9 +147,6 @@ function GlossaryCard({ word, definition, resourceId }: GlossaryCardProps) {
 }
 
 export default async function Page() {
-  if (!isResourceEnabled("glossary")) {
-    redirect("/");
-  }
   const { isEnabled: isDraftMode } = await draftMode();
   if (isDraftMode) {
     return (
@@ -161,11 +165,18 @@ async function DynamicGlossaryPage() {
 
 async function CachedGlossaryPage({ perspective, stega }: DynamicFetchOptions) {
   "use cache";
-  const [{ data: glossaryItems }, { data: pageSettings }] = await Promise.all([
-    sanityFetch({ perspective, query: GLOSSARY_QUERY, stega }),
-    sanityFetch({ perspective, query: GLOSSARY_PAGE_QUERY, stega }),
-  ]);
+  const [{ data: glossaryItems }, { data: pageSettings }, { data: settings }] =
+    await Promise.all([
+      sanityFetch({ perspective, query: GLOSSARY_QUERY, stega }),
+      sanityFetch({ perspective, query: GLOSSARY_PAGE_QUERY, stega }),
+      sanityFetch({ perspective, query: SITE_SETTINGS_QUERY, stega }),
+    ]);
 
+  const availability = getFeatureAvailability(settings);
+  const resourceAvailability = availability.resources.glossary;
+  if (!resourceAvailability.published) {
+    notFound();
+  }
   const groupedGlossary = groupByFirstLetter(glossaryItems);
   const [leftColumn, rightColumn] = splitIntoColumns(groupedGlossary);
   const defaults = RESOURCE_PAGE_DEFAULTS.glossary;
@@ -175,9 +186,10 @@ async function CachedGlossaryPage({ perspective, stega }: DynamicFetchOptions) {
     <>
       <ResourcesHeader
         intro={pageSettings?.introText ?? defaults.introText}
+        resources={getEnabledResources(availability)}
         title={defaults.title}
       >
-        {isSearchEnabled("glossary") && <SearchInput />}
+        {resourceAvailability.searchEnabled ? <SearchInput /> : null}
       </ResourcesHeader>
       <section className="grid grid-cols-1 gap-x-2.5 md:grid-cols-2">
         <ResourceTargetScroller

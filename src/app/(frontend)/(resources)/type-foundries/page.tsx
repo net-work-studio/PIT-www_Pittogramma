@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import CtaCard from "@/components/cards/cta-card";
 import ResourcesHeader from "@/components/navigation/resources-header";
 import { TypeFoundriesContent } from "@/components/resources/type-foundries-content";
 import {
-  getEnabledViews,
-  isResourceEnabled,
-  isSearchEnabled,
-} from "@/lib/feature-flags";
+  getEnabledResources,
+  getFeatureAvailability,
+} from "@/lib/feature-availability";
 import { RESOURCE_PAGE_DEFAULTS } from "@/lib/resource-page";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -48,9 +47,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-  if (!isResourceEnabled("type-foundries")) {
-    redirect("/");
-  }
   const { isEnabled: isDraftMode } = await draftMode();
   if (isDraftMode) {
     return (
@@ -80,6 +76,11 @@ async function CachedTypeFoundriesPage({
     ]);
 
   const utmSettings = utmSettingsFromSiteSettings(settings);
+  const availability = getFeatureAvailability(settings);
+  const resourceAvailability = availability.resources["type-foundries"];
+  if (!resourceAvailability.published) {
+    notFound();
+  }
   const defaults = RESOURCE_PAGE_DEFAULTS.typeFoundries;
   const cta = pageSettings?.endOfPageCta;
 
@@ -87,12 +88,13 @@ async function CachedTypeFoundriesPage({
     <>
       <ResourcesHeader
         intro={pageSettings?.introText ?? defaults.introText}
+        resources={getEnabledResources(availability)}
         title={defaults.title}
       />
       <TypeFoundriesContent
-        enabledViews={getEnabledViews("type-foundries")}
+        enabledViews={resourceAvailability.enabledViews}
         foundries={foundries}
-        searchEnabled={isSearchEnabled("type-foundries")}
+        searchEnabled={resourceAvailability.searchEnabled}
         utmSettings={utmSettings}
       />
       {cta ? (

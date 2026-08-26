@@ -11,7 +11,7 @@ import {
   type ResourceListColumn,
   ResourceViewTabs,
 } from "@/components/resources/resource-view-tabs";
-import type { ViewMode } from "@/lib/feature-flags";
+import type { ViewMode } from "@/lib/feature-availability";
 import { buildHrefFromUrl } from "@/lib/resource-website-url";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { BOOKSHOPS_QUERY_RESULT } from "@/sanity/types";

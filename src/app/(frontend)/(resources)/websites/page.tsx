@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import CtaCard from "@/components/cards/cta-card";
 import ResourcesHeader from "@/components/navigation/resources-header";
 import { WebsitesContent } from "@/components/resources/websites-content";
 import {
-  getEnabledViews,
-  isResourceEnabled,
-  isSearchEnabled,
-} from "@/lib/feature-flags";
+  getEnabledResources,
+  getFeatureAvailability,
+} from "@/lib/feature-availability";
 import { RESOURCE_PAGE_DEFAULTS } from "@/lib/resource-page";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -48,9 +47,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-  if (!isResourceEnabled("websites")) {
-    redirect("/");
-  }
   const { isEnabled: isDraftMode } = await draftMode();
   if (isDraftMode) {
     return (
@@ -77,6 +73,11 @@ async function CachedWebsitesPage({ perspective, stega }: DynamicFetchOptions) {
     ]);
 
   const utmSettings = utmSettingsFromSiteSettings(settings);
+  const availability = getFeatureAvailability(settings);
+  const resourceAvailability = availability.resources.websites;
+  if (!resourceAvailability.published) {
+    notFound();
+  }
   const defaults = RESOURCE_PAGE_DEFAULTS.websites;
   const cta = pageSettings?.endOfPageCta;
 
@@ -84,11 +85,12 @@ async function CachedWebsitesPage({ perspective, stega }: DynamicFetchOptions) {
     <>
       <ResourcesHeader
         intro={pageSettings?.introText ?? defaults.introText}
+        resources={getEnabledResources(availability)}
         title={defaults.title}
       />
       <WebsitesContent
-        enabledViews={getEnabledViews("websites")}
-        searchEnabled={isSearchEnabled("websites")}
+        enabledViews={resourceAvailability.enabledViews}
+        searchEnabled={resourceAvailability.searchEnabled}
         sources={sources}
         utmSettings={utmSettings}
       />

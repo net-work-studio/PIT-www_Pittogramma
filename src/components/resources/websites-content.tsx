@@ -8,7 +8,7 @@ import {
   ResourceViewTabs,
 } from "@/components/resources/resource-view-tabs";
 import { TagsDisplay } from "@/components/resources/tags-display";
-import type { ViewMode } from "@/lib/feature-flags";
+import type { ViewMode } from "@/lib/feature-availability";
 import { buildHrefFromUrl } from "@/lib/resource-website-url";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { WEB_SOURCES_QUERY_RESULT } from "@/sanity/types";
