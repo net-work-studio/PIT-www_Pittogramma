@@ -34,6 +34,23 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
   }
 `);
 
+export const PUBLIC_SITE_STATE_QUERY = defineQuery(`
+  *[_type == "siteSettings"][0] {
+    publicSiteMode,
+    countdown {
+      heading,
+      message,
+      launchAt
+    },
+    maintenance {
+      heading,
+      message,
+      returnAt,
+      contactUrl
+    }
+  }
+`);
+
 // ==================== PAGE QUERIES ====================
 
 export const HOME_PAGE_QUERY = defineQuery(`

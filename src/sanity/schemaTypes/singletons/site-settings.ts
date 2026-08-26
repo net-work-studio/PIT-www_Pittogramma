@@ -20,6 +20,75 @@ export const siteSettings = defineType({
     }),
     defineField({
       description:
+        "Controls what visitors see on the public website. Keep this set to Live unless you are publishing a planned holding page.",
+      group: "publicSite",
+      initialValue: "live",
+      name: "publicSiteMode",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "Live", value: "live" },
+          { title: "Countdown", value: "countdown" },
+          { title: "Maintenance", value: "maintenance" },
+        ],
+      },
+      title: "Public site mode",
+      type: "string",
+    }),
+    defineField({
+      description:
+        "Shown to visitors while the public site is in Countdown mode. Fill in the launch time before publishing this mode.",
+      fields: [
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({
+          name: "message",
+          rows: 3,
+          title: "Message",
+          type: "text",
+        }),
+        defineField({
+          name: "launchAt",
+          title: "Launch date and time",
+          type: "datetime",
+        }),
+      ],
+      group: "publicSite",
+      hidden: ({ parent }) => parent?.publicSiteMode !== "countdown",
+      name: "countdown",
+      title: "Countdown message",
+      type: "object",
+    }),
+    defineField({
+      description:
+        "Shown to visitors while the public site is in Maintenance mode.",
+      fields: [
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({
+          name: "message",
+          rows: 3,
+          title: "Message",
+          type: "text",
+        }),
+        defineField({
+          name: "returnAt",
+          title: "Expected return date and time",
+          type: "datetime",
+        }),
+        defineField({
+          name: "contactUrl",
+          title: "Contact URL",
+          type: "url",
+          validation: httpUrlValidation,
+        }),
+      ],
+      group: "publicSite",
+      hidden: ({ parent }) => parent?.publicSiteMode !== "maintenance",
+      name: "maintenance",
+      title: "Maintenance message",
+      type: "object",
+    }),
+    defineField({
+      description:
         "Control which Indexes are public and the controls available on each one.",
       fields: [
         defineField({
@@ -304,6 +373,7 @@ export const siteSettings = defineType({
   ],
   groups: [
     { default: true, name: "seo", title: "SEO" },
+    { name: "publicSite", title: "Public site" },
     { name: "indexAvailability", title: "Index availability" },
     { name: "footer", title: "Footer" },
     { name: "contributions", title: "Contributions" },
