@@ -16,15 +16,14 @@ import {
   getDynamicFetchOptions,
   SanityLive,
   sanityFetch,
-  sanityFetchMetadata,
 } from "@/sanity/lib/live";
 import { PUBLIC_SITE_STATE_QUERY } from "@/sanity/lib/queries";
 
 export async function generateMetadata(): Promise<Metadata> {
   await connection();
-  const { data: settings } = await sanityFetchMetadata({
+  const settings = await getCachedPublicSiteSettings({
     perspective: "published",
-    query: PUBLIC_SITE_STATE_QUERY,
+    stega: false,
   });
   const state = getPublicSiteState(settings, {
     bypass: process.env.PUBLIC_SITE_MODE_BYPASS === "true",
