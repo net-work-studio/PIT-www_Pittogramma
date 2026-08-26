@@ -1,0 +1,19 @@
+src/sanity/schemaTypes/singletons/site-settings.ts
+  s_1b73f90c5f63ba::t_950a82d4d31fe8 36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "cbe82cd42938acdb6088fa0597009f2c0809e4c4",
+  "prompts": {},
+  "sessions": {
+    "s_1b73f90c5f63ba": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a03d3f-6c8f-7171-b3ce-9d64bc20dd70",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
