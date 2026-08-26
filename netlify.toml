@@ -1,0 +1,3 @@
+[build]
+  command = "mkdir -p .netlify-countdown && cp pittogramma-countdown.html .netlify-countdown/index.html"
+  publish = ".netlify-countdown"
