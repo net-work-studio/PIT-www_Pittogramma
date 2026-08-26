@@ -1,8 +1,22 @@
-import { getPublicSiteRobotsHeader } from "../../src/lib/public-site-robots";
-import {
-  getPublicSiteState,
-  type PublicSiteSettings,
-} from "../../src/lib/public-site-state";
+interface PublicSiteSettings {
+  countdown?: {
+    heading?: string | null;
+    launchAt?: string | null;
+    message?: string | null;
+  } | null;
+  maintenance?: {
+    contactUrl?: string | null;
+    heading?: string | null;
+    message?: string | null;
+    returnAt?: string | null;
+  } | null;
+  publicSiteMode?: string | null;
+}
+
+type PublicSiteState =
+  | { mode: "live" }
+  | { mode: "countdown" }
+  | { mode: "maintenance" };
 
 const CACHE_TTL_MS = 10_000;
 const SANITY_API_VERSION = "2026-06-03";
@@ -71,6 +85,35 @@ async function getCurrentPublicSiteState() {
   }
 
   return cachedState;
+}
+
+function getPublicSiteRobotsHeader(state: PublicSiteState): string | null {
+  return state.mode === "live" ? null : "noindex, nofollow";
+}
+
+function getPublicSiteState(
+  settings: PublicSiteSettings | null | undefined,
+  now = new Date()
+): PublicSiteState {
+  if (
+    settings?.publicSiteMode === "countdown" &&
+    settings.countdown?.heading &&
+    settings.countdown.launchAt
+  ) {
+    return new Date(settings.countdown.launchAt).getTime() <= now.getTime()
+      ? { mode: "live" }
+      : { mode: "countdown" };
+  }
+
+  if (
+    settings?.publicSiteMode === "maintenance" &&
+    settings.maintenance?.heading &&
+    settings.maintenance.message
+  ) {
+    return { mode: "maintenance" };
+  }
+
+  return { mode: "live" };
 }
 
 export const config = {
