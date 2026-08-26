@@ -93,9 +93,12 @@ function PittogrammaMark() {
 
 function formatDateTime(value: string): string {
   return new Intl.DateTimeFormat("en-GB", {
-    dateStyle: "long",
-    timeStyle: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    month: "long",
     timeZone: "Europe/Rome",
     timeZoneName: "short",
+    year: "numeric",
   }).format(new Date(value));
 }
