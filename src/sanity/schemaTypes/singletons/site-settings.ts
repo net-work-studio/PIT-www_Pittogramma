@@ -33,6 +33,7 @@ export const siteSettings = defineType({
             defineField({
               initialValue: true,
               name: "published",
+              readOnly: true,
               title: "Published",
               type: "boolean",
             }),
