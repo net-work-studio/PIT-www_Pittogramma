@@ -1,0 +1,28 @@
+src/components/shared/countdown-timer.tsx
+  s_2d4a81bfd3e734::t_f99470807599e2 49-58
+src/app/(frontend)/layout.tsx
+  s_2d4a81bfd3e734::t_663a09b5f84cce 113-115
+  s_2d4a81bfd3e734::t_f99470807599e2 2
+  s_2d4a81bfd3e734::t_cbcdf7f5ea6f36 4,24,63,68-71,108,121
+src/lib/public-site-state.ts
+  s_2d4a81bfd3e734::t_754d8ad98ace66 39
+  s_2d4a81bfd3e734::t_f99470807599e2 50-53
+src/lib/public-site-state.test.ts
+  s_2d4a81bfd3e734::t_f99470807599e2 33-47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "c1ed5efeb2a2184f1f14bbda0a9404f874b5f0ca",
+  "prompts": {},
+  "sessions": {
+    "s_2d4a81bfd3e734": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a03cfb-0464-7821-9cf2-616a933d57f8",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
