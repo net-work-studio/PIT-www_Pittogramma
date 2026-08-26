@@ -46,7 +46,16 @@ export function CountdownTimer({ launchAt }: CountdownTimerProps) {
     update();
 
     const interval = window.setInterval(update, 1000);
-    return () => window.clearInterval(interval);
+    const untilLaunch = new Date(launchAt).getTime() - Date.now();
+    const reload = window.setTimeout(
+      () => window.location.reload(),
+      Math.max(0, untilLaunch) + 1000
+    );
+
+    return () => {
+      window.clearInterval(interval);
+      window.clearTimeout(reload);
+    };
   }, [launchAt]);
 
   return (
