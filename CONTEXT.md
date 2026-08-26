@@ -4,6 +4,22 @@ Pittogramma is a cultural platform covering graphic design, visual culture, even
 
 ## Language
 
+**Countdown page**:
+The temporary standalone Pittogramma page published on the production domain before the public-site launch.
+_Avoid_: Preview deployment, maintenance page
+
+**Launch cutover**:
+The scheduled switch at 00:00 CEST on 1 September 2026 from the Countdown page to the public Pittogramma site.
+_Avoid_: Domain migration, site deployment
+
+**Production domain**:
+The canonical public address `pittogramma.xyz`; `www.pittogramma.xyz` redirects to it.
+_Avoid_: Final domain, www domain
+
+**External DNS**:
+The Infomaniak-managed DNS zone for the Production domain. It continues to own all records while its website records direct traffic to the site host.
+_Avoid_: Netlify DNS, domain transfer
+
 **Designer Index ordering**:
 The visitor-selected ascending or descending order applied to any visible desktop column of the public Designers Index. The default is Designer name A–Z.
 _Avoid_: Chronological designer ordering, manually fixed list order, name-only sorting
