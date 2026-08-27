@@ -1,0 +1,47 @@
+CONTEXT.md
+  s_4bfd1f5109c738::t_079da932b7e0da 27-32
+src/app/(frontend)/(resources)/glossary/page.tsx
+  s_4bfd1f5109c738::t_26993bce6e0308 10,143
+src/app/(frontend)/events/[slug]/page.tsx
+  s_4bfd1f5109c738::t_2a7268ce77044b 13,221
+src/components/cards/cta-card.tsx
+  s_4bfd1f5109c738::t_a543a67d00c2b7 5,76,89-91
+src/components/modules/designer/designer-info.tsx
+  s_4bfd1f5109c738::t_f12970cf8b11b5 1,46-50
+src/components/modules/designer/designer-modal.tsx
+  s_4bfd1f5109c738::t_a5aa755448142b 8,183-187
+src/components/modules/edition/edition-info.tsx
+  s_4bfd1f5109c738::t_63c6dcc4a82b40 2,57-58
+src/components/modules/event/event-info-grid.tsx
+  s_4bfd1f5109c738::t_be2bf4be5fbf68 1-2,47-48
+src/components/modules/project/project-description.tsx
+  s_4bfd1f5109c738::t_45aff8883d22d8 4,56-58
+src/components/modules/shared/logo-frame.tsx
+  s_4bfd1f5109c738::t_e237510b0b3907 2,104-106
+src/components/resources/book-details-modal.tsx
+  s_4bfd1f5109c738::t_04879816d69d69 4,103-107
+src/components/shared/multiline-text.test.tsx
+  s_4bfd1f5109c738::t_753b0e11722ece 1-23
+src/components/shared/multiline-text.tsx
+  s_4bfd1f5109c738::t_bf3c68a90fc51e 1-21
+src/components/shared/page-header.tsx
+  s_4bfd1f5109c738::t_d5c09b38e5f407 1,25
+src/components/shared/public-holding-page.tsx
+  s_4bfd1f5109c738::t_b4c01334528ef2 1,23-24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "cd38731423c21b96623adccd56937e245650f7da",
+  "prompts": {},
+  "sessions": {
+    "s_4bfd1f5109c738": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0431e-8f1e-73e3-88a5-8e8fc31a0f84",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
