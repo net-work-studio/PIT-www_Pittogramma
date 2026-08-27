@@ -1,6 +1,6 @@
 import { PortableText, type PortableTextComponents } from "next-sanity";
 
-const EXTERNAL_HTTP_URL = /^https?:\/\//;
+const EXTERNAL_HTTP_URL = /^https?:\/\//i;
 
 const components: PortableTextComponents = {
   block: {
