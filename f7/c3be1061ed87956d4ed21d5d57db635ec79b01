@@ -1,0 +1,19 @@
+src/components/modules/legal/legal-page-content.tsx
+  s_b97e8b3dd117f2::t_9953adfd78c2af 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "f7c3be1061ed87956d4ed21d5d57db635ec79b01",
+  "prompts": {},
+  "sessions": {
+    "s_b97e8b3dd117f2": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04227-dd08-70f2-919f-0b503b8c111e",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
