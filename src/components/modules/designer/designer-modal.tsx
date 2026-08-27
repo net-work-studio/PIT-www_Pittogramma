@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { designerInitial } from "@/components/modules/designer/designer-portrait-thumb";
 import DesignerProjectLink from "@/components/modules/designer/designer-project-link";
 import SanityImage from "@/components/modules/shared/sanity-image";
+import { MultilineText } from "@/components/shared/multiline-text";
 import {
   Dialog,
   DialogContent,
@@ -179,7 +180,11 @@ function DesignerModalContent({
           ) : null}
         </div>
 
-        {bio ? <p>{bio}</p> : null}
+        {bio ? (
+          <p>
+            <MultilineText text={bio} />
+          </p>
+        ) : null}
 
         {filteredProjects.length > 0 ? (
           <section className="flex flex-col space-y-1.5">
