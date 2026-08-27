@@ -1,3 +1,4 @@
+import { MultilineText } from "@/components/shared/multiline-text";
 import {
   formatEducationInline,
   sortEducationByYearDesc,
@@ -42,7 +43,11 @@ export default function DesignerInfo({
         </hgroup>
 
         <div className="flex flex-col gap-20">
-          {bio ? <p>{bio}</p> : null}
+          {bio ? (
+            <p>
+              <MultilineText text={bio} />
+            </p>
+          ) : null}
 
           <dl className="flex flex-col gap-4">
             {birthYear ? (

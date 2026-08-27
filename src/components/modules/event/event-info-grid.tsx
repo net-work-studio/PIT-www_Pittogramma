@@ -1,3 +1,5 @@
+import { MultilineText } from "@/components/shared/multiline-text";
+
 interface InfoItem {
   _key: string;
   content: string | null;
@@ -42,8 +44,8 @@ function Column({ items }: { items: InfoItem[] }) {
           <dt className="w-[138px] shrink-0 font-mono text-sm uppercase lg:w-[200px]">
             {item.title}
           </dt>
-          <dd className="whitespace-pre-line text-muted-foreground text-sm">
-            {item.content}
+          <dd className="text-muted-foreground text-sm">
+            <MultilineText text={item.content ?? ""} />
           </dd>
         </div>
       ))}

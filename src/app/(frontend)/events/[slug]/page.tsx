@@ -10,6 +10,7 @@ import EventInfoGrid from "@/components/modules/event/event-info-grid";
 import ShareLinks from "@/components/modules/project/share-links";
 import CoverMedia from "@/components/modules/shared/cover-media";
 import { JsonLd } from "@/components/seo/json-ld";
+import { MultilineText } from "@/components/shared/multiline-text";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { hasCoverMedia } from "@/lib/cover-media-utils";
 import { formatDateRange } from "@/lib/date-utils";
@@ -217,7 +218,7 @@ async function CachedEventPage({
               About
             </p>
             <p className="text-base leading-normal lg:text-[2rem] lg:leading-tight">
-              {event.description}
+              <MultilineText text={event.description} />
             </p>
           </div>
         ) : null}

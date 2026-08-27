@@ -7,6 +7,7 @@ import CtaCard from "@/components/cards/cta-card";
 import SearchInput from "@/components/feat/search-input";
 import ResourcesHeader from "@/components/navigation/resources-header";
 import { ResourceTargetScroller } from "@/components/resources/resource-target";
+import { MultilineText } from "@/components/shared/multiline-text";
 import {
   Accordion,
   AccordionContent,
@@ -139,7 +140,7 @@ function GlossaryCard({ word, definition, resourceId }: GlossaryCardProps) {
           {word}
         </AccordionTrigger>
         <AccordionContent className="mt-2.5 max-w-prose p-0">
-          {definition}
+          <MultilineText text={definition} />
         </AccordionContent>
       </AccordionItem>
     </Accordion>

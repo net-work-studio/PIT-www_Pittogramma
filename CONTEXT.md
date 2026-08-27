@@ -24,6 +24,12 @@ with rounded corners and internal padding. Studio provides one multiline Text
 field, without language or syntax-highlighting controls.
 _Avoid_: Quote (the existing large serif pull-quote style), syntax-highlighted code
 
+**Editorial line break**:
+A line break or blank line intentionally entered in a visitor-visible
+multiline text field in Studio. Every Editorial line break is preserved on the
+public site; ordinary repeated spaces remain collapsed.
+_Avoid_: Code-block whitespace, paragraph style
+
 **Footnote (Journal)**:
 An inline citation or editorial note in a Journal entry. Footnotes are numbered
 automatically in reading order, link to a generated endnotes list, and provide

@@ -1,4 +1,5 @@
 import SanityImage from "@/components/modules/shared/sanity-image";
+import { MultilineText } from "@/components/shared/multiline-text";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { cn } from "@/lib/utils";
 import type { ImageLike } from "@/sanity/lib/image";
@@ -100,7 +101,9 @@ export default function LogoFrame({
         </div>
       </AspectRatio>
       {description ? (
-        <p className="text-sm leading-normal">{description}</p>
+        <p className="text-sm leading-normal">
+          <MultilineText text={description} />
+        </p>
       ) : null}
     </div>
   );
