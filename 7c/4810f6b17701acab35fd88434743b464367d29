@@ -1,0 +1,29 @@
+src/components/resources/bibliography-list.tsx
+  s_0d80329b179e59::t_6a80a2a450d79d 45,112,121
+  s_0d80329b179e59::t_83d8f6932f7b93 63
+src/sanity/lib/queries.ts
+  s_0d80329b179e59::t_42ab5a927f4e77 498-503
+src/sanity/types.ts
+  s_0d80329b179e59::t_d78de43c143c20 5437,5442,9447
+src/components/feat/filter/filter-sheet.tsx
+  s_0d80329b179e59::t_d29d7c0303c48a 158
+  s_0d80329b179e59::t_48ec8d4a871295 151
+  s_0d80329b179e59::t_42ab5a927f4e77 25,154-157,159-161
+  s_0d80329b179e59::t_c6b07224dc1504 145
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "7c4810f6b17701acab35fd88434743b464367d29",
+  "prompts": {},
+  "sessions": {
+    "s_0d80329b179e59": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a047f3-d64a-7b03-81f5-b3db6855d386",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
