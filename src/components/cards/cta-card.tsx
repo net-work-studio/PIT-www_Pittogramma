@@ -2,6 +2,7 @@ import Link from "next/link";
 import { stegaClean } from "next-sanity";
 
 import SanityImage from "@/components/modules/shared/sanity-image";
+import { MultilineText } from "@/components/shared/multiline-text";
 import { Button } from "@/components/ui/button";
 import { resolveInternalLink } from "@/lib/resolve-link";
 
@@ -72,7 +73,7 @@ export default function CtaCard({
           <div className="flex w-full flex-col items-center justify-center gap-4 md:w-2/3">
             {headline ? (
               <h3 className="mb-2 max-w-prose text-pretty text-center text-3xl text-foreground">
-                {headline}
+                <MultilineText text={headline} />
               </h3>
             ) : null}
             {buttonElement}
@@ -85,7 +86,9 @@ export default function CtaCard({
   return (
     <div className="flex flex-col items-center justify-start gap-4 text-balance rounded-lg bg-secondary p-5 text-center text-3xl">
       {headline ? (
-        <h2 className="max-w-prose text-balance">{headline}</h2>
+        <h2 className="max-w-prose text-balance">
+          <MultilineText text={headline} />
+        </h2>
       ) : null}
       {buttonElement}
     </div>

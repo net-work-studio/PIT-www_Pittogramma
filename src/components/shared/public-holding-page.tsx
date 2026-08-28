@@ -1,3 +1,4 @@
+import { MultilineText } from "@/components/shared/multiline-text";
 import type { PublicSiteState } from "@/lib/public-site-state";
 
 import { CountdownTimer } from "./countdown-timer";
@@ -19,8 +20,8 @@ export function PublicHoldingPage({ state }: { state: HoldingPageState }) {
           {state.heading}
         </h1>
         {state.message ? (
-          <p className="mt-5 max-w-xl whitespace-pre-wrap text-[#6f6b64] text-base leading-relaxed">
-            {state.message}
+          <p className="mt-5 max-w-xl text-[#6f6b64] text-base leading-relaxed">
+            <MultilineText text={state.message} />
           </p>
         ) : null}
         {state.mode === "countdown" ? (
@@ -93,9 +94,12 @@ function PittogrammaMark() {
 
 function formatDateTime(value: string): string {
   return new Intl.DateTimeFormat("en-GB", {
-    dateStyle: "long",
-    timeStyle: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    month: "long",
     timeZone: "Europe/Rome",
     timeZoneName: "short",
+    year: "numeric",
   }).format(new Date(value));
 }

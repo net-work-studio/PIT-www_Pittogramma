@@ -24,6 +24,12 @@ with rounded corners and internal padding. Studio provides one multiline Text
 field, without language or syntax-highlighting controls.
 _Avoid_: Quote (the existing large serif pull-quote style), syntax-highlighted code
 
+**Editorial line break**:
+A line break or blank line intentionally entered in a visitor-visible
+multiline text field in Studio. Every Editorial line break is preserved on the
+public site; ordinary repeated spaces remain collapsed.
+_Avoid_: Code-block whitespace, paragraph style
+
 **Footnote (Journal)**:
 An inline citation or editorial note in a Journal entry. Footnotes are numbered
 automatically in reading order, link to a generated endnotes list, and provide
@@ -109,6 +115,14 @@ _Avoid_: Next, future (in user-facing copy)
 **Homepage content stream**:
 The fixed number of editorial and advertising cards shown on the homepage. Projects, Interviews, Journal entries, and Events share one chronological stream, ordered by their publishing date; adding a content type replaces another stream card rather than increasing the card total.
 _Avoid_: Separate per-type homepage feeds, event-date ordering, an expanding homepage card count
+
+**Sponsored placement**:
+A clearly labelled, paid placement for one external partner within Pittogramma's public editorial experience. A placement has a stable identifier, a campaign period, a destination URL, and a defined reporting method. It is separate from a Contributor, which records an organisation's identity and editorial credit.
+_Avoid_: Treating every Contributor as paid advertising, calling a pageview an ad impression
+
+**Viewable sponsored impression**:
+A recorded sponsored placement that meets Pittogramma's stated visibility rule. The rule and measurement method appear in advertiser reporting before the placement is sold.
+_Avoid_: Pageview, served impression, an unstated viewability threshold
 
 **Event publishing date**:
 The editorial date when an Event joins the homepage content stream. It is independent of the Event's start and end dates, which only describe when the event happens.

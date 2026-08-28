@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import { cacheLife } from "next/cache";
 import { draftMode } from "next/headers";
+import { connection } from "next/server";
+import Script from "next/script";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { Suspense } from "react";
 
@@ -9,19 +12,22 @@ import Header from "@/components/shared/header";
 import { PublicHoldingPage } from "@/components/shared/public-holding-page";
 import { ThemeProvider } from "@/components/theme-provider";
 import { getPublicSiteState } from "@/lib/public-site-state";
+import { shouldTrackWithUmami } from "@/lib/umami";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
   SanityLive,
   sanityFetch,
-  sanityFetchMetadata,
 } from "@/sanity/lib/live";
 import { PUBLIC_SITE_STATE_QUERY } from "@/sanity/lib/queries";
 
+const umamiWebsiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
+
 export async function generateMetadata(): Promise<Metadata> {
-  const { data: settings } = await sanityFetchMetadata({
+  await connection();
+  const settings = await getCachedPublicSiteSettings({
     perspective: "published",
-    query: PUBLIC_SITE_STATE_QUERY,
+    stega: false,
   });
   const state = getPublicSiteState(settings, {
     bypass: process.env.PUBLIC_SITE_MODE_BYPASS === "true",
@@ -57,12 +63,20 @@ export default async function FrontendLayout({
 }
 
 async function FrontendContent({ children }: { children: React.ReactNode }) {
+  await connection();
   const { isEnabled: isDraftMode } = await draftMode();
   const { perspective, stega } = isDraftMode
     ? await getDynamicFetchOptions()
     : { perspective: "published" as const, stega: false };
-  const state = await getCachedPublicSiteState({ perspective, stega });
+  const settings = await getCachedPublicSiteSettings({ perspective, stega });
+  const state = getPublicSiteState(settings, {
+    bypass: process.env.PUBLIC_SITE_MODE_BYPASS === "true",
+  });
   const isLive = state.mode === "live";
+  const shouldTrack = shouldTrackWithUmami({
+    isDraftMode,
+    websiteId: umamiWebsiteId,
+  });
 
   return (
     <>
@@ -94,23 +108,33 @@ async function FrontendContent({ children }: { children: React.ReactNode }) {
           <VisualEditing />
         </>
       ) : null}
+      {shouldTrack ? (
+        <Script
+          data-domains="pittogramma.xyz,www.pittogramma.xyz"
+          data-do-not-track="true"
+          data-website-id={umamiWebsiteId}
+          src="https://umami.net-work.studio/script.js"
+          strategy="afterInteractive"
+        />
+      ) : null}
     </>
   );
 }
 
-async function getCachedPublicSiteState({
+async function getCachedPublicSiteSettings({
   perspective,
   stega,
 }: DynamicFetchOptions) {
   "use cache";
+  // Public-site mode is a small operational setting. It must take effect
+  // without depending on a visitor already having Sanity Live connected.
+  cacheLife({ expire: 60, revalidate: 10, stale: 0 });
   const { data: settings } = await sanityFetch({
     perspective,
     query: PUBLIC_SITE_STATE_QUERY,
     stega,
   });
-  return getPublicSiteState(settings, {
-    bypass: process.env.PUBLIC_SITE_MODE_BYPASS === "true",
-  });
+  return settings;
 }
 
 async function DynamicHeader() {

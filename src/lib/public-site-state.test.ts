@@ -30,6 +30,21 @@ describe("public site state", () => {
     });
   });
 
+  test("releases the site when the countdown reaches its launch time", () => {
+    expect(
+      getPublicSiteState(
+        {
+          countdown: {
+            heading: "Coming soon",
+            launchAt: "2026-09-01T00:00:00+02:00",
+          },
+          publicSiteMode: "countdown",
+        },
+        { now: new Date("2026-09-01T00:00:00+02:00") }
+      )
+    ).toEqual({ mode: "live" });
+  });
+
   test("resolves a configured maintenance page", () => {
     expect(
       getPublicSiteState({

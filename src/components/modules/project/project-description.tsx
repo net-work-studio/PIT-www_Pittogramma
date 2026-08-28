@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { MultilineText } from "@/components/shared/multiline-text";
 
 interface ProjectDescriptionProps {
   description: string | null;
@@ -52,7 +53,9 @@ export default function ProjectDescription({
         className="scrollbar-none h-full min-h-0 overflow-y-auto [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         ref={scrollRef}
       >
-        <p>{description}</p>
+        <p>
+          <MultilineText text={description} />
+        </p>
       </div>
       {showFade ? (
         <div

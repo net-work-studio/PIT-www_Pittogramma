@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { MultilineText } from "@/components/shared/multiline-text";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -99,7 +100,11 @@ function BookDetailsContent({
           {authors ? <p className="text-muted-foreground">{authors}</p> : null}
         </header>
 
-        {book.description ? <p>{book.description}</p> : null}
+        {book.description ? (
+          <p>
+            <MultilineText text={book.description} />
+          </p>
+        ) : null}
 
         <dl className="grid grid-cols-2 gap-x-5 gap-y-4">
           <BookDetail label="Publisher" value={book.publisher?.name} />

@@ -1,4 +1,5 @@
 import MetaItem from "@/components/modules/shared/meta-item";
+import { MultilineText } from "@/components/shared/multiline-text";
 import { Button } from "@/components/ui/button";
 
 interface NamedRef {
@@ -53,8 +54,8 @@ export default function EditionInfo({
 
         <div className="flex flex-col gap-10">
           {description ? (
-            <p className="whitespace-pre-line text-sm leading-relaxed">
-              {description}
+            <p className="text-sm leading-relaxed">
+              <MultilineText text={description} />
             </p>
           ) : null}
 
