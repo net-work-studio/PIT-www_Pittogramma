@@ -15,7 +15,6 @@ Measure Pittogramma's audience with Umami, prepare defensible direct-sponsorship
 
 ## Not yet specified
 
-- The Umami tracker endpoint and website ID.
 - The placement formats, pricing, availability, and viewability rule.
 
 ## #1: Choose the Umami deployment

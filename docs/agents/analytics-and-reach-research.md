@@ -4,9 +4,17 @@ Research date: 2026-08-27
 
 ## Decision
 
+Pittogramma's final selection is the existing self-hosted Umami instance. It
+keeps analytics data on Pittogramma-controlled infrastructure and supports the
+event, UTM, funnel, attribution, board, and sharing work needed for direct
+sponsorship reporting. The team accepts ownership of PostgreSQL, backups,
+updates, and access control.
+
+### Superseded initial recommendation
+
 Use **Plausible Cloud on the Business plan** if Pittogramma's budget permits it. It is the better fit for an editorial site preparing an advertiser-facing media kit: goals, funnels, custom properties, the Stats API and share links are documented product features, and Plausible explicitly identifies potential partners and advertisers as a shared-dashboard use case. Keep the advertiser-facing evidence restrained: publish a dated media-kit page or PDF with a fixed reporting window and methodology, then give serious partners a password-protected, read-only dashboard link for current numbers. Do not make a permanently public live dashboard the only media kit.
 
-Choose **Umami** instead if self-hosting, full data control or a custom embedded analytics view matters more than Plausible's managed advertiser-sharing workflow. Its feature set now overlaps strongly with Plausible, including events, properties, UTM analysis, funnels, attribution, boards and share URLs. That comes with operating a Node application and PostgreSQL, plus backups, updates and access control.
+That initial recommendation was superseded when the team chose its existing self-hosted Umami instance. Umami remains the better selection when self-hosting, full data control, or a custom embedded analytics view matters more than Plausible's managed advertiser-sharing workflow.
 
 Both products describe themselves as cookie-free and privacy-first. That lowers the consent burden for their default tracking, but it is not a legal conclusion. Have the privacy notice, hosting location, DPA and all event properties reviewed for the applicable jurisdictions. Never put emails, names, full URLs containing identifiers, or other personal data in analytics events. Do not enable Umami session replay without a separate privacy and consent assessment.
 
