@@ -1,0 +1,19 @@
+docs/agents/analytics-and-reach-research.md
+  s_367c6ff4a45096::t_9896e01825d32f 7-14,17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "c51b5cfd3969a4dc888b5c417592e524d088906e",
+  "prompts": {},
+  "sessions": {
+    "s_367c6ff4a45096": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0435c-f9f2-7451-9717-7f9dbddaef73",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
