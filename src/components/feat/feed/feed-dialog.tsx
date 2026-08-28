@@ -72,7 +72,6 @@ function FeedDialogInner({ advs, communityItems }: FeedDialogProps) {
             ? "scrollbar-none w-120 max-w-120 overflow-y-auto [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             : "scrollbar-none max-h-[90vh] overflow-y-auto [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         }
-        overlayClassName="bg-background/80 backdrop-blur-md"
         side={side}
       >
         <SheetHeader className="pb-4">
