@@ -59,12 +59,12 @@ Type: Prototype
 
 ### Question
 
-How should the Next.js layout load the Umami tracker only for the live public site, with a site ID and tracker URL supplied through public environment variables?
+How should the Next.js layout load the Umami tracker for public visitors, including a temporary holding page, with a site ID and tracker URL supplied through public environment variables?
 
 ### Answer
 
-Resolved. Load Umami once with `next/script` in the public frontend layout,
-only when the public site is live and not in Sanity draft mode. Set
+Resolved. Load Umami once with `next/script` in the public frontend layout for
+both the live site and any public holding page, but never in Sanity draft mode. Set
 `NEXT_PUBLIC_UMAMI_WEBSITE_ID` to the Pittogramma website ID in local and
 Netlify environments. The tracker uses the existing self-hosted instance at
 `https://umami.net-work.studio/script.js`, restricts collection to the

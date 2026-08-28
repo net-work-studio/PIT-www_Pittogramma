@@ -12,6 +12,7 @@ import Header from "@/components/shared/header";
 import { PublicHoldingPage } from "@/components/shared/public-holding-page";
 import { ThemeProvider } from "@/components/theme-provider";
 import { getPublicSiteState } from "@/lib/public-site-state";
+import { shouldTrackWithUmami } from "@/lib/umami";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
@@ -72,7 +73,10 @@ async function FrontendContent({ children }: { children: React.ReactNode }) {
     bypass: process.env.PUBLIC_SITE_MODE_BYPASS === "true",
   });
   const isLive = state.mode === "live";
-  const shouldTrackWithUmami = isLive && !isDraftMode && Boolean(umamiWebsiteId);
+  const shouldTrack = shouldTrackWithUmami({
+    isDraftMode,
+    websiteId: umamiWebsiteId,
+  });
 
   return (
     <>
@@ -104,7 +108,7 @@ async function FrontendContent({ children }: { children: React.ReactNode }) {
           <VisualEditing />
         </>
       ) : null}
-      {shouldTrackWithUmami ? (
+      {shouldTrack ? (
         <Script
           data-domains="pittogramma.xyz,www.pittogramma.xyz"
           data-do-not-track="true"
