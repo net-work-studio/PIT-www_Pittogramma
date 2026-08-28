@@ -1,0 +1,19 @@
+src/components/modules/project/project-description.tsx
+  s_0d80329b179e59::t_7096c1e470b034 14-15,24,26-28,64-70,73
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "10ded98dd48371506428759f9e292d3d00cdd510",
+  "prompts": {},
+  "sessions": {
+    "s_0d80329b179e59": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a047f3-d64a-7b03-81f5-b3db6855d386",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
