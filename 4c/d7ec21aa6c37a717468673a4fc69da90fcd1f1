@@ -1,0 +1,31 @@
+CONTEXT.md
+  s_367c6ff4a45096::t_33b296ea2e002a 119-126
+docs/agents/umami-media-kit-decision-map.md
+  s_367c6ff4a45096::t_4d6c42f68e04c4 10-12,18-19,31,43,55,80,94,108
+  s_367c6ff4a45096::t_33b296ea2e002a 1-9,13-17,20-30,32-42,44-54,56-66,77-79,81-93,95-107,109-132
+  s_367c6ff4a45096::t_00be89697905b4 67-69,71-76
+  s_367c6ff4a45096::t_9e3cee282d6bf4 70
+docs/agents/analytics-and-reach-research.md
+  s_367c6ff4a45096::t_efd2b6b0abd2e7 1-55
+docs/agents/umami-ad-blocker-research.md
+  s_367c6ff4a45096::t_8176060f4d00f7 1-38
+src/app/(frontend)/layout.tsx
+  s_367c6ff4a45096::t_00be89697905b4 5,23-24,75,107-114
+  s_367c6ff4a45096::t_f3352eec621b67 115
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "4cd7ec21aa6c37a717468673a4fc69da90fcd1f1",
+  "prompts": {},
+  "sessions": {
+    "s_367c6ff4a45096": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0435c-f9f2-7451-9717-7f9dbddaef73",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
