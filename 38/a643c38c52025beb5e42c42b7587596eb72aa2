@@ -1,0 +1,25 @@
+src/lib/umami.ts
+  s_455febda8c43a5::t_c512eac15e3f7e 1-9
+docs/agents/umami-media-kit-decision-map.md
+  s_455febda8c43a5::t_c512eac15e3f7e 62,66-67
+src/lib/umami.test.ts
+  s_455febda8c43a5::t_c512eac15e3f7e 1-32
+src/app/(frontend)/layout.tsx
+  s_455febda8c43a5::t_c512eac15e3f7e 15,76-79,111
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "38a643c38c52025beb5e42c42b7587596eb72aa2",
+  "prompts": {},
+  "sessions": {
+    "s_455febda8c43a5": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a047b5-1019-7af3-92e5-55446985e237",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
