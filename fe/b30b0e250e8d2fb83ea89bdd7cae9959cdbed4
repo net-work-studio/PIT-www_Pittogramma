@@ -1,0 +1,19 @@
+src/sanity/types.ts
+  s_7cd2640915da14::t_53c7e003faf171 5437,9446
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "feb30b0e250e8d2fb83ea89bdd7cae9959cdbed4",
+  "prompts": {},
+  "sessions": {
+    "s_7cd2640915da14": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0488e-d99a-73c1-b211-b5f3f779d2f8",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": null
+    }
+  }
+}
