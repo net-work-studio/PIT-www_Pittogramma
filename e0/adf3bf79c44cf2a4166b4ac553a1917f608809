@@ -1,0 +1,21 @@
+src/components/modules/event/event-info.tsx
+  s_0d80329b179e59::t_7c2dcddb6c686d 89
+src/app/(frontend)/events/[slug]/page.tsx
+  s_0d80329b179e59::t_c33351e836e57c 216
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "e0adf3bf79c44cf2a4166b4ac553a1917f608809",
+  "prompts": {},
+  "sessions": {
+    "s_0d80329b179e59": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a047f3-d64a-7b03-81f5-b3db6855d386",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
