@@ -11,7 +11,8 @@ export default function ProjectDescription({
   description,
 }: ProjectDescriptionProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [showFade, setShowFade] = useState(false);
+  const [showTopFade, setShowTopFade] = useState(false);
+  const [showBottomFade, setShowBottomFade] = useState(false);
 
   const updateFade = useCallback(() => {
     const el = scrollRef.current;
@@ -20,8 +21,11 @@ export default function ProjectDescription({
     }
 
     const hasOverflow = el.scrollHeight > el.clientHeight;
+    const atTop = el.scrollTop <= 1;
     const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
-    setShowFade(hasOverflow && !atBottom);
+
+    setShowTopFade(hasOverflow && !atTop);
+    setShowBottomFade(hasOverflow && !atBottom);
   }, []);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: description triggers re-measurement when text content changes
@@ -57,10 +61,16 @@ export default function ProjectDescription({
           <MultilineText text={description} />
         </p>
       </div>
-      {showFade ? (
+      {showTopFade ? (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-background to-transparent"
+          className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-background to-transparent"
+        />
+      ) : null}
+      {showBottomFade ? (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent"
         />
       ) : null}
     </div>

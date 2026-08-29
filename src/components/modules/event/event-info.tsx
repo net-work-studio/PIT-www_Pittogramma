@@ -86,7 +86,7 @@ export default function EventInfo({
                   .filter(Boolean)
                   .filter((tag) => tag.name)
                   .map((tag) => (
-                    <li className="text-sm underline" key={tag._id}>
+                    <li className="text-sm" key={tag._id}>
                       {tag.name}
                     </li>
                   ))}
