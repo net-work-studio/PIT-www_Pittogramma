@@ -1,0 +1,21 @@
+src/sanity/lib/queries.ts
+  s_9e273f42598ad1::t_09331955cbb108 498
+src/sanity/types.ts
+  s_9e273f42598ad1::t_debf4ba66e1bf2 5437,9447
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "ea5c9d5db73d805eb4f35f74e0a9c2b01100e60b",
+  "prompts": {},
+  "sessions": {
+    "s_9e273f42598ad1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04cf5-c972-7df2-82c3-cfb06edf3459",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
