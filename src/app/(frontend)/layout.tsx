@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import { draftMode } from "next/headers";
+import Script from "next/script";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { Suspense } from "react";
 
@@ -10,6 +11,7 @@ import Header from "@/components/shared/header";
 import { PublicHoldingPage } from "@/components/shared/public-holding-page";
 import { ThemeProvider } from "@/components/theme-provider";
 import { getPublicSiteState } from "@/lib/public-site-state";
+import { shouldTrackWithUmami } from "@/lib/umami";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
@@ -17,6 +19,8 @@ import {
   sanityFetch,
 } from "@/sanity/lib/live";
 import { PUBLIC_SITE_STATE_QUERY } from "@/sanity/lib/queries";
+
+const umamiWebsiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getCachedPublicSiteSettings({
@@ -66,6 +70,10 @@ async function FrontendContent({ children }: { children: React.ReactNode }) {
     bypass: process.env.PUBLIC_SITE_MODE_BYPASS === "true",
   });
   const isLive = state.mode === "live";
+  const shouldTrack = shouldTrackWithUmami({
+    isDraftMode,
+    websiteId: umamiWebsiteId,
+  });
 
   return (
     <>
@@ -96,6 +104,15 @@ async function FrontendContent({ children }: { children: React.ReactNode }) {
           <DisableDraftMode />
           <VisualEditing />
         </>
+      ) : null}
+      {shouldTrack ? (
+        <Script
+          data-domains="pittogramma.xyz,www.pittogramma.xyz"
+          data-do-not-track="true"
+          data-website-id={umamiWebsiteId}
+          src="https://umami.net-work.studio/script.js"
+          strategy="afterInteractive"
+        />
       ) : null}
     </>
   );
