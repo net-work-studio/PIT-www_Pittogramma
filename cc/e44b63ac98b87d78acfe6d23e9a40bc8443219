@@ -1,0 +1,32 @@
+docs/agents/umami-ad-blocker-research.md
+  s_9e273f42598ad1::t_1f89b1e326fa6b 1-38
+src/lib/umami.test.ts
+  s_9e273f42598ad1::t_1f89b1e326fa6b 1-32
+docs/agents/umami-media-kit-decision-map.md
+  s_9e273f42598ad1::t_1f89b1e326fa6b 1-131
+src/lib/umami.ts
+  s_9e273f42598ad1::t_1f89b1e326fa6b 1-9
+docs/agents/analytics-and-reach-research.md
+  s_9e273f42598ad1::t_1f89b1e326fa6b 1-63
+src/app/(frontend)/layout.tsx
+  s_9e273f42598ad1::t_1f89b1e326fa6b 4,14,23-24,73-76,108-115
+  s_9e273f42598ad1::t_7b80f72293fb82 116
+CONTEXT.md
+  s_9e273f42598ad1::t_1f89b1e326fa6b 119-126
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "cce44b63ac98b87d78acfe6d23e9a40bc8443219",
+  "prompts": {},
+  "sessions": {
+    "s_9e273f42598ad1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04cf5-c972-7df2-82c3-cfb06edf3459",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
