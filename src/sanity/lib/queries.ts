@@ -495,7 +495,7 @@ export const PROJECTS_COUNT_QUERY = defineQuery(`
 `);
 
 export const PROJECTS_TAGS_QUERY = defineQuery(`
-  *[_type == "tag" && _id in *[_type == "project" && defined(slug.current) && defined(tags)].tags[]._ref] {
+  *[_type == "tag" && defined(slug.current) && _id in *[_type == "project" && defined(slug.current) && defined(tags)].tags[]._ref] {
     _id,
     name,
     "slug": slug.current,
