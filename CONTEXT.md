@@ -4,6 +4,38 @@ Pittogramma is a cultural platform covering graphic design, visual culture, even
 
 ## Language
 
+**Pittogramma**:
+The public name of an informal cultural project and collective. Pittogramma is not currently a company, association, or other legal entity.
+_Avoid_: Pittogramma company, Pittogramma association, incorporated organisation
+
+**Website operator**:
+Fabio Mario Rizzotti, the person currently responsible for operating Pittogramma and its website from Italy.
+_Avoid_: Pittogramma as the legal operator, the Pittogramma team collectively as operator
+
+**Adult project submitter**:
+A Project submitter who confirms they are at least 18 years old. Pittogramma does not accept Project submissions from minors.
+_Avoid_: Collecting a full date of birth solely to establish eligibility, minor submitter
+
+**Submitting representative**:
+The Project submitter who confirms they have authority to submit the Project and agree to publication terms for every named designer and collaborator.
+_Avoid_: Assuming Pittogramma itself obtained separate approval from every collaborator
+
+**Project submission fee**:
+The non-refundable fee charged for Pittogramma to review a Project submission, calculated per submitted designer. Payment does not guarantee selection or publication, and mandatory statutory refund and withdrawal rights still apply.
+_Avoid_: Publication fee, guaranteed placement, no refunds under any circumstances
+
+**Launch consent model**:
+Pittogramma launches without optional tracking, analytics, behavioural advertising, maps, or external video embeds. Outside the embedded submission form, it uses only technical theme-preference storage, so no sitewide consent banner or preference centre is shown until a non-essential service is introduced. Fillout's own cookie notice and consent control must be enabled within the submission form.
+_Avoid_: Precautionary cookie banner, dormant consent categories, loading optional third-party resources before consent
+
+**Direct sponsorship**:
+A paid or in-kind placement agreed directly between Pittogramma and a sponsor, presented without selecting visitors through behavioural tracking.
+_Avoid_: Programmatic advertising, personalised advertising
+
+**Affiliate link**:
+An outbound link through which Pittogramma may receive a commission when a visitor completes a qualifying action with the linked provider.
+_Avoid_: Neutral editorial link, behavioural advertising
+
 **Designer Index ordering**:
 The visitor-selected ascending or descending order applied to any visible desktop column of the public Designers Index. The default is Designer name A–Z.
 _Avoid_: Chronological designer ordering, manually fixed list order, name-only sorting
