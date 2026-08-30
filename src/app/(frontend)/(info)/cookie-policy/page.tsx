@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import LegalPageContent from "@/components/modules/legal/legal-page-content";
 import PageHeader from "@/components/shared/page-header";
@@ -45,7 +46,7 @@ async function CachedCookiePolicyPage({
   });
 
   if (!page?.content?.length) {
-    return null;
+    notFound();
   }
 
   return (

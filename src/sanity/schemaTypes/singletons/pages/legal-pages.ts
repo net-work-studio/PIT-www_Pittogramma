@@ -28,7 +28,7 @@ function legalPage(title: string, name: LegalPageName) {
         of: [defineArrayMember({ type: "block" })],
         title: "Content",
         type: "array",
-        validation: (Rule) => Rule.required(),
+        validation: (Rule) => Rule.required().min(1),
       }),
       defineField({
         group: "seo",
