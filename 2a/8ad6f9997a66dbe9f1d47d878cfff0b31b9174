@@ -1,0 +1,23 @@
+src/app/(frontend)/(info)/submission-terms/page.tsx
+  s_49a3cf69e77579::t_a8f56cacda92e9 3,49
+src/sanity/schemaTypes/singletons/pages/legal-pages.ts
+  s_49a3cf69e77579::t_73dc3f73316eab 31
+src/app/(frontend)/(info)/cookie-policy/page.tsx
+  s_49a3cf69e77579::t_a8f56cacda92e9 3,49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "2a8ad6f9997a66dbe9f1d47d878cfff0b31b9174",
+  "prompts": {},
+  "sessions": {
+    "s_49a3cf69e77579": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a053f4-bba7-7bd1-8caa-846a527dab05",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
