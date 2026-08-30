@@ -17,16 +17,31 @@ A Project submitter who confirms they are at least 18 years old. Pittogramma doe
 _Avoid_: Collecting a full date of birth solely to establish eligibility, minor submitter
 
 **Submitting representative**:
-The Project submitter who confirms they have authority to submit the Project and agree to publication terms for every named designer and collaborator.
+The adult designer who submits a Project and confirms they have authority to submit the supplied materials and agree to the terms for every named designer and collaborator.
 _Avoid_: Assuming Pittogramma itself obtained separate approval from every collaborator
 
 **Project submission fee**:
-The non-refundable fee charged for Pittogramma to review a Project submission, calculated per submitted designer. Payment does not guarantee selection or publication, and mandatory statutory refund and withdrawal rights still apply.
+The non-refundable EUR 5 fee paid by the Submitting representative to have Pittogramma process a Project submission, calculated per named designer. It pays for processing time, not for copyright in Submitted materials. Payment does not guarantee selection or publication, and mandatory statutory refund and withdrawal rights still apply.
 _Avoid_: Publication fee, guaranteed placement, no refunds under any circumstances
+
+**Submitted materials**:
+The images and text a Submitting representative sends with a Project submission. Pittogramma may receive transferable economic copyright in these materials, but not ownership of the underlying Project.
+_Avoid_: The Project itself, a designer's future work, a blanket transfer of all rights
+
+**Submission terms acceptance**:
+The required confirmation by which a Submitting representative accepts the Project Submission Terms for themselves and every named designer and collaborator before payment.
+_Avoid_: A footer link as proof of acceptance, presumed agreement by collaborators
 
 **Launch consent model**:
 Pittogramma launches without optional tracking, analytics, behavioural advertising, maps, or external video embeds. Outside the embedded submission form, it uses only technical theme-preference storage, so no sitewide consent banner or preference centre is shown until a non-essential service is introduced. Fillout's own cookie notice and consent control must be enabled within the submission form.
 _Avoid_: Precautionary cookie banner, dormant consent categories, loading optional third-party resources before consent
+
+**Legal page**:
+A fixed-route, Sanity-managed public document containing Pittogramma's legal
+copy. Legal pages are the Legal Notice / Impressum, Privacy Policy, Cookie
+Policy, and Project Submission Terms. They are available from the footer;
+Project Submission Terms is also linked from the Project submission page.
+_Avoid_: Static legal copy embedded in a route, an unpublished legal-page route
 
 **Direct sponsorship**:
 A paid or in-kind placement agreed directly between Pittogramma and a sponsor, presented without selecting visitors through behavioural tracking.
@@ -172,7 +187,7 @@ _Avoid_: A hero item duplicated in the card stream, a hero limited to Projects a
 Events that have ended.
 
 **Event type**:
-The format of an event: Talk, Workshop, 5+1, or a generic Event. Shown as a solid pink chip on detail pages and as an outline badge on cards (TALK, WORKSHOP, 5+1, EVENT).
+The format of an event: Talk, Workshop, 5+1, or a generic Event. Shown as a solid `pink-300` (`--color-pink-300`) chip on event detail pages and as an outline badge that becomes `pink-300` on hover on event cards (TALK, WORKSHOP, 5+1, EVENT).
 _Avoid_: Tag, category, tipologia (in code — use "type")
 
 **Event card location byline**:

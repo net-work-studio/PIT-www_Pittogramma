@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import LegalPageContent from "@/components/modules/legal/legal-page-content";
 import PageHeader from "@/components/shared/page-header";
@@ -44,18 +45,15 @@ async function CachedSubmissionTermsPage({
     stega,
   });
 
+  if (!page?.content?.length) {
+    notFound();
+  }
+
   return (
     <>
-      <PageHeader title={page?.title ?? "Project Submission Terms"} />
+      <PageHeader title={page.title ?? "Project Submission Terms"} />
       <section className="mx-auto w-full max-w-prose pb-16">
-        {page?.content?.length ? (
-          <LegalPageContent content={page.content} />
-        ) : (
-          <p className="text-muted-foreground">
-            Pittogramma&apos;s project submission terms are being prepared and
-            will be published here soon.
-          </p>
-        )}
+        <LegalPageContent content={page.content} />
       </section>
     </>
   );
