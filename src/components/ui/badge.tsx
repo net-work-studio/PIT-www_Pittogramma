@@ -22,14 +22,14 @@ const badgeVariants = cva(
         "detail-article": "bg-orange-500 text-white outline-orange-500",
         "detail-baseline": "bg-purple-500 text-white outline-purple-500",
         "detail-diary": "bg-green-500 text-black outline-green-500",
-        "detail-event": "bg-pink-500 text-black outline-pink-500",
+        "detail-event": "bg-pink-300 text-black outline-pink-300",
         "detail-interview": "bg-yellow-500 text-black outline-yellow-500",
         "detail-project": "bg-blue-700 text-white outline-blue-700",
         diary:
           "group-hover:bg-green-500 group-hover:text-black group-hover:outline-green-500",
         event: "group-hover:bg-background group-hover:text-foreground",
         "event-type":
-          "hover:bg-foreground hover:text-background hover:outline-foreground group-hover:bg-foreground group-hover:text-background group-hover:outline-foreground",
+          "hover:bg-pink-300 hover:text-black hover:outline-pink-300 group-hover:bg-pink-300 group-hover:text-black group-hover:outline-pink-300",
         feat: "group-hover:bg-background group-hover:text-foreground group-hover:outline-background",
         gold: "group-hover:bg-yellow-500 group-hover:text-black group-hover:outline-yellow-500",
         interview:

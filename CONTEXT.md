@@ -140,7 +140,7 @@ _Avoid_: A hero item duplicated in the card stream, a hero limited to Projects a
 Events that have ended.
 
 **Event type**:
-The format of an event: Talk, Workshop, 5+1, or a generic Event. Shown as a solid pink chip on detail pages and as an outline badge on cards (TALK, WORKSHOP, 5+1, EVENT).
+The format of an event: Talk, Workshop, 5+1, or a generic Event. Shown as a solid `pink-300` (`--color-pink-300`) chip on event detail pages and as an outline badge that becomes `pink-300` on hover on event cards (TALK, WORKSHOP, 5+1, EVENT).
 _Avoid_: Tag, category, tipologia (in code — use "type")
 
 **Event card location byline**:
