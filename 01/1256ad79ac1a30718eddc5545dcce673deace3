@@ -1,0 +1,41 @@
+docs/legal/cookie-policy.md
+  s_93175f6460effa::t_e610beb4260d50 1-50
+docs/legal/project-submission-terms.md
+  s_93175f6460effa::t_e610beb4260d50 1-86
+CONTEXT.md
+  s_93175f6460effa::t_3131ab68e980ea 31-34
+  s_93175f6460effa::t_eac544fc7fc7ff 20,27-29
+  s_93175f6460effa::t_c26685a1250fa6 24
+  s_93175f6460effa::t_fee860b556aa0a 30
+  s_93175f6460effa::t_e66ffeba0b347d 39-45
+src/app/(frontend)/(info)/cookie-policy/page.tsx
+  s_9a45793626534d::t_e4dace1f4dc9de 47-50,53,55
+src/app/(frontend)/(info)/submission-terms/page.tsx
+  s_9a45793626534d::t_eaaeaa7a49d2cb 47-50,53,55
+src/app/(frontend)/(support)/submit/page.tsx
+  s_9a45793626534d::t_76d88f96a86e8a 2,20-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "011256ad79ac1a30718eddc5545dcce673deace3",
+  "prompts": {},
+  "sessions": {
+    "s_93175f6460effa": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a053d0-5595-7ba2-af3d-e9900e1aa9cb",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_9a45793626534d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a053cf-0c19-7ad3-a9e7-6c5bdba88038",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
