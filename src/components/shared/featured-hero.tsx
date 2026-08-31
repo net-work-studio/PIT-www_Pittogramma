@@ -34,8 +34,8 @@ const badgeVariantMap: Record<
 };
 
 const HEIGHT_BY_VARIANT = {
-  full: "h-[calc(100svh-3.5rem-2.5rem)]",
   compact: "h-[600px]",
+  full: "h-[calc(100svh-3.5rem-2.5rem)]",
 } as const;
 
 export default function FeaturedHero({
@@ -59,19 +59,19 @@ export default function FeaturedHero({
       {...(external ? { rel: "noopener noreferrer", target: "_blank" } : {})}
     >
       <div className="z-10 flex w-full flex-col items-center gap-4 px-4 text-center text-white sm:px-6">
-        {badgeLabel && (
+        {badgeLabel ? (
           <Badge
             className="outline-white"
             variant={badgeVariant ?? badgeVariantMap[contentType]}
           >
             {badgeLabel}
           </Badge>
-        )}
+        ) : null}
         <hgroup className="flex w-full flex-col items-center gap-2">
           <h2 className="text-balance font-normal font-sans text-4xl md:text-5xl">
             {title}
           </h2>
-          {subtitle && <p className="text-2xl text-white">{subtitle}</p>}
+          {subtitle ? <p className="text-2xl text-white">{subtitle}</p> : null}
         </hgroup>
       </div>
 
