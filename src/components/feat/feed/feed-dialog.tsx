@@ -21,12 +21,56 @@ import type {
 type FeedAdv = FEED_QUERY_RESULT[number];
 type FeedCommunityItem = FEED_COMMUNITY_QUERY_RESULT[number];
 
+export type FeedItem =
+  | { item: FeedAdv; kind: "adv" }
+  | { item: FeedCommunityItem; kind: "community" };
+
 interface FeedDialogProps {
-  advs: FeedAdv[];
-  communityItems: FeedCommunityItem[];
+  items: FeedItem[];
 }
 
-function FeedDialogInner({ advs, communityItems }: FeedDialogProps) {
+function FeedTimelineCard({ item, kind }: FeedItem) {
+  if (!item.cover?.image?.asset) {
+    return null;
+  }
+
+  if (kind === "adv") {
+    return (
+      <FeedCard
+        byline={
+          item.sponsor?.name ? `Sponsored by ${item.sponsor.name}` : "Sponsored"
+        }
+        href={item.externalUrl}
+        image={
+          item.coverPortrait?.asset
+            ? { alt: item.cover.alt, image: item.coverPortrait }
+            : item.cover
+        }
+        key={item._id}
+        sponsored
+        title={item.title ?? ""}
+        variant={item.tier}
+      />
+    );
+  }
+
+  return (
+    <FeedCard
+      byline={
+        item.partner?.name
+          ? `In partnership with ${item.partner.name}`
+          : "Community"
+      }
+      href={item.externalUrl}
+      image={item.cover}
+      key={item._id}
+      sponsored
+      title={item.title ?? ""}
+    />
+  );
+}
+
+function FeedDialogInner({ items }: FeedDialogProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -51,9 +95,7 @@ function FeedDialogInner({ advs, communityItems }: FeedDialogProps) {
     [pathname, router, searchParams]
   );
 
-  const hasAdvs = advs.some((adv) => adv.cover?.image?.asset);
-  const hasCommunity = communityItems.some((item) => item.cover?.image?.asset);
-  const hasItems = hasAdvs || hasCommunity;
+  const hasItems = items.some((feedItem) => feedItem.item.cover?.image?.asset);
 
   const side = isDesktop ? "right" : "bottom";
 
@@ -79,45 +121,9 @@ function FeedDialogInner({ advs, communityItems }: FeedDialogProps) {
         </SheetHeader>
         <div className="flex-1 space-y-6 px-6 pb-6">
           {hasItems ? (
-            <>
-              {advs.map((adv) =>
-                adv.cover?.image?.asset ? (
-                  <FeedCard
-                    byline={
-                      adv.sponsor?.name
-                        ? `Sponsored by ${adv.sponsor.name}`
-                        : "Sponsored"
-                    }
-                    href={adv.externalUrl}
-                    image={
-                      adv.coverPortrait?.asset
-                        ? { alt: adv.cover.alt, image: adv.coverPortrait }
-                        : adv.cover
-                    }
-                    key={adv._id}
-                    sponsored
-                    title={adv.title ?? ""}
-                    variant={adv.tier}
-                  />
-                ) : null
-              )}
-              {communityItems.map((item) =>
-                item.cover?.image?.asset ? (
-                  <FeedCard
-                    byline={
-                      item.partner?.name
-                        ? `In partnership with ${item.partner.name}`
-                        : "Community"
-                    }
-                    href={item.externalUrl}
-                    image={item.cover}
-                    key={item._id}
-                    sponsored
-                    title={item.title ?? ""}
-                  />
-                ) : null
-              )}
-            </>
+            items.map((feedItem) => (
+              <FeedTimelineCard {...feedItem} key={feedItem.item._id} />
+            ))
           ) : (
             <p className="py-20 text-center text-muted-foreground">
               No active sponsors or community items right now.
