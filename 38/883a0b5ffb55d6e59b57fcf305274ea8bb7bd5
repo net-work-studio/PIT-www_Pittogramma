@@ -1,0 +1,22 @@
+src/components/feat/feed/feed-dialog.tsx
+  s_57417615d1a99d::t_e32002b37e9fd9 73,80
+  s_57417615d1a99d::t_c238c525e1c32a 72
+CONTEXT.md
+  s_57417615d1a99d::t_446ae1bd8c9bd4 170-173
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "38883a0b5ffb55d6e59b57fcf305274ea8bb7bd5",
+  "prompts": {},
+  "sessions": {
+    "s_57417615d1a99d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05975-c79c-7cb3-b80e-ab62a55a40a6",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
