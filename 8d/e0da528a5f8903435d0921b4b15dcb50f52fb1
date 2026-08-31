@@ -1,0 +1,14 @@
+src/components/shared/featured-hero.tsx
+  h_75f73f9fd69b93 78
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "8de0da528a5f8903435d0921b4b15dcb50f52fb1",
+  "prompts": {},
+  "humans": {
+    "h_75f73f9fd69b93": {
+      "author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
