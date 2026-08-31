@@ -1,0 +1,19 @@
+src/components/modules/shared/sanity-image.tsx
+  s_6ceb76219cc709::t_c6016364ff9531 83-85,111,147-149,157
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "13a70a9f5c8fde1182089119b3e2e843442a4255",
+  "prompts": {},
+  "sessions": {
+    "s_6ceb76219cc709": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a058b0-f00e-7e10-992d-8f536e0181fa",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
