@@ -1,0 +1,21 @@
+CONTEXT.md
+  s_591e95954efff1::t_23d9a49eeef4e2 83-86
+src/components/resources/book-details-modal.tsx
+  s_591e95954efff1::t_23d9a49eeef4e2 117,120,123-125
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "98596d37182048fd94747e3d9be440d89b0b2cf1",
+  "prompts": {},
+  "sessions": {
+    "s_591e95954efff1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05795-cce4-7be1-9edc-5db3824fd5f0",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
