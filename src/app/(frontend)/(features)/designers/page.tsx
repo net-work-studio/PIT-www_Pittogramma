@@ -15,6 +15,8 @@ import {
 } from "@/sanity/lib/live";
 import { DESIGNERS_PAGE_QUERY, DESIGNERS_QUERY } from "@/sanity/lib/queries";
 
+export const instant = false;
+
 export async function generateMetadata(): Promise<Metadata> {
   const { perspective } = await getDynamicFetchOptions();
   const { data: page } = await sanityFetchMetadata({
