@@ -1,0 +1,57 @@
+scripts/migrate-cta-images.ts
+  s_537aa4c733f99a::t_240600a6af3b6e 1-39
+src/app/(frontend)/(features)/designers/page.tsx
+  s_537aa4c733f99a::t_a04600d7324df3 86-87
+src/app/(frontend)/(features)/editions/page.tsx
+  s_537aa4c733f99a::t_b75dcb80eab07d 88-89
+src/app/(frontend)/(features)/interviews/page.tsx
+  s_537aa4c733f99a::t_718f5808d29668 265-266
+src/app/(frontend)/(features)/projects/page.tsx
+  s_537aa4c733f99a::t_0cf76a7f01ab74 266-267
+src/app/(frontend)/(resources)/bibliography/page.tsx
+  s_537aa4c733f99a::t_02aba860fec2fa 97-98
+src/app/(frontend)/(resources)/bookshops/page.tsx
+  s_537aa4c733f99a::t_cf29909215d638 106-107
+src/app/(frontend)/(resources)/glossary/page.tsx
+  s_537aa4c733f99a::t_d89d47841f91d7 232-233
+src/app/(frontend)/(resources)/institutes/page.tsx
+  s_537aa4c733f99a::t_3b198809c62f28 106-107
+src/app/(frontend)/(resources)/studios-agencies/page.tsx
+  s_537aa4c733f99a::t_14efb547f0d574 103-104
+src/app/(frontend)/(resources)/type-foundries/page.tsx
+  s_537aa4c733f99a::t_06b6e8d8a4bedb 106-107
+src/app/(frontend)/(resources)/websites/page.tsx
+  s_537aa4c733f99a::t_c2a4fa69d3ca8a 103-104
+src/app/(frontend)/events/page.tsx
+  s_537aa4c733f99a::t_4aef10d8224854 249-250
+src/app/(frontend)/journal/page.tsx
+  s_537aa4c733f99a::t_87a422142f634a 249-250
+src/app/(frontend)/page.tsx
+  s_537aa4c733f99a::t_e345f7ef585d67 288-289,307-308
+src/components/cards/cta-card.tsx
+  s_537aa4c733f99a::t_b462b569af79a0 14-15,20-21,27-65,70-71,105,109
+src/sanity/extract.json
+  s_537aa4c733f99a::t_3b52808014c985 4397-4405
+src/sanity/lib/fragments.ts
+  s_537aa4c733f99a::t_cd1e083eb1f215 44-50
+src/sanity/schemaTypes/documents/cta.ts
+  s_537aa4c733f99a::t_48f6dd90df75d3 33,35-36,42,47-53,128
+src/sanity/types.ts
+  s_537aa4c733f99a::t_ac86889e3ff8e2 773-774,1854,2047-2067,2166-2186,3234,3244-3264,3403,3413-3433,3572,3582-3602,3741,3751-3771,3910,3920-3940,4079,4089-4109,4248,4258-4278,4417,4427-4447,4586,4596-4616,4755,4765-4785,4924,4934-4954,7482,7553-7573,9500,9509-9529,9914,9922-9932,9958,9979
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "b9c2a4af2f36ac187c4c78f1cf732b1ef5952809",
+  "prompts": {},
+  "sessions": {
+    "s_537aa4c733f99a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a058bb-72bf-7741-83b8-95f8e5d3f42f",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
