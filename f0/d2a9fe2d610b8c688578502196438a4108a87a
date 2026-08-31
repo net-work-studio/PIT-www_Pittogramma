@@ -1,0 +1,26 @@
+src/components/feat/filter/filter-sheet.tsx
+  s_4c0e2b9980c48b::t_e97d5c599554de 114-118
+src/components/feat/feed/feed-dialog.tsx
+  s_4c0e2b9980c48b::t_8594ef9165796c 114
+src/components/modules/shared/sanity-image.test.tsx
+  s_4c0e2b9980c48b::t_e97d5c599554de 25
+src/components/feat/sort/sort-dropdown.tsx
+  s_4c0e2b9980c48b::t_e97d5c599554de 5,22,41,51
+  s_4c0e2b9980c48b::t_8594ef9165796c 43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "f0d2a9fe2d610b8c688578502196438a4108a87a",
+  "prompts": {},
+  "sessions": {
+    "s_4c0e2b9980c48b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a059e8-da09-7711-b7bc-415ed2016737",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
