@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import LoadMore from "@/components/feat/load-more/load-more";
+import EventsPageSkeleton from "@/components/modules/shared/events-page-skeleton";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import PageHeader from "@/components/shared/page-header";
 import { buildLocalToday } from "@/lib/date-utils";
@@ -92,7 +93,7 @@ export default function Page({
   searchParams: Promise<{ page?: string }>;
 }) {
   return (
-    <Suspense>
+    <Suspense fallback={<EventsPageSkeleton />}>
       <DynamicEventsPage searchParams={searchParams} />
     </Suspense>
   );
