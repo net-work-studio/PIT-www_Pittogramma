@@ -80,6 +80,10 @@ Search availability is configured only for Studios / Agencies, Type Foundries, I
 An always-published Resource containing Pittogramma's curated list of books on graphic design. It is available at `/bibliography` and appears in Resource navigation.
 _Avoid_: Treating Bibliography as an optionally published feature
 
+**Bibliography tag**:
+An editorial label applied to a Bibliography entry. Tags are the only labels shown in the public Bibliography list and book-detail dialog. Google Books categories are import metadata, not visitor-facing labels.
+_Avoid_: Showing Google Books categories in the public Bibliography
+
 **Bibliography availability**:
 The fixed availability state shown in Site Settings for Bibliography. It is published, with no editable view or search controls because the public Bibliography is one sortable list.
 _Avoid_: Configurable Bibliography publication, dormant view or search toggles
