@@ -22,6 +22,7 @@ test("uses cover only when a caller has not supplied an object-fit class", () =>
 
   expect(markup).toContain("object-cover");
   expect(containMarkup).toContain("object-contain");
+  expect(containMarkup).not.toContain("object-cover");
   expect(containMarkup).not.toContain("object-fit:cover");
 });
 

@@ -111,7 +111,7 @@ function FeedDialogInner({ items }: FeedDialogProps) {
       <SheetContent
         className={
           isDesktop
-            ? "scrollbar-none w-120 max-w-120 overflow-y-auto [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            ? "scrollbar-none w-120 max-w-120 overflow-y-auto [-ms-overflow-style:none] sm:max-w-120! [&::-webkit-scrollbar]:hidden"
             : "scrollbar-none max-h-[90vh] overflow-y-auto [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         }
         side={side}

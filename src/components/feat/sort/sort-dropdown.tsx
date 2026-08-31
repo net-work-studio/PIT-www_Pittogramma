@@ -2,7 +2,7 @@
 
 import { ArrowDownUpIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +19,7 @@ export default function SortDropdown() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
 
   const rawSort = searchParams.get("sort") ?? undefined;
   const currentSort: SortOption = isValidSort(rawSort) ? rawSort : "newest";
@@ -37,9 +38,9 @@ export default function SortDropdown() {
       // Reset to page 1 on sort change
       params.delete("page");
       const qs = params.toString();
-      router.push(qs ? `${pathname}?${qs}` : pathname);
+      startTransition(() => router.push(qs ? `${pathname}?${qs}` : pathname));
     },
-    [router, pathname, searchParams]
+    [pathname, router, searchParams]
   );
 
   return (
@@ -47,7 +48,7 @@ export default function SortDropdown() {
       <DropdownMenuTrigger
         render={
           <Button
-            aria-label={`Sort: ${currentLabel}`}
+            aria-label={isPending ? "Loading…" : `Sort: ${currentLabel}`}
             className="font-mono uppercase max-sm:w-9 max-sm:px-0"
             title={`Sort: ${currentLabel}`}
           />
