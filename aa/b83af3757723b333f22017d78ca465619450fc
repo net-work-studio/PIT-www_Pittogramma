@@ -1,0 +1,60 @@
+src/app/(frontend)/events/page.tsx
+  s_edfc8e747b7fbe::t_3cca83d7f90ff4 143,153,159,165
+src/app/(frontend)/(features)/interviews/[slug]/page.tsx
+  s_edfc8e747b7fbe::t_ffff62a854934f 11-15,32,35,56-60,87-92,100-101,110-114
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_edfc8e747b7fbe::t_ffff62a854934f 10-14,31,33-36,55-59,90,99-100,109-113
+src/lib/public-site-state.test.ts
+  s_edfc8e747b7fbe::t_4c389d1492ff4a 17-24,26-27
+src/app/(frontend)/(features)/projects/page.tsx
+  s_edfc8e747b7fbe::t_b08a8f47f621d5 122,134,142,157-162
+src/sanity/types.ts
+  s_edfc8e747b7fbe::t_18b1d982fff0cf 5439,5444,5532,5537,5630,5635,7169,7172,10056-10057,10059,10078
+  s_edfc8e747b7fbe::t_1f71191dd4878b 1741,1748,1755,1762,1769,1771-1883,1896,5625,5901,6005,6010,6025,6129,6233,6337,6443,6549,6655,6761,6863,6965,7067,7939,8607,8709,8714,8719,10028-10032,10058,10061-10063,10065-10072,10075-10077,10081,10084-10085
+  s_edfc8e747b7fbe::t_53830126afb8d2 1897-1899
+src/lib/date-utils.ts
+  s_edfc8e747b7fbe::t_552c1cb6c2e781 16-23
+src/app/(frontend)/journal/page.tsx
+  s_edfc8e747b7fbe::t_c742fa80841779 151-154,156,232-235
+  s_edfc8e747b7fbe::t_8bc0e46e62d01f 18,95,107,112,128,134,140,147,149-150,155
+CONTEXT.md
+  s_edfc8e747b7fbe::t_286dc641b36aec 120-123
+src/app/sitemap.ts
+  s_edfc8e747b7fbe::t_96b1f7e3e6bf53 134-143
+  s_edfc8e747b7fbe::t_56eb60cf9a1917 13,169
+  s_edfc8e747b7fbe::t_c742fa80841779 185-187,217-220
+  s_edfc8e747b7fbe::t_5f209e05636c52 2,165-168
+  s_edfc8e747b7fbe::t_dd3c25c560e133 5-12,14,16,19-73,77-84,88-96,102-113,115-133,144-161,171-172,176-178,180-182,184,188,190-197,199-203,206-216,221-231
+src/app/(frontend)/(features)/projects/[slug]/page.tsx
+  s_edfc8e747b7fbe::t_be57f00332dd66 10,27,29-32,51-55,82-87,105-109
+  s_edfc8e747b7fbe::t_6d45d628f75342 95-96
+src/app/(frontend)/(features)/interviews/page.tsx
+  s_edfc8e747b7fbe::t_324664bee3bb66 178-181
+  s_edfc8e747b7fbe::t_b08a8f47f621d5 122,134,142,157-162
+src/app/(frontend)/events/[slug]/page.tsx
+  s_edfc8e747b7fbe::t_9ecefb8497fcfc 16-20,43,45-48,67-71,102-109,122-127,135-136,148-152
+src/lib/date-utils.test.ts
+  s_edfc8e747b7fbe::t_c742fa80841779 2
+  s_edfc8e747b7fbe::t_552c1cb6c2e781 3-11
+src/sanity/lib/queries.ts
+  s_edfc8e747b7fbe::t_3cca83d7f90ff4 426,432,438
+  s_edfc8e747b7fbe::t_61142e3ca4d3e5 502,522,552,572,592,612,635,658,681,704,736,768,800,969,1028,1060
+  s_edfc8e747b7fbe::t_324664bee3bb66 408,446,865
+  s_edfc8e747b7fbe::t_d960e957cc95f2 528,532,1066
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "aab83af3757723b333f22017d78ca465619450fc",
+  "prompts": {},
+  "sessions": {
+    "s_edfc8e747b7fbe": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a059e0-c528-7443-971f-f312cb6ba986",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
