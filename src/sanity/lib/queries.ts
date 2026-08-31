@@ -213,6 +213,32 @@ export const PRIVACY_POLICY_PAGE_QUERY = defineQuery(`
   }
 `);
 
+export const COOKIE_POLICY_PAGE_QUERY = defineQuery(`
+  *[_type == "cookiePolicyPage"][0] {
+    _id,
+    title,
+    content[] {
+      _key,
+      _type,
+      _type == "block" => @
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
+export const SUBMISSION_TERMS_PAGE_QUERY = defineQuery(`
+  *[_type == "submissionTermsPage"][0] {
+    _id,
+    title,
+    content[] {
+      _key,
+      _type,
+      _type == "block" => @
+    },
+    ${SEO_FIELDS}
+  }
+`);
+
 export const PROJECTS_PAGE_QUERY = defineQuery(`
   *[_type == "projectsPage"][0] {
     _id,
@@ -495,7 +521,12 @@ export const PROJECTS_COUNT_QUERY = defineQuery(`
 `);
 
 export const PROJECTS_TAGS_QUERY = defineQuery(`
-  array::unique(*[_type == "project" && defined(tags)].tags[]->{ _id, name, "slug": slug.current })
+  *[_type == "tag" && defined(slug.current) && _id in *[_type == "project" && defined(slug.current) && defined(tags)].tags[]._ref] {
+    _id,
+    name,
+    "slug": slug.current,
+    "count": count(*[_type == "project" && defined(slug.current) && ^._id in tags[]._ref])
+  }
 `);
 
 export const TAG_IDS_BY_SLUGS_QUERY = defineQuery(`

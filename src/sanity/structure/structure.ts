@@ -36,8 +36,15 @@ export const structure: StructureResolver = (S) =>
         S,
         "Legal",
         [
-          singleton(S, "impressumPage", "Impressum", FileText),
+          singleton(S, "impressumPage", "Legal Notice / Impressum", FileText),
           singleton(S, "privacyPolicyPage", "Privacy Policy", FileText),
+          singleton(S, "cookiePolicyPage", "Cookie Policy", FileText),
+          singleton(
+            S,
+            "submissionTermsPage",
+            "Project Submission Terms",
+            FileText
+          ),
         ],
         "legal",
         FileText

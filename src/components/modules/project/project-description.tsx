@@ -13,7 +13,7 @@ export default function ProjectDescription({
   }
 
   return (
-    <ScrollFade className="h-full flex-1" key={description}>
+    <ScrollFade className="h-full flex-1" fadeAtTop key={description}>
       <p>
         <MultilineText text={description} />
       </p>

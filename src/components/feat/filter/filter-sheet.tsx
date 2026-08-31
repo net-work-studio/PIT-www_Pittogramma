@@ -22,6 +22,7 @@ import {
 
 interface Tag {
   _id: string;
+  count?: number;
   name: string;
   slug: string;
 }
@@ -141,16 +142,23 @@ export default function FilterSheet({
               Filter {label}
             </SheetTitle>
           </SheetHeader>
-          <div className="flex-1 overflow-y-auto px-6 pt-2 pb-6">
+          <div className="flex-1 overflow-y-auto px-6 pt-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="divide-y border-foreground/15 border-y">
               {availableTags.map((tag) => {
                 const checked = draftSlugs.includes(tag.slug);
                 return (
                   <label
-                    className="flex min-h-11 cursor-pointer items-center justify-between gap-4 py-3"
+                    className="flex min-h-10 cursor-pointer items-center justify-between gap-4 py-2"
                     key={tag._id}
                   >
-                    <span>{tag.name}</span>
+                    <span className="flex items-baseline gap-2">
+                      <span>{tag.name}</span>
+                      {typeof tag.count === "number" ? (
+                        <span className="font-mono text-muted-foreground text-xs uppercase">
+                          {tag.count}
+                        </span>
+                      ) : null}
+                    </span>
                     <input
                       checked={checked}
                       className="size-4 accent-foreground"

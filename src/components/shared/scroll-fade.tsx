@@ -7,21 +7,29 @@ import { cn } from "@/lib/utils";
 interface ScrollFadeProps {
   children: ReactNode;
   className?: string;
+  fadeAtTop?: boolean;
 }
 
-export function ScrollFade({ children, className }: ScrollFadeProps) {
+export function ScrollFade({
+  children,
+  className,
+  fadeAtTop = false,
+}: ScrollFadeProps) {
   const scrollRef = useRef<HTMLDivElement>(
     null
   ) as MutableRefObject<HTMLDivElement>;
-  const [showFade, setShowFade] = useState(false);
+  const [showTopFade, setShowTopFade] = useState(false);
+  const [showBottomFade, setShowBottomFade] = useState(false);
 
   const updateFade = useCallback(() => {
     const element = scrollRef.current;
     const hasOverflow = element.scrollHeight > element.clientHeight;
+    const atTop = element.scrollTop <= 1;
     const atBottom =
       element.scrollTop + element.clientHeight >= element.scrollHeight - 1;
-    setShowFade(hasOverflow && !atBottom);
-  }, []);
+    setShowTopFade(fadeAtTop && hasOverflow && !atTop);
+    setShowBottomFade(hasOverflow && !atBottom);
+  }, [fadeAtTop]);
 
   useEffect(() => {
     const element = scrollRef.current;
@@ -45,7 +53,13 @@ export function ScrollFade({ children, className }: ScrollFadeProps) {
       >
         {children}
       </div>
-      {showFade ? (
+      {showTopFade ? (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-background to-transparent"
+        />
+      ) : null}
+      {showBottomFade ? (
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background via-background/95 to-transparent"

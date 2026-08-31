@@ -72,13 +72,12 @@ function FeedDialogInner({ advs, communityItems }: FeedDialogProps) {
             ? "scrollbar-none w-120 max-w-120 overflow-y-auto [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             : "scrollbar-none max-h-[90vh] overflow-y-auto [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         }
-        overlayClassName="bg-background/80 backdrop-blur-md"
         side={side}
       >
-        <SheetHeader>
+        <SheetHeader className="pb-4">
           <SheetTitle>Feed</SheetTitle>
         </SheetHeader>
-        <div className="flex-1 space-y-4 px-6 pb-6">
+        <div className="flex-1 space-y-6 px-6 pb-6">
           {hasItems ? (
             <>
               {advs.map((adv) =>
@@ -92,7 +91,7 @@ function FeedDialogInner({ advs, communityItems }: FeedDialogProps) {
                     href={adv.externalUrl}
                     image={
                       adv.coverPortrait?.asset
-                        ? { image: adv.coverPortrait, alt: adv.cover.alt }
+                        ? { alt: adv.cover.alt, image: adv.coverPortrait }
                         : adv.cover
                     }
                     key={adv._id}

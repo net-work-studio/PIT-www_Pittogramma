@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import LegalPageContent from "@/components/modules/legal/legal-page-content";
 import PageHeader from "@/components/shared/page-header";
@@ -8,54 +9,51 @@ import {
   getDynamicFetchOptions,
   sanityFetch,
 } from "@/sanity/lib/live";
-import { IMPRESSUM_PAGE_QUERY } from "@/sanity/lib/queries";
+import { SUBMISSION_TERMS_PAGE_QUERY } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
-  title: "Legal Notice / Impressum",
+  title: "Project Submission Terms",
 };
 
-export default async function ImpressumPage() {
+export default async function SubmissionTermsPage() {
   const { isEnabled: isDraftMode } = await draftMode();
 
   if (isDraftMode) {
     return (
       <Suspense>
-        <DynamicImpressumPage />
+        <DynamicSubmissionTermsPage />
       </Suspense>
     );
   }
 
-  return <CachedImpressumPage perspective="published" stega={false} />;
+  return <CachedSubmissionTermsPage perspective="published" stega={false} />;
 }
 
-async function DynamicImpressumPage() {
+async function DynamicSubmissionTermsPage() {
   const { perspective, stega } = await getDynamicFetchOptions();
-  return <CachedImpressumPage perspective={perspective} stega={stega} />;
+  return <CachedSubmissionTermsPage perspective={perspective} stega={stega} />;
 }
 
-async function CachedImpressumPage({
+async function CachedSubmissionTermsPage({
   perspective,
   stega,
 }: DynamicFetchOptions) {
   "use cache";
   const { data: page } = await sanityFetch({
     perspective,
-    query: IMPRESSUM_PAGE_QUERY,
+    query: SUBMISSION_TERMS_PAGE_QUERY,
     stega,
   });
 
+  if (!page?.content?.length) {
+    notFound();
+  }
+
   return (
     <>
-      <PageHeader title={page?.title ?? "Legal Notice / Impressum"} />
+      <PageHeader title={page.title ?? "Project Submission Terms"} />
       <section className="mx-auto w-full max-w-prose pb-16">
-        {page?.content?.length ? (
-          <LegalPageContent content={page.content} />
-        ) : (
-          <p className="text-muted-foreground">
-            The legal notice for Pittogramma is being prepared and will be
-            published here soon.
-          </p>
-        )}
+        <LegalPageContent content={page.content} />
       </section>
     </>
   );
