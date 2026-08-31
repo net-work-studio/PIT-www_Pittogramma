@@ -1,0 +1,75 @@
+src/sanity/structure/structure.ts
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 39,41-47
+src/sanity/schemaTypes/index.ts
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 49,52,98,101
+src/components/feat/feed/feed-dialog.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 77,80,94
+src/components/ui/dialog.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 31
+src/components/modules/project/project-description.tsx
+  s_f8dfe1c3d0f83d::t_0f150c8b89efbf 16
+src/components/shared/scroll-fade.tsx
+  s_f8dfe1c3d0f83d::t_0f150c8b89efbf 10,13-17,21-22,27,30-32,56-62
+src/components/cards/feed-card.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 36,58,63
+src/app/(frontend)/events/[slug]/page.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 216
+CONTEXT.md
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 7-53
+src/sanity/lib/queries.ts
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 216-241,524-529
+src/components/modules/legal/legal-page-content.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 3-4,16-30,34-41,45-46,50-51
+src/components/ui/sheet.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 30,64,67
+src/app/(frontend)/(support)/submit/page.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 2,20-26
+src/sanity/extract.json
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 1450-1680,1900,2131-2138,2140-2362
+src/sanity/schemaTypes/singletons/pages/legal-pages.ts
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 5-11,31,48-52,57-60
+src/app/(frontend)/(info)/submission-terms/page.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 1-60
+src/app/sitemap.ts
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 86-97
+src/components/modules/event/event-info.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 89
+src/components/feat/filter/filter-sheet.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 25,145,151,154-161
+src/components/resources/bibliography-list.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 45,63,112,121
+src/app/(frontend)/page.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 3,169-177,179,181-187
+docs/legal/cookie-policy.md
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 1-50
+src/components/modules/project/project-info.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 39,45
+docs/legal/project-submission-terms.md
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 1-86
+src/app/(frontend)/(info)/cookie-policy/page.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 1-60
+src/sanity/types.ts
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 300-327,335,363-391,1642,1645,2946,3013-3147,5629,5634,9619-9620,9641
+src/app/(frontend)/(info)/impressum/page.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 14,49
+src/components/navigation/navigation-mobile.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 159-173
+src/components/shared/footer.tsx
+  s_f8dfe1c3d0f83d::t_2caf9b6229644f 81,86-91
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "4128701c4d7654ffd0a2a1625b39cf5c02005730",
+  "prompts": {},
+  "sessions": {
+    "s_f8dfe1c3d0f83d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05741-285d-75f2-b774-57167bd160a0",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
