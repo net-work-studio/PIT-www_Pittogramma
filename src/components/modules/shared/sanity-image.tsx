@@ -141,6 +141,10 @@ export default function SanityImage({
   const blurProps = blurDataUrl
     ? { blurDataURL: blurDataUrl, placeholder: "blur" as const }
     : {};
+  const imageStyle: React.CSSProperties = {
+    objectFit: objectFit as React.CSSProperties["objectFit"],
+    ...style,
+  };
 
   const imageProps = {
     alt: imageAlt,
@@ -153,7 +157,7 @@ export default function SanityImage({
     priority,
     sizes: fill ? (sizes ?? "100vw") : sizes,
     src: url,
-    style,
+    style: imageStyle,
     unoptimized:
       preserveAnimation ||
       unoptimizedProp ||

@@ -113,14 +113,16 @@ function DesignerListItem({
           onOpenChange={onOpenChange}
         >
           <button
-            className="inline-flex items-center gap-2 transition-colors hover:text-muted-foreground"
+            className="inline-flex max-w-full items-center gap-2 transition-colors hover:text-muted-foreground"
             type="button"
           >
             <DesignerPortraitThumb
               name={designer.name}
               portrait={designer.portrait}
             />
-            <span className="max-md:font-medium">{designer.name}</span>
+            <span className="min-w-0 truncate max-md:font-medium">
+              {designer.name}
+            </span>
           </button>
         </DesignerModal>
       </div>

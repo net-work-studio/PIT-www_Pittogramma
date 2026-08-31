@@ -27,7 +27,7 @@ function SheetOverlay({ className, ...props }: DialogPrimitive.Backdrop.Props) {
   return (
     <DialogPrimitive.Backdrop
       className={cn(
-        "fixed inset-0 z-50 bg-black/50 transition-opacity duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0",
+        "fixed inset-0 z-50 bg-black/10 transition-opacity duration-150 ease-out data-ending-style:opacity-0 data-starting-style:opacity-0 supports-[backdrop-filter]:backdrop-blur-xs",
         className
       )}
       data-slot="sheet-overlay"
@@ -58,14 +58,13 @@ const sheetVariants = cva(
 function SheetContent({
   side = "right",
   className,
-  overlayClassName,
   children,
   ...props
 }: DialogPrimitive.Popup.Props &
-  VariantProps<typeof sheetVariants> & { overlayClassName?: string }) {
+  VariantProps<typeof sheetVariants>) {
   return (
     <SheetPortal>
-      <SheetOverlay className={overlayClassName} />
+      <SheetOverlay />
       <DialogPrimitive.Popup
         className={cn(sheetVariants({ side }), className)}
         data-side={side}

@@ -2,7 +2,13 @@ import { InfoOutlineIcon } from "@sanity/icons/InfoOutline";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { groups } from "@/sanity/utils/groups";
 
-function legalPage(title: string, name: "impressumPage" | "privacyPolicyPage") {
+type LegalPageName =
+  | "cookiePolicyPage"
+  | "impressumPage"
+  | "privacyPolicyPage"
+  | "submissionTermsPage";
+
+function legalPage(title: string, name: LegalPageName) {
   return defineType({
     __experimental_omnisearch_visibility: false,
     fields: [
@@ -22,6 +28,7 @@ function legalPage(title: string, name: "impressumPage" | "privacyPolicyPage") {
         of: [defineArrayMember({ type: "block" })],
         title: "Content",
         type: "array",
+        validation: (Rule) => Rule.required().min(1),
       }),
       defineField({
         group: "seo",
@@ -38,8 +45,16 @@ function legalPage(title: string, name: "impressumPage" | "privacyPolicyPage") {
   });
 }
 
-export const impressumPage = legalPage("Impressum", "impressumPage");
+export const cookiePolicyPage = legalPage("Cookie Policy", "cookiePolicyPage");
+export const impressumPage = legalPage(
+  "Legal Notice / Impressum",
+  "impressumPage"
+);
 export const privacyPolicyPage = legalPage(
   "Privacy Policy",
   "privacyPolicyPage"
+);
+export const submissionTermsPage = legalPage(
+  "Project Submission Terms",
+  "submissionTermsPage"
 );

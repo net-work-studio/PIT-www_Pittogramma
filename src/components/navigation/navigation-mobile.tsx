@@ -156,8 +156,21 @@ export function NavigationMobile({ resources }: { resources: Resource[] }) {
 
           {/* Footer */}
           <footer className="px-4 py-4 text-muted-foreground text-xs">
-            <p>&copy; 2025 Pittogramma</p>
-            <p>All Rights Reserved. Privacy Policy</p>
+            <p>&copy; {new Date().getFullYear()} Pittogramma</p>
+            <div className="flex flex-wrap gap-x-3">
+              <Link href="/impressum" onClick={closeMenu}>
+                Legal Notice
+              </Link>
+              <Link href="/privacy-policy" onClick={closeMenu}>
+                Privacy Policy
+              </Link>
+              <Link href="/cookie-policy" onClick={closeMenu}>
+                Cookie Policy
+              </Link>
+              <Link href="/submission-terms" onClick={closeMenu}>
+                Submission Terms
+              </Link>
+            </div>
           </footer>
         </div>
       )}
