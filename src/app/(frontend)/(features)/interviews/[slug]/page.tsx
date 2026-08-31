@@ -8,7 +8,11 @@ import DiscoverMore from "@/components/modules/shared/discover-more";
 import EditorialPageHero from "@/components/modules/shared/editorial-page-hero";
 import { JsonLd } from "@/components/seo/json-ld";
 import { DetailPageBadge } from "@/lib/content-type-badge";
-import { formatEventDate } from "@/lib/date-utils";
+import {
+  buildLocalToday,
+  formatEventDate,
+  isPublicationDateReached,
+} from "@/lib/date-utils";
 import { selectRelatedInterviews } from "@/lib/select-related-interviews";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -25,9 +29,10 @@ import { INTERVIEW_QUERY } from "@/sanity/lib/queries";
 
 export async function generateStaticParams() {
   const interviewSlugsQuery = defineQuery(
-    `*[_type == "interview" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
+    `*[_type == "interview" && defined(slug.current) && defined(publishingDate.date) && publishingDate.date <= $today] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
   );
   const { data } = await sanityFetchStaticParams({
+    params: { today: buildLocalToday() },
     query: interviewSlugsQuery,
   });
   return data as { slug: string }[];
@@ -48,7 +53,11 @@ export async function generateMetadata({
     query: INTERVIEW_QUERY,
   });
 
-  if (!interview) {
+  if (
+    !interview ||
+    (perspective === "published" &&
+      !isPublicationDateReached(interview.publishingDate?.date))
+  ) {
     return {};
   }
 
@@ -75,7 +84,12 @@ export default async function InterviewPage({
     getDynamicFetchOptions(),
   ]);
   return (
-    <CachedInterviewPage perspective={perspective} slug={slug} stega={stega} />
+    <CachedInterviewPage
+      perspective={perspective}
+      slug={slug}
+      stega={stega}
+      today={buildLocalToday()}
+    />
   );
 }
 
@@ -83,7 +97,8 @@ async function CachedInterviewPage({
   slug,
   perspective,
   stega,
-}: { slug: string } & DynamicFetchOptions) {
+  today,
+}: { slug: string; today: string } & DynamicFetchOptions) {
   "use cache";
   const { data: interview } = await sanityFetch({
     params: { slug },
@@ -92,7 +107,11 @@ async function CachedInterviewPage({
     stega,
   });
 
-  if (!interview) {
+  if (
+    !interview ||
+    (perspective === "published" &&
+      !isPublicationDateReached(interview.publishingDate?.date, today))
+  ) {
     notFound();
   }
 

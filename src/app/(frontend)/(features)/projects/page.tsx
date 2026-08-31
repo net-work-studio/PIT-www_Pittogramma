@@ -119,6 +119,7 @@ async function CachedProjectsPage({
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
+  const includeFuture = perspective !== "published";
   const tagIdsPromise = hasTags
     ? sanityFetch({
         query: TAG_IDS_BY_SLUGS_QUERY,
@@ -130,7 +131,7 @@ async function CachedProjectsPage({
   const projectsPromise = tagIdsPromise.then(({ data: tagIds }) =>
     sanityFetch({
       query: getProjectsFilteredQuery(sort),
-      params: { tagIds, hasTags, start, end },
+      params: { end, hasTags, includeFuture, start, tagIds, today },
       perspective,
       stega,
     })
@@ -138,7 +139,7 @@ async function CachedProjectsPage({
   const totalCountPromise = tagIdsPromise.then(({ data: tagIds }) =>
     sanityFetch({
       query: PROJECTS_COUNT_QUERY,
-      params: { tagIds, hasTags },
+      params: { hasTags, includeFuture, tagIds, today },
       perspective,
       stega,
     })
@@ -153,7 +154,12 @@ async function CachedProjectsPage({
   ] = await Promise.all([
     projectsPromise,
     totalCountPromise,
-    sanityFetch({ query: PROJECTS_TAGS_QUERY, perspective, stega }),
+    sanityFetch({
+      params: { includeFuture, today },
+      perspective,
+      query: PROJECTS_TAGS_QUERY,
+      stega,
+    }),
     sanityFetch({ query: PROJECTS_PAGE_QUERY, perspective, stega }),
     sanityFetch({
       query: INDEX_GOLD_QUERY,

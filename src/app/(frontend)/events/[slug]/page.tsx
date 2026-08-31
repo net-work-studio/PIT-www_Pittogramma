@@ -13,7 +13,11 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { MultilineText } from "@/components/shared/multiline-text";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { hasCoverMedia } from "@/lib/cover-media-utils";
-import { formatDateRange } from "@/lib/date-utils";
+import {
+  buildLocalToday,
+  formatDateRange,
+  isPublicationDateReached,
+} from "@/lib/date-utils";
 import { buildExternalEventUrl } from "@/lib/event-destination";
 import {
   formatEventLocationDisplay,
@@ -36,9 +40,12 @@ import { EVENT_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
 export async function generateStaticParams() {
   const eventSlugsQuery = defineQuery(
-    `*[_type == "event" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
+    `*[_type == "event" && defined(slug.current) && defined(publishingDate.date) && publishingDate.date <= $today] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
   );
-  const { data } = await sanityFetchStaticParams({ query: eventSlugsQuery });
+  const { data } = await sanityFetchStaticParams({
+    params: { today: buildLocalToday() },
+    query: eventSlugsQuery,
+  });
   return data as { slug: string }[];
 }
 
@@ -57,7 +64,11 @@ export async function generateMetadata({
     perspective,
   });
 
-  if (!event) {
+  if (
+    !event ||
+    (perspective === "published" &&
+      !isPublicationDateReached(event.publishingDate?.date))
+  ) {
     return {};
   }
 
@@ -88,7 +99,14 @@ export default async function EventPage({
     );
   }
   const { slug } = await params;
-  return <CachedEventPage perspective="published" slug={slug} stega={false} />;
+  return (
+    <CachedEventPage
+      perspective="published"
+      slug={slug}
+      stega={false}
+      today={buildLocalToday()}
+    />
+  );
 }
 
 async function DynamicEventPage({
@@ -101,7 +119,12 @@ async function DynamicEventPage({
     getDynamicFetchOptions(),
   ]);
   return (
-    <CachedEventPage perspective={perspective} slug={slug} stega={stega} />
+    <CachedEventPage
+      perspective={perspective}
+      slug={slug}
+      stega={stega}
+      today={buildLocalToday()}
+    />
   );
 }
 
@@ -109,7 +132,8 @@ async function CachedEventPage({
   slug,
   perspective,
   stega,
-}: { slug: string } & DynamicFetchOptions) {
+  today,
+}: { slug: string; today: string } & DynamicFetchOptions) {
   "use cache";
   const [{ data: event }, { data: siteSettings }] = await Promise.all([
     sanityFetch({
@@ -121,7 +145,11 @@ async function CachedEventPage({
     sanityFetch({ perspective, query: SITE_SETTINGS_QUERY, stega }),
   ]);
 
-  if (!event) {
+  if (
+    !event ||
+    (perspective === "published" &&
+      !isPublicationDateReached(event.publishingDate?.date, today))
+  ) {
     notFound();
   }
 

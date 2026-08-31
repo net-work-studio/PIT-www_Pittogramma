@@ -140,6 +140,7 @@ async function CachedEventsPage({
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
+  const includeFuture = perspective !== "published";
 
   const [
     { data: futureEventsData },
@@ -149,19 +150,19 @@ async function CachedEventsPage({
   ] = await Promise.all([
     sanityFetch({
       query: FUTURE_EVENTS_QUERY,
-      params: { today },
+      params: { includeFuture, today },
       perspective,
       stega,
     }),
     sanityFetch({
       query: PAST_EVENTS_QUERY,
-      params: { today, start, end },
+      params: { end, includeFuture, start, today },
       perspective,
       stega,
     }),
     sanityFetch({
       query: PAST_EVENTS_COUNT_QUERY,
-      params: { today },
+      params: { includeFuture, today },
       perspective,
       stega,
     }),

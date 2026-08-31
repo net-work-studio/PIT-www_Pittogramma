@@ -13,6 +13,14 @@ export function buildLocalToday(): string {
   return `${y}-${m}-${day}`;
 }
 
+/** Whether an editorial item is publicly available on the supplied date. */
+export function isPublicationDateReached(
+  publishingDate: string | null | undefined,
+  today: string = buildLocalToday()
+): boolean {
+  return Boolean(publishingDate && publishingDate <= today);
+}
+
 /** An event remains homepage-eligible through its final calendar day. */
 export function isUpcomingEvent(
   dateStart: string | null | undefined,

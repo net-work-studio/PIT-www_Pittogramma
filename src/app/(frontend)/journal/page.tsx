@@ -15,6 +15,7 @@ import {
   getJournalHeroCover,
   resolveJournalHeroCover,
 } from "@/lib/cover-media-utils";
+import { buildLocalToday, isPublicationDateReached } from "@/lib/date-utils";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { JOURNAL_LABELS } from "@/lib/journal-labels";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -91,6 +92,7 @@ async function DynamicJournalPage({
       sortParam={sp.sort}
       stega={stega}
       tagsParam={sp.tags}
+      today={buildLocalToday()}
     />
   );
 }
@@ -102,10 +104,12 @@ async function CachedJournalPage({
   sortParam,
   perspective,
   stega,
+  today,
 }: {
   tagsParam?: string;
   pageParam?: string;
   sortParam?: string;
+  today: string;
 } & DynamicFetchOptions) {
   "use cache";
 
@@ -121,28 +125,35 @@ async function CachedJournalPage({
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
+  const includeFuture = perspective !== "published";
 
   const [{ data: articles }, { data: totalCount }, { data: pageSettings }] =
     await Promise.all([
       sanityFetch({
         query: getJournalFilteredQuery(sort),
-        params: { tags: tagSlugs, hasTags, start, end },
+        params: { end, hasTags, includeFuture, start, tags: tagSlugs, today },
         perspective,
         stega,
       }),
       sanityFetch({
         query: JOURNAL_COUNT_QUERY,
-        params: { tags: tagSlugs, hasTags },
+        params: { hasTags, includeFuture, tags: tagSlugs, today },
         perspective,
         stega,
       }),
       sanityFetch({ query: JOURNAL_PAGE_QUERY, perspective, stega }),
     ]);
 
+  const configuredFeaturedArticle = pageSettings?.featuredArticle;
   const featuredArticle =
-    pageSettings?.featuredArticle ??
-    (articles as JOURNAL_QUERY_RESULT)?.[0] ??
-    null;
+    configuredFeaturedArticle &&
+    (includeFuture ||
+      isPublicationDateReached(
+        configuredFeaturedArticle.publishingDate?.date,
+        today
+      ))
+      ? configuredFeaturedArticle
+      : ((articles as JOURNAL_QUERY_RESULT)?.[0] ?? null);
   const cta = pageSettings?.endOfPageCta;
   const totalPages = Math.max(1, Math.ceil((totalCount ?? 0) / PAGE_SIZE));
   if (page > totalPages) {
@@ -218,7 +229,10 @@ async function CachedJournalPage({
             {totalCount} {totalCount === 1 ? "article" : "articles"}
           </p>
           <div className="flex items-center justify-end gap-2">
-            <FilterSheet availableTags={JOURNAL_LABEL_OPTIONS} label="articles" />
+            <FilterSheet
+              availableTags={JOURNAL_LABEL_OPTIONS}
+              label="articles"
+            />
             <SortDropdown />
           </div>
         </div>

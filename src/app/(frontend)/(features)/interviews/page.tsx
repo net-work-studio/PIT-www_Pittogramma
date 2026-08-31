@@ -119,6 +119,7 @@ async function CachedInterviewsPage({
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
+  const includeFuture = perspective !== "published";
   const tagIdsPromise = hasTags
     ? sanityFetch({
         query: TAG_IDS_BY_SLUGS_QUERY,
@@ -130,7 +131,7 @@ async function CachedInterviewsPage({
   const interviewsPromise = tagIdsPromise.then(({ data: tagIds }) =>
     sanityFetch({
       query: getInterviewsFilteredQuery(sort),
-      params: { tagIds, hasTags, start, end },
+      params: { end, hasTags, includeFuture, start, tagIds, today },
       perspective,
       stega,
     })
@@ -138,7 +139,7 @@ async function CachedInterviewsPage({
   const totalCountPromise = tagIdsPromise.then(({ data: tagIds }) =>
     sanityFetch({
       query: INTERVIEWS_COUNT_QUERY,
-      params: { tagIds, hasTags },
+      params: { hasTags, includeFuture, tagIds, today },
       perspective,
       stega,
     })
@@ -153,7 +154,12 @@ async function CachedInterviewsPage({
   ] = await Promise.all([
     interviewsPromise,
     totalCountPromise,
-    sanityFetch({ query: INTERVIEWS_TAGS_QUERY, perspective, stega }),
+    sanityFetch({
+      params: { includeFuture, today },
+      perspective,
+      query: INTERVIEWS_TAGS_QUERY,
+      stega,
+    }),
     sanityFetch({ query: INTERVIEWS_PAGE_QUERY, perspective, stega }),
     sanityFetch({
       query: INDEX_GOLD_QUERY,
@@ -169,7 +175,10 @@ async function CachedInterviewsPage({
     notFound();
   }
 
-  const tags = (availableTags ?? []) as INTERVIEWS_TAGS_QUERY_RESULT;
+  const tags = (availableTags ?? []).filter(
+    (tag): tag is NonNullable<INTERVIEWS_TAGS_QUERY_RESULT[number]> =>
+      tag !== null
+  );
   const uniqueTags = Array.from(new Map(tags.map((t) => [t._id, t])).values());
 
   type SanityImageSource = Parameters<typeof SanityImage>[0]["source"];
