@@ -1,0 +1,90 @@
+src/app/(frontend)/(resources)/bibliography/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 97-98
+src/app/(frontend)/(resources)/bookshops/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 106-107
+src/app/(frontend)/(resources)/websites/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 103-104
+src/app/(frontend)/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 288-289,307-308
+src/components/modules/shared/content-card-skeleton.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 1-26
+src/app/(frontend)/(resources)/institutes/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 106-107
+src/components/modules/event/event-page-skeleton.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 1-50
+src/components/ui/skeleton.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 1-16
+src/app/(frontend)/(features)/projects/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 266-267
+src/app/(frontend)/(features)/editions/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 88-89
+src/components/feat/sort/sort-dropdown.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 29,42-44,54,57,63
+src/components/cards/cta-card.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 14-15,20-21,27-65,70-71,105,109
+src/sanity/schemaTypes/documents/cta.ts
+  s_4c0e2b9980c48b::t_85c7562baea994 33,35-36,42,47-53,128
+CONTEXT.md
+  s_4c0e2b9980c48b::t_ccfb070f3f5161 171
+  s_4c0e2b9980c48b::t_85c7562baea994 170,172
+src/app/(frontend)/journal/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 10,71,250-251
+scripts/migrate-cta-images.ts
+  s_4c0e2b9980c48b::t_85c7562baea994 1-39
+src/app/(frontend)/events/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 7,96,250-251
+src/components/modules/shared/journal-page-skeleton.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 1-53
+src/app/(frontend)/(features)/interviews/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 265-266
+src/components/modules/shared/page-header-skeleton.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 1-13
+src/sanity/types.ts
+  s_4c0e2b9980c48b::t_85c7562baea994 773-774,1854,2047-2067,2166-2186,3234,3244-3264,3403,3413-3433,3572,3582-3602,3741,3751-3771,3910,3920-3940,4079,4089-4109,4248,4258-4278,4417,4427-4447,4586,4596-4616,4755,4765-4785,4924,4934-4954,7482,7553-7573,9502,9511-9531,9916,9924-9934,9960,9981
+src/sanity/extract.json
+  s_4c0e2b9980c48b::t_85c7562baea994 4397-4405
+src/components/feat/filter/filter-sheet.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 104,122,128-130,194
+  s_4c0e2b9980c48b::t_ccfb070f3f5161 115
+src/app/(frontend)/(features)/designers/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 86-87
+src/app/(frontend)/(resources)/studios-agencies/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 103-104
+src/app/(frontend)/events/loading.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 1-5
+src/components/modules/shared/events-page-skeleton.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 1-31
+src/components/ui/sheet.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 42-44,52,63,89
+src/components/feat/feed/feed-dialog.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 115,119,122
+  s_4c0e2b9980c48b::t_ccfb070f3f5161 114
+src/app/(frontend)/(resources)/type-foundries/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 106-107
+src/components/modules/shared/editorial-article-skeleton.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 2,10,12,36,40-43,55,65-67,73,75
+src/app/(frontend)/events/[slug]/loading.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 1-2,4
+src/app/(frontend)/journal/loading.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 1-5
+src/app/(frontend)/(resources)/glossary/page.tsx
+  s_4c0e2b9980c48b::t_85c7562baea994 110-120,133,137,140,193,230-231
+src/sanity/lib/fragments.ts
+  s_4c0e2b9980c48b::t_85c7562baea994 44-50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "4a5ef371cfad2964fd76a87ca2b22ae1b7b4b916",
+  "prompts": {},
+  "sessions": {
+    "s_4c0e2b9980c48b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a059e8-da09-7711-b7bc-415ed2016737",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
