@@ -75,7 +75,7 @@ export default function FeaturedHero({
         </hgroup>
       </div>
 
-      <div className="absolute z-1 h-full w-full rounded-xl bg-black/20 transition-opacity duration-500 group-hover:bg-black/15" />
+      <div className="absolute z-1 h-full w-full rounded-xl bg-black/40 transition-opacity duration-500 group-hover:bg-black/35" />
 
       <CoverMedia
         className="absolute h-full w-full rounded-xl object-cover transition-transform duration-300"
