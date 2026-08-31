@@ -22,7 +22,7 @@ export interface ImageLike {
 }
 
 // https://www.sanity.io/docs/image-url
-const builder = createImageUrlBuilder({ projectId, dataset });
+const builder = createImageUrlBuilder({ dataset, projectId });
 
 export const urlFor = (source: SanityImageSource) => builder.image(source);
 
@@ -75,7 +75,6 @@ export const getLqip = (
     const meta = (asset as { metadata?: AssetMetadata }).metadata;
     return meta?.lqip ?? undefined;
   }
-  return;
 };
 
 /** Extract image dimensions from resolved asset metadata */
@@ -87,13 +86,12 @@ export const getImageDimensions = (
     const meta = (asset as { metadata?: AssetMetadata }).metadata;
     return meta?.dimensions ?? undefined;
   }
-  return;
 };
 
 /** Prevent transformed Sanity URLs from upscaling beyond the source asset. */
 /** Generate blur data URL for Next.js Image placeholder.
- *  Prefers native LQIP from metadata, falling back to a tiny image that keeps
- *  the source aspect ratio. */
+ * Prefers native LQIP from metadata, falling back to a tiny image that keeps
+ * the source aspect ratio. */
 export const getBlurDataUrl = (
   source: CoverMedia | ImageWithMetadata | ImageLike | null | undefined,
   ignoreCrop = false

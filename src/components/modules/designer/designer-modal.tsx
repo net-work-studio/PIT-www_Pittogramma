@@ -6,6 +6,7 @@ import { designerInitial } from "@/components/modules/designer/designer-portrait
 import DesignerProjectLink from "@/components/modules/designer/designer-project-link";
 import SanityImage from "@/components/modules/shared/sanity-image";
 import { MultilineText } from "@/components/shared/multiline-text";
+import { ScrollFade } from "@/components/shared/scroll-fade";
 import {
   Dialog,
   DialogContent,
@@ -97,7 +98,7 @@ export default function DesignerModal({
       <Dialog onOpenChange={handleOpenChange} open={open}>
         <DialogTrigger render={children} />
         <DialogContent
-          className="max-h-[85vh] overflow-y-auto p-0 sm:max-w-5xl"
+          className="h-[min(85vh,calc(53.333vw-1.06667rem),42.6667rem)] w-[calc(100%-2rem)] max-w-7xl overflow-hidden p-0 sm:max-w-7xl!"
           finalFocus={false}
         >
           <DialogTitle className="sr-only">{titleText}</DialogTitle>
@@ -111,7 +112,7 @@ export default function DesignerModal({
     <Sheet onOpenChange={handleOpenChange} open={open}>
       <SheetTrigger render={children} />
       <SheetContent
-        className="max-h-[85vh] overflow-y-auto p-6"
+        className="flex h-[85vh] max-h-[85vh] flex-col overflow-hidden p-6"
         finalFocus={false}
         side="bottom"
       >
@@ -146,8 +147,8 @@ function DesignerModalContent({
   const sortedEducation = education ? sortEducationByYearDesc(education) : [];
 
   return (
-    <div className="flex w-full flex-col md:flex-row md:items-stretch">
-      <div className="aspect-3/4 w-full md:relative md:aspect-auto md:w-2/5 md:shrink-0">
+    <div className="flex h-full w-full flex-col md:flex-row">
+      <div className="aspect-3/4 w-full shrink-0 md:relative md:h-full md:w-auto">
         <div className="relative h-full w-full overflow-hidden rounded-xl md:absolute md:inset-0 md:rounded-none md:rounded-l-xl">
           {hasPortrait ? (
             <SanityImage
@@ -169,75 +170,81 @@ function DesignerModalContent({
         </div>
       </div>
 
-      <div className="w-full space-y-5 p-5 max-md:px-0 max-md:pb-0 md:w-3/5">
-        <div className="flex flex-col text-base">
-          <hgroup className="flex">
-            {name ? <h2>{name}</h2> : null}
-            {birthYear ? <p>, {birthYear}</p> : null}
-          </hgroup>
-          {locationLine ? (
-            <p className="text-muted-foreground">{locationLine}</p>
-          ) : null}
+      <div className="flex h-full min-h-0 min-w-0 flex-1 flex-col">
+        <div className="shrink-0 px-5 pt-5 pb-2.5 max-md:px-0">
+          <div className="flex flex-col text-base">
+            <hgroup className="flex">
+              {name ? <h2>{name}</h2> : null}
+              {birthYear ? <p>, {birthYear}</p> : null}
+            </hgroup>
+            {locationLine ? (
+              <p className="text-muted-foreground">{locationLine}</p>
+            ) : null}
+          </div>
         </div>
 
-        {bio ? (
-          <p>
-            <MultilineText text={bio} />
-          </p>
-        ) : null}
+        <ScrollFade className="min-h-0 flex-1" key={designer._id}>
+          <div className="space-y-5 px-5 pt-5 pb-24 max-md:px-0">
+            {bio ? (
+              <p>
+                <MultilineText text={bio} />
+              </p>
+            ) : null}
 
-        {filteredProjects.length > 0 ? (
-          <section className="flex flex-col space-y-1.5">
-            <p className="font-mono text-muted-foreground text-xxs uppercase">
-              Projects
-            </p>
-            <ul className="flex flex-col gap-2">
-              {filteredProjects.map((project) => (
-                <li key={project._id}>
-                  <DesignerProjectLink project={project} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
+            {filteredProjects.length > 0 ? (
+              <section className="flex flex-col space-y-1.5">
+                <p className="font-mono text-muted-foreground text-xxs uppercase">
+                  Projects
+                </p>
+                <ul className="flex flex-col gap-2">
+                  {filteredProjects.map((project) => (
+                    <li key={project._id}>
+                      <DesignerProjectLink project={project} />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
 
-        {sortedEducation.length > 0 ? (
-          <section className="flex flex-col">
-            <p className="font-mono text-muted-foreground text-xxs uppercase">
-              Education
-            </p>
-            <ul className="flex flex-col">
-              {sortedEducation.map((edu) => (
-                <li className="flex" key={edu._key}>
-                  <span className="w-12.5">{edu.year}</span>
-                  {educationTextParts(edu).join(", ")}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
+            {sortedEducation.length > 0 ? (
+              <section className="flex flex-col">
+                <p className="font-mono text-muted-foreground text-xxs uppercase">
+                  Education
+                </p>
+                <ul className="flex flex-col">
+                  {sortedEducation.map((edu) => (
+                    <li className="flex" key={edu._key}>
+                      <span className="w-12.5">{edu.year}</span>
+                      {educationTextParts(edu).join(", ")}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
 
-        {links.length > 0 ? (
-          <section className="flex flex-col">
-            <p className="font-mono text-muted-foreground text-xxs uppercase">
-              Links
-            </p>
-            <ul className="flex flex-col">
-              {links.map((link) => (
-                <li key={link._key}>
-                  <a
-                    className="hover:text-muted-foreground"
-                    href={link.url}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    ↗ {SOCIAL_LINK_LABELS[link.platform] ?? link.platform}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
+            {links.length > 0 ? (
+              <section className="flex flex-col">
+                <p className="font-mono text-muted-foreground text-xxs uppercase">
+                  Links
+                </p>
+                <ul className="flex flex-col">
+                  {links.map((link) => (
+                    <li key={link._key}>
+                      <a
+                        className="hover:text-muted-foreground"
+                        href={link.url}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        ↗ {SOCIAL_LINK_LABELS[link.platform] ?? link.platform}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
+          </div>
+        </ScrollFade>
       </div>
     </div>
   );

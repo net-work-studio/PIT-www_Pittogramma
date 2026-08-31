@@ -24,7 +24,6 @@ import { PUBLIC_SITE_STATE_QUERY } from "@/sanity/lib/queries";
 const umamiWebsiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
 
 export async function generateMetadata(): Promise<Metadata> {
-  await connection();
   const settings = await getCachedPublicSiteSettings({
     perspective: "published",
     stega: false,
