@@ -69,15 +69,15 @@ function FeedDialogInner({ advs, communityItems }: FeedDialogProps) {
       <SheetContent
         className={
           isDesktop
-            ? "scrollbar-none w-120 max-w-120 overflow-y-auto [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-            : "scrollbar-none max-h-[90vh] overflow-y-auto [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            ? "flex h-full min-h-0 w-120 max-w-120 flex-col gap-0 overflow-hidden [&>[data-slot=sheet-close]]:top-5 [&>[data-slot=sheet-close]]:right-6 [&>[data-slot=sheet-close]]:inline-flex [&>[data-slot=sheet-close]]:size-6 [&>[data-slot=sheet-close]]:items-center [&>[data-slot=sheet-close]]:justify-center"
+            : "flex h-[90vh] min-h-0 flex-col gap-0 overflow-hidden"
         }
         side={side}
       >
-        <SheetHeader className="pb-4">
+        <SheetHeader className={isDesktop ? "items-start pb-4" : "pb-4"}>
           <SheetTitle>Feed</SheetTitle>
         </SheetHeader>
-        <div className="flex-1 space-y-6 px-6 pb-6">
+        <div className="scrollbar-none min-h-0 flex-1 space-y-6 overflow-y-auto px-6 pb-6 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           {hasItems ? (
             <>
               {advs.map((adv) =>
