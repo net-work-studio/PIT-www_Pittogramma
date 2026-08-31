@@ -172,7 +172,7 @@ The fixed number of editorial and advertising cards shown on the homepage. Proje
 _Avoid_: Separate per-type homepage feeds, event-date ordering, an expanding homepage card count
 
 **Feed sidebar**:
-The header-opened panel that lists Sponsored placements and community items. It is separate from the Homepage content stream.
+The header-opened panel that presents active Sponsored placements and Community items in one chronological timeline. Cards are ordered by Start Date, newest first, with the newest CMS creation time breaking ties. It is separate from the Homepage content stream.
 _Avoid_: Homepage content stream, a Feed content type
 
 **Sponsored placement**:

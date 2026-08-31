@@ -1284,13 +1284,13 @@ export const ADVS_QUERY = defineQuery(`
   }
 `);
 
-// Feed query — gold + silver + bronze.
+// Feed placement eligibility query — gold + silver + bronze.
 // Active window: dateStart <= today <= dateEnd. Sorted by tier priority
 // (gold → silver → bronze), then dateStart asc (first-booked-first-served),
 // tie-break on _createdAt asc. The hard cap of 16 is a safety net well above
 // the visible cap budget (1 + 2 + 5 = 8) so legitimate inventory survives any
 // short-term overflow while still bounding worst-case payload size.
-// Per-tier visible caps are enforced by the page, not the query.
+// Header applies per-tier visible caps before building the Feed drawer timeline.
 // Tier priority below must match `TIER_ORDER` in src/lib/adv-config.ts.
 export const FEED_QUERY = defineQuery(`
   *[
@@ -1304,6 +1304,7 @@ export const FEED_QUERY = defineQuery(`
     _createdAt asc
   ) [0...16] {
     _id,
+    _createdAt,
     title,
     cover { ${COVER_MEDIA_FIELDS} },
     coverPortrait { ${IMAGE_FIELDS} },
@@ -1368,17 +1369,19 @@ export const INDEX_GOLD_QUERY = defineQuery(`
   }
 `);
 
-// Feed community query — all active community items, deliberately uncapped.
+// Feed community eligibility query — all active community items, deliberately
+// uncapped.
 // Active window: dateStart <= today AND (no dateEnd, OR dateEnd >= today).
-// Sorted by dateStart asc (first-booked-first-served), tie-break on
-// _createdAt asc.
+// Header combines the results with eligible sponsored placements and sorts the
+// Feed drawer timeline by dateStart desc, then _createdAt desc.
 export const FEED_COMMUNITY_QUERY = defineQuery(`
   *[
     _type == "community"
     && dateStart <= $today
     && (!defined(dateEnd) || dateEnd >= $today)
-  ] | order(dateStart asc, _createdAt asc) {
+  ] {
     _id,
+    _createdAt,
     title,
     type,
     cover { ${COVER_MEDIA_FIELDS} },
