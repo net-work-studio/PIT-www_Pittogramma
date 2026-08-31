@@ -41,3 +41,13 @@ This is a single Next.js 16 (App Router, React 19) app named `pittogramma-web` b
 - **Typecheck**: `bun run typecheck` (`tsc --noEmit`).
 - **Use `next-cacheComponents`**: `next.config.ts` sets `cacheComponents: true`; data fetching goes through `next-sanity` `sanityFetch`/`<SanityLive>`. `/editions` and `/editions/:slug` are temporarily redirected to `/`.
 - Optional/feature-specific env vars (not needed to boot): `SANITY_REVALIDATE_SECRET`, `NEXT_SITE_URL` (Sanity Function cache invalidation), `GOOGLE_BOOKS_API_KEY`, `NEXT_PUBLIC_BASE_URL`. Feature flags in `src/lib/feature-flags.ts` default to enabled.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

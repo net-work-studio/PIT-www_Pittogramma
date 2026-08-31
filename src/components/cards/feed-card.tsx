@@ -33,7 +33,7 @@ export default function FeedCard({
 
   return (
     <Link
-      className="group flex w-full flex-col items-start gap-2.5 rounded-card"
+      className="group flex w-full flex-col items-start gap-2 rounded-card"
       href={href}
       rel={linkRel}
       target="_blank"
@@ -55,14 +55,12 @@ export default function FeedCard({
         )}
       </AspectRatio>
       {variant ? <Badge variant={variant}>Sponsored</Badge> : null}
-      <hgroup className="flex w-full flex-col items-start gap-2">
+      <hgroup className="flex w-full flex-col items-start gap-0.5">
         <h3 className="text-pretty text-foreground text-lg leading-tight">
           {title}
         </h3>
         {byline ? (
-          <p className="font-normal text-base text-muted-foreground">
-            {byline}
-          </p>
+          <p className="font-normal text-muted-foreground text-sm">{byline}</p>
         ) : null}
       </hgroup>
     </Link>

@@ -42,7 +42,7 @@ const LIST_COLUMNS = [
     label: "Title",
   },
   {
-    className: "col-span-2",
+    className: "col-span-3",
     getSortValue: (book: BibliographyItem) => book.authors?.[0]?.name,
     id: "author",
     label: "Author/s",
@@ -60,7 +60,7 @@ const LIST_COLUMNS = [
     label: "Tag",
   },
   {
-    className: "col-span-2",
+    className: "col-span-1",
     getSortValue: (book: BibliographyItem) => book.year,
     id: "year",
     label: "Year",
@@ -109,7 +109,7 @@ function BookListItem({ book, onSelect }: BookCardListProps) {
           {book.name}
         </button>
       </span>
-      <span className="col-span-2">
+      <span className="col-span-3">
         {getAuthors(book.authors)}
       </span>
       <span className="col-span-2 max-md:hidden">
@@ -118,7 +118,7 @@ function BookListItem({ book, onSelect }: BookCardListProps) {
       <span className="col-span-2 max-md:hidden">
         <TagsDisplay tags={book.tags} />
       </span>
-      <span className="col-span-2 max-md:hidden">{book.year || "-"}</span>
+      <span className="col-span-1 max-md:hidden">{book.year || "-"}</span>
     </ResourceListItem>
   );
 }

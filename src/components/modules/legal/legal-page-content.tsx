@@ -1,5 +1,7 @@
 import { PortableText, type PortableTextComponents } from "next-sanity";
 
+const EXTERNAL_HTTP_URL = /^https?:\/\//i;
+
 const components: PortableTextComponents = {
   block: {
     h2: ({ children }) => (
@@ -11,23 +13,42 @@ const components: PortableTextComponents = {
       <h3 className="mt-8 mb-3 text-lg leading-tight lg:text-xl">{children}</h3>
     ),
     normal: ({ children }) => (
-      <p className="mb-4 text-base leading-relaxed lg:text-xl">{children}</p>
+      <p className="mb-4 whitespace-pre-line text-base leading-relaxed lg:text-xl">
+        {children}
+      </p>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => (
+      <ul className="mb-4 list-disc space-y-2 pl-6 text-base leading-relaxed lg:text-xl">
+        {children}
+      </ul>
+    ),
+    number: ({ children }) => (
+      <ol className="mb-4 list-decimal space-y-2 pl-6 text-base leading-relaxed lg:text-xl">
+        {children}
+      </ol>
     ),
   },
   marks: {
-    link: ({ children, value }) =>
-      value?.href ? (
+    link: ({ children, value }) => {
+      if (!value?.href) {
+        return children;
+      }
+
+      const isExternal = EXTERNAL_HTTP_URL.test(value.href);
+
+      return (
         <a
           className="underline"
           href={value.href}
-          rel="noopener noreferrer"
-          target="_blank"
+          rel={isExternal ? "noopener noreferrer" : undefined}
+          target={isExternal ? "_blank" : undefined}
         >
           {children}
         </a>
-      ) : (
-        children
-      ),
+      );
+    },
   },
 };
 
