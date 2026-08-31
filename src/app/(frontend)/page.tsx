@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import CtaCard from "@/components/cards/cta-card";
 import RecentUpdates from "@/components/home/recent-updates";
@@ -165,14 +166,25 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   const { isEnabled: isDraftMode } = await draftMode();
-  if (isDraftMode) {
-    return (
+  return (
+    <>
+      {isDraftMode ? (
+        <Suspense>
+          <DynamicHome />
+        </Suspense>
+      ) : (
+        <CachedHome perspective="published" stega={false} />
+      )}
       <Suspense>
-        <DynamicHome />
+        <DynamicMarker />
       </Suspense>
-    );
-  }
-  return <CachedHome perspective="published" stega={false} />;
+    </>
+  );
+}
+
+async function DynamicMarker() {
+  await connection();
+  return null;
 }
 
 async function DynamicHome() {

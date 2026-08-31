@@ -78,10 +78,16 @@ export default async function Footer({
           <p>© {new Date().getFullYear()} Pittogramma. All Rights Reserved.</p>
           <ul className={`flex flex-wrap gap-x-4 ${footerLinkListClass}`}>
             <li>
-              <Link href="/impressum">Impressum</Link>
+              <Link href="/impressum">Legal Notice</Link>
             </li>
             <li>
               <Link href="/privacy-policy">Privacy Policy</Link>
+            </li>
+            <li>
+              <Link href="/cookie-policy">Cookie Policy</Link>
+            </li>
+            <li>
+              <Link href="/submission-terms">Submission Terms</Link>
             </li>
           </ul>
         </div>
