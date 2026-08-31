@@ -83,7 +83,8 @@ async function CachedDesignersPage({
             buttonText={cta.buttonText}
             externalUrl={cta.externalUrl}
             headline={cta.headline}
-            image={cta.image}
+            imgDark={cta.imgDark}
+            imgLight={cta.imgLight}
             internalLink={cta.internalLink}
             linkType={cta.linkType}
             variant={cta.variant}

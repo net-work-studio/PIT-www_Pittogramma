@@ -4394,7 +4394,15 @@
         },
         "optional": true
       },
-      "image": {
+      "imgLight": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "imageWithMetadata"
+        },
+        "optional": true
+      },
+      "imgDark": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
