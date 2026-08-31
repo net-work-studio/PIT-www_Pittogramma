@@ -7,6 +7,7 @@ import FilterSheet from "@/components/feat/filter/filter-sheet";
 import LoadMore from "@/components/feat/load-more/load-more";
 import SortDropdown from "@/components/feat/sort/sort-dropdown";
 import { isValidSort } from "@/components/feat/sort/sort-options";
+import JournalPageSkeleton from "@/components/modules/shared/journal-page-skeleton";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
@@ -67,7 +68,7 @@ export default function JournalPage({
   searchParams: Promise<{ tags?: string; page?: string; sort?: string }>;
 }) {
   return (
-    <Suspense>
+    <Suspense fallback={<JournalPageSkeleton />}>
       <DynamicJournalPage searchParams={searchParams} />
     </Suspense>
   );

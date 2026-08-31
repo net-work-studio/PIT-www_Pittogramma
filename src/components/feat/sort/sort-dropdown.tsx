@@ -2,7 +2,7 @@
 
 import { ArrowDownUpIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,12 +19,14 @@ export default function SortDropdown() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
 
   const rawSort = searchParams.get("sort") ?? undefined;
   const currentSort: SortOption = isValidSort(rawSort) ? rawSort : "newest";
 
   const currentLabel =
     SORT_OPTIONS.find((o) => o.value === currentSort)?.label ?? "Newest first";
+  const displayedLabel = isPending ? "Loading…" : currentLabel;
 
   const handleSortChange = useCallback(
     (value: string) => {
@@ -37,7 +39,9 @@ export default function SortDropdown() {
       // Reset to page 1 on sort change
       params.delete("page");
       const qs = params.toString();
-      router.push(qs ? `${pathname}?${qs}` : pathname);
+      startTransition(() => {
+        router.push(qs ? `${pathname}?${qs}` : pathname);
+      });
     },
     [router, pathname, searchParams]
   );
@@ -47,14 +51,16 @@ export default function SortDropdown() {
       <DropdownMenuTrigger
         render={
           <Button
+            aria-busy={isPending || undefined}
             aria-label={`Sort: ${currentLabel}`}
             className="font-mono uppercase max-sm:w-9 max-sm:px-0"
+            disabled={isPending}
             title={`Sort: ${currentLabel}`}
           />
         }
       >
         <ArrowDownUpIcon className="sm:hidden" />
-        <span className="max-sm:sr-only">{currentLabel}</span>
+        <span className="max-sm:sr-only">{displayedLabel}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuRadioGroup
