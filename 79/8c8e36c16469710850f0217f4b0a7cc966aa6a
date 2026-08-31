@@ -1,0 +1,19 @@
+src/components/shared/featured-hero.tsx
+  s_34a32eebebd006::t_692ad1f8766878 62,69,74
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "798c8e36c16469710850f0217f4b0a7cc966aa6a",
+  "prompts": {},
+  "sessions": {
+    "s_34a32eebebd006": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05894-c3d4-7023-815e-94261c738ea6",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
