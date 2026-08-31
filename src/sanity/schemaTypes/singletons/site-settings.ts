@@ -318,6 +318,15 @@ export const siteSettings = defineType({
       validation: httpUrlValidation,
     }),
     defineField({
+      description:
+        "External Notion form where visitors can report an issue with the platform.",
+      group: "footer",
+      name: "issueReportFormUrl",
+      title: "Issue report form URL",
+      type: "url",
+      validation: httpUrlValidation,
+    }),
+    defineField({
       group: "contributions",
       initialValue:
         "https://app.notion.com/p/3b97f12bcce680279120ebe629e655bf?pvs=106",

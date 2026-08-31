@@ -80,7 +80,9 @@ function shouldUseCssHotspot(
  * Hotspot handling depends on layout:
  * - `fill` (default): CSS object-position from Sanity hotspot via `respectHotspot` (defaults on).
  * - Fixed width/height with `fit="crop"`: Sanity CDN crops using hotspot/crop metadata in the URL.
- * Set `respectHotspot={false}` for logos and other object-contain layouts.
+ * Set `respectHotspot={false}` for logos and other contain layouts. Images cover by
+ * default; an explicit `objectFit` prop or an object-fit utility in `className`
+ * overrides that default.
  */
 type Props = {
   fillWidth?: number;
@@ -106,7 +108,7 @@ export default function SanityImage({
   quality = 75,
   preserveAnimation = false,
   respectHotspot,
-  objectFit = "cover",
+  objectFit,
   objectPosition: objectPositionProp,
   style,
   unoptimized: unoptimizedProp,
@@ -142,7 +144,9 @@ export default function SanityImage({
     ? { blurDataURL: blurDataUrl, placeholder: "blur" as const }
     : {};
   const imageStyle: React.CSSProperties = {
-    objectFit: objectFit as React.CSSProperties["objectFit"],
+    ...(objectFit
+      ? { objectFit: objectFit as React.CSSProperties["objectFit"] }
+      : {}),
     ...style,
   };
 
@@ -150,7 +154,7 @@ export default function SanityImage({
     alt: imageAlt,
     ...blurProps,
     className: cn(
-      objectFit === "contain" ? "object-contain" : "object-cover",
+      objectFit ? undefined : "object-cover",
       className
     ),
     ...(objectPosition ? { objectPosition } : {}),

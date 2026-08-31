@@ -41,7 +41,13 @@ export const CTA_PROJECTION = `{
     title,
     variant,
     headline,
-    image {
+    imgLight {
+      _type,
+      image { ${IMAGE_FIELDS} },
+      alt,
+      caption
+    },
+    imgDark {
       _type,
       image { ${IMAGE_FIELDS} },
       alt,

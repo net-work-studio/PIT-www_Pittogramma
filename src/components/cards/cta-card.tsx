@@ -11,21 +11,64 @@ interface InternalLinkDoc {
   slug?: { current: string } | null;
 }
 
+type CtaImageSource = React.ComponentProps<typeof SanityImage>["source"];
+
 interface CtaCardProps {
   buttonText: string;
   externalUrl?: string | null;
   headline?: string | null;
-  image?: React.ComponentProps<typeof SanityImage>["source"];
+  imgDark?: CtaImageSource;
+  imgLight?: CtaImageSource;
   internalLink?: InternalLinkDoc | null;
   linkType?: "internal" | "external" | null;
   variant?: "simple" | "withImage" | null;
+}
+
+function CtaImages({
+  imgDark,
+  imgLight,
+}: {
+  imgDark?: CtaImageSource;
+  imgLight?: CtaImageSource;
+}) {
+  const hasBothImages = Boolean(
+    imgLight?.image?.asset && imgDark?.image?.asset
+  );
+
+  return (
+    <div className="md:w-1/3">
+      {imgLight ? (
+        <SanityImage
+          className={
+            hasBothImages
+              ? "h-auto max-h-80 w-full object-contain dark:hidden"
+              : "h-auto max-h-80 w-full object-contain"
+          }
+          sizes="(max-width: 768px) 100vw, 400px"
+          source={imgLight}
+        />
+      ) : null}
+      {imgDark ? (
+        <SanityImage
+          className={
+            hasBothImages
+              ? "hidden h-auto max-h-80 w-full object-contain dark:block"
+              : "h-auto max-h-80 w-full object-contain"
+          }
+          sizes="(max-width: 768px) 100vw, 400px"
+          source={imgDark}
+        />
+      ) : null}
+    </div>
+  );
 }
 
 export default function CtaCard({
   headline,
   buttonText,
   variant,
-  image,
+  imgDark,
+  imgLight,
   linkType,
   internalLink,
   externalUrl,
@@ -59,17 +102,11 @@ export default function CtaCard({
     <Button>{buttonText}</Button>
   );
 
-  if (resolvedVariant === "withImage" && image) {
+  if (resolvedVariant === "withImage" && (imgLight || imgDark)) {
     return (
       <div className="w-full overflow-hidden rounded-xl bg-secondary">
         <div className="mx-auto flex max-w-375 flex-col gap-4 p-4 md:flex-row md:p-8">
-          <div className="md:w-1/3">
-            <SanityImage
-              className="h-auto max-h-80 w-full object-contain"
-              sizes="(max-width: 768px) 100vw, 400px"
-              source={image}
-            />
-          </div>
+          <CtaImages imgDark={imgDark} imgLight={imgLight} />
           <div className="flex w-full flex-col items-center justify-center gap-4 md:w-2/3">
             {headline ? (
               <h3 className="mb-2 max-w-prose text-pretty text-center text-3xl text-foreground">

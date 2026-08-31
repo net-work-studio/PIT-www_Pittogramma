@@ -30,18 +30,26 @@ export const cta = defineType({
       type: "text",
     }),
     defineField({
+      description: "Image used in light mode.",
       hidden: ({ document }) => document?.variant !== "withImage",
-      name: "image",
-      title: "Image",
+      name: "imgLight",
+      title: "Image Light",
       type: "imageWithMetadata",
       validation: (rule) =>
         rule.custom((value, context) => {
           const document = context.document as { variant?: string };
           if (document?.variant === "withImage" && !value) {
-            return "Image is required for CTAs with images";
+            return "A light-mode image is required for CTAs with images";
           }
           return true;
         }),
+    }),
+    defineField({
+      description: "Optional image used in dark mode.",
+      hidden: ({ document }) => document?.variant !== "withImage",
+      name: "imgDark",
+      title: "Image Dark",
+      type: "imageWithMetadata",
     }),
     defineField({
       name: "buttonText",
@@ -117,7 +125,7 @@ export const cta = defineType({
       };
     },
     select: {
-      media: "image",
+      media: "imgLight.image",
       subtitle: "variant",
       title: "title",
     },

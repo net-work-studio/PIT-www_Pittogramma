@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 import Mark from "@/components/brand/mark";
-import FeedDialog from "@/components/feat/feed/feed-dialog";
+import FeedDialog, { type FeedItem } from "@/components/feat/feed/feed-dialog";
 import { ModeToggle } from "@/components/mode-toggle";
 import { type AdvTier, TIER_CAPS, TIER_ORDER } from "@/lib/adv-config";
 import { buildLocalToday } from "@/lib/date-utils";
@@ -11,6 +11,7 @@ import {
   getEnabledResources,
   getFeatureAvailability,
 } from "@/lib/feature-availability";
+import { sortFeedTimelineItems } from "@/lib/feed-timeline";
 import { type DynamicFetchOptions, sanityFetch } from "@/sanity/lib/live";
 import {
   FEED_COMMUNITY_QUERY,
@@ -58,6 +59,13 @@ export default async function Header({
   const advs = TIER_ORDER.flatMap((tier) =>
     byTier[tier].slice(0, TIER_CAPS[tier])
   );
+  const feedItems = sortFeedTimelineItems<FeedItem>(
+    [
+      ...advs.map((item) => ({ item, kind: "adv" as const })),
+      ...communityItems.map((item) => ({ item, kind: "community" as const })),
+    ],
+    (feedItem) => feedItem.item
+  );
 
   return (
     <header className="fixed top-0 right-0 left-0 z-20 flex w-full flex-row items-center justify-between border-border border-b bg-background px-4 py-2.5">
@@ -83,7 +91,7 @@ export default async function Header({
             </Button>
           }
         >
-          <FeedDialog advs={advs} communityItems={communityItems} />
+          <FeedDialog items={feedItems} />
         </Suspense>
         {availability.headerSearchEnabled ? (
           <div className="hidden md:flex">
