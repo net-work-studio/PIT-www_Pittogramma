@@ -107,19 +107,17 @@ function splitIntoColumns(
 
 function LetterSection({ letter, words }: GroupedGlossary) {
   return (
-    <div className="space-y-5">
-      <h2 className="border-b pb-2 pl-2.5 text-xs uppercase">{letter}</h2>
-      <div className="space-y-1.5">
-        {words.map((item: GlossaryItem) => (
-          <GlossaryCard
-            definition={item.description}
-            key={item._id}
-            resourceId={item._id}
-            word={item.name}
-          />
-        ))}
-      </div>
-    </div>
+    <section className="overflow-hidden rounded-lg bg-secondary">
+      <h2 className="px-2.5 py-3 font-mono text-xs uppercase">{letter}</h2>
+      {words.map((item: GlossaryItem) => (
+        <GlossaryCard
+          definition={item.description}
+          key={item._id}
+          resourceId={item._id}
+          word={item.name}
+        />
+      ))}
+    </section>
   );
 }
 
@@ -132,14 +130,14 @@ interface GlossaryCardProps {
 function GlossaryCard({ word, definition, resourceId }: GlossaryCardProps) {
   return (
     <Accordion
-      className="rounded-lg bg-secondary p-2.5"
+      className="border-t px-2.5 py-3"
       id={getResourceTargetElementId(resourceId)}
     >
       <AccordionItem value="item-1">
-        <AccordionTrigger className="p-0 font-mono uppercase">
+        <AccordionTrigger className="p-0 font-normal text-base hover:no-underline">
           {word}
         </AccordionTrigger>
-        <AccordionContent className="mt-2.5 max-w-prose p-0">
+        <AccordionContent className="mt-2.5 max-w-prose p-0 font-normal text-base">
           <MultilineText text={definition} />
         </AccordionContent>
       </AccordionItem>
@@ -192,7 +190,7 @@ async function CachedGlossaryPage({ perspective, stega }: DynamicFetchOptions) {
       >
         {resourceAvailability.searchEnabled ? <SearchInput /> : null}
       </ResourcesHeader>
-      <section className="grid grid-cols-1 gap-x-2.5 md:grid-cols-2">
+      <section className="grid grid-cols-1 gap-x-2.5 pt-16 max-md:pt-4 md:grid-cols-2">
         <ResourceTargetScroller
           resourceIds={glossaryItems.map((item) => item._id)}
         />
