@@ -1,0 +1,20 @@
+src/components/modules/designer/designer-modal.tsx
+  s_f8dfe1c3d0f83d::t_d4bd8eb984f4fb 73,272
+  s_f8dfe1c3d0f83d::t_1c9b74054931d9 91,116,130,134,152-263,289,292
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "a9751551a6359e57e75cc0fc7517613da8aea85c",
+  "prompts": {},
+  "sessions": {
+    "s_f8dfe1c3d0f83d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05741-285d-75f2-b774-57167bd160a0",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
