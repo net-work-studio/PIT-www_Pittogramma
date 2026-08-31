@@ -1,0 +1,41 @@
+src/app/(frontend)/journal/page.tsx
+  s_6d31484c402456::t_5540c805c7949e 10,71
+src/app/(frontend)/events/page.tsx
+  s_6d31484c402456::t_5540c805c7949e 7,96
+src/app/(frontend)/events/[slug]/loading.tsx
+  s_6d31484c402456::t_9051d6946dee0d 1-2,4
+src/app/(frontend)/events/loading.tsx
+  s_6d31484c402456::t_e50c8472bb3f57 1-5
+src/app/(frontend)/journal/loading.tsx
+  s_6d31484c402456::t_2f80f81dfdd165 1-5
+src/components/feat/filter/filter-sheet.tsx
+  s_6d31484c402456::t_aa106f27c11d66 104,115,118,124-126,190
+src/components/feat/sort/sort-dropdown.tsx
+  s_6d31484c402456::t_7cd6b543a22474 5,22,29,42-44,54,57,63
+src/components/modules/event/event-page-skeleton.tsx
+  s_6d31484c402456::t_0a4f11d770155f 1-50
+src/components/modules/shared/content-card-skeleton.tsx
+  s_6d31484c402456::t_4567ae8f128250 1-26
+src/components/modules/shared/editorial-article-skeleton.tsx
+  s_6d31484c402456::t_84ab3deb53c4e3 2,10,12,36,40-43,55,65-67,73,75
+src/components/modules/shared/journal-page-skeleton.tsx
+  s_6d31484c402456::t_4abcae6600854d 1-53
+src/components/modules/shared/page-header-skeleton.tsx
+  s_6d31484c402456::t_b60cb782906036 1-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "396f7b00acc757f73badcf5d0564d3a75a927697",
+  "prompts": {},
+  "sessions": {
+    "s_6d31484c402456": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a058fd-1988-74e0-88c2-d0e0777bb649",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
