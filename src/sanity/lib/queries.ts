@@ -18,6 +18,7 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     utmCampaign,
     instagramUrl,
     linkedinUrl,
+    issueReportFormUrl,
     studioAgencyContributionUrl,
     typeFoundriesContributionUrl,
     bibliographyContributionUrl,

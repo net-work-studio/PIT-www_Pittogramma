@@ -143,6 +143,10 @@ _Avoid_: A separate Publisher Resource page, treating Publishers as a sibling pu
 An external Notion form for proposing a particular Resource type. The currently available Contribution forms propose a Studio / Agency, a Type Foundry, or a Bibliography entry. Each form is optional and is configured from the dedicated Contributions tab in Site Settings; the public Contribute page shows only forms with a configured URL and opens them in a new tab.
 _Avoid_: Project submission form (which has its own `/submit` route), a general-purpose contribution form
 
+**Issue report form**:
+An external Notion form through which a visitor reports an issue with the Pittogramma platform. Its URL is configured in the Footer tab of Site Settings and is offered from the footer.
+_Avoid_: Contribution form, Project submission form, an in-site issue-reporting workflow
+
 **Contribute page**:
 The public `/contribute` page, titled “Contribute to the index,” that lists the currently configured Contribution forms and directs visitors to the appropriate external Notion form. It has no introductory copy. Contribution forms do not appear on individual Resource indexes.
 _Avoid_: Project submission page, repository contribution guide. The footer link uses the same “Contribute to the index” label.
