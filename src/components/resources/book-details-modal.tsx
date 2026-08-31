@@ -125,15 +125,15 @@ function BookDetailsContent({
               />
             </dl>
 
-            {book.categories?.length ? (
+            {book.tags?.length ? (
               <section className="flex flex-col gap-2">
                 <p className="font-mono text-muted-foreground text-xxs uppercase">
-                  Categories
+                  Tags
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {book.categories.map((category) => (
-                    <Badge key={category} variant="outline">
-                      {category}
+                  {book.tags.map((tag) => (
+                    <Badge key={tag._id} variant="outline">
+                      {tag.name}
                     </Badge>
                   ))}
                 </div>
