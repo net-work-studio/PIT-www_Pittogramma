@@ -1,3 +1,0 @@
-[mcp_servers.cubic]
-url = "https://www.cubic.dev/api/mcp"
-bearer_token_env_var = "CUBIC_API_KEY"
