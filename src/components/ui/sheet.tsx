@@ -39,18 +39,18 @@ function SheetOverlay({ className, ...props }: DialogPrimitive.Backdrop.Props) {
 const sheetVariants = cva(
   "fixed z-50 gap-4 bg-background shadow-lg transition-transform duration-500 ease-in-out data-ending-style:duration-300",
   {
+    defaultVariants: {
+      side: "right",
+    },
     variants: {
       side: {
-        top: "inset-x-0 top-0 border-b data-ending-style:-translate-y-full data-starting-style:-translate-y-full",
         bottom:
           "inset-x-0 bottom-0 border-t data-ending-style:translate-y-full data-starting-style:translate-y-full",
         left: "inset-y-0 left-0 h-full w-3/4 border-r data-ending-style:-translate-x-full data-starting-style:-translate-x-full sm:max-w-sm",
         right:
           "inset-y-0 right-0 h-full w-3/4 border-l data-ending-style:translate-x-full data-starting-style:translate-x-full sm:max-w-md",
+        top: "inset-x-0 top-0 border-b data-ending-style:-translate-y-full data-starting-style:-translate-y-full",
       },
-    },
-    defaultVariants: {
-      side: "right",
     },
   }
 );
@@ -60,8 +60,7 @@ function SheetContent({
   className,
   children,
   ...props
-}: DialogPrimitive.Popup.Props &
-  VariantProps<typeof sheetVariants>) {
+}: DialogPrimitive.Popup.Props & VariantProps<typeof sheetVariants>) {
   return (
     <SheetPortal>
       <SheetOverlay />
@@ -87,7 +86,7 @@ function SheetContent({
 function SheetHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn("flex flex-col gap-1.5 p-6 pb-0", className)}
+      className={cn("flex flex-col gap-1.5 p-4 pb-0", className)}
       data-slot="sheet-header"
       {...props}
     />

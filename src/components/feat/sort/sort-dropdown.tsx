@@ -26,6 +26,7 @@ export default function SortDropdown() {
 
   const currentLabel =
     SORT_OPTIONS.find((o) => o.value === currentSort)?.label ?? "Newest first";
+  const displayedLabel = isPending ? "Loading…" : currentLabel;
 
   const handleSortChange = useCallback(
     (value: string) => {
@@ -38,7 +39,9 @@ export default function SortDropdown() {
       // Reset to page 1 on sort change
       params.delete("page");
       const qs = params.toString();
-      startTransition(() => router.push(qs ? `${pathname}?${qs}` : pathname));
+      startTransition(() => {
+        router.push(qs ? `${pathname}?${qs}` : pathname);
+      });
     },
     [pathname, router, searchParams]
   );
@@ -48,14 +51,16 @@ export default function SortDropdown() {
       <DropdownMenuTrigger
         render={
           <Button
+            aria-busy={isPending || undefined}
             aria-label={isPending ? "Loading…" : `Sort: ${currentLabel}`}
             className="font-mono uppercase max-sm:w-9 max-sm:px-0"
+            disabled={isPending}
             title={`Sort: ${currentLabel}`}
           />
         }
       >
         <ArrowDownUpIcon className="sm:hidden" />
-        <span className="max-sm:sr-only">{currentLabel}</span>
+        <span className="max-sm:sr-only">{displayedLabel}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuRadioGroup

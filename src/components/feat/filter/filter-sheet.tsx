@@ -101,6 +101,7 @@ export default function FilterSheet({
     <>
       {activeSlugs.length > 0 && (
         <button
+          aria-busy={isPending || undefined}
           className="mr-2 font-mono text-muted-foreground text-xs uppercase underline underline-offset-4 hover:text-foreground"
           disabled={isPending}
           onClick={clearApplied}
@@ -111,18 +112,22 @@ export default function FilterSheet({
       )}
 
       <Button
+        aria-busy={isPending || undefined}
         aria-label={
           isPending
             ? "Loading…"
             : `Filter ${label}${activeSlugs.length > 0 ? ` (${activeSlugs.length} active)` : ""}`
         }
         className="relative max-sm:w-9 max-sm:px-0"
+        disabled={isPending}
         onClick={open}
         title={`Filter ${label}`}
         variant="mono"
       >
         <SlidersHorizontalIcon />
-        <span className="max-sm:sr-only">Filter</span>
+        <span className="max-sm:sr-only">
+          {isPending ? "Loading" : "Filter"}
+        </span>
         {activeSlugs.length > 0 && (
           <span className="font-mono text-xs max-sm:sr-only">
             ({activeSlugs.length})
@@ -186,7 +191,7 @@ export default function FilterSheet({
                 Clear all
               </button>
               <Button disabled={isPending} onClick={apply} variant="mono">
-                Show results
+                {isPending ? "Loading…" : "Show results"}
               </Button>
             </div>
           </SheetFooter>

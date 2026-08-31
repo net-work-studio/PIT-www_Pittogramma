@@ -167,9 +167,9 @@ _Avoid_: Next, future (in user-facing copy)
 The fixed number of editorial and advertising cards shown on the homepage. Projects, Interviews, Journal entries, and Events share one chronological stream, ordered by their publishing date; adding a content type replaces another stream card rather than increasing the card total.
 _Avoid_: Separate per-type homepage feeds, event-date ordering, an expanding homepage card count
 
-**Feed drawer**:
-The header drawer that presents active Sponsored placements and Community items in one chronological timeline. Cards are ordered by Start Date, newest first, with the newest CMS creation time breaking ties. It is separate from the Homepage content stream.
-_Avoid_: Homepage feed, homepage content stream
+**Feed sidebar**:
+The header-opened panel that presents active Sponsored placements and Community items in one chronological timeline. Cards are ordered by Start Date, newest first, with the newest CMS creation time breaking ties. It is separate from the Homepage content stream.
+_Avoid_: Homepage content stream, a Feed content type
 
 **Sponsored placement**:
 A clearly labelled, paid placement for one external partner within Pittogramma's public editorial experience. A placement has a stable identifier, a campaign period, a destination URL, and a defined reporting method. It is separate from a Contributor, which records an organisation's identity and editorial credit.
