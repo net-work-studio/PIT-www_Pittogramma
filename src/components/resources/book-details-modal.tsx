@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { MultilineText } from "@/components/shared/multiline-text";
+import { ScrollFade } from "@/components/shared/scroll-fade";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -45,7 +46,7 @@ export function BookDetailsModal({
   if (isDesktop) {
     return (
       <Dialog onOpenChange={onOpenChange} open={open}>
-        <DialogContent className="max-h-[85vh] overflow-y-auto p-0 sm:max-w-5xl">
+        <DialogContent className="sm:!max-w-7xl h-[min(85vh,calc(53.333vw-1.06667rem),42.6667rem)] w-full max-w-7xl overflow-hidden p-0 px-4">
           <DialogTitle className="sr-only">{title}</DialogTitle>
           {content}
         </DialogContent>
@@ -55,7 +56,10 @@ export function BookDetailsModal({
 
   return (
     <Sheet onOpenChange={onOpenChange} open={open}>
-      <SheetContent className="max-h-[85vh] overflow-y-auto p-6" side="bottom">
+      <SheetContent
+        className="flex h-[85vh] max-h-[85vh] flex-col overflow-hidden p-6"
+        side="bottom"
+      >
         <SheetTitle className="sr-only">{title}</SheetTitle>
         {content}
       </SheetContent>
@@ -76,16 +80,17 @@ function BookDetailsContent({
   const languages = joinNames(book.languages);
 
   return (
-    <div className="flex w-full flex-col md:flex-row md:items-stretch">
-      <div className="aspect-2/3 w-full md:relative md:aspect-auto md:w-2/5 md:shrink-0">
-        <div className="relative h-full w-full overflow-hidden rounded-xl bg-muted md:absolute md:inset-0 md:rounded-none md:rounded-l-xl">
+    <div className="flex h-full w-full flex-col md:flex-row">
+      <div className="aspect-3/4 w-full shrink-0 md:relative md:h-full md:w-auto">
+        <div className="relative h-full w-full overflow-hidden rounded-xl bg-muted p-5 md:absolute md:inset-0 md:rounded-none md:rounded-l-xl md:p-6">
           {coverUrl ? (
             <Image
               alt={book.cover?.alt || book.name || "Book cover"}
-              className="object-cover"
+              className="object-contain"
               fill
               sizes="(min-width: 768px) 40vw, 100vw"
               src={coverUrl}
+              style={{ objectFit: "contain" }}
               {...(blurDataURL
                 ? { blurDataURL, placeholder: "blur" as const }
                 : {})}
@@ -94,56 +99,68 @@ function BookDetailsContent({
         </div>
       </div>
 
-      <div className="flex w-full flex-col gap-5 p-5 max-md:px-0 max-md:pb-0 md:w-3/5">
-        <header>
+      <div className="flex h-full min-h-0 min-w-0 flex-1 flex-col">
+        <header className="shrink-0 px-5 pt-5 pb-2.5 max-md:px-0">
           <h2 className="text-lg">{book.name}</h2>
           {authors ? <p className="text-muted-foreground">{authors}</p> : null}
         </header>
 
-        {book.description ? (
-          <p>
-            <MultilineText text={book.description} />
-          </p>
-        ) : null}
+        <ScrollFade className="min-h-0 flex-1" key={book._id}>
+          <div className="flex flex-col gap-5 px-5 pt-5 pb-24 max-md:px-0">
+            {book.description ? (
+              <p>
+                <MultilineText text={book.description} />
+              </p>
+            ) : null}
 
-        <dl className="grid grid-cols-2 gap-x-5 gap-y-4">
-          <BookDetail label="Publisher" value={book.publisher?.name} />
-          <BookDetail label="Year" value={book.year} />
-          <BookDetail label="Language" value={languages} />
-          <BookDetail label="Pages" value={book.pageCount} />
-          <BookDetail className="col-span-2" label="ISBN" value={book.isbn} />
-        </dl>
-
-        {book.categories?.length ? (
-          <section className="flex flex-col gap-2">
-            <p className="font-mono text-muted-foreground text-xxs uppercase">
-              Categories
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {book.categories.map((category) => (
-                <Badge key={category} variant="outline">
-                  {category}
-                </Badge>
-              ))}
-            </div>
-          </section>
-        ) : null}
-
-        {book.affiliateLink ? (
-          <Button
-            className="mt-auto w-fit"
-            nativeButton={false}
-            render={
-              <a
-                href={buildTrackedLink(book.affiliateLink, "book", utmSettings)}
-                rel="noopener noreferrer"
-                target="_blank"
+            <dl className="grid grid-cols-2 gap-x-5 gap-y-4">
+              <BookDetail label="Publisher" value={book.publisher?.name} />
+              <BookDetail label="Year" value={book.year} />
+              <BookDetail label="Language" value={languages} />
+              <BookDetail label="Pages" value={book.pageCount} />
+              <BookDetail
+                className="col-span-2"
+                label="ISBN"
+                value={book.isbn}
               />
-            }
-          >
-            Buy book
-          </Button>
-        ) : null}
+            </dl>
+
+            {book.categories?.length ? (
+              <section className="flex flex-col gap-2">
+                <p className="font-mono text-muted-foreground text-xxs uppercase">
+                  Categories
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {book.categories.map((category) => (
+                    <Badge key={category} variant="outline">
+                      {category}
+                    </Badge>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+
+            {book.affiliateLink ? (
+              <Button
+                className="mt-auto w-fit"
+                nativeButton={false}
+                render={
+                  <a
+                    href={buildTrackedLink(
+                      book.affiliateLink,
+                      "book",
+                      utmSettings
+                    )}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  />
+                }
+              >
+                Buy book
+              </Button>
+            ) : null}
+          </div>
+        </ScrollFade>
       </div>
     </div>
   );
