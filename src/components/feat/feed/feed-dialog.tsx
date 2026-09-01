@@ -64,7 +64,6 @@ function FeedTimelineCard({ item, kind }: FeedItem) {
       href={item.externalUrl}
       image={item.cover}
       key={item._id}
-      sponsored
       title={item.title ?? ""}
     />
   );

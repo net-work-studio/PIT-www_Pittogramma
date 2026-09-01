@@ -35,6 +35,22 @@ export function httpUrlValidation<T extends CustomStringValidationRule<T>>(
   );
 }
 
+export function httpsUrlValidation<T extends CustomStringValidationRule<T>>(
+  rule: T
+): T {
+  return rule.custom((value: string | undefined) => {
+    if (!value) {
+      return true;
+    }
+
+    try {
+      return new URL(value).protocol === "https:" ? true : "Must use HTTPS";
+    } catch {
+      return "Must be a valid HTTPS URL";
+    }
+  });
+}
+
 export function requiredHttpUrlWhen(
   predicate: ValidationPredicate,
   message: string
