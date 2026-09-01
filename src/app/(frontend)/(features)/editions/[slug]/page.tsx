@@ -39,9 +39,9 @@ export async function generateMetadata({
     getDynamicFetchOptions(),
   ]);
   const { data: edition } = await sanityFetchMetadata({
-    query: EDITION_QUERY,
     params: { slug },
     perspective,
+    query: EDITION_QUERY,
   });
 
   if (!edition) {
@@ -49,13 +49,13 @@ export async function generateMetadata({
   }
 
   return mapSanityToMetadata({
-    page: {
-      title: edition.title,
-      description: edition.description ?? undefined,
-      coverImage: edition.cover ?? undefined,
-      seo: edition.seo as SeoModule | undefined,
-    },
     baseUrl: siteDefaults.baseUrl,
+    page: {
+      coverImage: edition.cover ?? undefined,
+      description: edition.description ?? undefined,
+      seo: edition.seo as SeoModule | undefined,
+      title: edition.title,
+    },
     path: `/editions/${slug}`,
     siteDefaults,
   });
@@ -82,9 +82,9 @@ async function CachedEditionPage({
 }: { slug: string } & DynamicFetchOptions) {
   "use cache";
   const { data: edition } = await sanityFetch({
-    query: EDITION_QUERY,
     params: { slug },
     perspective,
+    query: EDITION_QUERY,
     stega,
   });
 
@@ -114,13 +114,13 @@ async function CachedEditionPage({
     <>
       <JsonLd
         data={{
-          name: edition.title,
           author: authorEntities.length > 0 ? authorEntities : undefined,
           datePublished,
-          image: imageUrl,
           description: edition.description ?? undefined,
-          url: editionUrl,
+          image: imageUrl,
+          name: edition.title,
           offers,
+          url: editionUrl,
         }}
         type="Book"
       />

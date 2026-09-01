@@ -4,19 +4,19 @@ import Calendar from "@/components/feat/calendar";
 
 const CALENDAR_EVENTS = [
   {
+    date: "2025-01-15",
     id: "1",
     title: "Design Workshop",
-    date: "2025-01-15",
   },
   {
+    date: "2025-01-22",
     id: "2",
     title: "Typography Talk",
-    date: "2025-01-22",
   },
   {
+    date: "2025-01-29",
     id: "3",
     title: "Portfolio Review",
-    date: "2025-01-29",
   },
 ];
 

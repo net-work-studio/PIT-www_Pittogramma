@@ -17,11 +17,9 @@ export function ResourceMobileCard({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-start justify-between gap-3">
-        <span className="min-w-0 text-2xl leading-none">
-          {name}
-        </span>
+        <span className="min-w-0 text-2xl leading-none">{name}</span>
         {badge ? (
-          <span className="max-w-[55%] rounded-full border border-foreground px-2 py-0.5 text-right font-mono text-xs leading-tight uppercase">
+          <span className="max-w-[55%] rounded-full border border-foreground px-2 py-0.5 text-right font-mono text-xs uppercase leading-tight">
             {badge}
           </span>
         ) : null}

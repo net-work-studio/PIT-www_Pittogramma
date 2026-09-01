@@ -15,18 +15,18 @@ export function validateEmail(email: string): EmailValidationResult {
   const normalized = normalizeEmail(email);
 
   if (!normalized) {
-    return { email: normalized, valid: false, error: "Email is required" };
+    return { email: normalized, error: "Email is required", valid: false };
   }
 
   if (normalized.length > MAX_EMAIL_LENGTH) {
-    return { email: normalized, valid: false, error: "Email is too long" };
+    return { email: normalized, error: "Email is too long", valid: false };
   }
 
   if (!EMAIL_REGEX.test(normalized)) {
     return {
       email: normalized,
-      valid: false,
       error: "Invalid email address",
+      valid: false,
     };
   }
 

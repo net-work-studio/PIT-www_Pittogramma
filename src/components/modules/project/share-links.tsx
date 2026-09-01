@@ -9,24 +9,24 @@ interface ShareLinksProps {
 
 const platforms = [
   {
-    name: "LinkedIn",
     getUrl: (url: string) =>
       `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+    name: "LinkedIn",
   },
   {
-    name: "Pinterest",
     getUrl: (url: string, title: string) =>
       `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(title)}`,
+    name: "Pinterest",
   },
   {
-    name: "X",
     getUrl: (url: string, title: string) =>
       `https://x.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+    name: "X",
   },
   {
-    name: "WhatsApp",
     getUrl: (url: string, title: string) =>
       `https://wa.me/?text=${encodeURIComponent(`${title} ${url}`)}`,
+    name: "WhatsApp",
   },
 ];
 

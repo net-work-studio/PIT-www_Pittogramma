@@ -110,11 +110,11 @@ function parseOgData(html: string, baseUrl: string): OgData {
   }
 
   return {
+    description: ogDescription || metaDescription,
+    imageUrl: ogImage,
+    siteName: ogSiteName,
     title:
       ogTitle || (titleTag ? decodeHtmlEntities(titleTag[1].trim()) : null),
-    description: ogDescription || metaDescription,
-    siteName: ogSiteName,
-    imageUrl: ogImage,
   };
 }
 
@@ -131,8 +131,8 @@ export async function POST(request: Request) {
       parsedUrl,
       {
         headers: {
-          "User-Agent": "Mozilla/5.0 (compatible; PittogrammaBot/1.0)",
           Accept: "text/html,application/xhtml+xml",
+          "User-Agent": "Mozilla/5.0 (compatible; PittogrammaBot/1.0)",
         },
       },
       {

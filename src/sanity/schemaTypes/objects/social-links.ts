@@ -2,25 +2,16 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 import { httpUrlValidation } from "@/sanity/utils/validation";
 
 export const socialLinks = defineType({
-  type: "object",
-  name: "socialLinks",
-  title: "Social Links",
   fields: [
     defineField({
-      type: "array",
       name: "links",
-      title: "Links",
       of: [
         defineArrayMember({
-          type: "object",
-          name: "socialLink",
-          title: "Social Link",
           fields: [
             defineField({
-              type: "string",
               name: "platform",
-              title: "Platform",
               options: {
+                layout: "dropdown",
                 list: [
                   { title: "Behance", value: "behance" },
                   { title: "Bluesky", value: "bluesky" },
@@ -34,39 +25,48 @@ export const socialLinks = defineType({
                   { title: "X (Twitter)", value: "x" },
                   { title: "Website", value: "website" },
                 ],
-                layout: "dropdown",
               },
+              title: "Platform",
+              type: "string",
               validation: (e) => e.required(),
             }),
             defineField({
-              type: "url",
               name: "url",
               title: "URL",
+              type: "url",
               validation: (e) => [e.required(), httpUrlValidation(e)],
             }),
           ],
+          name: "socialLink",
           preview: {
+            prepare({ platform, url }) {
+              const platformNames: Record<string, string> = {
+                bluesky: "Bluesky",
+                ig: "Instagram",
+                linktree: "Linktree",
+                mastodon: "Mastodon",
+                website: "Website",
+                x: "X (Twitter)",
+              };
+              return {
+                subtitle: url,
+                title: platformNames[platform] || platform,
+              };
+            },
             select: {
               platform: "platform",
               url: "url",
             },
-            prepare({ platform, url }) {
-              const platformNames: Record<string, string> = {
-                ig: "Instagram",
-                x: "X (Twitter)",
-                linktree: "Linktree",
-                website: "Website",
-                bluesky: "Bluesky",
-                mastodon: "Mastodon",
-              };
-              return {
-                title: platformNames[platform] || platform,
-                subtitle: url,
-              };
-            },
           },
+          title: "Social Link",
+          type: "object",
         }),
       ],
+      title: "Links",
+      type: "array",
     }),
   ],
+  name: "socialLinks",
+  title: "Social Links",
+  type: "object",
 });

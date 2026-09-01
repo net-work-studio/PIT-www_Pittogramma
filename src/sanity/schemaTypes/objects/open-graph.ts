@@ -2,31 +2,31 @@ import { defineField, defineType } from "sanity";
 import { httpUrlValidation } from "@/sanity/utils/validation";
 
 export const openGraph = defineType({
-  name: "openGraph",
-  title: "Open Graph",
-  type: "object",
   fields: [
     defineField({
+      description:
+        "Optional override for social sharing. Uses Meta Title by default.",
       name: "title",
       title: "OG Title",
       type: "string",
-      description:
-        "Optional override for social sharing. Uses Meta Title by default.",
     }),
     defineField({
-      name: "description",
-      title: "OG Description",
-      type: "text",
-      rows: 3,
       description:
         "Optional override for social sharing. Uses Meta Description by default.",
+      name: "description",
+      rows: 3,
+      title: "OG Description",
+      type: "text",
     }),
     defineField({
+      description: "URL used for social sharing (usually the canonical URL).",
       name: "url",
       title: "OG URL",
       type: "url",
-      description: "URL used for social sharing (usually the canonical URL).",
       validation: httpUrlValidation,
     }),
   ],
+  name: "openGraph",
+  title: "Open Graph",
+  type: "object",
 });

@@ -65,12 +65,12 @@ function MediaThumbnail({
       radius={2}
       shadow={1}
       style={{
-        flex: 1,
-        cursor: "pointer",
         border: hasMedia ? undefined : "2px dashed var(--card-border-color)",
+        cursor: "pointer",
+        flex: 1,
         minHeight: 120,
-        position: "relative",
         overflow: "hidden",
+        position: "relative",
       }}
       tone={hasMedia ? "default" : "transparent"}
       type="button"
@@ -78,13 +78,13 @@ function MediaThumbnail({
       <Stack gap={2}>
         <Box
           style={{
-            aspectRatio,
-            borderRadius: 4,
-            overflow: "hidden",
-            backgroundColor: "var(--card-muted-bg-color)",
-            display: "flex",
             alignItems: "center",
+            aspectRatio,
+            backgroundColor: "var(--card-muted-bg-color)",
+            borderRadius: 4,
+            display: "flex",
             justifyContent: "center",
+            overflow: "hidden",
           }}
         >
           {hasImage ? (

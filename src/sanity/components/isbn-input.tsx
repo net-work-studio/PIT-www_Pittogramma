@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Button,
-  Card,
-  Flex,
-  Stack,
-  Text,
-  TextInput,
-} from "@sanity/ui";
+import { Button, Card, Flex, Stack, Text, TextInput } from "@sanity/ui";
 import { useToast } from "@sanity/ui/toast";
 import { useCallback, useState } from "react";
 import {
@@ -125,14 +118,14 @@ export function IsbnInput(props: StringInputProps) {
 
       return {
         _type: "imageWithMetadata",
+        alt: title || "Book cover",
         image: {
           _type: "image",
           asset: {
-            _type: "reference",
             _ref: imageAsset._id,
+            _type: "reference",
           },
         },
-        alt: title || "Book cover",
       };
     },
     [client, value, sanityAuthToken]
@@ -168,10 +161,10 @@ export function IsbnInput(props: StringInputProps) {
         await client.patch(patchId).set(patchData).commit();
 
         toast.push({
-          status: "success",
-          title: "Fields populated",
           description:
             "Book data has been auto-filled. Please link Authors and Publisher manually.",
+          status: "success",
+          title: "Fields populated",
         });
       } catch (err) {
         setError(
@@ -198,9 +191,9 @@ export function IsbnInput(props: StringInputProps) {
 
     try {
       const response = await fetch("/api/books/fetch-isbn", {
-        method: "POST",
-        headers: getStudioApiHeaders(sanityAuthToken),
         body: JSON.stringify({ isbn: value }),
+        headers: getStudioApiHeaders(sanityAuthToken),
+        method: "POST",
       });
       const data = await response.json();
 

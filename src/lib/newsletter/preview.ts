@@ -21,11 +21,7 @@ function getPreviewImageUrl(item: NewsletterPreviewItem): string | null {
     item._type === "journal" ? getJournalHeroCover(item) : item.cover;
 
   return (
-    urlForImage(cover)
-      ?.width(1200)
-      .height(630)
-      .auto("format")
-      .url() ?? null
+    urlForImage(cover)?.width(1200).height(630).auto("format").url() ?? null
   );
 }
 
@@ -57,13 +53,13 @@ export function toNewsletterPreviewBlock(
   });
 
   return {
+    byline: getPreviewByline(item),
     contentType: item._type,
-    title: item.title.trim() || "Untitled",
-    excerpt: getPreviewExcerpt(item),
-    imageUrl: getPreviewImageUrl(item),
     ctaText: "Read more",
     destinationUrl: path ? `${baseUrl}${path}` : baseUrl,
+    excerpt: getPreviewExcerpt(item),
+    imageUrl: getPreviewImageUrl(item),
     publishedDate: item.publishingDate.date ?? null,
-    byline: getPreviewByline(item),
+    title: item.title.trim() || "Untitled",
   };
 }

@@ -23,9 +23,9 @@ const sanityConfig = JSON.parse(
 );
 
 const client = createClient({
-  projectId: "jfvmcjyl",
-  dataset: "production",
   apiVersion: "2024-01-01",
+  dataset: "production",
+  projectId: "jfvmcjyl",
   token: sanityConfig.authToken,
   useCdn: false,
 });
@@ -52,9 +52,9 @@ interface OldDoc {
 
 // Maps old type → role value
 const TYPE_TO_ROLE: Record<string, string> = {
+  author: "author",
   designer: "designer",
   professional: "professional",
-  author: "author",
   teacher: "teacher",
 };
 
@@ -135,7 +135,7 @@ async function run() {
       processedIds.add(d._id);
     }
 
-    personPlans.push({ newId, roles, primaryDoc: primary, allOldIds });
+    personPlans.push({ allOldIds, newId, primaryDoc: primary, roles });
   }
 
   const createTx = client.transaction();
@@ -144,8 +144,8 @@ async function run() {
     const newDoc: Record<string, unknown> = {
       _id: plan.newId,
       _type: "person",
-      roles: plan.roles,
       name: doc.name,
+      roles: plan.roles,
     };
 
     if (doc.slug) {

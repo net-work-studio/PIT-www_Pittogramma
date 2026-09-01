@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Button,
-  Card,
-  Flex,
-  Stack,
-  Text,
-  TextInput,
-} from "@sanity/ui";
+import { Button, Card, Flex, Stack, Text, TextInput } from "@sanity/ui";
 import { useToast } from "@sanity/ui/toast";
 import { useCallback, useState } from "react";
 import {
@@ -125,9 +118,9 @@ export function UrlInput(props: StringInputProps) {
           (body as { error?: string } | null)?.error ??
           `HTTP ${imageResponse.status}`;
         toast.push({
+          description: reason,
           status: "warning",
           title: "Image upload skipped",
-          description: reason,
         });
         return null;
       }
@@ -139,14 +132,14 @@ export function UrlInput(props: StringInputProps) {
 
       return {
         _type: "imageWithMetadata",
+        alt: siteName || "Website cover",
         image: {
           _type: "image",
           asset: {
-            _type: "reference",
             _ref: imageAsset._id,
+            _type: "reference",
           },
         },
-        alt: siteName || "Website cover",
       };
     },
     [client, toast, sanityAuthToken]
@@ -180,9 +173,9 @@ export function UrlInput(props: StringInputProps) {
         await client.patch(draftId).set(patchData).commit();
 
         toast.push({
+          description: "Website data has been auto-filled from OG tags.",
           status: "success",
           title: "Fields populated",
-          description: "Website data has been auto-filled from OG tags.",
         });
       } catch (err) {
         setError(

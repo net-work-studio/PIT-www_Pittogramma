@@ -134,16 +134,16 @@ export function InstitutesContent({
   utmSettings,
 }: InstitutesContentProps) {
   const markers = institutes.flatMap((i) => {
-    if (i.place?.lat == null || i.place.lng == null) {
+    if (i.place?.lat === null || i.place.lng === null) {
       return [];
     }
 
     return [
       {
         id: i._id,
-        name: i.name ?? "",
         lat: i.place.lat,
         lng: i.place.lng,
+        name: i.name ?? "",
       },
     ];
   });

@@ -21,97 +21,124 @@ const journalReferenceTargets = [
 ];
 
 export const journal = defineType({
-  type: "document",
-  name: "journal",
-  title: "Journal",
-  icon: DocumentTextIcon,
-  groups,
   fields: [
     defineField({
-      type: "string",
+      group: "metadata",
       name: "title",
       title: "Title",
-      group: "metadata",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "slug",
-      name: "slug",
-      title: "Slug",
       group: "metadata",
+      name: "slug",
       options: {
         source: "title",
       },
+      title: "Slug",
+      type: "slug",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "publishingDate",
+      group: "metadata",
       name: "publishingDate",
       title: "Publishing Date",
-      group: "metadata",
+      type: "publishingDate",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "string",
-      name: "label",
-      title: "Label",
       group: "metadata",
-      options: {
-        list: JOURNAL_LABELS,
-        layout: "radio",
-      },
       initialValue: "articles",
+      name: "label",
+      options: {
+        layout: "radio",
+        list: JOURNAL_LABELS,
+      },
+      title: "Label",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "coverMedia",
+      group: "content",
       name: "cover",
       title: "Cover",
-      group: "content",
+      type: "coverMedia",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "coverMedia",
-      name: "featuredCover",
-      title: "Featured Cover",
-      group: "content",
       description:
         "Optional cover used when this article appears as a featured hero. Falls back to the regular cover if empty.",
+      group: "content",
+      name: "featuredCover",
+      title: "Featured Cover",
+      type: "coverMedia",
     }),
     tagsField("content"),
     defineField({
-      type: "array",
-      name: "authors",
-      title: "Authors",
       group: "content",
+      name: "authors",
       of: [
         defineArrayMember({
-          type: "reference",
           name: "author",
-          title: "Author",
-          to: [{ type: "person" }],
           options: {
             filter: '"author" in roles',
           },
+          title: "Author",
+          to: [{ type: "person" }],
+          type: "reference",
         }),
       ],
+      title: "Authors",
+      type: "array",
     }),
     defineField({
-      type: "text",
+      description: "A short summary of the article",
+      group: "content",
       name: "excerpt",
       title: "Excerpt",
-      group: "content",
-      description: "A short summary of the article",
+      type: "text",
     }),
     defineField({
-      type: "array",
-      name: "content",
-      title: "Content",
       group: "content",
+      name: "content",
       of: [
         defineArrayMember({
-          type: "block",
           marks: {
+            annotations: [
+              {
+                fields: [
+                  {
+                    name: "href",
+                    title: "URL",
+                    type: "url",
+                    validation: httpUrlValidation,
+                  },
+                ],
+                name: "link",
+                title: "Link",
+                type: "object",
+              },
+              {
+                fields: [
+                  {
+                    name: "note",
+                    rows: 4,
+                    title: "Note",
+                    type: "text",
+                    validation: (rule) => rule.required(),
+                  },
+                  {
+                    name: "url",
+                    title: "URL",
+                    type: "url",
+                    validation: httpUrlValidation,
+                  },
+                ],
+                name: "footnote",
+                title: "Footnote",
+                type: "object",
+              },
+            ],
             decorators: [
               { title: "Strong", value: "strong" },
               { title: "Emphasis", value: "em" },
@@ -119,141 +146,106 @@ export const journal = defineType({
               { title: "Underline", value: "underline" },
               { title: "Strike", value: "strike-through" },
             ],
-            annotations: [
-              {
-                name: "link",
-                type: "object",
-                title: "Link",
-                fields: [
-                  {
-                    name: "href",
-                    type: "url",
-                    title: "URL",
-                    validation: httpUrlValidation,
-                  },
-                ],
-              },
-              {
-                name: "footnote",
-                type: "object",
-                title: "Footnote",
-                fields: [
-                  {
-                    name: "note",
-                    type: "text",
-                    title: "Note",
-                    rows: 4,
-                    validation: (rule) => rule.required(),
-                  },
-                  {
-                    name: "url",
-                    type: "url",
-                    title: "URL",
-                    validation: httpUrlValidation,
-                  },
-                ],
-              },
-            ],
           },
+          type: "block",
         }),
         defineArrayMember({ type: "singleMediaBlock" }),
         defineArrayMember({ type: "sideBySideMediaBlock" }),
         defineArrayMember({ type: "threeSideBySideMediaBlock" }),
         defineArrayMember({ type: "gridFourMediaBlock" }),
         defineArrayMember({
-          type: "object",
-          name: "codeBlock",
-          title: "Code block",
           fields: [
             defineField({
-              type: "text",
-              name: "code",
-              title: "Text",
-              rows: 5,
               description: "Spacing and line breaks are preserved on the site.",
+              name: "code",
+              rows: 5,
+              title: "Text",
+              type: "text",
               validation: (rule) => rule.required(),
             }),
           ],
+          name: "codeBlock",
           preview: {
-            select: { code: "code" },
             prepare({ code }) {
               const text = typeof code === "string" ? code : "";
               return {
-                title: "Code block",
                 subtitle: text.replace(/\s+/g, " ").slice(0, 100),
+                title: "Code block",
               };
             },
+            select: { code: "code" },
           },
+          title: "Code block",
+          type: "object",
         }),
         defineArrayMember({
-          type: "object",
-          name: "referencesBlock",
-          title: "References",
-          icon: LinkIcon,
           fields: [
             defineField({
-              type: "string",
+              initialValue: "References",
               name: "title",
               title: "Title",
-              initialValue: "References",
+              type: "string",
             }),
             defineField({
-              type: "array",
               name: "references",
-              title: "References",
               of: [
                 defineArrayMember({
-                  type: "reference",
                   name: "reference",
                   title: "Reference",
                   to: journalReferenceTargets,
+                  type: "reference",
                 }),
               ],
+              title: "References",
+              type: "array",
               validation: (rule) => rule.required().min(1).unique(),
             }),
           ],
+          icon: LinkIcon,
+          name: "referencesBlock",
           preview: {
-            select: {
-              title: "title",
-              references: "references",
-            },
             prepare({ title, references }) {
               const count = Array.isArray(references) ? references.length : 0;
               return {
-                title: title || "References",
                 subtitle: count === 1 ? "1 reference" : `${count} references`,
+                title: title || "References",
               };
             },
+            select: {
+              references: "references",
+              title: "title",
+            },
           },
+          title: "References",
+          type: "object",
         }),
       ],
+      title: "Content",
+      type: "array",
     }),
     defineField({
-      type: "seoModule",
+      group: "seo",
       name: "seo",
       title: "SEO",
-      group: "seo",
+      type: "seoModule",
     }),
   ],
+  groups,
+  icon: DocumentTextIcon,
+  name: "journal",
   orderings: [
     {
-      title: "Publishing Date, Newest",
+      by: [{ direction: "desc", field: "publishingDate.date" }],
       name: "publishingDateDesc",
-      by: [{ field: "publishingDate.date", direction: "desc" }],
+      title: "Publishing Date, Newest",
     },
     {
-      title: "Publishing Date, Oldest",
+      by: [{ direction: "asc", field: "publishingDate.date" }],
       name: "publishingDateAsc",
-      by: [{ field: "publishingDate.date", direction: "asc" }],
+      title: "Publishing Date, Oldest",
     },
   ],
   preview: {
-    select: {
-      title: "title",
-      label: "label",
-      date: "publishingDate.date",
-      media: "cover.image",
-    },
     prepare({ title, label, date, media }) {
       const labels = Object.fromEntries(
         JOURNAL_LABELS.map((opt) => [opt.value, opt.title])
@@ -261,10 +253,18 @@ export const journal = defineType({
       const labelText = label ? (labels[label] ?? label) : undefined;
       const parts = [date, labelText].filter(Boolean);
       return {
-        title,
-        subtitle: parts.length ? parts.join(" – ") : undefined,
         media,
+        subtitle: parts.length ? parts.join(" – ") : undefined,
+        title,
       };
     },
+    select: {
+      date: "publishingDate.date",
+      label: "label",
+      media: "cover.image",
+      title: "title",
+    },
   },
+  title: "Journal",
+  type: "document",
 });

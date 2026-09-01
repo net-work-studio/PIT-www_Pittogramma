@@ -41,7 +41,6 @@ export async function POST(request: Request) {
       url,
       {
         headers: {
-          "User-Agent": "Mozilla/5.0 (compatible; PittogrammaBot/1.0)",
           Accept: Array.from(
             new Set([
               "image/jpeg",
@@ -51,6 +50,7 @@ export async function POST(request: Request) {
               "image/avif",
             ])
           ).join(","),
+          "User-Agent": "Mozilla/5.0 (compatible; PittogrammaBot/1.0)",
         },
       },
       {

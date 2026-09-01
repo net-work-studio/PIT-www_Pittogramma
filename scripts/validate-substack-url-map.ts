@@ -28,9 +28,9 @@ if (!(projectId && dataset)) {
 }
 
 const client = createClient({
-  projectId,
-  dataset,
   apiVersion: "2026-06-03",
+  dataset,
+  projectId,
   useCdn: false,
 });
 
@@ -60,11 +60,15 @@ async function main() {
     const parsed = parseDestinationPath(entry.destination);
 
     if (parsed.type === "journal" && !journalSet.has(parsed.slug)) {
-      errors.push(`${label}: journal slug not found in Sanity (${parsed.slug})`);
+      errors.push(
+        `${label}: journal slug not found in Sanity (${parsed.slug})`
+      );
     }
 
     if (parsed.type === "project" && !projectSet.has(parsed.slug)) {
-      errors.push(`${label}: project slug not found in Sanity (${parsed.slug})`);
+      errors.push(
+        `${label}: project slug not found in Sanity (${parsed.slug})`
+      );
     }
   }
 

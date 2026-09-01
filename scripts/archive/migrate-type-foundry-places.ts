@@ -23,10 +23,10 @@ if (!(projectId && dataset && token)) {
 }
 
 const client = createClient({
-  projectId,
-  dataset,
-  token,
   apiVersion: "2025-12-18",
+  dataset,
+  projectId,
+  token,
   useCdn: false,
 });
 
@@ -56,9 +56,9 @@ async function main() {
         .set({
           places: [
             {
-              _type: "reference",
-              _ref: doc.place._ref,
               _key: randomBytes(6).toString("hex"),
+              _ref: doc.place._ref,
+              _type: "reference",
             },
           ],
         })

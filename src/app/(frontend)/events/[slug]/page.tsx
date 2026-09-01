@@ -60,9 +60,9 @@ export async function generateMetadata({
     getDynamicFetchOptions(),
   ]);
   const { data: event } = await sanityFetchMetadata({
-    query: EVENT_QUERY,
     params: { slug },
     perspective,
+    query: EVENT_QUERY,
   });
   const today = await getCachedLocalToday();
 
@@ -75,13 +75,13 @@ export async function generateMetadata({
   }
 
   return mapSanityToMetadata({
-    page: {
-      title: event.title ?? "Event",
-      description: event.description ?? undefined,
-      coverImage: (event.cover as SeoImageSource) ?? undefined,
-      seo: event.seo as SeoModule | undefined,
-    },
     baseUrl: siteDefaults.baseUrl,
+    page: {
+      coverImage: (event.cover as SeoImageSource) ?? undefined,
+      description: event.description ?? undefined,
+      seo: event.seo as SeoModule | undefined,
+      title: event.title ?? "Event",
+    },
     path: `/events/${slug}`,
     siteDefaults,
   });
@@ -171,23 +171,23 @@ async function CachedEventPage({
     <>
       <JsonLd
         data={{
-          name: event.title,
           description: event.description,
-          startDate: event.dateStart,
           endDate: event.dateEnd ?? event.dateStart,
+          eventAttendanceMode: getSchemaEventAttendanceMode(
+            event.attendanceMode,
+            event.locationName
+          ),
+          eventStatus: "https://schema.org/EventScheduled",
+          image: imageUrl,
           location: getSchemaEventLocation(
             event.attendanceMode,
             event.locationName,
             event.locationAddress,
             eventUrl
           ),
-          image: imageUrl,
+          name: event.title,
+          startDate: event.dateStart,
           url: eventUrl,
-          eventStatus: "https://schema.org/EventScheduled",
-          eventAttendanceMode: getSchemaEventAttendanceMode(
-            event.attendanceMode,
-            event.locationName
-          ),
         }}
         type="Event"
       />

@@ -184,7 +184,10 @@ describe("assertSanityProjectUser", () => {
         method: "POST",
       }),
       {
-        fetcher: ((input: Parameters<typeof fetch>[0], init: Parameters<typeof fetch>[1]) => {
+        fetcher: ((
+          input: Parameters<typeof fetch>[0],
+          init: Parameters<typeof fetch>[1]
+        ) => {
           verificationUrl = input.toString();
           verificationAuthorization =
             init?.headers instanceof Headers
@@ -370,13 +373,12 @@ describe("image content types", () => {
 });
 
 describe("HTML content types", () => {
-  test.each([
-    "text/html",
-    "Text/HTML; charset=UTF-8",
-    "APPLICATION/XHTML+XML",
-  ])("allows %s", (contentType) => {
-    expect(isAllowedHtmlContentType(contentType)).toBe(true);
-  });
+  test.each(["text/html", "Text/HTML; charset=UTF-8", "APPLICATION/XHTML+XML"])(
+    "allows %s",
+    (contentType) => {
+      expect(isAllowedHtmlContentType(contentType)).toBe(true);
+    }
+  );
 
   test("rejects non-HTML content", () => {
     expect(isAllowedHtmlContentType("application/json")).toBe(false);

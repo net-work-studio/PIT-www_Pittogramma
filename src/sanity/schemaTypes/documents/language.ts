@@ -2,29 +2,29 @@ import { TranslateIcon } from "@sanity/icons/Translate";
 import { defineField, defineType } from "sanity";
 
 export const language = defineType({
-  type: "document",
-  name: "language",
-  title: "Language",
-  icon: TranslateIcon,
   fields: [
     defineField({
-      type: "string",
       name: "name",
       title: "Name",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "slug",
       name: "slug",
-      title: "Slug",
       options: { source: "name" },
+      title: "Slug",
+      type: "slug",
       validation: (e) => e.required(),
     }),
   ],
+  icon: TranslateIcon,
+  name: "language",
   preview: {
     select: {
-      title: "name",
       subtitle: "slug.current",
+      title: "name",
     },
   },
+  title: "Language",
+  type: "document",
 });

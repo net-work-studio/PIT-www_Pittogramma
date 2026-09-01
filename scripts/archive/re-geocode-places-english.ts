@@ -26,10 +26,10 @@ if (!(projectId && dataset && token)) {
 }
 
 const client = createClient({
-  projectId,
-  dataset,
-  token,
   apiVersion: "2025-12-18",
+  dataset,
+  projectId,
+  token,
   useCdn: false,
 });
 
@@ -79,8 +79,8 @@ async function reverseGeocode(
 
   const response = await fetch(url.toString(), {
     headers: {
-      "User-Agent": USER_AGENT,
       Accept: "application/json",
+      "User-Agent": USER_AGENT,
     },
   });
 
@@ -144,12 +144,12 @@ async function main() {
       await client
         .patch(doc._id)
         .set({
-          name,
           city,
           country,
           countryCode,
-          state,
           formattedAddress,
+          name,
+          state,
         })
         .commit();
 

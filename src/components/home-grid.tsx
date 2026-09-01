@@ -66,8 +66,6 @@ function getAuthors(item: EditorialItem) {
   ) {
     return [{ name: item.typeFoundry }];
   }
-
-  return;
 }
 
 function renderSlot(slot: HomeGridSlot) {
