@@ -1,0 +1,25 @@
+src/sanity/utils/validation.ts
+  s_e23c534a1ad988::t_7e89766b1f5cc4 38-53
+package.json
+  s_e23c534a1ad988::t_7e89766b1f5cc4 47,57
+src/sanity/schemaTypes/singletons/site-settings.ts
+  s_e23c534a1ad988::t_7e89766b1f5cc4 2-5,330
+README.md
+  s_e23c534a1ad988::t_7e89766b1f5cc4 26,28-30,32-34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "661bba19b68d45542aa0666b18bac9392afe2271",
+  "prompts": {},
+  "sessions": {
+    "s_e23c534a1ad988": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05beb-f407-7c91-95c6-7d55c44abb79",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
