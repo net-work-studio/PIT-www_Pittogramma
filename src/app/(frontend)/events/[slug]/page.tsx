@@ -12,6 +12,7 @@ import CoverMedia from "@/components/modules/shared/cover-media";
 import { JsonLd } from "@/components/seo/json-ld";
 import { MultilineText } from "@/components/shared/multiline-text";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import { hasCoverMedia } from "@/lib/cover-media-utils";
 import {
   buildLocalToday,
@@ -63,11 +64,12 @@ export async function generateMetadata({
     params: { slug },
     perspective,
   });
+  const today = await getCachedLocalToday();
 
   if (
     !event ||
     (perspective === "published" &&
-      !isPublicationDateReached(event.publishingDate?.date))
+      !isPublicationDateReached(event.publishingDate?.date, today))
   ) {
     return {};
   }
@@ -99,14 +101,7 @@ export default async function EventPage({
     );
   }
   const { slug } = await params;
-  return (
-    <CachedEventPage
-      perspective="published"
-      slug={slug}
-      stega={false}
-      today={buildLocalToday()}
-    />
-  );
+  return <CachedEventPage perspective="published" slug={slug} stega={false} />;
 }
 
 async function DynamicEventPage({
@@ -119,12 +114,7 @@ async function DynamicEventPage({
     getDynamicFetchOptions(),
   ]);
   return (
-    <CachedEventPage
-      perspective={perspective}
-      slug={slug}
-      stega={stega}
-      today={buildLocalToday()}
-    />
+    <CachedEventPage perspective={perspective} slug={slug} stega={stega} />
   );
 }
 
@@ -132,9 +122,9 @@ async function CachedEventPage({
   slug,
   perspective,
   stega,
-  today,
-}: { slug: string; today: string } & DynamicFetchOptions) {
+}: { slug: string } & DynamicFetchOptions) {
   "use cache";
+  const today = await getCachedLocalToday();
   const [{ data: event }, { data: siteSettings }] = await Promise.all([
     sanityFetch({
       params: { slug },

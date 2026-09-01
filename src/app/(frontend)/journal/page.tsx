@@ -11,11 +11,12 @@ import JournalPageSkeleton from "@/components/modules/shared/journal-page-skelet
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import {
   getJournalHeroCover,
   resolveJournalHeroCover,
 } from "@/lib/cover-media-utils";
-import { buildLocalToday, isPublicationDateReached } from "@/lib/date-utils";
+import { isPublicationDateReached } from "@/lib/date-utils";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { JOURNAL_LABELS } from "@/lib/journal-labels";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -92,7 +93,6 @@ async function DynamicJournalPage({
       sortParam={sp.sort}
       stega={stega}
       tagsParam={sp.tags}
-      today={buildLocalToday()}
     />
   );
 }
@@ -104,14 +104,13 @@ async function CachedJournalPage({
   sortParam,
   perspective,
   stega,
-  today,
 }: {
   tagsParam?: string;
   pageParam?: string;
   sortParam?: string;
-  today: string;
 } & DynamicFetchOptions) {
   "use cache";
+  const today = await getCachedLocalToday();
 
   const sort = isValidSort(sortParam) ? sortParam : "newest";
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];

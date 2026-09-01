@@ -7,8 +7,9 @@ import RecentUpdates from "@/components/home/recent-updates";
 import HomeGrid, { type HomeGridSlot } from "@/components/home-grid";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import { getJournalHeroCover, hasCoverMedia } from "@/lib/cover-media-utils";
-import { buildLocalToday, isUpcomingEvent } from "@/lib/date-utils";
+import { isUpcomingEvent } from "@/lib/date-utils";
 import { formatEventCardLocation } from "@/lib/event-location";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -194,7 +195,7 @@ async function DynamicHome() {
 
 async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
   "use cache";
-  const today = buildLocalToday();
+  const today = await getCachedLocalToday();
   const [
     { data: homePage },
     { data: feedItems },

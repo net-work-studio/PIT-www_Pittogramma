@@ -7,7 +7,7 @@ import LoadMore from "@/components/feat/load-more/load-more";
 import EventsPageSkeleton from "@/components/modules/shared/events-page-skeleton";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import PageHeader from "@/components/shared/page-header";
-import { buildLocalToday } from "@/lib/date-utils";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import { formatEventCardLocation } from "@/lib/event-location";
 import { EVENT_TYPE_BADGE_VARIANT, getEventTypeLabel } from "@/lib/event-type";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -114,7 +114,6 @@ async function DynamicEventsPage({
       pageParam={sp.page}
       perspective={perspective}
       stega={stega}
-      today={buildLocalToday()}
     />
   );
 }
@@ -124,12 +123,11 @@ async function CachedEventsPage({
   pageParam,
   perspective,
   stega,
-  today,
 }: {
   pageParam?: string;
-  today: string;
 } & DynamicFetchOptions) {
   "use cache";
+  const today = await getCachedLocalToday();
 
   const parsedPage = Number.parseInt(pageParam ?? "1", 10);
   const requestedPage =

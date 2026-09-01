@@ -11,7 +11,7 @@ import { isValidSort } from "@/components/feat/sort/sort-options";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import PageHeader from "@/components/shared/page-header";
 import { buildIndexSlots } from "@/lib/adv-config";
-import { buildLocalToday } from "@/lib/date-utils";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -86,7 +86,6 @@ async function DynamicInterviewsPage({
       sortParam={sp.sort}
       stega={stega}
       tagsParam={sp.tags}
-      today={buildLocalToday()}
     />
   );
 }
@@ -98,14 +97,13 @@ async function CachedInterviewsPage({
   sortParam,
   perspective,
   stega,
-  today,
 }: {
   tagsParam?: string;
   pageParam?: string;
   sortParam?: string;
-  today: string;
 } & DynamicFetchOptions) {
   "use cache";
+  const today = await getCachedLocalToday();
 
   const sort = isValidSort(sortParam) ? sortParam : "newest";
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];

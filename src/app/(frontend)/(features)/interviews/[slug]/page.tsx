@@ -7,6 +7,7 @@ import ShareLinks from "@/components/modules/project/share-links";
 import DiscoverMore from "@/components/modules/shared/discover-more";
 import EditorialPageHero from "@/components/modules/shared/editorial-page-hero";
 import { JsonLd } from "@/components/seo/json-ld";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import { DetailPageBadge } from "@/lib/content-type-badge";
 import {
   buildLocalToday,
@@ -52,11 +53,12 @@ export async function generateMetadata({
     perspective,
     query: INTERVIEW_QUERY,
   });
+  const today = await getCachedLocalToday();
 
   if (
     !interview ||
     (perspective === "published" &&
-      !isPublicationDateReached(interview.publishingDate?.date))
+      !isPublicationDateReached(interview.publishingDate?.date, today))
   ) {
     return {};
   }
@@ -84,12 +86,7 @@ export default async function InterviewPage({
     getDynamicFetchOptions(),
   ]);
   return (
-    <CachedInterviewPage
-      perspective={perspective}
-      slug={slug}
-      stega={stega}
-      today={buildLocalToday()}
-    />
+    <CachedInterviewPage perspective={perspective} slug={slug} stega={stega} />
   );
 }
 
@@ -97,9 +94,9 @@ async function CachedInterviewPage({
   slug,
   perspective,
   stega,
-  today,
-}: { slug: string; today: string } & DynamicFetchOptions) {
+}: { slug: string } & DynamicFetchOptions) {
   "use cache";
+  const today = await getCachedLocalToday();
   const { data: interview } = await sanityFetch({
     params: { slug },
     perspective,

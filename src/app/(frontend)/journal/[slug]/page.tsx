@@ -6,6 +6,7 @@ import JournalContent from "@/components/modules/journal/journal-content";
 import ShareLinks from "@/components/modules/project/share-links";
 import EditorialPageHero from "@/components/modules/shared/editorial-page-hero";
 import { JsonLd } from "@/components/seo/json-ld";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import { DetailPageBadge } from "@/lib/content-type-badge";
 import {
   buildLocalToday,
@@ -51,11 +52,12 @@ export async function generateMetadata({
     perspective,
     query: JOURNAL_ARTICLE_QUERY,
   });
+  const today = await getCachedLocalToday();
 
   if (
     !article ||
     (perspective === "published" &&
-      !isPublicationDateReached(article.publishingDate?.date))
+      !isPublicationDateReached(article.publishingDate?.date, today))
   ) {
     return {};
   }
@@ -87,7 +89,6 @@ export default async function JournalArticlePage({
       perspective={perspective}
       slug={slug}
       stega={stega}
-      today={buildLocalToday()}
     />
   );
 }
@@ -96,9 +97,9 @@ async function CachedJournalArticlePage({
   slug,
   perspective,
   stega,
-  today,
-}: { slug: string; today: string } & DynamicFetchOptions) {
+}: { slug: string } & DynamicFetchOptions) {
   "use cache";
+  const today = await getCachedLocalToday();
   const { data: article } = await sanityFetch({
     params: { slug },
     perspective,

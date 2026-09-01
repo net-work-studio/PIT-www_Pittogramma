@@ -7,6 +7,7 @@ import ProjectInfo from "@/components/modules/project/project-info";
 import ShareLinks from "@/components/modules/project/share-links";
 import DiscoverMore from "@/components/modules/shared/discover-more";
 import { JsonLd } from "@/components/seo/json-ld";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import { buildLocalToday, isPublicationDateReached } from "@/lib/date-utils";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -47,11 +48,12 @@ export async function generateMetadata({
     params: { slug },
     perspective,
   });
+  const today = await getCachedLocalToday();
 
   if (
     !project ||
     (perspective === "published" &&
-      !isPublicationDateReached(project.publishingDate?.date))
+      !isPublicationDateReached(project.publishingDate?.date, today))
   ) {
     return {};
   }
@@ -79,12 +81,7 @@ export default async function ProjectPage({
     getDynamicFetchOptions(),
   ]);
   return (
-    <CachedProjectPage
-      perspective={perspective}
-      slug={slug}
-      stega={stega}
-      today={buildLocalToday()}
-    />
+    <CachedProjectPage perspective={perspective} slug={slug} stega={stega} />
   );
 }
 
@@ -92,9 +89,9 @@ async function CachedProjectPage({
   slug,
   perspective,
   stega,
-  today,
-}: { slug: string; today: string } & DynamicFetchOptions) {
+}: { slug: string } & DynamicFetchOptions) {
   "use cache";
+  const today = await getCachedLocalToday();
   const { data: project } = await sanityFetch({
     query: PROJECT_QUERY,
     params: { slug },
