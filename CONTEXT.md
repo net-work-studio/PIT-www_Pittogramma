@@ -121,6 +121,18 @@ _Avoid_: Deployment-time feature flags, a published Index with no usable view
 A canonical, publicly indexable Pittogramma URL listed in the XML sitemap. Sitemap entries include public pages and published editorial content, except individual Designer profiles; they exclude redirects, unavailable Indexes, and URLs set to `noindex`.
 _Avoid_: A list of every route, a Designer profile entry, a redirect URL
 
+**Legacy URL**:
+A public path served by the pre-migration Kirby site, including its historical English `/en` and Italian `/it` prefixes. It is distinct from a current canonical URL and is retained only as a possible redirect source.
+_Avoid_: Canonical URL, current route
+
+**Canonical successor**:
+The current public Pittogramma URL that represents the same page or editorial content as a Legacy URL. A redirect is created only after this equivalence is verified.
+_Avoid_: A guessed slug match, a generic homepage fallback
+
+**Retired Legacy URL**:
+A Legacy URL for content or an endpoint with no verified Canonical successor. It remains an intentional not-found response rather than redirecting visitors to an unrelated page.
+_Avoid_: Homepage fallback, inferred replacement
+
 Missing Index availability values retain the all-enabled default during the configuration rollout.
 
 An unpublished Index is unavailable at its public route and returns a 404. Permanently retired Indexes may subsequently have their content deleted from Sanity.
