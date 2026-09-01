@@ -117,6 +117,10 @@ _Avoid_: Renaming individual directory types, treating Index as a separate conte
 The editorial Site Settings configuration that controls whether an Index is published and which of its supported public views are enabled. It has one fixed, named configuration section for each Index. Every published Index has at least one enabled view.
 _Avoid_: Deployment-time feature flags, a published Index with no usable view
 
+**Sitemap entry**:
+A canonical, publicly indexable Pittogramma URL listed in the XML sitemap. Sitemap entries include public pages and published editorial content, except individual Designer profiles; they exclude redirects, unavailable Indexes, and URLs set to `noindex`.
+_Avoid_: A list of every route, a Designer profile entry, a redirect URL
+
 Missing Index availability values retain the all-enabled default during the configuration rollout.
 
 An unpublished Index is unavailable at its public route and returns a 404. Permanently retired Indexes may subsequently have their content deleted from Sanity.

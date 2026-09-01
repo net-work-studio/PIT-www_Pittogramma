@@ -1,5 +1,14 @@
 import { describe, expect, test } from "bun:test";
-import { isUpcomingEvent } from "@/lib/date-utils";
+import { isPublicationDateReached, isUpcomingEvent } from "@/lib/date-utils";
+
+describe("isPublicationDateReached", () => {
+  test("publishes on its scheduled date and keeps future items unavailable", () => {
+    expect(isPublicationDateReached("2026-08-24", "2026-08-25")).toBe(true);
+    expect(isPublicationDateReached("2026-08-25", "2026-08-25")).toBe(true);
+    expect(isPublicationDateReached("2026-08-26", "2026-08-25")).toBe(false);
+    expect(isPublicationDateReached(undefined, "2026-08-25")).toBe(false);
+  });
+});
 
 describe("isUpcomingEvent", () => {
   test("keeps events ending today or in the future homepage-eligible", () => {

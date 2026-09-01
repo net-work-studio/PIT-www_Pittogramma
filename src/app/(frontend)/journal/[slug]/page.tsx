@@ -7,7 +7,11 @@ import ShareLinks from "@/components/modules/project/share-links";
 import EditorialPageHero from "@/components/modules/shared/editorial-page-hero";
 import { JsonLd } from "@/components/seo/json-ld";
 import { DetailPageBadge } from "@/lib/content-type-badge";
-import { formatEventDate } from "@/lib/date-utils";
+import {
+  buildLocalToday,
+  formatEventDate,
+  isPublicationDateReached,
+} from "@/lib/date-utils";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -24,9 +28,12 @@ import { JOURNAL_ARTICLE_QUERY } from "@/sanity/lib/queries";
 
 export async function generateStaticParams() {
   const journalSlugsQuery = defineQuery(
-    `*[_type == "journal" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
+    `*[_type == "journal" && defined(slug.current) && defined(publishingDate.date) && publishingDate.date <= $today] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
   );
-  const { data } = await sanityFetchStaticParams({ query: journalSlugsQuery });
+  const { data } = await sanityFetchStaticParams({
+    params: { today: buildLocalToday() },
+    query: journalSlugsQuery,
+  });
   return data as { slug: string }[];
 }
 
@@ -45,7 +52,11 @@ export async function generateMetadata({
     query: JOURNAL_ARTICLE_QUERY,
   });
 
-  if (!article) {
+  if (
+    !article ||
+    (perspective === "published" &&
+      !isPublicationDateReached(article.publishingDate?.date))
+  ) {
     return {};
   }
 
@@ -76,6 +87,7 @@ export default async function JournalArticlePage({
       perspective={perspective}
       slug={slug}
       stega={stega}
+      today={buildLocalToday()}
     />
   );
 }
@@ -84,7 +96,8 @@ async function CachedJournalArticlePage({
   slug,
   perspective,
   stega,
-}: { slug: string } & DynamicFetchOptions) {
+  today,
+}: { slug: string; today: string } & DynamicFetchOptions) {
   "use cache";
   const { data: article } = await sanityFetch({
     params: { slug },
@@ -93,16 +106,18 @@ async function CachedJournalArticlePage({
     stega,
   });
 
-  if (!article) {
+  if (
+    !article ||
+    (perspective === "published" &&
+      !isPublicationDateReached(article.publishingDate?.date, today))
+  ) {
     notFound();
   }
 
   const imageUrl = article.cover?.image?.asset
     ? urlForImage(article.cover)?.url()
     : undefined;
-  const authors = article.authors
-    ?.map((author: { name: string }) => author.name)
-    .filter(Boolean);
+  const authors = article.authors?.filter((author) => Boolean(author?.name));
   const articleUrl = `${siteDefaults.baseUrl}/journal/${slug}`;
   const labelConfig = getJournalLabelConfig(article.label);
 
@@ -111,14 +126,26 @@ async function CachedJournalArticlePage({
       <JsonLd
         data={{
           author: authors?.length
-            ? authors.map((name: string) => ({
+            ? authors.map((author) => ({
                 "@type": "Person",
-                name,
+                name: author.name,
+                url: author.slug?.current
+                  ? `${siteDefaults.baseUrl}/designers/${author.slug.current}`
+                  : undefined,
               }))
             : undefined,
+          dateModified: article._updatedAt,
+          datePublished: article.publishingDate?.date,
           description: article.excerpt,
+          headline: article.title,
           image: imageUrl,
-          name: article.title,
+          mainEntityOfPage: {
+            "@id": articleUrl,
+            "@type": "WebPage",
+          },
+          publisher: {
+            "@id": `${siteDefaults.baseUrl}#organization`,
+          },
           url: articleUrl,
         }}
         type="Article"
@@ -134,7 +161,7 @@ async function CachedJournalArticlePage({
               />
             ) : null
           }
-          byline={authors?.join(", ")}
+          byline={authors?.map((author) => author.name).join(", ")}
           cover={article.cover}
           date={
             article.publishingDate?.date

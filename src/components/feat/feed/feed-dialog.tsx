@@ -109,8 +109,8 @@ function FeedDialogInner({ items }: FeedDialogProps) {
         }
       />
       <SheetContent
-        className={
-          isDesktop
+          className={
+            isDesktop
             ? "flex h-full min-h-0 w-120 max-w-120 flex-col gap-0 overflow-hidden sm:max-w-120! [&>[data-slot=sheet-close]]:top-5 [&>[data-slot=sheet-close]]:right-6 [&>[data-slot=sheet-close]]:inline-flex [&>[data-slot=sheet-close]]:size-6 [&>[data-slot=sheet-close]]:items-center [&>[data-slot=sheet-close]]:justify-center"
             : "flex h-[90vh] min-h-0 flex-col gap-0 overflow-hidden"
         }

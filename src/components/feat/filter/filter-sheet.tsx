@@ -111,13 +111,13 @@ export default function FilterSheet({
         </button>
       )}
 
-      <Button
-        aria-busy={isPending || undefined}
-        aria-label={
-          isPending
-            ? "Loading…"
-            : `Filter ${label}${activeSlugs.length > 0 ? ` (${activeSlugs.length} active)` : ""}`
-        }
+        <Button
+          aria-busy={isPending || undefined}
+          aria-label={
+            isPending
+              ? "Loading…"
+              : `Filter ${label}${activeSlugs.length > 0 ? ` (${activeSlugs.length} active)` : ""}`
+          }
         className="relative max-sm:w-9 max-sm:px-0"
         disabled={isPending}
         onClick={open}

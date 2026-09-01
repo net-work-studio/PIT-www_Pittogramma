@@ -3,6 +3,7 @@ import { draftMode } from "next/headers";
 import { Suspense } from "react";
 import LegalPageContent from "@/components/modules/legal/legal-page-content";
 import PageHeader from "@/components/shared/page-header";
+import { staticPageMetadata } from "@/lib/seo/static-page-metadata";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
@@ -10,9 +11,11 @@ import {
 } from "@/sanity/lib/live";
 import { IMPRESSUM_PAGE_QUERY } from "@/sanity/lib/queries";
 
-export const metadata: Metadata = {
-  title: "Legal Notice / Impressum",
-};
+export const metadata: Metadata = staticPageMetadata(
+  "/impressum",
+  "Legal Notice / Impressum",
+  "Legal notice and publisher information for Pittogramma."
+);
 
 export default async function ImpressumPage() {
   const { isEnabled: isDraftMode } = await draftMode();

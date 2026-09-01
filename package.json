@@ -52,7 +52,8 @@
     "typegen": "rm -f ./src/sanity/extract.json && bunx sanity schema extract --enforce-required-fields --path ./src/sanity/extract.json && bunx sanity typegen generate",
     "cleanup": "rm -rf node_modules .next",
     "newsletter:validate-map": "bun run scripts/validate-substack-url-map.ts",
-    "newsletter:export-preview": "bun run scripts/export-newsletter-preview.ts"
+    "newsletter:export-preview": "bun run scripts/export-newsletter-preview.ts",
+    "seo:check-sitemap": "bun run scripts/check-sitemap.ts"
   },
   "version": "0.1.0",
   "private": true,

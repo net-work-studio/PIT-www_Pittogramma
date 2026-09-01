@@ -23,8 +23,12 @@ export function JsonLd({ type, data }: JsonLdProps) {
 
   return (
     <script
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD requires this pattern and JSON.stringify output is safe
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      // JSON-LD requires an inline script. Escaping `<` prevents user-authored
+      // CMS text from terminating the script element.
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD requires this pattern
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+      }}
       id={`json-ld-${type.toLowerCase()}`}
       type="application/ld+json"
     />

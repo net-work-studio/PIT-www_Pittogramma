@@ -50,9 +50,9 @@ export default function SortDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <Button
-            aria-busy={isPending || undefined}
-            aria-label={isPending ? "Loading…" : `Sort: ${currentLabel}`}
+            <Button
+              aria-busy={isPending || undefined}
+              aria-label={isPending ? "Loading…" : `Sort: ${currentLabel}`}
             className="font-mono uppercase max-sm:w-9 max-sm:px-0"
             disabled={isPending}
             title={`Sort: ${currentLabel}`}

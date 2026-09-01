@@ -14,14 +14,17 @@ describe("public site state", () => {
 
   test("resolves a configured countdown", () => {
     expect(
-      getPublicSiteState({
-        countdown: {
-          heading: "Coming soon",
-          launchAt: "2026-09-01T00:00:00+02:00",
-          message: "A new version is on its way.",
+      getPublicSiteState(
+        {
+          countdown: {
+            heading: "Coming soon",
+            launchAt: "2026-09-01T00:00:00+02:00",
+            message: "A new version is on its way.",
+          },
+          publicSiteMode: "countdown",
         },
-        publicSiteMode: "countdown",
-      })
+        { now: new Date("2026-08-31T23:59:59+02:00") }
+      )
     ).toEqual({
       heading: "Coming soon",
       launchAt: "2026-09-01T00:00:00+02:00",
