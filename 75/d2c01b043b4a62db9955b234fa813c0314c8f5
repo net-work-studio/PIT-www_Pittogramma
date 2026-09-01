@@ -1,0 +1,24 @@
+src/app/robots.ts
+  s_c9ba479cac7bc0::t_e06c41bd7d6cb8 5,12
+  s_c9ba479cac7bc0::t_8a1fdcafc4ee33 11
+src/app/robots.test.ts
+  s_c9ba479cac7bc0::t_8a1fdcafc4ee33 1-6,19-20
+  s_c9ba479cac7bc0::t_e06c41bd7d6cb8 7
+  s_c9ba479cac7bc0::t_3adfaf43f4cc9b 8-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "75d2c01b043b4a62db9955b234fa813c0314c8f5",
+  "prompts": {},
+  "sessions": {
+    "s_c9ba479cac7bc0": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05de0-70a9-7811-8eac-c7043f106a78",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
