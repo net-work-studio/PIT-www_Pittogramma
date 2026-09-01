@@ -1,0 +1,48 @@
+src/app/(frontend)/journal/page.tsx
+  s_e23c534a1ad988::t_80f48b40d033ae 19,113
+  s_e23c534a1ad988::t_35bcbe017da0ca 14
+src/app/(frontend)/events/page.tsx
+  s_e23c534a1ad988::t_80f48b40d033ae 10,130
+src/app/(frontend)/events/[slug]/page.tsx
+  s_e23c534a1ad988::t_78d988ccdd24ad 15,67,72,127
+  s_e23c534a1ad988::t_1f225b03d91c17 104,117
+  s_e23c534a1ad988::t_5763ad43ffc5bc 125
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_e23c534a1ad988::t_5763ad43ffc5bc 100
+  s_e23c534a1ad988::t_bfbac1331cdebe 9,55,60,102
+src/app/(frontend)/(features)/projects/[slug]/page.tsx
+  s_e23c534a1ad988::t_92eb66f6380182 10,51,56,94
+  s_e23c534a1ad988::t_5763ad43ffc5bc 92
+  s_e23c534a1ad988::t_1f225b03d91c17 84
+src/app/(frontend)/(features)/interviews/page.tsx
+  s_e23c534a1ad988::t_80f48b40d033ae 14,106
+src/app/(frontend)/(features)/interviews/[slug]/page.tsx
+  s_e23c534a1ad988::t_1f225b03d91c17 89
+  s_e23c534a1ad988::t_bfbac1331cdebe 10,56,61,99
+  s_e23c534a1ad988::t_5763ad43ffc5bc 97
+src/lib/cached-date-utils.ts
+  s_e23c534a1ad988::t_92eb66f6380182 1-6,8-12
+  s_e23c534a1ad988::t_beaf134b69cd00 7
+src/app/(frontend)/page.tsx
+  s_e23c534a1ad988::t_80f48b40d033ae 10,12,198
+src/app/(frontend)/(features)/projects/page.tsx
+  s_e23c534a1ad988::t_80f48b40d033ae 14,106
+src/components/shared/header.tsx
+  s_e23c534a1ad988::t_80f48b40d033ae 9,31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "a6ce82ea114c5fb8ee6a65e2670a5c4ad01080cc",
+  "prompts": {},
+  "sessions": {
+    "s_e23c534a1ad988": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05beb-f407-7c91-95c6-7d55c44abb79",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
