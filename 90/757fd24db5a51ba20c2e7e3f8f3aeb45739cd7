@@ -1,0 +1,28 @@
+src/lib/kirby-redirects.ts
+  s_f493705cea9401::t_42e4ea7d1a4efd 1-225
+data/kirby-url-map.json
+  s_f493705cea9401::t_42e4ea7d1a4efd 1-1284
+src/lib/kirby-redirects.test.ts
+  s_f493705cea9401::t_42e4ea7d1a4efd 1-53
+CONTEXT.md
+  s_f493705cea9401::t_42e4ea7d1a4efd 124-135
+next.config.ts
+  s_f493705cea9401::t_42e4ea7d1a4efd 3
+  s_f493705cea9401::t_f62338555c84cb 50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "90757fd24db5a51ba20c2e7e3f8f3aeb45739cd7",
+  "prompts": {},
+  "sessions": {
+    "s_f493705cea9401": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05dd2-6be0-7921-8caf-3d441ad79320",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
