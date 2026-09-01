@@ -6,7 +6,7 @@ import Mark from "@/components/brand/mark";
 import FeedDialog, { type FeedItem } from "@/components/feat/feed/feed-dialog";
 import { ModeToggle } from "@/components/mode-toggle";
 import { type AdvTier, TIER_CAPS, TIER_ORDER } from "@/lib/adv-config";
-import { buildLocalToday } from "@/lib/date-utils";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import {
   getEnabledResources,
   getFeatureAvailability,
@@ -28,7 +28,7 @@ export default async function Header({
   stega,
 }: DynamicFetchOptions) {
   "use cache";
-  const today = buildLocalToday();
+  const today = await getCachedLocalToday();
 
   const [advsRes, communityRes, settingsRes] = await Promise.all([
     sanityFetch({ params: { today }, perspective, query: FEED_QUERY, stega }),

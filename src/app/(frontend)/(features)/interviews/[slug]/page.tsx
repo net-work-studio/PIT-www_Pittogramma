@@ -7,8 +7,13 @@ import ShareLinks from "@/components/modules/project/share-links";
 import DiscoverMore from "@/components/modules/shared/discover-more";
 import EditorialPageHero from "@/components/modules/shared/editorial-page-hero";
 import { JsonLd } from "@/components/seo/json-ld";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import { DetailPageBadge } from "@/lib/content-type-badge";
-import { formatEventDate } from "@/lib/date-utils";
+import {
+  buildLocalToday,
+  formatEventDate,
+  isPublicationDateReached,
+} from "@/lib/date-utils";
 import { selectRelatedInterviews } from "@/lib/select-related-interviews";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
@@ -25,9 +30,10 @@ import { INTERVIEW_QUERY } from "@/sanity/lib/queries";
 
 export async function generateStaticParams() {
   const interviewSlugsQuery = defineQuery(
-    `*[_type == "interview" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
+    `*[_type == "interview" && defined(slug.current) && defined(publishingDate.date) && publishingDate.date <= $today] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
   );
   const { data } = await sanityFetchStaticParams({
+    params: { today: buildLocalToday() },
     query: interviewSlugsQuery,
   });
   return data as { slug: string }[];
@@ -47,8 +53,13 @@ export async function generateMetadata({
     perspective,
     query: INTERVIEW_QUERY,
   });
+  const today = await getCachedLocalToday();
 
-  if (!interview) {
+  if (
+    !interview ||
+    (perspective === "published" &&
+      !isPublicationDateReached(interview.publishingDate?.date, today))
+  ) {
     return {};
   }
 
@@ -85,6 +96,7 @@ async function CachedInterviewPage({
   stega,
 }: { slug: string } & DynamicFetchOptions) {
   "use cache";
+  const today = await getCachedLocalToday();
   const { data: interview } = await sanityFetch({
     params: { slug },
     perspective,
@@ -92,16 +104,20 @@ async function CachedInterviewPage({
     stega,
   });
 
-  if (!interview) {
+  if (
+    !interview ||
+    (perspective === "published" &&
+      !isPublicationDateReached(interview.publishingDate?.date, today))
+  ) {
     notFound();
   }
 
   const imageUrl = interview.cover?.image?.asset
     ? urlForImage(interview.cover)?.url()
     : undefined;
-  const interviewees = interview.designersAndProfessionals
-    ?.map((person: { name: string }) => person.name)
-    .filter(Boolean);
+  const interviewees = interview.designersAndProfessionals?.filter((person) =>
+    Boolean(person?.name)
+  );
   const interviewUrl = `${siteDefaults.baseUrl}/interviews/${slug}`;
   const relatedInterviews = selectRelatedInterviews({
     fallbackInterviews: interview.fallbackInterviews,
@@ -113,14 +129,26 @@ async function CachedInterviewPage({
       <JsonLd
         data={{
           author: interviewees?.length
-            ? interviewees.map((name: string) => ({
+            ? interviewees.map((person) => ({
                 "@type": "Person",
-                name,
+                name: person.name,
+                url: person.slug?.current
+                  ? `${siteDefaults.baseUrl}/designers/${person.slug.current}`
+                  : undefined,
               }))
             : undefined,
+          dateModified: interview._updatedAt,
+          datePublished: interview.publishingDate?.date,
           description: interview.introText,
+          headline: interview.title,
           image: imageUrl,
-          name: interview.title,
+          mainEntityOfPage: {
+            "@id": interviewUrl,
+            "@type": "WebPage",
+          },
+          publisher: {
+            "@id": `${siteDefaults.baseUrl}#organization`,
+          },
           url: interviewUrl,
         }}
         type="Article"
@@ -129,7 +157,7 @@ async function CachedInterviewPage({
       <div className="flex flex-col pb-12">
         <EditorialPageHero
           badge={<DetailPageBadge type="interview" />}
-          byline={interviewees?.join(", ")}
+          byline={interviewees?.map((person) => person.name).join(", ")}
           cover={interview.cover}
           date={
             interview.publishingDate?.date

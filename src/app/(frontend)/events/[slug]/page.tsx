@@ -12,8 +12,13 @@ import CoverMedia from "@/components/modules/shared/cover-media";
 import { JsonLd } from "@/components/seo/json-ld";
 import { MultilineText } from "@/components/shared/multiline-text";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import { hasCoverMedia } from "@/lib/cover-media-utils";
-import { formatDateRange } from "@/lib/date-utils";
+import {
+  buildLocalToday,
+  formatDateRange,
+  isPublicationDateReached,
+} from "@/lib/date-utils";
 import { buildExternalEventUrl } from "@/lib/event-destination";
 import {
   formatEventLocationDisplay,
@@ -36,9 +41,12 @@ import { EVENT_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
 export async function generateStaticParams() {
   const eventSlugsQuery = defineQuery(
-    `*[_type == "event" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
+    `*[_type == "event" && defined(slug.current) && defined(publishingDate.date) && publishingDate.date <= $today] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
   );
-  const { data } = await sanityFetchStaticParams({ query: eventSlugsQuery });
+  const { data } = await sanityFetchStaticParams({
+    params: { today: buildLocalToday() },
+    query: eventSlugsQuery,
+  });
   return data as { slug: string }[];
 }
 
@@ -56,8 +64,13 @@ export async function generateMetadata({
     params: { slug },
     perspective,
   });
+  const today = await getCachedLocalToday();
 
-  if (!event) {
+  if (
+    !event ||
+    (perspective === "published" &&
+      !isPublicationDateReached(event.publishingDate?.date, today))
+  ) {
     return {};
   }
 
@@ -111,6 +124,7 @@ async function CachedEventPage({
   stega,
 }: { slug: string } & DynamicFetchOptions) {
   "use cache";
+  const today = await getCachedLocalToday();
   const [{ data: event }, { data: siteSettings }] = await Promise.all([
     sanityFetch({
       params: { slug },
@@ -121,7 +135,11 @@ async function CachedEventPage({
     sanityFetch({ perspective, query: SITE_SETTINGS_QUERY, stega }),
   ]);
 
-  if (!event) {
+  if (
+    !event ||
+    (perspective === "published" &&
+      !isPublicationDateReached(event.publishingDate?.date, today))
+  ) {
     notFound();
   }
 

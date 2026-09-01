@@ -3,6 +3,7 @@ import { draftMode } from "next/headers";
 import { Suspense } from "react";
 import LegalPageContent from "@/components/modules/legal/legal-page-content";
 import PageHeader from "@/components/shared/page-header";
+import { staticPageMetadata } from "@/lib/seo/static-page-metadata";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
@@ -10,9 +11,11 @@ import {
 } from "@/sanity/lib/live";
 import { PRIVACY_POLICY_PAGE_QUERY } from "@/sanity/lib/queries";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-};
+export const metadata: Metadata = staticPageMetadata(
+  "/privacy-policy",
+  "Privacy Policy",
+  "How Pittogramma handles personal data and privacy."
+);
 
 export default async function PrivacyPolicyPage() {
   const { isEnabled: isDraftMode } = await draftMode();

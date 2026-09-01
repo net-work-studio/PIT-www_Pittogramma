@@ -7,8 +7,9 @@ import RecentUpdates from "@/components/home/recent-updates";
 import HomeGrid, { type HomeGridSlot } from "@/components/home-grid";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import { getJournalHeroCover, hasCoverMedia } from "@/lib/cover-media-utils";
-import { buildLocalToday, isUpcomingEvent } from "@/lib/date-utils";
+import { isUpcomingEvent } from "@/lib/date-utils";
 import { formatEventCardLocation } from "@/lib/event-location";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -194,7 +195,7 @@ async function DynamicHome() {
 
 async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
   "use cache";
-  const today = buildLocalToday();
+  const today = await getCachedLocalToday();
   const [
     { data: homePage },
     { data: feedItems },
@@ -285,7 +286,8 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
               buttonText={midCta.buttonText}
               externalUrl={midCta.externalUrl}
               headline={midCta.headline}
-              image={midCta.image}
+              imgDark={midCta.imgDark}
+              imgLight={midCta.imgLight}
               internalLink={midCta.internalLink}
               linkType={midCta.linkType}
               variant={midCta.variant}
@@ -303,7 +305,8 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
               buttonText={cta.buttonText}
               externalUrl={cta.externalUrl}
               headline={cta.headline}
-              image={cta.image}
+              imgDark={cta.imgDark}
+              imgLight={cta.imgLight}
               internalLink={cta.internalLink}
               linkType={cta.linkType}
               variant={cta.variant}

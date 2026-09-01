@@ -4,9 +4,10 @@ import { Suspense } from "react";
 import BaseCard from "@/components/cards/base-card";
 import CtaCard from "@/components/cards/cta-card";
 import LoadMore from "@/components/feat/load-more/load-more";
+import EventsPageSkeleton from "@/components/modules/shared/events-page-skeleton";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import PageHeader from "@/components/shared/page-header";
-import { buildLocalToday } from "@/lib/date-utils";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import { formatEventCardLocation } from "@/lib/event-location";
 import { EVENT_TYPE_BADGE_VARIANT, getEventTypeLabel } from "@/lib/event-type";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -92,7 +93,7 @@ export default function Page({
   searchParams: Promise<{ page?: string }>;
 }) {
   return (
-    <Suspense>
+    <Suspense fallback={<EventsPageSkeleton />}>
       <DynamicEventsPage searchParams={searchParams} />
     </Suspense>
   );
@@ -113,7 +114,6 @@ async function DynamicEventsPage({
       pageParam={sp.page}
       perspective={perspective}
       stega={stega}
-      today={buildLocalToday()}
     />
   );
 }
@@ -123,12 +123,11 @@ async function CachedEventsPage({
   pageParam,
   perspective,
   stega,
-  today,
 }: {
   pageParam?: string;
-  today: string;
 } & DynamicFetchOptions) {
   "use cache";
+  const today = await getCachedLocalToday();
 
   const parsedPage = Number.parseInt(pageParam ?? "1", 10);
   const requestedPage =
@@ -139,6 +138,7 @@ async function CachedEventsPage({
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
+  const includeFuture = perspective !== "published";
 
   const [
     { data: futureEventsData },
@@ -148,19 +148,19 @@ async function CachedEventsPage({
   ] = await Promise.all([
     sanityFetch({
       query: FUTURE_EVENTS_QUERY,
-      params: { today },
+      params: { includeFuture, today },
       perspective,
       stega,
     }),
     sanityFetch({
       query: PAST_EVENTS_QUERY,
-      params: { today, start, end },
+      params: { end, includeFuture, start, today },
       perspective,
       stega,
     }),
     sanityFetch({
       query: PAST_EVENTS_COUNT_QUERY,
-      params: { today },
+      params: { includeFuture, today },
       perspective,
       stega,
     }),
@@ -246,7 +246,8 @@ async function CachedEventsPage({
           buttonText={cta.buttonText}
           externalUrl={cta.externalUrl}
           headline={cta.headline}
-          image={cta.image}
+          imgDark={cta.imgDark}
+          imgLight={cta.imgLight}
           internalLink={cta.internalLink}
           linkType={cta.linkType}
           variant={cta.variant}

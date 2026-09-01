@@ -1,5 +1,8 @@
 import { defineField, defineType } from "sanity";
-import { httpUrlValidation } from "@/sanity/utils/validation";
+import {
+  httpsUrlValidation,
+  httpUrlValidation,
+} from "@/sanity/utils/validation";
 
 export const siteSettings = defineType({
   __experimental_omnisearch_visibility: false,
@@ -316,6 +319,15 @@ export const siteSettings = defineType({
       title: "LinkedIn URL",
       type: "url",
       validation: httpUrlValidation,
+    }),
+    defineField({
+      description:
+        "External Notion form where visitors can report an issue with the platform.",
+      group: "footer",
+      name: "issueReportFormUrl",
+      title: "Issue report form URL",
+      type: "url",
+      validation: httpsUrlValidation,
     }),
     defineField({
       group: "contributions",

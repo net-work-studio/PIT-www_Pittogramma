@@ -117,6 +117,10 @@ _Avoid_: Renaming individual directory types, treating Index as a separate conte
 The editorial Site Settings configuration that controls whether an Index is published and which of its supported public views are enabled. It has one fixed, named configuration section for each Index. Every published Index has at least one enabled view.
 _Avoid_: Deployment-time feature flags, a published Index with no usable view
 
+**Sitemap entry**:
+A canonical, publicly indexable Pittogramma URL listed in the XML sitemap. Sitemap entries include public pages and published editorial content, except individual Designer profiles; they exclude redirects, unavailable Indexes, and URLs set to `noindex`.
+_Avoid_: A list of every route, a Designer profile entry, a redirect URL
+
 Missing Index availability values retain the all-enabled default during the configuration rollout.
 
 An unpublished Index is unavailable at its public route and returns a 404. Permanently retired Indexes may subsequently have their content deleted from Sanity.
@@ -143,6 +147,10 @@ _Avoid_: A separate Publisher Resource page, treating Publishers as a sibling pu
 An external Notion form for proposing a particular Resource type. The currently available Contribution forms propose a Studio / Agency, a Type Foundry, or a Bibliography entry. Each form is optional and is configured from the dedicated Contributions tab in Site Settings; the public Contribute page shows only forms with a configured URL and opens them in a new tab.
 _Avoid_: Project submission form (which has its own `/submit` route), a general-purpose contribution form
 
+**Issue report form**:
+An external Notion form through which a visitor reports an issue with the Pittogramma platform. Its URL is configured in the Footer tab of Site Settings and is offered from the footer.
+_Avoid_: Contribution form, Project submission form, an in-site issue-reporting workflow
+
 **Contribute page**:
 The public `/contribute` page, titled “Contribute to the index,” that lists the currently configured Contribution forms and directs visitors to the appropriate external Notion form. It has no introductory copy. Contribution forms do not appear on individual Resource indexes.
 _Avoid_: Project submission page, repository contribution guide. The footer link uses the same “Contribute to the index” label.
@@ -167,9 +175,9 @@ _Avoid_: Next, future (in user-facing copy)
 The fixed number of editorial and advertising cards shown on the homepage. Projects, Interviews, Journal entries, and Events share one chronological stream, ordered by their publishing date; adding a content type replaces another stream card rather than increasing the card total.
 _Avoid_: Separate per-type homepage feeds, event-date ordering, an expanding homepage card count
 
-**Feed drawer**:
-The header drawer that presents active Sponsored placements and Community items in one chronological timeline. Cards are ordered by Start Date, newest first, with the newest CMS creation time breaking ties. It is separate from the Homepage content stream.
-_Avoid_: Homepage feed, homepage content stream
+**Feed sidebar**:
+The header-opened panel that presents active Sponsored placements and Community items in one chronological timeline. Cards are ordered by Start Date, newest first, with the newest CMS creation time breaking ties. It is separate from the Homepage content stream.
+_Avoid_: Homepage content stream, a Feed content type
 
 **Sponsored placement**:
 A clearly labelled, paid placement for one external partner within Pittogramma's public editorial experience. A placement has a stable identifier, a campaign period, a destination URL, and a defined reporting method. It is separate from a Contributor, which records an organisation's identity and editorial credit.

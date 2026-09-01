@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
 
-export const metadata: Metadata = {
-  title: "Submit your project",
-};
+import { staticPageMetadata } from "@/lib/seo/static-page-metadata";
+
+export const metadata: Metadata = staticPageMetadata(
+  "/submit",
+  "Submit your project",
+  "Submit an emerging graphic design project to Pittogramma."
+);
 
 export default function Page() {
   return (

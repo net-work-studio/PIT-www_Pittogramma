@@ -18,6 +18,7 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     utmCampaign,
     instagramUrl,
     linkedinUrl,
+    issueReportFormUrl,
     studioAgencyContributionUrl,
     typeFoundriesContributionUrl,
     bibliographyContributionUrl,
@@ -405,6 +406,7 @@ const EVENT_FIELDS = `
     _id,
     title,
     slug,
+    publishingDate,
     cardDestination,
     externalUrl,
     type,
@@ -422,19 +424,19 @@ const EVENT_FIELDS = `
 
 // Upcoming/past split uses effective end date: coalesce(dateEnd, dateStart).
 export const FUTURE_EVENTS_QUERY = defineQuery(`
-  *[_type == "event" && defined(slug.current) && coalesce(dateEnd, dateStart) >= $today] | order(dateStart asc) {
+  *[_type == "event" && defined(slug.current) && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today)) && coalesce(dateEnd, dateStart) >= $today] | order(dateStart asc) {
     ${EVENT_FIELDS}
   }
 `);
 
 export const PAST_EVENTS_QUERY = defineQuery(`
-  *[_type == "event" && defined(slug.current) && coalesce(dateEnd, dateStart) < $today] | order(dateStart desc) [$start...$end] {
+  *[_type == "event" && defined(slug.current) && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today)) && coalesce(dateEnd, dateStart) < $today] | order(dateStart desc) [$start...$end] {
     ${EVENT_FIELDS}
   }
 `);
 
 export const PAST_EVENTS_COUNT_QUERY = defineQuery(`
-  count(*[_type == "event" && defined(slug.current) && coalesce(dateEnd, dateStart) < $today])
+  count(*[_type == "event" && defined(slug.current) && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today)) && coalesce(dateEnd, dateStart) < $today])
 `);
 
 export const EVENT_QUERY = defineQuery(`
@@ -442,6 +444,7 @@ export const EVENT_QUERY = defineQuery(`
     _id,
     title,
     slug,
+    publishingDate,
     cardDestination,
     externalUrl,
     type,
@@ -497,6 +500,7 @@ export const PROJECTS_QUERY = defineQuery(`
 export const PROJECTS_FILTERED_QUERY = defineQuery(`
   *[_type == "project"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(publishingDate.date desc) [$start...$end] {
     _id,
@@ -516,16 +520,17 @@ export const PROJECTS_FILTERED_QUERY = defineQuery(`
 export const PROJECTS_COUNT_QUERY = defineQuery(`
   count(*[_type == "project"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ])
 `);
 
 export const PROJECTS_TAGS_QUERY = defineQuery(`
-  *[_type == "tag" && defined(slug.current) && _id in *[_type == "project" && defined(slug.current) && defined(tags)].tags[]._ref] {
+  *[_type == "tag" && defined(slug.current) && _id in *[_type == "project" && defined(slug.current) && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today)) && defined(tags)].tags[]._ref] {
     _id,
     name,
     "slug": slug.current,
-    "count": count(*[_type == "project" && defined(slug.current) && ^._id in tags[]._ref])
+    "count": count(*[_type == "project" && defined(slug.current) && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today)) && ^._id in tags[]._ref])
   }
 `);
 
@@ -545,6 +550,7 @@ function getSortKey(sort: string): SortKey {
 const PROJECTS_FILTERED_OLDEST_QUERY = defineQuery(`
   *[_type == "project"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(publishingDate.date asc) [$start...$end] {
     _id,
@@ -564,6 +570,7 @@ const PROJECTS_FILTERED_OLDEST_QUERY = defineQuery(`
 const PROJECTS_FILTERED_AZ_QUERY = defineQuery(`
   *[_type == "project"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(title asc) [$start...$end] {
     _id,
@@ -583,6 +590,7 @@ const PROJECTS_FILTERED_AZ_QUERY = defineQuery(`
 const PROJECTS_FILTERED_ZA_QUERY = defineQuery(`
   *[_type == "project"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(title desc) [$start...$end] {
     _id,
@@ -602,6 +610,7 @@ const PROJECTS_FILTERED_ZA_QUERY = defineQuery(`
 const JOURNAL_FILTERED_NEWEST_QUERY = defineQuery(`
   *[_type == "journal"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || label in $tags)
   ] | order(publishingDate.date desc) [$start...$end] {
     _id,
@@ -611,7 +620,7 @@ const JOURNAL_FILTERED_NEWEST_QUERY = defineQuery(`
     publishingDate,
     cover { ${COVER_MEDIA_FIELDS} },
     featuredCover { ${COVER_MEDIA_FIELDS} },
-    authors[]{ ...@->{ _id, name }, _key },
+    authors[]{ ...@->{ _id, name, slug }, _key },
     excerpt,
     tags[]->{
       _id,
@@ -624,6 +633,7 @@ const JOURNAL_FILTERED_NEWEST_QUERY = defineQuery(`
 const JOURNAL_FILTERED_OLDEST_QUERY = defineQuery(`
   *[_type == "journal"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || label in $tags)
   ] | order(publishingDate.date asc) [$start...$end] {
     _id,
@@ -633,7 +643,7 @@ const JOURNAL_FILTERED_OLDEST_QUERY = defineQuery(`
     publishingDate,
     cover { ${COVER_MEDIA_FIELDS} },
     featuredCover { ${COVER_MEDIA_FIELDS} },
-    authors[]{ ...@->{ _id, name }, _key },
+    authors[]{ ...@->{ _id, name, slug }, _key },
     excerpt,
     tags[]->{
       _id,
@@ -646,6 +656,7 @@ const JOURNAL_FILTERED_OLDEST_QUERY = defineQuery(`
 const JOURNAL_FILTERED_AZ_QUERY = defineQuery(`
   *[_type == "journal"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || label in $tags)
   ] | order(title asc) [$start...$end] {
     _id,
@@ -668,6 +679,7 @@ const JOURNAL_FILTERED_AZ_QUERY = defineQuery(`
 const JOURNAL_FILTERED_ZA_QUERY = defineQuery(`
   *[_type == "journal"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || label in $tags)
   ] | order(title desc) [$start...$end] {
     _id,
@@ -690,6 +702,7 @@ const JOURNAL_FILTERED_ZA_QUERY = defineQuery(`
 const INTERVIEWS_FILTERED_NEWEST_QUERY = defineQuery(`
   *[_type == "interview"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(publishingDate.date desc) [$start...$end] {
     _id,
@@ -721,6 +734,7 @@ const INTERVIEWS_FILTERED_NEWEST_QUERY = defineQuery(`
 const INTERVIEWS_FILTERED_OLDEST_QUERY = defineQuery(`
   *[_type == "interview"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(publishingDate.date asc) [$start...$end] {
     _id,
@@ -752,6 +766,7 @@ const INTERVIEWS_FILTERED_OLDEST_QUERY = defineQuery(`
 const INTERVIEWS_FILTERED_AZ_QUERY = defineQuery(`
   *[_type == "interview"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(title asc) [$start...$end] {
     _id,
@@ -783,6 +798,7 @@ const INTERVIEWS_FILTERED_AZ_QUERY = defineQuery(`
 const INTERVIEWS_FILTERED_ZA_QUERY = defineQuery(`
   *[_type == "interview"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(title desc) [$start...$end] {
     _id,
@@ -847,6 +863,8 @@ export function getInterviewsFilteredQuery(sort: string): string {
 export const PROJECT_QUERY = defineQuery(`
   *[_type == "project" && slug.current == $slug][0] {
     _id,
+    _updatedAt,
+    publishingDate,
     cover { ${COVER_MEDIA_FIELDS} },
     title,
     slug,
@@ -950,6 +968,7 @@ export const JOURNAL_QUERY = defineQuery(`
 export const JOURNAL_COUNT_QUERY = defineQuery(`
   count(*[_type == "journal"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || label in $tags)
   ])
 `);
@@ -957,12 +976,13 @@ export const JOURNAL_COUNT_QUERY = defineQuery(`
 export const JOURNAL_ARTICLE_QUERY = defineQuery(`
   *[_type == "journal" && slug.current == $slug][0] {
     _id,
+    _updatedAt,
     title,
     slug,
     label,
     publishingDate,
     cover { ${COVER_MEDIA_FIELDS} },
-    authors[]{ ...@->{ _id, name }, _key },
+    authors[]{ ...@->{ _id, name, slug }, _key },
     excerpt,
     tags[]->{
       _id,
@@ -974,6 +994,24 @@ export const JOURNAL_ARTICLE_QUERY = defineQuery(`
       ${JOURNAL_REFERENCE_BLOCK_FIELDS}
     },
     ${SEO_FIELDS}
+  }
+`);
+
+export const JOURNAL_RSS_QUERY = defineQuery(`
+  *[
+    _type == "journal"
+    && defined(slug.current)
+    && defined(publishingDate.date)
+    && publishingDate.date <= $today
+    && seo.metaRobots != "noindex, follow"
+    && seo.metaRobots != "noindex, nofollow"
+  ] | order(publishingDate.date desc) [0...50] {
+    _updatedAt,
+    title,
+    "slug": slug.current,
+    publishingDate,
+    excerpt,
+    authors[]{ ...@->{ _id, name }, _key }
   }
 `);
 
@@ -1008,6 +1046,7 @@ export const INTERVIEWS_QUERY = defineQuery(`
 export const INTERVIEWS_FILTERED_QUERY = defineQuery(`
   *[_type == "interview"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ] | order(publishingDate.date desc) [$start...$end] {
     _id,
@@ -1039,22 +1078,24 @@ export const INTERVIEWS_FILTERED_QUERY = defineQuery(`
 export const INTERVIEWS_COUNT_QUERY = defineQuery(`
   count(*[_type == "interview"
     && defined(slug.current)
+    && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today))
     && ($hasTags == false || count(tags[_ref in $tagIds]) > 0)
   ])
 `);
 
 export const INTERVIEWS_TAGS_QUERY = defineQuery(`
-  array::unique(*[_type == "interview" && defined(tags)].tags[]->{ _id, name, "slug": slug.current })
+  array::unique(*[_type == "interview" && ($includeFuture == true || (defined(publishingDate.date) && publishingDate.date <= $today)) && defined(tags)].tags[]->{ _id, name, "slug": slug.current })
 `);
 
 export const INTERVIEW_QUERY = defineQuery(`
   *[_type == "interview" && slug.current == $slug][0] {
     _id,
+    _updatedAt,
     title,
     slug,
     publishingDate,
     cover { ${COVER_MEDIA_FIELDS} },
-    designersAndProfessionals[]{ ...@->{ _id, name, ${PORTRAIT_FIELDS} }, _key },
+    designersAndProfessionals[]{ ...@->{ _id, name, slug, ${PORTRAIT_FIELDS} }, _key },
     interviewToType,
     studio->{
       _id,

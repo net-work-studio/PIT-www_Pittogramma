@@ -7,13 +7,16 @@ import FilterSheet from "@/components/feat/filter/filter-sheet";
 import LoadMore from "@/components/feat/load-more/load-more";
 import SortDropdown from "@/components/feat/sort/sort-dropdown";
 import { isValidSort } from "@/components/feat/sort/sort-options";
+import JournalPageSkeleton from "@/components/modules/shared/journal-page-skeleton";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import FeaturedHero from "@/components/shared/featured-hero";
 import PageHeader from "@/components/shared/page-header";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import {
   getJournalHeroCover,
   resolveJournalHeroCover,
 } from "@/lib/cover-media-utils";
+import { isPublicationDateReached } from "@/lib/date-utils";
 import { getJournalLabelConfig } from "@/lib/journal-label";
 import { JOURNAL_LABELS } from "@/lib/journal-labels";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
@@ -67,7 +70,7 @@ export default function JournalPage({
   searchParams: Promise<{ tags?: string; page?: string; sort?: string }>;
 }) {
   return (
-    <Suspense>
+    <Suspense fallback={<JournalPageSkeleton />}>
       <DynamicJournalPage searchParams={searchParams} />
     </Suspense>
   );
@@ -107,6 +110,7 @@ async function CachedJournalPage({
   sortParam?: string;
 } & DynamicFetchOptions) {
   "use cache";
+  const today = await getCachedLocalToday();
 
   const sort = isValidSort(sortParam) ? sortParam : "newest";
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
@@ -120,28 +124,35 @@ async function CachedJournalPage({
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
+  const includeFuture = perspective !== "published";
 
   const [{ data: articles }, { data: totalCount }, { data: pageSettings }] =
     await Promise.all([
       sanityFetch({
         query: getJournalFilteredQuery(sort),
-        params: { tags: tagSlugs, hasTags, start, end },
+        params: { end, hasTags, includeFuture, start, tags: tagSlugs, today },
         perspective,
         stega,
       }),
       sanityFetch({
         query: JOURNAL_COUNT_QUERY,
-        params: { tags: tagSlugs, hasTags },
+        params: { hasTags, includeFuture, tags: tagSlugs, today },
         perspective,
         stega,
       }),
       sanityFetch({ query: JOURNAL_PAGE_QUERY, perspective, stega }),
     ]);
 
+  const configuredFeaturedArticle = pageSettings?.featuredArticle;
   const featuredArticle =
-    pageSettings?.featuredArticle ??
-    (articles as JOURNAL_QUERY_RESULT)?.[0] ??
-    null;
+    configuredFeaturedArticle &&
+    (includeFuture ||
+      isPublicationDateReached(
+        configuredFeaturedArticle.publishingDate?.date,
+        today
+      ))
+      ? configuredFeaturedArticle
+      : ((articles as JOURNAL_QUERY_RESULT)?.[0] ?? null);
   const cta = pageSettings?.endOfPageCta;
   const totalPages = Math.max(1, Math.ceil((totalCount ?? 0) / PAGE_SIZE));
   if (page > totalPages) {
@@ -217,7 +228,10 @@ async function CachedJournalPage({
             {totalCount} {totalCount === 1 ? "article" : "articles"}
           </p>
           <div className="flex items-center justify-end gap-2">
-            <FilterSheet availableTags={JOURNAL_LABEL_OPTIONS} label="articles" />
+            <FilterSheet
+              availableTags={JOURNAL_LABEL_OPTIONS}
+              label="articles"
+            />
             <SortDropdown />
           </div>
         </div>
@@ -246,7 +260,8 @@ async function CachedJournalPage({
             buttonText={cta.buttonText}
             externalUrl={cta.externalUrl}
             headline={cta.headline}
-            image={cta.image}
+            imgDark={cta.imgDark}
+            imgLight={cta.imgLight}
             internalLink={cta.internalLink}
             linkType={cta.linkType}
             variant={cta.variant}

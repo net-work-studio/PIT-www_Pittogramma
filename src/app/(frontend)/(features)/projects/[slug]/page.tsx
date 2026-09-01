@@ -7,6 +7,8 @@ import ProjectInfo from "@/components/modules/project/project-info";
 import ShareLinks from "@/components/modules/project/share-links";
 import DiscoverMore from "@/components/modules/shared/discover-more";
 import { JsonLd } from "@/components/seo/json-ld";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
+import { buildLocalToday, isPublicationDateReached } from "@/lib/date-utils";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -23,9 +25,12 @@ import type { PROJECT_QUERY_RESULT } from "@/sanity/types";
 
 export async function generateStaticParams() {
   const projectSlugsQuery = defineQuery(
-    `*[_type == "project" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
+    `*[_type == "project" && defined(slug.current) && defined(publishingDate.date) && publishingDate.date <= $today] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
   );
-  const { data } = await sanityFetchStaticParams({ query: projectSlugsQuery });
+  const { data } = await sanityFetchStaticParams({
+    params: { today: buildLocalToday() },
+    query: projectSlugsQuery,
+  });
   return data as { slug: string }[];
 }
 
@@ -43,8 +48,13 @@ export async function generateMetadata({
     params: { slug },
     perspective,
   });
+  const today = await getCachedLocalToday();
 
-  if (!project) {
+  if (
+    !project ||
+    (perspective === "published" &&
+      !isPublicationDateReached(project.publishingDate?.date, today))
+  ) {
     return {};
   }
 
@@ -81,6 +91,7 @@ async function CachedProjectPage({
   stega,
 }: { slug: string } & DynamicFetchOptions) {
   "use cache";
+  const today = await getCachedLocalToday();
   const { data: project } = await sanityFetch({
     query: PROJECT_QUERY,
     params: { slug },
@@ -88,7 +99,11 @@ async function CachedProjectPage({
     stega,
   });
 
-  if (!project) {
+  if (
+    !project ||
+    (perspective === "published" &&
+      !isPublicationDateReached(project.publishingDate?.date, today))
+  ) {
     notFound();
   }
 
@@ -111,11 +126,22 @@ async function CachedProjectPage({
                 ) => ({
                   "@type": "Person",
                   name: d.name,
+                  url: d.slug?.current
+                    ? `${siteDefaults.baseUrl}/designers/${d.slug.current}`
+                    : undefined,
                 })
               )
             : undefined,
           dateCreated: project.year ? String(project.year) : undefined,
+          dateModified: project._updatedAt,
           image: imageUrl,
+          mainEntityOfPage: {
+            "@id": projectUrl,
+            "@type": "WebPage",
+          },
+          publisher: {
+            "@id": `${siteDefaults.baseUrl}#organization`,
+          },
           url: projectUrl,
         }}
         type="CreativeWork"

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import LegalPageContent from "@/components/modules/legal/legal-page-content";
 import PageHeader from "@/components/shared/page-header";
+import { staticPageMetadata } from "@/lib/seo/static-page-metadata";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
@@ -11,9 +12,11 @@ import {
 } from "@/sanity/lib/live";
 import { SUBMISSION_TERMS_PAGE_QUERY } from "@/sanity/lib/queries";
 
-export const metadata: Metadata = {
-  title: "Project Submission Terms",
-};
+export const metadata: Metadata = staticPageMetadata(
+  "/submission-terms",
+  "Project Submission Terms",
+  "Terms that apply when submitting a project to Pittogramma."
+);
 
 export default async function SubmissionTermsPage() {
   const { isEnabled: isDraftMode } = await draftMode();

@@ -11,7 +11,7 @@ import { isValidSort } from "@/components/feat/sort/sort-options";
 import type SanityImage from "@/components/modules/shared/sanity-image";
 import PageHeader from "@/components/shared/page-header";
 import { buildIndexSlots } from "@/lib/adv-config";
-import { buildLocalToday } from "@/lib/date-utils";
+import { getCachedLocalToday } from "@/lib/cached-date-utils";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 import type { SeoModule } from "@/lib/types/seo";
@@ -86,7 +86,6 @@ async function DynamicProjectsPage({
       sortParam={sp.sort}
       stega={stega}
       tagsParam={sp.tags}
-      today={buildLocalToday()}
     />
   );
 }
@@ -98,14 +97,13 @@ async function CachedProjectsPage({
   sortParam,
   perspective,
   stega,
-  today,
 }: {
   tagsParam?: string;
   pageParam?: string;
   sortParam?: string;
-  today: string;
 } & DynamicFetchOptions) {
   "use cache";
+  const today = await getCachedLocalToday();
 
   const sort = isValidSort(sortParam) ? sortParam : "newest";
   const tagSlugs = tagsParam?.split(",").filter(Boolean) ?? [];
@@ -119,6 +117,7 @@ async function CachedProjectsPage({
   const page = requestedPage;
   const start = 0;
   const end = page * PAGE_SIZE;
+  const includeFuture = perspective !== "published";
   const tagIdsPromise = hasTags
     ? sanityFetch({
         query: TAG_IDS_BY_SLUGS_QUERY,
@@ -130,7 +129,7 @@ async function CachedProjectsPage({
   const projectsPromise = tagIdsPromise.then(({ data: tagIds }) =>
     sanityFetch({
       query: getProjectsFilteredQuery(sort),
-      params: { tagIds, hasTags, start, end },
+      params: { end, hasTags, includeFuture, start, tagIds, today },
       perspective,
       stega,
     })
@@ -138,7 +137,7 @@ async function CachedProjectsPage({
   const totalCountPromise = tagIdsPromise.then(({ data: tagIds }) =>
     sanityFetch({
       query: PROJECTS_COUNT_QUERY,
-      params: { tagIds, hasTags },
+      params: { hasTags, includeFuture, tagIds, today },
       perspective,
       stega,
     })
@@ -153,7 +152,12 @@ async function CachedProjectsPage({
   ] = await Promise.all([
     projectsPromise,
     totalCountPromise,
-    sanityFetch({ query: PROJECTS_TAGS_QUERY, perspective, stega }),
+    sanityFetch({
+      params: { includeFuture, today },
+      perspective,
+      query: PROJECTS_TAGS_QUERY,
+      stega,
+    }),
     sanityFetch({ query: PROJECTS_PAGE_QUERY, perspective, stega }),
     sanityFetch({
       query: INDEX_GOLD_QUERY,
@@ -263,7 +267,8 @@ async function CachedProjectsPage({
             buttonText={cta.buttonText}
             externalUrl={cta.externalUrl}
             headline={cta.headline}
-            image={cta.image}
+            imgDark={cta.imgDark}
+            imgLight={cta.imgLight}
             internalLink={cta.internalLink}
             linkType={cta.linkType}
             variant={cta.variant}
