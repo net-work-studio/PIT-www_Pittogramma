@@ -1,0 +1,83 @@
+src/app/interviews/feed.xml/route.ts
+  s_edfc8e747b7fbe::t_ee6f70785a3701 1-12
+src/lib/seo/static-page-metadata.ts
+  s_edfc8e747b7fbe::t_21fce543b66244 1-28
+src/app/layout.tsx
+  s_edfc8e747b7fbe::t_bec9c924adaa9b 4,44,75
+package.json
+  s_edfc8e747b7fbe::t_c0b8a637b7c450 55-56
+src/app/opengraph-image.tsx
+  s_edfc8e747b7fbe::t_bec9c924adaa9b 1-6,8-13,29-30,35-36,38,41-43
+  s_edfc8e747b7fbe::t_3971938fbd7516 7,14-28,31-34,37,39-40
+src/app/(frontend)/(features)/projects/[slug]/page.tsx
+  s_edfc8e747b7fbe::t_c6549da1081a3f 132-134,139,141-147
+src/app/(frontend)/(support)/submit/page.tsx
+  s_edfc8e747b7fbe::t_21fce543b66244 5-11
+src/app/(frontend)/(info)/cookie-policy/page.tsx
+  s_edfc8e747b7fbe::t_21fce543b66244 7,15-19
+src/app/journal/feed.xml/route.ts
+  s_edfc8e747b7fbe::t_ee6f70785a3701 1-11
+src/app/(frontend)/(info)/submission-terms/page.tsx
+  s_edfc8e747b7fbe::t_21fce543b66244 7,15-19
+src/sanity/lib/queries.ts
+  s_edfc8e747b7fbe::t_bec9c924adaa9b 865,978,1092
+  s_edfc8e747b7fbe::t_c064a35d286bde 984
+  s_edfc8e747b7fbe::t_c6549da1081a3f 622,1097
+  s_edfc8e747b7fbe::t_1495e6eb74284f 999-1016
+  s_edfc8e747b7fbe::t_ad06edcc50b829 645
+src/sanity/types.ts
+  s_edfc8e747b7fbe::t_daaf5c609b611f 1902-1966,10123
+  s_edfc8e747b7fbe::t_3be8f2c4001d40 6404,6458,7238,7241,8017,8575-8590,8811,8814,8843,10159,10169,10174,10178
+  s_edfc8e747b7fbe::t_84ba240d0eb963 6511,6565,10160
+  s_edfc8e747b7fbe::t_eff2656d5e6711 8014,8047,10173
+  s_edfc8e747b7fbe::t_487d9d877eb62c 1967-1968
+src/components/seo/json-ld.tsx
+  s_edfc8e747b7fbe::t_bec9c924adaa9b 26-31
+src/app/projects/feed.xml/route.ts
+  s_edfc8e747b7fbe::t_ee6f70785a3701 1-11
+src/app/feed.xml/route.ts
+  s_edfc8e747b7fbe::t_ee6f70785a3701 1-12
+src/app/(frontend)/(info)/privacy-policy/page.tsx
+  s_edfc8e747b7fbe::t_21fce543b66244 6,14-18
+src/app/(frontend)/(info)/impressum/page.tsx
+  s_edfc8e747b7fbe::t_21fce543b66244 6,14-18
+scripts/check-sitemap.ts
+  s_edfc8e747b7fbe::t_bdf00806c8954e 2-6,33,36,41,46,50-51,54-55,57,60,64,67,92-94
+  s_edfc8e747b7fbe::t_82d5c6f9d3c9c5 68-86
+  s_edfc8e747b7fbe::t_80bb41b15879f9 1,7-32,34-35,37-40,42-45,47-49,52-53,56,58-59,61-63,65-66,87-91
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_edfc8e747b7fbe::t_c6549da1081a3f 129,131-134,137-138,140,142-148,164
+  s_edfc8e747b7fbe::t_ad06edcc50b829 120
+src/components/seo/site-schema.tsx
+  s_edfc8e747b7fbe::t_bec9c924adaa9b 1-58
+src/app/(frontend)/(features)/interviews/[slug]/page.tsx
+  s_edfc8e747b7fbe::t_ad06edcc50b829 121-122
+  s_edfc8e747b7fbe::t_c6549da1081a3f 123,135,137-140,143-144,146,148-154,163
+src/lib/seo/content-rss-feed.ts
+  s_edfc8e747b7fbe::t_874a1578f23c6e 1-113
+src/lib/seo/rss.ts
+  s_edfc8e747b7fbe::t_874a1578f23c6e 18-72
+  s_edfc8e747b7fbe::t_bdf00806c8954e 7
+  s_edfc8e747b7fbe::t_1495e6eb74284f 1-6,8-17
+src/lib/seo/rss.test.ts
+  s_edfc8e747b7fbe::t_64e01a6d114e18 3,14-35
+  s_edfc8e747b7fbe::t_1495e6eb74284f 1-2,4-13,36-37
+src/app/(frontend)/(support)/contribute/page.tsx
+  s_edfc8e747b7fbe::t_21fce543b66244 6,14-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "1adc755e79d5f80c74bde6feda46dd4bf3ecf269",
+  "prompts": {},
+  "sessions": {
+    "s_edfc8e747b7fbe": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a059e0-c528-7443-971f-f312cb6ba986",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
