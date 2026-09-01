@@ -44,6 +44,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build --webpack",
+    "prebuild": "test \"$VERCEL_ENV\" != production || bun run sanity:migrate-cta-images",
     "start": "next start",
     "typecheck": "node_modules/typescript-7/bin/tsc --noEmit",
     "predev": "bun run typegen",
@@ -53,6 +54,7 @@
     "cleanup": "rm -rf node_modules .next",
     "newsletter:validate-map": "bun run scripts/validate-substack-url-map.ts",
     "newsletter:export-preview": "bun run scripts/export-newsletter-preview.ts",
+    "sanity:migrate-cta-images": "bun run scripts/migrate-cta-images.ts",
     "seo:check-sitemap": "bun run scripts/check-sitemap.ts"
   },
   "version": "0.1.0",
