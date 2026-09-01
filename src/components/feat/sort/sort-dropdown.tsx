@@ -43,16 +43,16 @@ export default function SortDropdown() {
         router.push(qs ? `${pathname}?${qs}` : pathname);
       });
     },
-    [router, pathname, searchParams]
+    [pathname, router, searchParams]
   );
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <Button
-            aria-busy={isPending || undefined}
-            aria-label={`Sort: ${currentLabel}`}
+            <Button
+              aria-busy={isPending || undefined}
+              aria-label={isPending ? "Loading…" : `Sort: ${currentLabel}`}
             className="font-mono uppercase max-sm:w-9 max-sm:px-0"
             disabled={isPending}
             title={`Sort: ${currentLabel}`}

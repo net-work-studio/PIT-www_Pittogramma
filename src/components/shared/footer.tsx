@@ -35,6 +35,17 @@ export default async function Footer({
             <li>
               <Link href="/contribute">Contribute to the index</Link>
             </li>
+            {siteSettings?.issueReportFormUrl ? (
+              <li>
+                <a
+                  href={siteSettings.issueReportFormUrl}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Report an issue
+                </a>
+              </li>
+            ) : null}
           </ul>
 
           {/* Connect */}
