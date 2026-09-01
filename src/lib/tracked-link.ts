@@ -10,17 +10,17 @@ export function utmSettingsFromSiteSettings(
   settings: SITE_SETTINGS_QUERY_RESULT | null
 ): UtmSettings {
   return {
-    utmSource: settings?.utmSource,
-    utmMedium: settings?.utmMedium,
     utmCampaign: settings?.utmCampaign,
+    utmMedium: settings?.utmMedium,
+    utmSource: settings?.utmSource,
   };
 }
 
 // Default values used when settings are not provided
 const DEFAULT_UTM: Required<UtmSettings> = {
-  utmSource: "pittogramma",
-  utmMedium: "website",
   utmCampaign: "resources",
+  utmMedium: "website",
+  utmSource: "pittogramma",
 };
 
 /**

@@ -2,30 +2,27 @@ import { PlayIcon } from "@sanity/icons/Play";
 import { defineField, defineType } from "sanity";
 
 export const coverMedia = defineType({
-  type: "object",
-  name: "coverMedia",
-  title: "Cover Media",
   fields: [
     defineField({
-      type: "string",
+      initialValue: "image",
       name: "type",
-      title: "Type",
       options: {
+        layout: "radio",
         list: [
           { title: "Image", value: "image" },
           { title: "Video", value: "video" },
         ],
-        layout: "radio",
       },
-      initialValue: "image",
+      title: "Type",
+      type: "string",
     }),
     defineField({
-      type: "image",
-      name: "image",
-      title: "Image",
       description:
         "Cover image. When type is Video, used as the poster in listings and before playback.",
+      name: "image",
       options: { hotspot: true },
+      title: "Image",
+      type: "image",
       validation: (rule) =>
         rule.custom((value, context) => {
           const parent = context.parent as { type?: string };
@@ -43,20 +40,20 @@ export const coverMedia = defineType({
         }),
     }),
     defineField({
-      type: "boolean",
-      name: "preserveAnimation",
-      title: "Preserve animation",
       description:
         "Enable only for animated GIF or WebP covers that do not play. This bypasses Next.js image optimization while retaining the Sanity crop and hotspot.",
       hidden: ({ parent }) => parent?.type === "video",
       initialValue: false,
+      name: "preserveAnimation",
+      title: "Preserve animation",
+      type: "boolean",
     }),
     defineField({
-      type: "file",
-      name: "video",
-      title: "Video File",
-      options: { accept: "video/*" },
       hidden: ({ parent }) => parent?.type !== "video",
+      name: "video",
+      options: { accept: "video/*" },
+      title: "Video File",
+      type: "file",
       validation: (rule) =>
         rule.custom((value, context) => {
           const parent = context.parent as { type?: string };
@@ -67,14 +64,14 @@ export const coverMedia = defineType({
         }),
     }),
     defineField({
-      type: "string",
       name: "caption",
       title: "Caption / Copyright",
+      type: "string",
     }),
     defineField({
-      type: "string",
       name: "alt",
       title: "Alt",
+      type: "string",
       validation: (rule) =>
         rule
           .custom((value) =>
@@ -83,19 +80,22 @@ export const coverMedia = defineType({
           .warning(),
     }),
   ],
+  name: "coverMedia",
   preview: {
-    select: {
-      type: "type",
-      caption: "caption",
-      image: "image",
-    },
     prepare({ type, caption, image }) {
       const isVideo = type === "video";
       return {
-        title: caption || (isVideo ? "Video" : "Image"),
-        subtitle: isVideo ? "Video" : "Image",
         media: isVideo ? PlayIcon : image,
+        subtitle: isVideo ? "Video" : "Image",
+        title: caption || (isVideo ? "Video" : "Image"),
       };
     },
+    select: {
+      caption: "caption",
+      image: "image",
+      type: "type",
+    },
   },
+  title: "Cover Media",
+  type: "object",
 });

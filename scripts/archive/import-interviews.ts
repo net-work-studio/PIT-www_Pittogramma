@@ -31,10 +31,10 @@ if (!(projectId && dataset && token)) {
 }
 
 const client = createClient({
-  projectId,
-  dataset,
-  token,
   apiVersion: "2025-12-18",
+  dataset,
+  projectId,
+  token,
   useCdn: false,
 });
 
@@ -155,9 +155,9 @@ async function buildUuidMap(
     if (fields.Uuid) {
       const imageFile = file.replace(".it.txt", "");
       map.set(fields.Uuid, {
-        filePath: join(folderPath, imageFile),
-        caption: fields.Caption || "",
         alt: fields.Alt || "",
+        caption: fields.Caption || "",
+        filePath: join(folderPath, imageFile),
       });
     }
   }
@@ -268,20 +268,20 @@ function parseInlineHtml(html: string): PTSpan[] {
     const text = decodeHtmlEntities(part.replace(/<[^>]+>/g, ""));
     if (text) {
       spans.push({
-        _type: "span",
         _key: generateKey(),
-        text,
+        _type: "span",
         marks: [...activeMarks],
+        text,
       });
     }
   }
 
   if (spans.length === 0) {
     spans.push({
-      _type: "span",
       _key: generateKey(),
-      text: "",
+      _type: "span",
       marks: [],
+      text: "",
     });
   }
 
@@ -296,18 +296,18 @@ function htmlToBlocks(html: string, style: string): PTBlock[] {
     const cleaned = decodeHtmlEntities(html.replace(/<[^>]+>/g, "")).trim();
     if (cleaned) {
       blocks.push({
-        _type: "block",
         _key: generateKey(),
-        style,
-        markDefs: [],
+        _type: "block",
         children: [
           {
-            _type: "span",
             _key: generateKey(),
-            text: cleaned,
+            _type: "span",
             marks: [],
+            text: cleaned,
           },
         ],
+        markDefs: [],
+        style,
       });
     }
     return blocks;
@@ -325,11 +325,11 @@ function htmlToBlocks(html: string, style: string): PTBlock[] {
     }
 
     blocks.push({
-      _type: "block",
       _key: generateKey(),
-      style,
-      markDefs: [],
+      _type: "block",
       children: parseInlineHtml(cleaned),
+      markDefs: [],
+      style,
     });
   }
 
@@ -410,18 +410,18 @@ async function transformInterviewContent(
           ).trim();
           if (text) {
             blocks.push({
-              _type: "block",
               _key: generateKey(),
-              style: "normal",
-              markDefs: [],
+              _type: "block",
               children: [
                 {
-                  _type: "span",
                   _key: generateKey(),
-                  text,
+                  _type: "span",
                   marks: [],
+                  text,
                 },
               ],
+              markDefs: [],
+              style: "normal",
             });
           }
           break;
@@ -454,21 +454,21 @@ async function transformInterviewContent(
           const assetRef = await uploadImage(imageMeta.filePath);
 
           const mediaBlock: SingleMediaBlock = {
-            _type: "singleMediaBlock",
             _key: generateKey(),
-            orientation: "landscape",
+            _type: "singleMediaBlock",
             media: {
               _type: "mediaItem",
-              type: "image",
-              caption: block.content.caption || imageMeta.caption || "",
               alt: block.content.alt || imageMeta.alt || "",
+              caption: block.content.caption || imageMeta.caption || "",
+              type: "image",
             },
+            orientation: "landscape",
           };
 
           if (assetRef) {
             mediaBlock.media.image = {
               _type: "image",
-              asset: { _type: "reference", _ref: assetRef },
+              asset: { _ref: assetRef, _type: "reference" },
             };
           }
 
@@ -663,12 +663,12 @@ async function processInterview(
         if (coverAssetRef) {
           coverData = {
             _type: "imageWithMetadata",
+            alt: coverMeta.alt || "",
+            caption: coverMeta.caption || "",
             image: {
               _type: "image",
-              asset: { _type: "reference", _ref: coverAssetRef },
+              asset: { _ref: coverAssetRef, _type: "reference" },
             },
-            caption: coverMeta.caption || "",
-            alt: coverMeta.alt || "",
           };
         }
       }
@@ -689,9 +689,9 @@ async function processInterview(
     for (const name of names) {
       const refId = await resolveOrCreateDesigner(name);
       designerRefs.push({
-        _type: "reference",
-        _ref: refId,
         _key: generateKey(),
+        _ref: refId,
+        _type: "reference",
       });
     }
   }
@@ -701,7 +701,7 @@ async function processInterview(
   const studioName = itFields.Studio || "";
   if (studioName) {
     const refId = await resolveOrCreateStudio(studioName);
-    studioRef = { _type: "reference", _ref: refId };
+    studioRef = { _ref: refId, _type: "reference" };
   }
 
   // Place reference
@@ -709,7 +709,7 @@ async function processInterview(
   const location = itFields.Location || "";
   if (location) {
     const refId = await resolveOrCreatePlace(location);
-    placeRef = { _type: "reference", _ref: refId };
+    placeRef = { _ref: refId, _type: "reference" };
   }
 
   // Reading time
@@ -732,9 +732,9 @@ async function processInterview(
   for (const tagSlug of tagSlugs) {
     const refId = await resolveOrCreateTag(tagSlug);
     tagRefs.push({
-      _type: "reference",
-      _ref: refId,
       _key: generateKey(),
+      _ref: refId,
+      _type: "reference",
     });
   }
 
@@ -770,10 +770,10 @@ async function processInterview(
   const doc: any = {
     _id: docId,
     _type: "interview",
-    title,
-    slug: { _type: "slug", current: slug },
     interviewToType,
     introText,
+    slug: { _type: "slug", current: slug },
+    title,
   };
 
   if (publishingDate) {

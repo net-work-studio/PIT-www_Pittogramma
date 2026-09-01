@@ -24,10 +24,10 @@ if (!(projectId && dataset && token)) {
 }
 
 const client = createClient({
-  projectId,
-  dataset,
-  token,
   apiVersion: "2025-12-18",
+  dataset,
+  projectId,
+  token,
   useCdn: false,
 });
 
@@ -96,10 +96,10 @@ function parseOgData(html: string, baseUrl: string): OgData {
   }
 
   return {
-    title: ogTitle || (titleTag ? decodeHtml(titleTag[1].trim()) : null),
     description: ogDesc || metaDesc,
-    siteName: ogSite,
     imageUrl: ogImage,
+    siteName: ogSite,
+    title: ogTitle || (titleTag ? decodeHtml(titleTag[1].trim()) : null),
   };
 }
 
@@ -119,8 +119,8 @@ async function fetchOgData(url: string): Promise<OgData | null> {
   try {
     const response = await fetch(url, {
       headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; PittogrammaBot/1.0)",
         Accept: "text/html,application/xhtml+xml",
+        "User-Agent": "Mozilla/5.0 (compatible; PittogrammaBot/1.0)",
       },
       redirect: "follow",
       signal: AbortSignal.timeout(10_000),
@@ -170,14 +170,14 @@ async function uploadImage(
 
     return {
       _type: "imageWithMetadata",
+      alt: siteName || "Website cover",
       image: {
         _type: "image",
         asset: {
-          _type: "reference",
           _ref: asset._id,
+          _type: "reference",
         },
       },
-      alt: siteName || "Website cover",
     };
   } catch {
     return null;

@@ -5,24 +5,24 @@ import { SearchIcon } from "@sanity/icons/Search";
 
 export const groups = [
   {
+    icon: DatabaseIcon,
     name: "metadata",
     title: "Metadata",
-    icon: DatabaseIcon,
   },
   {
-    name: "content",
-    title: "Content",
     default: true,
     icon: DocumentTextIcon,
+    name: "content",
+    title: "Content",
   },
   {
+    icon: InfoOutlineIcon,
     name: "og",
     title: "Open Graph Data",
-    icon: InfoOutlineIcon,
   },
   {
+    icon: SearchIcon,
     name: "seo",
     title: "SEO",
-    icon: SearchIcon,
   },
 ];

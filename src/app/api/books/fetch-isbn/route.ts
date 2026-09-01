@@ -61,16 +61,16 @@ function parseBookData(book: GoogleBooksItem): BookData {
   }
 
   return {
-    title: volumeInfo.title ?? null,
     authors: volumeInfo.authors?.join(", ") ?? null,
-    publisher: volumeInfo.publisher ?? null,
-    year,
-    description: volumeInfo.description ?? null,
-    pageCount: volumeInfo.pageCount ?? null,
     categories: volumeInfo.categories ?? null,
-    language: volumeInfo.language ?? null,
-    thumbnailUrl,
+    description: volumeInfo.description ?? null,
     googleBooksId: book.id,
+    language: volumeInfo.language ?? null,
+    pageCount: volumeInfo.pageCount ?? null,
+    publisher: volumeInfo.publisher ?? null,
+    thumbnailUrl,
+    title: volumeInfo.title ?? null,
+    year,
   };
 }
 

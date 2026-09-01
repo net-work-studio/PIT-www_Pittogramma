@@ -6,119 +6,106 @@ import { buildLocalToday } from "@/lib/date-utils";
 import { httpUrlValidation } from "@/sanity/utils/validation";
 
 const COMMUNITY_TYPE_LABELS: Record<string, string> = {
-  projectOnSupport: "Project on Support",
   partnership: "Partnership",
+  projectOnSupport: "Project on Support",
 };
 
 export const community = defineType({
-  type: "document",
-  name: "community",
-  title: "Community",
-  icon: UsersIcon,
-  groups: [
-    {
-      name: "content",
-      title: "Content",
-      icon: DocumentTextIcon,
-      default: true,
-    },
-    { name: "management", title: "Management", icon: CogIcon },
-  ],
   fields: [
     defineField({
-      type: "string",
-      name: "title",
       group: "content",
+      name: "title",
       title: "Title",
+      type: "string",
       validation: (r) => r.required(),
     }),
     defineField({
-      type: "string",
-      name: "type",
       group: "content",
-      title: "Type",
+      name: "type",
       options: {
+        layout: "dropdown",
         list: [
           { title: "Project on Support", value: "projectOnSupport" },
           { title: "Partnership", value: "partnership" },
         ],
-        layout: "dropdown",
       },
+      title: "Type",
+      type: "string",
       validation: (r) => r.required(),
     }),
     defineField({
-      type: "coverMedia",
-      name: "cover",
-      title: "Cover",
       description: "Portrait image (3:4 ratio recommended).",
       group: "content",
+      name: "cover",
+      title: "Cover",
+      type: "coverMedia",
       validation: (r) => r.required(),
     }),
     defineField({
-      type: "array",
-      name: "description",
-      title: "Description",
       group: "content",
+      name: "description",
       of: [
         {
-          type: "block",
-          styles: [{ title: "Normal", value: "normal" }],
           lists: [],
           marks: {
+            annotations: [
+              {
+                fields: [
+                  {
+                    name: "href",
+                    title: "URL",
+                    type: "url",
+                    validation: httpUrlValidation,
+                  },
+                ],
+                name: "link",
+                title: "Link",
+                type: "object",
+              },
+            ],
             decorators: [
               { title: "Bold", value: "strong" },
               { title: "Italic", value: "em" },
               { title: "Underline", value: "underline" },
             ],
-            annotations: [
-              {
-                name: "link",
-                type: "object",
-                title: "Link",
-                fields: [
-                  {
-                    name: "href",
-                    type: "url",
-                    title: "URL",
-                    validation: httpUrlValidation,
-                  },
-                ],
-              },
-            ],
           },
+          styles: [{ title: "Normal", value: "normal" }],
+          type: "block",
         },
       ],
+      title: "Description",
+      type: "array",
     }),
     defineField({
-      type: "url",
+      group: "content",
       name: "externalUrl",
       title: "External URL",
-      group: "content",
+      type: "url",
       validation: (r) => [r.required(), httpUrlValidation(r)],
     }),
     defineField({
-      type: "reference",
-      name: "partner",
-      title: "Partner",
-      group: "management",
       description:
         'Optional. When set, the card byline reads "In partnership with [Name]"; otherwise "Community".',
+      group: "management",
+      name: "partner",
+      title: "Partner",
       to: [{ type: "contributor" }],
+      type: "reference",
     }),
     defineField({
-      type: "date",
+      group: "management",
       name: "dateStart",
       title: "Start Date",
-      group: "management",
+      type: "date",
       validation: (r) => r.required(),
     }),
     defineField({
-      type: "date",
-      name: "dateEnd",
-      title: "End Date",
-      group: "management",
       description:
         "Optional. Leave empty for evergreen community items (visible until manually unpublished).",
+      group: "management",
+      name: "dateEnd",
+      title: "End Date",
+      type: "date",
       validation: (r) => [
         r.custom((dateEnd, context) => {
           const dateStart = (context.document as { dateStart?: string })
@@ -145,25 +132,38 @@ export const community = defineType({
       ],
     }),
   ],
+  groups: [
+    {
+      default: true,
+      icon: DocumentTextIcon,
+      name: "content",
+      title: "Content",
+    },
+    { icon: CogIcon, name: "management", title: "Management" },
+  ],
+  icon: UsersIcon,
+  name: "community",
   // Community items are deliberately uncapped — all active items display in
   // the feed (unlike advs which are tier-capped). Date filtering in
   // FEED_COMMUNITY_QUERY handles visibility.
   preview: {
-    select: {
-      title: "title",
-      type: "type",
-      media: "cover",
-      dateStart: "dateStart",
-      dateEnd: "dateEnd",
-    },
     prepare({ title, type, media, dateStart, dateEnd }) {
       const typeLabel = type ? (COMMUNITY_TYPE_LABELS[type] ?? type) : "—";
       return {
-        title,
-        subtitle: typeLabel,
         description: `${dateStart ?? "?"} → ${dateEnd ?? "ongoing"}`,
         media,
+        subtitle: typeLabel,
+        title,
       };
     },
+    select: {
+      dateEnd: "dateEnd",
+      dateStart: "dateStart",
+      media: "cover",
+      title: "title",
+      type: "type",
+    },
   },
+  title: "Community",
+  type: "document",
 });

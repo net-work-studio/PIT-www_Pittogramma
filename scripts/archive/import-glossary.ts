@@ -28,10 +28,10 @@ if (!(projectId && dataset && token)) {
 }
 
 const client = createClient({
-  projectId,
-  dataset,
-  token,
   apiVersion: "2025-12-18",
+  dataset,
+  projectId,
+  token,
   useCdn: false,
 });
 
@@ -138,8 +138,8 @@ async function main(): Promise<void> {
     docs.push({
       _id: id,
       _type: "glossary",
-      name: capitalize(name),
       description,
+      name: capitalize(name),
     });
   }
 

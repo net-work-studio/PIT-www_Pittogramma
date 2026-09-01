@@ -9,9 +9,9 @@ export type AdvTier = "gold" | "silver" | "bronze";
 // dateStart asc and silently dropped past the cap, per the plan's
 // "first-booked-first-served, surplus simply doesn't render" rule.
 export const TIER_CAPS: Record<AdvTier, number> = {
+  bronze: 5,
   gold: 1,
   silver: 2,
-  bronze: 5,
 };
 
 // Tier priority used for both feed dialog concatenation order and the FEED_QUERY
@@ -40,12 +40,12 @@ export function buildIndexSlots<T>(
   goldPosition: number = INDEX_GOLD_POSITION
 ): IndexSlot<T>[] {
   const slots: IndexSlot<T>[] = editorial.map((item) => ({
-    kind: "editorial",
     item,
+    kind: "editorial",
   }));
   if (gold) {
     const insertAt = Math.min(goldPosition - 1, slots.length);
-    slots.splice(insertAt, 0, { kind: "adv", item: gold });
+    slots.splice(insertAt, 0, { item: gold, kind: "adv" });
   }
   return slots;
 }

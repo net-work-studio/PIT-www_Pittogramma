@@ -82,7 +82,9 @@ function BookListItem({ book, onSelect }: BookCardListProps) {
       id={getResourceTargetElementId(book._id)}
       mobileContent={
         <ResourceMobileCard
-          badge={book.tags?.length ? <TagsDisplay tags={book.tags} /> : undefined}
+          badge={
+            book.tags?.length ? <TagsDisplay tags={book.tags} /> : undefined
+          }
           fields={[
             { label: "Author/s", value: getAuthors(book.authors) },
             { label: "Publisher", value: book.publisher?.name || "-" },
@@ -109,9 +111,7 @@ function BookListItem({ book, onSelect }: BookCardListProps) {
           {book.name}
         </button>
       </span>
-      <span className="col-span-3">
-        {getAuthors(book.authors)}
-      </span>
+      <span className="col-span-3">{getAuthors(book.authors)}</span>
       <span className="col-span-2 max-md:hidden">
         {book.publisher?.name || "-"}
       </span>
@@ -199,7 +199,7 @@ function BibliographyListContent({
         </p>
       ) : (
         <>
-              <div className="sticky top-0 z-10 bg-background pt-16 max-md:static max-md:pt-4">
+          <div className="sticky top-0 z-10 bg-background pt-16 max-md:static max-md:pt-4">
             <div className="pb-2.5" />
             <ul className="grid grid-cols-12 gap-2.5 border-b px-2.5 pb-2 font-mono text-muted-foreground text-xs uppercase max-md:hidden">
               {LIST_COLUMNS.map((column) => {

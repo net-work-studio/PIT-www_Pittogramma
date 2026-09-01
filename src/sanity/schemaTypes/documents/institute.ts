@@ -5,21 +5,17 @@ const minYearFoundation = 1000;
 const maxYearFoundation = 2500;
 
 export const institute = defineType({
-  type: "document",
-  name: "institute",
-  title: "Institute",
-  icon: HomeIcon,
   fields: [
     defineField({
-      type: "string",
       name: "name",
       title: "Name",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "number",
       name: "yearFoundation",
       title: "Since",
+      type: "number",
       validation: (e) =>
         e
           .required()
@@ -35,30 +31,34 @@ export const institute = defineType({
           }),
     }),
     defineField({
-      type: "array",
       name: "languages",
-      title: "Languages",
       of: [
         defineArrayMember({
-          type: "reference",
           name: "language",
           title: "Language",
           to: [{ type: "language" }],
+          type: "reference",
         }),
       ],
+      title: "Languages",
+      type: "array",
     }),
     defineField({
-      type: "reference",
       name: "place",
       title: "Place",
       to: [{ type: "place" }],
+      type: "reference",
       validation: (e) => e.required(),
     }),
-    defineField({ type: "string", name: "address", title: "Address" }),
+    defineField({ name: "address", title: "Address", type: "string" }),
     defineField({
-      type: "socialLinks",
       name: "socialLinks",
       title: "Social Links",
+      type: "socialLinks",
     }),
   ],
+  icon: HomeIcon,
+  name: "institute",
+  title: "Institute",
+  type: "document",
 });

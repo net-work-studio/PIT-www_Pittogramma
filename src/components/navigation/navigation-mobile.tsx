@@ -31,20 +31,20 @@ export function NavigationMobile({ resources }: { resources: Resource[] }) {
   const menuItems: MenuItem[] = useMemo(
     () => [
       {
-        label: "Features",
         children: [
           { href: "/projects", label: "Projects" },
           { href: "/interviews", label: "Interviews" },
           { href: "/designers", label: "Designers" },
         ],
+        label: "Features",
       },
       {
-        label: "Index",
         children: resources.map((r) => ({ href: r.href, label: r.label })),
+        label: "Index",
       },
-      { label: "Journal", href: "/journal" },
-      { label: "Events", href: "/events" },
-      { label: "About", href: "/about" },
+      { href: "/journal", label: "Journal" },
+      { href: "/events", label: "Events" },
+      { href: "/about", label: "About" },
     ],
     [resources]
   );

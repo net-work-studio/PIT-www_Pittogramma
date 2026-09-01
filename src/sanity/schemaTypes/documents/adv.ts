@@ -19,117 +19,103 @@ type AdvValidationDoc = Pick<Adv, "_id"> &
   Partial<Pick<Adv, "tier" | "dateStart" | "dateEnd">>;
 
 export const adv = defineType({
-  type: "document",
-  name: "adv",
-  title: "ADV",
-  icon: BoltIcon,
-  groups: [
-    {
-      name: "content",
-      title: "Content",
-      icon: DocumentTextIcon,
-      default: true,
-    },
-    { name: "management", title: "Management", icon: CogIcon },
-  ],
   fields: [
     defineField({
-      type: "string",
-      name: "title",
-      group: "content",
-      title: "Title",
       description: "Campaign label (e.g. 'Monotype Spring 2026 Banner')",
+      group: "content",
+      name: "title",
+      title: "Title",
+      type: "string",
       validation: (r) => r.required(),
     }),
     defineField({
-      type: "coverMedia",
-      name: "cover",
-      title: "Cover",
       description: "Landscape image (4:3) — used in the home grid.",
       group: "content",
+      name: "cover",
+      title: "Cover",
+      type: "coverMedia",
       validation: (r) => r.required(),
     }),
     defineField({
-      type: "image",
-      name: "coverPortrait",
-      title: "Cover Portrait",
       description:
         "Optional portrait image (3:4) for the feed. Falls back to the landscape cover when empty.",
       group: "content",
+      name: "coverPortrait",
       options: { hotspot: true },
+      title: "Cover Portrait",
+      type: "image",
     }),
     defineField({
-      type: "array",
-      name: "description",
-      title: "Description",
       group: "content",
+      name: "description",
       of: [
         {
-          type: "block",
-          styles: [{ title: "Normal", value: "normal" }],
           lists: [],
           marks: {
+            annotations: [
+              {
+                fields: [
+                  {
+                    name: "href",
+                    title: "URL",
+                    type: "url",
+                    validation: httpUrlValidation,
+                  },
+                ],
+                name: "link",
+                title: "Link",
+                type: "object",
+              },
+            ],
             decorators: [
               { title: "Bold", value: "strong" },
               { title: "Italic", value: "em" },
               { title: "Underline", value: "underline" },
             ],
-            annotations: [
-              {
-                name: "link",
-                type: "object",
-                title: "Link",
-                fields: [
-                  {
-                    name: "href",
-                    type: "url",
-                    title: "URL",
-                    validation: httpUrlValidation,
-                  },
-                ],
-              },
-            ],
           },
+          styles: [{ title: "Normal", value: "normal" }],
+          type: "block",
         },
       ],
+      title: "Description",
+      type: "array",
     }),
     defineField({
-      type: "url",
+      group: "content",
       name: "externalUrl",
       title: "External URL",
-      group: "content",
+      type: "url",
       validation: (r) => [r.required(), httpUrlValidation(r)],
     }),
     defineField({
-      type: "string",
-      name: "tier",
-      title: "Tier",
       group: "management",
+      name: "tier",
       options: {
+        layout: "dropdown",
         list: [
           { title: "Bronze", value: "bronze" },
           { title: "Silver", value: "silver" },
           { title: "Gold", value: "gold" },
         ],
-        layout: "dropdown",
       },
+      title: "Tier",
+      type: "string",
       validation: (r) => r.required(),
     }),
     defineField({
-      type: "date",
+      group: "management",
       name: "dateStart",
       title: "Start Date",
-      group: "management",
+      type: "date",
       validation: (r) => r.required(),
     }),
     defineField({
-      type: "number",
-      name: "duration",
-      title: "Duration (days)",
-      group: "management",
+      components: { input: DurationInput },
       description:
         "Number of days from the start date. The end date is auto-filled and can be manually overridden afterwards.",
+      group: "management",
       initialValue: 30,
+      name: "duration",
       options: {
         list: [
           { title: "30 days", value: 30 },
@@ -137,16 +123,17 @@ export const adv = defineType({
           { title: "90 days", value: 90 },
         ],
       },
-      components: { input: DurationInput },
+      title: "Duration (days)",
+      type: "number",
       validation: (r) => r.required().positive(),
     }),
     defineField({
-      type: "date",
-      name: "dateEnd",
-      title: "End Date",
-      group: "management",
       description:
         "Auto-computed from start date + duration. Override only for irregular extensions.",
+      group: "management",
+      name: "dateEnd",
+      title: "End Date",
+      type: "date",
       validation: (r) => [
         r.required().custom((dateEnd, context) => {
           const dateStart = (context.document as { dateStart?: string })
@@ -169,14 +156,44 @@ export const adv = defineType({
       ],
     }),
     defineField({
-      type: "reference",
+      group: "management",
       name: "sponsor",
       title: "Sponsor",
-      group: "management",
       to: [{ type: "contributor" }],
+      type: "reference",
       validation: (r) => r.required(),
     }),
   ],
+  groups: [
+    {
+      default: true,
+      icon: DocumentTextIcon,
+      name: "content",
+      title: "Content",
+    },
+    { icon: CogIcon, name: "management", title: "Management" },
+  ],
+  icon: BoltIcon,
+  name: "adv",
+  preview: {
+    prepare({ title, tier, media, dateStart, dateEnd }) {
+      return {
+        description: `${dateStart ?? "?"} → ${dateEnd ?? "?"}`,
+        media,
+        subtitle: tier?.toUpperCase() ?? "—",
+        title,
+      };
+    },
+    select: {
+      dateEnd: "dateEnd",
+      dateStart: "dateStart",
+      media: "cover",
+      tier: "tier",
+      title: "title",
+    },
+  },
+  title: "ADV",
+  type: "document",
   // Document-level soft warnings: tier-window overlap with another active ADV
   // and tier capacity exceeded. Both are non-blocking — the document still
   // publishes when over capacity; the frontend silently drops the surplus.
@@ -215,7 +232,7 @@ export const adv = defineType({
         ] | order(dateStart asc) {
           _id, title, dateEnd
         }`,
-          { publishedId, draftId, tier, dateStart, dateEnd }
+          { dateEnd, dateStart, draftId, publishedId, tier }
         );
 
         if (conflicts.length === 0) {
@@ -235,21 +252,4 @@ export const adv = defineType({
         return `Overlaps with "${conflictTitle}" (ends ${first.dateEnd}) at the same tier. Earlier dateStart wins; this campaign won't display in that slot until the other ends.`;
       })
       .warning(),
-  preview: {
-    select: {
-      title: "title",
-      tier: "tier",
-      media: "cover",
-      dateStart: "dateStart",
-      dateEnd: "dateEnd",
-    },
-    prepare({ title, tier, media, dateStart, dateEnd }) {
-      return {
-        title,
-        subtitle: tier?.toUpperCase() ?? "—",
-        description: `${dateStart ?? "?"} → ${dateEnd ?? "?"}`,
-        media,
-      };
-    },
-  },
 });

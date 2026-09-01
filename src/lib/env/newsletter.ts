@@ -51,12 +51,12 @@ export function getBrevoNewsletterConfig():
   }
 
   return {
-    configured: true,
     config: {
       apiKey: apiKey as string,
-      websiteListId,
-      doiTemplateId,
       doiRedirectUrl: doiRedirectUrl as string,
+      doiTemplateId,
+      websiteListId,
     },
+    configured: true,
   };
 }

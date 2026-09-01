@@ -10,12 +10,12 @@ const QuestionStyle = (props: { children: React.ReactNode }) =>
     "span",
     {
       style: {
-        fontWeight: 600,
-        color: "#1a1a1a",
-        paddingLeft: "0em",
         borderTop: "1px solid #1a1a1a",
-        paddingTop: "0.75em",
+        color: "#1a1a1a",
         display: "block",
+        fontWeight: 600,
+        paddingLeft: "0em",
+        paddingTop: "0.75em",
       },
     },
     props.children
@@ -26,104 +26,87 @@ const AnswerStyle = (props: { children: React.ReactNode }) =>
     "span",
     {
       style: {
-        fontWeight: 400,
         color: "#666",
-        paddingBottom: "2.5em",
         display: "block",
+        fontWeight: 400,
+        paddingBottom: "2.5em",
       },
     },
     props.children
   );
 
 export const interview = defineType({
-  type: "document",
-  name: "interview",
-  title: "Interview",
-  icon: CommentIcon,
-  groups,
-  orderings: [
-    {
-      title: "Publishing Date, Newest",
-      name: "publishingDateDesc",
-      by: [{ field: "publishingDate.date", direction: "desc" }],
-    },
-    {
-      title: "Publishing Date, Oldest",
-      name: "publishingDateAsc",
-      by: [{ field: "publishingDate.date", direction: "asc" }],
-    },
-  ],
   fields: [
     defineField({
-      type: "string",
+      group: "metadata",
       name: "title",
       title: "Title",
-      group: "metadata",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "slug",
-      name: "slug",
-      title: "Slug",
       group: "metadata",
+      name: "slug",
       options: {
         source: "title",
       },
+      title: "Slug",
+      type: "slug",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "publishingDate",
+      group: "metadata",
       name: "publishingDate",
       title: "Publishing Date",
-      group: "metadata",
+      type: "publishingDate",
     }),
     defineField({
-      type: "coverMedia",
+      group: "content",
       name: "cover",
       title: "Cover",
+      type: "coverMedia",
       validation: (e) => e.required(),
-      group: "content",
     }),
     defineField({
-      type: "string",
-      name: "interviewToType",
-      title: "Interview To",
       group: "content",
+      initialValue: "designers",
+      name: "interviewToType",
       options: {
+        layout: "radio",
         list: [
           { title: "Designers", value: "designers" },
           { title: "Studio", value: "studio" },
           { title: "Type Foundry", value: "typeFoundry" },
         ],
-        layout: "radio",
       },
-      initialValue: "designers",
+      title: "Interview To",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "array",
-      name: "designersAndProfessionals",
-      title: "Designers and Professionals",
       group: "content",
+      name: "designersAndProfessionals",
       of: [
         defineArrayMember({
-          type: "reference",
-          to: [{ type: "person" }],
           options: {
             filter: '"designer" in roles || "professional" in roles',
           },
+          to: [{ type: "person" }],
+          type: "reference",
         }),
       ],
+      title: "Designers and Professionals",
+      type: "array",
       validation: (rule) =>
         rule.unique().error("You cannot add the same person twice"),
     }),
     defineField({
-      type: "reference",
+      group: "content",
+      hidden: ({ parent }) => parent?.interviewToType !== "studio",
       name: "studio",
       title: "Studio",
-      group: "content",
       to: [{ type: "studio" }],
-      hidden: ({ parent }) => parent?.interviewToType !== "studio",
+      type: "reference",
       validation: (e) =>
         e.custom((value, context) => {
           const parent = context.parent as { interviewToType?: string };
@@ -134,12 +117,12 @@ export const interview = defineType({
         }),
     }),
     defineField({
-      type: "reference",
+      group: "content",
+      hidden: ({ parent }) => parent?.interviewToType !== "typeFoundry",
       name: "typeFoundry",
       title: "Type Foundry",
-      group: "content",
       to: [{ type: "typeFoundry" }],
-      hidden: ({ parent }) => parent?.interviewToType !== "typeFoundry",
+      type: "reference",
       validation: (e) =>
         e.custom((value, context) => {
           const parent = context.parent as { interviewToType?: string };
@@ -150,51 +133,49 @@ export const interview = defineType({
         }),
     }),
     defineField({
-      type: "reference",
+      group: "content",
       name: "place",
       title: "Place",
-      group: "content",
       to: [{ type: "place" }],
+      type: "reference",
     }),
     defineField({
-      type: "number",
-      name: "readingTime",
-      title: "Reading Time",
-      group: "content",
+      components: { input: InterviewReadingTimeInput },
       description:
         "Calculated live from the intro, interview text, quotes, and media captions at 200 words per minute.",
-      components: { input: InterviewReadingTimeInput },
+      group: "content",
+      name: "readingTime",
+      title: "Reading Time",
+      type: "number",
       validation: (e) => e.min(1).integer(),
     }),
     tagsField("content"),
     defineField({
-      type: "text",
+      group: "content",
       name: "introText",
       title: "Intro Text",
-      group: "content",
+      type: "text",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "array",
-      name: "interview",
-      title: "Interview",
       group: "content",
+      name: "interview",
       of: [
         defineArrayMember({
-          type: "block",
-          styles: [
-            { title: "Question", value: "normal", component: QuestionStyle },
-            { title: "Answer", value: "answer", component: AnswerStyle },
-            { title: "Quote", value: "blockquote" },
-          ],
           lists: [{ title: "Bullet", value: "bullet" }],
           marks: {
+            annotations: [],
             decorators: [
               { title: "Strong", value: "strong" },
               { title: "Emphasis", value: "em" },
             ],
-            annotations: [],
           },
+          styles: [
+            { component: QuestionStyle, title: "Question", value: "normal" },
+            { component: AnswerStyle, title: "Answer", value: "answer" },
+            { title: "Quote", value: "blockquote" },
+          ],
+          type: "block",
         }),
 
         defineArrayMember({ type: "singleMediaBlock" }),
@@ -202,26 +183,45 @@ export const interview = defineType({
         defineArrayMember({ type: "threeSideBySideMediaBlock" }),
         defineArrayMember({ type: "gridFourMediaBlock" }),
       ],
+      title: "Interview",
+      type: "array",
     }),
     defineField({
-      type: "seoModule",
+      group: "seo",
       name: "seo",
       title: "SEO",
-      group: "seo",
+      type: "seoModule",
     }),
   ],
-  preview: {
-    select: {
-      title: "title",
-      media: "cover.image",
-      date: "publishingDate.date",
+  groups,
+  icon: CommentIcon,
+  name: "interview",
+  orderings: [
+    {
+      by: [{ direction: "desc", field: "publishingDate.date" }],
+      name: "publishingDateDesc",
+      title: "Publishing Date, Newest",
     },
+    {
+      by: [{ direction: "asc", field: "publishingDate.date" }],
+      name: "publishingDateAsc",
+      title: "Publishing Date, Oldest",
+    },
+  ],
+  preview: {
     prepare({ title, media, date }) {
       return {
-        title,
         media,
         subtitle: date,
+        title,
       };
     },
+    select: {
+      date: "publishingDate.date",
+      media: "cover.image",
+      title: "title",
+    },
   },
+  title: "Interview",
+  type: "document",
 });

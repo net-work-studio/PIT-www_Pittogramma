@@ -40,17 +40,17 @@ const MAX_PAGE = 20;
 export async function generateMetadata(): Promise<Metadata> {
   const { perspective } = await getDynamicFetchOptions();
   const { data: page } = await sanityFetchMetadata({
-    query: PROJECTS_PAGE_QUERY,
     perspective,
+    query: PROJECTS_PAGE_QUERY,
   });
 
   return mapSanityToMetadata({
+    baseUrl: siteDefaults.baseUrl,
     page: {
-      title: page?.title ?? "Projects",
       description: page?.introText,
       seo: page?.seo as SeoModule | undefined,
+      title: page?.title ?? "Projects",
     },
-    baseUrl: siteDefaults.baseUrl,
     path: "/projects",
     siteDefaults,
   });
@@ -120,25 +120,25 @@ async function CachedProjectsPage({
   const includeFuture = perspective !== "published";
   const tagIdsPromise = hasTags
     ? sanityFetch({
-        query: TAG_IDS_BY_SLUGS_QUERY,
         params: { slugs: tagSlugs },
         perspective,
+        query: TAG_IDS_BY_SLUGS_QUERY,
         stega,
       })
     : Promise.resolve({ data: [] as string[] });
   const projectsPromise = tagIdsPromise.then(({ data: tagIds }) =>
     sanityFetch({
-      query: getProjectsFilteredQuery(sort),
       params: { end, hasTags, includeFuture, start, tagIds, today },
       perspective,
+      query: getProjectsFilteredQuery(sort),
       stega,
     })
   );
   const totalCountPromise = tagIdsPromise.then(({ data: tagIds }) =>
     sanityFetch({
-      query: PROJECTS_COUNT_QUERY,
       params: { hasTags, includeFuture, tagIds, today },
       perspective,
+      query: PROJECTS_COUNT_QUERY,
       stega,
     })
   );
@@ -158,11 +158,11 @@ async function CachedProjectsPage({
       query: PROJECTS_TAGS_QUERY,
       stega,
     }),
-    sanityFetch({ query: PROJECTS_PAGE_QUERY, perspective, stega }),
+    sanityFetch({ perspective, query: PROJECTS_PAGE_QUERY, stega }),
     sanityFetch({
-      query: INDEX_GOLD_QUERY,
       params: { today },
       perspective,
+      query: INDEX_GOLD_QUERY,
       stega,
     }),
   ]);

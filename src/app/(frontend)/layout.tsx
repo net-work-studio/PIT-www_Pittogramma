@@ -107,8 +107,8 @@ async function FrontendContent({ children }: { children: React.ReactNode }) {
       ) : null}
       {shouldTrack ? (
         <Script
-          data-domains="pittogramma.xyz,www.pittogramma.xyz"
           data-do-not-track="true"
+          data-domains="pittogramma.xyz,www.pittogramma.xyz"
           data-website-id={umamiWebsiteId}
           src="https://umami.net-work.studio/script.js"
           strategy="afterInteractive"

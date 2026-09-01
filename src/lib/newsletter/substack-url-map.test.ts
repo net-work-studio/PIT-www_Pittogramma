@@ -5,13 +5,13 @@ import { validateSubstackUrlMapStructure } from "@/lib/newsletter/substack-url-m
 describe("validateSubstackUrlMapStructure", () => {
   test("accepts valid map with fallback", () => {
     const map = validateSubstackUrlMapStructure({
+      fallbackDestination: "/journal",
       mappings: [
         {
-          source: "/p/example-post",
           destination: "/journal/example-post",
+          source: "/p/example-post",
         },
       ],
-      fallbackDestination: "/journal",
     });
 
     expect(map.mappings).toHaveLength(1);
@@ -20,8 +20,8 @@ describe("validateSubstackUrlMapStructure", () => {
 
   test("accepts empty mappings", () => {
     const map = validateSubstackUrlMapStructure({
-      mappings: [],
       fallbackDestination: "/journal",
+      mappings: [],
     });
 
     expect(map.mappings).toEqual([]);
@@ -31,8 +31,8 @@ describe("validateSubstackUrlMapStructure", () => {
     expect(() =>
       validateSubstackUrlMapStructure({
         mappings: [
-          { source: "/p/a", destination: "/journal/a" },
-          { source: "/p/a", destination: "/journal/b" },
+          { destination: "/journal/a", source: "/p/a" },
+          { destination: "/journal/b", source: "/p/a" },
         ],
       })
     ).toThrow("duplicate source /p/a");
@@ -41,7 +41,7 @@ describe("validateSubstackUrlMapStructure", () => {
   test("rejects non-path source", () => {
     expect(() =>
       validateSubstackUrlMapStructure({
-        mappings: [{ source: "p/a", destination: "/journal/a" }],
+        mappings: [{ destination: "/journal/a", source: "p/a" }],
       })
     ).toThrow("source must start with /");
   });
@@ -49,7 +49,7 @@ describe("validateSubstackUrlMapStructure", () => {
   test("rejects non-path destination", () => {
     expect(() =>
       validateSubstackUrlMapStructure({
-        mappings: [{ source: "/p/a", destination: "journal/a" }],
+        mappings: [{ destination: "journal/a", source: "/p/a" }],
       })
     ).toThrow("destination must start with /");
   });
@@ -57,8 +57,8 @@ describe("validateSubstackUrlMapStructure", () => {
   test("rejects invalid fallback destination", () => {
     expect(() =>
       validateSubstackUrlMapStructure({
-        mappings: [],
         fallbackDestination: "journal",
+        mappings: [],
       })
     ).toThrow("fallbackDestination must start with /");
   });

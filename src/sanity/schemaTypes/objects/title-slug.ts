@@ -1,21 +1,21 @@
 import { defineField, defineType } from "sanity";
 
 export const titleSlug = defineType({
-  type: "object",
-  name: "titleSlug",
-  title: "TitleSlug",
   fields: [
     defineField({
-      type: "string",
       name: "title",
       title: "Title",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "slug",
       name: "slug",
       title: "Slug",
+      type: "slug",
       validation: (e) => e.required(),
     }),
   ],
+  name: "titleSlug",
+  title: "TitleSlug",
+  type: "object",
 });

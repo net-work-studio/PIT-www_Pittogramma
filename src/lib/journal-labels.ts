@@ -6,7 +6,7 @@ export interface JournalLabelOption {
 }
 
 export const JOURNAL_LABELS: JournalLabelOption[] = [
-  { value: "articles", title: "Articles" },
-  { value: "diary", title: "Diary" },
-  { value: "baseline", title: "Baseline" },
+  { title: "Articles", value: "articles" },
+  { title: "Diary", value: "diary" },
+  { title: "Baseline", value: "baseline" },
 ];

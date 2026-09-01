@@ -5,8 +5,10 @@ import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity/types";
 
 const portableComponents: PortableTextComponents = {
   block: {
-    normal: ({ children }) => (
-      <p className="mb-4 text-base leading-relaxed lg:text-xl">{children}</p>
+    blockquote: ({ children }) => (
+      <blockquote className="my-8 text-2xl leading-tight lg:text-[2.5rem] lg:leading-tight">
+        {children}
+      </blockquote>
     ),
     h2: ({ children }) => (
       <h2 className="mt-10 mb-4 text-xl leading-tight lg:text-2xl">
@@ -16,10 +18,8 @@ const portableComponents: PortableTextComponents = {
     h3: ({ children }) => (
       <h3 className="mt-8 mb-3 text-lg leading-tight lg:text-xl">{children}</h3>
     ),
-    blockquote: ({ children }) => (
-      <blockquote className="my-8 text-2xl leading-tight lg:text-[2.5rem] lg:leading-tight">
-        {children}
-      </blockquote>
+    normal: ({ children }) => (
+      <p className="mb-4 text-base leading-relaxed lg:text-xl">{children}</p>
     ),
   },
   marks: {
@@ -62,7 +62,7 @@ export default function AboutContent({ content }: AboutContentProps) {
 
   function flushText() {
     if (textBuffer.length > 0 && textStartKey) {
-      groups.push({ kind: "text", key: textStartKey, blocks: textBuffer });
+      groups.push({ blocks: textBuffer, key: textStartKey, kind: "text" });
       textBuffer = [];
       textStartKey = null;
     }
@@ -77,7 +77,7 @@ export default function AboutContent({ content }: AboutContentProps) {
       textBuffer.push(item);
     } else {
       flushText();
-      groups.push({ kind: "media", key, block: item });
+      groups.push({ block: item, key, kind: "media" });
     }
   });
   flushText();

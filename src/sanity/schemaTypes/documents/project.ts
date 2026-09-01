@@ -7,69 +7,52 @@ const minYear = 1900;
 const maxYear = 2500;
 
 export const project = defineType({
-  type: "document",
-  name: "project",
-  title: "Project",
-  icon: ProjectsIcon,
-  groups,
-  orderings: [
-    {
-      title: "Publishing Date, Newest",
-      name: "publishingDateDesc",
-      by: [{ field: "publishingDate.date", direction: "desc" }],
-    },
-    {
-      title: "Publishing Date, Oldest",
-      name: "publishingDateAsc",
-      by: [{ field: "publishingDate.date", direction: "asc" }],
-    },
-  ],
   fields: [
     defineField({
-      type: "string",
+      group: "metadata",
       name: "title",
       title: "Title",
-      group: "metadata",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "slug",
-      name: "slug",
-      title: "Slug",
       group: "metadata",
+      name: "slug",
       options: {
         source: "title",
       },
+      title: "Slug",
+      type: "slug",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "publishingDate",
+      group: "metadata",
       name: "publishingDate",
       title: "Publishing Date",
-      group: "metadata",
+      type: "publishingDate",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "coverMedia",
+      group: "content",
       name: "cover",
-      group: "content",
       title: "Cover",
+      type: "coverMedia",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "array",
-      name: "designers",
-      title: "Designers",
       group: "content",
+      name: "designers",
       of: [
         defineArrayMember({
-          type: "reference",
-          to: [{ type: "person" }],
           options: {
             filter: '"designer" in roles || "professional" in roles',
           },
+          to: [{ type: "person" }],
+          type: "reference",
         }),
       ],
+      title: "Designers",
+      type: "array",
       validation: (e) =>
         e
           .required()
@@ -78,34 +61,34 @@ export const project = defineType({
           .error("You cannot add the same designer twice"),
     }),
     defineField({
-      type: "reference",
+      group: "content",
       name: "institute",
       title: "Institute",
-      group: "content",
       to: [{ type: "institute" }],
+      type: "reference",
     }),
     defineField({
-      type: "array",
-      name: "teachers",
-      title: "Teachers",
       group: "content",
+      name: "teachers",
       of: [
         defineArrayMember({
-          type: "reference",
-          to: [{ type: "person" }],
           options: {
             filter: '"teacher" in roles',
           },
+          to: [{ type: "person" }],
+          type: "reference",
         }),
       ],
+      title: "Teachers",
+      type: "array",
       validation: (rule) =>
         rule.unique().error("You cannot add the same teacher twice"),
     }),
     defineField({
-      type: "number",
+      group: "content",
       name: "year",
       title: "Year",
-      group: "content",
+      type: "number",
       validation: (e) =>
         e
           .required()
@@ -119,43 +102,60 @@ export const project = defineType({
     }),
     tagsField("content"),
     defineField({
-      type: "text",
+      group: "content",
       name: "description",
       title: "Description",
-      group: "content",
+      type: "text",
     }),
     defineField({
-      type: "array",
-      name: "gallery",
-      title: "Gallery",
       group: "content",
+      name: "gallery",
       of: [
         defineArrayMember({ type: "singleMediaBlock" }),
         defineArrayMember({ type: "sideBySideMediaBlock" }),
         defineArrayMember({ type: "threeSideBySideMediaBlock" }),
         defineArrayMember({ type: "gridFourMediaBlock" }),
       ],
+      title: "Gallery",
+      type: "array",
     }),
 
     defineField({
-      type: "seoModule",
+      group: "seo",
       name: "seo",
       title: "SEO",
-      group: "seo",
+      type: "seoModule",
     }),
   ],
-  preview: {
-    select: {
-      title: "title",
-      media: "cover.image",
-      date: "publishingDate.date",
+  groups,
+  icon: ProjectsIcon,
+  name: "project",
+  orderings: [
+    {
+      by: [{ direction: "desc", field: "publishingDate.date" }],
+      name: "publishingDateDesc",
+      title: "Publishing Date, Newest",
     },
+    {
+      by: [{ direction: "asc", field: "publishingDate.date" }],
+      name: "publishingDateAsc",
+      title: "Publishing Date, Oldest",
+    },
+  ],
+  preview: {
     prepare({ title, media, date }) {
       return {
-        title,
         media,
         subtitle: date,
+        title,
       };
     },
+    select: {
+      date: "publishingDate.date",
+      media: "cover.image",
+      title: "title",
+    },
   },
+  title: "Project",
+  type: "document",
 });

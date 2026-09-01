@@ -6,65 +6,38 @@ import { groups } from "@/sanity/utils/groups";
 import { requiredHttpsUrlWhen } from "@/sanity/utils/validation";
 
 export const event = defineType({
-  type: "document",
-  name: "event",
-  title: "Event",
-  icon: CalendarIcon,
-  groups,
-  orderings: [
-    {
-      title: "Publishing Date, Newest",
-      name: "publishingDateDesc",
-      by: [{ field: "publishingDate.date", direction: "desc" }],
-    },
-    {
-      title: "Publishing Date, Oldest",
-      name: "publishingDateAsc",
-      by: [{ field: "publishingDate.date", direction: "asc" }],
-    },
-    {
-      title: "Event Date, Newest",
-      name: "dateStartDesc",
-      by: [{ field: "dateStart", direction: "desc" }],
-    },
-    {
-      title: "Event Date, Oldest",
-      name: "dateStartAsc",
-      by: [{ field: "dateStart", direction: "asc" }],
-    },
-  ],
   fields: [
     defineField({
-      type: "string",
+      group: "content",
       name: "title",
       title: "Title",
-      group: "content",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "slug",
-      name: "slug",
-      title: "Slug",
       group: "content",
+      name: "slug",
       options: {
         source: "title",
       },
+      title: "Slug",
+      type: "slug",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "publishingDate",
+      group: "content",
       name: "publishingDate",
       title: "Publishing Date",
-      group: "content",
+      type: "publishingDate",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "string",
-      name: "cardDestination",
-      title: "Card Destination",
       description: "Choose where the event card sends visitors.",
       group: "content",
+      initialValue: "internal",
+      name: "cardDestination",
       options: {
+        layout: "radio",
         list: [
           {
             title: "Pittogramma event page",
@@ -72,75 +45,75 @@ export const event = defineType({
           },
           { title: "External page", value: "external" },
         ],
-        layout: "radio",
       },
-      initialValue: "internal",
+      title: "Card Destination",
+      type: "string",
     }),
     defineField({
-      type: "url",
-      name: "externalUrl",
-      title: "External URL",
       description:
         "The event's branded Pittogramma URL will permanently redirect here.",
       group: "content",
       hidden: ({ document }) => document?.cardDestination !== "external",
+      name: "externalUrl",
+      title: "External URL",
+      type: "url",
       validation: requiredHttpsUrlWhen(
         ({ document }) => document?.cardDestination === "external",
         "External URL is required when the card destination is an external page"
       ),
     }),
     defineField({
-      type: "string",
-      name: "type",
-      title: "Type",
       group: "content",
+      initialValue: "event",
+      name: "type",
       options: {
+        layout: "dropdown",
         list: [
           { title: "Talk", value: "talk" },
           { title: "Workshop", value: "workshop" },
           { title: "5+1", value: "5+1" },
           { title: "Event", value: "event" },
         ],
-        layout: "dropdown",
       },
-      initialValue: "event",
+      title: "Type",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "coverMedia",
-      name: "cover",
-      title: "Cover",
       description: "Portrait image (3:4 ratio recommended).",
       group: "content",
+      name: "cover",
+      title: "Cover",
+      type: "coverMedia",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "date",
+      group: "content",
       name: "dateStart",
       title: "Date Start",
-      group: "content",
+      type: "date",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "date",
+      group: "content",
       name: "dateEnd",
       title: "Date End",
-      group: "content",
+      type: "date",
     }),
     defineField({
-      type: "string",
-      name: "attendanceMode",
-      title: "Attendance",
       group: "content",
+      hidden: ({ document }) => document?.cardDestination === "external",
+      initialValue: "offline",
+      name: "attendanceMode",
       options: {
+        layout: "radio",
         list: [
           { title: "In person", value: "offline" },
           { title: "Online", value: "online" },
         ],
-        layout: "radio",
       },
-      initialValue: "offline",
-      hidden: ({ document }) => document?.cardDestination === "external",
+      title: "Attendance",
+      type: "string",
       validation: (rule) =>
         rule.custom((value, { document }) =>
           document?.cardDestination === "external" || value
@@ -149,79 +122,106 @@ export const event = defineType({
         ),
     }),
     defineField({
-      type: "string",
-      name: "locationName",
-      title: "Location Name",
       components: { input: LocationNameInput },
       group: "content",
       hidden: ({ document, parent }) =>
         document?.cardDestination !== "external" &&
         parent?.attendanceMode === "online",
+      name: "locationName",
+      title: "Location Name",
+      type: "string",
     }),
     defineField({
-      type: "string",
-      name: "locationAddress",
-      title: "Location Address",
       group: "content",
       hidden: ({ document, parent }) =>
         document?.cardDestination === "external" ||
         parent?.attendanceMode === "online",
+      name: "locationAddress",
+      title: "Location Address",
+      type: "string",
     }),
     defineField({
-      type: "text",
+      group: "content",
+      hidden: ({ document }) => document?.cardDestination === "external",
       name: "description",
       title: "Description",
-      group: "content",
-      hidden: ({ document }) => document?.cardDestination === "external",
+      type: "text",
     }),
     defineField({
-      type: "array",
+      group: "content",
+      hidden: ({ document }) => document?.cardDestination === "external",
       name: "sponsors",
+      of: [{ to: [{ type: "contributor" }], type: "reference" }],
       title: "Sponsors",
-      group: "content",
-      hidden: ({ document }) => document?.cardDestination === "external",
-      of: [{ type: "reference", to: [{ type: "contributor" }] }],
+      type: "array",
     }),
     defineField({
-      type: "array",
+      group: "content",
+      hidden: ({ document }) => document?.cardDestination === "external",
       name: "partners",
+      of: [{ to: [{ type: "contributor" }], type: "reference" }],
       title: "Partners",
-      group: "content",
-      hidden: ({ document }) => document?.cardDestination === "external",
-      of: [{ type: "reference", to: [{ type: "contributor" }] }],
+      type: "array",
     }),
     defineField({
-      type: "array",
-      name: "info",
-      title: "Info",
       group: "content",
       hidden: ({ document }) => document?.cardDestination === "external",
+      name: "info",
       of: [{ type: "infoItem" }],
+      title: "Info",
+      type: "array",
     }),
     tagsField(
       "content",
       ({ document }) => document?.cardDestination === "external"
     ),
     defineField({
-      type: "seoModule",
-      name: "seo",
-      title: "SEO",
       group: "seo",
       hidden: ({ document }) => document?.cardDestination === "external",
+      name: "seo",
+      title: "SEO",
+      type: "seoModule",
     }),
   ],
-  preview: {
-    select: {
-      title: "title",
-      media: "cover.image",
-      dateStart: "dateStart",
+  groups,
+  icon: CalendarIcon,
+  name: "event",
+  orderings: [
+    {
+      by: [{ direction: "desc", field: "publishingDate.date" }],
+      name: "publishingDateDesc",
+      title: "Publishing Date, Newest",
     },
+    {
+      by: [{ direction: "asc", field: "publishingDate.date" }],
+      name: "publishingDateAsc",
+      title: "Publishing Date, Oldest",
+    },
+    {
+      by: [{ direction: "desc", field: "dateStart" }],
+      name: "dateStartDesc",
+      title: "Event Date, Newest",
+    },
+    {
+      by: [{ direction: "asc", field: "dateStart" }],
+      name: "dateStartAsc",
+      title: "Event Date, Oldest",
+    },
+  ],
+  preview: {
     prepare({ title, media, dateStart }) {
       return {
-        title,
-        subtitle: dateStart,
         media,
+        subtitle: dateStart,
+        title,
       };
     },
+    select: {
+      dateStart: "dateStart",
+      media: "cover.image",
+      title: "title",
+    },
   },
+  title: "Event",
+  type: "document",
 });

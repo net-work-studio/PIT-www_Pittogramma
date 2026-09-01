@@ -20,17 +20,17 @@ export const instant = false;
 export async function generateMetadata(): Promise<Metadata> {
   const { perspective } = await getDynamicFetchOptions();
   const { data: page } = await sanityFetchMetadata({
-    query: DESIGNERS_PAGE_QUERY,
     perspective,
+    query: DESIGNERS_PAGE_QUERY,
   });
 
   return mapSanityToMetadata({
+    baseUrl: siteDefaults.baseUrl,
     page: {
-      title: page?.title ?? "Designers",
       description: page?.introText,
       seo: page?.seo as SeoModule | undefined,
+      title: page?.title ?? "Designers",
     },
-    baseUrl: siteDefaults.baseUrl,
     path: "/designers",
     siteDefaults,
   });
@@ -59,8 +59,8 @@ async function CachedDesignersPage({
 }: DynamicFetchOptions) {
   "use cache";
   const [{ data: designers }, { data: pageSettings }] = await Promise.all([
-    sanityFetch({ query: DESIGNERS_QUERY, perspective, stega }),
-    sanityFetch({ query: DESIGNERS_PAGE_QUERY, perspective, stega }),
+    sanityFetch({ perspective, query: DESIGNERS_QUERY, stega }),
+    sanityFetch({ perspective, query: DESIGNERS_PAGE_QUERY, stega }),
   ]);
 
   const cta = pageSettings?.endOfPageCta;

@@ -17,17 +17,17 @@ export function getEmbedInfo(url: string | null | undefined): EmbedInfo | null {
     const id = youtubeMatch[1];
     const params = new URLSearchParams({
       autoplay: "1",
-      mute: "1",
-      loop: "1",
-      playlist: id,
       controls: "0",
+      loop: "1",
       modestbranding: "1",
+      mute: "1",
+      playlist: id,
       playsinline: "1",
       rel: "0",
     });
     return {
-      src: `https://www.youtube.com/embed/${id}?${params.toString()}`,
       provider: "youtube",
+      src: `https://www.youtube.com/embed/${id}?${params.toString()}`,
     };
   }
 
@@ -36,13 +36,13 @@ export function getEmbedInfo(url: string | null | undefined): EmbedInfo | null {
     const id = vimeoMatch[1];
     const params = new URLSearchParams({
       autoplay: "1",
-      muted: "1",
-      loop: "1",
       background: "1",
+      loop: "1",
+      muted: "1",
     });
     return {
-      src: `https://player.vimeo.com/video/${id}?${params.toString()}`,
       provider: "vimeo",
+      src: `https://player.vimeo.com/video/${id}?${params.toString()}`,
     };
   }
 

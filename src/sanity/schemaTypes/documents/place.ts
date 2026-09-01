@@ -3,90 +3,90 @@ import { defineField, defineType } from "sanity";
 import { PlaceInput } from "@/sanity/components/place-input";
 
 export const place = defineType({
-  type: "document",
-  name: "place",
-  title: "Place",
-  icon: PinIcon,
   fields: [
     defineField({
-      type: "string",
-      name: "name",
-      title: "Name",
-      description: "Display name, e.g. Milan, Italy",
-      validation: (e) => e.required(),
       components: {
         input: PlaceInput,
       },
+      description: "Display name, e.g. Milan, Italy",
+      name: "name",
+      title: "Name",
+      type: "string",
+      validation: (e) => e.required(),
     }),
     defineField({
-      type: "string",
       name: "city",
+      readOnly: true,
       title: "City",
-      readOnly: true,
+      type: "string",
     }),
     defineField({
-      type: "string",
       name: "country",
+      readOnly: true,
       title: "Country",
-      readOnly: true,
+      type: "string",
     }),
     defineField({
-      type: "string",
-      name: "countryCode",
-      title: "Country Code",
       description: "2-letter ISO country code",
+      name: "countryCode",
       readOnly: true,
+      title: "Country Code",
+      type: "string",
     }),
     defineField({
-      type: "string",
       name: "state",
+      readOnly: true,
       title: "State / Region",
-      readOnly: true,
+      type: "string",
     }),
     defineField({
-      type: "number",
       name: "lat",
+      readOnly: true,
       title: "Latitude",
-      readOnly: true,
+      type: "number",
     }),
     defineField({
-      type: "number",
       name: "lng",
+      readOnly: true,
       title: "Longitude",
-      readOnly: true,
-    }),
-    defineField({
       type: "number",
+    }),
+    defineField({
       name: "osmId",
+      readOnly: true,
       title: "OpenStreetMap ID",
-      readOnly: true,
+      type: "number",
     }),
     defineField({
-      type: "string",
       name: "osmType",
-      title: "OSM Type",
       readOnly: true,
+      title: "OSM Type",
+      type: "string",
     }),
     defineField({
-      type: "string",
-      name: "formattedAddress",
-      title: "Formatted Address",
       description: "Full display name from Nominatim",
+      name: "formattedAddress",
       readOnly: true,
+      title: "Formatted Address",
+      type: "string",
     }),
   ],
+  icon: PinIcon,
+  name: "place",
   preview: {
-    select: {
-      title: "name",
-      city: "city",
-      country: "country",
-    },
     prepare({ title, city, country }) {
       const parts = [city, country].filter(Boolean);
       return {
-        title: title || "Untitled Place",
         subtitle: parts.join(", "),
+        title: title || "Untitled Place",
       };
     },
+    select: {
+      city: "city",
+      country: "country",
+      title: "name",
+    },
   },
+  title: "Place",
+  type: "document",
 });

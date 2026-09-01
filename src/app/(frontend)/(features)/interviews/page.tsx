@@ -40,17 +40,17 @@ const MAX_PAGE = 20;
 export async function generateMetadata(): Promise<Metadata> {
   const { perspective } = await getDynamicFetchOptions();
   const { data: page } = await sanityFetchMetadata({
-    query: INTERVIEWS_PAGE_QUERY,
     perspective,
+    query: INTERVIEWS_PAGE_QUERY,
   });
 
   return mapSanityToMetadata({
+    baseUrl: siteDefaults.baseUrl,
     page: {
-      title: page?.title ?? "Interviews",
       description: page?.introText,
       seo: page?.seo as SeoModule | undefined,
+      title: page?.title ?? "Interviews",
     },
-    baseUrl: siteDefaults.baseUrl,
     path: "/interviews",
     siteDefaults,
   });
@@ -120,25 +120,25 @@ async function CachedInterviewsPage({
   const includeFuture = perspective !== "published";
   const tagIdsPromise = hasTags
     ? sanityFetch({
-        query: TAG_IDS_BY_SLUGS_QUERY,
         params: { slugs: tagSlugs },
         perspective,
+        query: TAG_IDS_BY_SLUGS_QUERY,
         stega,
       })
     : Promise.resolve({ data: [] as string[] });
   const interviewsPromise = tagIdsPromise.then(({ data: tagIds }) =>
     sanityFetch({
-      query: getInterviewsFilteredQuery(sort),
       params: { end, hasTags, includeFuture, start, tagIds, today },
       perspective,
+      query: getInterviewsFilteredQuery(sort),
       stega,
     })
   );
   const totalCountPromise = tagIdsPromise.then(({ data: tagIds }) =>
     sanityFetch({
-      query: INTERVIEWS_COUNT_QUERY,
       params: { hasTags, includeFuture, tagIds, today },
       perspective,
+      query: INTERVIEWS_COUNT_QUERY,
       stega,
     })
   );
@@ -158,11 +158,11 @@ async function CachedInterviewsPage({
       query: INTERVIEWS_TAGS_QUERY,
       stega,
     }),
-    sanityFetch({ query: INTERVIEWS_PAGE_QUERY, perspective, stega }),
+    sanityFetch({ perspective, query: INTERVIEWS_PAGE_QUERY, stega }),
     sanityFetch({
-      query: INDEX_GOLD_QUERY,
       params: { today },
       perspective,
+      query: INDEX_GOLD_QUERY,
       stega,
     }),
   ]);

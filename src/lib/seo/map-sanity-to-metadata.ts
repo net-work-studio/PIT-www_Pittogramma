@@ -43,18 +43,18 @@ export function mapSanityToMetadata({
     const imageBuilder = sharedImage ? urlForImage(sharedImage) : undefined;
     const imageMeta = imageBuilder
       ? {
+          alt: sharedImage?.alt || title,
+          height: 630,
           url: imageBuilder.width(1200).height(630).url(),
           width: 1200,
-          height: 630,
-          alt: sharedImage?.alt || title,
         }
       : undefined;
 
     return {
-      title: page.seo?.openGraph?.title || title,
       description: page.seo?.openGraph?.description || description,
-      url: page.seo?.openGraph?.url || canonicalUrl,
       images: imageMeta ? [imageMeta] : undefined,
+      title: page.seo?.openGraph?.title || title,
+      url: page.seo?.openGraph?.url || canonicalUrl,
     };
   };
 
@@ -69,20 +69,20 @@ export function mapSanityToMetadata({
 
     return {
       card: "summary_large_image",
-      title: page.seo?.xCard?.title || title,
       description: page.seo?.xCard?.description || description,
       images,
+      title: page.seo?.xCard?.title || title,
     };
   };
 
   return {
-    title,
-    description,
-    robots: (page.seo?.metaRobots as Metadata["robots"]) || "index, follow",
     alternates: {
       canonical: canonicalUrl,
     },
+    description,
     openGraph: buildOpenGraph(),
+    robots: (page.seo?.metaRobots as Metadata["robots"]) || "index, follow",
+    title,
     twitter: buildTwitter(),
   };
 }

@@ -281,7 +281,7 @@ export const structure: StructureResolver = (S) =>
                   '_type == "adv" && dateStart <= $today && dateEnd >= $today'
                 )
                 .params({ today: buildLocalToday() })
-                .defaultOrdering([{ field: "dateStart", direction: "asc" }])
+                .defaultOrdering([{ direction: "asc", field: "dateStart" }])
             ),
           S.listItem()
             .title("Upcoming")
@@ -293,7 +293,7 @@ export const structure: StructureResolver = (S) =>
                 .apiVersion(apiVersion)
                 .filter('_type == "adv" && dateStart > $today')
                 .params({ today: buildLocalToday() })
-                .defaultOrdering([{ field: "dateStart", direction: "asc" }])
+                .defaultOrdering([{ direction: "asc", field: "dateStart" }])
             ),
           S.listItem()
             .title("Expired")
@@ -305,7 +305,7 @@ export const structure: StructureResolver = (S) =>
                 .apiVersion(apiVersion)
                 .filter('_type == "adv" && dateEnd < $today')
                 .params({ today: buildLocalToday() })
-                .defaultOrdering([{ field: "dateEnd", direction: "desc" }])
+                .defaultOrdering([{ direction: "desc", field: "dateEnd" }])
             ),
           S.divider(),
           S.listItem()
@@ -334,7 +334,7 @@ export const structure: StructureResolver = (S) =>
                   '_type == "community" && dateStart <= $today && (!defined(dateEnd) || dateEnd >= $today)'
                 )
                 .params({ today: buildLocalToday() })
-                .defaultOrdering([{ field: "dateStart", direction: "asc" }])
+                .defaultOrdering([{ direction: "asc", field: "dateStart" }])
             ),
           S.listItem()
             .title("Upcoming")
@@ -346,7 +346,7 @@ export const structure: StructureResolver = (S) =>
                 .apiVersion(apiVersion)
                 .filter('_type == "community" && dateStart > $today')
                 .params({ today: buildLocalToday() })
-                .defaultOrdering([{ field: "dateStart", direction: "asc" }])
+                .defaultOrdering([{ direction: "asc", field: "dateStart" }])
             ),
           S.listItem()
             .title("Expired")
@@ -361,7 +361,7 @@ export const structure: StructureResolver = (S) =>
                   '_type == "community" && defined(dateEnd) && dateEnd < $today'
                 )
                 .params({ today: buildLocalToday() })
-                .defaultOrdering([{ field: "dateEnd", direction: "desc" }])
+                .defaultOrdering([{ direction: "desc", field: "dateEnd" }])
             ),
           S.divider(),
           S.listItem()

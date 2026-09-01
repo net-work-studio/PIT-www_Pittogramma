@@ -44,15 +44,15 @@ export default function NewsletterSignupForm({
 
     try {
       const response = await fetch("/api/newsletter/subscribe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           email,
           source,
           website,
         }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
       });
 
       const body = (await response.json()) as NewsletterSubscribeResponse;

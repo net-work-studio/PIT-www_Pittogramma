@@ -68,7 +68,9 @@ function StudioCard({
         mobileContent={
           <ResourceMobileCard
             badge={
-              studio.tags?.length ? <TagsDisplay tags={studio.tags} /> : undefined
+              studio.tags?.length ? (
+                <TagsDisplay tags={studio.tags} />
+              ) : undefined
             }
             fields={[
               {
@@ -78,10 +80,7 @@ function StudioCard({
               {
                 label: "City",
                 value: (
-                  <PlacesDisplay
-                    places={studio.places}
-                    showCountry={false}
-                  />
+                  <PlacesDisplay places={studio.places} showCountry={false} />
                 ),
               },
               {
@@ -155,16 +154,16 @@ export function StudiosContent({
 }: StudiosContentProps) {
   const markers = studios.flatMap((studio) =>
     (studio.places ?? []).flatMap((p) => {
-      if (p?.lat == null || p.lng == null) {
+      if (p?.lat === null || p.lng === null) {
         return [];
       }
 
       return [
         {
           id: `${studio._id}-${p._id}`,
-          name: studio.name ?? "",
           lat: p.lat,
           lng: p.lng,
+          name: studio.name ?? "",
         },
       ];
     })
