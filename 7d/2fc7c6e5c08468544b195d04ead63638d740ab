@@ -1,0 +1,46 @@
+src/components/shared/footer.tsx
+  s_edfc8e747b7fbe::t_d8a940ac547c1e 38-48
+src/components/shared/header.tsx
+  s_edfc8e747b7fbe::t_d8a940ac547c1e 6,14,62-68,94
+src/sanity/schemaTypes/singletons/site-settings.ts
+  s_edfc8e747b7fbe::t_d8a940ac547c1e 321-327
+  s_edfc8e747b7fbe::t_f41de467f867e4 319-320
+src/sanity/lib/queries.ts
+  s_edfc8e747b7fbe::t_d8a940ac547c1e 21,1327,1333,1347,1412-1413,1415-1416,1422,1424
+src/components/modules/shared/sanity-image.test.tsx
+  s_edfc8e747b7fbe::t_d8a940ac547c1e 25
+CONTEXT.md
+  s_edfc8e747b7fbe::t_d8a940ac547c1e 150-153,179
+src/components/feat/feed/feed-dialog.tsx
+  s_edfc8e747b7fbe::t_e2d77268d6e313 112-113
+  s_edfc8e747b7fbe::t_d8a940ac547c1e 24-27,29-70,73,98,114,124-126
+src/components/feat/filter/filter-sheet.tsx
+  s_edfc8e747b7fbe::t_e2d77268d6e313 114-120
+src/components/feat/sort/sort-dropdown.tsx
+  s_edfc8e747b7fbe::t_d8a940ac547c1e 46
+  s_edfc8e747b7fbe::t_e2d77268d6e313 53-55
+src/lib/feed-timeline.test.ts
+  s_edfc8e747b7fbe::t_d8a940ac547c1e 1-48
+src/sanity/extract.json
+  s_edfc8e747b7fbe::t_d8a940ac547c1e 3094-3100
+src/sanity/types.ts
+  s_edfc8e747b7fbe::t_d8a940ac547c1e 531,1972,1979,9419,9422,9603,9606,10128,10191,10194
+src/lib/feed-timeline.ts
+  s_edfc8e747b7fbe::t_d8a940ac547c1e 1-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "7d2fc7c6e5c08468544b195d04ead63638d740ab",
+  "prompts": {},
+  "sessions": {
+    "s_edfc8e747b7fbe": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a059e0-c528-7443-971f-f312cb6ba986",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
