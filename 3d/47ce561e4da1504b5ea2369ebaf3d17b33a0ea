@@ -1,0 +1,19 @@
+src/lib/kirby-redirects.test.ts
+  s_4ccdb566ae2f28::t_c23119ab68629d 32-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "3d47ce561e4da1504b5ea2369ebaf3d17b33a0ea",
+  "prompts": {},
+  "sessions": {
+    "s_4ccdb566ae2f28": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05ca1-dfb2-7660-ad84-42f863d7db4e",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
