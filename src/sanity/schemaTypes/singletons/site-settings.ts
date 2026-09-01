@@ -1,5 +1,8 @@
 import { defineField, defineType } from "sanity";
-import { httpUrlValidation } from "@/sanity/utils/validation";
+import {
+  httpsUrlValidation,
+  httpUrlValidation,
+} from "@/sanity/utils/validation";
 
 export const siteSettings = defineType({
   __experimental_omnisearch_visibility: false,
@@ -324,7 +327,7 @@ export const siteSettings = defineType({
       name: "issueReportFormUrl",
       title: "Issue report form URL",
       type: "url",
-      validation: httpUrlValidation,
+      validation: httpsUrlValidation,
     }),
     defineField({
       group: "contributions",
