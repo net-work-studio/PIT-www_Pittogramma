@@ -1,0 +1,32 @@
+src/lib/kirby-redirects.ts
+  s_4ccdb566ae2f28::t_e87ffda3748a25 56-59,63,68,73,78,83,88,93,98,103,108,113,118,120,124,129,134,139,141,148,153,158,163,168,173,178,183,188,193,198,203,208,213,218,223
+  s_4ccdb566ae2f28::t_8014e8c0f8f284 1-55,60-62,64-67,69-72,74-77,79-82,84-87,89-92,94-97,99-102,104-107,109-112,114-117,119,121-123,125-128,130-133,135-138,140,142-147,149-152,154-157,159-162,164-167,169-172,174-177,179-182,184-187,189-192,194-197,199-202,204-207,209-212,214-217,219-222,224-235
+next.config.ts
+  s_4ccdb566ae2f28::t_8014e8c0f8f284 3,28
+CONTEXT.md
+  s_4ccdb566ae2f28::t_f57b556798a742 132-135
+  s_4ccdb566ae2f28::t_fd6ec988f8d67a 125
+  s_4ccdb566ae2f28::t_77bc3ddcc18ed4 124,126-131
+data/kirby-url-map.json
+  s_4ccdb566ae2f28::t_8d0eb297bc09b1 1
+  s_4ccdb566ae2f28::t_c224c16564c9d9 2-1284
+src/lib/kirby-redirects.test.ts
+  s_4ccdb566ae2f28::t_e87ffda3748a25 18,23,28,36,44,49
+  s_4ccdb566ae2f28::t_8014e8c0f8f284 1-17,19-22,24-27,29-35,37-43,45-48,50-52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "d136f9d6bd540970d5dac7948f81e998d006b1ca",
+  "prompts": {},
+  "sessions": {
+    "s_4ccdb566ae2f28": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05ca1-dfb2-7660-ad84-42f863d7db4e",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
