@@ -2,14 +2,14 @@ import type { MetadataRoute } from "next";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = siteDefaults.baseUrl;
+  const { baseUrl } = siteDefaults;
 
   return {
     rules: [
       {
-        userAgent: "*",
         allow: "/",
-        disallow: ["/admin/", "/api/"],
+        disallow: ["/admin", "/admin/", "/api/"],
+        userAgent: "*",
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
