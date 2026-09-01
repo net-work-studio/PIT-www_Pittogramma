@@ -1,0 +1,1284 @@
+{
+  "mappings": [
+    {
+      "source": "/en/designers/agnese-pulvirenti",
+      "destination": "/designers/agnese-pulvirenti"
+    },
+    {
+      "source": "/en/designers/alberto-malossi",
+      "destination": "/designers/alberto-malossi"
+    },
+    {
+      "source": "/en/designers/alessandro-bulegato",
+      "destination": "/designers/alessandro-bulegato"
+    },
+    {
+      "source": "/en/designers/alessandro-santoro",
+      "destination": "/designers/alessandro-santoro"
+    },
+    {
+      "source": "/en/designers/alvise-aspesi",
+      "destination": "/designers/alvise-aspesi"
+    },
+    {
+      "source": "/en/designers/amos-priore",
+      "destination": "/designers/amos-priore"
+    },
+    {
+      "source": "/en/designers/andrea-benedetto",
+      "destination": "/designers/andrea-benedetto"
+    },
+    {
+      "source": "/en/designers/andrea-cozza",
+      "destination": "/designers/andrea-cozza"
+    },
+    {
+      "source": "/en/designers/andrea-martinelli",
+      "destination": "/designers/andrea-martinelli"
+    },
+    {
+      "source": "/en/designers/anna-damoli",
+      "destination": "/designers/anna-damoli"
+    },
+    {
+      "source": "/en/designers/anna-deporta",
+      "destination": "/designers/anna-deporta"
+    },
+    {
+      "source": "/en/designers/antonio-plasmati",
+      "destination": "/designers/antonio-plasmati"
+    },
+    {
+      "source": "/en/designers/aurora-pelaggi",
+      "destination": "/designers/aurora-pelaggi"
+    },
+    {
+      "source": "/en/designers/benedetta-bovani",
+      "destination": "/designers/benedetta-bovani"
+    },
+    {
+      "source": "/en/designers/camilla-avino",
+      "destination": "/designers/camilla-avino"
+    },
+    {
+      "source": "/en/designers/camilla-guerci",
+      "destination": "/designers/camilla-guerci"
+    },
+    {
+      "source": "/en/designers/camilla-tosi",
+      "destination": "/designers/camilla-tosi"
+    },
+    {
+      "source": "/en/designers/carlotta-bacchini",
+      "destination": "/designers/carlotta-bacchini"
+    },
+    {
+      "source": "/en/designers/cecilia-pizzagalli",
+      "destination": "/designers/cecilia-pizzagalli"
+    },
+    {
+      "source": "/en/designers/christian-stifani",
+      "destination": "/designers/christian-stifani"
+    },
+    {
+      "source": "/en/designers/claudio-bolzonello",
+      "destination": "/designers/claudio-bolzonello"
+    },
+    {
+      "source": "/en/designers/daniel-di-candeloro",
+      "destination": "/designers/daniel-di-candeloro"
+    },
+    {
+      "source": "/en/designers/davide-perucchini",
+      "destination": "/designers/davide-perucchini"
+    },
+    {
+      "source": "/en/designers/elena-carboni",
+      "destination": "/designers/elena-carboni"
+    },
+    {
+      "source": "/en/designers/elisa-carbone",
+      "destination": "/designers/elisa-carbone"
+    },
+    {
+      "source": "/en/designers/emanuel-simionato",
+      "destination": "/designers/emanuel-simionato"
+    },
+    {
+      "source": "/en/designers/emiliano-garibaldi",
+      "destination": "/designers/emiliano-garibaldi"
+    },
+    {
+      "source": "/en/designers/enrico-isidori",
+      "destination": "/designers/enrico-isidori"
+    },
+    {
+      "source": "/en/designers/enrico-neri",
+      "destination": "/designers/enrico-neri"
+    },
+    {
+      "source": "/en/designers/enzo-taboada",
+      "destination": "/designers/enzo-taboada"
+    },
+    {
+      "source": "/en/designers/federica-trenti",
+      "destination": "/designers/federica-trenti"
+    },
+    {
+      "source": "/en/designers/federico-agnelli",
+      "destination": "/designers/federico-agnelli"
+    },
+    {
+      "source": "/en/designers/federico-bragaglia",
+      "destination": "/designers/federico-bragaglia"
+    },
+    {
+      "source": "/en/designers/federico-gajo",
+      "destination": "/designers/federico-gajo"
+    },
+    {
+      "source": "/en/designers/francesca-granzotto",
+      "destination": "/designers/francesca-granzotto"
+    },
+    {
+      "source": "/en/designers/francesco-bonetti",
+      "destination": "/designers/francesco-bonetti"
+    },
+    {
+      "source": "/en/designers/francesco-ferretti",
+      "destination": "/designers/francesco-ferretti"
+    },
+    {
+      "source": "/en/designers/gina-pulcini",
+      "destination": "/designers/gina-pulcini"
+    },
+    {
+      "source": "/en/designers/giulia-giordano",
+      "destination": "/designers/giulia-giordano"
+    },
+    {
+      "source": "/en/designers/giulia-guy",
+      "destination": "/designers/giulia-guy"
+    },
+    {
+      "source": "/en/designers/giulia-montesi",
+      "destination": "/designers/giulia-montesi"
+    },
+    {
+      "source": "/en/designers/giulia-pezzin",
+      "destination": "/designers/giulia-pezzin"
+    },
+    {
+      "source": "/en/designers/giulia-siviero",
+      "destination": "/designers/giulia-siviero"
+    },
+    {
+      "source": "/en/designers/ilaria-di-felice",
+      "destination": "/designers/ilaria-di-felice"
+    },
+    {
+      "source": "/en/designers/jessica-leonardi",
+      "destination": "/designers/jessica-leonardi"
+    },
+    {
+      "source": "/en/designers/laura-fusaro",
+      "destination": "/designers/laura-fusaro"
+    },
+    {
+      "source": "/en/designers/leonardo-gava",
+      "destination": "/designers/leonardo-gava"
+    },
+    {
+      "source": "/en/designers/lidia-bonato",
+      "destination": "/designers/lidia-bonato"
+    },
+    {
+      "source": "/en/designers/lorenzo-bernini",
+      "destination": "/designers/lorenzo-bernini"
+    },
+    {
+      "source": "/en/designers/lorenzo-guzzo",
+      "destination": "/designers/lorenzo-guzzo"
+    },
+    {
+      "source": "/en/designers/lorenzo-urgesi",
+      "destination": "/designers/lorenzo-urgesi"
+    },
+    {
+      "source": "/en/designers/luca-morello",
+      "destination": "/designers/luca-morello"
+    },
+    {
+      "source": "/en/designers/ludovica-polo",
+      "destination": "/designers/ludovica-polo"
+    },
+    {
+      "source": "/en/designers/marta-savignano",
+      "destination": "/designers/marta-savignano"
+    },
+    {
+      "source": "/en/designers/martina-costa-bignotti",
+      "destination": "/designers/martina-bignotti"
+    },
+    {
+      "source": "/en/designers/matteo-bettini",
+      "destination": "/designers/matteo-bettini"
+    },
+    {
+      "source": "/en/designers/matteo-mariangioli",
+      "destination": "/designers/matteo-mariangioli"
+    },
+    {
+      "source": "/en/designers/matteo-palu",
+      "destination": "/designers/matteo-palu"
+    },
+    {
+      "source": "/en/designers/matteo-savioli",
+      "destination": "/designers/matteo-savioli"
+    },
+    {
+      "source": "/en/designers/mattia-castelli",
+      "destination": "/designers/mattia-castelli"
+    },
+    {
+      "source": "/en/designers/mattia-lombardo",
+      "destination": "/designers/mattia-lombardo"
+    },
+    {
+      "source": "/en/designers/michelangelo-nigra",
+      "destination": "/designers/michelangelo-nigra"
+    },
+    {
+      "source": "/en/designers/michele-biondi",
+      "destination": "/designers/michele-biondi"
+    },
+    {
+      "source": "/en/designers/michele-giamello",
+      "destination": "/designers/michele-giamello"
+    },
+    {
+      "source": "/en/designers/niccolo-oriani",
+      "destination": "/designers/niccolo-oriani"
+    },
+    {
+      "source": "/en/designers/nicole-morrone",
+      "destination": "/designers/nicole-morrone"
+    },
+    {
+      "source": "/en/designers/noemi-biasetton",
+      "destination": "/designers/noemi-biasetton"
+    },
+    {
+      "source": "/en/designers/obi-fidler",
+      "destination": "/designers/obi-fidler"
+    },
+    {
+      "source": "/en/designers/pablo-panebianco",
+      "destination": "/designers/pablo-panebianco"
+    },
+    {
+      "source": "/en/designers/paola-spitaleri",
+      "destination": "/designers/paola-spitaleri"
+    },
+    {
+      "source": "/en/designers/paolo-cerani",
+      "destination": "/designers/paolo-cerani"
+    },
+    {
+      "source": "/en/designers/piero-beninato",
+      "destination": "/designers/piero-beninato"
+    },
+    {
+      "source": "/en/designers/pierpaolo-fabbriani",
+      "destination": "/designers/pierpaolo-fabbriani"
+    },
+    {
+      "source": "/en/designers/pietro-avolio",
+      "destination": "/designers/pietro-avolio"
+    },
+    {
+      "source": "/en/designers/pietro-basei",
+      "destination": "/designers/pietro-basei"
+    },
+    {
+      "source": "/en/designers/pietro-forino",
+      "destination": "/designers/pietro-forino"
+    },
+    {
+      "source": "/en/designers/raffaele-geronazzo",
+      "destination": "/designers/raffaele-geronazzo"
+    },
+    {
+      "source": "/en/designers/riccardo-de-capitani",
+      "destination": "/designers/riccardo-de-capitani"
+    },
+    {
+      "source": "/en/designers/riccardo-pantanali",
+      "destination": "/designers/riccardo-pantanali"
+    },
+    {
+      "source": "/en/designers/roberto-schneeberger",
+      "destination": "/designers/roberto-schneeberger"
+    },
+    {
+      "source": "/en/designers/ruggero-magri",
+      "destination": "/designers/ruggero-magri"
+    },
+    {
+      "source": "/en/designers/sara-bianchi",
+      "destination": "/designers/sara-bianchi"
+    },
+    {
+      "source": "/en/designers/simona-alina-andone",
+      "destination": "/designers/simona-alina-andone"
+    },
+    {
+      "source": "/en/designers/sofia-bollini",
+      "destination": "/designers/sofia-bollini"
+    },
+    {
+      "source": "/en/designers/sofia-cambiaggio",
+      "destination": "/designers/sofia-cambiaggio"
+    },
+    {
+      "source": "/en/designers/susanna-brucoli",
+      "destination": "/designers/susanna-brucoli"
+    },
+    {
+      "source": "/en/designers/tiziano-torresani",
+      "destination": "/designers/tiziano-torresani"
+    },
+    {
+      "source": "/en/designers/tommaso-ciccotti",
+      "destination": "/designers/tommaso-ciccotti"
+    },
+    {
+      "source": "/en/designers/valerio-romano",
+      "destination": "/designers/valerio-romano"
+    },
+    {
+      "source": "/en/interviews/ascionemagro",
+      "destination": "/interviews/ascionemagro"
+    },
+    {
+      "source": "/en/interviews/bbdb",
+      "destination": "/interviews/returning-to-italy-to-explore-new-models-of-community-research-cultural-and-commercial-practices"
+    },
+    {
+      "source": "/en/interviews/benedettacrippa",
+      "destination": "/interviews/the-differences-between-abroad-and-italy-and-the-need-to-create-conditions-for-designing-freely"
+    },
+    {
+      "source": "/en/interviews/but-maybe",
+      "destination": "/interviews/founding-a-studio-among-friends-with-the-same-objectives-values-and-tastes"
+    },
+    {
+      "source": "/en/interviews/pierodibiase",
+      "destination": "/interviews/the-type-foundry-as-a-new-dimension-of-dynamic-and-cross-activity-studio"
+    },
+    {
+      "source": "/en/interviews/sunday-buro",
+      "destination": "/interviews/valentina-casali"
+    },
+    {
+      "source": "/en/interviews/taddeo-zacchini",
+      "destination": "/interviews/the-future-of-ai-and-digital-design-always-starts-from-the-analog"
+    },
+    {
+      "source": "/en/projects/26-idea-di-libro-libro-tovaglietta",
+      "destination": "/projects/26-idea-di-libro-libro-tovaglietta"
+    },
+    {
+      "source": "/en/projects/acculturation-display",
+      "destination": "/projects/acculturation-display"
+    },
+    {
+      "source": "/en/projects/adelphi",
+      "destination": "/projects/adelphi"
+    },
+    {
+      "source": "/en/projects/arrivederci-e-grazie",
+      "destination": "/projects/arrivederci-e-grazie"
+    },
+    {
+      "source": "/en/projects/brick-by-brick",
+      "destination": "/projects/brick-by-brick"
+    },
+    {
+      "source": "/en/projects/ci-sara-una-volta",
+      "destination": "/projects/ci-sara-una-volta"
+    },
+    {
+      "source": "/en/projects/conquista-del-passo-della-sentinella",
+      "destination": "/projects/conquista-del-passo-della-sentinella"
+    },
+    {
+      "source": "/en/projects/crumbs",
+      "destination": "/projects/crumbs-guida-digitale-alla-petizione-online"
+    },
+    {
+      "source": "/en/projects/descrizione-di-una-battaglia",
+      "destination": "/projects/descrizione-di-una-battaglia"
+    },
+    {
+      "source": "/en/projects/enea",
+      "destination": "/projects/enea"
+    },
+    {
+      "source": "/en/projects/ephemera-come-architettura-il-caso-giorgio-wenter-marini",
+      "destination": "/projects/ephemera-come-architettura-il-caso-giorgio-wenter-marini"
+    },
+    {
+      "source": "/en/projects/fano",
+      "destination": "/projects/fano"
+    },
+    {
+      "source": "/en/projects/fantasia-radicale-immaginare-il-progetto-e-il-progetto-come-immagine",
+      "destination": "/projects/fantasia-radicale-immaginare-il-progetto-e-il-progetto-come-immagine"
+    },
+    {
+      "source": "/en/projects/fictional-brands-archive",
+      "destination": "/projects/fictional-brands-archive"
+    },
+    {
+      "source": "/en/projects/finding-a-way",
+      "destination": "/projects/finding-a-way"
+    },
+    {
+      "source": "/en/projects/folder-metaphor",
+      "destination": "/projects/folder-metaphor"
+    },
+    {
+      "source": "/en/projects/gan-eden",
+      "destination": "/projects/gan-eden"
+    },
+    {
+      "source": "/en/projects/general-journal-of-network-requests",
+      "destination": "/projects/general-journal-of-network-requests"
+    },
+    {
+      "source": "/en/projects/greengleam-from-old-to-gold-alternative-per-l-industria-della-moda",
+      "destination": "/projects/greengleam-from-old-to-gold-alternative-per-l-industria-della-moda"
+    },
+    {
+      "source": "/en/projects/halp",
+      "destination": "/projects/halp"
+    },
+    {
+      "source": "/en/projects/iconocracy",
+      "destination": "/projects/iconocracy"
+    },
+    {
+      "source": "/en/projects/il-crampo-di-gesso",
+      "destination": "/projects/il-crampo-di-gesso"
+    },
+    {
+      "source": "/en/projects/il-ruolo-della-tipografia-nell-arte-cartografica-il-caso-del-touring-club-italiano",
+      "destination": "/projects/il-ruolo-della-tipografia-nell-arte-cartografica-il-caso-del-touring-club-italiano"
+    },
+    {
+      "source": "/en/projects/il-ruolo-espressivo-delle-variabili-visive-nella-visualizzazione-dati",
+      "destination": "/projects/il-ruolo-espressivo-delle-variabili-visive-nella-visualizzazione-dati"
+    },
+    {
+      "source": "/en/projects/illustrazioni-semplici-per-emozioni-complesse",
+      "destination": "/projects/illustrazioni-semplici-per-emozioni-complesse"
+    },
+    {
+      "source": "/en/projects/impressum",
+      "destination": "/projects/impressum"
+    },
+    {
+      "source": "/en/projects/in-solito",
+      "destination": "/projects/in-solito"
+    },
+    {
+      "source": "/en/projects/introduzione-alle-non-razze",
+      "destination": "/projects/introduzione-alle-non-razze"
+    },
+    {
+      "source": "/en/projects/la-fede-addosso-dizionario-iconografico-dei-simboli-del-pellegrino",
+      "destination": "/projects/la-fede-addosso-dizionario-iconografico-dei-simboli-del-pellegrino"
+    },
+    {
+      "source": "/en/projects/lettere-come-immagini",
+      "destination": "/projects/lettere-come-immagini"
+    },
+    {
+      "source": "/en/projects/matematical-systems-on-natural-shape",
+      "destination": "/projects/matematical-systems-on-natural-shape"
+    },
+    {
+      "source": "/en/projects/memes-in-fabula",
+      "destination": "/projects/memes-in-fabula"
+    },
+    {
+      "source": "/en/projects/micromort",
+      "destination": "/projects/micromort"
+    },
+    {
+      "source": "/en/projects/mineralia-i-micro-paesaggi-delle-centovalli",
+      "destination": "/projects/mineralia-i-micro-paesaggi-delle-centovalli"
+    },
+    {
+      "source": "/en/projects/moti-dialogici",
+      "destination": "/projects/moti-dialogici"
+    },
+    {
+      "source": "/en/projects/no-future",
+      "destination": "/projects/no-future"
+    },
+    {
+      "source": "/en/projects/nomadismi-editoriali",
+      "destination": "/projects/nomadismi-editoriali"
+    },
+    {
+      "source": "/en/projects/novelle-illustrate",
+      "destination": "/projects/novelle-illustrate"
+    },
+    {
+      "source": "/en/projects/oggetti-d-affezione",
+      "destination": "/projects/oggetti-d-affezione"
+    },
+    {
+      "source": "/en/projects/omne-quod-non-mutat-nox",
+      "destination": "/projects/omne-quod-non-mutat-nox"
+    },
+    {
+      "source": "/en/projects/palazzo-chiaramonte-steri",
+      "destination": "/projects/palazzo-chiaramonte-steri"
+    },
+    {
+      "source": "/en/projects/parliamone-in-piazza",
+      "destination": "/projects/parliamone-in-piazza"
+    },
+    {
+      "source": "/en/projects/paroles-d-objets-kit-scenographique-modulable",
+      "destination": "/projects/paroles-d-objets-kit-scenographique-modulable"
+    },
+    {
+      "source": "/en/projects/pasta-divella",
+      "destination": "/projects/pasta-divella"
+    },
+    {
+      "source": "/en/projects/piana-di-marcesina-geografia-emotiva-e-poesie-tassonometriche",
+      "destination": "/projects/piana-di-marcesina-geografia-emotiva-e-poesie-tassonometriche"
+    },
+    {
+      "source": "/en/projects/pompilia",
+      "destination": "/projects/pompilia"
+    },
+    {
+      "source": "/en/projects/print-it",
+      "destination": "/projects/print-it"
+    },
+    {
+      "source": "/en/projects/salvaguardia-e-valorizzazione-del-patrimonio-culturale-intangibile",
+      "destination": "/projects/salvaguardia-e-valorizzazione-del-patrimonio-culturale-intangibile"
+    },
+    {
+      "source": "/en/projects/specta-your-personal-eco-anxiety-silencer",
+      "destination": "/projects/specta-your-personal-eco-anxiety-silencer"
+    },
+    {
+      "source": "/en/projects/stato-in-luogo",
+      "destination": "/projects/stato-in-luogo"
+    },
+    {
+      "source": "/en/projects/tac",
+      "destination": "/projects/tac"
+    },
+    {
+      "source": "/en/projects/the-flower-encyclopedia",
+      "destination": "/projects/the-flower-encyclopedia"
+    },
+    {
+      "source": "/en/projects/the-glossy-glossary-of-drag",
+      "destination": "/projects/the-glossy-glossary-of-drag"
+    },
+    {
+      "source": "/en/projects/toni-e-bepi",
+      "destination": "/projects/toni-e-bepi"
+    },
+    {
+      "source": "/en/projects/torviscosa-specimen-di-carattere-contaminazioni-razionale-organico",
+      "destination": "/projects/torviscosa-specimen-di-carattere-contaminazioni-razionale-organico"
+    },
+    {
+      "source": "/en/projects/trasformazioni-verbovisive",
+      "destination": "/projects/trasformazioni-verbovisive-parola-e-immagine-fra-arti-e-design-un-percorso-storico"
+    },
+    {
+      "source": "/en/projects/trucks",
+      "destination": "/projects/trucks"
+    },
+    {
+      "source": "/en/projects/una-famiglia-contadina-dell-altopiano-del-salto",
+      "destination": "/projects/una-famiglia-contadina-dell-altopiano-del-salto"
+    },
+    {
+      "source": "/en/projects/uncanny-valley",
+      "destination": "/projects/uncanny-valley"
+    },
+    {
+      "source": "/en/projects/vi-e-il-riflesso-perduto",
+      "destination": "/projects/vi-e-il-riflesso-perduto"
+    },
+    {
+      "source": "/en/projects/vinyl",
+      "destination": "/projects/vinyl"
+    },
+    {
+      "source": "/en/projects/voltare-pagina",
+      "destination": "/projects/voltare-pagina"
+    },
+    {
+      "source": "/en/projects/warming-up-kids-laboratori-per-bambini-esplorando-il-processo-di-apprendimento-creativo",
+      "destination": "/projects/warming-up-kids-laboratori-per-bambini-esplorando-il-processo-di-apprendimento-creativo"
+    },
+    {
+      "source": "/en/projects/write-it-personal",
+      "destination": "/projects/write-it-personal"
+    },
+    {
+      "source": "/it/designers/agnese-pulvirenti",
+      "destination": "/designers/agnese-pulvirenti"
+    },
+    {
+      "source": "/it/designers/alberto-malossi",
+      "destination": "/designers/alberto-malossi"
+    },
+    {
+      "source": "/it/designers/alessandro-bulegato",
+      "destination": "/designers/alessandro-bulegato"
+    },
+    {
+      "source": "/it/designers/alessandro-santoro",
+      "destination": "/designers/alessandro-santoro"
+    },
+    {
+      "source": "/it/designers/alvise-aspesi",
+      "destination": "/designers/alvise-aspesi"
+    },
+    {
+      "source": "/it/designers/amos-priore",
+      "destination": "/designers/amos-priore"
+    },
+    {
+      "source": "/it/designers/andrea-benedetto",
+      "destination": "/designers/andrea-benedetto"
+    },
+    {
+      "source": "/it/designers/andrea-cozza",
+      "destination": "/designers/andrea-cozza"
+    },
+    {
+      "source": "/it/designers/andrea-martinelli",
+      "destination": "/designers/andrea-martinelli"
+    },
+    {
+      "source": "/it/designers/anna-damoli",
+      "destination": "/designers/anna-damoli"
+    },
+    {
+      "source": "/it/designers/anna-deporta",
+      "destination": "/designers/anna-deporta"
+    },
+    {
+      "source": "/it/designers/antonio-plasmati",
+      "destination": "/designers/antonio-plasmati"
+    },
+    {
+      "source": "/it/designers/aurora-pelaggi",
+      "destination": "/designers/aurora-pelaggi"
+    },
+    {
+      "source": "/it/designers/benedetta-bovani",
+      "destination": "/designers/benedetta-bovani"
+    },
+    {
+      "source": "/it/designers/camilla-avino",
+      "destination": "/designers/camilla-avino"
+    },
+    {
+      "source": "/it/designers/camilla-guerci",
+      "destination": "/designers/camilla-guerci"
+    },
+    {
+      "source": "/it/designers/camilla-tosi",
+      "destination": "/designers/camilla-tosi"
+    },
+    {
+      "source": "/it/designers/carlotta-bacchini",
+      "destination": "/designers/carlotta-bacchini"
+    },
+    {
+      "source": "/it/designers/cecilia-pizzagalli",
+      "destination": "/designers/cecilia-pizzagalli"
+    },
+    {
+      "source": "/it/designers/christian-stifani",
+      "destination": "/designers/christian-stifani"
+    },
+    {
+      "source": "/it/designers/claudio-bolzonello",
+      "destination": "/designers/claudio-bolzonello"
+    },
+    {
+      "source": "/it/designers/daniel-di-candeloro",
+      "destination": "/designers/daniel-di-candeloro"
+    },
+    {
+      "source": "/it/designers/davide-perucchini",
+      "destination": "/designers/davide-perucchini"
+    },
+    {
+      "source": "/it/designers/elena-carboni",
+      "destination": "/designers/elena-carboni"
+    },
+    {
+      "source": "/it/designers/elisa-carbone",
+      "destination": "/designers/elisa-carbone"
+    },
+    {
+      "source": "/it/designers/emanuel-simionato",
+      "destination": "/designers/emanuel-simionato"
+    },
+    {
+      "source": "/it/designers/emiliano-garibaldi",
+      "destination": "/designers/emiliano-garibaldi"
+    },
+    {
+      "source": "/it/designers/enrico-isidori",
+      "destination": "/designers/enrico-isidori"
+    },
+    {
+      "source": "/it/designers/enrico-neri",
+      "destination": "/designers/enrico-neri"
+    },
+    {
+      "source": "/it/designers/enzo-taboada",
+      "destination": "/designers/enzo-taboada"
+    },
+    {
+      "source": "/it/designers/federica-trenti",
+      "destination": "/designers/federica-trenti"
+    },
+    {
+      "source": "/it/designers/federico-agnelli",
+      "destination": "/designers/federico-agnelli"
+    },
+    {
+      "source": "/it/designers/federico-bragaglia",
+      "destination": "/designers/federico-bragaglia"
+    },
+    {
+      "source": "/it/designers/federico-gajo",
+      "destination": "/designers/federico-gajo"
+    },
+    {
+      "source": "/it/designers/francesca-granzotto",
+      "destination": "/designers/francesca-granzotto"
+    },
+    {
+      "source": "/it/designers/francesco-bonetti",
+      "destination": "/designers/francesco-bonetti"
+    },
+    {
+      "source": "/it/designers/francesco-ferretti",
+      "destination": "/designers/francesco-ferretti"
+    },
+    {
+      "source": "/it/designers/gina-pulcini",
+      "destination": "/designers/gina-pulcini"
+    },
+    {
+      "source": "/it/designers/giulia-giordano",
+      "destination": "/designers/giulia-giordano"
+    },
+    {
+      "source": "/it/designers/giulia-guy",
+      "destination": "/designers/giulia-guy"
+    },
+    {
+      "source": "/it/designers/giulia-montesi",
+      "destination": "/designers/giulia-montesi"
+    },
+    {
+      "source": "/it/designers/giulia-pezzin",
+      "destination": "/designers/giulia-pezzin"
+    },
+    {
+      "source": "/it/designers/giulia-siviero",
+      "destination": "/designers/giulia-siviero"
+    },
+    {
+      "source": "/it/designers/ilaria-di-felice",
+      "destination": "/designers/ilaria-di-felice"
+    },
+    {
+      "source": "/it/designers/jessica-leonardi",
+      "destination": "/designers/jessica-leonardi"
+    },
+    {
+      "source": "/it/designers/laura-fusaro",
+      "destination": "/designers/laura-fusaro"
+    },
+    {
+      "source": "/it/designers/leonardo-gava",
+      "destination": "/designers/leonardo-gava"
+    },
+    {
+      "source": "/it/designers/lidia-bonato",
+      "destination": "/designers/lidia-bonato"
+    },
+    {
+      "source": "/it/designers/lorenzo-bernini",
+      "destination": "/designers/lorenzo-bernini"
+    },
+    {
+      "source": "/it/designers/lorenzo-guzzo",
+      "destination": "/designers/lorenzo-guzzo"
+    },
+    {
+      "source": "/it/designers/lorenzo-urgesi",
+      "destination": "/designers/lorenzo-urgesi"
+    },
+    {
+      "source": "/it/designers/luca-morello",
+      "destination": "/designers/luca-morello"
+    },
+    {
+      "source": "/it/designers/ludovica-polo",
+      "destination": "/designers/ludovica-polo"
+    },
+    {
+      "source": "/it/designers/marta-savignano",
+      "destination": "/designers/marta-savignano"
+    },
+    {
+      "source": "/it/designers/martina-costa-bignotti",
+      "destination": "/designers/martina-bignotti"
+    },
+    {
+      "source": "/it/designers/matteo-bettini",
+      "destination": "/designers/matteo-bettini"
+    },
+    {
+      "source": "/it/designers/matteo-mariangioli",
+      "destination": "/designers/matteo-mariangioli"
+    },
+    {
+      "source": "/it/designers/matteo-palu",
+      "destination": "/designers/matteo-palu"
+    },
+    {
+      "source": "/it/designers/matteo-savioli",
+      "destination": "/designers/matteo-savioli"
+    },
+    {
+      "source": "/it/designers/mattia-castelli",
+      "destination": "/designers/mattia-castelli"
+    },
+    {
+      "source": "/it/designers/mattia-lombardo",
+      "destination": "/designers/mattia-lombardo"
+    },
+    {
+      "source": "/it/designers/michelangelo-nigra",
+      "destination": "/designers/michelangelo-nigra"
+    },
+    {
+      "source": "/it/designers/michele-biondi",
+      "destination": "/designers/michele-biondi"
+    },
+    {
+      "source": "/it/designers/michele-giamello",
+      "destination": "/designers/michele-giamello"
+    },
+    {
+      "source": "/it/designers/niccolo-oriani",
+      "destination": "/designers/niccolo-oriani"
+    },
+    {
+      "source": "/it/designers/nicole-morrone",
+      "destination": "/designers/nicole-morrone"
+    },
+    {
+      "source": "/it/designers/noemi-biasetton",
+      "destination": "/designers/noemi-biasetton"
+    },
+    {
+      "source": "/it/designers/obi-fidler",
+      "destination": "/designers/obi-fidler"
+    },
+    {
+      "source": "/it/designers/pablo-panebianco",
+      "destination": "/designers/pablo-panebianco"
+    },
+    {
+      "source": "/it/designers/paola-spitaleri",
+      "destination": "/designers/paola-spitaleri"
+    },
+    {
+      "source": "/it/designers/paolo-cerani",
+      "destination": "/designers/paolo-cerani"
+    },
+    {
+      "source": "/it/designers/piero-beninato",
+      "destination": "/designers/piero-beninato"
+    },
+    {
+      "source": "/it/designers/pierpaolo-fabbriani",
+      "destination": "/designers/pierpaolo-fabbriani"
+    },
+    {
+      "source": "/it/designers/pietro-avolio",
+      "destination": "/designers/pietro-avolio"
+    },
+    {
+      "source": "/it/designers/pietro-basei",
+      "destination": "/designers/pietro-basei"
+    },
+    {
+      "source": "/it/designers/pietro-forino",
+      "destination": "/designers/pietro-forino"
+    },
+    {
+      "source": "/it/designers/raffaele-geronazzo",
+      "destination": "/designers/raffaele-geronazzo"
+    },
+    {
+      "source": "/it/designers/riccardo-de-capitani",
+      "destination": "/designers/riccardo-de-capitani"
+    },
+    {
+      "source": "/it/designers/riccardo-pantanali",
+      "destination": "/designers/riccardo-pantanali"
+    },
+    {
+      "source": "/it/designers/roberto-schneeberger",
+      "destination": "/designers/roberto-schneeberger"
+    },
+    {
+      "source": "/it/designers/ruggero-magri",
+      "destination": "/designers/ruggero-magri"
+    },
+    {
+      "source": "/it/designers/sara-bianchi",
+      "destination": "/designers/sara-bianchi"
+    },
+    {
+      "source": "/it/designers/simona-alina-andone",
+      "destination": "/designers/simona-alina-andone"
+    },
+    {
+      "source": "/it/designers/sofia-bollini",
+      "destination": "/designers/sofia-bollini"
+    },
+    {
+      "source": "/it/designers/sofia-cambiaggio",
+      "destination": "/designers/sofia-cambiaggio"
+    },
+    {
+      "source": "/it/designers/susanna-brucoli",
+      "destination": "/designers/susanna-brucoli"
+    },
+    {
+      "source": "/it/designers/tiziano-torresani",
+      "destination": "/designers/tiziano-torresani"
+    },
+    {
+      "source": "/it/designers/tommaso-ciccotti",
+      "destination": "/designers/tommaso-ciccotti"
+    },
+    {
+      "source": "/it/designers/valerio-romano",
+      "destination": "/designers/valerio-romano"
+    },
+    {
+      "source": "/it/interviste/ascionemagro",
+      "destination": "/interviews/ascionemagro"
+    },
+    {
+      "source": "/it/interviste/bbdb",
+      "destination": "/interviews/returning-to-italy-to-explore-new-models-of-community-research-cultural-and-commercial-practices"
+    },
+    {
+      "source": "/it/interviste/benedettacrippa",
+      "destination": "/interviews/the-differences-between-abroad-and-italy-and-the-need-to-create-conditions-for-designing-freely"
+    },
+    {
+      "source": "/it/interviste/but-maybe",
+      "destination": "/interviews/founding-a-studio-among-friends-with-the-same-objectives-values-and-tastes"
+    },
+    {
+      "source": "/it/interviste/pierodibiase",
+      "destination": "/interviews/the-type-foundry-as-a-new-dimension-of-dynamic-and-cross-activity-studio"
+    },
+    {
+      "source": "/it/interviste/sunday-buro",
+      "destination": "/interviews/valentina-casali"
+    },
+    {
+      "source": "/it/interviste/taddeo-zacchini",
+      "destination": "/interviews/the-future-of-ai-and-digital-design-always-starts-from-the-analog"
+    },
+    {
+      "source": "/it/progetti/acculturation-display",
+      "destination": "/projects/acculturation-display"
+    },
+    {
+      "source": "/it/progetti/adelphi",
+      "destination": "/projects/adelphi"
+    },
+    {
+      "source": "/it/progetti/arrivederci-e-grazie",
+      "destination": "/projects/arrivederci-e-grazie"
+    },
+    {
+      "source": "/it/progetti/brick-by-brick",
+      "destination": "/projects/brick-by-brick"
+    },
+    {
+      "source": "/it/progetti/ci-sara-una-volta",
+      "destination": "/projects/ci-sara-una-volta"
+    },
+    {
+      "source": "/it/progetti/conquista-del-passo-della-sentinella",
+      "destination": "/projects/conquista-del-passo-della-sentinella"
+    },
+    {
+      "source": "/it/progetti/crumbs",
+      "destination": "/projects/crumbs-guida-digitale-alla-petizione-online"
+    },
+    {
+      "source": "/it/progetti/descrizione-di-una-battaglia",
+      "destination": "/projects/descrizione-di-una-battaglia"
+    },
+    {
+      "source": "/it/progetti/enea",
+      "destination": "/projects/enea"
+    },
+    {
+      "source": "/it/progetti/ephemera-come-architettura-il-caso-giorgio-wenter-marini",
+      "destination": "/projects/ephemera-come-architettura-il-caso-giorgio-wenter-marini"
+    },
+    {
+      "source": "/it/progetti/fano",
+      "destination": "/projects/fano"
+    },
+    {
+      "source": "/it/progetti/fantasia-radicale-immaginare-il-progetto-e-il-progetto-come-immagine",
+      "destination": "/projects/fantasia-radicale-immaginare-il-progetto-e-il-progetto-come-immagine"
+    },
+    {
+      "source": "/it/progetti/fictional-brands-archive",
+      "destination": "/projects/fictional-brands-archive"
+    },
+    {
+      "source": "/it/progetti/finding-a-way",
+      "destination": "/projects/finding-a-way"
+    },
+    {
+      "source": "/it/progetti/folder-metaphor",
+      "destination": "/projects/folder-metaphor"
+    },
+    {
+      "source": "/it/progetti/gan-eden",
+      "destination": "/projects/gan-eden"
+    },
+    {
+      "source": "/it/progetti/general-journal-of-network-requests",
+      "destination": "/projects/general-journal-of-network-requests"
+    },
+    {
+      "source": "/it/progetti/greengleam-from-old-to-gold-alternative-per-l-industria-della-moda",
+      "destination": "/projects/greengleam-from-old-to-gold-alternative-per-l-industria-della-moda"
+    },
+    {
+      "source": "/it/progetti/halp",
+      "destination": "/projects/halp"
+    },
+    {
+      "source": "/it/progetti/iconocracy",
+      "destination": "/projects/iconocracy"
+    },
+    {
+      "source": "/it/progetti/idea-di-libro-libro-tovaglietta",
+      "destination": "/projects/26-idea-di-libro-libro-tovaglietta"
+    },
+    {
+      "source": "/it/progetti/il-crampo-di-gesso",
+      "destination": "/projects/il-crampo-di-gesso"
+    },
+    {
+      "source": "/it/progetti/il-ruolo-della-tipografia-nell-arte-cartografica-il-caso-del-tourin-club-italiano",
+      "destination": "/projects/il-ruolo-della-tipografia-nell-arte-cartografica-il-caso-del-touring-club-italiano"
+    },
+    {
+      "source": "/it/progetti/il-ruolo-espressivo-delle-variabili-visive-nella-visualizzazione-dati",
+      "destination": "/projects/il-ruolo-espressivo-delle-variabili-visive-nella-visualizzazione-dati"
+    },
+    {
+      "source": "/it/progetti/illustrazioni-semplici-per-emozioni-complesse",
+      "destination": "/projects/illustrazioni-semplici-per-emozioni-complesse"
+    },
+    {
+      "source": "/it/progetti/impressum",
+      "destination": "/projects/impressum"
+    },
+    {
+      "source": "/it/progetti/in-solito",
+      "destination": "/projects/in-solito"
+    },
+    {
+      "source": "/it/progetti/introduzione-alle-non-razze",
+      "destination": "/projects/introduzione-alle-non-razze"
+    },
+    {
+      "source": "/it/progetti/la-fede-addosso-dizionario-iconografico-dei-simboli-del-pellegrino",
+      "destination": "/projects/la-fede-addosso-dizionario-iconografico-dei-simboli-del-pellegrino"
+    },
+    {
+      "source": "/it/progetti/lettere-come-immagini",
+      "destination": "/projects/lettere-come-immagini"
+    },
+    {
+      "source": "/it/progetti/matematical-systems-on-natural-shape",
+      "destination": "/projects/matematical-systems-on-natural-shape"
+    },
+    {
+      "source": "/it/progetti/memes-in-fabula",
+      "destination": "/projects/memes-in-fabula"
+    },
+    {
+      "source": "/it/progetti/micromort",
+      "destination": "/projects/micromort"
+    },
+    {
+      "source": "/it/progetti/mineralia-i-micro-paesaggi-delle-centovalli",
+      "destination": "/projects/mineralia-i-micro-paesaggi-delle-centovalli"
+    },
+    {
+      "source": "/it/progetti/moti-dialogici",
+      "destination": "/projects/moti-dialogici"
+    },
+    {
+      "source": "/it/progetti/no-future",
+      "destination": "/projects/no-future"
+    },
+    {
+      "source": "/it/progetti/nomadismi-editoriali",
+      "destination": "/projects/nomadismi-editoriali"
+    },
+    {
+      "source": "/it/progetti/novelle-illustrate",
+      "destination": "/projects/novelle-illustrate"
+    },
+    {
+      "source": "/it/progetti/oggetti-d-affezione",
+      "destination": "/projects/oggetti-d-affezione"
+    },
+    {
+      "source": "/it/progetti/omne-quod-non-mutat-nox",
+      "destination": "/projects/omne-quod-non-mutat-nox"
+    },
+    {
+      "source": "/it/progetti/palazzo-chiaramonte-steri",
+      "destination": "/projects/palazzo-chiaramonte-steri"
+    },
+    {
+      "source": "/it/progetti/parliamone-in-piazza",
+      "destination": "/projects/parliamone-in-piazza"
+    },
+    {
+      "source": "/it/progetti/paroles-d-objets-kit-scenographique-modulable",
+      "destination": "/projects/paroles-d-objets-kit-scenographique-modulable"
+    },
+    {
+      "source": "/it/progetti/pasta-divella",
+      "destination": "/projects/pasta-divella"
+    },
+    {
+      "source": "/it/progetti/piana-di-marcesina-geografia-emotiva-e-poesie-tassonometriche",
+      "destination": "/projects/piana-di-marcesina-geografia-emotiva-e-poesie-tassonometriche"
+    },
+    {
+      "source": "/it/progetti/pompilia",
+      "destination": "/projects/pompilia"
+    },
+    {
+      "source": "/it/progetti/print-it",
+      "destination": "/projects/print-it"
+    },
+    {
+      "source": "/it/progetti/salvaguardia-e-valorizzazione-del-patrimonio-culturale-intangibile",
+      "destination": "/projects/salvaguardia-e-valorizzazione-del-patrimonio-culturale-intangibile"
+    },
+    {
+      "source": "/it/progetti/specta-your-personal-eco-anxiety-silencer",
+      "destination": "/projects/specta-your-personal-eco-anxiety-silencer"
+    },
+    {
+      "source": "/it/progetti/stato-in-luogo",
+      "destination": "/projects/stato-in-luogo"
+    },
+    {
+      "source": "/it/progetti/tac",
+      "destination": "/projects/tac"
+    },
+    {
+      "source": "/it/progetti/the-flower-encyclopedia",
+      "destination": "/projects/the-flower-encyclopedia"
+    },
+    {
+      "source": "/it/progetti/the-glossy-glossary-of-drag",
+      "destination": "/projects/the-glossy-glossary-of-drag"
+    },
+    {
+      "source": "/it/progetti/toni-e-bepi",
+      "destination": "/projects/toni-e-bepi"
+    },
+    {
+      "source": "/it/progetti/torviscosa-specimen-di-carattere-contaminazioni-razionale-organico",
+      "destination": "/projects/torviscosa-specimen-di-carattere-contaminazioni-razionale-organico"
+    },
+    {
+      "source": "/it/progetti/trasformazioni-verbovisive",
+      "destination": "/projects/trasformazioni-verbovisive-parola-e-immagine-fra-arti-e-design-un-percorso-storico"
+    },
+    {
+      "source": "/it/progetti/trucks",
+      "destination": "/projects/trucks"
+    },
+    {
+      "source": "/it/progetti/una-famiglia-contadina-dell-altopiano-del-salto",
+      "destination": "/projects/una-famiglia-contadina-dell-altopiano-del-salto"
+    },
+    {
+      "source": "/it/progetti/uncanny-valley",
+      "destination": "/projects/uncanny-valley"
+    },
+    {
+      "source": "/it/progetti/vi-e-il-riflesso-perduto",
+      "destination": "/projects/vi-e-il-riflesso-perduto"
+    },
+    {
+      "source": "/it/progetti/vinyl",
+      "destination": "/projects/vinyl"
+    },
+    {
+      "source": "/it/progetti/voltare-pagina",
+      "destination": "/projects/voltare-pagina"
+    },
+    {
+      "source": "/it/progetti/warming-up-kids-laboratori-per-bambini-esplorando-il-processo-di-apprendimento-creativo",
+      "destination": "/projects/warming-up-kids-laboratori-per-bambini-esplorando-il-processo-di-apprendimento-creativo"
+    },
+    {
+      "source": "/it/progetti/write-it-personal",
+      "destination": "/projects/write-it-personal"
+    }
+  ]
+}
