@@ -108,16 +108,16 @@ export function BookshopsContent({
   utmSettings,
 }: BookshopsContentProps) {
   const markers = bookshops.flatMap((b) => {
-    if (b.place?.lat == null || b.place.lng == null) {
+    if (b.place?.lat === null || b.place.lng === null) {
       return [];
     }
 
     return [
       {
         id: b._id,
-        name: b.name ?? "",
         lat: b.place.lat,
         lng: b.place.lng,
+        name: b.name ?? "",
       },
     ];
   });

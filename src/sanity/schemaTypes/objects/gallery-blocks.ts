@@ -43,170 +43,161 @@ const orientationField = defineField({
 });
 
 export const singleMediaBlock = defineType({
-  type: "object",
-  name: "singleMediaBlock",
-  title: "Single Media",
-  icon: SquareIcon,
   fields: [
     orientationField,
     defineField({
-      type: "mediaItem",
       name: "media",
       title: "Media",
+      type: "mediaItem",
       validation: (e) => e.required(),
     }),
   ],
+  icon: SquareIcon,
+  name: "singleMediaBlock",
   preview: {
-    select: {
-      type: "media.type",
-      caption: "media.caption",
-      image: "media.image",
-    },
     prepare({ type, caption, image }) {
       return {
-        title: caption || "Single Media",
-        subtitle: type === "image" ? "Image" : "Video",
         media: type === "image" ? image : ImageIcon,
+        subtitle: type === "image" ? "Image" : "Video",
+        title: caption || "Single Media",
       };
     },
+    select: {
+      caption: "media.caption",
+      image: "media.image",
+      type: "media.type",
+    },
   },
+  title: "Single Media",
+  type: "object",
 });
 
 export const sideBySideMediaBlock = defineType({
-  type: "object",
-  name: "sideBySideMediaBlock",
-  title: "Side by Side",
-  icon: InlineIcon,
   components: {
     input: SideBySideInput,
   },
   fields: [
     orientationField,
     defineField({
-      type: "mediaItem",
       name: "left",
       title: "Left",
+      type: "mediaItem",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "mediaItem",
       name: "right",
       title: "Right",
+      type: "mediaItem",
       validation: (e) => e.required(),
     }),
   ],
+  icon: InlineIcon,
+  name: "sideBySideMediaBlock",
   preview: {
-    select: {
-      leftCaption: "left.caption",
-      rightCaption: "right.caption",
-      leftImage: "left.image",
-    },
     prepare({ leftCaption, rightCaption, leftImage }) {
       const title =
         [leftCaption, rightCaption].filter(Boolean).join(" | ") ||
         "Side by Side";
       return {
-        title,
-        subtitle: "2 items",
         media: leftImage || InlineIcon,
+        subtitle: "2 items",
+        title,
       };
     },
+    select: {
+      leftCaption: "left.caption",
+      leftImage: "left.image",
+      rightCaption: "right.caption",
+    },
   },
+  title: "Side by Side",
+  type: "object",
 });
 
 export const threeSideBySideMediaBlock = defineType({
-  type: "object",
-  name: "threeSideBySideMediaBlock",
-  title: "3 Side by Side",
-  icon: BlockElementIcon,
   components: {
     input: ThreeSideBySideInput,
   },
   fields: [
     orientationField,
     defineField({
-      type: "mediaItem",
       name: "left",
       title: "Left",
+      type: "mediaItem",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "mediaItem",
       name: "center",
       title: "Center",
+      type: "mediaItem",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "mediaItem",
       name: "right",
       title: "Right",
+      type: "mediaItem",
       validation: (e) => e.required(),
     }),
   ],
+  icon: BlockElementIcon,
+  name: "threeSideBySideMediaBlock",
   preview: {
-    select: {
-      leftCaption: "left.caption",
-      centerCaption: "center.caption",
-      rightCaption: "right.caption",
-      leftImage: "left.image",
-    },
     prepare({ leftCaption, centerCaption, rightCaption, leftImage }) {
       const title =
         [leftCaption, centerCaption, rightCaption]
           .filter(Boolean)
           .join(" | ") || "3 Side by Side";
       return {
-        title,
-        subtitle: "3 items",
         media: leftImage || BlockElementIcon,
+        subtitle: "3 items",
+        title,
       };
     },
+    select: {
+      centerCaption: "center.caption",
+      leftCaption: "left.caption",
+      leftImage: "left.image",
+      rightCaption: "right.caption",
+    },
   },
+  title: "3 Side by Side",
+  type: "object",
 });
 
 export const gridFourMediaBlock = defineType({
-  type: "object",
-  name: "gridFourMediaBlock",
-  title: "Grid of 4",
-  icon: ThLargeIcon,
   components: {
     input: GridFourInput,
   },
   fields: [
     orientationField,
     defineField({
-      type: "mediaItem",
       name: "topLeft",
       title: "Top Left",
+      type: "mediaItem",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "mediaItem",
       name: "topRight",
       title: "Top Right",
+      type: "mediaItem",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "mediaItem",
       name: "bottomLeft",
       title: "Bottom Left",
+      type: "mediaItem",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "mediaItem",
       name: "bottomRight",
       title: "Bottom Right",
+      type: "mediaItem",
       validation: (e) => e.required(),
     }),
   ],
+  icon: ThLargeIcon,
+  name: "gridFourMediaBlock",
   preview: {
-    select: {
-      topLeftCaption: "topLeft.caption",
-      topRightCaption: "topRight.caption",
-      bottomLeftCaption: "bottomLeft.caption",
-      bottomRightCaption: "bottomRight.caption",
-      topLeftImage: "topLeft.image",
-    },
     prepare({
       topLeftCaption,
       topRightCaption,
@@ -219,10 +210,19 @@ export const gridFourMediaBlock = defineType({
           .filter(Boolean)
           .join(" | ") || "Grid of 4";
       return {
-        title,
-        subtitle: "4 items",
         media: topLeftImage || ThLargeIcon,
+        subtitle: "4 items",
+        title,
       };
     },
+    select: {
+      bottomLeftCaption: "bottomLeft.caption",
+      bottomRightCaption: "bottomRight.caption",
+      topLeftCaption: "topLeft.caption",
+      topLeftImage: "topLeft.image",
+      topRightCaption: "topRight.caption",
+    },
   },
+  title: "Grid of 4",
+  type: "object",
 });

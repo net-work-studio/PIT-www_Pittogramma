@@ -2,29 +2,29 @@ import { TagIcon } from "@sanity/icons/Tag";
 import { defineField, defineType } from "sanity";
 
 export const tag = defineType({
-  type: "document",
-  name: "tag",
-  title: "Tag",
-  icon: TagIcon,
   fields: [
     defineField({
-      type: "string",
       name: "name",
       title: "Name",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "slug",
       name: "slug",
-      title: "Slug",
       options: { source: "name" },
+      title: "Slug",
+      type: "slug",
       validation: (e) => e.required(),
     }),
   ],
+  icon: TagIcon,
+  name: "tag",
   preview: {
     select: {
-      title: "name",
       subtitle: "slug.current",
+      title: "name",
     },
   },
+  title: "Tag",
+  type: "document",
 });

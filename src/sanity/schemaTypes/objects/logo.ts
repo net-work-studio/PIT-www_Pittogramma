@@ -1,22 +1,22 @@
 import { defineField, defineType } from "sanity";
 
 export const logo = defineType({
-  type: "object",
-  name: "logo",
-  title: "Logo",
   fields: [
     defineField({
-      type: "image",
+      description: "Upload black image, will be used in light mode.",
       name: "logoLight",
       title: "Logo Light",
-      description: "Upload black image, will be used in light mode.",
+      type: "image",
     }),
     defineField({
-      type: "image",
+      description: "Upload white image, will be used in dark mode.",
       name: "logoDark",
       title: "Logo Dark",
-      description: "Upload white image, will be used in dark mode.",
+      type: "image",
     }),
-    defineField({ type: "string", name: "alt", title: "Alt" }),
+    defineField({ name: "alt", title: "Alt", type: "string" }),
   ],
+  name: "logo",
+  title: "Logo",
+  type: "object",
 });

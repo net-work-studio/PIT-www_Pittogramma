@@ -18,16 +18,16 @@ import { EDITIONS_LIST_QUERY, EDITIONS_PAGE_QUERY } from "@/sanity/lib/queries";
 export async function generateMetadata(): Promise<Metadata> {
   const { perspective } = await getDynamicFetchOptions();
   const { data: page } = await sanityFetchMetadata({
-    query: EDITIONS_PAGE_QUERY,
     perspective,
+    query: EDITIONS_PAGE_QUERY,
   });
 
   return mapSanityToMetadata({
-    page: {
-      title: page?.title ?? "Editions",
-      seo: page?.seo as SeoModule | undefined,
-    },
     baseUrl: siteDefaults.baseUrl,
+    page: {
+      seo: page?.seo as SeoModule | undefined,
+      title: page?.title ?? "Editions",
+    },
     path: "/editions",
     siteDefaults,
   });
@@ -53,8 +53,8 @@ async function DynamicEditionsPage() {
 async function CachedEditionsPage({ perspective, stega }: DynamicFetchOptions) {
   "use cache";
   const [{ data: editions }, { data: pageSettings }] = await Promise.all([
-    sanityFetch({ query: EDITIONS_LIST_QUERY, perspective, stega }),
-    sanityFetch({ query: EDITIONS_PAGE_QUERY, perspective, stega }),
+    sanityFetch({ perspective, query: EDITIONS_LIST_QUERY, stega }),
+    sanityFetch({ perspective, query: EDITIONS_PAGE_QUERY, stega }),
   ]);
 
   const items = editions ?? [];

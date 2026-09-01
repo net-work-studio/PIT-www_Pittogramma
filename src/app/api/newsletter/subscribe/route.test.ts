@@ -8,9 +8,9 @@ import { POST } from "./route";
 
 const originalEnv = {
   BREVO_API_KEY: process.env.BREVO_API_KEY,
-  BREVO_WEBSITE_LIST_ID: process.env.BREVO_WEBSITE_LIST_ID,
-  BREVO_DOI_TEMPLATE_ID: process.env.BREVO_DOI_TEMPLATE_ID,
   BREVO_DOI_REDIRECT_URL: process.env.BREVO_DOI_REDIRECT_URL,
+  BREVO_DOI_TEMPLATE_ID: process.env.BREVO_DOI_TEMPLATE_ID,
+  BREVO_WEBSITE_LIST_ID: process.env.BREVO_WEBSITE_LIST_ID,
   NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
 };
 
@@ -37,12 +37,12 @@ function createSubscribeRequest(
   origin = "https://pittogramma.xyz"
 ) {
   return new Request("https://pittogramma.xyz/api/newsletter/subscribe", {
-    method: "POST",
+    body: JSON.stringify(body),
     headers: {
       "Content-Type": "application/json",
       Origin: origin,
     },
-    body: JSON.stringify(body),
+    method: "POST",
   });
 }
 
@@ -126,11 +126,11 @@ describe("createDoiContact", () => {
     await createDoiContact({
       apiKey: "test-api-key",
       email: "reader@example.com",
+      fetcher,
       listId: 12,
-      templateId: 34,
       redirectUrl: "https://pittogramma.xyz/journal",
       source: "footer",
-      fetcher,
+      templateId: 34,
     });
 
     expect(fetcher).toHaveBeenCalledTimes(1);
@@ -162,7 +162,7 @@ describe("createDoiContact", () => {
             code: "duplicate_parameter",
             message: "Contact already exist",
           }),
-          { status: 400, headers: { "Content-Type": "application/json" } }
+          { headers: { "Content-Type": "application/json" }, status: 400 }
         )
     );
 
@@ -170,11 +170,11 @@ describe("createDoiContact", () => {
       createDoiContact({
         apiKey: "test-api-key",
         email: "reader@example.com",
+        fetcher,
         listId: 12,
-        templateId: 34,
         redirectUrl: "https://pittogramma.xyz/journal",
         source: "footer",
-        fetcher,
+        templateId: 34,
       })
     ).rejects.toMatchObject({ status: 409 });
   });
@@ -197,12 +197,12 @@ describe("POST /api/newsletter/subscribe", () => {
 
     const response = await POST(
       new Request("https://pittogramma.xyz/api/newsletter/subscribe", {
-        method: "POST",
+        body: "{",
         headers: {
           "Content-Type": "application/json",
           Origin: "https://pittogramma.xyz",
         },
-        body: "{",
+        method: "POST",
       })
     );
 
@@ -279,8 +279,8 @@ describe("POST /api/newsletter/subscribe", () => {
             message: "Contact already exist",
           }),
           {
-            status: 400,
             headers: { "Content-Type": "application/json" },
+            status: 400,
           }
         )
     ) as unknown as typeof fetch;

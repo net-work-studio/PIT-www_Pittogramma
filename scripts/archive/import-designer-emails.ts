@@ -28,10 +28,10 @@ if (!(projectId && dataset && token)) {
 }
 
 const client = createClient({
-  projectId,
-  dataset,
-  token,
   apiVersion: "2025-12-18",
+  dataset,
+  projectId,
+  token,
   useCdn: false,
 });
 
@@ -101,7 +101,7 @@ async function main(): Promise<void> {
       continue;
     }
 
-    designerEmails.push({ name, slug: toSlug(name), email });
+    designerEmails.push({ email, name, slug: toSlug(name) });
   }
 
   // 3. Fetch existing person documents from Sanity
@@ -125,9 +125,9 @@ async function main(): Promise<void> {
     }
 
     patches.push({
+      email: designer.email,
       id: person._id,
       name: designer.name,
-      email: designer.email,
     });
     _matched++;
   }

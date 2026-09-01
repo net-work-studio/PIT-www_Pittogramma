@@ -36,9 +36,9 @@ if (!(projectId && dataset)) {
 }
 
 const client = createClient({
-  projectId,
-  dataset,
   apiVersion: "2026-06-03",
+  dataset,
+  projectId,
   useCdn: false,
 });
 
@@ -46,17 +46,17 @@ async function main() {
   const items = await client.fetch<NEWSLETTER_PREVIEW_QUERY_RESULT>(
     NEWSLETTER_PREVIEW_QUERY,
     {
-      today: buildLocalToday(),
       limit,
+      today: buildLocalToday(),
     }
   );
 
   const blocks = items.map((item) => toNewsletterPreviewBlock(item, baseUrl));
   const payload = {
-    generatedAt: new Date().toISOString(),
     baseUrl,
-    limit,
     blocks,
+    generatedAt: new Date().toISOString(),
+    limit,
     manualPromoBlock: {
       note: "Insert sponsored content manually in Brevo when a placement exists.",
     },

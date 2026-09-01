@@ -16,16 +16,12 @@ import { schema } from "./src/sanity/schemaTypes";
 import { structure } from "./src/sanity/structure/structure";
 
 export default defineConfig({
-  basePath: "/admin",
-  projectId,
-  title: "Pittogramma",
-  icon: Mark,
-  dataset,
   auth: {
     loginMethod: "token",
   },
-  // Add and edit the content schema in the './sanity/schemaTypes' folder
-  schema,
+  basePath: "/admin",
+  dataset,
+  icon: Mark,
   plugins: [
     structureTool({ structure }),
     // Vision is for querying with GROQ from inside the Studio
@@ -33,12 +29,16 @@ export default defineConfig({
     visionTool({ defaultApiVersion: apiVersion }),
     media(),
     presentationTool({
-      resolve,
       previewUrl: {
         previewMode: {
           enable: "/api/draft-mode/enable",
         },
       },
+      resolve,
     }),
   ],
+  projectId,
+  // Add and edit the content schema in the './sanity/schemaTypes' folder
+  schema,
+  title: "Pittogramma",
 });

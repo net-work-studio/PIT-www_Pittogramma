@@ -8,14 +8,14 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 
 // Fix default marker icons for webpack/next.js bundling
 const defaultIcon = L.icon({
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  iconAnchor: [12, 41],
   iconRetinaUrl:
     "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
   iconSize: [25, 41],
-  iconAnchor: [12, 41],
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
 L.Marker.prototype.options.icon = defaultIcon;
@@ -55,7 +55,7 @@ function FitBounds({ places }: { places: MapPlace[] }) {
       places
         .filter(
           (p: MapPlace): p is MapPlace & { lat: number; lng: number } =>
-            p.lat != null && p.lng != null
+            p.lat !== null && p.lng !== null
         )
         .map((p: MapPlace & { lat: number; lng: number }) =>
           L.latLng(p.lat, p.lng)
@@ -63,7 +63,7 @@ function FitBounds({ places }: { places: MapPlace[] }) {
     );
 
     if (bounds.isValid()) {
-      map.fitBounds(bounds, { padding: [50, 50], maxZoom: 12 });
+      map.fitBounds(bounds, { maxZoom: 12, padding: [50, 50] });
     }
   }, [map, places]);
 
@@ -129,7 +129,7 @@ function buildPopupContent(place: MapPlace): string {
 export default function LocationMap({ places, className }: LocationMapProps) {
   const validPlaces = places.filter(
     (p: MapPlace): p is MapPlace & { lat: number; lng: number } =>
-      p.lat != null && p.lng != null
+      p.lat !== null && p.lng !== null
   );
 
   if (validPlaces.length === 0) {
@@ -148,10 +148,10 @@ export default function LocationMap({ places, className }: LocationMapProps) {
         center={[45, 10]}
         scrollWheelZoom
         style={{
-          height: "100%",
-          width: "100%",
-          minHeight: 400,
           borderRadius: "0.75rem",
+          height: "100%",
+          minHeight: 400,
+          width: "100%",
         }}
         zoom={4}
       >

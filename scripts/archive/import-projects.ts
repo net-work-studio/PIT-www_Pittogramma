@@ -39,10 +39,10 @@ if (!(projectId && dataset && token)) {
 }
 
 const client = createClient({
-  projectId,
-  dataset,
-  token,
   apiVersion: "2025-12-18",
+  dataset,
+  projectId,
+  token,
   useCdn: false,
 });
 
@@ -52,11 +52,11 @@ const PROJECTS_DIR = join(process.cwd(), "DATA_IMPORT/1_progetti");
 const IMAGE_UPLOAD_DELAY = 300;
 
 const INSTITUTE_ALIASES: Record<string, string> = {
+  "ABA Palermo": "Accademia di Belle Arti di Palermo",
+  "Abadir, Accademia di Design e Comunicazione Visiva": "Abadir",
   "ISIA Uribno": "ISIA Urbino",
   IUAV: "Università IUAV di Venezia",
   "Universita luav di Venezia": "Università IUAV di Venezia",
-  "ABA Palermo": "Accademia di Belle Arti di Palermo",
-  "Abadir, Accademia di Design e Comunicazione Visiva": "Abadir",
 };
 
 // --- Helpers ---
@@ -145,9 +145,9 @@ async function buildUuidMap(
     if (fields.Uuid) {
       const imageFile = file.replace(".it.txt", "");
       map.set(fields.Uuid, {
-        filePath: join(folderPath, imageFile),
-        caption: fields.Caption || "",
         alt: fields.Alt || "",
+        caption: fields.Caption || "",
+        filePath: join(folderPath, imageFile),
       });
     }
   }
@@ -245,9 +245,9 @@ async function buildMediaItem(
 ): Promise<MediaItemData> {
   const mediaItem: MediaItemData = {
     _type: "mediaItem",
-    type: "image",
-    caption: "",
     alt: "",
+    caption: "",
+    type: "image",
   };
 
   const imageRefs = block.content.image || [];
@@ -273,7 +273,7 @@ async function buildMediaItem(
   if (assetRef) {
     mediaItem.image = {
       _type: "image",
-      asset: { _type: "reference", _ref: assetRef },
+      asset: { _ref: assetRef, _type: "reference" },
     };
   }
 
@@ -308,10 +308,10 @@ async function transformGallery(
 
       const media = await buildMediaItem(block, uuidMap);
       blocks.push({
-        _type: "singleMediaBlock",
         _key: generateKey(),
-        orientation: "landscape",
+        _type: "singleMediaBlock",
         media,
+        orientation: "landscape",
       });
     } else if (
       columns.length === 2 &&
@@ -328,10 +328,10 @@ async function transformGallery(
       const left = await buildMediaItem(leftBlock, uuidMap);
       const right = await buildMediaItem(rightBlock, uuidMap);
       blocks.push({
-        _type: "sideBySideMediaBlock",
         _key: generateKey(),
-        orientation: "landscape",
+        _type: "sideBySideMediaBlock",
         left,
+        orientation: "landscape",
         right,
       });
     } else {
@@ -344,10 +344,10 @@ async function transformGallery(
 
         const media = await buildMediaItem(block, uuidMap);
         blocks.push({
-          _type: "singleMediaBlock",
           _key: generateKey(),
-          orientation: "landscape",
+          _type: "singleMediaBlock",
           media,
+          orientation: "landscape",
         });
       }
     }
@@ -474,7 +474,7 @@ async function resolveOrCreateTeacher(
   };
 
   if (instituteId) {
-    doc.teachingAt = { _type: "reference", _ref: instituteId };
+    doc.teachingAt = { _ref: instituteId, _type: "reference" };
   }
 
   if (!DRY_RUN) {
@@ -554,12 +554,12 @@ async function processProject(
         if (coverAssetRef) {
           coverData = {
             _type: "imageWithMetadata",
+            alt: coverMeta.alt || "",
+            caption: coverMeta.caption || "",
             image: {
               _type: "image",
-              asset: { _type: "reference", _ref: coverAssetRef },
+              asset: { _ref: coverAssetRef, _type: "reference" },
             },
-            caption: coverMeta.caption || "",
-            alt: coverMeta.alt || "",
           };
         }
       }
@@ -577,9 +577,9 @@ async function processProject(
     for (const path of paths) {
       const refId = await resolveOrCreateDesigner(path);
       designerRefs.push({
-        _type: "reference",
-        _ref: refId,
         _key: generateKey(),
+        _ref: refId,
+        _type: "reference",
       });
     }
   }
@@ -599,9 +599,9 @@ async function processProject(
     for (const name of names) {
       const refId = await resolveOrCreateTeacher(name, instituteId);
       teacherRefs.push({
-        _type: "reference",
-        _ref: refId,
         _key: generateKey(),
+        _ref: refId,
+        _type: "reference",
       });
     }
   }
@@ -621,9 +621,9 @@ async function processProject(
   for (const tagSlug of tagSlugs) {
     const refId = await resolveOrCreateTag(tagSlug);
     tagRefs.push({
-      _type: "reference",
-      _ref: refId,
       _key: generateKey(),
+      _ref: refId,
+      _type: "reference",
     });
   }
 
@@ -664,8 +664,8 @@ async function processProject(
   const doc: any = {
     _id: docId,
     _type: "project",
-    title,
     slug: { _type: "slug", current: slug },
+    title,
   };
 
   if (publishingDate) {
@@ -678,7 +678,7 @@ async function processProject(
     doc.designers = designerRefs;
   }
   if (instituteId) {
-    doc.institute = { _type: "reference", _ref: instituteId };
+    doc.institute = { _ref: instituteId, _type: "reference" };
   }
   if (teacherRefs.length > 0) {
     doc.teachers = teacherRefs;
@@ -761,8 +761,8 @@ async function main(): Promise<void> {
   const allEntries = await readdir(PROJECTS_DIR);
   const dirChecks = await Promise.all(
     allEntries.map(async (f) => ({
-      name: f,
       isDir: (await stat(join(PROJECTS_DIR, f))).isDirectory(),
+      name: f,
     }))
   );
   const folders = dirChecks

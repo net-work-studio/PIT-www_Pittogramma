@@ -26,10 +26,10 @@ if (!(projectId && dataset && token)) {
 }
 
 const client = createClient({
-  projectId,
-  dataset,
-  token,
   apiVersion: "2025-12-18",
+  dataset,
+  projectId,
+  token,
   useCdn: false,
 });
 

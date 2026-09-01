@@ -50,23 +50,23 @@ export async function createDoiContact(
   const fetcher = input.fetcher ?? fetch;
 
   const response = await fetcher(BREVO_DOI_ENDPOINT, {
-    method: "POST",
+    body: JSON.stringify({
+      attributes: {
+        SIGNUP_CONTEXT: input.source,
+        SIGNUP_SOURCE: "website",
+      },
+      email: input.email,
+      includeListIds: [input.listId],
+      redirectionUrl: input.redirectUrl,
+      templateId: input.templateId,
+    }),
     cache: "no-store",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json",
       "api-key": input.apiKey,
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      email: input.email,
-      includeListIds: [input.listId],
-      templateId: input.templateId,
-      redirectionUrl: input.redirectUrl,
-      attributes: {
-        SIGNUP_SOURCE: "website",
-        SIGNUP_CONTEXT: input.source,
-      },
-    }),
+    method: "POST",
     signal: AbortSignal.timeout(10_000),
   });
 

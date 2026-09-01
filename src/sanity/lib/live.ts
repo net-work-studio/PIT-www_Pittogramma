@@ -10,8 +10,8 @@ import { client } from "./client";
 import { token } from "./token";
 
 export const { SanityLive, sanityFetch } = defineLive({
-  client,
   browserToken: token,
+  client,
   serverToken: token,
   strict: true,
 });
@@ -37,9 +37,9 @@ export async function sanityFetchStaticParams<
 >({ query, params = {} }: { query: QueryString; params?: QueryParams }) {
   "use cache";
   const { data } = await sanityFetch({
-    query,
     params,
     perspective: "published",
+    query,
     stega: false,
   });
   return { data };
@@ -56,9 +56,9 @@ export async function sanityFetchMetadata<const QueryString extends string>({
 }) {
   "use cache";
   const { data } = await sanityFetch({
-    query,
     params,
     perspective,
+    query,
     stega: false,
   });
   return { data };

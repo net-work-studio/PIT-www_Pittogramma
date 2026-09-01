@@ -20,9 +20,9 @@ const sanityConfig = JSON.parse(
 );
 
 const client = createClient({
-  projectId: "jfvmcjyl",
-  dataset: "production",
   apiVersion: "2024-01-01",
+  dataset: "production",
+  projectId: "jfvmcjyl",
   token: sanityConfig.authToken,
   useCdn: false,
 });

@@ -13,15 +13,15 @@ const BADGE_VARIANT: Record<
   JournalLabelConfig["badgeVariant"]
 > = {
   articles: "article",
-  diary: "diary",
   baseline: "baseline",
+  diary: "diary",
 };
 
 const LABEL_CONFIG: Record<JournalLabelValue, JournalLabelConfig> =
   Object.fromEntries(
     JOURNAL_LABELS.map((opt) => [
       opt.value,
-      { label: opt.title, badgeVariant: BADGE_VARIANT[opt.value] },
+      { badgeVariant: BADGE_VARIANT[opt.value], label: opt.title },
     ])
   ) as Record<JournalLabelValue, JournalLabelConfig>;
 

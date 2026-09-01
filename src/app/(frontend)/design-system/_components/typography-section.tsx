@@ -1,16 +1,16 @@
 const SAMPLE_TEXT = "The quick brown fox jumps over the lazy dog";
 
 const SIZE_SCALE = [
-  { name: "text-xs", class: "text-xs" },
-  { name: "text-sm", class: "text-sm" },
-  { name: "text-base", class: "text-base" },
-  { name: "text-lg", class: "text-lg" },
-  { name: "text-xl", class: "text-xl" },
-  { name: "text-2xl", class: "text-2xl" },
-  { name: "text-3xl", class: "text-3xl" },
-  { name: "text-4xl", class: "text-4xl" },
-  { name: "text-5xl", class: "text-5xl" },
-  { name: "text-6xl", class: "text-6xl" },
+  { class: "text-xs", name: "text-xs" },
+  { class: "text-sm", name: "text-sm" },
+  { class: "text-base", name: "text-base" },
+  { class: "text-lg", name: "text-lg" },
+  { class: "text-xl", name: "text-xl" },
+  { class: "text-2xl", name: "text-2xl" },
+  { class: "text-3xl", name: "text-3xl" },
+  { class: "text-4xl", name: "text-4xl" },
+  { class: "text-5xl", name: "text-5xl" },
+  { class: "text-6xl", name: "text-6xl" },
 ];
 
 export default function TypographySection() {

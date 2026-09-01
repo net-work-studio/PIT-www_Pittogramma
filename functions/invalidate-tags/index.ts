@@ -28,20 +28,20 @@ export const handler = syncTagInvalidateEventHandler(
     const endpoint = new URL("/api/expire-tags", siteUrl);
 
     const response = await fetch(endpoint, {
-      method: "POST",
+      body: JSON.stringify({ syncTags }),
       headers: {
         Authorization: `Bearer ${secret}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ syncTags }),
+      method: "POST",
     });
 
     if (!response.ok) {
       const body = await response.text();
       // biome-ignore lint/suspicious/noConsole: Sanity Functions expose operational logs through console.
       console.error("Failed to invalidate Next cache tags", {
-        status: response.status,
         body,
+        status: response.status,
         syncTags,
       });
       throw new Error(`Next cache invalidation failed: ${response.status}`);

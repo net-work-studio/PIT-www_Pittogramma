@@ -2,16 +2,16 @@ import { PublishIcon } from "@sanity/icons/Publish";
 import { defineField, defineType } from "sanity";
 
 export const publisher = defineType({
-  type: "document",
-  name: "publisher",
-  title: "Publisher",
-  icon: PublishIcon,
   fields: [
     defineField({
-      type: "string",
       name: "name",
       title: "Name",
+      type: "string",
       validation: (e) => e.required(),
     }),
   ],
+  icon: PublishIcon,
+  name: "publisher",
+  title: "Publisher",
+  type: "document",
 });

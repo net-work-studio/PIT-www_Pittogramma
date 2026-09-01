@@ -130,18 +130,18 @@ function buildHomeStream(
 ): HomeGridSlot[] {
   const slots: HomeGridSlot[] = [];
   let cursor = 0;
-  for (let position = 1; position <= totalSlots; position++) {
+  for (let position = 1; position <= totalSlots; position += 1) {
     const adv = injections.get(position);
     if (adv) {
-      slots.push({ kind: "adv", item: adv });
+      slots.push({ item: adv, kind: "adv" });
       continue;
     }
     const item = editorial[cursor];
     if (!item) {
       break;
     }
-    slots.push({ kind: "editorial", item });
-    cursor++;
+    slots.push({ item, kind: "editorial" });
+    cursor += 1;
   }
   return slots;
 }
@@ -149,17 +149,17 @@ function buildHomeStream(
 export async function generateMetadata(): Promise<Metadata> {
   const { perspective } = await getDynamicFetchOptions();
   const { data: page } = await sanityFetchMetadata({
-    query: HOME_PAGE_QUERY,
     perspective,
+    query: HOME_PAGE_QUERY,
   });
 
   return mapSanityToMetadata({
+    baseUrl: siteDefaults.baseUrl,
     page: {
-      title: siteDefaults.title,
       description: siteDefaults.description,
       seo: page?.seo as SeoModule | undefined,
+      title: siteDefaults.title,
     },
-    baseUrl: siteDefaults.baseUrl,
     path: "/",
     siteDefaults,
   });
@@ -202,18 +202,18 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
     { data: recentUpdates },
     { data: homeAdvs },
   ] = await Promise.all([
-    sanityFetch({ query: HOME_PAGE_QUERY, perspective, stega }),
+    sanityFetch({ perspective, query: HOME_PAGE_QUERY, stega }),
     sanityFetch({
-      query: HOME_FEED_QUERY,
       params: { today },
       perspective,
+      query: HOME_FEED_QUERY,
       stega,
     }),
-    sanityFetch({ query: RECENT_UPDATES_QUERY, perspective, stega }),
+    sanityFetch({ perspective, query: RECENT_UPDATES_QUERY, stega }),
     sanityFetch({
-      query: HOME_ADV_QUERY,
       params: { today },
       perspective,
+      query: HOME_ADV_QUERY,
       stega,
     }),
   ]);
@@ -230,10 +230,11 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
     (selectedFeatured && isHomepageEligible(selectedFeatured, today)
       ? selectedFeatured
       : null) ??
-    ((feedItems?.[0] as unknown as EditorialItem | undefined) ?? null);
-  const editorialPool = ((feedItems ?? []) as unknown as EditorialItem[]).filter(
-    (item) => item._id !== featuredItem?._id
-  );
+    (feedItems?.[0] as unknown as EditorialItem | undefined) ??
+    null;
+  const editorialPool = (
+    (feedItems ?? []) as unknown as EditorialItem[]
+  ).filter((item) => item._id !== featuredItem?._id);
 
   // Bucket ADVs by tier; only inject those with a valid cover image.
   const advs = (homeAdvs ?? []) as AdvItem[];

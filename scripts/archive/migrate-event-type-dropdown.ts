@@ -28,10 +28,10 @@ if (!(projectId && dataset && token)) {
 }
 
 const client = createClient({
-  projectId,
-  dataset,
-  token,
   apiVersion: "2025-12-18",
+  dataset,
+  projectId,
+  token,
   useCdn: false,
 });
 
@@ -41,9 +41,9 @@ const VALID_VALUES = ["talk", "workshop", "5+1", "event"] as const;
 
 const TYPE_MAPPING: Record<string, string> = {
   "5+1": "5+1",
+  adadad: "workshop",
   Talk: "talk",
   Workshop: "workshop",
-  adadad: "workshop",
 };
 
 interface EventDoc {

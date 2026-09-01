@@ -1,7 +1,4 @@
-export const NEWSLETTER_SIGNUP_SOURCES = [
-  "footer",
-  "newsletter_card",
-] as const;
+export const NEWSLETTER_SIGNUP_SOURCES = ["footer", "newsletter_card"] as const;
 
 export type NewsletterSignupSource = (typeof NEWSLETTER_SIGNUP_SOURCES)[number];
 

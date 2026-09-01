@@ -36,17 +36,17 @@ const MAX_PAGE = 20;
 export async function generateMetadata(): Promise<Metadata> {
   const { perspective } = await getDynamicFetchOptions();
   const { data: page } = await sanityFetchMetadata({
-    query: EVENTS_PAGE_QUERY,
     perspective,
+    query: EVENTS_PAGE_QUERY,
   });
 
   return mapSanityToMetadata({
+    baseUrl: siteDefaults.baseUrl,
     page: {
-      title: page?.title ?? "Events",
       description: page?.introText ?? undefined,
       seo: page?.seo as SeoModule | undefined,
+      title: page?.title ?? "Events",
     },
-    baseUrl: siteDefaults.baseUrl,
     path: "/events",
     siteDefaults,
   });
@@ -147,24 +147,24 @@ async function CachedEventsPage({
     { data: pageSettings },
   ] = await Promise.all([
     sanityFetch({
-      query: FUTURE_EVENTS_QUERY,
       params: { includeFuture, today },
       perspective,
+      query: FUTURE_EVENTS_QUERY,
       stega,
     }),
     sanityFetch({
-      query: PAST_EVENTS_QUERY,
       params: { end, includeFuture, start, today },
       perspective,
+      query: PAST_EVENTS_QUERY,
       stega,
     }),
     sanityFetch({
-      query: PAST_EVENTS_COUNT_QUERY,
       params: { includeFuture, today },
       perspective,
+      query: PAST_EVENTS_COUNT_QUERY,
       stega,
     }),
-    sanityFetch({ query: EVENTS_PAGE_QUERY, perspective, stega }),
+    sanityFetch({ perspective, query: EVENTS_PAGE_QUERY, stega }),
   ]);
 
   const cta = pageSettings?.endOfPageCta;

@@ -95,9 +95,9 @@ export function FetchWebsiteDataButton(_props: StringInputProps) {
           (body as { error?: string } | null)?.error ??
           `HTTP ${imageResponse.status}`;
         toast.push({
+          description: reason,
           status: "warning",
           title: "Image upload skipped",
-          description: reason,
         });
         return null;
       }
@@ -109,14 +109,14 @@ export function FetchWebsiteDataButton(_props: StringInputProps) {
 
       return {
         _type: "imageWithMetadata",
+        alt: siteName || "Website cover",
         image: {
           _type: "image",
           asset: {
-            _type: "reference",
             _ref: imageAsset._id,
+            _type: "reference",
           },
         },
-        alt: siteName || "Website cover",
       };
     },
     [client, toast, sanityAuthToken]
@@ -150,9 +150,9 @@ export function FetchWebsiteDataButton(_props: StringInputProps) {
         await client.patch(draftId).set(patchData).commit();
 
         toast.push({
+          description: "Website data has been auto-filled from OG tags.",
           status: "success",
           title: "Fields populated",
-          description: "Website data has been auto-filled from OG tags.",
         });
       } catch (err) {
         setError(

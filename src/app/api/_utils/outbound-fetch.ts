@@ -401,7 +401,7 @@ export async function fetchWithSafeRedirects(
   const visitedUrls = new Set<string>();
   let currentUrl = url;
 
-  for (let redirects = 0; redirects <= maxRedirects; redirects++) {
+  for (let redirects = 0; redirects <= maxRedirects; redirects += 1) {
     currentUrl = await validatePublicHttpUrl(currentUrl.href, options);
 
     if (visitedUrls.has(currentUrl.href)) {

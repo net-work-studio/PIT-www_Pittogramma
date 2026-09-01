@@ -13,7 +13,7 @@ export function educationTextParts(edu: EducationEntry): string[] {
 
 export function formatEducationInline(edu: EducationEntry): string {
   const parts = educationTextParts(edu);
-  if (edu.year == null) {
+  if (edu.year === null) {
     return parts.join(", ");
   }
   return [...parts, edu.year].join(", ");

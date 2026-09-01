@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Button,
-  Card,
-  Flex,
-  Stack,
-  Text,
-  TextInput,
-} from "@sanity/ui";
+import { Button, Card, Flex, Stack, Text, TextInput } from "@sanity/ui";
 import { useToast } from "@sanity/ui/toast";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -72,9 +65,9 @@ export function PlaceInput(props: StringInputProps) {
 
       try {
         const response = await fetch("/api/places/search", {
-          method: "POST",
-          headers: getStudioApiHeaders(sanityAuthToken),
           body: JSON.stringify({ query }),
+          headers: getStudioApiHeaders(sanityAuthToken),
+          method: "POST",
         });
         const data = await response.json();
 
@@ -152,19 +145,19 @@ export function PlaceInput(props: StringInputProps) {
             city,
             country,
             countryCode: addr.country_code?.toUpperCase() || "",
-            state: addr.state || "",
+            formattedAddress: result.display_name,
             lat: Number.parseFloat(result.lat),
             lng: Number.parseFloat(result.lon),
             osmId: result.osm_id,
             osmType: result.osm_type,
-            formattedAddress: result.display_name,
+            state: addr.state || "",
           })
           .commit();
 
         toast.push({
+          description: `Selected: ${displayName}`,
           status: "success",
           title: "Place populated",
-          description: `Selected: ${displayName}`,
         });
       } catch (err) {
         setError(
@@ -207,13 +200,13 @@ export function PlaceInput(props: StringInputProps) {
               radius={2}
               shadow={2}
               style={{
-                position: "absolute",
-                top: "100%",
                 left: 0,
-                right: 0,
-                zIndex: 100,
                 maxHeight: 300,
                 overflowY: "auto",
+                position: "absolute",
+                right: 0,
+                top: "100%",
+                zIndex: 100,
               }}
             >
               <Stack gap={1} padding={1}>
@@ -269,7 +262,7 @@ export function PlaceInput(props: StringInputProps) {
             <Text size={1}>
               <strong>Country:</strong> {currentCountry}
             </Text>
-            {currentLat != null && currentLng != null && (
+            {currentLat !== null && currentLng !== null && (
               <Text size={1}>
                 <strong>Coordinates:</strong> {currentLat}, {currentLng}
               </Text>

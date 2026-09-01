@@ -44,9 +44,9 @@ export async function generateMetadata({
     getDynamicFetchOptions(),
   ]);
   const { data: project } = await sanityFetchMetadata({
-    query: PROJECT_QUERY,
     params: { slug },
     perspective,
+    query: PROJECT_QUERY,
   });
   const today = await getCachedLocalToday();
 
@@ -59,13 +59,13 @@ export async function generateMetadata({
   }
 
   return mapSanityToMetadata({
-    page: {
-      title: project.title,
-      description: project.description ?? undefined,
-      coverImage: project.cover ?? undefined,
-      seo: project.seo as SeoModule | undefined,
-    },
     baseUrl: siteDefaults.baseUrl,
+    page: {
+      coverImage: project.cover ?? undefined,
+      description: project.description ?? undefined,
+      seo: project.seo as SeoModule | undefined,
+      title: project.title,
+    },
     path: `/projects/${slug}`,
     siteDefaults,
   });
@@ -93,9 +93,9 @@ async function CachedProjectPage({
   "use cache";
   const today = await getCachedLocalToday();
   const { data: project } = await sanityFetch({
-    query: PROJECT_QUERY,
     params: { slug },
     perspective,
+    query: PROJECT_QUERY,
     stega,
   });
 
@@ -117,8 +117,6 @@ async function CachedProjectPage({
     <>
       <JsonLd
         data={{
-          name: project.title,
-          description: project.description,
           creator: project.designers?.length
             ? project.designers.map(
                 (
@@ -134,11 +132,13 @@ async function CachedProjectPage({
             : undefined,
           dateCreated: project.year ? String(project.year) : undefined,
           dateModified: project._updatedAt,
+          description: project.description,
           image: imageUrl,
           mainEntityOfPage: {
             "@id": projectUrl,
             "@type": "WebPage",
           },
+          name: project.title,
           publisher: {
             "@id": `${siteDefaults.baseUrl}#organization`,
           },
