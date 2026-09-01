@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import { sanity } from "next-sanity/live/cache-life";
+import { getKirbyRedirects } from "./src/lib/kirby-redirects";
 import { getSubstackRedirects } from "./src/lib/newsletter/substack-redirects";
 
 const sanityProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
@@ -24,6 +25,7 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: false,
       },
+      ...getKirbyRedirects(),
       ...getSubstackRedirects(),
     ];
   },
