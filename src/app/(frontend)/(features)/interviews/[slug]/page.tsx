@@ -118,9 +118,9 @@ async function CachedInterviewPage({
   const imageUrl = interview.cover?.image?.asset
     ? urlForImage(interview.cover)?.url()
     : undefined;
-  const interviewees = interview.designersAndProfessionals
-    ?.map((person: { name: string }) => person.name)
-    .filter(Boolean);
+  const interviewees = interview.designersAndProfessionals?.filter((person) =>
+    Boolean(person?.name)
+  );
   const interviewUrl = `${siteDefaults.baseUrl}/interviews/${slug}`;
   const relatedInterviews = selectRelatedInterviews({
     fallbackInterviews: interview.fallbackInterviews,
@@ -132,14 +132,26 @@ async function CachedInterviewPage({
       <JsonLd
         data={{
           author: interviewees?.length
-            ? interviewees.map((name: string) => ({
+            ? interviewees.map((person) => ({
                 "@type": "Person",
-                name,
+                name: person.name,
+                url: person.slug?.current
+                  ? `${siteDefaults.baseUrl}/designers/${person.slug.current}`
+                  : undefined,
               }))
             : undefined,
+          dateModified: interview._updatedAt,
+          datePublished: interview.publishingDate?.date,
           description: interview.introText,
+          headline: interview.title,
           image: imageUrl,
-          name: interview.title,
+          mainEntityOfPage: {
+            "@id": interviewUrl,
+            "@type": "WebPage",
+          },
+          publisher: {
+            "@id": `${siteDefaults.baseUrl}#organization`,
+          },
           url: interviewUrl,
         }}
         type="Article"
@@ -148,7 +160,7 @@ async function CachedInterviewPage({
       <div className="flex flex-col pb-12">
         <EditorialPageHero
           badge={<DetailPageBadge type="interview" />}
-          byline={interviewees?.join(", ")}
+          byline={interviewees?.map((person) => person.name).join(", ")}
           cover={interview.cover}
           date={
             interview.publishingDate?.date

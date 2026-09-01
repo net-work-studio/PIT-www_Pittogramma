@@ -619,7 +619,7 @@ const JOURNAL_FILTERED_NEWEST_QUERY = defineQuery(`
     publishingDate,
     cover { ${COVER_MEDIA_FIELDS} },
     featuredCover { ${COVER_MEDIA_FIELDS} },
-    authors[]{ ...@->{ _id, name }, _key },
+    authors[]{ ...@->{ _id, name, slug }, _key },
     excerpt,
     tags[]->{
       _id,
@@ -642,7 +642,7 @@ const JOURNAL_FILTERED_OLDEST_QUERY = defineQuery(`
     publishingDate,
     cover { ${COVER_MEDIA_FIELDS} },
     featuredCover { ${COVER_MEDIA_FIELDS} },
-    authors[]{ ...@->{ _id, name }, _key },
+    authors[]{ ...@->{ _id, name, slug }, _key },
     excerpt,
     tags[]->{
       _id,
@@ -862,6 +862,7 @@ export function getInterviewsFilteredQuery(sort: string): string {
 export const PROJECT_QUERY = defineQuery(`
   *[_type == "project" && slug.current == $slug][0] {
     _id,
+    _updatedAt,
     publishingDate,
     cover { ${COVER_MEDIA_FIELDS} },
     title,
@@ -974,12 +975,13 @@ export const JOURNAL_COUNT_QUERY = defineQuery(`
 export const JOURNAL_ARTICLE_QUERY = defineQuery(`
   *[_type == "journal" && slug.current == $slug][0] {
     _id,
+    _updatedAt,
     title,
     slug,
     label,
     publishingDate,
     cover { ${COVER_MEDIA_FIELDS} },
-    authors[]{ ...@->{ _id, name }, _key },
+    authors[]{ ...@->{ _id, name, slug }, _key },
     excerpt,
     tags[]->{
       _id,
@@ -991,6 +993,24 @@ export const JOURNAL_ARTICLE_QUERY = defineQuery(`
       ${JOURNAL_REFERENCE_BLOCK_FIELDS}
     },
     ${SEO_FIELDS}
+  }
+`);
+
+export const JOURNAL_RSS_QUERY = defineQuery(`
+  *[
+    _type == "journal"
+    && defined(slug.current)
+    && defined(publishingDate.date)
+    && publishingDate.date <= $today
+    && seo.metaRobots != "noindex, follow"
+    && seo.metaRobots != "noindex, nofollow"
+  ] | order(publishingDate.date desc) [0...50] {
+    _updatedAt,
+    title,
+    "slug": slug.current,
+    publishingDate,
+    excerpt,
+    authors[]{ ...@->{ _id, name }, _key }
   }
 `);
 
@@ -1069,11 +1089,12 @@ export const INTERVIEWS_TAGS_QUERY = defineQuery(`
 export const INTERVIEW_QUERY = defineQuery(`
   *[_type == "interview" && slug.current == $slug][0] {
     _id,
+    _updatedAt,
     title,
     slug,
     publishingDate,
     cover { ${COVER_MEDIA_FIELDS} },
-    designersAndProfessionals[]{ ...@->{ _id, name, ${PORTRAIT_FIELDS} }, _key },
+    designersAndProfessionals[]{ ...@->{ _id, name, slug, ${PORTRAIT_FIELDS} }, _key },
     interviewToType,
     studio->{
       _id,

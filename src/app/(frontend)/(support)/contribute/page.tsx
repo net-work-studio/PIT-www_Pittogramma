@@ -3,6 +3,7 @@ import { draftMode } from "next/headers";
 import { Suspense } from "react";
 import PageHeader from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
+import { staticPageMetadata } from "@/lib/seo/static-page-metadata";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
@@ -10,9 +11,11 @@ import {
 } from "@/sanity/lib/live";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 
-export const metadata: Metadata = {
-  title: "Contribute to the index",
-};
+export const metadata: Metadata = staticPageMetadata(
+  "/contribute",
+  "Contribute to the index",
+  "Suggest a studio, type foundry, or bibliography entry for Pittogramma’s graphic design index."
+);
 
 const contributionForms = [
   { key: "studioAgencyContributionUrl", title: "Studio / Agency" },

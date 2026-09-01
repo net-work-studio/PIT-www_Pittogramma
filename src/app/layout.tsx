@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-import { JsonLd } from "@/components/seo/json-ld";
+import SiteSchema from "@/components/seo/site-schema";
 import { siteDefaults } from "@/lib/seo/site-defaults";
 
 import "./globals.css";
@@ -41,6 +41,7 @@ const aktual = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteDefaults.baseUrl),
   title: {
     default: siteDefaults.title || "Pittogramma",
     template: "%s – Pittogramma",
@@ -53,7 +54,6 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: siteDefaults.title || "Pittogramma",
-    // Default OG image can be added here
   },
   twitter: {
     card: "summary_large_image",
@@ -72,22 +72,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="flex min-h-screen flex-col justify-between bg-background text-foreground antialiased">
-        <JsonLd
-          data={{
-            name: siteDefaults.title,
-            description: siteDefaults.description,
-            url: siteDefaults.baseUrl,
-          }}
-          type="Organization"
-        />
-        <JsonLd
-          data={{
-            name: siteDefaults.title,
-            description: siteDefaults.description,
-            url: siteDefaults.baseUrl,
-          }}
-          type="WebSite"
-        />
+        <SiteSchema />
         {children}
       </body>
     </html>

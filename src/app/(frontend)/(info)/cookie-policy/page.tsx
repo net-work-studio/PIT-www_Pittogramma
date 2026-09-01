@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import LegalPageContent from "@/components/modules/legal/legal-page-content";
 import PageHeader from "@/components/shared/page-header";
+import { staticPageMetadata } from "@/lib/seo/static-page-metadata";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
@@ -11,9 +12,11 @@ import {
 } from "@/sanity/lib/live";
 import { COOKIE_POLICY_PAGE_QUERY } from "@/sanity/lib/queries";
 
-export const metadata: Metadata = {
-  title: "Cookie Policy",
-};
+export const metadata: Metadata = staticPageMetadata(
+  "/cookie-policy",
+  "Cookie Policy",
+  "How Pittogramma uses cookies and similar technologies."
+);
 
 export default async function CookiePolicyPage() {
   const { isEnabled: isDraftMode } = await draftMode();

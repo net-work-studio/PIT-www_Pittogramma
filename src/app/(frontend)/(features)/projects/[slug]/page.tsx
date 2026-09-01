@@ -129,11 +129,22 @@ async function CachedProjectPage({
                 ) => ({
                   "@type": "Person",
                   name: d.name,
+                  url: d.slug?.current
+                    ? `${siteDefaults.baseUrl}/designers/${d.slug.current}`
+                    : undefined,
                 })
               )
             : undefined,
           dateCreated: project.year ? String(project.year) : undefined,
+          dateModified: project._updatedAt,
           image: imageUrl,
+          mainEntityOfPage: {
+            "@id": projectUrl,
+            "@type": "WebPage",
+          },
+          publisher: {
+            "@id": `${siteDefaults.baseUrl}#organization`,
+          },
           url: projectUrl,
         }}
         type="CreativeWork"

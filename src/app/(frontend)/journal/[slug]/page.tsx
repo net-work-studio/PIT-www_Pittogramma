@@ -117,9 +117,7 @@ async function CachedJournalArticlePage({
   const imageUrl = article.cover?.image?.asset
     ? urlForImage(article.cover)?.url()
     : undefined;
-  const authors = article.authors
-    ?.map((author: { name: string }) => author.name)
-    .filter(Boolean);
+  const authors = article.authors?.filter((author) => Boolean(author?.name));
   const articleUrl = `${siteDefaults.baseUrl}/journal/${slug}`;
   const labelConfig = getJournalLabelConfig(article.label);
 
@@ -128,14 +126,26 @@ async function CachedJournalArticlePage({
       <JsonLd
         data={{
           author: authors?.length
-            ? authors.map((name: string) => ({
+            ? authors.map((author) => ({
                 "@type": "Person",
-                name,
+                name: author.name,
+                url: author.slug?.current
+                  ? `${siteDefaults.baseUrl}/designers/${author.slug.current}`
+                  : undefined,
               }))
             : undefined,
+          dateModified: article._updatedAt,
+          datePublished: article.publishingDate?.date,
           description: article.excerpt,
+          headline: article.title,
           image: imageUrl,
-          name: article.title,
+          mainEntityOfPage: {
+            "@id": articleUrl,
+            "@type": "WebPage",
+          },
+          publisher: {
+            "@id": `${siteDefaults.baseUrl}#organization`,
+          },
           url: articleUrl,
         }}
         type="Article"
@@ -151,7 +161,7 @@ async function CachedJournalArticlePage({
               />
             ) : null
           }
-          byline={authors?.join(", ")}
+          byline={authors?.map((author) => author.name).join(", ")}
           cover={article.cover}
           date={
             article.publishingDate?.date
