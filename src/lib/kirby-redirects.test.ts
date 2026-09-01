@@ -29,12 +29,13 @@ describe("getKirbyRedirects", () => {
     });
   });
 
-  test("keeps retired edition URLs temporary while they point to the homepage", () => {
-    expect(redirects).toContainEqual({
-      destination: "/",
-      permanent: false,
-      source: "/en/editions/:path*",
-    });
+  test("leaves retired edition URLs to the not-found route", () => {
+    expect(redirects.map((redirect) => redirect.source)).not.toContain(
+      "/en/editions/:path*"
+    );
+    expect(redirects.map((redirect) => redirect.source)).not.toContain(
+      "/it/edizioni/:path*"
+    );
   });
 
   test("preserves former resource and archive aliases", () => {

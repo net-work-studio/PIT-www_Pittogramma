@@ -143,16 +143,6 @@ const STATIC_REDIRECTS: KirbyRedirect[] = [
 
 const PATTERN_REDIRECTS: KirbyRedirect[] = [
   {
-    destination: "/",
-    permanent: false,
-    source: "/en/editions/:path*",
-  },
-  {
-    destination: "/",
-    permanent: false,
-    source: "/it/edizioni/:path*",
-  },
-  {
     destination: "/studios-agencies",
     permanent: true,
     source: "/:language(en|it)/archivio/studios/:path*",
