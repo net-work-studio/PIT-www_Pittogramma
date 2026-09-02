@@ -81,7 +81,7 @@ export default function FeaturedHero({
         className="absolute h-full w-full rounded-xl object-cover transition-transform duration-300"
         cover={cover}
         fill
-        priority
+        preload
         sizes="(max-width: 1280px) 100vw, 75vw"
       />
     </Link>

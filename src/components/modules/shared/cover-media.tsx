@@ -23,6 +23,7 @@ interface CoverMediaProps {
   cover: CoverMediaData | null | undefined;
   fill?: boolean;
   fillWidth?: number;
+  preload?: boolean;
   priority?: boolean;
   sizes?: string;
 }
@@ -32,6 +33,7 @@ export default function CoverMedia({
   className,
   fill,
   fillWidth,
+  preload,
   priority,
   sizes,
 }: CoverMediaProps) {
@@ -67,6 +69,7 @@ export default function CoverMedia({
       className={className}
       fill={fill}
       fillWidth={fillWidth}
+      preload={preload}
       preserveAnimation={cover.preserveAnimation === true}
       priority={priority}
       sizes={sizes}
