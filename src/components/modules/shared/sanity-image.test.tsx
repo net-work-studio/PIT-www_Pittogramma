@@ -33,3 +33,19 @@ test("makes an explicit objectFit prop authoritative", () => {
 
   expect(markup).toContain("object-fit:contain");
 });
+
+test("uses Sanity format negotiation for non-animated images", () => {
+  const markup = renderToStaticMarkup(
+    <SanityImage fill fillWidth={1200} source={source} />
+  );
+
+  expect(markup).toContain("auto%3Dformat");
+});
+
+test("keeps animated images on their original format", () => {
+  const markup = renderToStaticMarkup(
+    <SanityImage fill preserveAnimation source={source} />
+  );
+
+  expect(markup).not.toContain("auto%3Dformat");
+});
