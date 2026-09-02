@@ -1,0 +1,22 @@
+migrations/tag-reference-member-type/index.ts
+  s_9cb396e40330ea::t_8ce0d18ea83980 42-48,64-67,72-73
+  s_9cb396e40330ea::t_cc6c500fd447b5 10,13
+  s_9cb396e40330ea::t_a9e4022a9c68d1 1-9,11-12,14-41,49-63,68-71,74-119,123-124
+  s_9cb396e40330ea::t_2a50ff52f69fdb 120-122
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "974f86d3c40992c6ccadcb6962b04fe2e18704e9",
+  "prompts": {},
+  "sessions": {
+    "s_9cb396e40330ea": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0626c-76cf-7833-8b94-2e0f2bce79a4",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
