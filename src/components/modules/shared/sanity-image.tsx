@@ -105,6 +105,7 @@ export default function SanityImage({
   sizes,
   className,
   priority,
+  preload,
   quality = 75,
   preserveAnimation = false,
   respectHotspot,
@@ -124,7 +125,9 @@ export default function SanityImage({
   const requestedWidth = fill ? (fillWidth ?? 1920) : Number(width);
   const sourceWidth = getImageDimensions(source)?.width;
   const safeWidth = getSafeImageWidth(requestedWidth, sourceWidth);
-  const sizedBuilder = builder.quality(Number(quality));
+  const sizedBuilder = preserveAnimation
+    ? builder.quality(Number(quality))
+    : builder.quality(Number(quality)).auto("format");
   const url = buildSizedImageUrl(sizedBuilder, {
     fill,
     fillWidth: fill ? safeWidth : fillWidth,
@@ -155,6 +158,7 @@ export default function SanityImage({
     ...blurProps,
     className: cn(objectFit ? undefined : "object-cover", className),
     ...(objectPosition ? { objectPosition } : {}),
+    preload,
     priority,
     sizes: fill ? (sizes ?? "100vw") : sizes,
     src: url,

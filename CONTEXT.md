@@ -130,8 +130,8 @@ The current public Pittogramma URL that represents the same page or editorial co
 _Avoid_: A guessed slug match, a generic homepage fallback
 
 **Retired Legacy URL**:
-A Legacy URL for content or an endpoint with no verified Canonical successor. It remains an intentional not-found response rather than redirecting visitors to an unrelated page.
-_Avoid_: Homepage fallback, inferred replacement
+A verified Legacy URL for content or an endpoint with no Canonical successor. It returns 404 by default. Use 410 only when its permanent retirement is explicitly recorded. It never redirects visitors to an unrelated page.
+_Avoid_: Homepage fallback, inferred replacement, an unrecorded 410
 
 Missing Index availability values retain the all-enabled default during the configuration rollout.
 
