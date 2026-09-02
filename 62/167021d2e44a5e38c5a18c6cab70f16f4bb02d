@@ -1,0 +1,25 @@
+src/components/modules/shared/cover-media.tsx
+  s_f6d2bc51b5eb16::t_6d43d1b2b0dd34 26,36,72
+src/components/modules/shared/sanity-image.test.tsx
+  s_f6d2bc51b5eb16::t_bd83a3e8386837 36-51
+src/components/modules/shared/sanity-image.tsx
+  s_f6d2bc51b5eb16::t_08c2811f639e1f 108,128-130,164
+src/components/shared/featured-hero.tsx
+  s_f6d2bc51b5eb16::t_35c8490766f4b9 84
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "62167021d2e44a5e38c5a18c6cab70f16f4bb02d",
+  "prompts": {},
+  "sessions": {
+    "s_f6d2bc51b5eb16": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a06131-50a4-7af3-b99e-803d9948021d",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
