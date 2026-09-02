@@ -1,0 +1,19 @@
+CONTEXT.md
+  s_df9cb63a7ef5a4::t_86a3b4ee627951 133-134
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "9d826425c91876168a4cd0def9f9d7f2baa6ff08",
+  "prompts": {},
+  "sessions": {
+    "s_df9cb63a7ef5a4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05dd7-2f02-7a21-a567-47d1a1bb4243",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
