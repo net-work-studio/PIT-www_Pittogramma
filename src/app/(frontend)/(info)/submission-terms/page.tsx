@@ -4,19 +4,35 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import LegalPageContent from "@/components/modules/legal/legal-page-content";
 import PageHeader from "@/components/shared/page-header";
-import { staticPageMetadata } from "@/lib/seo/static-page-metadata";
+import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
+import { siteDefaults } from "@/lib/seo/site-defaults";
+import type { SeoModule } from "@/lib/types/seo";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
   sanityFetch,
+  sanityFetchMetadata,
 } from "@/sanity/lib/live";
 import { SUBMISSION_TERMS_PAGE_QUERY } from "@/sanity/lib/queries";
 
-export const metadata: Metadata = staticPageMetadata(
-  "/submission-terms",
-  "Project Submission Terms",
-  "Terms that apply when submitting a project to Pittogramma."
-);
+export async function generateMetadata(): Promise<Metadata> {
+  const { perspective } = await getDynamicFetchOptions();
+  const { data: page } = await sanityFetchMetadata({
+    perspective,
+    query: SUBMISSION_TERMS_PAGE_QUERY,
+  });
+
+  return mapSanityToMetadata({
+    baseUrl: siteDefaults.baseUrl,
+    page: {
+      description: "Terms that apply when submitting a project to Pittogramma.",
+      seo: page?.seo as SeoModule | undefined,
+      title: page?.title ?? "Project Submission Terms",
+    },
+    path: "/submission-terms",
+    siteDefaults,
+  });
+}
 
 export default async function SubmissionTermsPage() {
   const { isEnabled: isDraftMode } = await draftMode();

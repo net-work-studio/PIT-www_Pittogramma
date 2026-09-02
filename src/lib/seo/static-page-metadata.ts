@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { defaultSocialImage } from "./default-social-image";
 import { siteDefaults } from "./site-defaults";
 
 export function staticPageMetadata(
@@ -14,6 +15,7 @@ export function staticPageMetadata(
     description,
     openGraph: {
       description,
+      images: [defaultSocialImage],
       title,
       type: "website",
       url,
@@ -22,6 +24,7 @@ export function staticPageMetadata(
     twitter: {
       card: "summary_large_image",
       description,
+      images: [defaultSocialImage.url],
       title,
     },
   };

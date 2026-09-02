@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import type { SeoImageSource, SeoModule } from "@/lib/types/seo";
 import { urlForImage } from "@/sanity/lib/image";
+import { defaultSocialImage } from "./default-social-image";
 
 interface MapSanityToMetadataProps {
   baseUrl: string;
@@ -52,7 +53,7 @@ export function mapSanityToMetadata({
 
     return {
       description: page.seo?.openGraph?.description || description,
-      images: imageMeta ? [imageMeta] : undefined,
+      images: [imageMeta ?? defaultSocialImage],
       title: page.seo?.openGraph?.title || title,
       url: page.seo?.openGraph?.url || canonicalUrl,
     };
@@ -70,7 +71,7 @@ export function mapSanityToMetadata({
     return {
       card: "summary_large_image",
       description: page.seo?.xCard?.description || description,
-      images,
+      images: images ?? [defaultSocialImage.url],
       title: page.seo?.xCard?.title || title,
     };
   };

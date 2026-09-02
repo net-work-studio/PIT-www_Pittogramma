@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
+import { defaultSocialImageAlt } from "@/lib/seo/default-social-image";
 
-export const alt = "Pittogramma — emerging graphic design";
+export const alt = defaultSocialImageAlt;
 
 export const size = {
   height: 630,

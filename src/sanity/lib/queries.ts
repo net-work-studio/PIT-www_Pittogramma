@@ -368,6 +368,7 @@ export const DESIGNER_QUERY = defineQuery(`
     name,
     slug,
     ${PORTRAIT_FIELDS},
+    ${SEO_FIELDS},
     birthYear,
     bio,
     education[] {
