@@ -1,0 +1,46 @@
+src/lib/seo/default-social-image.ts
+  s_bcab2541a8b6fe::t_a84627145d08e8 1-2,5,7-10
+  s_bcab2541a8b6fe::t_9f0a7cb02dc1a2 3-4,6
+src/app/(frontend)/(info)/submission-terms/page.tsx
+  s_bcab2541a8b6fe::t_f61a0f7338d9e3 28
+  s_bcab2541a8b6fe::t_f0ede3903c6b17 7-9,14,18-27,29-35
+src/app/opengraph-image.tsx
+  s_bcab2541a8b6fe::t_9f0a7cb02dc1a2 2,4
+src/sanity/types.ts
+  s_bcab2541a8b6fe::t_71843b1a1a87bc 5375,5401-5441,10191
+src/lib/seo/static-page-metadata.ts
+  s_bcab2541a8b6fe::t_a84627145d08e8 3,18,27
+src/app/(frontend)/(info)/impressum/page.tsx
+  s_bcab2541a8b6fe::t_f0ede3903c6b17 6-8,13,17-34
+src/lib/seo/metadata.test.ts
+  s_bcab2541a8b6fe::t_a84627145d08e8 1-26,52
+  s_bcab2541a8b6fe::t_f0ede3903c6b17 27-51
+src/lib/seo/map-sanity-to-metadata.ts
+  s_bcab2541a8b6fe::t_dafa10b7e88c12 47-48,57,75,83,85-86
+  s_bcab2541a8b6fe::t_a84627145d08e8 5,56,74
+src/sanity/lib/queries.ts
+  s_bcab2541a8b6fe::t_38c465d39773d7 371
+src/app/(frontend)/(features)/designers/[slug]/page.tsx
+  s_bcab2541a8b6fe::t_f0ede3903c6b17 14,61
+src/app/(frontend)/(info)/cookie-policy/page.tsx
+  s_bcab2541a8b6fe::t_f61a0f7338d9e3 28
+  s_bcab2541a8b6fe::t_f0ede3903c6b17 7-9,14,18-27,29-35
+src/app/(frontend)/(info)/privacy-policy/page.tsx
+  s_bcab2541a8b6fe::t_f0ede3903c6b17 6-8,13,17-34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "2d026a3d8fbb06c50d521b6d40605e1ebcf3cabc",
+  "prompts": {},
+  "sessions": {
+    "s_bcab2541a8b6fe": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05dd8-74f5-70a1-bbf1-1f70983c3a9d",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
