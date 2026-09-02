@@ -3,19 +3,35 @@ import { draftMode } from "next/headers";
 import { Suspense } from "react";
 import LegalPageContent from "@/components/modules/legal/legal-page-content";
 import PageHeader from "@/components/shared/page-header";
-import { staticPageMetadata } from "@/lib/seo/static-page-metadata";
+import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
+import { siteDefaults } from "@/lib/seo/site-defaults";
+import type { SeoModule } from "@/lib/types/seo";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
   sanityFetch,
+  sanityFetchMetadata,
 } from "@/sanity/lib/live";
 import { IMPRESSUM_PAGE_QUERY } from "@/sanity/lib/queries";
 
-export const metadata: Metadata = staticPageMetadata(
-  "/impressum",
-  "Legal Notice / Impressum",
-  "Legal notice and publisher information for Pittogramma."
-);
+export async function generateMetadata(): Promise<Metadata> {
+  const { perspective } = await getDynamicFetchOptions();
+  const { data: page } = await sanityFetchMetadata({
+    perspective,
+    query: IMPRESSUM_PAGE_QUERY,
+  });
+
+  return mapSanityToMetadata({
+    baseUrl: siteDefaults.baseUrl,
+    page: {
+      description: "Legal notice and publisher information for Pittogramma.",
+      seo: page?.seo as SeoModule | undefined,
+      title: page?.title ?? "Legal Notice / Impressum",
+    },
+    path: "/impressum",
+    siteDefaults,
+  });
+}
 
 export default async function ImpressumPage() {
   const { isEnabled: isDraftMode } = await draftMode();

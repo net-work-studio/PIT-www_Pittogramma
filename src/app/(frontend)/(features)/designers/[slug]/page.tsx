@@ -11,6 +11,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
 import { siteDefaults } from "@/lib/seo/site-defaults";
+import type { SeoModule } from "@/lib/types/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import {
   type DynamicFetchOptions,
@@ -57,6 +58,7 @@ export async function generateMetadata({
       title: designer.name,
       description: designer.bio ?? undefined,
       coverImage: designer.portrait ?? undefined,
+      seo: designer.seo as SeoModule | undefined,
     },
     baseUrl: siteDefaults.baseUrl,
     path: `/designers/${slug}`,

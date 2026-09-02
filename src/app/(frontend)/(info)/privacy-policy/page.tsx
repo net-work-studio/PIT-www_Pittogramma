@@ -3,19 +3,35 @@ import { draftMode } from "next/headers";
 import { Suspense } from "react";
 import LegalPageContent from "@/components/modules/legal/legal-page-content";
 import PageHeader from "@/components/shared/page-header";
-import { staticPageMetadata } from "@/lib/seo/static-page-metadata";
+import { mapSanityToMetadata } from "@/lib/seo/map-sanity-to-metadata";
+import { siteDefaults } from "@/lib/seo/site-defaults";
+import type { SeoModule } from "@/lib/types/seo";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
   sanityFetch,
+  sanityFetchMetadata,
 } from "@/sanity/lib/live";
 import { PRIVACY_POLICY_PAGE_QUERY } from "@/sanity/lib/queries";
 
-export const metadata: Metadata = staticPageMetadata(
-  "/privacy-policy",
-  "Privacy Policy",
-  "How Pittogramma handles personal data and privacy."
-);
+export async function generateMetadata(): Promise<Metadata> {
+  const { perspective } = await getDynamicFetchOptions();
+  const { data: page } = await sanityFetchMetadata({
+    perspective,
+    query: PRIVACY_POLICY_PAGE_QUERY,
+  });
+
+  return mapSanityToMetadata({
+    baseUrl: siteDefaults.baseUrl,
+    page: {
+      description: "How Pittogramma handles personal data and privacy.",
+      seo: page?.seo as SeoModule | undefined,
+      title: page?.title ?? "Privacy Policy",
+    },
+    path: "/privacy-policy",
+    siteDefaults,
+  });
+}
 
 export default async function PrivacyPolicyPage() {
   const { isEnabled: isDraftMode } = await draftMode();
