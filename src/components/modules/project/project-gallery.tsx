@@ -386,9 +386,7 @@ export default function ProjectGallery({
                   {mediaItems.map((media, index) => (
                     <CarouselItem
                       className="h-full pl-0"
-                      key={
-                        `${index}-${media.videoFileUrl ?? media.videoUrl ?? media.type ?? "media"}`
-                      }
+                      key={`${index}-${media.videoFileUrl ?? media.videoUrl ?? media.type ?? "media"}`}
                     >
                       <div className="relative h-full w-full">
                         <LightboxMedia

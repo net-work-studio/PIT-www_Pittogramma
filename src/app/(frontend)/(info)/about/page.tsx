@@ -45,8 +45,8 @@ function deriveDescriptionFromContent(
 export async function generateMetadata(): Promise<Metadata> {
   const { perspective } = await getDynamicFetchOptions();
   const { data: about } = await sanityFetchMetadata({
-    query: ABOUT_PAGE_QUERY,
     perspective,
+    query: ABOUT_PAGE_QUERY,
   });
 
   if (!about) {
@@ -54,13 +54,13 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   return mapSanityToMetadata({
+    baseUrl: siteDefaults.baseUrl,
     page: {
-      title: about.title ?? "About",
       description:
         deriveDescriptionFromContent(about.content) ?? siteDefaults.description,
       seo: about.seo as SeoModule | undefined,
+      title: about.title ?? "About",
     },
-    baseUrl: siteDefaults.baseUrl,
     path: "/about",
     siteDefaults,
   });
@@ -86,8 +86,8 @@ async function DynamicAboutPage() {
 async function CachedAboutPage({ perspective, stega }: DynamicFetchOptions) {
   "use cache";
   const { data: about } = await sanityFetch({
-    query: ABOUT_PAGE_QUERY,
     perspective,
+    query: ABOUT_PAGE_QUERY,
     stega,
   });
 
@@ -103,8 +103,8 @@ async function CachedAboutPage({ perspective, stega }: DynamicFetchOptions) {
     <>
       <JsonLd
         data={{
-          name: about.title ?? "About",
           description,
+          name: about.title ?? "About",
           url: aboutUrl,
         }}
         type="AboutPage"

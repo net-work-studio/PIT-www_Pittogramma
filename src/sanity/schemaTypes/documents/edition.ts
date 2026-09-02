@@ -4,57 +4,52 @@ import { groups } from "@/sanity/utils/groups";
 import { httpUrlValidation } from "@/sanity/utils/validation";
 
 export const edition = defineType({
-  type: "document",
-  name: "edition",
-  title: "Edition",
-  icon: DocumentsIcon,
-  groups,
   fields: [
     defineField({
-      type: "string",
+      group: "metadata",
       name: "title",
       title: "Title",
-      group: "metadata",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "slug",
-      name: "slug",
-      title: "Slug",
       group: "metadata",
+      name: "slug",
       options: {
         source: "title",
       },
+      title: "Slug",
+      type: "slug",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "publishingDate",
+      group: "metadata",
       name: "publishingDate",
       title: "Publishing Date",
-      group: "metadata",
+      type: "publishingDate",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "coverMedia",
+      group: "content",
       name: "cover",
       title: "Cover",
-      group: "content",
+      type: "coverMedia",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "array",
-      name: "authors",
-      title: "Authors",
       group: "content",
+      name: "authors",
       of: [
         defineArrayMember({
-          type: "reference",
-          to: [{ type: "person" }],
           options: {
             filter: '"author" in roles',
           },
+          to: [{ type: "person" }],
+          type: "reference",
         }),
       ],
+      title: "Authors",
+      type: "array",
       validation: (e) =>
         e
           .required()
@@ -63,19 +58,19 @@ export const edition = defineType({
           .error("You cannot add the same author twice"),
     }),
     defineField({
-      type: "array",
-      name: "designers",
-      title: "Designers",
       group: "content",
+      name: "designers",
       of: [
         defineArrayMember({
-          type: "reference",
-          to: [{ type: "person" }],
           options: {
             filter: '"designer" in roles || "professional" in roles',
           },
+          to: [{ type: "person" }],
+          type: "reference",
         }),
       ],
+      title: "Designers",
+      type: "array",
       validation: (e) =>
         e
           .required()
@@ -84,62 +79,67 @@ export const edition = defineType({
           .error("You cannot add the same designer twice"),
     }),
     defineField({
-      type: "array",
-      name: "supporters",
-      title: "Supporters",
       group: "content",
+      name: "supporters",
       of: [
         defineArrayMember({
-          type: "reference",
           to: [{ type: "contributor" }],
+          type: "reference",
         }),
       ],
+      title: "Supporters",
+      type: "array",
       validation: (e) =>
         e.unique().error("You cannot add the same supporter twice"),
     }),
     defineField({
-      type: "text",
+      group: "content",
       name: "description",
       title: "Description",
-      group: "content",
+      type: "text",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "url",
+      group: "content",
       name: "buyUrl",
       title: "Buy URL",
-      group: "content",
+      type: "url",
       validation: httpUrlValidation,
     }),
     defineField({
-      type: "array",
-      name: "gallery",
-      title: "Gallery",
       group: "content",
+      name: "gallery",
       of: [
         defineArrayMember({ type: "singleMediaBlock" }),
         defineArrayMember({ type: "sideBySideMediaBlock" }),
       ],
+      title: "Gallery",
+      type: "array",
     }),
     defineField({
-      type: "seoModule",
+      group: "seo",
       name: "seo",
       title: "SEO",
-      group: "seo",
+      type: "seoModule",
     }),
   ],
+  groups,
+  icon: DocumentsIcon,
+  name: "edition",
   preview: {
-    select: {
-      title: "title",
-      media: "cover.image",
-      date: "publishingDate.date",
-    },
     prepare({ title, media, date }) {
       return {
-        title,
         media,
         subtitle: date,
+        title,
       };
     },
+    select: {
+      date: "publishingDate.date",
+      media: "cover.image",
+      title: "title",
+    },
   },
+  title: "Edition",
+  type: "document",
 });

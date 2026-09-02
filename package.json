@@ -1,7 +1,29 @@
 {
+  "name": "pittogramma-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "prebuild": "test \"$VERCEL_ENV\" != production || bun run sanity:migrate-cta-images",
+    "build": "next build --webpack",
+    "check": "ultracite check",
+    "cleanup": "rm -rf node_modules .next",
+    "predev": "bun run typegen",
+    "dev": "next dev",
+    "fix": "ultracite fix",
+    "newsletter:export-preview": "bun run scripts/export-newsletter-preview.ts",
+    "newsletter:validate-map": "bun run scripts/validate-substack-url-map.ts",
+    "sanity:migrate-cta-images": "bun run scripts/migrate-cta-images.ts",
+    "seo:check-sitemap": "bun run scripts/check-sitemap.ts",
+    "start": "next start",
+    "typecheck": "node_modules/typescript-7/bin/tsc --noEmit",
+    "typegen": "rm -f ./src/sanity/extract.json && bunx sanity schema extract --enforce-required-fields --path ./src/sanity/extract.json && bunx sanity typegen generate"
+  },
+  "overrides": {
+    "@sanity/client": "7.26.2"
+  },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
-    "@sanity/client": "^7.26.2",
+    "@sanity/client": "7.26.2",
     "@sanity/icons": "^5.2.1",
     "@sanity/image-url": "^2.1.1",
     "@sanity/orderable-document-list": "^2.0.22",
@@ -40,30 +62,8 @@
     "typescript-7": "npm:typescript@^7.0.0",
     "ultracite": "7.10.6"
   },
-  "name": "pittogramma-web",
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build --webpack",
-    "prebuild": "test \"$VERCEL_ENV\" != production || bun run sanity:migrate-cta-images",
-    "start": "next start",
-    "typecheck": "node_modules/typescript-7/bin/tsc --noEmit",
-    "predev": "bun run typegen",
-    "check": "ultracite check",
-    "fix": "ultracite fix",
-    "typegen": "rm -f ./src/sanity/extract.json && bunx sanity schema extract --enforce-required-fields --path ./src/sanity/extract.json && bunx sanity typegen generate",
-    "cleanup": "rm -rf node_modules .next",
-    "newsletter:validate-map": "bun run scripts/validate-substack-url-map.ts",
-    "newsletter:export-preview": "bun run scripts/export-newsletter-preview.ts",
-    "sanity:migrate-cta-images": "bun run scripts/migrate-cta-images.ts",
-    "seo:check-sitemap": "bun run scripts/check-sitemap.ts"
-  },
-  "version": "0.1.0",
-  "private": true,
+  "packageManager": "bun@1.3.14",
   "engines": {
     "node": ">=24"
-  },
-  "overrides": {
-    "@sanity/client": "7.26.2"
-  },
-  "packageManager": "bun@1.3.14"
+  }
 }

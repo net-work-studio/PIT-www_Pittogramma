@@ -1,8 +1,8 @@
 export const SORT_OPTIONS = [
-  { value: "newest", label: "Newest first" },
-  { value: "oldest", label: "Oldest first" },
-  { value: "a-z", label: "A \u2192 Z" },
-  { value: "z-a", label: "Z \u2192 A" },
+  { label: "Newest first", value: "newest" },
+  { label: "Oldest first", value: "oldest" },
+  { label: "A \u2192 Z", value: "a-z" },
+  { label: "Z \u2192 A", value: "z-a" },
 ] as const;
 
 export type SortOption = (typeof SORT_OPTIONS)[number]["value"];

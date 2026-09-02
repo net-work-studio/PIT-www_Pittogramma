@@ -21,40 +21,35 @@ function hasRole(
 }
 
 export const person = defineType({
-  type: "document",
-  name: "person",
-  title: "Person",
-  icon: UserIcon,
-  groups,
   fields: [
     // Metadata
     defineField({
-      type: "array",
-      name: "roles",
-      title: "Roles",
       group: "metadata",
+      name: "roles",
       of: [defineArrayMember({ type: "string" })],
       options: {
         list: ROLE_OPTIONS,
       },
+      title: "Roles",
+      type: "array",
       validation: (e) =>
         e.required().min(1).error("At least one role is required"),
     }),
     defineField({
-      type: "string",
+      group: "metadata",
       name: "name",
       title: "Name",
-      group: "metadata",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "slug",
-      name: "slug",
-      title: "Slug",
       group: "metadata",
+      name: "slug",
       options: {
         source: "name",
       },
+      title: "Slug",
+      type: "slug",
       validation: (rule) =>
         rule.custom((slug, context) => {
           const doc = context.document as { roles?: string[] };
@@ -67,18 +62,18 @@ export const person = defineType({
 
     // Content
     defineField({
-      type: "imageWithMetadata",
+      group: "content",
       name: "portrait",
       title: "Portrait",
-      group: "content",
+      type: "imageWithMetadata",
     }),
     defineField({
-      type: "number",
-      name: "birthYear",
-      title: "Birth Year",
       group: "content",
       hidden: ({ document }) =>
         !hasRole(document as { roles?: string[] }, "designer", "professional"),
+      name: "birthYear",
+      title: "Birth Year",
+      type: "number",
       validation: (rule) =>
         rule.min(minBirthYear).custom((value, context) => {
           const doc = context.document as { roles?: string[] };
@@ -92,37 +87,30 @@ export const person = defineType({
         }),
     }),
     defineField({
-      type: "text",
-      name: "bio",
-      title: "Bio",
       group: "content",
       hidden: ({ document }) =>
         !hasRole(document as { roles?: string[] }, "designer", "professional"),
+      name: "bio",
+      title: "Bio",
+      type: "text",
     }),
     defineField({
-      type: "array",
-      name: "education",
-      title: "Education",
       group: "content",
       hidden: ({ document }) =>
         !hasRole(document as { roles?: string[] }, "designer"),
+      name: "education",
       of: [
         defineArrayMember({
-          type: "object",
-          name: "instituteEducation",
-          title: "Institute Education",
           fields: [
             defineField({
-              type: "reference",
               name: "institute",
               title: "Institute",
               to: [{ type: "institute" }],
+              type: "reference",
               validation: (e) => e.required(),
             }),
             defineField({
-              type: "string",
               name: "degree",
-              title: "Degree",
               options: {
                 list: [
                   { title: "Bachelor", value: "Bachelor" },
@@ -132,17 +120,19 @@ export const person = defineType({
                   { title: "Other", value: "Other" },
                 ],
               },
+              title: "Degree",
+              type: "string",
               validation: (e) => e.required(),
             }),
             defineField({
-              type: "string",
               name: "courseName",
               title: "Course Name",
+              type: "string",
             }),
             defineField({
-              type: "number",
               name: "year",
               title: "Year",
+              type: "number",
               validation: (e) =>
                 e.min(minBirthYear).custom((value) => {
                   if (value && (value < minBirthYear || value > maxBirthYear)) {
@@ -152,17 +142,22 @@ export const person = defineType({
                 }),
             }),
           ],
+          name: "instituteEducation",
+          title: "Institute Education",
+          type: "object",
         }),
       ],
+      title: "Education",
+      type: "array",
     }),
     defineField({
-      type: "reference",
-      name: "place",
-      title: "Place",
       group: "content",
       hidden: ({ document }) =>
         !hasRole(document as { roles?: string[] }, "designer", "professional"),
+      name: "place",
+      title: "Place",
       to: [{ type: "place" }],
+      type: "reference",
       validation: (rule) =>
         rule.custom((value, context) => {
           const doc = context.document as { roles?: string[] };
@@ -173,78 +168,83 @@ export const person = defineType({
         }),
     }),
     defineField({
-      type: "socialLinks",
-      name: "socialLinks",
-      title: "Social Links",
       group: "content",
       hidden: ({ document }) =>
         !hasRole(document as { roles?: string[] }, "designer", "professional"),
+      name: "socialLinks",
+      title: "Social Links",
+      type: "socialLinks",
     }),
     defineField({
-      type: "string",
-      name: "email",
-      title: "Email",
       group: "content",
       hidden: ({ document }) =>
         !hasRole(document as { roles?: string[] }, "designer"),
+      name: "email",
+      title: "Email",
+      type: "string",
       validation: (e) => e.email(),
     }),
     defineField({
-      type: "string",
-      name: "phone",
-      title: "Phone",
       group: "content",
       hidden: ({ document }) =>
         !hasRole(document as { roles?: string[] }, "designer"),
+      name: "phone",
+      title: "Phone",
+      type: "string",
       validation: (e) =>
         e.regex(PHONE_REGEX, {
-          name: "phone",
           invert: false,
+          name: "phone",
         }),
     }),
     defineField({
-      type: "reference",
-      name: "teachingAt",
-      title: "Teaching at",
       group: "content",
       hidden: ({ document }) =>
         !hasRole(document as { roles?: string[] }, "teacher", "professional"),
+      name: "teachingAt",
+      title: "Teaching at",
       to: [{ type: "institute" }],
+      type: "reference",
     }),
     defineField({
-      type: "reference",
-      name: "studio",
-      title: "Studio",
       group: "content",
       hidden: ({ document }) =>
         !hasRole(document as { roles?: string[] }, "professional"),
+      name: "studio",
+      title: "Studio",
       to: [{ type: "studio" }],
+      type: "reference",
     }),
 
     // SEO
     defineField({
-      type: "seoModule",
-      name: "seo",
-      title: "SEO",
       group: "seo",
       hidden: ({ document }) =>
         !hasRole(document as { roles?: string[] }, "designer"),
+      name: "seo",
+      title: "SEO",
+      type: "seoModule",
     }),
   ],
+  groups,
+  icon: UserIcon,
+  name: "person",
   preview: {
-    select: {
-      title: "name",
-      subtitle: "birthYear",
-      media: "portrait.image",
-      roles: "roles",
-    },
     prepare({ title, subtitle, media, roles }) {
       const roleLabels = (roles as string[] | undefined)?.join(", ") ?? "";
       return {
-        title,
-        subtitle: roleLabels || (subtitle ? String(subtitle) : undefined),
         media,
+        subtitle: roleLabels || (subtitle ? String(subtitle) : undefined),
+        title,
       };
     },
+    select: {
+      media: "portrait.image",
+      roles: "roles",
+      subtitle: "birthYear",
+      title: "name",
+    },
   },
+  title: "Person",
+  type: "document",
 });

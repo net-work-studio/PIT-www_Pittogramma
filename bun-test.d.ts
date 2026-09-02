@@ -10,15 +10,15 @@ declare module "bun:test" {
 
   interface Matchers {
     rejects: Matchers;
-    toBe(expected: unknown): void;
-    toBeInstanceOf(expected: unknown): void;
-    toBeNull(): void;
-    toContain(expected: unknown): void;
-    toEqual(expected: unknown): void;
-    toHaveBeenCalledTimes(expected: number): void;
-    toHaveLength(expected: number): void;
-    toMatchObject(expected: Record<string, unknown>): void;
-    toThrow(expected?: string | RegExp): void;
+    toBe: (expected: unknown) => void;
+    toBeInstanceOf: (expected: unknown) => void;
+    toBeNull: () => void;
+    toContain: (expected: unknown) => void;
+    toEqual: (expected: unknown) => void;
+    toHaveBeenCalledTimes: (expected: number) => void;
+    toHaveLength: (expected: number) => void;
+    toMatchObject: (expected: Record<string, unknown>) => void;
+    toThrow: (expected?: string | RegExp) => void;
   }
 
   interface TestFunction {

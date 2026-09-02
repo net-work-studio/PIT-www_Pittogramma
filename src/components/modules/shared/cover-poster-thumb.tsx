@@ -15,7 +15,7 @@ export default function CoverPosterThumb({
 }: CoverPosterThumbProps) {
   if (!cover?.image?.asset) {
     return (
-      <div className={cn(THUMB_CLASS, "bg-primary/5", className)} aria-hidden />
+      <div aria-hidden className={cn(THUMB_CLASS, "bg-primary/5", className)} />
     );
   }
 

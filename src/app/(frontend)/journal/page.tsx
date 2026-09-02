@@ -47,17 +47,17 @@ const JOURNAL_LABEL_OPTIONS = JOURNAL_LABELS.map((opt) => ({
 export async function generateMetadata(): Promise<Metadata> {
   const { perspective } = await getDynamicFetchOptions();
   const { data: page } = await sanityFetchMetadata({
-    query: JOURNAL_PAGE_QUERY,
     perspective,
+    query: JOURNAL_PAGE_QUERY,
   });
 
   return mapSanityToMetadata({
+    baseUrl: siteDefaults.baseUrl,
     page: {
-      title: page?.title ?? "Journal",
       description: page?.introText ?? undefined,
       seo: page?.seo as SeoModule | undefined,
+      title: page?.title ?? "Journal",
     },
-    baseUrl: siteDefaults.baseUrl,
     path: "/journal",
     siteDefaults,
   });
@@ -129,18 +129,18 @@ async function CachedJournalPage({
   const [{ data: articles }, { data: totalCount }, { data: pageSettings }] =
     await Promise.all([
       sanityFetch({
-        query: getJournalFilteredQuery(sort),
         params: { end, hasTags, includeFuture, start, tags: tagSlugs, today },
         perspective,
+        query: getJournalFilteredQuery(sort),
         stega,
       }),
       sanityFetch({
-        query: JOURNAL_COUNT_QUERY,
         params: { hasTags, includeFuture, tags: tagSlugs, today },
         perspective,
+        query: JOURNAL_COUNT_QUERY,
         stega,
       }),
-      sanityFetch({ query: JOURNAL_PAGE_QUERY, perspective, stega }),
+      sanityFetch({ perspective, query: JOURNAL_PAGE_QUERY, stega }),
     ]);
 
   const configuredFeaturedArticle = pageSettings?.featuredArticle;

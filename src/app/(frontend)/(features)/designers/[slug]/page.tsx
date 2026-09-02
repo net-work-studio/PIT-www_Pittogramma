@@ -44,9 +44,9 @@ export async function generateMetadata({
     getDynamicFetchOptions(),
   ]);
   const { data: designer } = await sanityFetchMetadata({
-    query: DESIGNER_QUERY,
     params: { slug },
     perspective,
+    query: DESIGNER_QUERY,
   });
 
   if (!designer) {
@@ -54,13 +54,13 @@ export async function generateMetadata({
   }
 
   return mapSanityToMetadata({
-    page: {
-      title: designer.name,
-      description: designer.bio ?? undefined,
-      coverImage: designer.portrait ?? undefined,
-      seo: designer.seo as SeoModule | undefined,
-    },
     baseUrl: siteDefaults.baseUrl,
+    page: {
+      coverImage: designer.portrait ?? undefined,
+      description: designer.bio ?? undefined,
+      seo: designer.seo as SeoModule | undefined,
+      title: designer.name,
+    },
     path: `/designers/${slug}`,
     siteDefaults,
   });
@@ -87,9 +87,9 @@ async function CachedDesignerPage({
 }: { slug: string } & DynamicFetchOptions) {
   "use cache";
   const { data: designer } = await sanityFetch({
-    query: DESIGNER_QUERY,
     params: { slug },
     perspective,
+    query: DESIGNER_QUERY,
     stega,
   });
 
@@ -111,16 +111,16 @@ async function CachedDesignerPage({
     <>
       <JsonLd
         data={{
-          name: designer.name,
           description: designer.bio,
           image: imageUrl,
+          name: designer.name,
           url: designerUrl,
           ...(locationParts.length
             ? {
                 address: {
                   "@type": "PostalAddress",
-                  addressLocality: designer.place?.city,
                   addressCountry: designer.place?.country,
+                  addressLocality: designer.place?.city,
                 },
               }
             : {}),

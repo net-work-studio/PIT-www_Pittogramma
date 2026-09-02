@@ -2,43 +2,43 @@ import { CalendarIcon } from "@sanity/icons/Calendar";
 import { defineField, defineType } from "sanity";
 
 export const eventsPage = defineType({
-  name: "eventsPage",
-  title: "Events Page",
-  type: "document",
-  icon: CalendarIcon,
   __experimental_omnisearch_visibility: false,
-  groups: [
-    { name: "content", title: "Content", default: true },
-    { name: "seo", title: "SEO" },
-  ],
   fields: [
     defineField({
+      group: "content",
       name: "title",
+      readOnly: true,
       title: "Title",
       type: "string",
-      group: "content",
-      readOnly: true,
     }),
     defineField({
+      group: "content",
       name: "introText",
+      rows: 3,
       title: "Intro Text",
       type: "text",
-      group: "content",
-      rows: 3,
       validation: (Rule) => Rule.required().max(170),
     }),
     defineField({
+      group: "content",
       name: "endOfPageCta",
       title: "End of Page CTA",
-      type: "reference",
       to: [{ type: "cta" }],
-      group: "content",
+      type: "reference",
     }),
     defineField({
+      group: "seo",
       name: "seo",
       title: "SEO",
       type: "seoModule",
-      group: "seo",
     }),
   ],
+  groups: [
+    { default: true, name: "content", title: "Content" },
+    { name: "seo", title: "SEO" },
+  ],
+  icon: CalendarIcon,
+  name: "eventsPage",
+  title: "Events Page",
+  type: "document",
 });

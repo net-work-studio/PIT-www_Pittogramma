@@ -5,31 +5,28 @@ import { defineField, defineType } from "sanity";
 import { videoEmbedUrlValidation } from "@/sanity/utils/validation";
 
 export const mediaItem = defineType({
-  type: "object",
-  name: "mediaItem",
-  title: "Media Item",
   fields: [
     defineField({
-      type: "string",
+      initialValue: "image",
       name: "type",
-      title: "Type",
       options: {
+        layout: "radio",
         list: [
           { title: "Image", value: "image" },
           { title: "Video (Upload)", value: "videoUpload" },
           { title: "Video (Embed)", value: "videoEmbed" },
         ],
-        layout: "radio",
       },
-      initialValue: "image",
+      title: "Type",
+      type: "string",
       validation: (e) => e.required(),
     }),
     defineField({
-      type: "image",
-      name: "image",
-      title: "Image",
-      options: { hotspot: true },
       hidden: ({ parent }) => parent?.type !== "image",
+      name: "image",
+      options: { hotspot: true },
+      title: "Image",
+      type: "image",
       validation: (rule) =>
         rule.custom((value, context) => {
           const parent = context.parent as { type?: string };
@@ -40,13 +37,13 @@ export const mediaItem = defineType({
         }),
     }),
     defineField({
-      type: "file",
+      hidden: ({ parent }) => parent?.type !== "videoUpload",
       name: "video",
-      title: "Video File",
       options: {
         accept: "video/*",
       },
-      hidden: ({ parent }) => parent?.type !== "videoUpload",
+      title: "Video File",
+      type: "file",
       validation: (rule) =>
         rule.custom((value, context) => {
           const parent = context.parent as { type?: string };
@@ -57,11 +54,11 @@ export const mediaItem = defineType({
         }),
     }),
     defineField({
-      type: "url",
-      name: "videoUrl",
-      title: "Video URL",
       description: "YouTube or Vimeo URL",
       hidden: ({ parent }) => parent?.type !== "videoEmbed",
+      name: "videoUrl",
+      title: "Video URL",
+      type: "url",
       validation: (rule) => [
         rule.custom((value, context) => {
           const parent = context.parent as { type?: string };
@@ -74,40 +71,43 @@ export const mediaItem = defineType({
       ],
     }),
     defineField({
-      type: "string",
       name: "caption",
       title: "Caption",
+      type: "string",
     }),
     defineField({
-      type: "string",
+      hidden: ({ parent }) => parent?.type !== "image",
       name: "alt",
       title: "Alt Text",
-      hidden: ({ parent }) => parent?.type !== "image",
+      type: "string",
     }),
   ],
+  name: "mediaItem",
   preview: {
-    select: {
-      type: "type",
-      caption: "caption",
-      image: "image",
-    },
     prepare({ type, caption, image }) {
       const typeLabels = {
         image: "Image",
-        videoUpload: "Video (Upload)",
         videoEmbed: "Video (Embed)",
+        videoUpload: "Video (Upload)",
       };
       const icons = {
         image: ImageIcon,
-        videoUpload: PlayIcon,
         videoEmbed: LinkIcon,
+        videoUpload: PlayIcon,
       };
       return {
+        media: type === "image" ? image : icons[type as keyof typeof icons],
+        subtitle: typeLabels[type as keyof typeof typeLabels],
         title:
           caption || typeLabels[type as keyof typeof typeLabels] || "Media",
-        subtitle: typeLabels[type as keyof typeof typeLabels],
-        media: type === "image" ? image : icons[type as keyof typeof icons],
       };
     },
+    select: {
+      caption: "caption",
+      image: "image",
+      type: "type",
+    },
   },
+  title: "Media Item",
+  type: "object",
 });

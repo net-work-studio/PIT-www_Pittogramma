@@ -1,25 +1,22 @@
 import { defineField, defineType } from "sanity";
 
 export const imageWithMetadata = defineType({
-  type: "object",
-  name: "imageWithMetadata",
-  title: "Image with Metadata",
   fields: [
     defineField({
-      type: "image",
       name: "image",
-      title: "Image",
       options: { hotspot: true },
+      title: "Image",
+      type: "image",
     }),
     defineField({
-      type: "string",
       name: "caption",
       title: "Caption / Copyright",
+      type: "string",
     }),
     defineField({
-      type: "string",
       name: "alt",
       title: "Alt",
+      type: "string",
       validation: (rule) =>
         rule
           .custom((value) =>
@@ -28,4 +25,7 @@ export const imageWithMetadata = defineType({
           .warning(),
     }),
   ],
+  name: "imageWithMetadata",
+  title: "Image with Metadata",
+  type: "object",
 });

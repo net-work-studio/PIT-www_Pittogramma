@@ -1,5 +1,5 @@
-import { validateSubstackUrlMapStructure } from "./substack-url-map";
 import substackUrlMap from "../../../data/substack-url-map.json";
+import { validateSubstackUrlMapStructure } from "./substack-url-map";
 
 export function getSubstackRedirects(): Array<{
   destination: string;
@@ -8,16 +8,16 @@ export function getSubstackRedirects(): Array<{
 }> {
   const map = validateSubstackUrlMapStructure(substackUrlMap);
   const redirects = map.mappings.map((entry) => ({
-    source: entry.source,
     destination: entry.destination,
     permanent: true,
+    source: entry.source,
   }));
 
   if (map.fallbackDestination) {
     redirects.push({
-      source: "/p/:slug",
       destination: map.fallbackDestination,
       permanent: false,
+      source: "/p/:slug",
     });
   }
 

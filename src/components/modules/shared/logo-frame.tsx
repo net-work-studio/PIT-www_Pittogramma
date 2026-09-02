@@ -42,7 +42,7 @@ function LogoImage({
         objectFit="contain"
         respectHotspot={false}
         sizes={sizes}
-        source={{ image, alt }}
+        source={{ alt, image }}
       />
     </div>
   );

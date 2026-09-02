@@ -1,8 +1,8 @@
 import { Badge } from "@/components/ui/badge";
 
 export const DETAIL_PAGE_LABELS = {
-  project: "Project",
   interview: "Interview",
+  project: "Project",
 } as const;
 
 type DetailPageType =
@@ -18,6 +18,8 @@ type DetailPageBadgeProps =
 
 export function DetailPageBadge({ label, type }: DetailPageBadgeProps) {
   const text =
-    type === "project" || type === "interview" ? DETAIL_PAGE_LABELS[type] : label;
+    type === "project" || type === "interview"
+      ? DETAIL_PAGE_LABELS[type]
+      : label;
   return <Badge variant={`detail-${type}`}>{text}</Badge>;
 }

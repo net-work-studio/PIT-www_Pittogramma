@@ -96,12 +96,12 @@ export function DurationInput(props: NumberInputProps) {
         {...elementProps}
         onChange={handleChange}
         style={{
-          padding: "0.5rem",
-          borderRadius: "0.25rem",
-          border: "1px solid var(--card-border-color)",
           background: "var(--card-bg-color)",
+          border: "1px solid var(--card-border-color)",
+          borderRadius: "0.25rem",
           color: "var(--card-fg-color)",
           fontSize: "0.9375rem",
+          padding: "0.5rem",
         }}
         value={value ?? ""}
       >

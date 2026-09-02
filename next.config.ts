@@ -13,22 +13,6 @@ const sanityImagePath =
 const nextConfig: NextConfig = {
   cacheComponents: true,
   cacheLife: { default: sanity },
-  async redirects() {
-    return [
-      {
-        source: "/editions",
-        destination: "/",
-        permanent: false,
-      },
-      {
-        source: "/editions/:slug",
-        destination: "/",
-        permanent: false,
-      },
-      ...getKirbyRedirects(),
-      ...getSubstackRedirects(),
-    ];
-  },
   experimental: {
     // Next's runtime config currently does not backfill this default when
     // cacheComponents is enabled, despite the main config normalizer doing so.
@@ -39,17 +23,33 @@ const nextConfig: NextConfig = {
     qualities: [75],
     remotePatterns: [
       {
-        protocol: "https",
         hostname: "placehold.co",
         pathname: "/**",
+        protocol: "https",
       },
       {
-        protocol: "https",
         hostname: "cdn.sanity.io",
         pathname: sanityImagePath,
+        protocol: "https",
         // Sanity image transformations rely on dynamic query parameters.
       },
     ],
+  },
+  async redirects() {
+    return [
+      {
+        destination: "/",
+        permanent: false,
+        source: "/editions",
+      },
+      {
+        destination: "/",
+        permanent: false,
+        source: "/editions/:slug",
+      },
+      ...getKirbyRedirects(),
+      ...getSubstackRedirects(),
+    ];
   },
 };
 

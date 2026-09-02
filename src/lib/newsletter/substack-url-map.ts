@@ -55,8 +55,8 @@ function readMappingEntry(entry: unknown, label: string): SubstackUrlMapping {
   }
 
   return note === undefined
-    ? { source, destination }
-    : { source, destination, note };
+    ? { destination, source }
+    : { destination, note, source };
 }
 
 export function validateSubstackUrlMapStructure(raw: unknown): SubstackUrlMap {
@@ -110,12 +110,12 @@ export function parseDestinationPath(
 ): ParsedDestinationPath {
   const journalMatch = destination.match(JOURNAL_DESTINATION_REGEX);
   if (journalMatch) {
-    return { type: "journal", slug: journalMatch[1] };
+    return { slug: journalMatch[1], type: "journal" };
   }
 
   const projectMatch = destination.match(PROJECT_DESTINATION_REGEX);
   if (projectMatch) {
-    return { type: "project", slug: projectMatch[1] };
+    return { slug: projectMatch[1], type: "project" };
   }
 
   return { type: "static" };

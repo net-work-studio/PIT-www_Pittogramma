@@ -7,53 +7,53 @@ import { siteDefaults } from "@/lib/seo/site-defaults";
 import "./globals.css";
 
 const sono = localFont({
+  preload: true,
   src: [
     {
       path: "../fonts/OTSonoMono-Regular.woff2",
-      weight: "400",
       style: "normal",
+      weight: "400",
     },
     {
       path: "../fonts/OTSonoMono-RegularItalic.woff2",
-      weight: "400",
       style: "italic",
+      weight: "400",
     },
   ],
-  preload: true,
   variable: "--font-sono",
 });
 
 const aktual = localFont({
+  preload: true,
   src: [
     {
       path: "../fonts/FTAktual-Regular.woff2",
-      weight: "400",
       style: "normal",
+      weight: "400",
     },
     {
       path: "../fonts/FTAktual-RegularItalic.woff2",
-      weight: "400",
       style: "italic",
+      weight: "400",
     },
   ],
-  preload: true,
   variable: "--font-aktual",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteDefaults.baseUrl),
-  title: {
-    default: siteDefaults.title || "Pittogramma",
-    template: "%s – Pittogramma",
-  },
-  description: siteDefaults.description,
   appleWebApp: {
     title: "Pittogramma",
   },
+  description: siteDefaults.description,
+  metadataBase: new URL(siteDefaults.baseUrl),
   openGraph: {
-    type: "website",
     locale: "en_US",
     siteName: siteDefaults.title || "Pittogramma",
+    type: "website",
+  },
+  title: {
+    default: siteDefaults.title || "Pittogramma",
+    template: "%s – Pittogramma",
   },
   twitter: {
     card: "summary_large_image",

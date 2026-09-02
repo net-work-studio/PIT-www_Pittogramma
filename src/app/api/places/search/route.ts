@@ -64,8 +64,8 @@ export async function POST(request: NextRequest) {
     const response = await fetch(url.toString(), {
       cache: "no-store",
       headers: {
-        "User-Agent": USER_AGENT,
         Accept: "application/json",
+        "User-Agent": USER_AGENT,
       },
       signal: AbortSignal.timeout(10_000),
     });

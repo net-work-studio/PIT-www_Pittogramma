@@ -67,10 +67,7 @@ function TypeFoundryCard({
               {
                 label: "City",
                 value: (
-                  <PlacesDisplay
-                    places={foundry.places}
-                    showCountry={false}
-                  />
+                  <PlacesDisplay places={foundry.places} showCountry={false} />
                 ),
               },
               {
@@ -125,16 +122,16 @@ export function TypeFoundriesContent({
 }: TypeFoundriesContentProps) {
   const markers = foundries.flatMap((foundry) =>
     (foundry.places ?? []).flatMap((p) => {
-      if (p?.lat == null || p.lng == null) {
+      if (p?.lat === null || p.lng === null) {
         return [];
       }
 
       return [
         {
           id: `${foundry._id}-${p._id}`,
-          name: foundry.name ?? "",
           lat: p.lat,
           lng: p.lng,
+          name: foundry.name ?? "",
         },
       ];
     })

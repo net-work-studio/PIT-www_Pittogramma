@@ -153,10 +153,7 @@ export default function SanityImage({
   const imageProps = {
     alt: imageAlt,
     ...blurProps,
-    className: cn(
-      objectFit ? undefined : "object-cover",
-      className
-    ),
+    className: cn(objectFit ? undefined : "object-cover", className),
     ...(objectPosition ? { objectPosition } : {}),
     priority,
     sizes: fill ? (sizes ?? "100vw") : sizes,
