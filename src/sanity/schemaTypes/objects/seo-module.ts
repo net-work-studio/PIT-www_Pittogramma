@@ -7,7 +7,7 @@ export const seoModule = defineType({
   fields: [
     defineField({
       description:
-        "Title shown in search results and browser tabs. Aim for ~60 characters. Falls back to site settings if empty.",
+        "Optional override for this page's title in search results and browser tabs. Leave empty to use the page title. Aim for ~60 characters.",
       name: "metaTitle",
       title: "Meta Title",
       type: "string",
@@ -29,7 +29,8 @@ export const seoModule = defineType({
           .warning("Descriptions longer than ~155–160 chars may be truncated"),
     }),
     defineField({
-      description: "Default image representing this page in search or shares.",
+      description:
+        "Optional override for the image used in search results and social shares. Leave empty to use the page cover image; pages without a cover use the default site sharing image.",
       name: "metaImage",
       title: "Meta Image",
       type: "imageWithMetadata",
