@@ -90,10 +90,15 @@ function Carousel({
   );
 
   React.useEffect(() => {
-    if (!(api && setApi)) {
+    if (!setApi) {
       return;
     }
+
     setApi(api);
+
+    return () => {
+      setApi(undefined);
+    };
   }, [api, setApi]);
 
   React.useEffect(() => {
@@ -110,20 +115,32 @@ function Carousel({
     };
   }, [api, onSelect]);
 
+  const contextValue = React.useMemo(
+    () => ({
+      api,
+      canScrollNext,
+      canScrollPrev,
+      carouselRef,
+      opts,
+      orientation:
+        orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
+      scrollNext,
+      scrollPrev,
+    }),
+    [
+      api,
+      canScrollNext,
+      canScrollPrev,
+      carouselRef,
+      opts,
+      orientation,
+      scrollNext,
+      scrollPrev,
+    ]
+  );
+
   return (
-    <CarouselContext.Provider
-      value={{
-        api,
-        canScrollNext,
-        canScrollPrev,
-        carouselRef,
-        opts,
-        orientation:
-          orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
-        scrollNext,
-        scrollPrev,
-      }}
-    >
+    <CarouselContext.Provider value={contextValue}>
       <section
         className={cn("relative", className)}
         data-slot="carousel"

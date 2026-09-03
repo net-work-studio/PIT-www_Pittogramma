@@ -88,8 +88,14 @@ export default function CtaCard({
       nativeButton={false}
       render={
         isExternal ? (
-          // biome-ignore lint/a11y/useAnchorContent: Base UI injects the Button children into this render element.
-          <a href={href} rel="noopener noreferrer" target="_blank" />
+          // Base UI injects the Button children into this render element.
+          // biome-ignore lint/a11y/useAnchorContent: The anchor has the stable aria-label below.
+          <a
+            aria-label={buttonText}
+            href={href}
+            rel="noopener noreferrer"
+            target="_blank"
+          />
         ) : (
           <Link href={href} />
         )

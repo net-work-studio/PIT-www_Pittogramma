@@ -71,7 +71,12 @@ async function CachedContributePage({
               <Button
                 nativeButton={false}
                 render={
-                  <a href={url} rel="noopener noreferrer" target="_blank" />
+                  <a
+                    aria-label="Open form"
+                    href={url}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  />
                 }
                 variant="outline"
               >

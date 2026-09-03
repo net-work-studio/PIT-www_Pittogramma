@@ -47,12 +47,14 @@ export async function generateMetadata({
     params,
     getDynamicFetchOptions(),
   ]);
-  const { data: article } = await sanityFetchMetadata({
-    params: { slug },
-    perspective,
-    query: JOURNAL_ARTICLE_QUERY,
-  });
-  const today = await getCachedLocalToday();
+  const [{ data: article }, today] = await Promise.all([
+    sanityFetchMetadata({
+      params: { slug },
+      perspective,
+      query: JOURNAL_ARTICLE_QUERY,
+    }),
+    getCachedLocalToday(),
+  ]);
 
   if (
     !article ||
@@ -99,13 +101,15 @@ async function CachedJournalArticlePage({
   stega,
 }: { slug: string } & DynamicFetchOptions) {
   "use cache";
-  const today = await getCachedLocalToday();
-  const { data: article } = await sanityFetch({
-    params: { slug },
-    perspective,
-    query: JOURNAL_ARTICLE_QUERY,
-    stega,
-  });
+  const [today, { data: article }] = await Promise.all([
+    getCachedLocalToday(),
+    sanityFetch({
+      params: { slug },
+      perspective,
+      query: JOURNAL_ARTICLE_QUERY,
+      stega,
+    }),
+  ]);
 
   if (
     !article ||

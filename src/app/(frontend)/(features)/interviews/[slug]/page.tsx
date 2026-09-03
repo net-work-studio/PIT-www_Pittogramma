@@ -48,12 +48,14 @@ export async function generateMetadata({
     params,
     getDynamicFetchOptions(),
   ]);
-  const { data: interview } = await sanityFetchMetadata({
-    params: { slug },
-    perspective,
-    query: INTERVIEW_QUERY,
-  });
-  const today = await getCachedLocalToday();
+  const [{ data: interview }, today] = await Promise.all([
+    sanityFetchMetadata({
+      params: { slug },
+      perspective,
+      query: INTERVIEW_QUERY,
+    }),
+    getCachedLocalToday(),
+  ]);
 
   if (
     !interview ||
@@ -96,13 +98,15 @@ async function CachedInterviewPage({
   stega,
 }: { slug: string } & DynamicFetchOptions) {
   "use cache";
-  const today = await getCachedLocalToday();
-  const { data: interview } = await sanityFetch({
-    params: { slug },
-    perspective,
-    query: INTERVIEW_QUERY,
-    stega,
-  });
+  const [today, { data: interview }] = await Promise.all([
+    getCachedLocalToday(),
+    sanityFetch({
+      params: { slug },
+      perspective,
+      query: INTERVIEW_QUERY,
+      stega,
+    }),
+  ]);
 
   if (
     !interview ||
