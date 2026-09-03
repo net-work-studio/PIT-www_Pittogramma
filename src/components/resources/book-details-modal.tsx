@@ -146,6 +146,7 @@ function BookDetailsContent({
                 nativeButton={false}
                 render={
                   <a
+                    aria-label="Buy book"
                     href={buildTrackedLink(
                       book.affiliateLink,
                       "book",

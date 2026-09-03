@@ -259,7 +259,7 @@ export default function ProjectGallery({
   cover,
   gallery,
 }: ProjectGalleryProps) {
-  const carouselApiRef = useRef<CarouselApi>(undefined);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>(undefined);
   const [current, setCurrent] = useState(1);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const coverMedia = getCoverMedia(cover);
@@ -286,25 +286,22 @@ export default function ProjectGallery({
   }, []);
 
   const handleCarouselApi = useCallback(
-    (carouselApi: CarouselApi) => {
-      if (!carouselApi || carouselApiRef.current === carouselApi) {
-        return;
-      }
-
-      carouselApiRef.current?.off("select", handleCarouselSelect);
-      carouselApiRef.current = carouselApi;
-      handleCarouselSelect(carouselApi);
-      carouselApi.on("select", handleCarouselSelect);
-    },
-    [handleCarouselSelect]
+    (nextCarouselApi: CarouselApi) => setCarouselApi(nextCarouselApi),
+    []
   );
 
-  useEffect(
-    () => () => {
-      carouselApiRef.current?.off("select", handleCarouselSelect);
-    },
-    [handleCarouselSelect]
-  );
+  useEffect(() => {
+    if (!carouselApi) {
+      return;
+    }
+
+    handleCarouselSelect(carouselApi);
+    carouselApi.on("select", handleCarouselSelect);
+
+    return () => {
+      carouselApi.off("select", handleCarouselSelect);
+    };
+  }, [carouselApi, handleCarouselSelect]);
 
   const closeLightbox = useCallback(() => setSelectedIndex(null), []);
   const handleOpenChange = useCallback((open: boolean) => {

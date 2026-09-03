@@ -64,7 +64,12 @@ export default function EditionInfo({
               <Button
                 nativeButton={false}
                 render={
-                  <a href={buyUrl} rel="noopener noreferrer" target="_blank" />
+                  <a
+                    aria-label="Buy this edition"
+                    href={buyUrl}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  />
                 }
                 size="sm"
               >

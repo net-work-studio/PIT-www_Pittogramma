@@ -59,12 +59,14 @@ export async function generateMetadata({
     params,
     getDynamicFetchOptions(),
   ]);
-  const { data: event } = await sanityFetchMetadata({
-    params: { slug },
-    perspective,
-    query: EVENT_QUERY,
-  });
-  const today = await getCachedLocalToday();
+  const [{ data: event }, today] = await Promise.all([
+    sanityFetchMetadata({
+      params: { slug },
+      perspective,
+      query: EVENT_QUERY,
+    }),
+    getCachedLocalToday(),
+  ]);
 
   if (
     !event ||
@@ -124,8 +126,8 @@ async function CachedEventPage({
   stega,
 }: { slug: string } & DynamicFetchOptions) {
   "use cache";
-  const today = await getCachedLocalToday();
-  const [{ data: event }, { data: siteSettings }] = await Promise.all([
+  const [today, { data: event }, { data: siteSettings }] = await Promise.all([
+    getCachedLocalToday(),
     sanityFetch({
       params: { slug },
       perspective,

@@ -39,7 +39,7 @@ export default function GlobalError({
             A critical error occurred. Please try reloading the page.
           </p>
           <button
-            className="mt-10 inline-flex h-9 items-center justify-center rounded-full border px-4 py-2 font-medium text-sm shadow-xs transition-all hover:cursor-pointer hover:bg-accent hover:text-accent-foreground"
+            className="mt-10 inline-flex h-9 items-center justify-center rounded-full border px-4 py-2 font-medium text-sm shadow-xs transition-colors hover:cursor-pointer hover:bg-accent hover:text-accent-foreground"
             onClick={reset}
             type="button"
           >

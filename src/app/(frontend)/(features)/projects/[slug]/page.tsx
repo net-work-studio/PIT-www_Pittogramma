@@ -43,12 +43,14 @@ export async function generateMetadata({
     params,
     getDynamicFetchOptions(),
   ]);
-  const { data: project } = await sanityFetchMetadata({
-    params: { slug },
-    perspective,
-    query: PROJECT_QUERY,
-  });
-  const today = await getCachedLocalToday();
+  const [{ data: project }, today] = await Promise.all([
+    sanityFetchMetadata({
+      params: { slug },
+      perspective,
+      query: PROJECT_QUERY,
+    }),
+    getCachedLocalToday(),
+  ]);
 
   if (
     !project ||
@@ -91,13 +93,15 @@ async function CachedProjectPage({
   stega,
 }: { slug: string } & DynamicFetchOptions) {
   "use cache";
-  const today = await getCachedLocalToday();
-  const { data: project } = await sanityFetch({
-    params: { slug },
-    perspective,
-    query: PROJECT_QUERY,
-    stega,
-  });
+  const [today, { data: project }] = await Promise.all([
+    getCachedLocalToday(),
+    sanityFetch({
+      params: { slug },
+      perspective,
+      query: PROJECT_QUERY,
+      stega,
+    }),
+  ]);
 
   if (
     !project ||
