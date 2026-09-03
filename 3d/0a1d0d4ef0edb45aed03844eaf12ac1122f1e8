@@ -1,0 +1,19 @@
+src/sanity/schemaTypes/objects/seo-module.ts
+  s_083dda3e9ba919::t_8d1c5b319e719c 10,32-33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "3d0a1d0d4ef0edb45aed03844eaf12ac1122f1e8",
+  "prompts": {},
+  "sessions": {
+    "s_083dda3e9ba919": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a06654-24c0-7793-8335-365f952a77be",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
