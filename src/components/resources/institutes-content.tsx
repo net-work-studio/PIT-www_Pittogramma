@@ -13,6 +13,7 @@ import {
   ResourceViewTabs,
 } from "@/components/resources/resource-view-tabs";
 import type { ViewMode } from "@/lib/feature-availability";
+import { getInstituteMarkers } from "@/lib/institute-map-markers";
 import { buildHrefFromUrl } from "@/lib/resource-website-url";
 import type { UtmSettings } from "@/lib/tracked-link";
 import type { INSTITUTES_QUERY_RESULT } from "@/sanity/types";
@@ -133,20 +134,7 @@ export function InstitutesContent({
   searchEnabled,
   utmSettings,
 }: InstitutesContentProps) {
-  const markers = institutes.flatMap((i) => {
-    if (i.place?.lat === null || i.place.lng === null) {
-      return [];
-    }
-
-    return [
-      {
-        id: i._id,
-        lat: i.place.lat,
-        lng: i.place.lng,
-        name: i.name ?? "",
-      },
-    ];
-  });
+  const markers = getInstituteMarkers(institutes);
 
   return (
     <ResourceViewTabs

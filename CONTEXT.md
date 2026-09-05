@@ -109,6 +109,10 @@ _Avoid_: Resource records, global Resource settings
 A public Resource page selected as the internal destination of a reusable CTA. Its fixed route is resolved by the front end.
 _Avoid_: Storing the Resource page URL in a CTA
 
+**Unmapped Institute**:
+An Institute without an associated Place with geographic coordinates. It remains in the Institutes Index but has no map marker.
+_Avoid_: Hidden Institute, invalid Institute
+
 **Index**:
 The public navigation and Studio sidebar grouping for Pittogramma’s curated directories, including Studios / Agencies, Type Foundries, Bibliography, and the other existing Resource pages. “Index” is the user-facing label; internal code may continue to use Resource terminology.
 _Avoid_: Renaming individual directory types, treating Index as a separate content type
