@@ -16,6 +16,7 @@ export function staticPageMetadata(
     openGraph: {
       description,
       images: [defaultSocialImage],
+      siteName: siteDefaults.title || "Pittogramma",
       title,
       type: "website",
       url,
