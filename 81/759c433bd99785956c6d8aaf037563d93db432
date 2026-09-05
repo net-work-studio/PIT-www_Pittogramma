@@ -1,0 +1,21 @@
+.github/workflows/sanity-production-backup.yml
+  s_985f21f1b0d24c::t_0e7187bcd2927c 18-21
+scripts/export-sanity-backup.ts
+  s_985f21f1b0d24c::t_0e7187bcd2927c 48-49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "81759c433bd99785956c6d8aaf037563d93db432",
+  "prompts": {},
+  "sessions": {
+    "s_985f21f1b0d24c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a07102-5733-7cc3-aedc-80b9616aebb6",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
