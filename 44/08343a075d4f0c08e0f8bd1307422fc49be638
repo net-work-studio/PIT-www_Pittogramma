@@ -1,0 +1,30 @@
+scripts/export-sanity-backup.ts
+  s_985f21f1b0d24c::t_0aa25c5b467ce8 1-88
+package.json
+  s_985f21f1b0d24c::t_0aa25c5b467ce8 15
+  s_985f21f1b0d24c::t_e544a45b5d74dd 53
+.github/workflows/sanity-production-backup.yml
+  s_985f21f1b0d24c::t_8bc688b0c201d9 67-69,77,79-87,89-97
+  s_985f21f1b0d24c::t_f2f8189d979100 78,88
+  s_985f21f1b0d24c::t_0aa25c5b467ce8 1-66,70-76
+README.md
+  s_985f21f1b0d24c::t_0f5f9d54caa20f 35-46
+bun.lock
+  s_985f21f1b0d24c::t_706de1474e7bb0 12-13,27-28,35,83,1045,1057,1321,1359,1363,1523,1579,1723,1787,1895,1999,2019,2021,2061,2185,2265-2266,2299,2303-2304,2367-2368,2383,2389-2390,2401-2407,2411-2414,2417-2418,2433-2436,2445-2447,2455-2458,2513-2514,2591,2593-2595,2603,2605,2681-2682,2743,2779,2781,2867-2868,2917-2918,2925-2930,2944-2947
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "4408343a075d4f0c08e0f8bd1307422fc49be638",
+  "prompts": {},
+  "sessions": {
+    "s_985f21f1b0d24c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a07102-5733-7cc3-aedc-80b9616aebb6",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
