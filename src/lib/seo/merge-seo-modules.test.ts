@@ -1,5 +1,7 @@
 import { describe, expect, test } from "bun:test";
 
+import type { SeoImageSource } from "@/lib/types/seo";
+
 import { mergeSeoModules } from "./merge-seo-modules";
 
 describe("mergeSeoModules", () => {
@@ -7,15 +9,15 @@ describe("mergeSeoModules", () => {
     const siteImage = {
       alt: "Pittogramma social image",
       image: {
-        asset: { _ref: "image-site-settings-og-image-1200x630-png" },
+        asset: {
+          _ref: "image-site-settings-og-image-1200x630-png",
+          _type: "reference",
+        },
       },
-    };
+    } satisfies SeoImageSource;
 
     expect(
-      mergeSeoModules(
-        { metaImage: siteImage },
-        { metaTitle: "Homepage title" }
-      )
+      mergeSeoModules({ metaImage: siteImage }, { metaTitle: "Homepage title" })
     ).toMatchObject({
       metaImage: siteImage,
       metaTitle: "Homepage title",
@@ -24,11 +26,21 @@ describe("mergeSeoModules", () => {
 
   test("uses a page image instead of the Site Settings image", () => {
     const siteImage = {
-      image: { asset: { _ref: "image-site-settings-og-image-1200x630-png" } },
-    };
+      image: {
+        asset: {
+          _ref: "image-site-settings-og-image-1200x630-png",
+          _type: "reference",
+        },
+      },
+    } satisfies SeoImageSource;
     const pageImage = {
-      image: { asset: { _ref: "image-page-og-image-1200x630-png" } },
-    };
+      image: {
+        asset: {
+          _ref: "image-page-og-image-1200x630-png",
+          _type: "reference",
+        },
+      },
+    } satisfies SeoImageSource;
 
     expect(
       mergeSeoModules({ metaImage: siteImage }, { metaImage: pageImage })

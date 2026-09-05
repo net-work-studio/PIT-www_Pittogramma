@@ -1,8 +1,5 @@
 import type { SeoModule } from "@/lib/types/seo";
-import {
-  getDynamicFetchOptions,
-  sanityFetchMetadata,
-} from "@/sanity/lib/live";
+import { getDynamicFetchOptions, sanityFetchMetadata } from "@/sanity/lib/live";
 
 const SITE_SETTINGS_SEO_QUERY = `
   *[_type == "siteSettings"][0] {
