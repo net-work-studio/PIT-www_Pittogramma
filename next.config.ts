@@ -2,6 +2,11 @@ import type { NextConfig } from "next";
 import { sanity } from "next-sanity/live/cache-life";
 import { getKirbyRedirects } from "./src/lib/kirby-redirects";
 import { getSubstackRedirects } from "./src/lib/newsletter/substack-redirects";
+import {
+  UMAMI_COLLECT_PATH,
+  UMAMI_ORIGIN,
+  UMAMI_SCRIPT_PATH,
+} from "./src/lib/umami";
 
 const sanityProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const sanityDataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -49,6 +54,18 @@ const nextConfig: NextConfig = {
       },
       ...getKirbyRedirects(),
       ...getSubstackRedirects(),
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        destination: `${UMAMI_ORIGIN}/script.js`,
+        source: UMAMI_SCRIPT_PATH,
+      },
+      {
+        destination: `${UMAMI_ORIGIN}/api/send`,
+        source: UMAMI_COLLECT_PATH,
+      },
     ];
   },
 };

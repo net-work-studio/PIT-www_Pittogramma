@@ -11,7 +11,11 @@ import Header from "@/components/shared/header";
 import { PublicHoldingPage } from "@/components/shared/public-holding-page";
 import { ThemeProvider } from "@/components/theme-provider";
 import { getPublicSiteState } from "@/lib/public-site-state";
-import { shouldTrackWithUmami } from "@/lib/umami";
+import {
+  shouldTrackWithUmami,
+  UMAMI_PROXY_PATH,
+  UMAMI_SCRIPT_PATH,
+} from "@/lib/umami";
 import {
   type DynamicFetchOptions,
   getDynamicFetchOptions,
@@ -109,8 +113,9 @@ async function FrontendContent({ children }: { children: React.ReactNode }) {
         <Script
           data-do-not-track="true"
           data-domains="pittogramma.xyz,www.pittogramma.xyz"
+          data-host-url={UMAMI_PROXY_PATH}
           data-website-id={umamiWebsiteId}
-          src="https://umami.net-work.studio/script.js"
+          src={UMAMI_SCRIPT_PATH}
           strategy="afterInteractive"
         />
       ) : null}
