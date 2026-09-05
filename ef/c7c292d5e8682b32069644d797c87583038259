@@ -1,0 +1,23 @@
+src/lib/seo/static-page-metadata.ts
+  s_113d61d7cedd1c::t_dd3b863f56e3ed 19
+src/lib/seo/metadata.test.ts
+  s_113d61d7cedd1c::t_dd3b863f56e3ed 13,26
+src/lib/seo/map-sanity-to-metadata.ts
+  s_113d61d7cedd1c::t_dd3b863f56e3ed 61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "efc7c292d5e8682b32069644d797c87583038259",
+  "prompts": {},
+  "sessions": {
+    "s_113d61d7cedd1c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a071d7-a22d-7430-a7f2-f6169076187d",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
