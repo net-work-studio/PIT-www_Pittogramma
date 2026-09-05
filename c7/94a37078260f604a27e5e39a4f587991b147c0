@@ -1,0 +1,23 @@
+src/lib/seo/merge-seo-modules.test.ts
+  s_b9534d5a778faa::t_f9195d530f5f4e 3-4,17,35,43
+  s_b9534d5a778faa::t_aa46b469e87daa 12-15,29-34,37-42
+  s_b9534d5a778faa::t_a6b8734bc0fac5 20
+src/lib/seo/site-settings-seo.ts
+  s_b9534d5a778faa::t_a6b8734bc0fac5 2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "c794a37078260f604a27e5e39a4f587991b147c0",
+  "prompts": {},
+  "sessions": {
+    "s_b9534d5a778faa": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a071c5-5b3c-7152-b1d7-22fb80791393",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
