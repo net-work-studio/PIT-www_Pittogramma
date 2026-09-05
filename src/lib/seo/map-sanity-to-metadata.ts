@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import type { SeoImageSource, SeoModule } from "@/lib/types/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import { defaultSocialImage } from "./default-social-image";
+import { mergeSeoModules } from "./merge-seo-modules";
+import { getSiteSettingsSeo } from "./site-settings-seo";
 
 interface MapSanityToMetadataProps {
   baseUrl: string;
@@ -19,26 +21,28 @@ interface MapSanityToMetadataProps {
   };
 }
 
-export function mapSanityToMetadata({
+export async function mapSanityToMetadata({
   page,
   baseUrl,
   path,
   siteDefaults,
-}: MapSanityToMetadataProps): Metadata {
+}: MapSanityToMetadataProps): Promise<Metadata> {
+  const seo = mergeSeoModules(await getSiteSettingsSeo(), page.seo);
+
   // Title fallback chain: SEO metaTitle → page title → site title
-  const title = page.seo?.metaTitle || page.title || siteDefaults.title;
+  const title = seo?.metaTitle || page.title || siteDefaults.title;
 
   // Description fallback chain: SEO metaDescription → page description → site description
   const description =
-    page.seo?.metaDescription || page.description || siteDefaults.description;
+    seo?.metaDescription || page.description || siteDefaults.description;
 
   // Canonical URL
-  const canonicalUrl = page.seo?.canonicalURL
-    ? `${baseUrl}${page.seo.canonicalURL}`
+  const canonicalUrl = seo?.canonicalURL
+    ? `${baseUrl}${seo.canonicalURL}`
     : `${baseUrl}${path}`;
 
   // Single image source for all platforms
-  const sharedImage = page.seo?.metaImage || page.coverImage;
+  const sharedImage = seo?.metaImage || page.coverImage;
 
   const buildOpenGraph = (): Metadata["openGraph"] => {
     const imageBuilder = sharedImage ? urlForImage(sharedImage) : undefined;
@@ -52,10 +56,10 @@ export function mapSanityToMetadata({
       : undefined;
 
     return {
-      description: page.seo?.openGraph?.description || description,
+      description: seo?.openGraph?.description || description,
       images: [imageMeta ?? defaultSocialImage],
-      title: page.seo?.openGraph?.title || title,
-      url: page.seo?.openGraph?.url || canonicalUrl,
+      title: seo?.openGraph?.title || title,
+      url: seo?.openGraph?.url || canonicalUrl,
     };
   };
 
@@ -70,9 +74,9 @@ export function mapSanityToMetadata({
 
     return {
       card: "summary_large_image",
-      description: page.seo?.xCard?.description || description,
+      description: seo?.xCard?.description || description,
       images: images ?? [defaultSocialImage.url],
-      title: page.seo?.xCard?.title || title,
+      title: seo?.xCard?.title || title,
     };
   };
 
@@ -82,7 +86,7 @@ export function mapSanityToMetadata({
     },
     description,
     openGraph: buildOpenGraph(),
-    robots: (page.seo?.metaRobots as Metadata["robots"]) || "index, follow",
+    robots: (seo?.metaRobots as Metadata["robots"]) || "index, follow",
     title,
     twitter: buildTwitter(),
   };

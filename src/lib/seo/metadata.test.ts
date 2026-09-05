@@ -13,8 +13,8 @@ describe("social image metadata", () => {
     expect(metadata.twitter?.images).toEqual([defaultSocialImage.url]);
   });
 
-  test("uses the generated site image when Sanity has no image", () => {
-    const metadata = mapSanityToMetadata({
+  test("uses the generated site image when Sanity has no image", async () => {
+    const metadata = await mapSanityToMetadata({
       baseUrl: siteDefaults.baseUrl,
       page: { title: "Projects" },
       path: "/projects",
@@ -25,8 +25,8 @@ describe("social image metadata", () => {
     expect(metadata.twitter?.images).toEqual([defaultSocialImage.url]);
   });
 
-  test("uses Sanity SEO fields before page-level fallbacks", () => {
-    const metadata = mapSanityToMetadata({
+  test("uses Sanity SEO fields before page-level fallbacks", async () => {
+    const metadata = await mapSanityToMetadata({
       baseUrl: siteDefaults.baseUrl,
       page: {
         description: "Page description",
