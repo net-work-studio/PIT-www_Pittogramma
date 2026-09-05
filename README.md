@@ -1,3 +1,5 @@
+[![Sanity production backup](https://github.com/net-work-studio/PIT-www_Pittogramma/actions/workflows/sanity-production-backup.yml/badge.svg)](https://github.com/net-work-studio/PIT-www_Pittogramma/actions/workflows/sanity-production-backup.yml)
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
