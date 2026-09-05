@@ -45,8 +45,8 @@ async function main() {
 
   const command = Bun.spawn({
     cmd: [
-      "bunx",
-      "sanity",
+      "node",
+      "node_modules/@sanity/cli/bin/run.js",
       "datasets",
       "export",
       DATASET,
