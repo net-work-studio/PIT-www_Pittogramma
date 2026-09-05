@@ -1,0 +1,27 @@
+src/lib/umami.ts
+  s_081f678142e1b1::t_0e9879c7bea9e2 1-5
+next.config.test.ts
+  s_081f678142e1b1::t_5fe20a8fe686df 1-26
+src/app/(frontend)/layout.tsx
+  s_081f678142e1b1::t_0e9879c7bea9e2 15-18,116,118
+  s_081f678142e1b1::t_28a0d1a1132a46 14
+next.config.ts
+  s_081f678142e1b1::t_0e9879c7bea9e2 5-9,59-68
+  s_081f678142e1b1::t_3fa4bc973fe554 69-70
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "de26a2399a839d57cd3c91430d031de2edd265ec",
+  "prompts": {},
+  "sessions": {
+    "s_081f678142e1b1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a07179-7c67-7b60-9ae4-e6287c762f9d",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
