@@ -75,7 +75,7 @@ jobs:
           fi
 
           weekly_cutoff=$(date -u -d '90 days ago' +%F)
-          { s3cmd --config="$s3_config" ls --recursive "s3://${SWISS_BACKUP_S3_BUCKET}/sanity-production/weekly" 2>/dev/null || true; } \
+          s3cmd --config="$s3_config" ls --recursive "s3://${SWISS_BACKUP_S3_BUCKET}/sanity-production/weekly" \
             | awk '{print $NF}' \
             | while read -r object; do
                 backup_day=$(printf '%s' "$object" | cut -d/ -f6)
@@ -85,11 +85,11 @@ jobs:
               done
 
           monthly_cutoff=$(date -u -d '12 months ago' +%Y-%m)
-          { s3cmd --config="$s3_config" ls --recursive "s3://${SWISS_BACKUP_S3_BUCKET}/sanity-production/monthly" 2>/dev/null || true; } \
+          s3cmd --config="$s3_config" ls --recursive "s3://${SWISS_BACKUP_S3_BUCKET}/sanity-production/monthly" \
             | awk '{print $NF}' \
             | while read -r object; do
                 backup_month=$(printf '%s' "$object" | cut -d/ -f6)
-                if [[ "$backup_month" < "$monthly_cutoff" ]]; then
+                if [[ "$backup_month" < "$monthly_cutoff" || "$backup_month" == "$monthly_cutoff" ]]; then
                   s3cmd --config="$s3_config" del "$object"
                 fi
               done
