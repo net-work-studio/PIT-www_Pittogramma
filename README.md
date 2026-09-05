@@ -32,3 +32,15 @@ projection is deployed. Preview and local builds skip this production migration.
 Set `SANITY_AUTH_TOKEN` in the Vercel Production environment to a Sanity token
 with write access. If the migration fails, the build stops before deployment.
 The migration is idempotent, so later production builds can run it safely.
+
+## Sanity production backups
+
+Run `bun run sanity:backup` with a read-only `SANITY_AUTH_TOKEN` to create a
+full `jfvmcjyl` / `production` export, including assets, in `./backups`. The
+command writes a SHA-256 manifest beside the archive. Set
+`SANITY_BACKUP_OUTPUT_DIR` to write elsewhere.
+
+GitHub Actions runs the same export every Monday at 02:17 UTC on Blacksmith,
+uploads it to Swiss Backup, checks that the uploaded manifest round-trips, and
+keeps weekly archives for 90 days plus monthly archives for 12 months. Run the
+workflow manually for an on-demand backup.
