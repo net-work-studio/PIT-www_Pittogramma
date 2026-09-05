@@ -1,0 +1,29 @@
+CONTEXT.md
+  s_91436d59d44368::t_f7147caa705aaf 112-115
+src/components/resources/institutes-content.tsx
+  s_91436d59d44368::t_f7147caa705aaf 137
+  s_91436d59d44368::t_2667412ed30b5a 16
+src/sanity/schemaTypes/documents/institute.ts
+  s_91436d59d44368::t_be241e3d3e85b2 62-67
+src/lib/institute-map-markers.ts
+  s_91436d59d44368::t_2667412ed30b5a 1-20
+src/components/resources/institutes-content.test.ts
+  s_91436d59d44368::t_f7147caa705aaf 1-2,4-20
+  s_91436d59d44368::t_2667412ed30b5a 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "f94048b26eeda003f1b8b24395d4d79c15aa3b4b",
+  "prompts": {},
+  "sessions": {
+    "s_91436d59d44368": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a07178-da1b-74b0-97b6-bcec9eddd19d",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
