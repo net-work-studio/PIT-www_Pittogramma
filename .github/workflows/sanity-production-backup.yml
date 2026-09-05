@@ -1,0 +1,97 @@
+name: Sanity production backup
+
+on:
+  schedule:
+    - cron: "17 2 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Install S3 client
+        run: python3 -m pip install --disable-pip-version-check s3cmd==2.4.0
+
+      - name: Export and upload production backup
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+          SWISS_BACKUP_S3_ACCESS_KEY: ${{ secrets.SWISS_BACKUP_S3_ACCESS_KEY }}
+          SWISS_BACKUP_S3_BUCKET: ${{ vars.SWISS_BACKUP_S3_BUCKET }}
+          SWISS_BACKUP_S3_ENDPOINT: ${{ vars.SWISS_BACKUP_S3_ENDPOINT }}
+          SWISS_BACKUP_S3_SECRET_KEY: ${{ secrets.SWISS_BACKUP_S3_SECRET_KEY }}
+        run: |
+          set -euo pipefail
+          export SANITY_BACKUP_OUTPUT_DIR="$RUNNER_TEMP/sanity-backup"
+          bun run sanity:backup
+
+          archive=$(find "$SANITY_BACKUP_OUTPUT_DIR" -name '*.tar.gz' -type f -print -quit)
+          manifest="${archive}.sha256.json"
+          test -n "$archive"
+          test -f "$manifest"
+
+          endpoint="${SWISS_BACKUP_S3_ENDPOINT#https://}"
+          endpoint="${endpoint#http://}"
+          s3_config="$RUNNER_TEMP/s3cfg"
+          {
+            printf '%s\n' '[default]'
+            printf 'access_key = %s\n' "$SWISS_BACKUP_S3_ACCESS_KEY"
+            printf 'secret_key = %s\n' "$SWISS_BACKUP_S3_SECRET_KEY"
+            printf 'host_base = %s\n' "$endpoint"
+            printf 'host_bucket = %s\n' "$endpoint"
+            printf '%s\n' 'use_https = True'
+            printf '%s\n' 'signature_v2 = False'
+          } > "$s3_config"
+
+          backup_date=$(date -u +%F)
+          archive_name=$(basename "$archive")
+          manifest_name=$(basename "$manifest")
+          weekly_path="s3://${SWISS_BACKUP_S3_BUCKET}/sanity-production/weekly/${backup_date}"
+
+          s3cmd --config="$s3_config" put "$archive" "${weekly_path}/${archive_name}"
+          s3cmd --config="$s3_config" put "$manifest" "${weekly_path}/${manifest_name}"
+          s3cmd --config="$s3_config" ls "${weekly_path}/${archive_name}"
+          s3cmd --config="$s3_config" ls "${weekly_path}/${manifest_name}"
+          uploaded_manifest="$RUNNER_TEMP/uploaded-manifest.json"
+          s3cmd --config="$s3_config" get "${weekly_path}/${manifest_name}" "$uploaded_manifest"
+          cmp --silent "$manifest" "$uploaded_manifest"
+
+          if [ "$(date -u +%d)" -le 07 ]; then
+            monthly_path="s3://${SWISS_BACKUP_S3_BUCKET}/sanity-production/monthly/$(date -u +%Y-%m)"
+            s3cmd --config="$s3_config" put "$archive" "${monthly_path}/${archive_name}"
+            s3cmd --config="$s3_config" put "$manifest" "${monthly_path}/${manifest_name}"
+          fi
+
+          weekly_cutoff=$(date -u -d '90 days ago' +%F)
+          s3cmd --config="$s3_config" ls --recursive "s3://${SWISS_BACKUP_S3_BUCKET}/sanity-production/weekly" \
+            | awk '{print $NF}' \
+            | while read -r object; do
+                backup_day=$(printf '%s' "$object" | cut -d/ -f6)
+                if [[ "$backup_day" < "$weekly_cutoff" ]]; then
+                  s3cmd --config="$s3_config" del "$object"
+                fi
+              done
+
+          monthly_cutoff=$(date -u -d '12 months ago' +%Y-%m)
+          s3cmd --config="$s3_config" ls --recursive "s3://${SWISS_BACKUP_S3_BUCKET}/sanity-production/monthly" \
+            | awk '{print $NF}' \
+            | while read -r object; do
+                backup_month=$(printf '%s' "$object" | cut -d/ -f6)
+                if [[ "$backup_month" < "$monthly_cutoff" || "$backup_month" == "$monthly_cutoff" ]]; then
+                  s3cmd --config="$s3_config" del "$object"
+                fi
+              done
+
+          rm -f "$s3_config" "$archive" "$manifest" "$uploaded_manifest"

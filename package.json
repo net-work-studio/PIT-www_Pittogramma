@@ -12,6 +12,7 @@
     "fix": "ultracite fix",
     "newsletter:export-preview": "bun run scripts/export-newsletter-preview.ts",
     "newsletter:validate-map": "bun run scripts/validate-substack-url-map.ts",
+    "sanity:backup": "bun run scripts/export-sanity-backup.ts",
     "sanity:migrate-cta-images": "bun run scripts/migrate-cta-images.ts",
     "seo:check-sitemap": "bun run scripts/check-sitemap.ts",
     "start": "next start",
@@ -49,6 +50,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.5.10",
     "@sanity/blueprints": "^0.23.6",
+    "@sanity/cli": "8.2.1",
     "@sanity/functions": "^1.6.8",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/bun": "^1.4.0",
