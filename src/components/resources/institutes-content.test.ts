@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import type { INSTITUTES_QUERY_RESULT } from "@/sanity/types";
 import { getInstituteMarkers } from "@/lib/institute-map-markers";
+import type { INSTITUTES_QUERY_RESULT } from "@/sanity/types";
 
 describe("getInstituteMarkers", () => {
   test("omits an institute without a place while retaining mapped institutes", () => {

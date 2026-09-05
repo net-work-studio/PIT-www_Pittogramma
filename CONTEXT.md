@@ -36,6 +36,10 @@ _Avoid_: A footer link as proof of acceptance, presumed agreement by collaborato
 Pittogramma launches without optional tracking, analytics, behavioural advertising, maps, or external video embeds. Outside the embedded submission form, it uses only technical theme-preference storage, so no sitewide consent banner or preference centre is shown until a non-essential service is introduced. Fillout's own cookie notice and consent control must be enabled within the submission form.
 _Avoid_: Precautionary cookie banner, dormant consent categories, loading optional third-party resources before consent
 
+**Umami analytics dashboard**:
+The externally hosted analytics dashboard available to Studio editors through a public shared URL. It is launched outside Studio and is not an analytics resource loaded on the public Pittogramma website.
+_Avoid_: Embedded dashboard, site tracking integration
+
 **Legal page**:
 A fixed-route, Sanity-managed public document containing Pittogramma's legal
 copy. Legal pages are the Legal Notice / Impressum, Privacy Policy, Cookie
