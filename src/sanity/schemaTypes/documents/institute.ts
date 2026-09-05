@@ -59,6 +59,12 @@ export const institute = defineType({
   ],
   icon: HomeIcon,
   name: "institute",
+  preview: {
+    select: {
+      subtitle: "place.name",
+      title: "name",
+    },
+  },
   title: "Institute",
   type: "document",
 });
