@@ -10,6 +10,7 @@ describe("social image metadata", () => {
     const metadata = staticPageMetadata("/submit", "Submit", "Submit work");
 
     expect(metadata.openGraph?.images).toEqual([defaultSocialImage]);
+    expect(metadata.openGraph?.siteName).toBe("Pittogramma");
     expect(metadata.twitter?.images).toEqual([defaultSocialImage.url]);
   });
 
@@ -22,6 +23,7 @@ describe("social image metadata", () => {
     });
 
     expect(metadata.openGraph?.images).toEqual([defaultSocialImage]);
+    expect(metadata.openGraph?.siteName).toBe("Pittogramma");
     expect(metadata.twitter?.images).toEqual([defaultSocialImage.url]);
   });
 
