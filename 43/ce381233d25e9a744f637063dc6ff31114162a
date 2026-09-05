@@ -1,0 +1,30 @@
+src/sanity/tools/analytics.tsx
+  s_8a3de60b1b52d2::t_38e081ad944bcd 1-12,15-42
+  s_8a3de60b1b52d2::t_e0952617896a70 13-14
+package.json
+  s_8a3de60b1b52d2::t_4fd07d5271567d 31
+src/components/resources/institutes-content.test.ts
+  s_8a3de60b1b52d2::t_c5cee8fafa4184 3
+sanity.config.ts
+  s_8a3de60b1b52d2::t_38e081ad944bcd 17,45
+CONTEXT.md
+  s_8a3de60b1b52d2::t_411a84734cb69a 39-42
+bun.lock
+  s_8a3de60b1b52d2::t_b829b7101c387d 13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "43ce381233d25e9a744f637063dc6ff31114162a",
+  "prompts": {},
+  "sessions": {
+    "s_8a3de60b1b52d2": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a071a4-7c8d-71d2-a219-93d3a45c2010",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
