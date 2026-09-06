@@ -8,7 +8,7 @@ Create a Brevo workspace before adding credentials to the website. Do **not** co
 
 ## Environment Variables
 
-Add these server-only variables to `.env.local` and Vercel when the account exists:
+Add these server-only variables to `.env.local` and Netlify when the account exists:
 
 
 | Variable                 | Purpose                                                                 |
@@ -16,7 +16,7 @@ Add these server-only variables to `.env.local` and Vercel when the account exis
 | `BREVO_API_KEY`          | Brevo API v3 key                                                        |
 | `BREVO_WEBSITE_LIST_ID`  | List ID for website signups                                             |
 | `BREVO_DOI_TEMPLATE_ID`  | Double opt-in confirmation template ID                                  |
-| `BREVO_DOI_REDIRECT_URL` | Post-confirmation redirect URL (e.g. `https://pittogramma.xyz/journal`) |
+| `BREVO_DOI_REDIRECT_URL` | Post-confirmation redirect URL (`https://pittogramma.xyz/newsletter-confirmed`) |
 | `NEXT_PUBLIC_BASE_URL`   | Canonical site URL permitted to submit the browser signup form          |
 
 
@@ -29,7 +29,7 @@ Optional for migrated contacts (import handled in Brevo UI, not website API):
 
 
 For the production deployment, set `NEXT_PUBLIC_BASE_URL` to
-`https://pittogramma.xyz` in Vercel, then redeploy. This is the site address
+`https://pittogramma.xyz` in Netlify, then redeploy. This is the site address
 the browser sends as the signup form's origin; it is not a Brevo credential.
 
 
@@ -68,7 +68,7 @@ Create contact attributes in Brevo before enabling the website API:
 
 1. Create a DOI email template in Brevo.
 2. Note the template ID for `BREVO_DOI_TEMPLATE_ID`.
-3. Set `BREVO_DOI_REDIRECT_URL` to a thank-you or journal landing page.
+3. Set `BREVO_DOI_REDIRECT_URL` to `https://pittogramma.xyz/newsletter-confirmed`.
 4. The website calls `POST /v3/contacts/doubleOptinConfirmation` via `/api/newsletter/subscribe`.
 
 ### Automations and templates
