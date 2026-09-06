@@ -1,0 +1,22 @@
+docs/newsletter/brevo-setup.md
+  s_c8a3f103227a7d::t_6dbc5a4a84d6b9 11,32
+  s_c8a3f103227a7d::t_ec3e356557208a 19,71
+src/app/(frontend)/newsletter-confirmed/page.tsx
+  s_c8a3f103227a7d::t_ec3e356557208a 1-33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "d6714db73a67697829c5776a60b91dfd7d69d9aa",
+  "prompts": {},
+  "sessions": {
+    "s_c8a3f103227a7d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0665f-8eba-71b1-b022-b894bd957908",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
