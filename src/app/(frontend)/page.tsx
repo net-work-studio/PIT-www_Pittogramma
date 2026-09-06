@@ -273,6 +273,7 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
             featuredItem.cardDestination === "external"
           }
           href={getEditorialHref(featuredItem)}
+          imageFillWidth={1600}
           subtitle={featuredSubtitle}
           title={featuredItem.title ?? ""}
         />
