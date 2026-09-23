@@ -136,8 +136,7 @@ async function getCachedPublicSiteSettings({
   stega,
 }: DynamicFetchOptions) {
   "use cache";
-  // Keep site-mode changes prompt without excluding public pages from prerendering.
-  cacheLife({ expire: 300, revalidate: 10, stale: 30 });
+  cacheLife({ expire: 3600, revalidate: 300, stale: 600 });
   const { data: settings } = await sanityFetch({
     perspective,
     query: PUBLIC_SITE_STATE_QUERY,
