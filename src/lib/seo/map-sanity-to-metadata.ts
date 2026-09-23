@@ -58,6 +58,7 @@ export async function mapSanityToMetadata({
     return {
       description: seo?.openGraph?.description || description,
       images: [imageMeta ?? defaultSocialImage],
+      siteName: siteDefaults.title || "Pittogramma",
       title: seo?.openGraph?.title || title,
       url: seo?.openGraph?.url || canonicalUrl,
     };
