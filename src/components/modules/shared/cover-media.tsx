@@ -21,6 +21,7 @@ export interface CoverMediaData {
 interface CoverMediaProps {
   className?: string;
   cover: CoverMediaData | null | undefined;
+  fetchPriority?: "high" | "low" | "auto";
   fill?: boolean;
   fillWidth?: number;
   preload?: boolean;
@@ -31,6 +32,7 @@ interface CoverMediaProps {
 export default function CoverMedia({
   cover,
   className,
+  fetchPriority,
   fill,
   fillWidth,
   preload,
@@ -67,6 +69,7 @@ export default function CoverMedia({
   return (
     <SanityImage
       className={className}
+      fetchPriority={fetchPriority}
       fill={fill}
       fillWidth={fillWidth}
       preload={preload}
