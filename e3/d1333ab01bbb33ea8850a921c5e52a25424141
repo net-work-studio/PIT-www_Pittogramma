@@ -1,0 +1,28 @@
+docs/investigations/serverless-compute/local-cache-fixture.sh
+  s_dbf6ee9f3a06f9::t_8884717b153ba4 1-58
+docs/investigations/2026-09-23-serverless-compute.md
+  s_dbf6ee9f3a06f9::t_5e4a01ffb2c847 178-179
+  s_dbf6ee9f3a06f9::t_3c664e5d4355e7 51,133
+  s_dbf6ee9f3a06f9::t_6b3f4106868d6b 78-79,119,177
+  s_dbf6ee9f3a06f9::t_d83b2088720313 1-50,52-77,80-118,120-132,134-176
+docs/investigations/serverless-compute/public-cache-probe.sh
+  s_dbf6ee9f3a06f9::t_8884717b153ba4 1-32
+docs/investigations/serverless-compute/route-probes.txt
+  s_dbf6ee9f3a06f9::t_594c356abfca42 1-66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "e3d1333ab01bbb33ea8850a921c5e52a25424141",
+  "prompts": {},
+  "sessions": {
+    "s_dbf6ee9f3a06f9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ced7-89f0-7cf3-ba0f-4cbc12f3bb52",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
