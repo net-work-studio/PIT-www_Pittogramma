@@ -134,7 +134,6 @@ export default function BaseCard({
         big ? "col-span-2" : "col-span-1"
       )}
       href={href}
-      prefetch={false}
       {...(isExternal ? { rel: linkRel, target: "_blank" } : {})}
     >
       <AspectRatio

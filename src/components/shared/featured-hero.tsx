@@ -56,7 +56,6 @@ export default function FeaturedHero({
         HEIGHT_BY_VARIANT[variant]
       )}
       href={href}
-      prefetch={false}
       {...(external ? { rel: "noopener noreferrer", target: "_blank" } : {})}
     >
       <div className="z-10 flex w-full flex-col items-center gap-4 px-4 text-center text-white sm:px-6">
@@ -81,9 +80,8 @@ export default function FeaturedHero({
       <CoverMedia
         className="absolute h-full w-full rounded-xl object-cover transition-transform duration-300"
         cover={cover}
-        fetchPriority="high"
         fill
-        loading="eager"
+        preload
         sizes="(max-width: 1280px) 100vw, 75vw"
       />
     </Link>

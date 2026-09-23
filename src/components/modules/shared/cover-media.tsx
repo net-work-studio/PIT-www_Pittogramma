@@ -21,10 +21,9 @@ export interface CoverMediaData {
 interface CoverMediaProps {
   className?: string;
   cover: CoverMediaData | null | undefined;
-  fetchPriority?: "high" | "low" | "auto";
   fill?: boolean;
   fillWidth?: number;
-  loading?: "eager" | "lazy";
+  preload?: boolean;
   priority?: boolean;
   sizes?: string;
 }
@@ -32,10 +31,9 @@ interface CoverMediaProps {
 export default function CoverMedia({
   cover,
   className,
-  fetchPriority,
   fill,
   fillWidth,
-  loading,
+  preload,
   priority,
   sizes,
 }: CoverMediaProps) {
@@ -69,10 +67,9 @@ export default function CoverMedia({
   return (
     <SanityImage
       className={className}
-      fetchPriority={fetchPriority}
       fill={fill}
       fillWidth={fillWidth}
-      loading={loading}
+      preload={preload}
       preserveAnimation={cover.preserveAnimation === true}
       priority={priority}
       sizes={sizes}
