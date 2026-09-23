@@ -122,8 +122,7 @@ async function getCachedPublicSiteState({
   stega,
 }: DynamicFetchOptions) {
   "use cache";
-  // Keep the public response prerenderable while checking site mode every 10s.
-  cacheLife({ expire: 300, revalidate: 10, stale: 30 });
+  cacheLife({ expire: 300, revalidate: 60, stale: 30 });
   const { data: settings } = await sanityFetch({
     perspective,
     query: PUBLIC_SITE_STATE_QUERY,
