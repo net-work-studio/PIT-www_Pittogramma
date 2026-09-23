@@ -83,6 +83,7 @@ export default function FeaturedHero({
         cover={cover}
         fetchPriority="high"
         fill
+        loading="eager"
         sizes="(max-width: 1280px) 100vw, 75vw"
       />
     </Link>

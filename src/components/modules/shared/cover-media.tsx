@@ -24,7 +24,7 @@ interface CoverMediaProps {
   fetchPriority?: "high" | "low" | "auto";
   fill?: boolean;
   fillWidth?: number;
-  preload?: boolean;
+  loading?: "eager" | "lazy";
   priority?: boolean;
   sizes?: string;
 }
@@ -35,7 +35,7 @@ export default function CoverMedia({
   fetchPriority,
   fill,
   fillWidth,
-  preload,
+  loading,
   priority,
   sizes,
 }: CoverMediaProps) {
@@ -72,7 +72,7 @@ export default function CoverMedia({
       fetchPriority={fetchPriority}
       fill={fill}
       fillWidth={fillWidth}
-      preload={preload}
+      loading={loading}
       preserveAnimation={cover.preserveAnimation === true}
       priority={priority}
       sizes={sizes}
