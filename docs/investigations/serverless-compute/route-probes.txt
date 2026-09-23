@@ -1,0 +1,66 @@
+route=/about sample=1 status=200 ttfb=2.425302 total=3.718038
+cache-control: private,no-cache,no-store,max-age=0,must-revalidate
+cache-status: "Netlify Durable"; fwd=bypass, "Netlify Edge"; fwd=miss; fwd-status=200
+content-type: text/html; charset=utf-8
+x-nf-request-id: 01M37E0R12SFVV0HMC506KENQ5
+route=/about sample=2 status=200 ttfb=1.433870 total=2.595094
+cache-control: private,no-cache,no-store,max-age=0,must-revalidate
+cache-status: "Netlify Durable"; fwd=bypass, "Netlify Edge"; fwd=miss; fwd-status=200
+content-type: text/html; charset=utf-8
+x-nf-request-id: 01M37E0VPERXKDRSFC7MX9V9EX
+route=/projects sample=1 status=200 ttfb=1.143831 total=2.399424
+cache-control: private,no-cache,no-store,max-age=0,must-revalidate
+cache-status: "Netlify Durable"; fwd=bypass, "Netlify Edge"; fwd=miss; fwd-status=200
+content-type: text/html; charset=utf-8
+x-nf-request-id: 01M37E0Y6KJCVEES34WWN6QKJK
+route=/projects sample=2 status=200 ttfb=1.058049 total=2.316771
+cache-control: private,no-cache,no-store,max-age=0,must-revalidate
+cache-status: "Netlify Durable"; fwd=bypass, "Netlify Edge"; fwd=miss; fwd-status=200
+content-type: text/html; charset=utf-8
+x-nf-request-id: 01M37E10H85EBHSHXTNTRY9T3B
+route=/projects/gamut sample=1 status=200 ttfb=1.065558 total=1.629187
+cache-control: private,no-cache,no-store,max-age=0,must-revalidate
+cache-status: "Netlify Durable"; fwd=bypass, "Netlify Edge"; fwd=miss; fwd-status=200
+content-type: text/html; charset=utf-8
+x-nf-request-id: 01M37E12SYP4GXAH9R66VH9068
+route=/projects/gamut sample=2 status=200 ttfb=0.949923 total=1.352264
+cache-control: private,no-cache,no-store,max-age=0,must-revalidate
+cache-status: "Netlify Durable"; fwd=bypass, "Netlify Edge"; fwd=miss; fwd-status=200
+content-type: text/html; charset=utf-8
+x-nf-request-id: 01M37E14EDTBJNJ0TTSJE02PPJ
+route=/sitemap.xml sample=1 status=200 ttfb=1.209015 total=1.222894
+cache-control: public,max-age=0,must-revalidate
+cache-status: "Netlify Durable"; fwd=bypass
+cache-status: "Netlify Edge"; fwd=miss; fwd-status=200; stored
+content-type: application/xml
+x-nf-request-id: 01M37E15RF068S0GQG3DWAY578
+route=/sitemap.xml sample=2 status=200 ttfb=0.942895 total=0.964436
+cache-control: public,max-age=0,must-revalidate
+cache-status: "Netlify Durable"; fwd=bypass
+cache-status: "Netlify Edge"; fwd=miss; fwd-status=200; stored
+content-type: application/xml
+x-nf-request-id: 01M37E16XW97E815C6F0RHWR4R
+route=/robots.txt sample=1 status=200 ttfb=0.853509 total=0.854098
+cache-control: public,max-age=0,must-revalidate
+cache-status: "Netlify Durable"; hit; ttl=29974976
+cache-status: "Next.js"; hit
+cache-status: "Netlify Edge"; fwd=miss; fwd-status=200; stored
+content-type: text/plain
+x-nf-request-id: 01M37E17V801NTAD9PDKXD67P8
+route=/robots.txt sample=2 status=200 ttfb=0.749569 total=0.749747
+cache-control: public,max-age=0,must-revalidate
+cache-status: "Netlify Durable"; hit; ttl=29974975
+cache-status: "Next.js"; hit
+cache-status: "Netlify Edge"; fwd=miss; fwd-status=200; stored
+content-type: text/plain
+x-nf-request-id: 01M37E18Q8S9Y6D720BPK3VBA6
+route=/assets/p.js sample=1 status=200 ttfb=0.884253 total=0.895970
+cache-control: public,max-age=86400,must-revalidate
+cache-status: "Netlify Durable"; fwd=stale; fwd-status=304; ttl=-96293, "Netlify Edge"; fwd=miss; fwd-status=200; stored
+content-type: application/javascript; charset=UTF-8
+x-nf-request-id: 01M37E19FGBW07MRTHADS2NSHY
+route=/assets/p.js sample=2 status=200 ttfb=0.608028 total=0.608238
+cache-control: public,max-age=86400,must-revalidate
+cache-status: "Netlify Durable"; hit; ttl=77331, "Netlify Edge"; fwd=miss; fwd-status=200; stored
+content-type: application/javascript; charset=UTF-8
+x-nf-request-id: 01M37E1ABQW3YH709WCKBR1D98
