@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cacheLife } from "next/cache";
+import { cacheLife, io } from "next/cache";
 import { draftMode } from "next/headers";
 import Script from "next/script";
 import { VisualEditing } from "next-sanity/visual-editing";
@@ -27,7 +27,7 @@ import { PUBLIC_SITE_STATE_QUERY } from "@/sanity/lib/queries";
 const umamiWebsiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const state = await getCachedPublicSiteState({
+  const state = await getPublicSiteStateForRequest({
     perspective: "published",
     stega: false,
   });
@@ -66,7 +66,7 @@ async function FrontendContent({ children }: { children: React.ReactNode }) {
   const { perspective, stega } = isDraftMode
     ? await getDynamicFetchOptions()
     : { perspective: "published" as const, stega: false };
-  const state = await getCachedPublicSiteState({ perspective, stega });
+  const state = await getPublicSiteStateForRequest({ perspective, stega });
   const isLive = state.mode === "live";
   const shouldTrack = shouldTrackWithUmami({
     isDraftMode,
@@ -117,20 +117,33 @@ async function FrontendContent({ children }: { children: React.ReactNode }) {
   );
 }
 
-async function getCachedPublicSiteState({
+async function getPublicSiteStateForRequest(options: DynamicFetchOptions) {
+  const settings = await getCachedPublicSiteSettings(options);
+  const bypass = process.env.PUBLIC_SITE_MODE_BYPASS === "true";
+  if (
+    !bypass &&
+    settings?.publicSiteMode === "countdown" &&
+    settings.countdown?.heading &&
+    settings.countdown.launchAt
+  ) {
+    await io();
+  }
+  return getPublicSiteState(settings, { bypass });
+}
+
+async function getCachedPublicSiteSettings({
   perspective,
   stega,
 }: DynamicFetchOptions) {
   "use cache";
-  cacheLife({ expire: 300, revalidate: 60, stale: 30 });
+  // Keep site-mode changes prompt without excluding public pages from prerendering.
+  cacheLife({ expire: 300, revalidate: 10, stale: 30 });
   const { data: settings } = await sanityFetch({
     perspective,
     query: PUBLIC_SITE_STATE_QUERY,
     stega,
   });
-  return getPublicSiteState(settings, {
-    bypass: process.env.PUBLIC_SITE_MODE_BYPASS === "true",
-  });
+  return settings;
 }
 
 async function DynamicHeader() {
