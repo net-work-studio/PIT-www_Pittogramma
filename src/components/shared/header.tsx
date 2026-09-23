@@ -78,7 +78,7 @@ export default async function Header({
         <div className="hidden md:flex">
           <Button
             nativeButton={false}
-            render={<Link href="/submit" />}
+            render={<Link href="/submit" prefetch={false} />}
             variant="mono"
           >
             Submit your project

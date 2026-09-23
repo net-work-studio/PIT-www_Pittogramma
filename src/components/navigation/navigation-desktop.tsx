@@ -42,7 +42,7 @@ export function NavigationDesktop({ resources }: { resources: Resource[] }) {
           <NavigationMenuLink
             className={navigationMenuTriggerStyle()}
             closeOnClick
-            render={<Link href="/journal" />}
+            render={<Link href="/journal" prefetch={false} />}
           >
             Journal
           </NavigationMenuLink>
@@ -51,7 +51,7 @@ export function NavigationDesktop({ resources }: { resources: Resource[] }) {
           <NavigationMenuLink
             className={navigationMenuTriggerStyle()}
             closeOnClick
-            render={<Link href="/events" />}
+            render={<Link href="/events" prefetch={false} />}
           >
             Events
           </NavigationMenuLink>
@@ -60,7 +60,7 @@ export function NavigationDesktop({ resources }: { resources: Resource[] }) {
           <NavigationMenuLink
             className={navigationMenuTriggerStyle()}
             closeOnClick
-            render={<Link href="/about" />}
+            render={<Link href="/about" prefetch={false} />}
           >
             About
           </NavigationMenuLink>
@@ -77,7 +77,10 @@ function ListItem({
 }: Omit<React.ComponentPropsWithoutRef<"li">, "children"> & { href: string }) {
   return (
     <li {...props}>
-      <NavigationMenuLink closeOnClick render={<Link href={href} />}>
+      <NavigationMenuLink
+        closeOnClick
+        render={<Link href={href} prefetch={false} />}
+      >
         <div className="whitespace-break-spaces text-3xl leading-none hover:text-muted-foreground">
           {title}
         </div>

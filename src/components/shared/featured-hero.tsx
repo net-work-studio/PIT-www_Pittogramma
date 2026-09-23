@@ -56,6 +56,7 @@ export default function FeaturedHero({
         HEIGHT_BY_VARIANT[variant]
       )}
       href={href}
+      prefetch={false}
       {...(external ? { rel: "noopener noreferrer", target: "_blank" } : {})}
     >
       <div className="z-10 flex w-full flex-col items-center gap-4 px-4 text-center text-white sm:px-6">
