@@ -195,6 +195,10 @@ _Avoid_: Next, future (in user-facing copy)
 The fixed number of editorial and advertising cards shown on the homepage. Projects, Interviews, Journal entries, and Events share one chronological stream, ordered by their publishing date; adding a content type replaces another stream card rather than increasing the card total.
 _Avoid_: Separate per-type homepage feeds, event-date ordering, an expanding homepage card count
 
+**Homepage availability**:
+Visitors can receive the live homepage with at least one published editorial item in the Homepage content stream. Cached published content counts; an empty stream or the public holding page does not.
+_Avoid_: Equating a successful static file response, an HTTP status alone, or fresh Sanity data with Homepage availability
+
 **Feed sidebar**:
 The header-opened panel that presents active Sponsored placements and Community items in one chronological timeline. Cards are ordered by Start Date, newest first, with the newest CMS creation time breaking ties. It is separate from the Homepage content stream.
 _Avoid_: Homepage content stream, a Feed content type

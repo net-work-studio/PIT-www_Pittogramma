@@ -253,6 +253,7 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
   }
 
   const stream = buildHomeStream(editorialPool, injections, TOTAL_STREAM_SLOTS);
+  const hasEditorialItem = stream.some((slot) => slot.kind === "editorial");
 
   const featuredSubtitle = getFeaturedSubtitle(featuredItem);
   const featuredBadge = getFeaturedBadge(featuredItem);
@@ -316,6 +317,9 @@ async function CachedHome({ perspective, stega }: DynamicFetchOptions) {
         }
         slots={stream}
       />
+      {hasEditorialItem ? (
+        <span data-homepage-content-ready="true" hidden />
+      ) : null}
     </>
   );
 }
