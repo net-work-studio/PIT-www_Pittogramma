@@ -1,0 +1,22 @@
+src/app/(frontend)/page.tsx
+  s_c6460d98dc42d4::t_ea0d6474253c8b 256
+  s_c6460d98dc42d4::t_67067d4cabd94c 320-322
+CONTEXT.md
+  s_c6460d98dc42d4::t_e2f0d02bbe7b26 198-201
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "78127d8f26f530b640bc1496c988c41f7e928bd4",
+  "prompts": {},
+  "sessions": {
+    "s_c6460d98dc42d4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0cedf-312d-7053-ac2b-1fe914df9f66",
+        "model": "gpt-6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
