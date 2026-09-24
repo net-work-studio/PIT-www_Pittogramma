@@ -35,8 +35,11 @@ export default async function publicSiteRobots(
   _request: Request,
   context: { next: () => Promise<Response> }
 ) {
-  const response = await context.next();
-  const robots = getPublicSiteRobotsHeader(await getCurrentPublicSiteState());
+  const [response, state] = await Promise.all([
+    context.next(),
+    getCurrentPublicSiteState(),
+  ]);
+  const robots = getPublicSiteRobotsHeader(state);
 
   if (!robots) {
     return response;
@@ -128,6 +131,9 @@ export const config = {
     "/manifest.json",
     "/robots.txt",
     "/sitemap.xml",
+    "/assets/p.js",
+    "/p/api/send",
+    "/health.txt",
   ],
   path: "/*",
 };

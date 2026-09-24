@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cacheLife } from "next/cache";
+import { cacheLife, io } from "next/cache";
 import { draftMode } from "next/headers";
 import Script from "next/script";
 import { VisualEditing } from "next-sanity/visual-editing";
@@ -27,12 +27,9 @@ import { PUBLIC_SITE_STATE_QUERY } from "@/sanity/lib/queries";
 const umamiWebsiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = await getCachedPublicSiteSettings({
+  const state = await getPublicSiteStateForRequest({
     perspective: "published",
     stega: false,
-  });
-  const state = getPublicSiteState(settings, {
-    bypass: process.env.PUBLIC_SITE_MODE_BYPASS === "true",
   });
 
   if (state.mode === "live") {
@@ -69,10 +66,7 @@ async function FrontendContent({ children }: { children: React.ReactNode }) {
   const { perspective, stega } = isDraftMode
     ? await getDynamicFetchOptions()
     : { perspective: "published" as const, stega: false };
-  const settings = await getCachedPublicSiteSettings({ perspective, stega });
-  const state = getPublicSiteState(settings, {
-    bypass: process.env.PUBLIC_SITE_MODE_BYPASS === "true",
-  });
+  const state = await getPublicSiteStateForRequest({ perspective, stega });
   const isLive = state.mode === "live";
   const shouldTrack = shouldTrackWithUmami({
     isDraftMode,
@@ -123,14 +117,27 @@ async function FrontendContent({ children }: { children: React.ReactNode }) {
   );
 }
 
+async function getPublicSiteStateForRequest(options: DynamicFetchOptions) {
+  const settings = await getCachedPublicSiteSettings(options);
+  const bypass = process.env.PUBLIC_SITE_MODE_BYPASS === "true";
+  if (
+    !bypass &&
+    settings?.publicSiteMode === "countdown" &&
+    settings.countdown?.heading &&
+    settings.countdown.launchAt
+  ) {
+    await io();
+  }
+  return getPublicSiteState(settings, { bypass });
+}
+
 async function getCachedPublicSiteSettings({
   perspective,
   stega,
 }: DynamicFetchOptions) {
   "use cache";
-  // Public-site mode is a small operational setting. It must take effect
-  // without depending on a visitor already having Sanity Live connected.
-  cacheLife({ expire: 60, revalidate: 10, stale: 0 });
+  // Keep site-mode changes prompt without excluding public pages from prerendering.
+  cacheLife({ expire: 300, revalidate: 10, stale: 30 });
   const { data: settings } = await sanityFetch({
     perspective,
     query: PUBLIC_SITE_STATE_QUERY,

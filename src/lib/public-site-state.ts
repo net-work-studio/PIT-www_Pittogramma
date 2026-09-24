@@ -36,7 +36,7 @@ export type PublicSiteState =
  */
 export function getPublicSiteState(
   settings: PublicSiteSettings | null | undefined,
-  { bypass = false, now = new Date() }: { bypass?: boolean; now?: Date } = {}
+  { bypass = false, now }: { bypass?: boolean; now?: Date } = {}
 ): PublicSiteState {
   if (bypass) {
     return { mode: "live" };
@@ -47,7 +47,10 @@ export function getPublicSiteState(
     settings.countdown?.heading &&
     settings.countdown.launchAt
   ) {
-    if (new Date(settings.countdown.launchAt).getTime() <= now.getTime()) {
+    if (
+      new Date(settings.countdown.launchAt).getTime() <=
+      (now ?? new Date()).getTime()
+    ) {
       return { mode: "live" };
     }
 
